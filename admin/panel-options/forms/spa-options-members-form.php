@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Options Members Form
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
+$LastChangedDate: 2018-11-05 07:39:53 -0600 (Mon, 05 Nov 2018) $
+$Rev: 15808 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -81,6 +81,14 @@ function spa_options_members_form() {
 				spa_paint_wide_textarea(SP()->primitives->admin_text('Blocked display names'), 'display-name', $sfoptions['display-name'], $submessage);
     			$submessage = SP()->primitives->admin_text('Enter a comma separated list of guest names to disallow when a guest posts');
 				spa_paint_wide_textarea(SP()->primitives->admin_text('Blocked guest posting names'), 'guest-name', $sfoptions['guest-name'], $submessage);
+			spa_paint_close_fieldset();
+		spa_paint_close_panel();
+
+		spa_paint_open_panel();
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Privacy Data Export'), true, 'privacy-export');
+				spa_paint_checkbox(SP()->primitives->admin_text('Include Forum Posts in Data Export'), 'posts', $sfoptions['posts']);
+do_action('sph_options_members_privacy_export');
+				spa_paint_input(SP()->primitives->admin_text('Number of posts to batch process - Please note that users with a large number of posts may cause the exporter to run out of available resources'), 'number', $sfoptions['number']);				
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 

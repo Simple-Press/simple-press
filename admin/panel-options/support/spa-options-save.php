@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Options Save Options Support Functions
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-05 07:39:53 -0600 (Mon, 05 Nov 2018) $
+$Rev: 15808 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -228,6 +228,11 @@ function spa_save_members_data() {
 	$sfprofile = SP()->options->get('sfprofile');
 	$sfprofile['namelink'] = SP()->filters->integer($_POST['namelink']);
 	SP()->options->update('sfprofile', $sfprofile);
+
+	$sfPrivacy = SP()->options->get('spPrivacy');
+	$sfPrivacy['posts'] = isset($_POST['posts']);
+	$sfPrivacy['number'] = SP()->filters->integer($_POST['number']);
+	SP()->options->update('spPrivacy', $sfPrivacy);
 
     do_action('sph_option_members_save');
 

@@ -2,8 +2,8 @@
 /*
   Simple:Press
   Main Forum Installer (New Instalations)
-  $LastChangedDate: 2018-08-14 03:08:54 -0500 (Tue, 14 Aug 2018) $
-  $Rev: 15703 $
+  $LastChangedDate: 2018-11-05 07:39:53 -0600 (Mon, 05 Nov 2018) $
+  $Rev: 15808 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -729,13 +729,14 @@ function sp_perform_install($phase, $subphase = 0) {
 			$sfavatars['sfavatarresize']		 = true;
 			$sfavatars['sfavatarresizequality']	 = 90;
 			$sfavatars['sfavatarfilesize']		 = 10240;
+			# gravatar, upload, spf, wp, pool, remote
 			$sfavatars['sfavatarpriority']		 = array(
 				0,
 				2,
 				3,
 				1,
 				4,
-				5);  # gravatar, upload, spf, wp, pool, remote
+				5);  
 			SP()->options->add('sfavatars', $sfavatars);
 
 			# default avatars
@@ -780,6 +781,12 @@ function sp_perform_install($phase, $subphase = 0) {
 			$theme['parent'] = '';
 			$theme['icons']	 = '';
 			SP()->options->add('sp_current_theme', $theme);
+
+			# privacy export
+			$privacy			= array();
+			$privacy['posts']	= false;
+			$privacy['number']	= 200;
+			SP()->options->add('spPrivacy', $privacy);
 
 			$theme					 = array();
 			$theme['active']		 = false;

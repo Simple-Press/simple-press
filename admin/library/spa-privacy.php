@@ -8,23 +8,25 @@ $Rev: 11461 $
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
+
+# --------------------------------------------
+# Export of SP related personal profile data
+# --------------------------------------------
+
 # Specific forum profile data filter hook
 add_filter('sp_privacy_profile_data', 'sp_privacy_profile_export', 20, 4);
 
-# Register the export
-function sp_register_privacy_exporter($exporters) {
-	$exporters['simple_press'] = array(
-		'exporter_friendly_name' => SP()->primitives->admin_text('Simple Press Forum'),
-		'callback' => 'sp_privacy_exporter',
+# Register the profile export
+function sp_register_profile_exporter($exporters) {
+	$exporters['simple_press_profile'] = array(
+		'exporter_friendly_name' => SP()->primitives->admin_text('Simple Press Profile'),
+		'callback' => 'sp_profile_exporter'
 	);
 	return $exporters;
 }
 
-# Main Exporter function
-function sp_privacy_exporter($email_address, $page = 1) {
-	$number = 250; // Limit us to avoid timing out
-	$page = (int) $page;
-
+# Main SP Profile Data Exporter function
+function sp_profile_exporter($email_address, $page = 1) {
 	# get users ID
 	$userID = SP()->DB->table(SPUSERS, "user_email='$email_address'", 'ID');
 	if (!empty($userID)) {
@@ -36,11 +38,11 @@ function sp_privacy_exporter($email_address, $page = 1) {
 		# call generic forum profile filter hook		
 		$exportItems = apply_filters('sp_privacy_profile_data', $exportItems, $spUserData, $groupID, $groupLabel);
 		# call new section filter hook
-		$exportItems = apply_filters('sp_privacy_section_data', $exportItems, $spUserData);
+		$exportItems = apply_filters('sp_privacy_profile_section_data', $exportItems, $spUserData);
 
 		return array(
 			'data' => $exportItems,
-			'done' => true,
+			'done' => true
 		);
 	}
 }
@@ -48,7 +50,7 @@ function sp_privacy_exporter($email_address, $page = 1) {
 # Specific profile data exporter using general profile filter hook
 function sp_privacy_profile_export($exportItems, $spUserData, $groupID, $groupLabel) {
 	$data = array();
-	
+
 	# Additional Profile Data from UserMeta
 	$items = array(
 		'display_name' 	=> SP()->primitives->admin_text('Forum Display Name'),
@@ -110,9 +112,111 @@ function sp_privacy_profile_export($exportItems, $spUserData, $groupID, $groupLa
 		'group_id'		=> $groupID,
 		'group_label' 	=> $groupLabel,
 		'item_id' => 'Profile',
-		'data' => $data,
+		'data' => $data
 	);
 
 	return $exportItems;
 }
 
+
+# --------------------------------------------
+# Export of SP post data
+# --------------------------------------------
+
+# Specific forum profile data filter hook
+add_filter('sp_privacy_forum_data', 'sp_privacy_forum_export', 21, 7);
+
+function sp_register_forum_exporter($exporters) {
+	$exporters['simple_press_forum'] = array(
+		'exporter_friendly_name' => SP()->primitives->admin_text('Simple Press Forum'),
+		'callback' => 'sp_forum_exporter'
+	);
+	return $exporters;
+}
+
+# Main SP Forum Data Exporter function
+function sp_forum_exporter($email_address, $page = 0) {
+	$ops = SP()->options->get('spPrivacy');
+	# Limit us to avoid timing out
+	if (!empty($ops['number'])) {
+		$number = $ops['number'];
+	} else {
+		$number = 200;
+	}
+	$page = (int) $page;
+	$done = false;
+	$data = array();
+
+	# get users ID
+	$userID = SP()->DB->table(SPUSERS, "user_email='$email_address'", 'ID');
+	if (!empty($userID)) {
+		$exportItems = array();
+		$spUserData = SP()->user->get($userID);
+		$groupID = SP()->primitives->admin_text('Forum Post Group');
+		$groupLabel = SP()->primitives->admin_text('Forum Posts');
+
+		# call generic forum profile filter hook		
+		$exportItems = apply_filters('sp_privacy_forum_data', $exportItems, $spUserData, $groupID, $groupLabel, $page, $number, $done);
+		# call new section filter hook
+		$exportItems = apply_filters('sp_privacy_forum_section_data', $exportItems, $spUserData, $groupID, $groupLabel, $page, $number, $done);
+
+		return array(
+			'data' => $exportItems,
+			'done' => true
+		);
+	}
+}
+
+# Specific profile data exporter using general profile filter hook
+function sp_privacy_forum_export($exportItems, $spUserData, $groupID, $groupLabel, $page, $number, $done) {
+	$ops = SP()->options->get('spPrivacy');
+	if($ops['posts'] == false) return $exportItems;
+
+	$data = array();
+	
+	# Select forum posts
+	$query				= new stdClass();
+	$query->type		= 'set';
+	$query->table		= SPPOSTS;
+	$query->fields		= 'post_date, post_content, topic_name';
+	$query->join		= SPTOPICS.' ON '.SPPOSTS.'.topic_id = '.SPTOPICS.'.topic_id';
+	$query->where		= SPPOSTS.".user_id = $spUserData->ID.";
+	$query->orderby		= SPPOSTS.'.post_id';
+	$query->limit		= $page.', '.$number;
+	$posts = SP()->DB->select($query);
+	
+	if (empty($posts) && $page==0) {
+		$data[] = array(
+			'name'	=>	SP()->primitives->admin_text('No forum posts'),
+			'value'	=>	'',
+			'done'	=> true
+		);
+		$done = true;
+	} elseif (empty($posts)) {
+		$data[] = array(
+			'name'	=>	'',
+			'value'	=>	'',
+			'done'	=> true
+		);
+		$done = true;
+	} else {
+		foreach($posts as $post) {
+			$nameValue = SP()->displayFilters->title($post->topic_name.' - '.$post->post_date);
+			$data[] = array(
+				'name'	=> $nameValue,
+				'value'	=> SP()->displayFilters->content($post->post_content)
+			);
+		}
+	}
+
+	# Now to export the forum post data
+	$exportItems[] = array(
+		'group_id'		=> $groupID,
+		'group_label' 	=> $groupLabel,
+		'item_id' => 'Posts',
+		'data' => $data,
+		'done' => $done
+	);
+
+	return $exportItems;
+}

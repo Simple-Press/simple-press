@@ -1,11 +1,11 @@
-=== Simple Press - WordPress Forum Plugin ===
+=== Simple:Press - WordPress Forum Plugin ===
 
 Contributors: simplepress, usermrpapa, brokenparrot
 Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 4.4
 Tested up to: 4.9
 Requires PHP: 5.6
-Stable tag: 6.0.0
+Stable tag: 6.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,10 +154,10 @@ Check out our extensions in our store at [simple-press.com](https://simple-press
 * Timezone on Registration
 
 
-**Memberships**
+**Premium Bundles**
 
-Purchase one of our memberships and get premium support and add-on discounts one one full year.
-[View Membership Options](https://simple-press.com/store/memberships/)
+Purchase one of our bundles to get premium support directly from us
+[View Pricing Options](https://simple-press.com/pricing/)
 
 **Compatibility**
 Simple:Press was built to be compatible with most themes, both free and commercial. 
@@ -200,23 +200,24 @@ You can access this setup process by either clicking the INSTALL button that sho
 At the conclusion of a successful install, a button will be displayed to load the forum admin and clicking on this will take you to the Storage Locations panel. All being well, all locations will be ticked as created and available but if this is not the case follow the instructions to manually create folders if necessary.
 
 = Getting Started=
-Now that you have installed your forums read our [getting started](https://simple-press.com/documentation/codex/getting-started/) pages.
+Now that you have installed your forums read our [getting started](https://simple-press.com/documentation/getting-started/) pages.
 
 == Frequently Asked Questions ==
 = I've installed the plugin - now what? =
 
-Now that you have installed your forums read our [getting started](https://simple-press.com/documentation/codex/getting-started/) pages.
+Now that you have installed your forums read our [getting started](https://simple-press.com/documentation/getting-started/) pages.
 
 = I don't receive e-mail notifications =
 
 There are several factors that can influence e-mail notifications delivery. The best thing you can do to diagnose email delivery issues is to install a plugin that shows you an email log.  We recommend MAILGUN or SMTP POST.  The logs will let you know if emails are being generated and not delivered or just not being generated at all.
 
 == Screenshots ==
-1. Main admin screen
+1. Main front-end screen using our REBOOT theme
+2. Main admin screen
 
 == Changelog ==
 
-= 6.0.0 =
+= 6.0.3 =
 New
 	* First version released on WordPress.org.
 

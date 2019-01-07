@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Options General Support Functions
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-05 07:39:53 -0600 (Mon, 05 Nov 2018) $
+$Rev: 15808 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -137,6 +137,10 @@ function spa_get_members_data() {
 
 	$sfprofile = SP()->options->get('sfprofile');
 	$sfoptions['namelink'] = $sfprofile['namelink'];
+	
+	$sfPrivacy = SP()->options->get('spPrivacy');
+	$sfoptions['posts'] = $sfPrivacy['posts'];
+	$sfoptions['number'] = $sfPrivacy['number'];
 
 	return $sfoptions;
 }

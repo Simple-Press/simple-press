@@ -1,6 +1,6 @@
 --- Manage Options ---
-$LastChangedDate: 2016-10-20 11:08:57 -0500 (Thu, 20 Oct 2016) $
-$Rev: 14645 $
+$LastChangedDate: 2018-11-05 07:39:53 -0600 (Mon, 05 Nov 2018) $
+$Rev: 15808 $
 
 [auto-update]
 <strong>Auto Update</strong><br /><br />
@@ -288,4 +288,16 @@ If you turn it on you can also specify the text to use in the flag. We recommend
 
 [flag-display]
 If using the new posts flag, select both the background and text colours to be used.
+[end]
+
+[privacy-export]
+The Privacy Export feature allows for forum posts and Messages to be optionally included in the WordPress 
+personal data export tool.<br /><br />
+<b>Important Note</b><br />
+If a user has an extraordinary large number of forum posts and messages it is possible for the 
+WordPress export tool to run out of memory resources. if this happens an error message will 
+be displayed on the export control page.<br /><br />
+<b>Number to Batch Process</b><br />
+WordPress carries out the export file creation process in batches to avoid a timeout on the server. 
+The default for the forum data is 200. If a timeout occurs this number can be reduced.
 [end]

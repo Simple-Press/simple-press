@@ -2,8 +2,8 @@
 /*
   Simple:Press
   Upgrade Path Routines - Version 5.0
-  $LastChangedDate: 2018-10-28 12:03:43 -0500 (Sun, 28 Oct 2018) $
-  $Rev: 15778 $
+  $LastChangedDate: 2018-11-05 07:39:53 -0600 (Mon, 05 Nov 2018) $
+  $Rev: 15808 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -284,6 +284,20 @@ sp_bump_build($build, 15766);
 
 sp_bump_build($build, 15768);
 
+# Start of Upgrade Routines - 6.0.3 ============================================================
+
+sp_bump_build($build, 15802);
+
+$section = 15810;
+if ($build < $section) {
+	# privacy export options
+	$privacy			= array();
+	$privacy['posts']	= false;
+	$privacy['number']	= 200;
+	SP()->options->add('spPrivacy', $privacy);
+
+	sp_response($section);
+}
 
 # ****** IMPORTANT: THE FINAL $section values MUST be the same as the SPBUILD constant
 # ******			for the Upgrade to complete correctly
