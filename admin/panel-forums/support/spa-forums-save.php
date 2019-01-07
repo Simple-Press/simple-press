@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Forums Data Sae Support Functions
-$LastChangedDate: 2018-10-15 21:45:40 -0500 (Mon, 15 Oct 2018) $
-$Rev: 15753 $
+$LastChangedDate: 2018-11-02 11:09:55 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15787 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -11,8 +11,8 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function spa_save_forums_create_group() {
 	check_admin_referer('forum-adminform_groupnew', 'forum-adminform_groupnew');
 
-	$ug_list   = array_unique($_POST['usergroup_id']);
-	$perm_list = $_POST['role'];
+	$ug_list   = array_map('intval', array_unique($_POST['usergroup_id']));
+	$perm_list = array_map('intval', $_POST['role']);
 
 	$groupdata = array();
 
@@ -48,7 +48,7 @@ function spa_save_forums_create_group() {
 
 	# save the default permissions for the group
 	for ($x = 0; $x < count($ug_list); $x++) {
-		if ($perm_list[$x] != -1) spa_add_defpermission_row($group_id, (int) $ug_list[$x], (int) $perm_list[$x]);
+		if ($perm_list[$x] != -1) spa_add_defpermission_row($group_id, $ug_list[$x], $perm_list[$x]);
 	}
 
 	if ($success == false) {
@@ -244,12 +244,12 @@ function spa_save_forums_create_forum() {
 	$success = $thisforum;
 
 	# add the user group permission sets
-	$usergroup_id_list = array_unique($_POST['usergroup_id']);
-	$role_list         = $_POST['role'];
+	$usergroup_id_list = array_map('intval', array_unique($_POST['usergroup_id']));
+	$role_list         = array_map('intval', $_POST['role']);
 	$perm_prob         = false;
 	for ($x = 0; $x < count($usergroup_id_list); $x++) {
-		$usergroup_id = SP()->filters->integer($usergroup_id_list[$x]);
-		$role         = SP()->filters->integer($role_list[$x]);
+		$usergroup_id = $usergroup_id_list[$x];
+		$role         = $role_list[$x];
 		if ($role == -1) {
 			$defrole = spa_get_defpermissions_role($forumdata['group_id'], $usergroup_id);
 			if ($defrole == '') {
@@ -808,7 +808,7 @@ function spa_save_forums_edit_forum() {
 
 	# has the forum changed to a new group
 	if (($forumdata['group_id'] != $_POST['cgroup_id']) && (!empty($_POST['cchildren']))) {
-		spa_update_parent_group($_POST['cgroup_id'], $forumdata['group_id'], $forum_id);
+		spa_update_parent_group(SP()->filters->integer($_POST['cgroup_id']), $forumdata['group_id'], $forum_id);
 	}
 
 	# Finally - we can save the updated forum record!
@@ -875,8 +875,8 @@ function spa_save_forums_edit_group() {
 	$groupdata['group_desc']    = SP()->saveFilters->text(trim($_POST['group_desc']));
 	$groupdata['group_message'] = SP()->saveFilters->text(trim($_POST['group_message']));
 
-	$ug_list   = array_unique($_POST['usergroup_id']);
-	$perm_list = $_POST['role'];
+	$ug_list   = array_map('intval', array_unique($_POST['usergroup_id']));
+	$perm_list = array_map('intval', $_POST['role']);
 
 	if (!empty($_POST['group_icon'])) {
 		# Check new icon exists
@@ -899,8 +899,8 @@ function spa_save_forums_edit_group() {
 
 	# save the default permissions for the group
 	for ($x = 0; $x < count($ug_list); $x++) {
-		$ug   = SP()->filters->integer($ug_list[$x]);
-		$perm = SP()->filters->integer($perm_list[$x]);
+		$ug   = $ug_list[$x];
+		$perm = $perm_list[$x];
 		if (spa_get_defpermissions_role($group_id, $ug)) {
 			$sql = 'UPDATE '.SPDEFPERMISSIONS."
 					SET permission_role=$perm
@@ -911,7 +911,11 @@ function spa_save_forums_edit_group() {
 		}
 	}
 
-	if ($groupdata['group_name'] == $_POST['cgroup_name'] && $groupdata['group_desc'] == $_POST['cgroup_desc'] && $groupdata['group_rss'] == $_POST['cgroup_rss'] && $groupdata['group_message'] == $_POST['cgroup_message'] && $groupdata['group_icon'] == $_POST['cgroup_icon']) {
+	if ($groupdata['group_name'] == sanitize_text_field($_POST['cgroup_name']) &&
+		$groupdata['group_desc'] == sanitize_text_field($_POST['cgroup_desc']) &&
+		$groupdata['group_rss'] == sanitize_text_field($_POST['cgroup_rss']) &&
+		$groupdata['group_message'] == sanitize_text_field($_POST['cgroup_message']) &&
+		$groupdata['group_icon'] == sanitize_text_field($_POST['cgroup_icon'])) {
 		$mess = SP()->primitives->admin_text('No data changed');
 	} else {
 		$sql = 'UPDATE '.SPGROUPS.' SET ';
@@ -946,7 +950,7 @@ function spa_save_forums_edit_perm() {
 	$permissiondata['permission_role'] = SP()->filters->integer($_POST['role']);
 
 	# dont do anything if the permission set wasnt actually updated
-	if ($permissiondata['permission_role'] == $_POST['ugroup_perm']) {
+	if ($permissiondata['permission_role'] == sanitize_text_field($_POST['ugroup_perm'])) {
 		$mess = SP()->primitives->admin_text('No data changed');
 
 		return $mess;
@@ -1091,8 +1095,8 @@ function spa_save_forums_global_rssset() {
 function spa_save_forums_merge() {
 	check_admin_referer('forum-adminform_mergeforums', 'forum-adminform_mergeforums');
 	$source = $target = 0;
-	if (isset($_POST['source'])) $source = (int)$_POST['source'];
-	if (isset($_POST['target'])) $target = (int)$_POST['target'];
+	if (isset($_POST['source'])) $source = (int) $_POST['source'];
+	if (isset($_POST['target'])) $target = (int) $_POST['target'];
 	if (empty($source) || empty($target) || ($source == $target)) {
 		return SP()->primitives->admin_text('Selections invalid');
 	}
@@ -1149,11 +1153,12 @@ function spa_save_forums_order() {
 	check_admin_referer('forum-adminform_forumorder', 'forum-adminform_forumorder');
 
 	# get the sorted lst
-	parse_str($_POST['spForumsOrder'], $list);
+	parse_str(SP()->filters->str($_POST['spForumsOrder']), $list);
+
 	# make sure we have groups
 	if (empty($list['group'])) return SP()->primitives->admin_text('Unable to save group/forum ordering');
 
-	if ($_POST['cgroup'] == 0) {
+	if ((int) $_POST['cgroup'] == 0) {
 		# save group sequence
 		$gseq = 1;
 		foreach ($list['group'] as $gid => $group) {
@@ -1276,6 +1281,7 @@ function spa_delete_sample($group_id) {
 	# clear out group cache tpo enable change_user
 	SP()->cache->flush('group');
 
+	require_once SP_PLUGIN_DIR.'/forum/database/sp-db-statistics.php';
 	$counts = sp_get_stats_counts();
 	SP()->options->update('spForumStats', $counts);
 }

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Profiles Support Functions
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-03 11:12:02 -0500 (Sat, 03 Nov 2018) $
+$Rev: 15799 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -53,7 +53,9 @@ function spa_paint_avatar_pool() {
 		if ($file != "." && $file != "..") {
 			$out.= '<table style="width:100%">';
 			$out.= '<tr>';
-			$out.= '<td style="text-align:center;width:30%" class="spWFBorder"><img class="sfavatarpool" src="'.esc_url(SPAVATARDIR.$file).'" alt="" /></td>';
+//			ashow(SPAVATARPOOLURL);
+//			ashow($file);
+			$out.= '<td style="text-align:center;width:30%" class="spWFBorder"><img class="sfavatarpool" src="'.esc_url(SPAVATARPOOLURL.$file).'" alt="" /></td>';
 			$out.= '<td style="text-align:center;width:50%" class="spWFBorder sflabel">';
 			$out.= $file;
 			$out.= '</td>';

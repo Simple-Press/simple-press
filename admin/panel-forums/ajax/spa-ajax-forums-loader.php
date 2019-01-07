@@ -2,8 +2,8 @@
 /*
 Simple:Press Admin
 Ajax form loader - Forums
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 13:02:17 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15795 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -31,80 +31,81 @@ $adminhelpfile = 'admin-forums';
 if (!SP()->auths->current_user_can('SPF Manage Forums')) die();
 
 if (isset($_GET['loadform'])) {
-	spa_render_forums_container($_GET['loadform']);
+	spa_render_forums_container(sanitize_text_field($_GET['loadform']));
 	die();
 }
 
 if (isset($_GET['saveform'])) {
-	if ($_GET['saveform'] == 'creategroup') {
+	$saveform = sanitize_text_field($_GET['saveform']);
+	if ($saveform == 'creategroup') {
 		echo spa_save_forums_create_group();
 		die();
 	}
-	if ($_GET['saveform'] == 'createforum') {
+	if ($saveform == 'createforum') {
 		echo spa_save_forums_create_forum();
 		die();
 	}
-	if ($_GET['saveform'] == 'globalperm') {
+	if ($saveform == 'globalperm') {
 		echo spa_save_forums_global_perm();
 		die();
 	}
-	if ($_GET['saveform'] == 'removeperms') {
+	if ($saveform == 'removeperms') {
 		echo spa_save_forums_remove_perms();
 		die();
 	}
-	if ($_GET['saveform'] == 'mergeforums') {
+	if ($saveform == 'mergeforums') {
 		echo spa_save_forums_merge();
 		die();
 	}
-	if ($_GET['saveform'] == 'globalrss') {
+	if ($saveform == 'globalrss') {
 		echo spa_save_forums_global_rss();
 		die();
 	}
-	if ($_GET['saveform'] == 'globalrssset') {
+	if ($saveform == 'globalrssset') {
 		echo spa_save_forums_global_rssset();
 		die();
 	}
-	if ($_GET['saveform'] == 'grouppermission') {
+	if ($saveform == 'grouppermission') {
 		echo spa_save_forums_group_perm();
 		die();
 	}
-	if ($_GET['saveform'] == 'editgroup') {
+	if ($saveform == 'editgroup') {
 		echo spa_save_forums_edit_group();
 		die();
 	}
-	if ($_GET['saveform'] == 'deletegroup') {
+	if ($saveform == 'deletegroup') {
 		echo spa_save_forums_delete_group();
 		die();
 	}
-	if ($_GET['saveform'] == 'editforum') {
+	if ($saveform == 'editforum') {
 		echo spa_save_forums_edit_forum();
 		die();
 	}
-	if ($_GET['saveform'] == 'deleteforum') {
+	if ($saveform == 'deleteforum') {
 		echo spa_save_forums_delete_forum();
 		die();
 	}
-	if ($_GET['saveform'] == 'disableforum') {
+	if ($saveform == 'disableforum') {
 		echo spa_save_forums_disable_forum();
 		die();
 	}
-	if ($_GET['saveform'] == 'enableforum') {
+	if ($saveform == 'enableforum') {
 		echo spa_save_forums_enable_forum();
 		die();
 	}
-	if ($_GET['saveform'] == 'addperm') {
+	if ($saveform == 'addperm') {
 		echo spa_save_forums_forum_perm();
 		die();
 	}
-	if ($_GET['saveform'] == 'editperm') {
+	if ($saveform == 'editperm') {
 		echo spa_save_forums_edit_perm();
 		die();
 	}
-	if ($_GET['saveform'] == 'delperm') {
+	if ($saveform == 'delperm') {
 		echo spa_save_forums_delete_perm();
 		die();
 	}
-	if ($_GET['saveform'] == 'orderforum') {
+	if ($saveform == 'orderforum') {
 		echo spa_save_forums_order();
 		die();
 	}

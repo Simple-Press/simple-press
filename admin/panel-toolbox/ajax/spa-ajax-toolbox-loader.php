@@ -2,8 +2,8 @@
 /*
 Simple:Press Admin
 Ajax form loader - Toolbox
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 13:02:17 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15795 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -31,32 +31,33 @@ $adminhelpfile = 'admin-toolbox';
 if (!SP()->auths->current_user_can('SPF Manage Toolbox')) die();
 
 if (isset($_GET['loadform'])) {
-	spa_render_toolbox_container($_GET['loadform']);
+	spa_render_toolbox_container(sanitize_text_field($_GET['loadform']));
 	die();
 }
 
 if (isset($_GET['saveform'])) {
-	if ($_GET['saveform'] == 'toolbox') {
+	$saveform = sanitize_text_field($_GET['saveform']);
+	if ($saveform == 'toolbox') {
 		echo spa_save_toolbox_data();
 		die();
 	}
-	if ($_GET['saveform'] == 'uninstall') {
+	if ($saveform == 'uninstall') {
 		echo spa_save_uninstall_data();
 		die();
 	}
-	if ($_GET['saveform'] == 'sfclearlog') {
+	if ($saveform == 'sfclearlog') {
 		echo spa_save_toolbox_clearlog();
 		die();
 	}
-	if ($_GET['saveform'] == 'housekeeping') {
+	if ($saveform == 'housekeeping') {
 		echo spa_save_housekeeping_data();
 		die();
 	}
-	if ($_GET['saveform'] == 'inspector') {
+	if ($saveform == 'inspector') {
 		echo spa_save_inspector_data();
 		die();
 	}
-	if ($_GET['saveform'] == 'cron') {
+	if ($saveform == 'cron') {
 		echo spa_save_cron_data();
 		die();
 	}

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin plugins Update Support Functions
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 12:17:59 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15790 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -50,14 +50,15 @@ function spa_save_plugin_list_actions() {
 
 	if (empty($_POST['checked'])) return SP()->primitives->admin_text('Error - no plugins selected');
 
-	$action = '';
-	if (isset($_POST['action1']) && $_POST['action1'] != -1) $action = $_POST['action1'];
-	if (isset($_POST['action2']) && $_POST['action2'] != -1) $action = $_POST['action2'];
+	$action  = '';
+	if (isset($_POST['action1']) && SP()->filters->str($_POST['action1']) != -1) $action = SP()->filters->str($_POST['action1']);
+	if (isset($_POST['action2']) && SP()->filters->str($_POST['action2']) != -1) $action = SP()->filters->str($_POST['action2']);
 
 	switch ($action) {
 		case 'activate-selected':
 			$activate = false;
-			foreach ($_POST['checked'] as $plugin) {
+			$checked = array_map('sanitize_text_field', $_POST['checked']);
+			foreach ($checked as $plugin) {
                 $plugin = SP()->saveFilters->name($plugin);
 				if (!SP()->plugin->is_active($plugin)) {
 					$activate = true;
@@ -73,7 +74,8 @@ function spa_save_plugin_list_actions() {
 
 		case 'deactivate-selected':
 			$deactivate = false;
-			foreach ($_POST['checked'] as $plugin) {
+			$checked = array_map('sanitize_text_field', $_POST['checked']);
+			foreach ($checked as $plugin) {
                 $plugin = SP()->saveFilters->name($plugin);
 				if (SP()->plugin->is_active($plugin)) {
 					$deactivate = true;
@@ -89,7 +91,8 @@ function spa_save_plugin_list_actions() {
 
 		case 'delete-selected':
 			$active = false;
-			foreach ($_POST['checked'] as $plugin) {
+			$checked = array_map('sanitize_text_field', $_POST['checked']);
+			foreach ($checked as $plugin) {
                 $plugin = SP()->saveFilters->name($plugin);
 				if (!SP()->plugin->is_active($plugin)) {
 			        SP()->plugin->delete($plugin);

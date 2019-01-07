@@ -2,8 +2,8 @@
 /*
   Simple:Press
   Admin Options Save Options Support Functions
-  $LastChangedDate: 2018-10-15 21:45:40 -0500 (Mon, 15 Oct 2018) $
-  $Rev: 15753 $
+  $LastChangedDate: 2018-11-02 12:07:31 -0500 (Fri, 02 Nov 2018) $
+  $Rev: 15788 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -19,29 +19,39 @@ function spa_save_smileys_data() {
 	$sfsmileys = array();
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/';
 
-	$smileyname = $_POST['smname'];
+	$allSmileys = array_map('SP()->filters->str', $_POST['smname']);
+	$numSmileys = SP()->filters->integer($_POST['smiley-count']);
 
-	for ($x = 0; $x < count($smileyname); $x++) {
-		$file = $_POST['smfile'][$x];
-		$path_info = pathinfo($path.$file);
-		$fn = strtolower($path_info['filename']);
-		if (file_exists($path.$file)) {
-			if (empty($smileyname[$x])) $smileyname[$x] = $fn;
-			$thisname = urldecode(sp_create_slug($smileyname[$x], false));
+	if ($numSmileys) {
+		for ($x = 0; $x < ($numSmileys+1); $x++) {
+			$smileyName = $allSmileys[$x];
+			$file = SP()->filters->str($_POST['smfile'][$x]);
+			$path_info = pathinfo($path.$file);
+			$fn = strtolower($path_info['filename']);
+			if (file_exists($path.$file)) {
+				if (empty($smileyName)) $smileyName = $fn;
+				$thisname = urldecode(sp_create_slug($smileyName, false));
 
-			$code = (empty($_POST['smcode'][$x]) ? $fn : $_POST['smcode'][$x]);
-			$code = sp_create_slug($code, false);
-			trim($code, ':');
-			if (empty($code)) $code = $thisname;
-			$code = ':'.$code.':';
+				$code = (empty($_POST['smcode'][$x]) ? $fn : SP()->filters->str($_POST['smcode'][$x]));
+				$code = sp_create_slug($code, false);
+				trim($code, ':');
+				if (empty($code)) $code = $thisname;
+				$code = ':'.$code.':';
 
-			$sfsmileys[$thisname][] = SP()->saveFilters->filename($_POST['smfile'][$x]);
-			$sfsmileys[$thisname][] = $code;
-			$sfsmileys[$thisname][] = isset($_POST['sminuse-'.$smileyname[$x]]) ? 1 : 0;
-			$sfsmileys[$thisname][] = $x;
-
-			if (isset($_POST['smbreak-newbreak-'.$x])) $_POST['smbreak-'.$smileyname[$x]] = $_POST['smbreak-newbreak-'.$x];
-			$sfsmileys[$thisname][] = isset($_POST['smbreak-'.$smileyname[$x]]) ? 1 : 0;
+				$sfsmileys[$thisname][] = SP()->saveFilters->filename($file);
+				$sfsmileys[$thisname][] = $code;
+				if (!empty($_POST['sminuse-'.$smileyName])) {
+					$sfsmileys[$thisname][] = isset($_POST['sminuse-'.$smileyName]) ? 1 : 0;
+				} else {
+					$sfsmileys[$thisname][] = 0;
+				}
+				$sfsmileys[$thisname][] = $x;
+				if (!empty($_POST['smbreak-'.$smileyName])) {
+					$sfsmileys[$thisname][] = isset($_POST['smbreak-'.$smileyName]) ? 1 : 0;
+				} else {
+					$sfsmileys[$thisname][] =  0;
+				}
+			}
 		}
 	}
 
@@ -184,7 +194,7 @@ function spa_save_forumranks_data() {
 			$rankdata['posts'] = SP()->filters->integer($_POST['rankpost'][$x]);
 			$rankdata['usergroup'] = (int) $_POST['rankug'][$x];
 			$rankdata['badge'] = SP()->saveFilters->filename($_POST['rankbadge'][$x]);
-			if ($_POST['rankid'][$x] == -1) {
+			if ((int) $_POST['rankid'][$x] == -1) {
 				SP()->meta->add('forum_rank', SP()->saveFilters->title(trim($_POST['rankdesc'][$x])), $rankdata);
 			} else {
 				SP()->meta->update('forum_rank', SP()->saveFilters->title(trim($_POST['rankdesc'][$x])), $rankdata, SP()->filters->integer($_POST['rankid'][$x]));
@@ -223,15 +233,15 @@ function spa_update_specialrank($id) {
 
 	# save special forum ranks
 	if (!empty($_POST['specialrankdesc'])) {
-		$desc = $_POST['specialrankdesc'];
-		$badge = $_POST['specialrankbadge'];
+		$desc = array_map('sanitize_text_field', $_POST['specialrankdesc']);
+		$badge = array_map('sanitize_text_field', $_POST['specialrankbadge']);
 		$rank = SP()->meta->get('special_rank', false, $id);
 		$rank[0]['meta_value']['badge'] = SP()->saveFilters->filename($badge[$id]);
 		SP()->meta->update('special_rank', SP()->saveFilters->title(trim($desc[$id])), $rank[0]['meta_value'], $id);
-		if ($_POST['currentname'][$id] != $desc[$id]) {
+		if (sanitize_text_field($_POST['currentname'][$id]) != $desc[$id]) {
 			SP()->DB->execute("UPDATE ".SPSPECIALRANKS."
-						SET special_rank = '".SP()->filters->integer($desc[$id])."'
-						WHERE special_rank = '".SP()->filters->str($_POST['currentname'][$id])."'");
+						SET special_rank = '".SP()->saveFilters->title($desc[$id])."'
+						WHERE special_rank = '".SP()->saveFilters->title($_POST['currentname'][$id])."'");
 		}
 	}
 
@@ -244,7 +254,7 @@ function spa_update_specialrank($id) {
 function spa_add_special_rank_member($id) {
 	check_admin_referer('special-rank-add', 'special-rank-add');
 
-	$user_id_list = array_unique($_POST['amember_id']);
+	$user_id_list = array_map('intval', array_unique($_POST['amember_id']));
 	if (empty($user_id_list)) return '';
 
 	# get the special rank
@@ -252,7 +262,7 @@ function spa_add_special_rank_member($id) {
 
 	# add the new users
 	for ($x = 0; $x < count($user_id_list); $x++) {
-		sp_add_special_rank((int) $user_id_list[$x], $rank[0]['meta_key']);
+		sp_add_special_rank($user_id_list[$x], $rank[0]['meta_key']);
 	}
 
 	do_action('sph_component_srank_add_save');
@@ -264,14 +274,14 @@ function spa_add_special_rank_member($id) {
 function spa_del_special_rank_member($id) {
 	check_admin_referer('special-rank-del', 'special-rank-del');
 
-	$user_id_list = array_unique($_POST['dmember_id']);
+	$user_id_list = array_map('intval', array_unique($_POST['dmember_id']));
 	if (empty($user_id_list)) return '';
 
 	# get the special rank
 	$rank = SP()->meta->get('special_rank', false, $id);
 
 	for ($x = 0; $x < count($user_id_list); $x++) {
-		sp_delete_special_rank((int) $user_id_list[$x], $rank[0]['meta_key']);
+		sp_delete_special_rank($user_id_list[$x], $rank[0]['meta_key']);
 	}
 
 	do_action('sph_component_srank_del_save');

@@ -2,8 +2,8 @@
 /*
 Simple:Press Admin
 Ajax form loader - Integration
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 13:02:17 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15795 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -31,20 +31,21 @@ $adminhelpfile = 'admin-integration';
 if (!SP()->auths->current_user_can('SPF Manage Integration')) die();
 
 if (isset($_GET['loadform'])) {
-	spa_render_integration_container($_GET['loadform']);
+	spa_render_integration_container(sanitize_text_field($_GET['loadform']));
 	die();
 }
 
 if (isset($_GET['saveform'])) {
-	if ($_GET['saveform'] == 'page') {
+	$saveform = sanitize_text_field($_GET['saveform']);
+	if ($saveform == 'page') {
 		echo spa_save_integration_page_data();
 		die();
 	}
-	if ($_GET['saveform'] == 'storage') {
+	if ($saveform == 'storage') {
 		echo spa_save_integration_storage_data();
 		die();
 	}
-	if ($_GET['saveform'] == 'language') {
+	if ($saveform == 'language') {
 		echo spa_save_integration_language_data();
 		die();
 	}

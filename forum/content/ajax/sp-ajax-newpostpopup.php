@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Users New Posts Popup
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15797 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -19,7 +19,7 @@ if (isset($_GET['popup'])) $popup = SP()->filters->integer($_GET['popup']);
 $count = (isset($_GET['count'])) ? SP()->filters->integer($_GET['count']) : 0;
 
 # Individual forum new post listing
-if ($_GET['targetaction'] == 'forum') {
+if (sanitize_text_field($_GET['targetaction']) == 'forum') {
 	if (isset($_GET['id'])) {
 		$fid = (int) $_GET['id'];
 		$topics = array();
@@ -38,7 +38,7 @@ if ($_GET['targetaction'] == 'forum') {
 }
 
 # All forums (users new post list)
-if ($_GET['targetaction'] == 'all') {
+if (sanitize_text_field($_GET['targetaction']) == 'all') {
 	echo '<div id="spMainContainer">';
     $first = SP()->filters->integer($_GET['first']);
     $group = SP()->filters->integer($_GET['group']);
@@ -48,13 +48,13 @@ if ($_GET['targetaction'] == 'all') {
 	echo '</div>';
 }
 
-if ($_GET['targetaction'] == 'mark-read') {
+if (sanitize_text_field($_GET['targetaction']) == 'mark-read') {
     sp_mark_all_read();
 
     die();
 }
 
-if ($_GET['targetaction'] == 'mark-forum-read') {
+if (sanitize_text_field($_GET['targetaction']) == 'mark-forum-read') {
     $forum = (empty($_GET['forum'])) ? '' : SP()->filters->integer($_GET['forum']);
     if (empty($forum)) die();
 

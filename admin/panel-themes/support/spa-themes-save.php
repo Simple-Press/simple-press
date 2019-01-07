@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin plugins Update Support Functions
-$LastChangedDate: 2018-10-16 23:45:35 -0500 (Tue, 16 Oct 2018) $
-$Rev: 15754 $
+$LastChangedDate: 2018-11-02 12:29:50 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15792 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -253,12 +253,12 @@ function spa_save_editor_data() {
 function spa_save_css_data() {
 	$css = '';
 	$curTheme = SP()->options->get('sp_current_theme');
-	$css = esc_attr($_POST['spnewcontent']);
+	$css = esc_textarea($_POST['spnewcontent']);
 	$css = SP()->saveFilters->nohtml($css);
-	if ($_POST['metaId']==0)	{
+	if ($_POST['metaId'] == 0)	{
 		SP()->meta->add('css', $curTheme['theme'], $css);
 	} else {
-		SP()->meta->update('css', $curTheme['theme'], $css, $_POST['metaId']);
+		SP()->meta->update('css', $curTheme['theme'], $css, (int) $_POST['metaId']);
 	}
 
 	$msg = SP()->primitives->admin_text('Custom theme CSS updated');

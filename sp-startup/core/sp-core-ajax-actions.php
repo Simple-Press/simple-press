@@ -3,8 +3,8 @@
  * Ajax Action handler - Common to admin and front
  * This file loads at core level - all page loads for admin and front
  *
- * $LastChangedDate: 2018-08-15 07:59:04 -0500 (Wed, 15 Aug 2018) $
- * $Rev: 15704 $
+ * $LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
+ * $Rev: 15797 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -40,7 +40,7 @@ function sp_nonce($ajaxTag) {
 		$message .= $ajaxTag.': '.SP()->primitives->front_text('failed nonce check');
 		if (!empty($_GET)) {
 			$message .= '<table class="form-table" style="width:auto;">';
-			foreach ($_GET as $key => $value) {
+			foreach (array_map('sanitize_text_field', $_GET) as $key => $value) {
 				$message .= "<tr><td class='sflabel'>$key</td><td class='sflabel'>$value</td></tr>";
 			}
 			$message .= '</table>';

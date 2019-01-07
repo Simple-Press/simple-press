@@ -3,8 +3,8 @@
  * Admin framework functions
  * Loads for all forum admin pages.
  *
- * $LastChangedDate: 2018-09-21 18:58:01 -0500 (Fri, 21 Sep 2018) $
- * $Rev: 15736 $
+ * $LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
+ * $Rev: 15797 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -296,9 +296,9 @@ function spa_render_sidemenu() {
 						}
 						$sel = '';
 						if (isset($_GET['tab'])) {
-							if ($_GET['tab'] == 'plugin') {
-								if (isset($_GET['admin']) && isset($data['admin']) && $_GET['admin'] == $data['admin']) $sel = ' selected="selected" ';
-							} else if ($_GET['tab'] == $formid) {
+							if (sanitize_text_field($_GET['tab']) == 'plugin') {
+								if (isset($_GET['admin']) && isset($data['admin']) && sanitize_text_field($_GET['admin']) == $data['admin']) $sel = ' selected="selected" ';
+							} else if (sanitize_text_field($_GET['tab']) == $formid) {
 								$sel = ' selected="selected" ';
 							}
 						}

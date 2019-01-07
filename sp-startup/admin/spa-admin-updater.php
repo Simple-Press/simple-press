@@ -3,8 +3,8 @@
  * Admin updater support functions
  * Loads when a user upgrading Simple Press plugins or themes.
  *
- * $LastChangedDate: 2018-09-15 00:45:38 -0500 (Sat, 15 Sep 2018) $
- * $Rev: 15729 $
+ * $LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
+ * $Rev: 15797 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -277,9 +277,9 @@ function sp_update_plugins() {
 	check_admin_referer('upgrade-core');
 
 	if (isset($_GET['plugins'])) {
-		$plugins = explode(',', $_GET['plugins']);
+		$plugins = explode(',', sanitize_text_field($_GET['plugins']));
 	} else if (isset($_POST['checked'])) {
-		$plugins = (array) $_POST['checked'];
+		$plugins = array_map('sanitize_text_field', (array) $_POST['checked']);
 	} else {
 		wp_redirect(admin_url('update-core.php'));
 		exit;
@@ -311,7 +311,7 @@ function sp_do_plugins_update() {
 	if (isset($_GET['plugins'])) {
 		$plugins = explode(',', stripslashes($_GET['plugins']));
 	} else if (isset($_POST['checked'])) {
-		$plugins = (array) $_POST['checked'];
+		$plugins = array_map('sanitize_text_field', (array) $_POST['checked']);
 	} else {
 		$plugins = array();
 	}
@@ -342,9 +342,9 @@ function sp_update_themes() {
 	check_admin_referer('upgrade-core');
 
 	if (isset($_GET['themes'])) {
-		$themes = explode(',', $_GET['themes']);
+		$themes = explode(',', sanitize_text_field($_GET['themes']));
 	} else if (isset($_POST['checked'])) {
-		$themes = (array) $_POST['checked'];
+		$themes = array_map('sanitize_text_field', (array) $_POST['checked']);
 	} else {
 		wp_redirect(admin_url('update-core.php'));
 		exit;
@@ -376,7 +376,7 @@ function sp_do_themes_update() {
 	if (isset($_GET['themes'])) {
 		$themes = explode(',', stripslashes($_GET['themes']));
 	} else if (isset($_POST['checked'])) {
-		$themes = (array) $_POST['checked'];
+		$themes = array_map('sanitize_text_field', (array) $_POST['checked']);
 	} else {
 		$themes = array();
 	}

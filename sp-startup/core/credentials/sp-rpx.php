@@ -2,8 +2,8 @@
 /**
  * 3rd party RPX (Janrain) framework functions
  *
- * $LastChangedDate: 2018-10-17 15:14:27 -0500 (Wed, 17 Oct 2018) $
- * $Rev: 15755 $
+ * $LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
+ * $Rev: 15797 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -109,8 +109,8 @@ function sp_rpx_login_head($arg = '') {
 	if ($arg == 'sploginform') return;
 
 	# dont do rpx stuff for register or lost password
-	if (!isset($_GET['action']) || (isset($_GET['action']) && ($_GET['action'] == 'login' || $_GET['action'] == 'register'))) {
-		if (isset($_GET['action']) && $_GET['action'] == 'register') {
+	if (!isset($_GET['action']) || (isset($_GET['action']) && (sanitize_text_field($_GET['action']) == 'login' || sanitize_text_field($_GET['action']) == 'register'))) {
+		if (isset($_GET['action']) && sanitize_text_field($_GET['action']) == 'register') {
 			echo sp_rpx_loginform('registerform');
 		} else {
 			echo sp_rpx_loginform('loginform');
@@ -153,7 +153,7 @@ function sp_rpx_process_token() {
 	$sfrpx = SP()->options->get('sfrpx');
 	if (empty($_REQUEST['rpx_response']) || empty($_REQUEST['token'])) return;
 	$post_data = array(
-		'token'	 => $_REQUEST['token'],
+		'token'	 => sanitize_text_field($_REQUEST['token']),
 		'apiKey' => $sfrpx['sfrpxkey'],
 		'format' => 'json');
 	$raw_response = sp_rpx_http_post('https://rpxnow.com/api/v2/auth_info', $post_data);
@@ -172,7 +172,7 @@ function sp_rpx_process_token() {
 function sp_rpx_process_auth_info($auth_info) {
 	# a user is already signed in and is changing their OpenID
 	if (isset($_REQUEST['attach_to'])) {
-		$wpuid = $_REQUEST['attach_to'];
+		$wpuid = sanitize_text_field($_REQUEST['attach_to']);
 
 		# make sure the actually initiated the sign-in request
 		$wpuser = wp_get_current_user();
@@ -201,7 +201,7 @@ function sp_rpx_signin_user($auth_info) {
 	wp_set_current_user($wpuid);
 
 	# redirect them back to the page they were originally on
-	wp_redirect($_GET['goback']);
+	wp_redirect(sanitize_text_field($_GET['goback']));
 	die();
 }
 

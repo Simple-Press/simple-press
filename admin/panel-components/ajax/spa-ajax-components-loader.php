@@ -2,8 +2,8 @@
 /*
 Simple:Press Admin
 Ajax form loader - Components
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 13:02:17 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15795 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -31,12 +31,12 @@ $adminhelpfile = 'admin-components';
 if (!SP()->auths->current_user_can('SPF Manage Components')) die();
 
 if (isset($_GET['loadform'])) {
-	spa_render_components_container($_GET['loadform']);
+	spa_render_components_container(sanitize_text_field($_GET['loadform']));
 	die();
 }
 
 if (isset($_GET['saveform'])) {
-	switch($_GET['saveform']) {
+	switch(sanitize_text_field($_GET['saveform'])) {
 		case 'smileys':
 			echo spa_save_smileys_data();
 			break;
@@ -54,7 +54,7 @@ if (isset($_GET['saveform'])) {
 			break;
 
 		case 'specialranks':
-			switch ($_GET['targetaction']) {
+			switch (sanitize_text_field($_GET['targetaction'])) {
 				case 'newrank':
 					echo spa_add_specialrank();
 					break;

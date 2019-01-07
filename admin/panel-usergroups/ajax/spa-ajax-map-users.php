@@ -28,7 +28,7 @@ if ($users) {
 	$value = SP()->meta->get('default usergroup', 'sfmembers');
 	$defaultUG = $value[0]['meta_value'];
 	foreach ($users as $thisUser) {
-		if ($_GET['mapoption'] == 2) SP()->DB->execute('DELETE FROM '.SPMEMBERSHIPS.' WHERE user_id='.$thisUser);
+		if ((int) $_GET['mapoption'] == 2) SP()->DB->execute('DELETE FROM '.SPMEMBERSHIPS.' WHERE user_id='.$thisUser);
 		$user = new WP_User($thisUser);
 		if (!empty($user->roles ) && is_array($user->roles)) {
 			foreach ($user->roles as $role) {

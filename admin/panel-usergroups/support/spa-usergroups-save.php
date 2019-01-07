@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin User Groups Support Functions
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 12:43:43 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15794 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -161,8 +161,10 @@ function spa_save_usergroups_map_settings() {
 	# check for changes in wp role usergroup assignments
 	if (isset($_POST['sfrole'])) {
 		$roles = array_keys($wp_roles->role_names);
-		foreach ($_POST['sfrole'] as $index => $role) {
-			if ($_POST['sfoldrole'][$index] != $role) SP()->meta->add('default usergroup', $roles[$index], SP()->filters->integer($role));
+		$maproles = array_map('sanitize_text_field', array_unique($_POST['sfrole']));
+		$oldmaproles = array_map('sanitize_text_field', array_unique($_POST['sfoldrole']));
+		foreach ($maproles as $index => $role) {
+			if ($oldmaproles[$index] != $role) SP()->meta->add('default usergroup', $roles[$index], SP()->filters->integer($role));
 		}
 	}
 

@@ -29,24 +29,24 @@ function spa_download_language_file($item) {
 
 	$langCode = SP()->filters->str($_GET['langcode']);
 	$homeName = SP()->filters->str($_GET['textdom']);
-	if(isset($_GET['name'])) $itemName = SP()->filters->str($_GET['name']);
+	if (isset($_GET['name'])) $itemName = SP()->filters->str($_GET['name']);
 
-	if($item == 'corefront' || $item == 'coreadmin') {
-		$url = 'http://glotpress.simple-press.com/glotpress/projects/simple-press-core/version-'.$_GET['version'].'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
+	if ($item == 'corefront' || $item == 'coreadmin') {
+		$url = 'http://glotpress.simple-press.com/glotpress/projects/simple-press-core/version-'.SP()->filters->str($_GET['version']).'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
 		$home = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/'.$homeName.'-'.$locale.'.mo';
 	}
 
-	if($item == 'theme') {
+	if ($item == 'theme') {
 		$url = 'http://glotpress.simple-press.com/glotpress/projects/simple-press-themes/'.$itemName.'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
 		$home = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp-themes'].'/'.$homeName.'-'.$locale.'.mo';
 	}
 
-	if($item == 'plugin') {
+	if ($item == 'plugin') {
 		$url = 'http://glotpress.simple-press.com/glotpress/projects/simple-press-plugins/'.$itemName.'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
 		$home = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp-plugins'].'/'.$homeName.'-'.$locale.'.mo';
 	}
 
-	if(isset($_GET['remove'])) {
+	if (isset($_GET['remove'])) {
 		$status = unlink($home);
 		echo '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Translation file removed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Translation file removed');
 		die();
@@ -54,13 +54,13 @@ function spa_download_language_file($item) {
 		$fData = file_get_contents($url);
 	}
 
-	if($fData == false) {
+	if ($fData == false) {
 		$status=false;
 	} else {
 		$status = file_put_contents($home, $fData);
 	}
 
-	if($status) {
+	if ($status) {
 		echo '<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Translation file installed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Translation file installed');
 	} else {
 		echo '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Translation install failed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Install failed - or there is no available translation');

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Panels - Component Management
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 13:31:02 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15796 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -25,7 +25,7 @@ global $adminhelpfile;
 $adminhelpfile = 'admin-components';
 # --------------------------------------------------------------------
 
-$tab = (isset($_GET['tab'])) ? $_GET['tab'] : 'smileys';
+$tab = (isset($_GET['tab'])) ? sanitize_text_field($_GET['tab']) : 'smileys';
 spa_panel_header();
 spa_render_components_panel($tab);
 spa_panel_footer();

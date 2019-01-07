@@ -3,8 +3,8 @@
  * Global Core Constants
  * This file loads at core level - all page loads for admin and front
  *
- * $LastChangedDate: 2017-09-04 00:33:23 -0500 (Mon, 04 Sep 2017) $
- * $Rev: 15541 $
+ * $LastChangedDate: 2018-11-03 11:12:02 -0500 (Sat, 03 Nov 2018) $
+ * $Rev: 15799 $
  */
 
 # Charset
@@ -32,6 +32,7 @@ if (!defined('SPAVATARURL')) define('SPAVATARURL', SP_STORE_URL.'/'.SP()->plugin
 if (!defined('SPAVATARDIR')) define('SPAVATARDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['avatars'].'/');
 if (!defined('SPAVATARDIR')) define('SPAVATARDIR', SP_STORE_URL.'/'.SP()->plugin->storage['avatar-pool'].'/');
 if (!defined('SPAVATARPOOLDIR')) define('SPAVATARPOOLDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/');
+if (!defined('SPAVATARPOOLURL')) define('SPAVATARPOOLURL', SP_STORE_URL.'/'.SP()->plugin->storage['avatar-pool'].'/');
 if (!defined('SPSMILEYS')) define('SPSMILEYS', SP_STORE_URL.'/'.SP()->plugin->storage['smileys'].'/');
 if (!defined('SPRANKS')) define('SPRANKS', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'].'/');
 

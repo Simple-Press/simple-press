@@ -3,8 +3,8 @@
  * Core Support Functions
  * This file loads at core level - all page loads for admin and front
  *
- *  $LastChangedDate: 2018-09-15 12:49:36 -0500 (Sat, 15 Sep 2018) $
- *  $Rev: 15730 $
+ *  $LastChangedDate: 2018-10-28 13:23:35 -0500 (Sun, 28 Oct 2018) $
+ *  $Rev: 15779 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -57,6 +57,7 @@ function sp_get_system_status() {
 		# first check that an uograde is actually necessary or whether we can do it silently
 		if (SP()->options->get('sfforceupgrade') == false && $current_build >= SPSILENT) {
 			# we can do it sliently...
+			require_once SP_PLUGIN_DIR.'/sp-startup/install/sp-upgrade-support.php';
 			require_once SP_PLUGIN_DIR.'/sp-startup/install/sp-install-support.php';
 			sp_silent_upgrade();
 		} else {

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Components Display Rendering
-$LastChangedDate: 2017-08-05 17:36:04 -0500 (Sat, 05 Aug 2017) $
-$Rev: 15488 $
+$LastChangedDate: 2018-11-02 13:31:02 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15796 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -49,12 +49,12 @@ function spa_render_components_container($formid) {
 
 		case 'addmembers':
 			require_once SP_PLUGIN_DIR.'/admin/panel-components/forms/spa-components-special-ranks-add-form.php';
-			spa_components_sr_add_members_form($_GET['id']);
+			spa_components_sr_add_members_form((int) $_GET['id']);
 			break;
 
 		case 'delmembers':
 			require_once SP_PLUGIN_DIR.'/admin/panel-components/forms/spa-components-special-ranks-del-form.php';
-			spa_components_sr_del_members_form($_GET['id']);
+			spa_components_sr_del_members_form((int) $_GET['id']);
 			break;
 
 		case 'messages':

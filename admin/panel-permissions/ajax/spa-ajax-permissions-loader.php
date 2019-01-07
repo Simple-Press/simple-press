@@ -2,8 +2,8 @@
 /*
 Simple:Press Permissions Admin
 Ajax form loader - Permissions
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 13:02:17 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15795 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -30,28 +30,29 @@ $adminhelpfile = 'admin-permissions';
 if (!SP()->auths->current_user_can('SPF Manage Permissions')) die();
 
 if (isset($_GET['loadform'])) {
-	spa_render_permissions_container($_GET['loadform']);
+	spa_render_permissions_container(sanitize_text_field($_GET['loadform']));
 	die();
 }
 
 if (isset($_GET['saveform'])) {
-	if ($_GET['saveform'] == 'addperm') {
+	$saveform = sanitize_text_field($_GET['saveform']);
+	if ($saveform == 'addperm') {
 		echo spa_save_permissions_new_role();
 		die();
 	}
-	if ($_GET['saveform'] == 'editperm') {
+	if ($saveform == 'editperm') {
 		echo spa_save_permissions_edit_role();
 		die();
 	}
-	if ($_GET['saveform'] == 'delperm') {
+	if ($saveform == 'delperm') {
 		echo spa_save_permissions_delete_role();
 		die();
 	}
-	if ($_GET['saveform'] == 'resetperms') {
+	if ($saveform == 'resetperms') {
 		echo spa_save_permissions_reset();
 		die();
 	}
-	if ($_GET['saveform'] == 'newauth') {
+	if ($saveform == 'newauth') {
 		echo spa_save_permissions_new_auth();
 		die();
 	}

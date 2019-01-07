@@ -3,8 +3,8 @@
  * Admin support functions
  * Loads for all forum admin pages and provides general support functions across the admin
  *
- * $LastChangedDate: 2018-09-22 17:40:18 -0500 (Sat, 22 Sep 2018) $
- * $Rev: 15739 $
+ * $LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
+ * $Rev: 15797 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -29,8 +29,8 @@ function spa_load_dashboard_css() {
  * @return void
  */
 function spa_check_removal() {
-	if (isset($_GET['spf']) && $_GET['spf'] == 'uninstall') SP()->options->update('sfuninstall', true);
-	if (isset($_GET['remove']) && $_GET['remove'] == 'storage') SP()->options->update('removestorage', true);
+	if (isset($_GET['spf']) && sanitize_text_field($_GET['spf']) == 'uninstall') SP()->options->update('sfuninstall', true);
+	if (isset($_GET['remove']) && sanitize_text_field($_GET['remove'] == 'storage')) SP()->options->update('removestorage', true);
 }
 
 /**
@@ -386,11 +386,11 @@ function sp_action_nag() {
 			echo sprintf(SP()->primitives->admin_text('Your Simple:Press forum is awaiting the initial database %s before it can be used'), strtolower(SP()->core->status));
 		} else if (SP()->core->status == 'Upgrade') {
 			echo sprintf(SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database %s'), strtolower(SP()->core->status));
-		} 
+		}
 		echo '<br /><a style="text-decoration: underline;" href="'.SPADMINUPGRADE.'">'.SP()->primitives->admin_text('Perform').' '.SP()->core->status.'</a>';
 		echo '</b></p></div>';
-    }    
-    
+    }
+
     # check for upgrades to 6.0+ from versions < 5.7.2 which is not allowed automatically (must be manual)
     if ($_SERVER['REQUEST_URI'] != '/wp-admin/index.php' && SP()->core->status == 'Unallowed 6.0 Upgrade') {
 		echo '<div class="error highlight notice is-dismissible"><p><b>';
@@ -398,11 +398,11 @@ function sp_action_nag() {
         # this is unallowed 6.0+ upgrade - version less than 5.7.2
         # uprading not allowed since its breaking changes and should be manually upgraded
         # since we dont allow, we need special messaging here
-		echo SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database upgrade.').'<br />';		  
+		echo SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database upgrade.').'<br />';
 		echo sprintf(SP()->primitives->admin_text('You are attempting to upgrade to version %s from you current version of %s.'), SPVERSION, SP()->options->get('sfversion')).'<br />';
 		echo SP()->primitives->admin_text('Unfortunately, auto upgrades from versions prior to 5.7.2 are not allowd due to the complexity of the changes.').'<br />';
         echo SP()->primitives->admin_text('Please visit our ').'<a href="https://simple-press.com/documentation/installation/upgrading/previous-simplepress-versions/">'.SP()->primitives->admin_text('previous versions page').'</a>';
-        echo sprintf(SP()->primitives->admin_text(', then download and upgrade to at least version 5.7.2 before attempting to upgrade to version %s.'), SPVERSION).'<br />';		        
+        echo sprintf(SP()->primitives->admin_text(', then download and upgrade to at least version 5.7.2 before attempting to upgrade to version %s.'), SPVERSION).'<br />';
     	echo '</b></p></div>';
    }
 }

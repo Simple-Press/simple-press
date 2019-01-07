@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Toolbox Update Options Support Functions
-$LastChangedDate: 2018-10-16 23:45:35 -0500 (Tue, 16 Oct 2018) $
-$Rev: 15754 $
+$LastChangedDate: 2018-11-02 12:30:34 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15793 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -14,10 +14,10 @@ function spa_save_toolbox_data() {
 	$mess = SP()->primitives->admin_text('Options Updated');
 
 	# build number update
-	if (empty($_POST['sfbuild']) || $_POST['sfbuild'] == 0) {
+	if (empty($_POST['sfbuild']) || (int) $_POST['sfbuild'] == 0) {
 		SP()->options->update('sfbuild', SPBUILD);
 	} else {
-		if ($_POST['sfbuild'] != SPBUILD && isset($_POST['sfforceupgrade'])) SP()->options->update('sfbuild', SP()->filters->integer($_POST['sfbuild']));
+		if ((int) $_POST['sfbuild'] != SPBUILD && isset($_POST['sfforceupgrade'])) SP()->options->update('sfbuild', SP()->filters->integer($_POST['sfbuild']));
 	}
 
 	SP()->options->update('sfforceupgrade', isset($_POST['sfforceupgrade']));

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Toolbox Changelog Form
-$LastChangedDate: 2017-05-20 17:49:42 -0500 (Sat, 20 May 2017) $
-$Rev: 15389 $
+$LastChangedDate: 2018-11-01 06:23:28 -0500 (Thu, 01 Nov 2018) $
+$Rev: 15782 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -18,8 +18,8 @@ function spa_toolbox_changelog_form() {
 
     		# Display current change log if available or passed log
     		if (isset($_POST['clselect'])) {
-    			$current = $_POST['clselect'];
-    			$cFile = 'change-log-'.$_POST['clselect'].'.txt';
+    			$current = SP()->filters->integer($_POST['clselect']);
+    			$cFile = 'change-log-'.$current.'.txt';
     		} else {
     			$cFile = 'change-log-'.SPBUILD.'.txt';
     			$current = 0;

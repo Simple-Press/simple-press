@@ -2,8 +2,8 @@
  Simple:Press - Version 5.0
  Front-end Forum Event Handlers Javascript
 
- $LastChangedDate: 2017-12-31 06:56:06 -0600 (Sun, 31 Dec 2017) $
- $Rev: 15612 $
+ $LastChangedDate: 2018-11-03 11:12:02 -0500 (Sat, 03 Nov 2018) $
+ $Rev: 15799 $
  ------------------------------------ */
 
 (function(spj, $, undefined) {
@@ -493,7 +493,7 @@
 					$('.spSelectPoolAvatar').on('click', function() {
 						var mydata = $(this).data();
 						spj.selectAvatar(mydata.src, mydata.file, mydata.text);
-						if (sp_Platform_Vars.device == 'mobile') {
+						if (sp_platform_vars.device == 'mobile') {
 							spj.resetMobileMenu();
 						} else {
 							$('#dialog').dialog('close');

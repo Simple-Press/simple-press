@@ -3,8 +3,8 @@
 /*
   Simple:Press
   Template Function Handler
-  $LastChangedDate: 2018-08-15 07:59:04 -0500 (Wed, 15 Aug 2018) $
-  $Rev: 15704 $
+  $LastChangedDate: 2018-11-03 11:12:02 -0500 (Sat, 03 Nov 2018) $
+  $Rev: 15799 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -287,7 +287,7 @@ function sp_UserAvatar($args = '', $contextData = '') {
 
 					if (!empty($userAvatar['pool'])) {
 						$pavfile         = $userAvatar['pool'];
-						$avatarData->url = SPAVATARDIR.$pavfile;
+						$avatarData->url = SPAVATARPOOLURL.$pavfile;
 						if (file_exists(SPAVATARPOOLDIR.$pavfile)) {
 							$avatarData->path = SPAVATARPOOLDIR.$pavfile;
 							break 2; # if pool avatar exists, show it

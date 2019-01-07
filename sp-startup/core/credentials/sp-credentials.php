@@ -2,8 +2,8 @@
 /**
  * Login/Registration credentials
  *
- * $LastChangedDate: 2018-08-15 07:59:04 -0500 (Wed, 15 Aug 2018) $
- * $Rev: 15704 $
+ * $LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
+ * $Rev: 15797 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -92,6 +92,6 @@ function sp_logout_redirect() {
 			$_REQUEST['redirect_to'] = $sflogin['sflogouturl'];
 		}
 	}
-	$redirect = isset($_REQUEST['redirect_to']) ? $_REQUEST['redirect_to'] : '';
+	$redirect = isset($_REQUEST['redirect_to']) ? sanitize_text_field($_REQUEST['redirect_to']) : '';
 	$_REQUEST['redirect_to'] = apply_filters('sph_logout_redirect', $redirect);
 }

@@ -2,8 +2,8 @@
 /*
   Simple:Press
   Upgrade Path Routines - Version 5.0
-  $LastChangedDate: 2018-10-27 18:37:55 -0500 (Sat, 27 Oct 2018) $
-  $Rev: 15776 $
+  $LastChangedDate: 2018-10-28 12:03:43 -0500 (Sun, 28 Oct 2018) $
+  $Rev: 15778 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -276,7 +276,13 @@ if ($build < $section) {
 
 sp_bump_build($build, 15746);
 
+# Start of Upgrade Routines - 6.0.1 ============================================================
+
 sp_bump_build($build, 15766);
+
+# Start of Upgrade Routines - 6.0.2 ============================================================
+
+sp_bump_build($build, 15768);
 
 
 # ****** IMPORTANT: THE FINAL $section values MUST be the same as the SPBUILD constant

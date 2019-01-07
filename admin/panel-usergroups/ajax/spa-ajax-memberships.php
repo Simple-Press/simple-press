@@ -20,13 +20,12 @@ if ($action == 'add') {
 	check_admin_referer('forum-adminform_membernew', 'forum-adminform_membernew');
 	# add the users to the user group membership
 	$usergroup_id = SP()->filters->integer($_GET['usergroup_id']);
-	if (isset($_GET['amid'])) $user_id_list = array_unique($_GET['amid']);
+	if (isset($_GET['amid'])) $user_id_list = array_map('intval', array_unique($_GET['amid']));
 
 	if (isset($user_id_list)) {
 		for ($x = $startNum; $x < ($startNum + $batchNum); $x++) {
 			if (isset($user_id_list[$x])) {
-				$user_id = SP()->filters->integer($user_id_list[$x]);
-				SP()->user->add_membership($usergroup_id, $user_id);
+				SP()->user->add_membership($usergroup_id, $user_id_list[$x]);
 			}
 		}
 	}
@@ -37,7 +36,7 @@ if ($action == 'del') {
 
     $usergroup_id = SP()->filters->integer($_GET['usergroupid']);
     $new_usergroup_id = SP()->filters->integer($_GET['usergroup_id']);
-    if (isset($_GET['dmid'])) $user_id_list = array_unique($_GET['dmid']);
+    if (isset($_GET['dmid'])) $user_id_list = array_map('intval', array_unique($_GET['dmid']));
 
 	# make sure not moving to same user group
 	if (!isset($user_id_list) || $usergroup_id == $new_usergroup_id) {
@@ -46,7 +45,7 @@ if ($action == 'del') {
 
 	for ($x = $startNum; $x < ($startNum + $batchNum); $x++) {
 		if (isset($user_id_list[$x])) {
-			$user_id = SP()->filters->integer($user_id_list[$x]);
+			$user_id = $user_id_list[$x];
 			$success = SP()->DB->execute('DELETE FROM '.SPMEMBERSHIPS." WHERE user_id=$user_id AND usergroup_id=$usergroup_id");
 
 			if ($new_usergroup_id != -1) $success = SP()->user->add_membership($new_usergroup_id, $user_id);

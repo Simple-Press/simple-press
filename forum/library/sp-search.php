@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Forum Search url creation
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15797 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -54,7 +54,7 @@ if (empty($_POST['searchoption'])) {
 	die();
 }
 
-if ($_POST['searchoption'] == 2) {
+if ((int) $_POST['searchoption'] == 2) {
 	$param['forum'] = 'all';
 } else {
 	$param['forum'] = SP()->filters->str($_POST['forumslug']);

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 TForum View Function Handler
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
+$LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15797 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -2247,7 +2247,7 @@ function sp_TopicEditorWindow($addTopicForm) {
 		echo $out;
 
 		# inline js to open topic form if from the topic view (script below)
-		if (isset($_GET['new']) && $_GET['new'] == 'topic') add_action('wp_footer', 'spjs_OpenTopicForm');
+		if (isset($_GET['new']) && sanitize_text_field($_GET['new']) == 'topic') add_action('wp_footer', 'spjs_OpenTopicForm');
 	}
 }
 

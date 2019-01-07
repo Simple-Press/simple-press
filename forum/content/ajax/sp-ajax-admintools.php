@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Edit Tools - Move Topic/Move Post
-$LastChangedDate: 2018-10-17 15:14:27 -0500 (Wed, 17 Oct 2018) $
-$Rev: 15755 $
+$LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15797 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -637,7 +637,7 @@ function sp_order_topic_pins() {
 function sp_post_delete() {
     sp_delete_post(SP()->filters->integer($_GET['killpost']));
 
-	if ($_GET['count'] == 1) {
+	if ((int) $_GET['count'] == 1) {
     	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.SP()->filters->integer($_GET['killpostforum']), 'forum_slug');
        	$topicslug = SP()->DB->table(SPTOPICS, 'topic_id='.SP()->filters->integer($_GET['killposttopic']), 'topic_slug');
         $page = SP()->filters->integer($_GET['page']);
@@ -661,7 +661,7 @@ function sp_topic_delete() {
       	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.SP()->filters->integer($_GET['killtopicforum']), 'forum_slug');
         $returnURL = SP()->spPermalinks->build_url($forumslug, '', 0);
         echo $returnURL;
-    } else if ($_GET['count'] == 1) {
+    } else if ((int) $_GET['count'] == 1) {
       	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.SP()->filters->integer($_GET['killtopicforum']), 'forum_slug');
         $page = SP()->filters->integer($_GET['page']);
         if ($page == 1) {

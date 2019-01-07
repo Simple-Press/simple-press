@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Profile Update Support Functions
-$LastChangedDate: 2018-10-16 23:45:35 -0500 (Tue, 16 Oct 2018) $
-$Rev: 15754 $
+$LastChangedDate: 2018-11-02 12:21:09 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15791 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -162,9 +162,8 @@ function spa_save_tabs_menus_data() {
 		$newTabs = array();
 
 		# need to cycle through all the tabs
-		$tabList = explode('&', $_POST['spTabsOrder']);
+		$tabList = explode('&', sanitize_text_field($_POST['spTabsOrder']));
 		foreach ($tabList as $curTab => $tab) {
-            $tab = SP()->filters->str($tab);
 			# extract the tab index from the jquery sortable mess
 			$tabData = explode('=', $tab);
 			$oldTab = $tabData[1];
@@ -177,10 +176,9 @@ function spa_save_tabs_menus_data() {
 
 			# now update menus for this tab
 			if (!empty($_POST['spMenusOrder'.$oldTab])) {
-				$menuList = explode('&', $_POST['spMenusOrder'.$oldTab]);
+				$menuList = explode('&', sanitize_text_field($_POST['spMenusOrder'.$oldTab]));
 				foreach ($menuList as $curMenu => $menu) {
-                    $menu = SP()->filters->str($menu);
-					# extract the menu index from the jquery sortable mess
+ 					# extract the menu index from the jquery sortable mess
 					$menuData = explode('=', $menu);
 					$thisMenu = $menuData[1];
 
@@ -193,7 +191,7 @@ function spa_save_tabs_menus_data() {
 					$newTabs[$curTab]['menus'][$curMenu]['slug'] = SP()->saveFilters->title($_POST['menu-slug-'.$oldMenuTab.'-'.$thisMenu]);
 					$newTabs[$curTab]['menus'][$curMenu]['auth'] = SP()->saveFilters->title($_POST['menu-auth-'.$oldMenuTab.'-'.$thisMenu]);
 					$newTabs[$curTab]['menus'][$curMenu]['display'] = (isset($_POST['menu-display-'.$oldMenuTab.'-'.$thisMenu])) ? 1 : 0;
-					$form = str_replace('\\','/', $_POST['menu-form-'.$oldMenuTab.'-'.$thisMenu]); # sanitize for Win32 installs
+					$form = str_replace('\\','/', sanitize_text_field($_POST['menu-form-'.$oldMenuTab.'-'.$thisMenu])); # sanitize for Win32 installs
 					$form = preg_replace('|/+|','/', $form); # remove any duplicate slash
 					$newTabs[$curTab]['menus'][$curMenu]['form'] = SP()->filters->str($form);
 				}
@@ -241,7 +239,7 @@ function spa_save_avatars_data() {
 
 	if (!empty($_POST['sfavataropts']) && $_POST['sfavataropts']) {
 
-		$list = explode('&', $_POST['sfavataropts']);
+		$list = explode('&', sanitize_text_field($_POST['sfavataropts']));
 		$newarray = array();
 		foreach ($list as $item) {
 			$thisone = explode('=', $item);

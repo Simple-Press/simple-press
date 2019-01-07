@@ -2,8 +2,8 @@
 /*
 Simple:Press Admin
 Ajax form loader - themes
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
+$LastChangedDate: 2018-11-02 13:02:17 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15795 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -31,12 +31,12 @@ $adminhelpfile = 'admin-themes';
 if (!SP()->auths->current_user_can('SPF Manage Themes')) die();
 
 if (isset($_GET['loadform'])) {
-	spa_render_themes_container($_GET['loadform']);
+	spa_render_themes_container(sanitize_text_field($_GET['loadform']));
 	die();
 }
 
 if (isset($_GET['saveform'])) {
-	switch($_GET['saveform']) {
+	switch(sanitize_text_field($_GET['saveform'])) {
 		case 'theme':
 			$msg = spa_save_theme_data();
 ?>

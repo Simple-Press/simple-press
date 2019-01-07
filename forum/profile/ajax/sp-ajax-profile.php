@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Ajax call for View Member Profile
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
+$LastChangedDate: 2018-11-03 11:12:02 -0500 (Sat, 03 Nov 2018) $
+$Rev: 15799 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -99,7 +99,7 @@ if ($action == 'update-pool-avatar') {
 		$ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&amp;user=$userid&amp;poolremove=1", 'profile'));
 		$target  = 'spAvatarPool';
 		$spinner = SPCOMMONIMAGES.'working.gif';
-		echo '<img src="'.esc_url(SPAVATARDIR.SP()->user->profileUser->avatar['pool']).'" alt="" /><br /><br />';
+		echo '<img src="'.esc_url(SPAVATARPOOLURL.SP()->user->profileUser->avatar['pool']).'" alt="" /><br /><br />';
 		echo "<div id='spPoolStatus'><p class='spCenter'><input type='button' class='spSubmit' id='spDeletePoolAvatar' value='".SP()->primitives->front_text('Remove Pool Avatar')."' data-url='$ajaxURL' data-target='$target' data-spinner='$spinner' /></p></div>";
 	} else {
 		echo '<div id="spPoolStatus"><p class="spCenter">'.SP()->primitives->front_text('No pool avatar currently selected').'<br /><br /></p></div>';
@@ -438,7 +438,7 @@ if ($action == 'avatarpool') {
 	while (false !== ($file = readdir($dlist))) {
 		if ($file != "." && $file != "..") {
 			$text = esc_attr("<p class='spCenter'>".SP()->primitives->front_text('Avatar selected. Please save pool avatar').'</p>');
-			echo "<img class='spAvatarPool spSelectPoolAvatar' src='".esc_url(SPAVATARDIR.'/'.$file)."' alt='' data-src='".esc_attr(SPAVATARDIR.'/'.$file)."' data-file='$file' data-text='$text' />&nbsp;&nbsp;";
+			echo "<img class='spAvatarPool spSelectPoolAvatar' src='".esc_url(SPAVATARPOOLURL.'/'.$file)."' alt='' data-src='".esc_attr(SPAVATARPOOLURL.'/'.$file)."' data-file='$file' data-text='$text' />&nbsp;&nbsp;";
 		}
 	}
 	echo '</div>';

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Ajax call save Profile data
-$LastChangedDate: 2018-10-19 06:34:14 -0500 (Fri, 19 Oct 2018) $
-$Rev: 15760 $
+$LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15797 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -184,11 +184,11 @@ function sp_UpdateProfile() {
 			if ($update) {
 				$spProfile = SP()->options->get('sfprofile');
 				if ($spProfile['nameformat'] || SP()->user->thisUser->admin) {
-					$display_name = (!empty($_POST['display_name'])) ? trim($_POST['display_name']) : SP()->DB->table(SPUSERS, "ID=$thisUser", 'user_login');
+					$display_name = (!empty($_POST['display_name'])) ? sanitize_text_field(trim($_POST['display_name'])) : SP()->DB->table(SPUSERS, "ID=$thisUser", 'user_login');
 					$display_name = SP()->saveFilters->name($display_name);
 
 					# make sure display name isnt already used
-					if ($_POST['oldname'] != $display_name) {
+					if (sanitize_text_field($_POST['oldname']) != $display_name) {
 						$records = SP()->DB->table(SPMEMBERS, "display_name='$display_name'");
 						if ($records) {
 							foreach ($records as $record) {
@@ -533,9 +533,9 @@ function sp_UpdateProfile() {
 		case 'edit-display-options': # save display options
 			$options = SP()->memberData->get($thisUser, 'user_options');
 			if (isset($_POST['timezone'])) {
-				if (preg_match('/^UTC[+-]/', $_POST['timezone'])) {
+				if (preg_match('/^UTC[+-]/', sanitize_text_field($_POST['timezone']))) {
 					# correct for manual UTC offets
-					$userOffset = preg_replace('/UTC\+?/', '', $_POST['timezone']) * 3600;
+					$userOffset = preg_replace('/UTC\+?/', '', SP()->filters->str($_POST['timezone'])) * 3600;
 				} else {
 					# get timezone offset for user
 					$date_time_zone_selected = new DateTimeZone(SP()->filters->str($_POST['timezone']));

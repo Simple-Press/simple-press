@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Admins Update Your Options Support Functions
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 11:09:55 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15787 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -60,39 +60,39 @@ function spa_save_admins_global_options_data() {
 function spa_save_admins_caps_data() {
     check_admin_referer('forum-adminform_sfupdatecaps', 'forum-adminform_sfupdatecaps');
 
-    $users = array_unique($_POST['uids']);
+    $users = array_map('intval', array_unique($_POST['uids']));
 
-    if (isset($_POST['remove-admin'])) { $remove_admin = $_POST['remove-admin']; } else { $remove_admin = ''; }
+    if (isset($_POST['remove-admin'])) { $remove_admin = array_map('sanitize_text_field', $_POST['remove-admin']); } else { $remove_admin = ''; }
 
-    if (isset($_POST['manage-opts'])) { $manage_opts = $_POST['manage-opts']; } else { $manage_opts = ''; }
-    if (isset($_POST['manage-forums'])) { $manage_forums = $_POST['manage-forums']; } else { $manage_forums = ''; }
-    if (isset($_POST['manage-ugs'])) { $manage_ugs = $_POST['manage-ugs']; } else { $manage_ugs = ''; }
-    if (isset($_POST['manage-perms'])) { $manage_perms = $_POST['manage-perms']; } else { $manage_perms = ''; }
-    if (isset($_POST['manage-comps'])) { $manage_comps = $_POST['manage-comps']; } else { $manage_comps = ''; }
-    if (isset($_POST['manage-users'])) { $manage_users = $_POST['manage-users']; } else { $manage_users = ''; }
-    if (isset($_POST['manage-profiles'])) { $manage_profiles = $_POST['manage-profiles']; } else { $manage_profiles = ''; }
-    if (isset($_POST['manage-admins'])) { $manage_admins = $_POST['manage-admins']; } else { $manage_admins = ''; }
-    if (isset($_POST['manage-tools'])) { $manage_tools = $_POST['manage-tools']; } else { $manage_tools = ''; }
-    if (isset($_POST['manage-plugins'])) { $manage_plugins = $_POST['manage-plugins']; } else { $manage_plugins = ''; }
-    if (isset($_POST['manage-themes'])) { $manage_themes = $_POST['manage-themes']; } else { $manage_themes = ''; }
-    if (isset($_POST['manage-integration'])) { $manage_integration = $_POST['manage-integration']; } else { $manage_integration = ''; }
+    if (isset($_POST['manage-opts'])) { $manage_opts = array_map('sanitize_text_field', $_POST['manage-opts']); } else { $manage_opts = ''; }
+    if (isset($_POST['manage-forums'])) { $manage_forums = array_map('sanitize_text_field', $_POST['manage-forums']); } else { $manage_forums = ''; }
+    if (isset($_POST['manage-ugs'])) { $manage_ugs = array_map('sanitize_text_field', $_POST['manage-ugs']); } else { $manage_ugs = ''; }
+    if (isset($_POST['manage-perms'])) { $manage_perms = array_map('sanitize_text_field', $_POST['manage-perms']); } else { $manage_perms = ''; }
+    if (isset($_POST['manage-comps'])) { $manage_comps = array_map('sanitize_text_field', $_POST['manage-comps']); } else { $manage_comps = ''; }
+    if (isset($_POST['manage-users'])) { $manage_users = array_map('sanitize_text_field', $_POST['manage-users']); } else { $manage_users = ''; }
+    if (isset($_POST['manage-profiles'])) { $manage_profiles = array_map('sanitize_text_field', $_POST['manage-profiles']); } else { $manage_profiles = ''; }
+    if (isset($_POST['manage-admins'])) { $manage_admins = array_map('sanitize_text_field', $_POST['manage-admins']); } else { $manage_admins = ''; }
+    if (isset($_POST['manage-tools'])) { $manage_tools = array_map('sanitize_text_field', $_POST['manage-tools']); } else { $manage_tools = ''; }
+    if (isset($_POST['manage-plugins'])) { $manage_plugins = array_map('sanitize_text_field', $_POST['manage-plugins']); } else { $manage_plugins = ''; }
+    if (isset($_POST['manage-themes'])) { $manage_themes = array_map('sanitize_text_field', $_POST['manage-themes']); } else { $manage_themes = ''; }
+    if (isset($_POST['manage-integration'])) { $manage_integration = array_map('sanitize_text_field', $_POST['manage-integration']); } else { $manage_integration = ''; }
 
-    if (isset($_POST['old-opts'])) { $old_opts = $_POST['old-opts']; } else { $old_opts = ''; }
-    if (isset($_POST['old-forums'])) { $old_forums = $_POST['old-forums']; } else { $old_forums = ''; }
-    if (isset($_POST['old-ugs'])) { $old_ugs = $_POST['old-ugs']; } else { $old_ugs = ''; }
-    if (isset($_POST['old-perms'])) { $old_perms = $_POST['old-perms']; } else { $old_perms = ''; }
-    if (isset($_POST['old-comps'])) { $old_comps = $_POST['old-comps']; } else { $old_comps = ''; }
-    if (isset($_POST['old-users'])) { $old_users = $_POST['old-users']; } else { $old_users = ''; }
-    if (isset($_POST['old-profiles'])) { $old_profiles = $_POST['old-profiles']; } else { $old_profiles = ''; }
-    if (isset($_POST['old-admins'])) { $old_admins = $_POST['old-admins']; } else { $old_admins = ''; }
-    if (isset($_POST['old-tools'])) { $old_tools = $_POST['old-tools']; } else { $old_tools = ''; }
-    if (isset($_POST['old-plugins'])) { $old_plugins = $_POST['old-plugins']; } else { $old_plugins = ''; }
-    if (isset($_POST['old-themes'])) { $old_themes = $_POST['old-themes']; } else { $old_themes = ''; }
-    if (isset($_POST['old-integration'])) { $old_integration = $_POST['old-integration']; } else { $old_integration = ''; }
+    if (isset($_POST['old-opts'])) { $old_opts = array_map('sanitize_text_field', $_POST['old-opts']); } else { $old_opts = ''; }
+    if (isset($_POST['old-forums'])) { $old_forums = array_map('sanitize_text_field', $_POST['old-forums']); } else { $old_forums = ''; }
+    if (isset($_POST['old-ugs'])) { $old_ugs = array_map('sanitize_text_field', $_POST['old-ugs']); } else { $old_ugs = ''; }
+    if (isset($_POST['old-perms'])) { $old_perms = array_map('sanitize_text_field', $_POST['old-perms']); } else { $old_perms = ''; }
+    if (isset($_POST['old-comps'])) { $old_comps = array_map('sanitize_text_field', $_POST['old-comps']); } else { $old_comps = ''; }
+    if (isset($_POST['old-users'])) { $old_users = array_map('sanitize_text_field', $_POST['old-users']); } else { $old_users = ''; }
+    if (isset($_POST['old-profiles'])) { $old_profiles = array_map('sanitize_text_field', $_POST['old-profiles']); } else { $old_profiles = ''; }
+    if (isset($_POST['old-admins'])) { $old_admins = array_map('sanitize_text_field', $_POST['old-admins']); } else { $old_admins = ''; }
+    if (isset($_POST['old-tools'])) { $old_tools = array_map('sanitize_text_field', $_POST['old-tools']); } else { $old_tools = ''; }
+    if (isset($_POST['old-plugins'])) { $old_plugins = array_map('sanitize_text_field', $_POST['old-plugins']); } else { $old_plugins = ''; }
+    if (isset($_POST['old-themes'])) { $old_themes = array_map('sanitize_text_field', $_POST['old-themes']); } else { $old_themes = ''; }
+    if (isset($_POST['old-integration'])) { $old_integration = array_map('sanitize_text_field', $_POST['old-integration']); } else { $old_integration = ''; }
 
     for ($index = 0; $index < count($users); $index++) {
 		# get user index and sanitize
-		$uid = intval($users[$index]);
+		$uid = $users[$index];
 		$user = new WP_User($uid);
 
         # do we need to remove all admin caps for user?
@@ -214,30 +214,30 @@ function spa_save_admins_newadmin_data() {
     check_admin_referer('forum-adminform_sfaddadmins', 'forum-adminform_sfaddadmins');
 
     if (isset($_POST['member_id'])) {
-		$newadmins = array_unique($_POST['member_id']);
+		$newadmins = array_map('intval', array_unique($_POST['member_id']));
 	} else {
 	    $mess = SP()->primitives->admin_text('No users selected!');
 		return $mess;
     }
 
-    if (isset($_POST['add-opts'])) { $opts = $_POST['add-opts']; } else { $opts = ''; }
-    if (isset($_POST['add-forums'])) { $forums = $_POST['add-forums']; } else { $forums = ''; }
-    if (isset($_POST['add-ugs'])) { $ugs = $_POST['add-ugs']; } else { $ugs = ''; }
-    if (isset($_POST['add-perms'])) { $perms = $_POST['add-perms']; } else { $perms = ''; }
-    if (isset($_POST['add-comps'])) { $comps = $_POST['add-comps']; } else { $comps = ''; }
-    if (isset($_POST['add-users'])) { $users = $_POST['add-users']; } else { $users = ''; }
-    if (isset($_POST['add-profiles'])) { $profiles = $_POST['add-profiles']; } else { $profiles = ''; }
-    if (isset($_POST['add-admins'])) { $admins = $_POST['add-admins']; } else { $admins = ''; }
-    if (isset($_POST['add-tools'])) { $tools = $_POST['add-tools']; } else { $tools = ''; }
-    if (isset($_POST['add-plugins'])) { $plugins = $_POST['add-plugins']; } else { $plugins = ''; }
-    if (isset($_POST['add-themes'])) { $themes = $_POST['add-themes']; } else { $themes = ''; }
-    if (isset($_POST['add-integration'])) { $integration = $_POST['add-integration']; } else { $integration = ''; }
+    if (isset($_POST['add-opts'])) { $opts = sanitize_text_field($_POST['add-opts']); } else { $opts = ''; }
+    if (isset($_POST['add-forums'])) { $forums = sanitize_text_field($_POST['add-forums']); } else { $forums = ''; }
+    if (isset($_POST['add-ugs'])) { $ugs = sanitize_text_field($_POST['add-ugs']); } else { $ugs = ''; }
+    if (isset($_POST['add-perms'])) { $perms = sanitize_text_field($_POST['add-perms']); } else { $perms = ''; }
+    if (isset($_POST['add-comps'])) { $comps = sanitize_text_field($_POST['add-comps']); } else { $comps = ''; }
+    if (isset($_POST['add-users'])) { $users = sanitize_text_field($_POST['add-users']); } else { $users = ''; }
+    if (isset($_POST['add-profiles'])) { $profiles = sanitize_text_field($_POST['add-profiles']); } else { $profiles = ''; }
+    if (isset($_POST['add-admins'])) { $admins = sanitize_text_field($_POST['add-admins']); } else { $admins = ''; }
+    if (isset($_POST['add-tools'])) { $tools = sanitize_text_field($_POST['add-tools']); } else { $tools = ''; }
+    if (isset($_POST['add-plugins'])) { $plugins = sanitize_text_field($_POST['add-plugins']); } else { $plugins = ''; }
+    if (isset($_POST['add-themes'])) { $themes = sanitize_text_field($_POST['add-themes']); } else { $themes = ''; }
+    if (isset($_POST['add-integration'])) { $integration = sanitize_text_field($_POST['add-integration']); } else { $integration = ''; }
 
 	$added = false;
     for ($index = 0; $index < count($newadmins); $index++) {
 		# get user index and sanitize
-		$uid = intval($newadmins[$index]);
-		$user = new WP_User(SP()->filters->integer($uid));
+		$uid = $newadmins[$index];
+		$user = new WP_User($uid);
 
 		if ($opts == 'on') $user->add_cap('SPF Manage Options');
 		if ($forums == 'on') $user->add_cap('SPF Manage Forums');

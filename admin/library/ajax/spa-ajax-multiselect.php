@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Common Ajax
-$LastChangedDate: 2018-10-27 11:16:46 -0500 (Sat, 27 Oct 2018) $
-$Rev: 15773 $
+$LastChangedDate: 2018-11-02 13:02:17 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15795 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -22,7 +22,7 @@ if (isset($_GET['page_msbox'])) {
 	$max = SP()->filters->integer($_GET['max']);
 	$filter = urldecode($_GET['filter']);
 
-	if ($_GET['page_msbox'] == 'filter') $max = spa_get_query_max($msbox, $uid, $filter);
+	if (sanitize_text_field($_GET['page_msbox']) == 'filter') $max = spa_get_query_max($msbox, $uid, $filter);
 	echo spa_page_msbox_list($msbox, $uid, $name, $from, $num, $offset, $max, $filter);
 	die();
 }

@@ -2,15 +2,15 @@
 /*
 Simple:Press
 Admin Plugins
-$LastChangedDate: 2018-10-17 15:14:27 -0500 (Wed, 17 Oct 2018) $
-$Rev: 15755 $
+$LastChangedDate: 2018-11-02 13:31:02 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15796 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 # Check Whether User Can Manage Plugins
 # dont check for admin panels loaded by plugins - the plugins api will do that
-$tab = (isset($_GET['tab'])) ? $_GET['tab'] : 'plugin-list';
+$tab = (isset($_GET['tab'])) ? sanitize_text_field($_GET['tab']) : 'plugin-list';
 if ($tab != 'plugin') {
     if (!SP()->auths->current_user_can('SPF Manage Plugins')) die();
 }

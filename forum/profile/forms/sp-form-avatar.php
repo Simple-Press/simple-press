@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Profile Avatars Form
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
+$LastChangedDate: 2018-11-03 11:12:02 -0500 (Sat, 03 Nov 2018) $
+$Rev: 15799 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -208,7 +208,7 @@ foreach ($spAvatars['sfavatarpriority'] as $priority) {
 					$ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&amp;user=$userid&amp;poolremove=1", 'profile'));
 					$target  = 'spAvatarPool';
 					$spinner = SPCOMMONIMAGES.'working.gif';
-					$out .= '<img src="'.esc_url(SPAVATARDIR.SP()->user->profileUser->avatar['pool']).'" alt="" /><br /><br />';
+					$out .= '<img src="'.esc_url(SPAVATARPOOLURL.SP()->user->profileUser->avatar['pool']).'" alt="" /><br /><br />';
 					$out .= "<div id='spPoolStatus'><p class='spCenter'><input type='button' class='spSubmit' id='spDeletePoolAvatar' value='".SP()->primitives->front_text('Remove Pool Avatar')."' data-url='$ajaxURL' data-target='$target' data-spinner='$spinner' /></p></div>";
 				} else {
 					$out .= '<div id="spPoolStatus"><p class="spCenter">'.SP()->primitives->front_text('No pool avatar currently selected').'<br /><br /></p></div>';

@@ -2,8 +2,8 @@
 /*
 Simple:Press User Groups Admin
 Ajax form loader - User Groups
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-11-02 13:02:17 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15795 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -31,36 +31,37 @@ $adminhelpfile = 'admin-usergroups';
 if (!SP()->auths->current_user_can('SPF Manage User Groups')) die();
 
 if (isset($_GET['loadform'])) {
-	spa_render_usergroups_container($_GET['loadform']);
+	spa_render_usergroups_container(sanitize_text_field($_GET['loadform']));
 	die();
 }
 
 if (isset($_GET['saveform'])) {
-	if ($_GET['saveform'] == 'newusergroup') {
+	$saveform = sanitize_text_field($_GET['saveform']);
+	if ($saveform == 'newusergroup') {
 		echo spa_save_usergroups_new_usergroup();
 		die();
 	}
-	if ($_GET['saveform'] == 'editusergroup') {
+	if ($saveform == 'editusergroup') {
 		echo spa_save_usergroups_edit_usergroup();
 		die();
 	}
-	if ($_GET['saveform'] == 'delusergroup') {
+	if ($saveform == 'delusergroup') {
 		echo spa_save_usergroups_delete_usergroup();
 		die();
 	}
-	if ($_GET['saveform'] == 'addmembers') {
+	if ($saveform == 'addmembers') {
 		echo spa_save_usergroups_add_members();
 		die();
 	}
-	if ($_GET['saveform'] == 'delmembers') {
+	if ($saveform == 'delmembers') {
 		echo spa_save_usergroups_delete_members();
 		die();
 	}
-	if ($_GET['saveform'] == 'mapsettings') {
+	if ($saveform == 'mapsettings') {
 		echo spa_save_usergroups_map_settings();
 		die();
 	}
-	if ($_GET['saveform'] == 'mapusers') {
+	if ($saveform == 'mapusers') {
 		echo spa_save_usergroups_map_users();
 		die();
 	}

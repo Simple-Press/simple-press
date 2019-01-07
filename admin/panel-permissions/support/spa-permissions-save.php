@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Permissions Support Functions
-$LastChangedDate: 2017-11-12 17:27:02 -0600 (Sun, 12 Nov 2017) $
-$Rev: 15583 $
+$LastChangedDate: 2018-11-02 12:10:58 -0500 (Fri, 02 Nov 2018) $
+$Rev: 15789 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -15,7 +15,7 @@ function spa_save_permissions_new_role() {
 	check_admin_referer('forum-adminform_rolenew', 'forum-adminform_rolenew');
 
 	$new_auths = array();
-	if (isset($_POST['role']) && $_POST['role'] != -1) {
+	if (isset($_POST['role']) && (int) $_POST['role'] != -1) {
 		$role = spa_get_role_row(SP()->filters->integer($_POST['role']));
 		$new_auths = $role->role_auths;
 	} else {
