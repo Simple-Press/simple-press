@@ -2,8 +2,8 @@
 /*
   Simple:Press
   Upgrade Path Routines - Version 5.0
-  $LastChangedDate: 2018-12-03 11:05:54 -0600 (Mon, 03 Dec 2018) $
-  $Rev: 15840 $
+  $LastChangedDate: 2018-12-14 19:50:43 -0600 (Fri, 14 Dec 2018) $
+  $Rev: 15853 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -319,7 +319,9 @@ if ($build < $section) {
 	sp_response($section);
 }
 
+# Start of Upgrade Routines - 6.0.6 ============================================================
 
+sp_bump_build($build, 15852);
 
 
 

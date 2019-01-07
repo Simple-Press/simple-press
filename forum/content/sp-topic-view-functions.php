@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Template Function Handler
-$LastChangedDate: 2018-08-25 12:34:44 -0500 (Sat, 25 Aug 2018) $
-$Rev: 15721 $
+$LastChangedDate: 2018-12-16 12:27:05 -0600 (Sun, 16 Dec 2018) $
+$Rev: 15855 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -287,13 +287,6 @@ function sp_PostNewButton($args = '', $label = '', $toolTip = '', $toolTipLock =
 	$out  = "<div id='$tagId'>";
 
 	$lock = false;
-	if (!$lock && $allowed) {
-		$out .= "<a class='$tagClass spNewPostButton' title='$toolTip' data-form='spPostForm' data-type='post'>\n";
-		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		if (!empty($label)) $out .= SP()->displayFilters->title($label);
-		$out .= "</a>\n";
-	}
-
 	if (SP()->core->forumData['lockdown'] || SP()->forum->view->thisTopic->forum_status || SP()->forum->view->thisTopic->topic_status) {
 		if (!empty($iconLock)) {
 			$out .= "<a class='$tagClass' title='$toolTipDenied'>\n";
@@ -302,6 +295,13 @@ function sp_PostNewButton($args = '', $label = '', $toolTip = '', $toolTipLock =
 			$out.= "</a>";
 		}
 		if (!SP()->user->thisUser->admin) $lock = true;
+	}
+
+	if (!$lock && $allowed) {
+		$out .= "<a class='$tagClass spNewPostButton' title='$toolTip' data-form='spPostForm' data-type='post'>\n";
+		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+		if (!empty($label)) $out .= SP()->displayFilters->title($label);
+		$out .= "</a>\n";
 	}
 
 	# Display if user not allowed to start topics

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 TForum View Function Handler
-$LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
-$Rev: 15797 $
+$LastChangedDate: 2018-12-16 12:27:05 -0600 (Sun, 16 Dec 2018) $
+$Rev: 15855 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -1402,19 +1402,19 @@ function sp_TopicNewButton($args = '', $label = '', $toolTip = '', $toolTipLock 
 	$out  = "<div id='$tagId'>";
 
 	$lock = false;
-	if (!$lock && SP()->auths->get('start_topics', SP()->forum->view->thisForum->forum_id)) {
-		$out .= "<a class='$tagClass spNewTopicButton' title='$toolTip' data-form='spPostForm' data-type='topic'>\n";
-		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		if (!empty($label)) $out .= SP()->displayFilters->title($label);
-		$out .= "</a>\n";
-	}
-
 	if (SP()->core->forumData['lockdown'] || SP()->forum->view->thisForum->forum_status) {
 		if (!empty($iconLock)) {
 			$iconLock = SP()->theme->paint_icon('$tagClass $iconClass $statusClass', SPTHEMEICONSURL, sanitize_file_name($iconLock), $toolTipLock);
 			$out .= "<a class='$tagClass'>".SP()->theme->paint_icon_id($iconLock, $tagId).'</a>';
 		}
 		if (!SP()->user->thisUser->admin) $lock = true;
+	}
+
+	if (!$lock && SP()->auths->get('start_topics', SP()->forum->view->thisForum->forum_id)) {
+		$out .= "<a class='$tagClass spNewTopicButton' title='$toolTip' data-form='spPostForm' data-type='topic'>\n";
+		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+		if (!empty($label)) $out .= SP()->displayFilters->title($label);
+		$out .= "</a>\n";
 	}
 
 	# Display if user not allowed to start topics
