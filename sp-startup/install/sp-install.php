@@ -2,8 +2,8 @@
 /*
   Simple:Press
   Main Forum Installer (New Instalations)
-  $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
-  $Rev: 15817 $
+  $LastChangedDate: 2018-12-03 11:05:54 -0600 (Mon, 03 Dec 2018) $
+  $Rev: 15840 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -786,6 +786,8 @@ function sp_perform_install($phase, $subphase = 0) {
 			$privacy			= array();
 			$privacy['posts']	= false;
 			$privacy['number']	= 200;
+			$privacy['erase']	= 1;
+			$privacy['mess']	= SP()->primitives->admin_text('Post content removed by user request');
 			SP()->options->add('spPrivacy', $privacy);
 
 			$theme					 = array();

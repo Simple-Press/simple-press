@@ -1,7 +1,7 @@
 <?php
 /*
 Simple:Press
-Desc: Privacy - Personal Data Export
+Desc: Privacy - Personal Data Export and Erase
 $LastChangedDate: 2014-05-24 09:12:47 +0100 (Sat, 24 May 2014) $
 $Rev: 11461 $
 */
@@ -220,3 +220,44 @@ function sp_privacy_forum_export($exportItems, $spUserData, $groupID, $groupLabe
 
 	return $exportItems;
 }
+
+
+# --------------------------------------------
+# Erasure of SP related data
+# --------------------------------------------
+
+# Register the forum data eraser
+function sp_register_forum_eraser($erasers) {
+	$erasers['simple-press'] = array(
+		'eraser_friendly_name' => SP()->primitives->admin_text('Forum Data'),
+		'callback'             => 'sp_data_eraser'
+    );
+  return $erasers;
+}
+
+# Perform the actual erasure
+# This calls the SP standard user deletion
+# code which converts all forum posts to 'Guest' 
+# and removes all other traces of the user.
+function sp_data_eraser($email_address, $page = 1) {
+	# get users ID
+	$userID = SP()->DB->table(SPUSERS, "user_email='$email_address'", 'ID');
+	$message = '';
+	if (!empty($userID)) {
+		$ops = SP()->options->get('spPrivacy');
+		if ($ops['erase'] == 2) {
+			SP()->user->delete_data($userID, '', 'spdelete', 0);
+			$message = SP()->primitives->admin_text('Forum data has been erased for this user');
+		} else {
+			SP()->user->delete_data($userID, '', 'spguest', 0, $ops['mess']);
+			$message = SP()->primitives->admin_text('Forum data anonymised for this user');
+		}
+	}
+	return array( 'items_removed' => 0,
+	'items_retained' => false,
+	'messages' => array($message),
+	'done' => true,
+  );
+}
+
+// spdelete

@@ -9,8 +9,8 @@
  * ------------------------
  * load()
  *
- * $LastChangedDate: 2018-11-04 10:24:01 -0600 (Sun, 04 Nov 2018) $
- * $Rev: 15803 $
+ * $LastChangedDate: 2018-12-03 06:28:04 -0600 (Mon, 03 Dec 2018) $
+ * $Rev: 15839 $
  */
 class spcCoreLoader {
 	/**
@@ -297,10 +297,11 @@ class spcCoreLoader {
 		add_action('remove_user_role', array(SP()->user, 'remove_role_to_ug'), 10, 2);
 		add_action('delete_user_form', array(SP()->user, 'delete_form'), 10, 2);
 
-		# Privacy data export
+		# Privacy data export and eraser
 		add_filter('wp_privacy_personal_data_exporters', 'sp_register_profile_exporter', 20);
 		add_filter('wp_privacy_personal_data_exporters', 'sp_register_forum_exporter', 21);
-
+		add_filter('wp_privacy_personal_data_erasers', 'sp_register_forum_eraser', 10);
+		
 		add_filter('registration_errors', array(SP()->user, 'validate_registration'), 10, 3);
 		add_action('user_profile_update_errors', array(SP()->user, 'validate_display_name'), 10, 3);
 

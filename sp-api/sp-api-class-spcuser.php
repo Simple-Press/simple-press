@@ -38,8 +38,8 @@
  * delete_form($user, $userids)
  * stats_status($userid, $memberships)
  *
- * $LastChangedDate: 2018-08-24 21:05:08 -0500 (Fri, 24 Aug 2018) $
- * $Rev: 15718 $
+ * $LastChangedDate: 2018-12-06 10:47:04 -0600 (Thu, 06 Dec 2018) $
+ * $Rev: 15841 $
  */
 class spcUser {
 	/**
@@ -677,7 +677,7 @@ class spcUser {
 	 *
 	 * @return void
 	 */
-	public function delete_data($userid, $blog_id = '', $delete_option = 'spguest', $reassign = 0) {
+	public function delete_data($userid, $blog_id = '', $delete_option = 'spguest', $reassign = 0, $mess = '') {
 		if (!$userid) return;
 
 		global $wpdb;
@@ -725,15 +725,17 @@ class spcUser {
 
 			case 'spguest':
 			default:
-				# get users email address
-				$user_email = SP()->saveFilters->email($wpdb->get_var('SELECT user_email from '.$wpdb->prefix."users WHERE ID=$userid"));
+				# Set display name to guest and remove User ID and IP Address from all of their posts
+				$guest_name = SP()->primitives->front_text('Guest');
 
-				# get the users display name from members table
-				$display_name = $wpdb->get_var('SELECT display_name FROM '.$wpdb->prefix."sfmembers WHERE user_id = $userid");
-				$display_name = SP()->saveFilters->name(maybe_unserialize($display_name));
+				$sql = 'UPDATE '.$wpdb->prefix."sfposts SET user_id=0, guest_name='$guest_name', poster_ip=''";
+				if (!empty($mess)) {
+					$sql .= ", post_content ='$mess'";
+				}
+				$sql .= " WHERE user_id=$userid";
 
-				# Set user name and email to guest name and meail in all of their posts
-				$wpdb->query('UPDATE '.$wpdb->prefix."sfposts SET user_id=0, guest_name='$display_name', guest_email='$user_email' WHERE user_id=$userid");
+				$wpdb->query($sql);
+				# and any refereneces from the topic records
 				$wpdb->query('UPDATE '.$wpdb->prefix."sftopics SET user_id=0 WHERE user_id=$userid");
 		}
 
@@ -1256,7 +1258,7 @@ class spcUser {
                 <li><label><input type="radio" id="sp_delete_option" name="sp_delete_option" value="spdelete"/>
 						<?php echo SP()->primitives->admin_text('Delete all the posts (warning - may take time and resources if lots of posts).'); ?>
                     </label></li>
-                <li><<label>input type="radio" id="sp_reassign_option" name="sp_delete_option" value="spreassign"/></label>
+                <li><label><input type="radio" id="sp_reassign_option" name="sp_delete_option" value="spreassign"/></label>
 					<?php
 					echo '<label for="sp_reassign_option">'.SP()->primitives->admin_text('Reassign all the posts to:').'</label> ';
 					wp_dropdown_users(array('name' => 'sp_reassign_user', 'exclude' => array($user->ID)));

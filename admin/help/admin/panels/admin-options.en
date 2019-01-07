@@ -1,6 +1,6 @@
 --- Manage Options ---
-$LastChangedDate: 2018-11-05 07:39:53 -0600 (Mon, 05 Nov 2018) $
-$Rev: 15808 $
+$LastChangedDate: 2018-12-03 11:05:54 -0600 (Mon, 03 Dec 2018) $
+$Rev: 15840 $
 
 [auto-update]
 <strong>Auto Update</strong><br /><br />
@@ -293,11 +293,24 @@ If using the new posts flag, select both the background and text colours to be u
 [privacy-export]
 The Privacy Export feature allows for forum posts and Messages to be optionally included in the WordPress 
 personal data export tool.<br /><br />
-<b>Important Note</b><br />
+<b>IMPORTANT NOTE:</b><br />
 If a user has an extraordinary large number of forum posts and messages it is possible for the 
 WordPress export tool to run out of memory resources. if this happens an error message will 
 be displayed on the export control page.<br /><br />
 <b>Number to Batch Process</b><br />
 WordPress carries out the export file creation process in batches to avoid a timeout on the server. 
 The default for the forum data is 200. If a timeout occurs this number can be reduced.
+[end]
+
+[privacy-erasure]
+Two options are available to enable user requested data erasure: <br /><br />
+<b>Anonymise</b><br />
+This option removes all personal profile data and anonymises the users posts by changing their 
+display name to 'Guest' and by removing the post content and replacing it with the message you have set for it.<br /><br />
+<n>Erasure</b><br />
+This option removes the forum posts completely.<br /><br />
+<b>IMPORTANT NOTE:</b><br />
+The Anonymise option is much faster to execute than full erasure. For a user with a large number of forum posts 
+full erasure can be a lengthy task and a potential time-out has to be considered -a problem most unlikely to occur with
+anonymisation.
 [end]

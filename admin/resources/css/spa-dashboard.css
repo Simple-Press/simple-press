@@ -46,6 +46,20 @@ a:active {
     cursor: pointer;
 }
 
+#toplevel_page_simplepress-admin-panel-forums-spa-forums .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-options-spa-options .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-components-spa-components .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-usergroups-spa-usergroups .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-permissions-spa-permissions .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-integration-spa-integration .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-profiles-spa-profiles .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-admins-spa-admins .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-users-spa-users .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-plugins-spa-plugins .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-themes-spa-themes .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-toolbox-spa-toolbox .wp-menu-image:before,
+#toplevel_page_simplepress-sp-startup-sp-load-install .wp-menu-image:before,
+#toplevel_page_simplepress-sp-startup-admin-spa-admin-notice .wp-menu-image:before,
 #toplevel_page_simple-press-admin-panel-forums-spa-forums .wp-menu-image:before,
 #toplevel_page_simple-press-admin-panel-options-spa-options .wp-menu-image:before,
 #toplevel_page_simple-press-admin-panel-components-spa-components .wp-menu-image:before,

@@ -8,8 +8,8 @@
  * Public methods available:
  * ------------------------
  *
- * $LastChangedDate: 2018-08-15 07:59:04 -0500 (Wed, 15 Aug 2018) $
- * $Rev: 15704 $
+ * $LastChangedDate: 2018-11-20 20:18:00 -0600 (Tue, 20 Nov 2018) $
+ * $Rev: 15831 $
  */
 class spcSaveFilters {
 	public function content($content, $action, $doEsc = true, $table = '', $column = '') {
@@ -321,7 +321,7 @@ class spcSaveFilters {
 	}
 
 	public function pre($content) {
-		$content = SP()->filters->tags($content);
+		$content = SP()->filters->pre($content);
 		$content = apply_filters('sph_save_pre_filter', $content);
 
 		return $content;

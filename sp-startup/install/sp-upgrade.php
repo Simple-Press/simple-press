@@ -2,8 +2,8 @@
 /*
   Simple:Press
   Upgrade Path Routines - Version 5.0
-  $LastChangedDate: 2018-11-11 23:06:59 -0600 (Sun, 11 Nov 2018) $
-  $Rev: 15814 $
+  $LastChangedDate: 2018-12-03 11:05:54 -0600 (Mon, 03 Dec 2018) $
+  $Rev: 15840 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -302,6 +302,28 @@ if ($build < $section) {
 # Start of Upgrade Routines - 6.0.4 ============================================================
 
 sp_bump_build($build, 15814);
+
+# Start of Upgrade Routines - 6.0.5 ============================================================
+
+sp_bump_build($build, 15827);
+
+$section = 15830;
+if ($build < $section) {
+	# privacy delete option
+	$privacy			= SP()->options->get('spPrivacy');
+	$privacy['erase']	= 1;
+	$privacy['mess']	= SP()->primitives->admin_text('Post content removed by user request');
+	
+	SP()->options->update('spPrivacy', $privacy);
+
+	sp_response($section);
+}
+
+
+
+
+
+
 
 
 # ****** IMPORTANT: THE FINAL $section values MUST be the same as the SPBUILD constant
