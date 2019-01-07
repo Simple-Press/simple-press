@@ -1,0 +1,189 @@
+--- Manage Components ---
+$LastChangedDate: 2016-10-03 02:33:10 -0500 (Mon, 03 Oct 2016) $
+$Rev: 14612 $
+
+[smiley-upload]
+<strong>Smiley Uploads</strong><br /><br />
+You can upload new images to the set delivered with the plugin. You will need to designate a name for the Smiley
+and the keyboard 'code' used to invoke it.
+[end]
+
+[custom-smileys]
+<strong>Custom Smileys</strong><br /><br />
+This shows the current contents of the 'forum-smileys' folder where custom smileys are stored. Apart, of course, from the actual image file,
+smileys require an identifying name and a code. Codes are most usually entered prefixed and suffixed with a colon - for example :smile:.<br /><br />
+<strong>Invalid Codes</strong><br />
+Please be careful with the keyboard codes you assign. The use of slashes and colons together, for example '/:', can be mistaken for part of a
+link (http://) ands can confuse the display of a post. It is important not to use any such codes that may conflict with other, valid textual strings or,
+for example, html tags.<br /><br />
+
+If you want the smiley to be able to be used in new posts, the 'in use' box should be checked.  If you want to prevent users from using the smiley in
+a new post but want to keep the smiley valid in existing posts, you should uncheck the 'in use' box.  If you remove a smiley, all posts with that smiley
+will no longer show the smiley.<br /><br />
+You can set a break in the display of smileys within the editor which will then force a new row to start being displayed.<br /><br />
+If you wish to remove one then click on the remove button at the end of the row. This will remove the entry and the image from the Smileys folder and also remove
+it from all existing posts.<br /><br />
+<strong>Re-ordering Smileys</strong><br /><br />
+When in use, smileys will display in the order shown here. You can re-order them by using the grab handle on the left of each row to drag and drop them to a new
+position. You will need to click on the update button after any such re-ordering.
+[end]
+
+[no-login]
+To turn on registrations go to WordPress – Settings – General and check the box labelled Membership – Anyone Can Register.<br /><br />
+You will also need to set the New User Default Role. Most commonly this will be set to Subscriber which will grant new users the minimum
+access to your WordPress admin – just the Dashboard and their Profile. Note that when a new user registers, they will be placed in the
+forum User Group designated by you on the Forum – Usergroups – Map Users to Usergroups panel and it is recommended that this
+be set up and checked prior to enabling site registrations.
+[end]
+
+[use-forum-components]
+Turn off the use of the Simple:Press complimentary Registration and Login/Logout buttons and the login form.
+[end]
+
+[alt-login-registration-urls]
+If you have built your own registration and/or login process or are using a membership plugin that requires them, you can override
+the standard WordPress registration, login and logout URLs and provide your own which will be used on the Simple:Press complimentary
+buttons and forms.
+[end]
+
+[login-registration-urls]
+<strong>Login and Registration URLs</strong><br />
+In this panel you can set redirects to occur after a user logs in, logs out or registers. These are the URLs that the user will be redirected to after logging in, logging out or registering. If you do not want a
+redirct to occur, leave them blank<br /><br />
+You can also specify the URL for logging in to be used in the emails sent to new users after they regiser.  By default, this is the standard wp login url and does not need to be changed unless you are using an
+alternate plugin for logging in that has a different location.
+[end]
+
+[user-registration]
+<strong>Spam Detection</strong><br />
+Simple:Press can use the effective 'math question' query to prevent spam posts being made automatically.
+This option is set up in the User Group Permissions. However, the same tool can also be used on the user registration form
+to help counter bogus registrations which are a general nuisance. Please note that if this feature is invoked it applies to both
+Simple:Press's registration form and the standard WordPress form.
+[end]
+
+[tracking-timeout]
+<strong>Set the User Tracking Timeout</strong><br /><br />
+You can set how many minutes of inactivity on the forums are allowed to pass before a user is considered no longer active. When this timeout
+is met, the user will be removed from the user tracking system and will no longer be considered to be on line. Note that this applies to
+visiting the forums only.<br /><br />
+Please use whole numbers and specify as minutes. The default value is 20 minutes.
+[end]
+
+[forum-ranks]
+<strong>Forum Ranks</strong><br /><br />
+This feature allows you to assign different 'ranks' to members depending on how many posts they have made.  A member's rank will be displayed along with each of their posts in the member's data box'.
+In addition, when a member reaches a defined forum rank, it is possible to auto assign this member to a User Group.  This auto assignment makes it possible to grant additional permissions to users upon
+reaching specific plateaus based on number of posts. If you do not wish for users to get automatic membership in a User Group when attaining a rank, leave the Automatic User Group Membership set
+to 'No Automatic User Group Membership.<br /><br />
+If using auto user-group membership based on forum ranks, care must be taken with regards to the Users are Limited to Single User Group Membership option setting (Forum Admin - User Groups - Map Users to User Groups) and what
+happens with existing user group memberships.<br /><br />
+To create forum ranks, enter the name and the number of posts up to which it applies. Optionally, you may select a currently defined User Group in the drop down list to assign members to when the
+forum rank is obtained.<br /><br />
+If you use all the available fields simply save the options panel and another blank field will appear. There is no limit to the number of rankings you can define.<br /><br />
+The final ranking should have a very high post count or if a user exceeds the final specified post count, there will be no ranking for the user to be assigned to and instead the user will get a default
+forum ranking of 'Member'.<br /><br />
+It is also possible to associate a graphical badge with each forum rank.  Images are uploaded for use as forum badges via the badge uploader in the Custom Forum Badge fieldset below (see the help in that fieldset).
+Once the badge images have been uploaded, the badge can be associated with a forum rank by typing its name (including the file extension, but no path) in the badge input column.  This badge will now be displayed
+in the topic view along with the username and avatar.<br /><br />
+[end]
+
+[editor-message]
+<strong>Custom Message Above Editor</strong><br /><br />
+Any text you enter here will be displayed immediately above the text editor for either, or both, a new Topic or new Post.
+This might, for example, be an instruction to the user to include certain details in their post, notes on formatting or
+a brief reminder about content policy.
+[end]
+
+[editor-intro]
+<strong>Custom In-Line Editor Message</strong><br /><br />
+You may optionally display a custom message inside the editor window as the first text of a new topic post. This could be
+used, for example, to request special information from the user such as which browser do they use - possibly important information
+if your forum is used for support purposes.
+[end]
+
+[seo-plugin-integration]
+<strong>SEO Settings</strong><br /><br />
+With these options, you can control the configuration of the browser title on Simple:Press pages.  You can also control the use of meta description and keywords on forum pages.<br /><br />
+If you would like the topic title (if on a topic page) included in the page/browser title, select the checkbox.  If you would like the forum title (if on a forum page) included in the page/browser title, select
+the checkbox.  In addition, please enter the separator text that you would like to use between the page/browser title components. If you do not select any of the topic or forum titles to be included, nothing will
+be added to the page/browser title.
+[end]
+
+[meta-setup]
+<strong>Custom Meta Tags</strong><br /><br />
+You can enter a custom meta description and those choose whether that description is used on all forum pages or just the group view forum page.  In addition, you then can optionally have the forum description used on
+forum pages and topic pages or have topic titles used on topic pages.<br /><br />
+You can enter a custom list of keywords (comma separated) to be used on forum pages.
+[end]
+
+[meta-tags]
+<strong>Custom Meta Tags</strong><br /><br />
+With these options, you can control the setting of custom meta tags for description and keywords on forum pages.<br /><br />
+[end]
+
+[seo-open-graph]
+If the option is turned on then Open Graph meta tags will be output for all forum views - in other words for all views
+that are displayed using the Simple:Press 'forum' Page.<br><br>
+<b>The Image Meta Tag</b><br>
+For Forum and Topic views, the image meta tag will be set to the parent forum's 'Featured Image' if one has been
+uploaded and specified (See both Create New and Edit Existing Forums).<br>
+Failing a forum specific image and for all other views, the image meta tag will use the Forum's WordPress Page featured
+image if one has been set.<br>
+In no image is set on the page then no image tag will be included.<br><br>
+<b>Please Note</b>: The recommended size for featured images to appear on FaceBook is 200px x 200px.<br><br>
+If you have the Simple:Press Image and File Uploader plugin active on your server then it is possible to look for attached
+images in forum topics. If the option to do so is turned on then the topic will be scanned for any attached images and if there
+are any found the very first one will be used as the Open Graph image tag. Note this only applies to the forum's topic view.
+[end]
+
+[special-ranks]
+<strong>Special Forum Ranks</strong><br /><br />
+The special forum ranks feature allows you to assign a rank or title to a user or group of users just based upon who they are.  The ranks are not based upon the number of posts but just what you title you want to
+give an individual or group of individuals.<br /><br />
+You can create as many special forum ranks as you want and you may assign as many or as few users to get the special rank that you want.  The Admin and Moderator ranks can be thought of as a special forum rank
+though you control who gets that rank by identifying them as an Admin or Moderator.  The special forum ranks have priority when display a rank  for a user, followed by the special admin and moderator ranks and
+finally followed by the normal forum ranks that are based on the number of posts.<br /><br />
+To create a special rank, type the desired rank title into the input form at the bottom of the special ranks and click on the update forum ranks button.  After the special forum rank is created, you may then
+control the list of users that are assigned to that forum rank or remove the special forum rank if it is no longer needed.<br /><br />
+It is also possible to associate a graphical badge with each special rank.  Images are uploaded for use as forum badges via the badge uploader in the Custom Forum Badge fieldset below (see the help in that fieldset).
+Once the badge images have been uploaded, the badge can be associated with a special rank by typing its name (including the file extension, but no path) in the badge input column.  This special rank badge will now be
+displayed in the topic view along with the username and avatar.<br /><br />
+[end]
+
+[badges-upload]
+<strong>Badges Uploads</strong><br /><br />
+If you have wish to use badges with your forum or special ranks, you can upload the badge images here. Click on the browse button, navigate to the badges you wish to upload and then click upload.  Once uploaded,
+the badge will be displayed next to the filename.  The location that badges are uploaded to is determined on the forum - integration - storage locations panel.
+[end]
+
+[rank-badges]
+<strong>Custom Badges</strong><br /><br />
+This shows the current contents of the forum badges upload folder where badges are stored. If you wish to remove one then click on the remove icon in the far right column.  The badge image will be removed from your
+server and any forum or special ranks that used the badge will no longer display.
+[end]
+
+[sneak-peek]
+<strong>Sneak Peek Message</strong><br /><br />
+If you are using the 'Can view forum and topic lists only' permission for guests or users, they will only be able to see the Group View (list of groups and forums) and Forum View (list of topics in a forum) and
+not any actual Posts.  This message is a customizable message that can be displayed to these guests and/or users when they try to view a Post.  If that permission is not being used, this message will never appear.
+[end]
+
+[admin-view]
+<strong>View Admin Posts Message</strong><br /><br />
+Only users or guests with the 'Can view admin posts' permission will be able to posts by Simple:Press Admins.  Others, without this permission, will instead be shown the View Admin Posts message.  This message
+is a customizable message that can be displayed to these guests and/or users when they try to view a Admin Post.  This can be useful for membership sites (perhaps paid support) were you want users to see what is being asked but not be able to see the Admin answers.
+[end]
+
+[rpx-login]
+<strong>RPX Web Services Support</strong><br /><br />
+Using the <a href="https://rpxnow.com/">RPX Web Services</a> you can allow users to use third party sites such as Twitter, Facebook, Google, Yahoo, OpenID, etc login credentials to access your site.  To utilize
+these services, you must have an <a href="https://rpxnow.com/">RPX Web Services Account</a>.  This account is free and will allow your users to access your site utilizing existing credentials.  To utilize the service,
+after creating an RPX account, please enter the RPX API key to begin utilizing their service.
+[end]
+
+[user-view]
+<strong>View Only Your Posts and Posts from Admins/Mods Message</strong><br /><br />
+If you are limiting users via permissino to only see their posts and those by Admins and Mods, this message will instead be shown for posts by other users.  This message is a customizable message that can be
+displayed to these guests and/or users when they try to view a other users Post.
+[end]

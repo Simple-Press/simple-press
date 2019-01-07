@@ -1,0 +1,80 @@
+--- Manage User Groups ---
+$LastChangedDate: 2016-04-27 05:11:08 -0500 (Wed, 27 Apr 2016) $
+$Rev: 14159 $
+
+[create-new-user-group]
+<strong>Create New User Group</strong><br /><br />
+This admin panel is used to create a new User Group. When created, this User Group will not have any members and will not have any
+permissions for your Forums. You will need to add members via thi Manage User Groups page and then add the User Group to your Forums with a
+Permission set via the Manage Forums admin page.
+<br /><br />
+Enter a User Group name and description and check the moderation box if this user group should be considered moderators.
+This considered moderators box is used to display moderators for the forums. User Group Permissions are still controlled via the
+Permission Sets.
+<br /><br />
+You can also optionally assign a badge for each usergroup.  Then this badge can be displayed on the topic view user post info area.
+You can also opt to hide any users destined for this user group from showing up in the new members and top posters statistics - but note
+that if a user belongs to more than one user group and any one group allows them to be listed then they will be shown.
+[end]
+
+[edit-user-group]
+<strong>Edit User Group</strong><br /><br />
+This admin panel is used to edit an existing User Group name, description, badge or treat as moderators flag.
+You can also opt to hide any users destined for this user group from showing up in the new members and top posters statistics - but note
+that if a user belongs to more than one user group and any one group allows them to be listed then they will be shown.<br /><br />
+User Group membership cannot be changed from this panel, but are instead changed from the Add, Move or Delete buttons on the Manage User Groups page.
+[end]
+
+[delete-user-group]
+<strong>Delete User Group</strong><br /><br />
+This admin panel is used to delete an existing User Group. Use with caution as all memberships in the User Group will also be deleted. If the members of this
+User Group are not in another User Group, they will lose access to the Forums. Please remember that the Guests, Members and Moderators are pre-defined User Groups that cannot be modified or deleted.
+[end]
+
+[add-members]
+<strong>Add Members To User Group</strong><br /><br />
+This admin panel is used to add Forum Users to a User Group. Depending upon your Option Settings, forum Users may belong to any number of User Groups. A list of registered Forum Users not already in
+this User Group is displayed. You may select any number of Users to add by clicking individually on their names. If you want to select more than one User, you must hold
+down the control key while selecting the Users. When finished selecting the desired Users, hit the Add Members button.<br /><br />
+When User Group memberships are added, care must be taken with regard to the <b>'Users are Limited to Single User Group Membership'</b> option setting </i>(Forum Admin > User Groups > Map Users to User Group)</i>.
+If not set, the new membership will be added to the existing memberships for the user.  If the option is set, any existing memberships will be removed.
+[end]
+
+[move-delete-members]
+<strong>Move or Delete Members From User Group</strong><br /><br />
+This admin panel is used to delete Users from a User Group. You may also choose to move the User to another User Group when removing the User from this User Group.
+If you delete a User from this User Group, if they are not members of another User Group, they will lose access to your Forums.
+<br /><br />
+Members of the current User Group are listed in the panel. Select as many Users as you want to delete/move. To select more than one User, you must hold down the control
+key while selecting the Users. If you wish to delete the User(s), leave the Select User Group pull-down in its default state and select Move/Delete Members. If you wish to
+move the User(s) to another User Group, select the new User Group in the pull-down and then select Move/Delete Members.<br /><br />
+When User Group memberships are moved, care must be taken with regard to the Users are Limited to Single User Group Membership option setting (forum - options - member tab).
+If not set, the new membership will be added to the existing memberships for the user.  If the option is set, any existing memberships will be removed.
+[end]
+
+[user-memberships]
+<strong>User Memberships</strong><br /><br />
+Every user (except Simple:Press Admins) has to be a member of a User Group or they will have no access to any of the forums. Some User Groups are pre-defined, but you can create others.
+These settings control the default User Group behaviour.<br /><br />
+The two required settings in this section are the default user group for members and the default user group for guests.  The user group for guests will control the permissions that
+guests visiting your forum will receive based on that user group.  The user group for members is the default user group that all new users to your WordPress site will gain membership in when
+their user account is created.  If these two user groups are invalid or in error, you will receive a warning message to that effect on every Simple:Press admin page load.<br /><br />
+Optionally, you may also have user group membership controlled by the WordPress role that users are designated as.  When a user is created or their WordPress role is later modified, their current
+user group membership will be assigned based up on the dropdown select boxes for each currently defined WordPress Role.  This is compatible with the Role Manager plugin and other user plugins
+that properly update users profiles.<br /><br />
+If auto user group assignment via the WordPress roles (or forum ranks in the components section) is used, care needs to be taken.  By default, the new user group membership will simply be
+added to any current user group memberships that the user has.  With the Users are Limited to Single User Group Membership option you can force any previous user group memberships to
+be removed when the new user group assignment is made.  Users will only be allowed to have membership in the most recent user group specified, whether via auto assignment or manual
+assignment in the manage user groups admin panel.  If you do not want to select this option, new user group memberships will be added to the current user group memberships and any
+adjustments will have to be made manually.
+[end]
+
+[map-users]
+<strong>Mapping Users to User Groups Based on WordPress Roles</strong><br /><br />
+This admin panel can be used to automatically map users to Simple:Press user groups based on their wp role. This is useful for membership plugins where you establish a WordPress role per membership level.
+This way you can give diferent permissions to different sets of users based on their WordPress role or membership level.<br /><br />
+The user memberships panel above can be set up to make this happen automatically for new users, however, it does not work for existing members. This panel will let you do if for all users.
+Choose whether you want to keep exisiting memberships or completely replace existing memberships. Simple Press Admins will not be affected as they do not have any user group memberships.
+You can choose whether to include Simple Press Moderators in the mapping or ignore them.  It may be easier to skip them and then manually make adjustments or you may accidentally remove them
+from a moderator usergroup.
+[end]

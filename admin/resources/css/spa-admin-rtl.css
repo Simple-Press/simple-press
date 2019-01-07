@@ -1,0 +1,96 @@
+/*
+Simple:Press Admin RTL CSS Overrides
+$LastChangedDate:2009-06-23 00:17:06 +0100 (Tue, 23 Jun 2009) $
+$Rev:2099 $
+*/
+
+body {
+	direction:rtl;
+	unicode-bidi:embed;
+}
+
+.wrap.sfatag {
+	padding:15px 5px 0 15px !important;
+}
+
+#sfmaincontainer {
+	margin:0 180px 10px 0px !important;
+}
+
+.sfalignright {
+	float:left !important;
+}
+.sfalignleft {
+	float:right !important;
+}
+.clearleft {
+	clear:right !important;
+}
+
+.mainicon {
+	margin:6px 0px 0 5px !important;
+	float:right !important;
+}
+.sfamenutable {
+	float:right !important;
+}
+ul.memberlist li {
+	float:right !important;
+}
+
+.form-table th {
+	text-align:right !important;
+	padding:5px 3px 5px 10px;
+}
+.form-table td.td-cbox {
+	padding:3px 0px 3px 5px !important;
+}
+
+td input.sfpostcontrol {
+	text-align:right !important;
+	padding:5px 3px 0 0px;
+}
+ul.memberlist li {
+	float:right !important;
+}
+
+#sfmsgspot {
+	margin:0 180px 0 20px !important;
+}
+.sffieldset ul li {
+	margin:0 20px 0 0px !important;
+}
+.sffieldset p {
+	padding:8px 15px 6px 0px !important;
+}
+#sfavataroptions {
+	text-align:right !important;
+}
+#sfavataroptions li {
+	height:20px !important;
+	margin-top:10px !important;
+}
+
+/* ACCORDION =======================================================================================*/
+
+#sfsidepanel {
+	float:right !important;
+}
+.sfsidebutton, .sfsidebutton a {
+	text-align:right !important;
+}
+.sfsidebutton img {
+	float:right !important;
+}
+.ui-accordion .ui-accordion-header .ui-icon {
+	right:.5em !important;
+}
+.ui-accordion .ui-accordion-content a {
+	text-align:right !important;
+}
+
+/* POPUP HELP================================================================================*/
+
+.sfhelplink {
+	float:left !important;
+}

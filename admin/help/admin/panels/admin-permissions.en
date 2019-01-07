@@ -1,0 +1,40 @@
+--- Manage Permission Sets ---
+$LastChangedDate: 2012-06-05 07:42:33 -0500 (Tue, 05 Jun 2012) $
+$Rev: 8661 $
+
+[create-new-permission-set]
+<strong>Create New Permission Set</strong><br /><br />
+This admin panel is used to create a new Permission Set. You may elect to create a totally new permission set by individually setting each permission or you may 'clone' an
+existing permission set.<br /><br />
+Permission Sets are a collection of rules that dictate various accesses to Forum functions and capabilities.
+When creating a new Permission Set, you need to provide a Permission Set name and description.
+Then, for each listed action, select whether that action will be allowed or denied for this Set.
+A Permission Set by itself does not allow or deny access to Forum functions.
+A Permission Set needs to be applied to a User Group and a Forum for the access control to become effective.
+Permission Sets can be used on as many different User Group and Forum combinations as desired.<br /><br />
+Note that some capabilities will <strong>never</strong> be applied to Guests (non-registered users) regardless of their setting.
+[end]
+
+[edit-master-permission-set]
+<strong>Editing A Permission Set</strong><br /><br />
+Permission Sets may be edited at any time to alter the capabilities and forum access of the User Group/Forums to which they are applied.
+[end]
+
+[delete-master-permission-set]
+<strong>Deleting A Permission Set</strong><br /><br />
+When removing a Permission Set please note that this removes it's controls for any Forums to which it may be associated. This action can not be reversed.
+[end]
+
+[reset-permissions]
+<strong>Rest All Permissions</strong><br /><br />
+This allows you to reset all permissions back to the default, install state.  Warning: This action cannot be undone.
+[end]
+
+[create-new-authorization]
+<strong>Create a New Authorization</strong><br /><br />
+This panel lets you create a new singular authorization.  An authorization is one component of a permission set.  When you create this new authorization, by default,
+it will not be used by core since its not really an authorization that is needed by core.  It will be added to each permission set that exists, just not used.<br /><br />
+So, why add a new authorization?  Perhaps  you want to create your own authorization that you want to check in your Simple:Press theme to control access.  Or perhaps create an authorization to use in the
+forum - profile - profile tabs and menus admin panel to control access to a profile tab or menu.  This admin panel, takes the work out of creating the authorization for you.<br /><br />
+Its just up to you to use the authorization!
+[end]

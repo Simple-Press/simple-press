@@ -1,0 +1,17 @@
+--- Manage Plugins ---
+$LastChangedDate: 2012-06-05 07:42:33 -0500 (Tue, 05 Jun 2012) $
+$Rev: 8661 $
+
+[template-tags]
+Certain portions of template tag code and some database queries are required to always be loaded just in case they are needed for template tags.  However, if you are not
+using these template tags, turning them off here will lower the code loading on each page. Just remember to turn these template tag includes back on should you want to use one of the template tags in the future.<br /><br />
+[end]
+
+[plugins]
+On this panel, you can manage the available plugins for Simple:Press.  You can activate, deactivate, or uninstall plugins.  Deactivating a plugin will not remove any data.  To fully remove the plugin and its data, you should uninstall the plugin.<br /><br />
+Just like WordPress, any plugin in the Simple:Press plugins folder has at least its base file loaded - even if deactivated.  If you really are not going to use the plugin, it should be deleted - not just deactivated.
+[end]
+
+[upload-plugin]
+On this panel, you can upload a plugin for Simple:Press. The plugin must be in a .zip archive and resident on your local machine for uploading.  After uploading the plugin, it will be available for activation in the Simple:Press plugin admin panel.
+[end]

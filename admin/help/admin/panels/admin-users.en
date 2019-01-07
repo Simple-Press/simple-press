@@ -1,0 +1,11 @@
+--- Manage Users ---
+$LastChangedDate: 2015-01-15 10:06:43 -0600 (Thu, 15 Jan 2015) $
+$Rev: 12353 $
+
+[users-info]
+<strong>Manage Member Info</strong><br /><br />
+This admin panel is used to manage/display member information.  Each member is listed (in paged format) or you can search for a specific member.  You do not need to know the complete member name to search.  It will attempt to match any users to the characters you enter.<br /><br />
+Each member has displayed their member display name, the topic and date of their first and last posts, their last visit, their total post number (please note this may differ from what you can view if some have been deleted), user group memberships and forum rank.  In addition, you can view the each topic that the member has posted in or view the profile information for the member.<br /><br />
+<strong>Warning!</strong><br /><br />
+Please note that Simple Press doesn't have unique users. All users listed here are in fact WordPress users. <strong><font color="red">Deleting a user on this page will remove them entirely from your WordPress database.</font></strong>
+[end]

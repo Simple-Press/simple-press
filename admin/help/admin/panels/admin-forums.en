@@ -1,0 +1,154 @@
+--- Manage Forums ---
+$LastChangedDate: 2015-07-29 09:25:53 -0500 (Wed, 29 Jul 2015) $
+$Rev: 13207 $
+
+[add-a-user-group-permission-set-to-all-forums]
+<strong>Add Global User Group Permission Set</strong><br /><br />
+This admin panel allows admin to globally add to ALL Forums, a User Group Permission Set. Please use caution as any current Permission Set for that User Group on any of the Forums will be overwritten.<br /><br />
+To add a Global User Group Permission, select the desired User Group from the pull-down menu. Then, select the Permission Set to apply to that User Group for ALL Forums. Click on Add Global Permission Set to complete the process.<br /><br />
+Please note that User Groups are defined on the Manage User Groups admin page and Permission Sets are defined on the Manage Permission Sets admin page.
+[end]
+
+[delete-all-forum-permission-sets]
+<strong>Delete All Forum Permission Sets</strong><br /><br />
+This panel allows admins to remove ALL User Group Permission Sets from ALL Groups/Forums on the site. Please use caution as this action cannot be undone.
+[end]
+
+[create-new-forum-group]
+<strong>Create New Forum Group</strong><br /><br />
+This admin panel is used to create a new Forum Group. Enter the new Group name and description and select the desired display
+position for the new Group.<br /><br />
+When creating a new Group, you also must assign each User Group a default permission for any forums created in this Group.
+For each of the existing User Groups, select the desired permission set.  Its not required but will help future forum creation by giving them default permissions.
+You can adjust the ordering of your groups on the forum - forums - order groups and forums admin panel.
+[end]
+
+[create-new-forum]
+<strong>Create New Forum</strong><br /><br />
+This admin panel is used to create a new Forum or Sub-Forum.<br /><br />
+<b>New Forum</b><br />
+Check the 'Standard Forum' option and select the desired Group for the new Forum from the pull-down menu. New Forums can only
+be added to existing Groups. If you want to create a new Group as well, you must first create the Group, then create the Forum.<br /><br />
+<b>New Sub-Forum</b><br />
+Check the 'Sub/Child Forum' option and select the desired existing forum the new Sub-Forum will belong to. Sub-Forums can be nested.<br /><br />
+Enter the Forum name, description and select the display position. <br /><br />
+You may also choose to have the new Forum locked during creation by checking the locked box. If the Forum is locked,
+users will not be able to create new topics or reply to existing topics.<br /><br />
+In this admin panel you may also selectively set the User Group Permission sets for the Forum. Permission Sets determine the level of
+access for the User Group on this Forum. Permission Sets are defined on the Manage Forum Permissions admin page.<br /><br />
+Select the desired User Group and Permission Set to apply to the Forum.  If you wish to have the Group level default permission sets
+applied to the new Forum, simply leave the drop down menus in their current state.  You may individually select as few or as many User
+Groups and Permission sets to apply as you like.  Any selected here will override the Group defined default permission sets.
+You can adjust the ordering of your groups and forums on the forum - forums - order groups and forums admin panel.
+[end]
+
+[add-user-group-permission-set]
+<strong>Add User Group Permission Set</strong><br /><br />
+During the creation of a new Forum, you MAY also supply the User Group Permission Set for the new Forum for all existing User Groups. For each User Group, you may select the Permission Set to apply to the new Forum.<br /><br />
+This is an optional step. However, if all User Groups are not assigned a Permission Set, the new Forum will be created, but a warning message will be issued. Those User Groups not assigned a Permission Set will not have any access to the newly created Forum.
+[end]
+
+[add-a-user-group-permission-set-to-an-entire-group]
+<strong>Add User Group Permission Set To An Entire Group</strong><br /><br />
+This admin panel is used to assign a User Group Permission Set to all Forums within a Group. Please use caution as any current Permission Set for that User Group on any of the Forums in the Group will be overwritten.<br /><br />
+Select the Group that you want to assign a User Group Permission Set to from the pull-down menu. Then, select the desired User Group Permission Set from Permission Set pull down menu to apply to all Forums within the Group.
+[end]
+
+[edit-forum-group]
+<strong>Edit Group</strong><br /><br />
+This admin panel is used to modify the information for an existing Group. User Group Permission Sets cannot be modified at the Group level and must be modified at the individual Forum level.<br /><br />
+When editing a Group, you also may also modify the User Group default permissions for any forums created in this Group.  For each of the existing User Groups, select the desired permission set.
+Existing User Group default permissions will already be shown in the drop down menus.  Changing any of the defaults will not add or modify any current permissions.  They will apply to any new forums created in this User Group.
+You can adjust the ordering of your groups on the forum - forums - order groups and forums admin panel.
+[end]
+
+[delete-forum-group]
+<strong>Delete Group</strong><br /><br />
+This admin panel is used to delete an existing Group. Use extreme caution with this function as all Forums, Topics and Posts within that Group will also be deleted.
+[end]
+
+[edit-permission-set]
+<strong>Edit Permission Set</strong><br /><br />
+This admin panel is used to edit the Permission Set for a User Group on the specified Forum. Select the desired User Group Permission Set from the pull-down menu. The old Permission Set will be overwritten. Please note that Permission Sets are defined on the Manage Permission Sets page.
+[end]
+
+[delete-permission-set]
+<strong>Delete Permission Set</strong><br /><br />
+This admin panel is used to delete an existing Permission Set for a User Group on the specified Forum. When the existing User Group Permission Set is deleted, that User Group will no longer have access to the Forum.
+[end]
+
+[edit-forum]
+<strong>Edit Forum</strong><br /><br />
+This admin panel is used to modify information on an existing Forum. The Forum name, description and other elements may be changed.
+The Forum may also be locked. If the Forum becomes locked, users will not be able to reply to topics or create new topics.
+In addition, you may also choose to move the Forum to a different Group.<br /><br />
+The unique forum 'slug' can also be edited here if necessary. It is <b>strongly recommended</b> that slugs NOT be changed unless
+a specific problem has been identified and a forum is having problems displaying correctly.<br />
+Please see the on-line help 'slugs' section for more information.
+You can adjust the ordering of your forums on the forum - forums - order groups and forums admin panel.
+[end]
+
+[delete-forum]
+<strong>Delete Forum</strong><br /><br />
+This admin panel is used to delete an existing Forum. Use with extreme caution as this action will also delete all Topics and Posts within the Forum.
+[end]
+
+[disable-forum]
+<strong>Disable Forum</strong><br /><br />
+This admin panel is used to disable a forum. Disabling a forum will prevent it from showing up on the front end for all users including admins.
+This will not delete the forum topic or posts. It only hides the forum from being displayed on the front end. You can reenable at any time.
+[end]
+
+[enable-forum]
+<strong>Enable Forum</strong><br /><br />
+This admin panel is used to enable a Forum. Enabling a forum will cause it to once again be displayed on the front end with permissions/memberships controlling access.
+[end]
+
+[global-rss]
+<strong>Global RSS Settings</strong><br /><br />
+This admin panel can be used to optionally set an external RSS Feed URL (IE feedburner) for the All RSS button displayed near the bottom of the forum pages.  <br /><br />
+From this panel, you can also globally enable or disable all RSS feeds for the forum.  Caution should be used here as globally enabling or disabling will apply that setting to all forums.
+Please note that this is not a global setting, per se.  Each RSS feed is still controlled at the individual forum level.  Globally disabling or enabling RSS feeds will simply change the state
+of each individual forum RSS enabled/disabled state.  No 'global' RSS setting is retained.
+[end]
+
+[merge-forums]
+This tool allows you to merge two forums into one.<br /><br />
+The 'source' forum is the one that you plan to remove from the system. The 'target' forum is the one that all source forum topics, posts etc., will inherit
+as a result of the merge. At the end of the merging process, the source forum record will be removed.<br /><br />
+Topics from the source forum will appear in the target forum merged into their creation order.<br /><br />
+<b>Important: This action can not be reversed. As always with such tools we recommend making a backup of your database before proceeding just
+in case you wish to revert the changes.</b>
+[end]
+
+[custom-icon-upload]
+<strong>Custom Icon Uploads</strong><br /><br />
+You can upload new custom icons for use as the group and forum icons.   This panel is for uploading. You would select the custom icon to use for a group or forum when creating or editing one.
+[end]
+
+[custom-icons]
+<strong>Custom Icons</strong><br /><br />
+This is the current list of custom icons available to be used.  If you no longer need the custom icon, you can delete it from this panel. Use the panel above to upload new icons. You select to use
+custom icons for a group or forum when creating or editing one.
+[end]
+
+[order-forums]
+<strong>Group and Forum Ordering</strong><br /><br />
+This is the where you can adjust the order of your Groups, Forums and SubForums.<br /><br />
+The interface is drag and drop.
+<ul>
+<li>Drag your Forum Groups with their member Forums up/down</li>
+<li>Drag your Forums up/down to their desired positions</li>
+<li>Drag Forums right to make them into SubForums or left to promote them</li>
+</ul>
+Once you have updated the order, be sure to click the save order button at the bottom of the panel.
+[end]
+
+[featured-image-upload]
+Use this control to upload forum level featured images. These can be associated with specific forums when editing the forum detail.<br><br>
+Currently, featured images, if one exists, may be used for the Open Graph meta tag and, for this use, images are recommended to be 200px x 200px.
+[end]
+
+[featured-images]
+A listing of currently uploaded and stored forum level featured images
+[end]

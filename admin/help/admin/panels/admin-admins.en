@@ -1,0 +1,49 @@
+--- Manage Admins ---
+$LastChangedDate: 2016-06-25 14:54:57 -0500 (Sat, 25 Jun 2016) $
+$Rev: 14342 $
+
+[manage-admins]
+<strong>Manage Current Admins/Moderators</strong><br /><br />
+This admin panel is used to edit/set the capabilities of current Simple:Press administrators/moderators and to grant capabilities to users to make them become administrators.
+Each of the Simple:Press admin panels has a WordPress capability defined that can selectively be granted to users to allow them access to the back end admin panels.
+Please note, a user with ANY admin capabilities defined will be granted admin rights on the front end of Simple:Press.  Also, admins do not belong to any usergroup.<br /><br />
+It is possible to assign your moderators admin capabilities.  By doing so, they will not be admins on the front end, but you can still give them access to SP admin pages
+in the wp admin.  Any current moderators will be listed below the admins.  It is possible (and likely) for the moderators to have no admin capabilities. In this case, no
+capabilities will be checked.  Unlike, admins, removing all capabilities will not remove the moderator from the list.  If you change
+your mind and want to make a moderator an admin, go to the Add New Admins section and add them as admin with the capabilities you want from there.  They will be removed as a moderator
+as admins cannot belong to any usegroup.<br /><br />
+To modify the capabilities for existing admins/moderators, use the top section and update their capabilities as desired and hit the Update Current Admin Capabilities button.
+You can edit as many current admins/moderators at once that you need to. To remove admin status from an existing admin/moderator, uncheck all the capabilities and hit the update button, and
+the user will lose all admin capabilities. Please note that you cannot remove the manage admins capability from yourself. This prevents you from mistakenly deleting yourself
+as an Simple:Press admin or locking yourself out of the manage admins panel.<br /><br />
+<strong>Add New Admins</strong><br /><br />
+The middle section of this admin panel is used to make users into new admins.  Each of the Simple:Press admin panels has a unique WordPress capability defined that can
+selectively be granted to users to allow them access to the back end admin panels.  Please note, a user with ANY admin capabilities defined will be granted admin rights on
+the front end of Simple:Press.  Select any users you desire to become admins and select the desired capabilities for these new admins and hit the Add New Admin button.
+Multiple users can be selected at once with the use of the shift or Ctrl keys.  However, if multiple users are selected, they all must initially be given the same admin capabilities.  They
+can later be edited with the edit current admin capabilities section of this admin panel.<br /><br />
+The bottom section of this admin panel is only provided for your information.  It is a listing of WordPress administrators (defined as having the 'administrator' capability),
+but do not have any Simple:Press admin capabilities.
+[end]
+
+[your-admin-options]
+<strong>Individual Admin Options</strong><br /><br />
+These admin options are customizable by each Administrator.<br /><br />
+<strong>Notify Admin (email) on new Topic/Post</strong><br />
+Every time a new post is made, an email will be sent to you.<br /><br />
+<strong>Notify Admin (within forum - not email) on new Post edit</strong><br />
+Every time a post is made, receive a notification via the forum front end notification system.
+[end]
+
+[global-options]
+You can choose to have the WordPress Dashboard display a 'Forum' section containing a list of new, unread posts and/or the latest
+forum statistics. Additionally, you can choose to have all posts within a topic awaiting moderation approved whenever an admin and/or moderator posts in that topic.<br /><br />
+You can also choose how to handle moderation for admins and mods.  Do you want any posts in moderation within a topic or post to be auto approved if an admin or moderator
+posts to that post/topic? or do you want to individually approve each post.  The two 'approve' options control that for you.<br /><br />
+Additionally, you can choose whether or not to display notices to your users if one of their post/topics is edited or moved.
+[end]
+
+[set-moderator-options]
+By turning this option on prior to saving your changes, when saved it will set each of the forum moderators options to be the same.<br /><br />
+Moderators can visit this admin panel at any time to manually adjust just their own option settings.
+[end]

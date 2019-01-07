@@ -1,0 +1,64 @@
+<?php
+/*
+Simple:Press
+Admin Forums Delete Permission Form
+$LastChangedDate: 2016-10-21 20:37:22 -0500 (Fri, 21 Oct 2016) $
+$Rev: 14651 $
+*/
+
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+
+# function to display the delete forum permission set form.  It is hidden until the delete permission set link is clicked
+function spa_forums_delete_permission_form($perm_id) {
+?>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+    	spjAjaxForm('sfpermissiondel<?php echo $perm_id; ?>', 'sfreloadfb');
+    });
+</script>
+<?php
+	$perm = spdb_table(SFPERMISSIONS, "permission_id=$perm_id", 'row');
+
+	echo '<div class="sfform-panel-spacer"></div>';
+
+	spa_paint_options_init();
+
+    $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=delperm', 'forums-loader');
+?>
+	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfpermissiondel<?php echo $perm->permission_id; ?>" name="sfpermissiondel<?php echo $perm->permission_id; ?>">
+<?php
+		echo sp_create_nonce('forum-adminform_permissiondelete');
+		spa_paint_open_tab(spa_text('Forums').' - '.spa_text('Manage Groups and Forums'), true);
+			spa_paint_open_panel();
+				spa_paint_open_fieldset(spa_text('Delete Permission Set'), 'true', 'delete-permission-set');
+?>
+					<input type="hidden" name="permission_id" value="<?php echo $perm->permission_id; ?>" />
+<?php
+					echo '<p>';
+					spa_etext('Warning! You are about to delete a permission set');
+					echo '</p>';
+					echo '<p>';
+					spa_etext('This will remove ALL access to this forum for this usergroup');
+					echo '</p>';
+					echo '<p>';
+					echo sprintf(spa_text('Please note that this action %s can NOT be reversed %s'), '<strong>', '</strong>');
+					echo '</p>';
+					echo '<p>';
+					spa_etext('Click on the delete permission set button below to proceed');
+					echo '</p>';
+
+				spa_paint_close_fieldset();
+			spa_paint_close_panel();
+			do_action('sph_forums_delete_perm_panel');
+		spa_paint_close_container();
+?>
+		<div class="sfform-submit-bar">
+    		<input type="submit" class="button-primary" id="delperm<?php echo $perm->permission_id; ?>" name="delperm<?php echo $perm->permission_id; ?>" value="<?php spa_etext('Delete Permission Set'); ?>" />
+    		<input type="button" class="button-primary spCancelForm" data-target="#curperm-<?php echo $perm->permission_id; ?>" id="sfpermissiondel<?php echo $perm->permission_id; ?>" name="delpermcancel<?php echo $perm->permission_id; ?>" value="<?php spa_etext('Cancel'); ?>" />
+        </div>
+	<?php spa_paint_close_tab(); ?>
+    </form>
+	<div class="sfform-panel-spacer"></div>
+<?php
+}
+?>

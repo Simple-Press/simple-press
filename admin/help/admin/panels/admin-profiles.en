@@ -1,0 +1,143 @@
+--- Manage Profiles ---
+$LastChangedDate: 2016-07-12 06:40:35 -0500 (Tue, 12 Jul 2016) $
+$Rev: 14431 $
+
+[display-name-format]
+<b>Display Name Format</b><br /><br />
+In most instances, allowing the user to create their own display name would be favoured but in special circumstances you can
+choose to force display names to be either the same as the users login or a combination of their first name and last name.
+[end]
+
+[personal-photos]
+<b>Personal Photos</b><br /><br />
+You may allow a user to place links to photos in their profile display. Or - if using the Simple:Press File Uploader plugin - to upload them
+to the server.<br />
+By default, user photos are only displayed on the full page profile option - NOT the popup profile display.<br /><br />
+Set the maximum number of photos you want to allow a user to display. Also set the number of columns to display the photos in. They will be
+automatically resized to fit the available space within the number of columns specified.
+[end]
+
+[display-profile-mode]
+<b>Display Profile Mode</b><br /><br />
+Select how the profile should be displayed. This can be within a pop-up window (which will not show photos) or to a separate page - both
+of which will be formatted by Simple:Press.<br /><br />
+Other options are to use the Buddy Press profile page, Mingle profile page or the WordPress 'Author' template. In all of these cases you will need to take
+responsibility for ensuring that the target page option can handle the display.<br />
+<b>Note</b>: The url built for the WordPress author page is siteurl/author/user_nicename.<br /><br />
+You can also elect to link to a different, custom page altogether. If you do this then you must provide both the URL and the name of a query
+variable to send the users ID in.<br /><br />
+<b>Notes</b>:
+<ul><li>The url built for this option will take the form of forumurl?yourqueryvar=userid</li>
+<li>if Popup Window is selected the option will be automatically switched to Forum Profile Page when viewed on a mobile phone device due to display constraints</li></ul>
+Finally, if selecting the forum page option, you can choose whether to 'wrap' the profile display within the forum header
+(logon, breadcrumbs, search bar etc) and forum footer (search and statistics) or whether to only show the profile data alone.
+[end]
+
+[profile-entry-form-mode]
+<b>Profile Entry Form Mode</b><br /><br />
+Select how the profile form should be displayed. This can be a forum generated page or the WordPress admin profile page.<br /><br />
+You can also elect to link to a different page altogether. if you do this then you must provide both the URL and the name of a query
+variable to send the users ID in.<br /><br />
+Finally, if selecting the separate page option, you can choose whether to 'wrap' the profile form within the forum header
+(logon, breadcrumbs, search bar etc) and forum footer (search and statistics) or whether to only show the profile form alone.
+[end]
+
+[first-forum-visit]
+<b>First Form Visit</b><br /><br />
+Select whether a new user should be directed to the profile page on their very first visit to the forum.<br />
+You may also choose to force a password change on this first visit. (Note: It is possible for a user to ignore this but they will
+receive a warning message).
+[end]
+
+[avatar-options]
+<strong>Avatars</strong><br /><br />
+<strong>Display Avatars</strong><br />
+These options determine whether avatars are displayed or not. <br /><br />
+<strong>Enable Avatar Uploading</strong><br />
+Before members can upload Avatars the option must be enabled, or turned on. Once turned on, members will be able to make the uploads
+if they are in a user group with a permission set assigned that allows it.<br /><br />
+<strong>Maximum Avatar Filesize (bytes)</strong><br />
+You determine the maximum file size an uploaded avatar may be. If its larger than this size at upload time, it will be rejected and an error message displayed.<br /><br />
+<strong>Enable Avatar Pool</strong><br />
+With an Avatar Pool, you can provide a set of Avatars for users to choose from.  Avatars for the Avatar Pool can be uploaded using the Avatar Pool uploader on this same panel if enabled.<br /><br />
+<strong>Remote Avatars</strong><br />
+With remote Avatars, you can allow users to point to an avatar image file located on another server/URL for use in the forum.<br /><br />
+<strong>Gravatar Rating</strong><br />
+If using Gravatars,this option restricts which avatars may be displayed based on its rating.<br /><br />
+<strong>Maximum Avatar Display Width (pixels)</strong><br />
+You determine the maximum width avatars should display at. For themes that are not that wide, a smaller avatar will save some space. Avatars will be displayed
+in the same aspect ratio as uploaded, but the width will be limited to this value which will limit the height too.  We do not crop or square the avatar.<br /><br />
+<strong>Auto Resize Avatar</strong><br />
+If you select this option, any avatars that have a width greater than the specified maximum width, will have the avatar image resized to this width keeping the same aspect ratio.<br /><br />
+<strong>Avatar Resize Quality</strong><br />
+If you are auto resizing avatars, this will be the image quality to retain when the resizing is done.  Number should be express as a percentage without the % sign.  Less quality means smaller file size.<br /><br />
+<strong>Replace WordPress Avatars</strong><br />
+If you would like to replace the WordPress avatars in locations such as the profile and comments, check this option and Simple:Press will insert its avatar in the place of the WordPress avatar.  This should also work for any WordPress avatar plugins that use the WordPress get_avatar() method.<br /><br />
+[end]
+
+[avatar-priorities]
+<strong>Avatar Priority</strong><br />
+This priority ranking determines which avatar is displayed should multiple be defined/available.  The list is a priority order and is sorted via a drag and drop interface. Should the top priority provide an avatar, for the requested user, that avatar will be displayed.  If one is not found, it will check the avatar method of the next priority.  <br /><br />Please note, an avatar will always be found for the Simple:Press default avatars.  If you want to "disable" any other form of avatar, simply put it in priority order after the Simple:Press default avatars. The WordPress avatars will also always find an avatar for display.  Any blank or default Gravatar is ignored and only actual Gravatars are used.
+[end]
+
+[avatar-pool-upload]
+<strong>Avatar Pool Upload</strong><br />
+With this avatar pool uploader, you may create a pool of avatars that your users can select from in order to give themselves an avatar.  Pool avatars can be enabled in the avatar options panel.  Also, the avatar priorities need to be adjusted on this panel to use the pool avatar if the user has selected one.<br /><br />
+The storage location for the avatar pool is defined on the forum - integration - storage locations admin panel.<br /><br />
+Please note, you may also manually move the avatars for the avatar pool into this storage location and they will display when the page is refreshed and will be available to users to select from their profile page if enabled.
+[end]
+
+[avatar-pool]
+<strong>Avatar Pool </strong><br />
+These avatars are the currently available avatars in your avatar pool for users to select if you have enabled avatar pool selection.<br /><br />
+The storage location for the avatar pool is defined on the forum - integration - storage locations admin panel.<br /><br />
+Please note, you may also manually move the avatars for the avatar pool into this storage location and they will display when the page is refreshed and will be available to users to select from their profile page if enabled.  Also, avatar pool uploaded files are NOT subject to the user avatar upload limits, so as admin, please use caution when uploading avatars regarding image width and height and filesize.
+[end]
+
+[avatar-default-upload]
+<strong>Avatar Defaults Upload</strong><br />
+With this avatar default uploader, you may create your own group of default avatars to replace those pre-supplied when
+you installed Simple:Press. SP Default Avatars can be enabled in the options section of this panel.  Also, the avatar priorities
+need to be adjusted on this panel to use the SP Defaults.<br /><br />
+There are 4 default avatars. These are: <ul>
+<li>Admin</li>
+<li>Moderator</li>
+<li>Member</li>
+<li>Guest</li></ul>
+The storage location for the forum avatars is defined on the forum - integration - storage locations admin panel. The defaults are
+uploaded to a 'defaults' sub-folder.<br /><br />
+Please note, you may also manually move the avatars for the defaults into this storage location and they will display when
+the page is refreshed and will be available to select below.
+[end]
+
+[avatar-defaults]
+<strong>Avatar Defaults</strong><br />
+These avatars are the currently available selection of default avatars. These will be used if your avatar priorities require
+defaults.<br /><br />
+Select the ones you wish to use for 'Admins', 'Moderators', 'Members' and 'Guests'. Upload alternatives on this panel.<br /><br />
+<b>Note</b>: Uploaded files are NOT subject to the user avatar upload limits, so as admin, please use caution when uploading avatars
+regarding image width and height and filesize.
+[end]
+
+[sig-images]
+<strong>Signature Image Sizes</strong><br /><br />
+If you have enabled signatures via permissions, this option will allow you to limit the size of any signature images.  Enter the maximum width and height into the input fields.  If you do not wish to limit the size of image signatures, enter a value of zero for width and height.  You can limit the width or height independently of each other.
+[end]
+
+[profile-menus]
+<strong>Configuring Your Profile Tabs and Menus</strong><br /><br />
+On this admin panel, you can control the operation of the user profile forms on the front end of Simple:Press.  Here you can set the order of the tabs and menus.  To change the order,
+just drag and drop the tab or menu to location where you would like it to appear.<br /><br />
+On this panel, you can also customize or localize the titles of the tabs and menus.  Simply open up the tab or menu and change the title of each tab or menu to what
+you would like it to be.<br /><br />
+You can also turn off (or on) the display of each tab or profile if you don't want it to appear on a user profile.  If you set the display to off, it will not appear as a form for users
+to edit in their profile.<br /><br />
+You can also set an authorization (ie permission) for a tab or menu to be available to a user.  Please note that this permission must already be defined in the Simple:Press system
+via core or a plugin.<br /><br />
+After making any changes, be sure to save the profile tabs and menus changes.
+[end]
+
+[profile-message]
+<strong>Overview Message</strong><br /><br />
+On this panel, you can enter a custom profile overview message that will appear when a user loads up their profile panel.  It only appears on the overview profile menu.
+[end]

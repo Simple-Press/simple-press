@@ -1,0 +1,135 @@
+--- Manage Toolbox ---
+$LastChangedDate: 2016-01-29 15:19:12 -0600 (Fri, 29 Jan 2016) $
+$Rev: 13870 $
+
+[uninstall]
+<strong>Un-install</strong><br /><br />
+If at any time you wish to entirely remove Simple:Press from your site, deactivating the plugin will stop it from working but will NOT remove the data.<br /><br />
+To completely un-install Simple:Press, including the removal of all data tables and option records, check the un-install box and THEN deactivate the plugin.<br /><br />
+To completely clean the storage locations Simple:Press, check the remove storage locations box and THEN deactivate the plugin. This will remove any Simple Press plugins and themes
+you have you as well as othr uploaded storage (ie avatars).
+[end]
+
+[modify-build-number]
+<strong>Modify Build Number</strong><br /><br />
+<b>WARNING - Change this only if you know what you are doing!</b><br /><br />
+This option update allows admins to change the current Simple:Press build number.  <b>WARNING - Change this only if you know what you
+are doing!  Changing the build number should only be done in rare cases when there were issues during an upgrade or installation.</b><br /><br />
+By manually changing the build number AND checking the Force Upgrade box, you can force the upgrade/install procedure to run once again.
+Normally, you should only change this when recommended by the Simple:Press team in the support forum.
+[end]
+
+[rebuild-indexes]
+<strong>Rebuild Forum and Post Indexes</strong><br /><br />
+As a performance aid, Simple:Press database tables for forums and topics maintain an index for latest activity.  Under normal conditions, you will never need to worry about this.  Some actions, like moving to a new domain, or importing other forum data, rebuilding these indexes is needed.  You should not need to use these unless asked to by Simple:Press support (though doing so won't hurt anything).<br /><br />
+Please note, that if you have a significant number of topics or forums, the process of rebuilding these indexes may take a few moments.  Please be patient.
+[end]
+
+[transient-cleanup]
+<strong>Transient Cleanup</strong><br /><br />
+To aid in performance, WordPress uses something called transients in the WordPress options table.  These transients have a limited time of validity.  Unfortunately, if a transient expires, it is not automatically removed from the options table.  It is only removed when it is accessed and its determined it has expired.<br /><br />
+Simple:Press uses these WordPress transients for some tasks.  If you have many short term users, like in a support forum, where the users may cause transients to be created but infrequently or rarely visit the forum, these expired transients may clutter up the options table. This housekeeping function will go in and remove any transients that have expired rather than waiting for WordPress to do when (and if) accessed.  This cleanup also cleans up and Simple:Press user notices that have expired from our database tables.
+[end]
+
+[newpost-cleanup]
+<strong>User's New Post List Cleanup</strong><br /><br />
+Simple:Press stores a user's last 50 New Posts (ie unread) in the database. For users that have stopped visiting the forum or visit infrequently, this data an take up database space.  Also, many versions ago, the number was unlimited, so its possible to have very large new post lists if its been some time since they visited.  Using this function will simply remove the new posts lists for users that haven't visited the forum in the specified number of days.
+[end]
+
+[reset-tabs]
+<strong>Reset Profile Tabs and Menus</strong><br /><br />
+This will reset the profile tabs and menus back to their original (at install) state.  Any plugins that added tabs or menus may need to be deactivated and reactivated after using this to get their tabs and menus re-added. Normally, you should only change this when recommended by the Simple:Press team in the support forum.
+[end]
+
+[reset-auths]
+<strong>Reset User Auth Caches</strong><br /><br />
+This will reset the auths cache for each user.  Normally the auths cache is stored and used for each user instead of calculating on each page load. Using this will clear the auth cache and force it to be rebuilt on next visit for each user.  Normally, you should only change this when recommended by the Simple:Press team in the support forum.
+[end]
+
+[reset-plugin-data]
+<strong>Reset Users Plugin Data Cache</strong><br /><br />
+Some user-related data created by plugins is cached to help loading performance. This task will clear that cache for all users should it become necessary to do so. Normally, you should only run this task when recommended by the Simple:Press team in the support forum.
+[end]
+
+[reset-combined]
+<strong>Reset Combined CSS Cache File</strong><br /><br />
+This will delete the current combined CSS cache file for your forum.  This should only be used when you are have made a change to a CSS file and its not getting reflected
+in the combined CSS file (this should not happen).  Do not confuse this cached file being outdated vs the browser cache being the culprit. Always try clearing your browser
+cache before using the housekeeping tool.
+Simple:Press team in the support forum.<br /><br />
+<strong>Reset Combined Scripts Cache Files</strong><br /><br />
+This will delete the current combined scripts (JS) cache file for your forum.  This should only be used when you are have made a change to a script file and its not getting reflected
+in the combined scripts files (this should not happen).  Do not confuse these cached files (one for header scripts and one for footer scripts) being outdated vs the browser cache
+being the culprit. Always try clearing your browser cache before using the housekeeping tool.
+[end]
+
+[inspect-data]
+This panel acts as an aid for those contemplating customisation or who are just curious! <br /><br />
+Turning on any of these itmes will display the underlying data objects and/or the underlying SQL Query.
+This will be displayed at the point of use within the forum itself.
+Please note that only the person who has set the inspection on will be shown the results.<br /><br />
+<ul>
+<li><b>All Page Views - Control Data:</b>
+<ul>
+<li><b>sfvars</b>: Data relating to the current page type and page activity</li>
+<li><b>sfglobals</b>: Control data used in a variety of pages so cached for the complete page load</li>
+<li><b>spThisUser</b>: The data objct available on the current user</li>
+<li><b>spDevice</b>: The current device being used</li>
+</ul>
+</li>
+<li><b>Specific Page Views:</b>
+<ul>
+<li><b>Group View Data</b>: The data objects used to create the Group View and sections within the view</li>
+<li><b>Forum View Data</b>: The data objects used to create the Forum View and sections within the view</li>
+<li><b>Topic View Data</b>: The data objects used to create the Topic View and sections within the view</li>
+<li><b>Member View Data</b>: The data objects used to create the Members Listing and section within the listing</li>
+<li><b>Profile View Data</b>: The data object used to create the Profile Forms and Display</li>
+<li><b>Topic List View Data</b>: The data object used to create the Topic Lists such as the New Post Lists or the Search Results</li>
+<li><b>Post List View Data</b>: The data objects used to create the Post Listings. Please note this view is not currently in use but is available for plugins if required.</li>
+</ul>
+</li>
+</ul>
+[end]
+
+[cron-add]
+<strong>Add a CRON Job</strong><br /><br />
+By filling in the Add a CRON job fields, you can schedule a CRON job.<br /><br />
+Enter a unix timestamp for when you want the CRON job to first run.  If you leave the timestamp blank, the CRON will be scheduled for immediately.<br /><br />
+Pick a scheduling interval from the list of available CRON schedules at the top of this admin form.  If you leave the interval blank, the CRON job will be run once and then disappear.<br /><br />
+The hook is a required field and is the action you want fired when the scheduled CRON runs.<br /><br />
+The list of arguments is an optional array of arguments that can be passed to the CRON hook.  It should be of the form, array(1, 2, 3).  Then those values would be passed to hooked action
+as the first, second and third arguments.
+[end]
+
+[cron-delete]
+<strong>Delete a CRON Job</strong><br /><br />
+By filling in the Delete a CRON job fields, you can remove scheduled CRON job. It will remove the next and all following scheduled activations of the CRON.<br /><br />
+Enter the next scheduled unix timestamp for the CRON.  You should be able to get this from the list of currently scheduled CRONs. The timestamp is a required field and must
+match a currently scheduled CRON.<br /><br />
+Enter the hook for the scheduled CRON.  The hook is a required field and must match the hook for the scheduled CRON you want to remove.<br /><br />
+The list of arguments must match the hooked array of arguments for the CRON you want to remove.  Again, you can get this information from the list of currently scheduled CRON jobs.
+[end]
+
+[cron-run]
+<strong>Run a CRON Job</strong><br /><br />
+Using the run a CRON job inputs, you can cause a CRON job to be executed one time.  This one time running will not affect the current schedule of the CRON.
+All it really does is fire the hook for the schedule CRON which simulates the CRON running.  You can get the hook from the list of currently schedueld CRON jobs.
+[end]
+
+[post-count-cleanup]
+<strong>User Post Count Cleanup</strong><br /><br />
+Using this housekeeping function, you can recalculate all of your user's post counts.  To do this, the sfposts table will be scanned for posts by each user.  Only
+current, existing posts will be counted.  Any posts from previously deleted forums will not be counted.
+[end]
+
+[flush-cache]
+<strong>Flush General Cache</strong><br /><br />
+Using this housekeeping function, you can flush (empty) the general cache.  This is the db table sfcache use for general caching of forum items.  Generally, no need to execute this unless
+asked to by the simple press support team.
+[end]
+
+[flush-xml]
+<strong>Flush XML API Cache</strong><br /><br />
+Using this housekeeping function, you can flush (empty) the XML API cache.  This is the cache used by the Simple Press plugin to check for updates. Generally, no need to execute this unless
+asked to by the simple press support team.
+[end]
