@@ -1,7 +1,173 @@
-eval((function(s){var a,c,e,i,j,o="",r,t="$^`|~";for(i=0;i<s.length;i++){r=t+s[i][2];a=s[i][1].split("");for(j=a.length - 1;j>=0;j--){s[i][0]=s[i][0].split(r.charAt(j)).join(a[j]);}o+=s[i][0];}var p=2003;var x=function(r){var c,p,s,l='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789';if(r<63)c=l.charAt(r);else{r-=63;p=Math.floor(r/63);s=r%63;c=l.charAt(p)+l.charAt(s)}return c;};a=o.substr(p).split(':');r=a[1].split('?');a=a[0].split('?');o=o.substr(0,p);if(!''.replace(/^/,String)){var z={};for(i=0;i<117;i++){var y=x(i);z[y]=r[i]||y}t=/\b\w\w?\b/g;y=function(a){return z[a]||a};o=o.replace(t,y);}else{for(j=a[a.length-1]-1;j>=0;j--){if(r[j])o=o.replace(new RegExp('\b'+(j<63?c.charAt(j):c.charAt((j-63)/63)+c.charAt((j-63)%63))+'\b','g'),r[j])}}return o.replace(//g,"\"");})([["var c,n;s R(A,y,g,k,h,I,r~aP{zh=(au(y)+au(k))g==0~z w=newN(rc=w.al(@i><img srcI'+c[1i'd({q:0}n=0}V{n++}z j=((n/ah)*aGq',jz u=A+'&^='+g,ac=#zone+gg==8&&h<(k+1)~u=thisUrl+'&sub^='+h}f(ac).aX(u,s(a,b~zI=a.substr(0,13f(ac)aI=='aF Error'~i[3v}am(g==8~h++h>k~g++}}V{g++}am(g>y~q',aGaj>'+Y(c[0])+'i[2v}V{R(A,y,g,k,h,I,r)}})}ap(e~z Ji'),Ll'J.B='<p>aE -DF can not be E$z t=<p>aUKyVxk MJ onWiOKsxvZ M E.;t+D 7 MtK: +e.aA+'$L.B=t;J;L}}s "+
-"Q(A,N,x,m,I,r,D~aP{z j=0,T=(x-N)c==null~z w=newN(rc=w.al(@i><img srcI'+c[1i'd({q:0})}V{aM=(T-(x-m)j=((aM/T)*aG)}q',jz u=A+'&start='+m;l').aX(u,s(a,b~aP{zr=a.al('%%%marker%%%'),F=f.parseJSON(ar[1])F.status=='succ'~S=F.sectionS==x~aj>'+X(c[0],c[4],D)+'i[2q',aGv}V{Q(A,N,x,S,I,r,D)}}V{l[3aCT: '+m+'7: '+F.7+'</p><aB HS:a0></aB>'l'v}}ap(e~l[3aCT: '+m+''+a+'</p><aB HS:a0></aB>'l'v}})}ap(e~z Ji'),Ll'J.B='<p>aE -D Ue can not be E$z t=<p>aU"+
-"KyVxk MJ onWiOKsxvZ M E.;t+D 7 MtK: +e.aA+'$L.B=t;J;L}}s Y(ae~v'<a_`sfidone method=postctionb.az?ai=aH-aQ/ab/aR-aL/spa-aL.az><6g=hidden`i q=1 /`go|umi qae</a_>'}s X(aq,an,D~v'&O;&O;&O;&O;&O;<aYb.az?ai=aH-aQ/ab/aR-aw/spa-aw.az&tab=changelog`W qaq</a>&O;&O;<aYD+'`W qan</a>'}0?117:??mageStrings?progrbar??jQuery?PhasSubPhasimagezonProgr?subPhaseCount?errorzonBuild?iProgr?getElementById??valumages?function?abortMsg?thisUrl?return"+
-"?itext?endBuild?^Count?var?phpUrl?innerHTML?html?homeUrl?completed?responsdocument?stylimagiZonfadeIn?eZonbeing?startBuild?nbsp?display?spjPer|mUspjPer|mI?returnVal?buildSpan?option?elsgo|umuspjEndUspjEndI?slow?primary??????naminput?error??br?block?admin?target?submit?magetext?button?typ^Total?pagfinishzonJavaScript?split?if?|umtext?class?catch?admintext?stripped?stopping?reported?parseInt?utoolbox?thproblem?php?magdiv??ThPROBLEM?I?100?simplretVal?loaded?is?|ums?cVal"+
-"uString?which?try?pr?panel?clear?build?Therwith?this?load?href?from?|m?both",
-"').C('<p</p>');nstall<9 />f('#=a af(#d).).K('Z'+' />>'+c;am(esse?d('U','current=G.o('pgrad='+]+');><6gd.H.Pa</p>';phase 5=for){of-_",
-""]]));
+/* Simple:Press Version 5.0 Install/Upgrade */
+
+/* ---------------------------------
+ Simple:Press - Version 5.0
+ Forum Javascript loaded in footer after page loads
+
+ $LastChangedDate: 2016-11-21 09:37:50 -0800 (Mon, 21 Nov 2016) $
+ $Rev: 14735 $
+ ------------------------------------ */
+
+(function(spj, $, undefined) {
+	// private properties
+	var messageStrings;
+	var installProgress;
+
+	// public properties
+
+	// public methods
+	spj.performInstall = function(phpUrl, phaseCount, currentPhase, subPhaseCount, currentSubPhase, image, messages) {
+		try {
+			var phaseTotal = (parseInt(phaseCount) + parseInt(subPhaseCount));
+
+			/* If first time in - load up message strings and initialize progress */
+			if (currentPhase == 0) {
+				var installtext = new String(messages);
+				messageStrings = installtext.split("@");
+
+				/* display installing message and set up progress bar */
+				$('#imagezone').html('<p><br /><img src="' + image + '" /><br />' + messageStrings[1] + '<br /></p>');
+				$('#imagezone').fadeIn('slow');
+				$("#progressbar").progressbar({value: 0});
+				installProgress = 0;
+			} else {
+				installProgress++;
+			}
+
+			/* update progress bar */
+			var currentProgress = ((installProgress / phaseTotal) * 100);
+			$("#progressbar").progressbar('option', 'value', currentProgress);
+
+			/* do next phase/build section */
+			var thisUrl = phpUrl + '&phase=' + currentPhase;
+			var target = "#zone" + currentPhase;
+			if (currentPhase == 8 && currentSubPhase < (subPhaseCount + 1)) {
+				thisUrl = thisUrl + '&subphase=' + currentSubPhase;
+			}
+
+			$(target).load(thisUrl, function(a, b) {
+				/* check for errors first */
+				var retVal = a.substr(0, 13);
+
+				$(target).fadeIn('slow');
+
+				if (retVal == 'Install Error') {
+					$('#imagezone').html('<p>' + messageStrings[3] + '</p>');
+					return;
+				}
+
+				if (currentPhase == 8) {
+					currentSubPhase++;
+					if (currentSubPhase > subPhaseCount) {
+						currentPhase++;
+					}
+				} else {
+					currentPhase++;
+				}
+
+				/* are we finished yet */
+				if (currentPhase > phaseCount) {
+					$("#progressbar").progressbar('option', 'value', 100);
+					$('#finishzone').html('<p>' + endInstall(messageStrings[0]) + '</p>');
+					$('#imagezone').html('<p>' + messageStrings[2] + '</p>');
+					return;
+				} else {
+					spj.performInstall(phpUrl, phaseCount, currentPhase, subPhaseCount, currentSubPhase, image, messages);
+				}
+			});
+		} catch (e) {
+			var iZone = document.getElementById('imagezone');
+			var eZone = document.getElementById('errorzone');
+			iZone.innerHTML = '<p>PROBLEM - The Install can not be completed</p>';
+			var abortMsg = "<p>There is a problem with the JavaScript being loaded on this page which is stopping the upgrade from being completed.<br />";
+			abortMsg += "The error being reported is: " + e.message + '</p>';
+			eZone.innerHTML = abortMsg;
+			iZone.style.display = "block";
+			eZone.style.display = "block";
+		}
+	};
+
+	spj.performUpgrade = function(phpUrl, startBuild, endBuild, currentBuild, image, messages, homeUrl) {
+		try {
+			var currentProgress = 0;
+			var buildSpan = (endBuild - startBuild);
+
+			/* If first time in - load up message strings and initialize progress */
+			if (messageStrings == null) {
+				var installtext = new String(messages);
+				messageStrings = installtext.split("@");
+
+				/* display upgrading message and progressbar */
+				$('#imagezone').html('<p><br /><img src="' + image + '" /><br />' + messageStrings[1] + '<br /></p>');
+				$('#imagezone').fadeIn('slow');
+				$("#progressbar").progressbar({value: 0});
+			} else {
+				/* calculate progress so far */
+				cValue = (buildSpan - (endBuild - currentBuild));
+				currentProgress = ((cValue / buildSpan) * 100);
+			}
+
+			/* update progress bar */
+			$("#progressbar").progressbar('option', 'value', currentProgress);
+
+			/* do next phase/build section */
+			var thisUrl = phpUrl + '&start=' + currentBuild;
+			$('#errorzone').load(thisUrl, function(a, b) {
+				try {
+					var stripped = a.split('%%%marker%%%');
+					var response = $.parseJSON(stripped[1]);
+					/* valid response if we get here - if was invalid, will go to catch */
+					if (response.status == 'success') { /* check for success or error */
+						/* see if done or more upgrades to do */
+						returnVal = response.section; /* get completed section */
+						if (returnVal == endBuild) {
+							/* last section complete - finish up */
+							$('#finishzone').html('<p>' + endUpgrade(messageStrings[0], messageStrings[4], homeUrl) + '</p>');
+							$('#imagezone').html('<p>' + messageStrings[2] + '</p>');
+							$("#progressbar").progressbar('option', 'value', 100);
+
+							/* any special messages? */
+							if (response.message != '') {
+								$('#imagezone').append('<p>' + response.message + '</p>');
+							}
+
+							return;
+						} else {
+							/* run next upgrade section */
+							spj.performUpgrade(phpUrl, startBuild, endBuild, returnVal, image, messages, homeUrl);
+						}
+					} else {
+						/* output our error message */
+						$('#errorzone').html('<p>' + messageStrings[3] + '<br />current build: ' + currentBuild + '<br />error: ' + response.error + '</p><div style="clear:both"></div>');
+						$('#errorzone').fadeIn('slow');
+						return;
+					}
+				} catch (e) {
+					/* a valid json response was not issued so error */
+					$('#errorzone').html('<p>' + messageStrings[3] + '<br />current build: ' + currentBuild + '<br />' + a + '</p><div style="clear:both"></div>');
+					$('#errorzone').fadeIn('slow');
+					return;
+				}
+			});
+		} catch (e) {
+			var iZone = document.getElementById('imagezone');
+			var eZone = document.getElementById('errorzone');
+			iZone.innerHTML = '<p>PROBLEM - The Upgrade can not be completed</p>';
+			var abortMsg = "<p>There is a problem with the JavaScript being loaded on this page which is stopping the upgrade from being completed.<br />";
+			abortMsg += "The error being reported is: " + e.message + '</p>';
+			eZone.innerHTML = abortMsg;
+			iZone.style.display = "block";
+			eZone.style.display = "block";
+		}
+	};
+
+	// private methods
+	function endInstall(messagetext) {
+		return '<form name="sfinstalldone" method="post" action="admin.php?page=simple-press/admin/panel-forums/spa-forums.php"><br /><input type="hidden" name="install" value="1" /><input type="submit" class="button-primary" name="goforuminstall" value="' + messagetext + '" /></form>';
+	}
+
+	function endUpgrade(admintext, forumtext, homeUrl) {
+		return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?page=simple-press/admin/panel-toolbox/spa-toolbox.php&tab=changelog"><input type="submit" class="button-primary" name="goforumupgrade" value="' + admintext + '" /></a>&nbsp;&nbsp;<a href="' + homeUrl + '"><input type="submit" class="button-primary" name="goforumupgrade" value="' + forumtext + '" /></a>';
+	}
+
+}(window.spj = window.spj || {}, jQuery));

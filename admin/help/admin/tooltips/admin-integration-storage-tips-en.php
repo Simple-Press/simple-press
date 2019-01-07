@@ -31,4 +31,3 @@ $tooltips['cache'] = 'The Cache folder contains the CSS and JavaScript library c
 $tooltips['forum-images'] = 'A place to store individual forum feature images.';
 
 $tooltips = apply_filters('sph_integration_tooltips', $tooltips);
-?>

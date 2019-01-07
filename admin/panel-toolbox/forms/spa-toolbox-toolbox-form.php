@@ -2,18 +2,16 @@
 /*
 Simple:Press
 Admin Toolbox Toolbox Form
-$LastChangedDate: 2016-06-25 05:55:17 -0500 (Sat, 25 Jun 2016) $
-$Rev: 14322 $
+$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
+$Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_toolbox_toolbox_form() {
 ?>
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-    	spjAjaxForm('sftoolboxform', '');
-    });
+<script>
+   	spj.loadAjaxForm('sftoolboxform', '');
 </script>
 <?php
 	$sfoptions = spa_get_toolbox_data();
@@ -27,11 +25,11 @@ function spa_toolbox_toolbox_form() {
 
     #== TOOLBOX Tab ============================================================
 
-	spa_paint_open_tab(spa_text('Toolbox').' - '.spa_text('Toolbox'));
+	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Toolbox'));
 		spa_paint_open_panel();
-			spa_paint_open_fieldset(spa_text('Current Version/Build'), false);
-            	$version = spa_text('Version:').'&nbsp;<strong>'.sp_get_option('sfversion').'</strong>';
-            	$build = spa_text('Build:  ').'&nbsp;<strong>'.sp_get_option('sfbuild').'</strong>';
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Current Version/Build'), false);
+            	$version = SP()->primitives->admin_text('Version:').'&nbsp;<strong>'.SP()->options->get('sfversion').'</strong>';
+            	$build = SP()->primitives->admin_text('Build:  ').'&nbsp;<strong>'.SP()->options->get('sfbuild').'</strong>';
             	echo $version.'&nbsp;&nbsp;&nbsp;&nbsp;'.$build;
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
@@ -40,10 +38,10 @@ function spa_toolbox_toolbox_form() {
 		spa_paint_tab_right_cell();
 
 		spa_paint_open_panel();
-			spa_paint_open_fieldset(spa_text('Modify Build Number'), true, 'modify-build-number');
-				echo '<div class="sfoptionerror">'.spa_text('WARNING: This value should not be changed unless requested by the Simple:Press team in the support forum as it may cause the install/upgrade script to be re-run.').'</div>';
-				spa_paint_input(spa_text('Build number'), "sfbuild", sp_get_option('sfbuild'), false, false);
-				spa_paint_checkbox(spa_text('Force upgrade to build number'), "sfforceupgrade", $sfoptions['sfforceupgrade']);
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Modify Build Number'), true, 'modify-build-number');
+				echo '<div class="sfoptionerror">'.SP()->primitives->admin_text('WARNING: This value should not be changed unless requested by the Simple:Press team in the support forum as it may cause the install/upgrade script to be re-run.').'</div>';
+				spa_paint_input(SP()->primitives->admin_text('Build number'), "sfbuild", SP()->options->get('sfbuild'), false, false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Force upgrade to build number'), "sfforceupgrade", $sfoptions['sfforceupgrade']);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
@@ -52,7 +50,7 @@ function spa_toolbox_toolbox_form() {
 
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php spa_etext('Update Toolbox'); ?>" />
+	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Toolbox'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();
@@ -60,5 +58,3 @@ function spa_toolbox_toolbox_form() {
 	</form>
 <?php
 }
-
-?>

@@ -2,18 +2,16 @@
 /*
 Simple:Press
 Admin Components Special Rank Add Member Form
-$LastChangedDate: 2016-10-21 16:27:53 -0500 (Fri, 21 Oct 2016) $
-$Rev: 14650 $
+$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
+$Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_components_sr_add_members_form($rank_id) {
 ?>
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-    	spjAjaxForm('sfmembernew<?php echo $rank_id; ?>', 'sfreloadfr');
-    });
+<script>
+   	spj.loadAjaxForm('sfmembernew<?php echo $rank_id; ?>', 'sfreloadfr');
 </script>
 <?php
 	spa_paint_options_init();
@@ -24,22 +22,21 @@ function spa_components_sr_add_members_form($rank_id) {
 <?php
 		echo sp_create_nonce('special-rank-add');
 ?>
-					<p><?php spa_etext('Select members to add (use CONTROL for multiple members)') ?></p>
+					<p><?php SP()->primitives->admin_etext('Select members to add (use CONTROL for multiple members)') ?></p>
 <?php
-                	$from = esc_js(spa_text('Eligible members'));
-                	$to = esc_js(spa_text('Selected members'));
+                	$from = esc_js(SP()->primitives->admin_text('Eligible members'));
+                	$to = esc_js(SP()->primitives->admin_text('Selected members'));
                     $action = 'addru';
-                	include_once SF_PLUGIN_DIR.'/admin/library/ajax/spa-ajax-multiselect.php';
+                    require_once SP_PLUGIN_DIR.'/admin/library/ajax/spa-ajax-multiselect.php';
 ?>
 					<div class="clearboth"></div>
 <?php
         $loc = 'sfrankshow-'.$rank_id;
 ?>
-		<input type="submit" class="button-primary spSpecialRankAdd" id="sfnewmember<?php echo $rank_id; ?>" name="sfnewmember<?php echo $rank_id; ?>" data-target="#amember_id<?php echo $rank_id; ?> option" value="<?php spa_etext('Add Members'); ?>" />
-		<input type="button" class="button-primary spSpecialRankCancel" data-target="#members-<?php echo $rank_id; ?>" data-loc="<?php echo $loc; ?>" id="addmemberscancel<?php echo $rank_id; ?>" name="addmemberscancel<?php echo $rank_id; ?>" value="<?php spa_etext('Cancel'); ?>" />
+		<input type="submit" class="button-primary spSpecialRankAdd" id="sfnewmember<?php echo $rank_id; ?>" name="sfnewmember<?php echo $rank_id; ?>" data-target="#amember_id<?php echo $rank_id; ?> option" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" />
+		<input type="button" class="button-primary spSpecialRankCancel" data-target="#members-<?php echo $rank_id; ?>" data-loc="<?php echo $loc; ?>" id="addmemberscancel<?php echo $rank_id; ?>" name="addmemberscancel<?php echo $rank_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 	</form>
 
 	<div class="sfform-panel-spacer"></div>
 <?php
 }
-?>

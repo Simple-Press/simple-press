@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Support Routines
-$LastChangedDate: 2014-02-10 04:43:46 -0600 (Mon, 10 Feb 2014) $
-$Rev: 11058 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -29,7 +29,7 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 #	$page:
 # ------------------------------------------------------------------
 function sp_push_topic_page($forumid, $page) {
-	sp_add_cache('bookmark', $forumid.'@'.$page);
+	SP()->cache->add('bookmark', $forumid.'@'.$page);
 }
 
 # ------------------------------------------------------------------
@@ -40,8 +40,8 @@ function sp_push_topic_page($forumid, $page) {
 #	$forumid:
 # ------------------------------------------------------------------
 function sp_pop_topic_page($forumid) {
-	$page = 1;
-	$check = sp_get_cache('bookmark');
+	$page  = 1;
+	$check = SP()->cache->get('bookmark');
 
 	# if no record then resort to page 1
 	if ($check == '') return $page;
@@ -49,6 +49,7 @@ function sp_pop_topic_page($forumid) {
 
 	# is it the same forum?
 	if ($check[0] == $forumid) $page = $check[1];
+
 	return $page;
 }
 
@@ -58,8 +59,7 @@ function sp_pop_topic_page($forumid) {
 # displays optional banner instead of page title
 # ------------------------------------------------------------------
 function sp_display_banner() {
-	global $spGlobals;
-	if (!empty($spGlobals['display']['pagetitle']['banner'])) return '<img id="sfbanner" src="'.esc_url($spGlobals['display']['pagetitle']['banner']).'" alt="" />';
-}
+	$text = (!empty(SP()->core->forumData['display']['pagetitle']['banner'])) ? '<img id="sfbanner" src="'.esc_url(SP()->core->forumData['display']['pagetitle']['banner']).'" alt="" />' : '';
 
-?>
+	return $text;
+}

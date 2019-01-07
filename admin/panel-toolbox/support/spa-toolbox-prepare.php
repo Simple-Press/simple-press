@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Toolbox Support Functions
-$LastChangedDate: 2015-02-22 05:20:39 -0600 (Sun, 22 Feb 2015) $
-$Rev: 12501 $
+$LastChangedDate: 2018-01-21 05:57:59 -0600 (Sun, 21 Jan 2018) $
+$Rev: 15635 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -11,9 +11,9 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function spa_get_toolbox_data() {
 	$sfoptions = array();
 
-	$sfoptions['sfforceupgrade'] = sp_get_option('sfforceupgrade');
+	$sfoptions['sfforceupgrade'] = SP()->options->get('sfforceupgrade');
 
-	if (sp_get_option('sfbuild') == SPBUILD) $sfoptions['sfforceupgrade'] = 0;
+	if (SP()->options->get('sfbuild') == SPBUILD) $sfoptions['sfforceupgrade'] = 0;
 
 	return $sfoptions;
 }
@@ -21,71 +21,68 @@ function spa_get_toolbox_data() {
 function spa_get_log_data() {
 	$sflog = array();
 
-	$sql = '
-		SELECT install_date, release_type, version, build, display_name
-		FROM '.SFLOG.'
-		JOIN '.SFMEMBERS.' ON '.SFLOG.'.user_id='.SFMEMBERS.'.user_id
-		ORDER BY id DESC;';
-
-	$sflog = spdb_select('set', $sql, ARRAY_A);
-
+	$sql = 'SELECT install_date, release_type, version, build, display_name
+			FROM '.SPLOG.'
+			JOIN '.SPMEMBERS.' ON '.SPLOG.'.user_id='.SPMEMBERS.'.user_id
+			ORDER BY id DESC;';
+	$sflog = SP()->DB->select($sql, 'set', ARRAY_A);
 	return $sflog;
 }
 
 function spa_get_errorlog_data() {
-	$sflog = spdb_table(SFERRORLOG, '', '', 'id DESC', '', ARRAY_A);
+	$sflog = SP()->DB->table(SPERRORLOG, '', '', 'id DESC', '', ARRAY_A);
 	return $sflog;
 }
 
 function spa_get_uninstall_data() {
 	$sfoptions = array();
-	$sfoptions['sfuninstall'] = sp_get_option('sfuninstall');
-	$sfoptions['removestorage'] = sp_get_option('removestorage');
+	$sfoptions['sfuninstall'] = SP()->options->get('sfuninstall');
+	$sfoptions['removestorage'] = SP()->options->get('removestorage');
 	return $sfoptions;
 }
 
 function spa_get_inspector_data() {
-	global $spThisUser;
 	$ins = array();
-	$ins = sp_get_option('spInspect');
-	$i = $spThisUser->ID;
+	$ins = SP()->options->get('spInspect');
+	$i = SP()->user->thisUser->ID;
 	if (empty($ins) || !array_key_exists($i, $ins)) {
-		$ins[$i] = array('con_spVars' => 0,
-						 'con_spGlobals' => 0,
-						 'con_spThisUser' => 0,
-						 'con_spDevice' => 0,
-						 'gv_spGroupView' => 0,
-						 'gv_spThisGroup' => 0,
-						 'gv_spThisForum' => 0,
-						 'gv_spThisForumSubs' => 0,
-						 'fv_spForumView' => 0,
-						 'fv_spThisForum' => 0,
-						 'fv_spThisForumSubs' => 0,
-						 'fv_spThisSubForum' => 0,
-						 'fv_spThisTopic' => 0,
-						 'tv_spTopicView' => 0,
-						 'tv_spThisTopic' => 0,
-						 'tv_spThisPost' => 0,
-						 'tv_spThisPostUser' => 0,
-						 'mv_spMembersList' => 0,
-						 'mv_spThisMemberGroup' => 0,
-						 'mv_spThisMember' => 0,
-						 'tlv_spTopicListView' => 0,
-						 'tlv_spThisListTopic' => 0,
-						 'plv_spPostListView' => 0,
-						 'plv_spThisListPost' => 0,
-						 'pro_spProfileUser' => 0,
-						 'q_spGroupView' => 0,
-						 'q_spGroupViewStats' => 0,
-						 'q_spForumView' => 0,
-						 'q_spForumViewStats' => 0,
-						 'q_spTopicView' => 0,
-						 'q_spMembersView' => 0,
-						 'q_spTopicListView' => 0,
-						 'q_spTopicListViewNew' => 0,
-						 'q_spTopicListViewFirst' => 0,
-						 'q_spPostListView' => 0,
-						 'q_spSearchView' => 0
+		$ins[$i] = array('con_pageData' => 0,
+						 'con_forumData' => 0,
+						 'con_thisUser' => 0,
+						 'con_device' => 0,
+						 'gv_groups' => 0,
+						 'gv_thisGroup' => 0,
+						 'gv_thisForum' => 0,
+						 'gv_thisForumSubs' => 0,
+						 'fv_forums' => 0,
+						 'fv_thisForum' => 0,
+						 'fv_thisForumSubs' => 0,
+						 'fv_thisSubForum' => 0,
+						 'fv_thisTopic' => 0,
+						 'tv_topics' => 0,
+						 'tv_thisTopic' => 0,
+						 'tv_thisPost' => 0,
+						 'tv_thisPostUser' => 0,
+						 'mv_members' => 0,
+						 'mv_thisMemberGroup' => 0,
+						 'mv_thisMember' => 0,
+						 'tlv_listTopics' => 0,
+						 'tlv_thisListTopic' => 0,
+						 'plv_listPosts' => 0,
+						 'plv_thisListPost' => 0,
+						 'pro_profileUser' => 0,
+						 'q_GroupView' => 0,
+						 'q_GroupViewStats' => 0,
+						 'q_ForumView' => 0,
+						 'q_ForumViewStats' => 0,
+						 'q_TopicView' => 0,
+						 'q_MembersView' => 0,
+						 'q_ListTopicView' => 0,
+						 'q_ListTopicViewNew' => 0,
+						 'q_ListTopicViewFirst' => 0,
+						 'q_ListPostView' => 0,
+						 'sv_search' => 0,
+						 'q_SearchView' => 0
 					    );
 	}
 	return $ins[$i];
@@ -97,7 +94,7 @@ function spa_get_cron_data() {
 	foreach ($data->cron as $time => $hooks) {
 		foreach ($hooks as $hook => $items) {
 			foreach ($items as $key => $item) {
-				$data->cron[$time][$hook][$key]['date'] = date_i18n(SFDATES, $time).' - '.date_i18n(SFTIMES, $time);
+				$data->cron[$time][$hook][$key]['date'] = date_i18n(SPDATES, $time).' - '.date_i18n(SPTIMES, $time);
 			}
 		}
 	}
@@ -106,5 +103,3 @@ function spa_get_cron_data() {
 
     return $data;
 }
-
-?>

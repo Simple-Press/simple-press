@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Forums Add Group Permission Form
-$LastChangedDate: 2016-10-21 20:37:22 -0500 (Fri, 21 Oct 2016) $
-$Rev: 14651 $
+$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
+$Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -11,13 +11,11 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 # function to display the add group permission set form.  It is hidden until the add group permission set link is clicked
 function spa_forums_add_group_permission_form($group_id) {
 ?>
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-    	spjAjaxForm('sfgrouppermnew<?php echo $group_id; ?>', 'sfreloadfb');
-    });
+<script>
+   	spj.loadAjaxForm('sfgrouppermnew<?php echo $group_id; ?>', 'sfreloadfb');
 </script>
 <?php
-	$group = $group = spdb_table(SFGROUPS, "group_id=$group_id", 'row');
+	$group = $group = SP()->DB->table(SPGROUPS, "group_id=$group_id", 'row');
 
 	spa_paint_options_init();
 
@@ -26,11 +24,11 @@ function spa_forums_add_group_permission_form($group_id) {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfgrouppermnew<?php echo $group->group_id; ?>" name="sfgrouppermnew<?php echo $group->group_id; ?>">
 <?php
 		echo sp_create_nonce('forum-adminform_grouppermissionnew');
-		spa_paint_open_tab(spa_text('Forums').' - '.spa_text('Manage Groups and Forums'), true);
+		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
 			spa_paint_open_panel();
-				spa_paint_open_fieldset(spa_text('Add a User Group Permission Set to an Entire Group'), 'true', 'add-a-user-group-permission-set-to-an-entire-group');
+				spa_paint_open_fieldset(SP()->primitives->admin_text('Add a User Group Permission Set to an Entire Group'), 'true', 'add-a-user-group-permission-set-to-an-entire-group');
 ?>
-					<?php echo spa_text('Set a usergroup permission set for all forum in a group').': '.sp_filter_title_display($group->group_name); ?>
+					<?php echo SP()->primitives->admin_text('Set a usergroup permission set for all forum in a group').': '.SP()->displayFilters->title($group->group_name); ?>
 					<table class="form-table">
 						<tr>
 							<td class="sflabel"><?php spa_display_usergroup_select(); ?></td>
@@ -39,13 +37,13 @@ function spa_forums_add_group_permission_form($group_id) {
 						</tr><tr>
 							<td class="sflabel">
     							<input type="checkbox" id="sfadddef" name="adddef" />
-    							<label for="sfadddef"><?php spa_etext('Add to group default permissions'); ?></label>
+    							<label for="sfadddef"><?php SP()->primitives->admin_etext('Add to group default permissions'); ?></label>
                             </td>
 						</tr>
 					</table>
 
 					<input type="hidden" name="group_id" value="<?php echo $group->group_id; ?>" />
-					<p><?php spa_etext('Caution:  Any current permission set for the selected usergroup for any forum in this group will be overwritten'); ?></p>
+					<p><?php SP()->primitives->admin_etext('Caution:  Any current permission set for the selected usergroup for any forum in this group will be overwritten'); ?></p>
 <?php
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
@@ -54,12 +52,11 @@ function spa_forums_add_group_permission_form($group_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sfform-submit-bar">
-    		<input type="submit" class="button-primary" id="groupperm<?php echo $group->group_id; ?>" name="groupperm<?php echo $group->group_id; ?>" value="<?php spa_etext('Add Group Permission'); ?>" />
-    		<input type="button" class="button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="grouppermcancel<?php echo $group->group_id; ?>" name="grouppermcancel<?php echo $group->group_id; ?>" value="<?php spa_etext('Cancel'); ?>" />
+    		<input type="submit" class="button-primary" id="groupperm<?php echo $group->group_id; ?>" name="groupperm<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Add Group Permission'); ?>" />
+    		<input type="button" class="button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="grouppermcancel<?php echo $group->group_id; ?>" name="grouppermcancel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
 	<div class="sfform-panel-spacer"></div>
 <?php
 }
-?>

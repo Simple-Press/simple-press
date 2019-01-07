@@ -14,7 +14,7 @@ if (!sp_nonce('plugin-tip')) die();
 
 if (!isset($_GET['file'])) die();
 
-$file = sp_esc_str($_GET['file']);
+$file = SP()->filters->str($_GET['file']);
 
 # Formatting and Display of Help Panel
 $helptext = wpautop(sp_retrieve_plugin_help($file), false);
@@ -27,9 +27,9 @@ echo '</div>';
 die();
 
 function sp_retrieve_plugin_help($file) {
-	$file = SFPLUGINDIR.$file;
+	$file = SPPLUGINDIR.$file;
 	if (file_exists($file) == false) {
-		return spa_text('No help file can be located');
+		return SP()->primitives->admin_text('No help file can be located');
 	}
 	$theData='';
 	$fh = fopen($file, 'r');
@@ -41,5 +41,3 @@ function sp_retrieve_plugin_help($file) {
 
 	return $theData;
 }
-
-?>

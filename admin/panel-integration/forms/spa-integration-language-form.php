@@ -9,7 +9,7 @@ $Rev: 11582 $
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_integration_language_form() {
-	include_once SF_PLUGIN_DIR.'/admin/library/sp-languages.php';
+	require_once SP_PLUGIN_DIR.'/admin/library/sp-languages.php';
 	global $siteLang, $locale;
 
 	$spCode = '';
@@ -28,14 +28,14 @@ function spa_integration_language_form() {
 
 	if ($siteLang=='en_US' || $siteLang=='en-US') {
 		echo '<br /><div class="sfoptionerror">';
-		spa_etext('Your site language setting is English/USA and therefore no translation files are required for Simple:Press');
+		SP()->primitives->admin_etext('Your site language setting is English/USA and therefore no translation files are required for Simple:Press');
 		echo '</div>';
 		return;
 	}
 	# check we can download
 	if (ini_get('allow_url_fopen') == false) {
 		echo '<br /><div class="sfoptionerror">';
-		spa_etext('Your server will not allow us to download the language files from Simple:Press');
+		SP()->primitives->admin_etext('Your server will not allow us to download the language files from Simple:Press');
 		echo '</div>';
 		return;
 	}
@@ -47,9 +47,9 @@ function spa_integration_language_form() {
 	$formLang = '';
 	$displayLang = '';
 
-	spa_paint_open_tab(spa_text('Integration').' - '.spa_text('Language Settings'));
+	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('Language Settings'));
 		spa_paint_open_panel();
-			spa_paint_open_fieldset(spa_text('Language'), true, 'language-select');
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Language'), true, 'language-select');
 
 				if (!empty($userLang) && array_key_exists($userLang['spCode'], $langSets)) {
 					$formLang = $userLang['spLang'];
@@ -63,14 +63,14 @@ function spa_integration_language_form() {
 					}
 				}
 				if (empty($formLang)) {
-					$link = '<a href="https://simple-press.com/documentation/codex/installation/installation-information/localization/" target="blank">'.spa_text('This Codex Page').'</a>';
+					$link = '<a href="https://simple-press.com/documentation/installation/installation-information/localization/" target="blank">'.SP()->primitives->admin_text('This Page').'</a>';
 					echo '<br /><div class="sfoptionerror">';
-					spa_etext('Your WordPress site language setting has not been recognised by Simple:Press');
-					echo '<br /><br />'.sprintf(spa_text('Please see %s for manual install instructions'), $link);
+					SP()->primitives->admin_etext('Your WordPress site language setting has not been recognised by Simple:Press');
+					echo '<br /><br />'.sprintf(SP()->primitives->admin_text('Please see %s for manual install instructions'), $link);
 					echo '</div>';
 				} else {
 					echo '<br /><div class="sfoptionerror">';
-					echo spa_text('Your site language is set to').' <b>'.$formLang.' - '.$displayLang.'</b>';
+					echo SP()->primitives->admin_text('Your site language is set to').' <b>'.$formLang.' - '.$displayLang.'</b>';
 					echo '</div>';
 				}
 
@@ -90,29 +90,29 @@ function spa_integration_language_form() {
 	# load up the XML file
 	$c = wp_remote_get('https://simple-press.com/downloads/simple-press/simple-press.xml');
 	if (is_wp_error($c) || wp_remote_retrieve_response_code($c) != 200) {
-		echo '<p>'.spa_text('Unable to communicate with Simple Press server').'</p>';
+		echo '<p>'.SP()->primitives->admin_text('Unable to communicate with Simple Press server').'</p>';
 		return;
 	}
 	$l = new SimpleXMLElement($c['body']);
 	if (empty($l)) {
-		echo '<p>'.spa_text('Unable to communicate with Simple Press server').'</p>';
+		echo '<p>'.SP()->primitives->admin_text('Unable to communicate with Simple Press server').'</p>';
 		return;
 	}
 
 	# Core, theme and plugin lists and downloads
-	$gif = SFCOMMONIMAGES.'working.gif';
+	$gif = SPCOMMONIMAGES.'working.gif';
 	$site = wp_nonce_url(SPAJAXURL.'integration-langs', 'integration-langs');
 	$x = 0;
 
-	spa_paint_open_tab(spa_text('Integration').' - '.spa_text('Language Translations'), true);
+	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('Language Translations'), true);
 		spa_paint_open_panel();
 			echo '<br />';
-			echo '&nbsp;&nbsp;<img src="'.SFADMINIMAGES.'sp_Yes.png" title="'.spa_text('Translation file installed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.spa_text('Translation file installed');
-			echo '&nbsp;&nbsp;<img src="'.SFADMINIMAGES.'sp_No.png" title="'.spa_text('No Translation file installed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.spa_text('No Translation file installed');
+			echo '&nbsp;&nbsp;<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Translation file installed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Translation file installed');
+			echo '&nbsp;&nbsp;<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('No Translation file installed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('No Translation file installed');
 
 # Core - front and admin --------------------------------------
 
-			spa_paint_open_fieldset(spa_text('Core Simple:Press'), false);
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Core Simple:Press'), false);
 
 				$item = $l->core;
 				$version = $item->version;
@@ -123,7 +123,7 @@ function spa_integration_language_form() {
 					$target = 'spItem'.$x;
 					$x++;
 					echo '<td><span id="'.$target.'">';
-					if(sp_check_for_mo('language-sp', 'sp', $thisItem, $target) ? $btext = spa_text('Get Latest') : $btext = spa_text('Install'));
+					if(sp_check_for_mo('language-sp', 'sp', $thisItem, $target) ? $btext = SP()->primitives->admin_text('Get Latest') : $btext = SP()->primitives->admin_text('Install'));
 					echo '&nbsp;&nbsp;';
 					echo '<input type="button" class="logDetail button spLoadAjax" value="'.$btext.'" data-url="'.$thisItem.'" data-target="'.$target.'" data-img="'.$gif.'" /></span></td></tr>';
 
@@ -132,7 +132,7 @@ function spa_integration_language_form() {
 					$target = 'spItem'.$x;
 					$x++;
 					echo '<td><span id="'.$target.'">';
-					if(sp_check_for_mo('language-sp', 'spa', $thisItem, $target) ? $btext = spa_text('Get Latest') : $btext = spa_text('Install'));
+					if(sp_check_for_mo('language-sp', 'spa', $thisItem, $target) ? $btext = SP()->primitives->admin_text('Get Latest') : $btext = SP()->primitives->admin_text('Install'));
 					echo '&nbsp;&nbsp;';
 					echo '<input type="button" class="logDetail button spLoadAjax" value="'.$btext.'" data-url="'.$thisItem.'" data-target="'.$target.'" data-img="'.$gif.'" /></span></td></tr>';
 				echo '</table>';
@@ -141,7 +141,7 @@ function spa_integration_language_form() {
 
 # Themes in use --------------------------------------
 
-			spa_paint_open_fieldset(spa_text('Active Simple:Press Themes'), false);
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Active Simple:Press Themes'), false);
 
 				$list = $l->themes;
 				$done = array();
@@ -150,7 +150,7 @@ function spa_integration_language_form() {
 				echo '<table class="wp-list-table widefat striped">';
 
 # Core Theme
-					$t = sp_get_option('sp_current_theme');
+					$t = SP()->options->get('sp_current_theme');
 					if (!empty($t['parent'])) {
 						# Is a child theme
 						$child = true;
@@ -165,22 +165,22 @@ function spa_integration_language_form() {
 					$data = sp_get_xml_theme_entry($list, $theme);
 					$name = (isset($data->name)) ? $data->name : $theme;
 					echo '<tr><td style="width:50%"><b>'.$name.'</b>';
-					if ($child) echo '&nbsp;('.spa_text('Child Theme Parent').')';
+					if ($child) echo '&nbsp;('.SP()->primitives->admin_text('Child Theme Parent').')';
 					echo '</td>';
 					if (isset($data->name)) {
 						$thisItem = $site.'&amp;item=theme&amp;langcode='.$userLang['spCode'].'&amp;textdom='.$data->lang.'&amp;name='.$theme;
 						$target = 'spItem'.$x;
 						$x++;
 						echo '<td><span id="'.$target.'">';
-						if (sp_check_for_mo('language-sp-themes', $data->lang, $thisItem, $target) ? $btext = spa_text('Get Latest') : $btext = spa_text('Install'));
+						if (sp_check_for_mo('language-sp-themes', $data->lang, $thisItem, $target) ? $btext = SP()->primitives->admin_text('Get Latest') : $btext = SP()->primitives->admin_text('Install'));
 						echo '&nbsp;&nbsp;';
 						echo '<input type="button" class="logDetail button spLoadAjax" value="'.$btext.'" data-url="'.$thisItem.'" data-target="'.$target.'" data-img="'.$gif.'" /></span></td></tr>';
 					} else {
-						echo '<td>'.spa_text('No Translation Project Exists').'</td></tr>';
+						echo '<td>'.SP()->primitives->admin_text('No Translation Project Exists').'</td></tr>';
 					}
 
 # Tablet Theme
-					$t = sp_get_option('sp_tablet_theme');
+					$t = SP()->options->get('sp_tablet_theme');
 					if ($t['active']) {
 						$child = false;
 						if (!empty($t['parent'])) {
@@ -203,24 +203,24 @@ function spa_integration_language_form() {
 							$name = (isset($data->name)) ? $data->name : $theme;
 							echo '<tr><td style="width:50%"><b>'.$name.'</b></td>';
 							echo '<tr><td style="width:50%"><b>'.$name.'</b>';
-							if($child) echo '&nbsp;('.spa_text('Child Theme Parent').')';
+							if($child) echo '&nbsp;('.SP()->primitives->admin_text('Child Theme Parent').')';
 							echo '</td>';
 							if (isset($data->name)) {
 								$thisItem = $site.'&amp;item=theme&amp;langcode='.$userLang['spCode'].'&amp;textdom='.$data->lang.'&amp;name='.$theme;
 								$target = 'spItem'.$x;
 								$x++;
 								echo '<td><span id="'.$target.'">';
-								if (sp_check_for_mo('language-sp-themes', $data->lang, $thisItem, $target) ? $btext = spa_text('Get Latest') : $btext = spa_text('Install'));
+								if (sp_check_for_mo('language-sp-themes', $data->lang, $thisItem, $target) ? $btext = SP()->primitives->admin_text('Get Latest') : $btext = SP()->primitives->admin_text('Install'));
 								echo '&nbsp;&nbsp;';
 								echo '<input type="button" class="logDetail button spLoadAjax" value="'.$btext.'" data-url="'.$thisItem.'" data-target="'.$target.'" data-img="'.$gif.'" /></span></td></tr>';
 							} else {
-								echo '<td>'.spa_text('No Translation Project Exists').'</td></tr>';
+								echo '<td>'.SP()->primitives->admin_text('No Translation Project Exists').'</td></tr>';
 							}
 						}
 					}
 
 # Mobile theme
-					$t = sp_get_option('sp_mobile_theme');
+					$t = SP()->options->get('sp_mobile_theme');
 					if ($t['active']) {
 						$child = false;
 						if (!empty($t['parent'])) {
@@ -242,18 +242,18 @@ function spa_integration_language_form() {
 							$data = sp_get_xml_theme_entry($list, $theme);
 							$name = (isset($data->name)) ? $data->name : $theme;
 							echo '<tr><td style="width:50%"><b>'.$name.'</b>';
-							if ($child) echo '&nbsp;('.spa_text('Child Theme Parent').')';
+							if ($child) echo '&nbsp;('.SP()->primitives->admin_text('Child Theme Parent').')';
 							echo '</td>';
 							if (isset($data->name)) {
 								$thisItem = $site.'&amp;item=theme&amp;langcode='.$userLang['spCode'].'&amp;textdom='.$data->lang.'&amp;name='.$theme;
 								$target = 'spItem'.$x;
 								$x++;
 								echo '<td><span id="'.$target.'">';
-								if (sp_check_for_mo('language-sp-themes', $data->lang, $thisItem, $target) ? $btext = spa_text('Get Latest') : $btext = spa_text('Install'));
+								if (sp_check_for_mo('language-sp-themes', $data->lang, $thisItem, $target) ? $btext = SP()->primitives->admin_text('Get Latest') : $btext = SP()->primitives->admin_text('Install'));
 								echo '&nbsp;&nbsp;';
 								echo '<input type="button" class="logDetail button spLoadAjax" value="'.$btext.'" data-url="'.$thisItem.'" data-target="'.$target.'" data-img="'.$gif.'" /></span></td></tr>';
 							} else {
-								echo '<td>'.spa_text('No Translation Project Exists').'</td></tr>';
+								echo '<td>'.SP()->primitives->admin_text('No Translation Project Exists').'</td></tr>';
 							}
 						}
 					}
@@ -263,10 +263,10 @@ function spa_integration_language_form() {
 
 # Plugins if any --------------------------------------
 
-			$plugins = sp_get_option('sp_active_plugins');
+			$plugins = SP()->options->get('sp_active_plugins');
 			if ($plugins) {
 
-				spa_paint_open_fieldset(spa_text('Active Simple:Press Plugins'), false);
+				spa_paint_open_fieldset(SP()->primitives->admin_text('Active Simple:Press Plugins'), false);
 
 					echo '<table class="wp-list-table widefat striped">';
 
@@ -282,11 +282,11 @@ function spa_integration_language_form() {
 								$target = 'spItem'.$x;
 								$x++;
 								echo '<td><span id="'.$target.'">';
-								if(sp_check_for_mo('language-sp-plugins', $data->lang, $thisItem, $target) ? $btext = spa_text('Get Latest') : $btext = spa_text('Install'));
+								if(sp_check_for_mo('language-sp-plugins', $data->lang, $thisItem, $target) ? $btext = SP()->primitives->admin_text('Get Latest') : $btext = SP()->primitives->admin_text('Install'));
 								echo '&nbsp;&nbsp;';
 								echo '<input type="button" class="logDetail button spLoadAjax" value="'.$btext.'" data-url="'.$thisItem.'" data-target="'.$target.'" data-img="'.$gif.'" /></span></td></tr>';
 							} else {
-								echo '<td>'.spa_text('No Translation Project Exists').'</td></tr>';
+								echo '<td>'.SP()->primitives->admin_text('No Translation Project Exists').'</td></tr>';
 							}
 						}
 					echo '</table>';
@@ -332,19 +332,17 @@ function sp_get_xml_plugin_entry($list, $cPlugin) {
 }
 
 function sp_check_for_mo($folder, $tDom, $thisItem, $target) {
-	global $spPaths, $siteLang;
-	$moFile = SF_STORE_DIR.'/'.$spPaths[$folder].'/'.$tDom.'-'.$siteLang.'.mo';
+	global $siteLang;
+	$moFile = SP_STORE_DIR.'/'.SP()->plugin->storage[$folder].'/'.$tDom.'-'.$siteLang.'.mo';
 	if (file_exists($moFile)) {
-		$gif = SFCOMMONIMAGES.'working.gif';
-		echo '<img src="'.SFADMINIMAGES.'sp_Yes.png" title="'.spa_text('Translation file found').'" alt="" style="vertical-align: middle;" />';
+		$gif = SPCOMMONIMAGES.'working.gif';
+		echo '<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Translation file found').'" alt="" style="vertical-align: middle;" />';
 		echo '&nbsp;&nbsp;';
 		$thisItem.= '&amp;remove=1';
-		echo '<input type="button" class="logDetail button spLoadAjax" value="'.spa_text('Remove').'" data-url="'.$thisItem.'" data-target="'.$target.'" data-img="'.$gif.'" />';
+		echo '<input type="button" class="logDetail button spLoadAjax" value="'.SP()->primitives->admin_text('Remove').'" data-url="'.$thisItem.'" data-target="'.$target.'" data-img="'.$gif.'" />';
 		return true;
 	} else {
-		echo '<img src="'.SFADMINIMAGES.'sp_No.png" title="'.spa_text('No translation file found').'" alt="" style="vertical-align: middle;" />';
+		echo '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('No translation file found').'" alt="" style="vertical-align: middle;" />';
 		return false;
 	}
 }
-
-?>

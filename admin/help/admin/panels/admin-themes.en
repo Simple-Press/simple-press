@@ -1,6 +1,6 @@
 --- Manage Themes ---
-$LastChangedDate: 2017-05-20 17:44:46 -0500 (Sat, 20 May 2017) $
-$Rev: 15386 $
+$LastChangedDate: 2018-09-22 17:40:18 -0500 (Sat, 22 Sep 2018) $
+$Rev: 15739 $
 
 [themes]
 On this panel, you can select the theme you want to use for Simple:Press from a list of available themes.
@@ -54,5 +54,5 @@ displays. Note please that SEO settings are not compromised.
 [css-editor]
 This textarea can be used for small amounts of custom CSS where, perhaps, overrides are desired for aspects of your SP theme.<br /><br />
 This feature should NOT be used for major changes. If you want to change a lot of the styling then you should create
-a  <a href="https://simple-press.com/documentation/codex/themes/theme-basics/creating-a-child-theme/">Custom Simple:Press Theme</a>.
+a  <a href="https://simple-press.com/documentation/themes/theme-basics/creating-a-child-theme/">Custom Simple:Press Theme</a>.
 [end]

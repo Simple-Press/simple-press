@@ -13,29 +13,29 @@ spa_admin_ajax_support();
 if (!sp_nonce('permission-tip')) die();
 
 if (!isset($_GET['role'])) die();
-$roleid = sp_esc_str($_GET['role']);
+$roleid = SP()->filters->str($_GET['role']);
 
 $sql = "SELECT forum_name, usergroup_name
-		FROM ".SFPERMISSIONS."
-		JOIN ".SFFORUMS." ON ".SFPERMISSIONS.".forum_id = ".SFFORUMS.".forum_id
-		JOIN ".SFUSERGROUPS." ON ".SFPERMISSIONS.".usergroup_id = ".SFUSERGROUPS.".usergroup_id
+		FROM ".SPPERMISSIONS."
+		JOIN ".SPFORUMS." ON ".SPPERMISSIONS.".forum_id = ".SPFORUMS.".forum_id
+		JOIN ".SPUSERGROUPS." ON ".SPPERMISSIONS.".usergroup_id = ".SPUSERGROUPS.".usergroup_id
 		WHERE permission_role = ".$roleid."
 		ORDER BY forum_name, usergroup_name";
-$list = spdb_select('set', $sql);
+$list = SP()->DB->select($sql);
 
 
 echo '<div>';
 
 if(empty($list)) {
 	echo '<div class="tipSection">';
-	spa_etext('Not Currently In Use');
+	SP()->primitives->admin_etext('Not Currently In Use');
 	echo '</div>';
 } else {
 ?>
 	<table class='form-table tipTable'>
 		<tr>
-			<th><b><?php spa_etext('Used for Forum'); ?></b></th>
-			<th><b><?php spa_etext('With User Group'); ?></b></th>
+			<th><b><?php SP()->primitives->admin_etext('Used for Forum'); ?></b></th>
+			<th><b><?php SP()->primitives->admin_etext('With User Group'); ?></b></th>
 		</tr>
 <?php
 	$fname = '';
@@ -68,5 +68,3 @@ if(empty($list)) {
 echo '</div>';
 
 die();
-
-?>

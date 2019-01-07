@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Search Results List View Function Handler
-$LastChangedDate: 2015-06-08 09:34:33 -0500 (Mon, 08 Jun 2015) $
-$Rev: 12990 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -37,26 +37,24 @@ function sp_ListViewSearchFoot() {
 #	Scope:	Topic Loop
 #	Version: 5.5.1
 # --------------------------------------------------------------------------------------
-function sp_NoPostsInListMessage($args='', $definedMessage='') {
-	global $spListView;
-	$defs = array('tagId'		=> 'spNoPostsInListMessage',
-				  'tagClass'	=> 'spMessage',
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_NoPostsInListMessage_args', $a);
+function sp_NoPostsInListMessage($args = '', $definedMessage = '') {
+	$defs = array('tagId'    => 'spNoPostsInListMessage',
+	              'tagClass' => 'spMessage',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_NoPostsInListMessage_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
 	if ($get) return $definedMessage;
 
-	$out = "<div id='$tagId' class='$tagClass'>".sp_filter_title_display($definedMessage)."</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>".SP()->displayFilters->title($definedMessage)."</div>\n";
 	$out = apply_filters('sph_NoPostsInListMessage', $out, $a);
 
 	if ($echo) {
@@ -72,47 +70,45 @@ function sp_NoPostsInListMessage($args='', $definedMessage='') {
 #	Scope:	post list loop
 #	Version: 5.5.1
 # --------------------------------------------------------------------------------------
-function sp_ListSearchTopicHeader($args='') {
-	global $spSearchView, $spThisPostList;
-	$defs = array('tagId'    	=> 'spListPostName%ID%',
-			      'tagClass' 	=> 'spListPostRowName',
-			      'linkClass'	=>	'spLink',
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ListSearchTopicHeader_args', $a);
+function sp_ListSearchTopicHeader($args = '') {
+	$defs = array('tagId'     => 'spListPostName%ID%',
+	              'tagClass'  => 'spListPostRowName',
+	              'linkClass' => 'spLink',
+	              'echo'      => 1,
+	              'get'       => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ListSearchTopicHeader_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$linkClass	= esc_attr($linkClass);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$linkClass = esc_attr($linkClass);
+	$echo      = (int) $echo;
+	$get       = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisPostList->post_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisListPost->post_id, $tagId);
 
-	if ($get) return $spThisPostList->topic_name;
+	if ($get) return SP()->forum->view->thisListPost->topic_name;
 
-    # build the keywords for highlighting
-    if ($spSearchView->searchInclude == 3) {
-        if ($spSearchView->searchType == 1 || $spSearchView->searchType == 2) {
-            if (strpos($spSearchView->searchTermRaw, ' ') === false) {
-                $highlight = $spSearchView->searchTermRaw.'*';
-            } else {
-                $highlight = str_replace(' ', '*|', $spSearchView->searchTermRaw);
-            }
-        } else {
-            $highlight = $spSearchView->searchTermRaw.'*';
-        }
+	# build the keywords for highlighting
+	if (SP()->forum->view->thisSearch->searchInclude == 3) {
+		if (SP()->forum->view->thisSearch->searchType == 1 || SP()->forum->view->thisSearch->searchType == 2) {
+			if (strpos(SP()->forum->view->thisSearch->searchTermRaw, ' ') === false) {
+				$highlight = SP()->forum->view->thisSearch->searchTermRaw.'*';
+			} else {
+				$highlight = str_replace(' ', '*|', SP()->forum->view->thisSearch->searchTermRaw);
+			}
+		} else {
+			$highlight = SP()->forum->view->thisSearch->searchTermRaw.'*';
+		}
 
-    	$topic_name = preg_replace('#(?!<.*)('.$highlight.')(?![^<>]*(?:</s(?:cript|tyle))?>)#is', '<span class="spSearchTermHighlight">$1</span>', $spThisPostList->topic_name);
-    } else {
-    	$topic_name = $spThisPostList->topic_name;
-    }
+		$topic_name = preg_replace('#(?!<.*)('.$highlight.')(?![^<>]*(?:</s(?:cript|tyle))?>)#is', '<span class="spSearchTermHighlight">$1</span>', SP()->forum->view->thisListPost->topic_name);
+	} else {
+		$topic_name = SP()->forum->view->thisListPost->topic_name;
+	}
 
-	$out = "<div id='$tagId' class='$tagClass'><a class='$linkClass' href='$spThisPostList->post_permalink'>$topic_name</a></div>\n";
+	$out = "<div id='$tagId' class='$tagClass'><a class='$linkClass' href='".SP()->forum->view->thisListPost->post_permalink."'>$topic_name</a></div>\n";
 	$out = apply_filters('sph_ListSearchTopicHeaderName', $out, $a);
 
 	if ($echo) {
@@ -128,59 +124,57 @@ function sp_ListSearchTopicHeader($args='') {
 #	Scope:	post list loop
 #	Version: 5.5.1
 # --------------------------------------------------------------------------------------
-function sp_ListSearchPostContent($args='') {
-	global $spSearchView, $spThisPostList;
-	$defs = array('tagId'    	=> 'spListPostContent%ID%',
-			      'tagClass' 	=> 'spPostContent',
-			      'excerpt'	    => 400,
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ListPostContent_args', $a);
+function sp_ListSearchPostContent($args = '') {
+	$defs = array('tagId'    => 'spListPostContent%ID%',
+	              'tagClass' => 'spPostContent',
+	              'excerpt'  => 400,
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ListPostContent_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$excerpt	= (int) $excerpt;
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$excerpt  = (int) $excerpt;
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisPostList->post_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisListPost->post_id, $tagId);
 
-	if ($get) return $spThisPostList->post_content;
+	if ($get) return SP()->forum->view->thisListPost->post_content;
 
-    # build the keywords for highlighting - add on wildcards to match mysql search
-    if ($spSearchView->searchType == 1 || $spSearchView->searchType == 2) {
-        if (strpos($spSearchView->searchTermRaw, ' ') === false) {
-            $highlight = $spSearchView->searchTermRaw;
-        } else {
-            $highlight = str_replace(' ', '|', $spSearchView->searchTermRaw);
-        }
-    } else {
-        $highlight = $spSearchView->searchTermRaw;
-    }
+	# build the keywords for highlighting - add on wildcards to match mysql search
+	if (SP()->forum->view->thisSearch->searchType == 1 || SP()->forum->view->thisSearch->searchType == 2) {
+		if (strpos(SP()->forum->view->thisSearch->searchTermRaw, ' ') === false) {
+			$highlight = SP()->forum->view->thisSearch->searchTermRaw;
+		} else {
+			$highlight = str_replace(' ', '|', SP()->forum->view->thisSearch->searchTermRaw);
+		}
+	} else {
+		$highlight = SP()->forum->view->thisSearch->searchTermRaw;
+	}
 
-    # get the excerpted post content prepared for editing but no mysql escaping
-    $content = sp_filter_content_save($spThisPostList->post_content, 'new', false, SFPOSTS, 'post_content');
+	# get the excerpted post content prepared for editing but no mysql escaping
+	$content = SP()->saveFilters->content(SP()->forum->view->thisListPost->post_content, 'new', false, SPPOSTS, 'post_content');
 
-    # lets remove some html content we dont need to show in search results
-    $content = strip_shortcodes($content);
-    $content = preg_replace('/<img[^>]+\>/i', sp_text(' (* image not shown *) '), $content);
-    $content = preg_replace('#<a.*?>.*?</a>#i', sp_text(' (* link not shown *) '), $content);
-    $content = preg_replace('#<iframe.*?>.*?</iframe>#i', sp_text(' (* media not shown *) '), $content);
-    $content = preg_replace('#<audio.*?>.*?</audio>#i', sp_text(' (* media not shown *) '), $content);
-    $content = preg_replace('#<video.*?>.*?</video>#i', sp_text(' (* media not shown *) '), $content);
+	# lets remove some html content we dont need to show in search results
+	$content = strip_shortcodes($content);
+	$content = preg_replace('/<img[^>]+\>/i', SP()->primitives->front_text(' (* image not shown *) '), $content);
+	$content = preg_replace('#<a.*?>.*?</a>#i', SP()->primitives->front_text(' (* link not shown *) '), $content);
+	$content = preg_replace('#<iframe.*?>.*?</iframe>#i', SP()->primitives->front_text(' (* media not shown *) '), $content);
+	$content = preg_replace('#<audio.*?>.*?</audio>#i', SP()->primitives->front_text(' (* media not shown *) '), $content);
+	$content = preg_replace('#<video.*?>.*?</video>#i', SP()->primitives->front_text(' (* media not shown *) '), $content);
 
-    # if we still have content left, lets highlight the search terms
-    if (!empty($content)) {
-        $content = sp_filter_content_excerpt($content, array_filter(explode('|', $highlight), 'strlen'), $excerpt);
-        $content = preg_replace('#(?!<.*)('.$highlight.')(?![^<>]*(?:</s(?:cript|tyle))?>)#is', '<span class="spSearchTermHighlight">$1</span>', $content);
-        $content = sp_filter_content_display($content);
-    }
+	# if we still have content left, lets highlight the search terms
+	if (!empty($content)) {
+		$content = SP()->filters->excerpt($content, array_filter(explode('|', $highlight), 'strlen'), $excerpt);
+		$content = preg_replace('#(?!<.*)('.$highlight.')(?![^<>]*(?:</s(?:cript|tyle))?>)#is', '<span class="spSearchTermHighlight">$1</span>', $content);
+		$content = SP()->displayFilters->content($content);
+	}
 
-    # display the excerpt with highlighting
+	# display the excerpt with highlighting
 	$out = "<div id='$tagId' class='$tagClass'>$content</div>\n";
 	$out = apply_filters('sph_ListPostContent', $out, $a);
 
@@ -197,39 +191,36 @@ function sp_ListSearchPostContent($args='') {
 #	Scope:	post list loop
 #	Version: 5.5.1
 # --------------------------------------------------------------------------------------
-function sp_ListSearchUserName($args='') {
-	global $spThisPostList;
-
-	$defs = array('tagId'    		=> 'spListPostUserName%ID%',
-				  'tagClass' 		=> 'spPostUserName',
-				  'truncateUser'	=> 0,
-				  'echo'			=> 1,
-				  'get'				=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ListSearchUserName_args', $a);
+function sp_ListSearchUserName($args = '') {
+	$defs = array('tagId'        => 'spListPostUserName%ID%',
+	              'tagClass'     => 'spPostUserName',
+	              'truncateUser' => 0,
+	              'echo'         => 1,
+	              'get'          => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ListSearchUserName_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$truncateUser	= (int) $truncateUser;
-	$echo			= (int) $echo;
-	$get			= (int) $get;
+	$tagId        = esc_attr($tagId);
+	$tagClass     = esc_attr($tagClass);
+	$truncateUser = (int) $truncateUser;
+	$echo         = (int) $echo;
+	$get          = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisPostList->post_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisListPost->post_id, $tagId);
 
 	$out = "<div id='$tagId' class='$tagClass'>";
-	if ($spThisPostList->user_id) {
-		$name = sp_build_name_display($spThisPostList->user_id, sp_truncate($spThisPostList->display_name, $truncateUser));
+	if (SP()->forum->view->thisListPost->user_id) {
+		$name = SP()->user->name_display(SP()->forum->view->thisListPost->user_id, SP()->primitives->truncate_name(SP()->forum->view->thisListPost->display_name, $truncateUser));
 	} else {
-		$name = sp_truncate($spThisPostList->guest_name, $truncateUser);
+		$name = SP()->primitives->truncate_name(SP()->forum->view->thisListPost->guest_name, $truncateUser);
 	}
-	$out.= $name;
+	$out .= $name;
 
 	if ($get) return $name;
 
-	$out.= "</div>\n";
+	$out .= "</div>\n";
 	$out = apply_filters('sph_ListSearchUserName', $out, $a);
 
 	if ($echo) {
@@ -245,50 +236,47 @@ function sp_ListSearchUserName($args='') {
 #	Scope:	post list loop
 #	Version: 5.5.1
 # --------------------------------------------------------------------------------------
-function sp_ListSearchUserDate($args='') {
-	global $spThisPostList;
-
-	$defs = array('tagId'    		=> 'spListPostUserDate%ID%',
-				  'tagClass' 		=> 'spPostUserDate',
-				  'nicedate'		=> 0,
-				  'date'  			=> 1,
-				  'time'  			=> 1,
-				  'stackdate'		=> 0,
-				  'echo'			=> 1,
-				  'get'				=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ListSearchUserDate_args', $a);
+function sp_ListSearchUserDate($args = '') {
+	$defs = array('tagId'     => 'spListPostUserDate%ID%',
+	              'tagClass'  => 'spPostUserDate',
+	              'nicedate'  => 0,
+	              'date'      => 1,
+	              'time'      => 1,
+	              'stackdate' => 0,
+	              'echo'      => 1,
+	              'get'       => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ListSearchUserDate_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$nicedate	= (int) $nicedate;
-	$date		= (int) $date;
-	$time		= (int) $time;
-	$stackdate	= (int) $stackdate;
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$nicedate  = (int) $nicedate;
+	$date      = (int) $date;
+	$time      = (int) $time;
+	$stackdate = (int) $stackdate;
+	$echo      = (int) $echo;
+	$get       = (int) $get;
 
 	$dlb = ($stackdate) ? '<br />' : ' ';
 
-	$tagId = str_ireplace('%ID%', $spThisPostList->post_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisListPost->post_id, $tagId);
 
-	if ($get) return $spThisPostList->post_date;
+	if ($get) return SP()->forum->view->thisListPost->post_date;
 
 	$out = "<div id='$tagId' class='$tagClass'>";
 
 	# date/time
 	if ($nicedate) {
-		$out.= sp_nicedate($spThisPostList->post_date);
+		$out .= SP()->dateTime->nice_date(SP()->forum->view->thisListPost->post_date);
 	} else {
 		if ($date) {
-			$out.= sp_date('d', $spThisPostList->post_date);
-			if ($time) $out.= $dlb.sp_date('t', $spThisPostList->post_date);
+			$out .= SP()->dateTime->format_date('d', SP()->forum->view->thisListPost->post_date);
+			if ($time) $out .= $dlb.SP()->dateTime->format_date('t', SP()->forum->view->thisListPost->post_date);
 		}
 	}
-	$out.= "</div>\n";
+	$out .= "</div>\n";
 	$out = apply_filters('sph_ListSearchUserDate', $out, $a);
 
 	if ($echo) {
@@ -304,36 +292,33 @@ function sp_ListSearchUserDate($args='') {
 #	Scope:	post list loop
 #	Version: 5.5.1
 # --------------------------------------------------------------------------------------
-function sp_ListSearchForumName($args='', $label='') {
-	global $spThisPostList;
-
-	$defs = array('tagId' 		=> 'spListPostForumName%ID%',
-				  'tagClass' 	=> 'spListPostForumRowName',
-			      'linkClass'	=>	'spLink',
-				  'truncate'	=> 0,
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ListSearchForumName_args', $a);
+function sp_ListSearchForumName($args = '', $label = '') {
+	$defs = array('tagId'     => 'spListPostForumName%ID%',
+	              'tagClass'  => 'spListPostForumRowName',
+	              'linkClass' => 'spLink',
+	              'truncate'  => 0,
+	              'echo'      => 1,
+	              'get'       => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ListSearchForumName_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$linkClass	= esc_attr($linkClass);
-	$truncate	= (int) $truncate;
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$linkClass = esc_attr($linkClass);
+	$truncate  = (int) $truncate;
+	$echo      = (int) $echo;
+	$get       = (int) $get;
 
-	$label 		= sp_filter_title_display($label);
-	$tagId = str_ireplace('%ID%', $spThisPostList->post_id, $tagId);
+	$label = SP()->displayFilters->title($label);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisListPost->post_id, $tagId);
 
-	if ($get) return sp_truncate($spThisPostList->forum_name, $truncate);
+	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisListPost->forum_name, $truncate);
 
 	$out = "<div id='$tagId' class='$tagClass'>$label\n";
-	$out.= "<a href='$spThisPostList->forum_permalink' class='$linkClass'>".sp_truncate($spThisPostList->forum_name, $truncate)."</a>\n";
-    $out.= "</div>\n";
+	$out .= "<a href='".SP()->forum->view->thisListPost->forum_permalink."' class='$linkClass'>".SP()->primitives->truncate_name(SP()->forum->view->thisListPost->forum_name, $truncate)."</a>\n";
+	$out .= "</div>\n";
 
 	$out = apply_filters('sph_ListSearchForumName', $out, $a);
 
@@ -350,35 +335,33 @@ function sp_ListSearchForumName($args='', $label='') {
 #	Scope:	post list loop
 #	Version: 5.5.1
 # --------------------------------------------------------------------------------------
-function sp_ListSearchTopicName($args='', $label='') {
-	global $spThisPostList;
-	$defs = array('tagId'    	=> 'spListPostTopicName%ID%',
-			      'tagClass' 	=> 'spListPostTopicRowName',
-			      'linkClass'	=>	'spLink',
-			      'truncate'	=> 0,
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ListSearchTopicName_args', $a);
+function sp_ListSearchTopicName($args = '', $label = '') {
+	$defs = array('tagId'     => 'spListPostTopicName%ID%',
+	              'tagClass'  => 'spListPostTopicRowName',
+	              'linkClass' => 'spLink',
+	              'truncate'  => 0,
+	              'echo'      => 1,
+	              'get'       => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ListSearchTopicName_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$linkClass	= esc_attr($linkClass);
-	$truncate	= (int) $truncate;
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$linkClass = esc_attr($linkClass);
+	$truncate  = (int) $truncate;
+	$echo      = (int) $echo;
+	$get       = (int) $get;
 
-	$label 		= sp_filter_title_display($label);
-	$tagId = str_ireplace('%ID%', $spThisPostList->post_id, $tagId);
+	$label = SP()->displayFilters->title($label);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisListPost->post_id, $tagId);
 
-	if ($get) return sp_truncate($spThisListTopic->topic_name, $truncate);
+	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->topic_name, $truncate);
 
 	$out = "<div id='$tagId' class='$tagClass'>$label\n";
-	$out.= "<a href='$spThisPostList->topic_permalink' class='$linkClass'>".sp_truncate($spThisPostList->topic_name, $truncate)."</a>\n";
-    $out.= "</div>\n";
+	$out .= "<a href='".SP()->forum->view->thisListPost->topic_permalink."' class='$linkClass'>".SP()->primitives->truncate_name(SP()->forum->view->thisListPost->topic_name, $truncate)."</a>\n";
+	$out .= "</div>\n";
 
 	$out = apply_filters('sph_ListSearchTopicName', $out, $a);
 
@@ -395,33 +378,31 @@ function sp_ListSearchTopicName($args='', $label='') {
 #	Scope:	post list loop
 #	Version: 5.5.1
 # --------------------------------------------------------------------------------------
-function sp_ListSearchTopicCount($args='', $label='') {
-	global $spThisPostList;
-	$defs = array('tagId'    	=> 'spListPostTopicCount%ID%',
-			      'tagClass' 	=> 'spListPostCountRowName',
-			      'truncate'	=> 0,
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ListSearchTopicCount_args', $a);
+function sp_ListSearchTopicCount($args = '', $label = '') {
+	$defs = array('tagId'    => 'spListPostTopicCount%ID%',
+	              'tagClass' => 'spListPostCountRowName',
+	              'truncate' => 0,
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ListSearchTopicCount_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$truncate	= (int) $truncate;
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$truncate = (int) $truncate;
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
-	$label 		= sp_filter_title_display($label);
-	$tagId = str_ireplace('%ID%', $spThisPostList->post_id, $tagId);
+	$label = SP()->displayFilters->title($label);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisListPost->post_id, $tagId);
 
-	if ($get) return $spThisListTopic->topic_count;
+	if ($get) return SP()->forum->view->thisListTopic->topic_count;
 
 	$out = "<div id='$tagId' class='$tagClass'>$label\n";
-	$out.= "$spThisPostList->post_count\n";
-    $out.= "</div>\n";
+	$out .= SP()->forum->view->thisListPost->post_count."\n";
+	$out .= "</div>\n";
 
 	$out = apply_filters('sph_ListSearchTopicCount', $out, $a);
 
@@ -438,33 +419,31 @@ function sp_ListSearchTopicCount($args='', $label='') {
 #	Scope:	post list loop
 #	Version: 5.5.1
 # --------------------------------------------------------------------------------------
-function sp_ListSearchTopicViews($args='', $label='') {
-	global $spThisPostList;
-	$defs = array('tagId'    	=> 'spListPostTopicViews%ID%',
-			      'tagClass' 	=> 'spListPostViewsRowName',
-			      'truncate'	=> 0,
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ListSearchTopicViews_args', $a);
+function sp_ListSearchTopicViews($args = '', $label = '') {
+	$defs = array('tagId'    => 'spListPostTopicViews%ID%',
+	              'tagClass' => 'spListPostViewsRowName',
+	              'truncate' => 0,
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ListSearchTopicViews_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$truncate	= (int) $truncate;
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$truncate = (int) $truncate;
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
-	$label 		= sp_filter_title_display($label);
-	$tagId = str_ireplace('%ID%', $spThisPostList->post_id, $tagId);
+	$label = SP()->displayFilters->title($label);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisListPost->post_id, $tagId);
 
-	if ($get) return $spThisListTopic->topic_count;
+	if ($get) return SP()->forum->view->thisListTopic->topic_count;
 
 	$out = "<div id='$tagId' class='$tagClass'>$label\n";
-	$out.= $spThisPostList->topic_opened;
-    $out.= "</div>\n";
+	$out .= SP()->forum->view->thisListPost->topic_opened;
+	$out .= "</div>\n";
 
 	$out = apply_filters('sph_ListSearchTopicViews', $out, $a);
 
@@ -481,33 +460,31 @@ function sp_ListSearchTopicViews($args='', $label='') {
 #	Scope:	post list loop
 #	Version: 5.5.1
 # --------------------------------------------------------------------------------------
-function sp_ListSearchGoToPost($args='', $label='') {
-	global $spThisPostList;
-	$defs = array('tagId'    	=> 'spListPostGoToPost%ID%',
-			      'tagClass' 	=> 'spListPostGoToPostRowName',
-			      'linkClass'	=>	'spLink',
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ListSearchGoToPost_args', $a);
+function sp_ListSearchGoToPost($args = '', $label = '') {
+	$defs = array('tagId'     => 'spListPostGoToPost%ID%',
+	              'tagClass'  => 'spListPostGoToPostRowName',
+	              'linkClass' => 'spLink',
+	              'echo'      => 1,
+	              'get'       => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ListSearchGoToPost_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$linkClass	= esc_attr($linkClass);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$linkClass = esc_attr($linkClass);
+	$echo      = (int) $echo;
+	$get       = (int) $get;
 
-	$label 		= sp_filter_title_display($label);
-	$tagId = str_ireplace('%ID%', $spThisPostList->post_id, $tagId);
+	$label = SP()->displayFilters->title($label);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisListPost->post_id, $tagId);
 
-	if ($get) return $spThisListTopic->topic_count;
+	if ($get) return SP()->forum->view->thisListTopic->topic_count;
 
 	$out = "<div id='$tagId' class='$tagClass'>\n";
-	$out.= "<a href='$spThisPostList->post_permalink' class='$linkClass'>$label</a>\n";
-    $out.= "</div>\n";
+	$out .= "<a href='".SP()->forum->view->thisListPost->post_permalink."' class='$linkClass'>$label</a>\n";
+	$out .= "</div>\n";
 
 	$out = apply_filters('sph_ListSearchGoToPost', $out, $a);
 
@@ -517,4 +494,3 @@ function sp_ListSearchGoToPost($args='', $label='') {
 		return $out;
 	}
 }
-?>

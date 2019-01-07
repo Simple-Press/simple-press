@@ -47,4 +47,3 @@ $tooltips['create_links'] = $t.'Can create links in posts';
 $tooltips['can_view_images'] = $t.'Can view images a user has posted';
 $tooltips['can_view_media'] = $t.'Can view and download media a user has posted';
 $tooltips = apply_filters('sph_perms_tooltips', $tooltips, $t);
-?>

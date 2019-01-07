@@ -1,4 +1,116 @@
-eval((function(s){var a,c,e,i,j,o="",r,t="%245789@BGHJKLOPRUVXYZ^_`qz~";for(i=0;i<s.length;i++){r=t+s[i][2];a=s[i][1].split("");for(j=a.length - 1;j>=0;j--){s[i][0]=s[i][0].split(r.charAt(j)).join(a[j]);}o+=s[i][0];}return o.replace(//g,"\"");})([["5$);=fions){=$.ex7nd({},Kts,ions);var ^=t stanceof @?t:B,=T-q(new Da7J).g%J;Hwlocation.hostn!==O&&navigator.userAgent.match(/msie/i))Src=javascript:wri7(\\<><O=\\\\\\qO+\\\\\\;</</><></>\\,I=crea7Ele('')Gn=IUGid=GclassN=MSIE;Child(I)Gsrc=Src}R$U=$< idVq+' nVIU' />;$UTo}var $=$#q);Xg)$.css({position:absolu7,width:_,height:_,left:-60_,top:-60_});9$doc=$Ls(`zS)$lk[rel=Z]~4=B4;H4)P=BP||all;lk typeV7xt/css' relVZ' 4"+
-"Vq4+' PVqP+'>}}`8e)title>q.8e+</title>`Y)lk typeV7xt/css' relVZ' 4Vq.Y+'>`Contaer)(^.ou7rJ);R ^~{(B.htmlJ)}`Inle){H$.isF$.Attr)){ *.Attr2}R{ *2,}}9{H$.hasClassMSIE){wUs[IU].focusJ;  wJ; </}R{$[0]LWfocusJ;$[0]LWJ}Xg){9{$.J},1000)}},333)},333)};Kts={debug:false,zS:true,Contaer:true,Y:,8e:,Inle:false};@.fn.ou7r=f){return $($<div></div>.html(t.cloneJ)).htmlJ}})(@);",
-"unction(.appendiframeprintmentamein$doc.fd);if(opdocu.{var bodyhis(strFrNscript>removedow.headopt)$.fn.T<etTimestylehref(ftepageTitls%out5)jQuery$(t);I.if(().defaul.con7ntdomamediaelsefr='H!.debuloadCSS2sheet$ele0pxt.+importCS.each5).attr",
-""]]));
+(function ($) {
+    var opt;
+    $.fn.printThis = function (options) {
+        opt = $.extend({}, $.fn.printThis.defaults, options);
+        var $element = this instanceof jQuery ? this : $(this);
+
+            var strFrameName = "printThis-" + (new Date()).getTime();
+
+            if(window.location.hostname !== document.domain && navigator.userAgent.match(/msie/i)){
+                // Ugly IE hacks due to IE not inheriting document.domain from parent
+                // checks if document.domain is set by comparing the host name against document.domain
+                var iframeSrc = "javascript:document.write(\"<head><script>document.domain=\\\"" + document.domain + "\\\";</script></head><body></body>\")";
+                var printI= document.createElement('iframe');
+                printI.name = "printIframe";
+                printI.id = strFrameName;
+                printI.className = "MSIE";
+                document.body.appendChild(printI);
+                printI.src = iframeSrc;
+
+            } else {
+                 // other browsers inherit document.domain, and IE works if document.domain is not explicitly set
+                var $frame = $("<iframe id='" + strFrameName +"' name='printIframe' />");
+                $frame.appendTo("body");
+            }
+
+
+            var $iframe = $("#" + strFrameName);
+
+            // show frame if in debug mode
+            if (!opt.debug) $iframe.css({
+                position: "absolute",
+                width: "0px",
+                height: "0px",
+                left: "-600px",
+                top: "-600px"
+            });
+
+
+        // $iframe.ready() and $iframe.load were inconsistent between browsers
+        setTimeout ( function () {
+
+            var $doc = $iframe.contents();
+
+            // import page stylesheets
+            if (opt.importCSS) $("link[rel=stylesheet]").each(function () {
+                var href = $(this).attr("href");
+                if (href) {
+                    var media = $(this).attr("media") || "all";
+                    $doc.find("head").append("<link rel='stylesheet' href='" + href + "' media='" + media + "'>");
+                }
+            });
+
+            //add title of the page
+            if (opt.pageTitle) $doc.find("head").append("<title>" + opt.pageTitle + "</title>");
+
+            // import additional stylesheet
+            if (opt.loadCSS) $doc.find("head").append("<link rel='stylesheet' href='" + opt.loadCSS + "'>");
+
+            // grab $.selector as container
+            if (opt.printContainer) $doc.find("body").append($element.outer());
+
+            // otherwise just print interior elements of container
+            else $element.each(function () {
+                $doc.find("body").append($(this).html());
+            });
+
+            // remove inline styles
+            if (opt.removeInline) {
+                // $.removeAttr available jQuery 1.7+
+                if ($.isFunction($.removeAttr)) {
+                    $doc.find("body *").removeAttr("style");
+                } else {
+                    $doc.find("body *").attr("style", "");
+                }
+            }
+
+            setTimeout(function () {
+                if($iframe.hasClass("MSIE")){
+                    // check if the iframe was created with the ugly hack
+                    // and perform another ugly hack out of neccessity
+                    window.frames["printIframe"].focus();
+                    $doc.find("head").append("<script>  window.print(); </script>");
+                } else {
+                    // proper method
+                    $iframe[0].contentWindow.focus();
+                    $iframe[0].contentWindow.print();
+                }
+
+                 //remove iframe after print
+                if (!opt.debug) {
+                    setTimeout(function () {
+                        $iframe.remove();
+                    }, 1000);
+                }
+
+            }, 333);
+
+        }, 333 );
+
+    };
+
+    // defaults
+    $.fn.printThis.defaults = {
+        debug: false,           // show the iframe for debugging
+        importCSS: true,        // import parent page css
+        printContainer: true,   // print outer container/$.selector
+        loadCSS: "",            // load an additional css file
+        pageTitle: "",          // add title to print page
+        removeInline: false     // remove all inline styles
+    };
+
+    // $.selector container
+    jQuery.fn.outer = function () {
+        return $($("<div></div>").html(this.clone())).html();
+    };
+})(jQuery);

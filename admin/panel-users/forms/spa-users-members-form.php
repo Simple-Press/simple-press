@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Users Members Form
-$LastChangedDate: 2017-11-11 15:57:00 -0600 (Sat, 11 Nov 2017) $
-$Rev: 15578 $
+$LastChangedDate: 2017-11-12 17:27:02 -0600 (Sun, 12 Nov 2017) $
+$Rev: 15583 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -14,16 +14,16 @@ function spa_users_members_form() {
 
 	spa_paint_options_init();
 
-	spa_paint_open_tab(spa_text('Users').' - '.spa_text('Member Information'), true);
+	spa_paint_open_tab(SP()->primitives->admin_text('Users').' - '.SP()->primitives->admin_text('Member Information'), true);
 		spa_paint_open_panel();
-			spa_paint_open_fieldset(spa_text('Member Information'), 'true', 'users-info');
-                if (!class_exists('WP_List_Table')) require_once(ABSPATH.'wp-admin/includes/class-wp-list-table.php');
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Member Information'), 'true', 'users-info');
+                if (!class_exists('WP_List_Table')) require_once ABSPATH.'wp-admin/includes/class-wp-list-table.php';
 
                 class SP_Members_Table extends WP_List_Table {
                     function __construct() {
                         parent::__construct( array(
-                            'singular'=> spa_text('member'),
-                            'plural' => spa_text('members'),
+                            'singular'=> SP()->primitives->admin_text('member'),
+                            'plural' => SP()->primitives->admin_text('members'),
                             'ajax'   => false
                         ));
                     }
@@ -31,14 +31,14 @@ function spa_users_members_form() {
                     function get_columns(){
                         $columns = array(
                             'cb'                => '<input type="checkbox" />',
-                            'user_id'           => spa_text('ID'),
-                            'user_login'        => spa_text('User Login'),
-                            'display_name'      => spa_text('Display Name'),
-                            'user_registered'   => spa_text('Registered'),
-                            'lastvisit'         => spa_text('Last Visit'),
-                            'posts'             => spa_text('Posts'),
-                            'memberships'       => spa_text('Memberships'),
-                            'rank'              => spa_text('Forum Rank'),
+                            'user_id'           => SP()->primitives->admin_text('ID'),
+                            'user_login'        => SP()->primitives->admin_text('User Login'),
+                            'display_name'      => SP()->primitives->admin_text('Display Name'),
+                            'user_registered'   => SP()->primitives->admin_text('Registered'),
+                            'lastvisit'         => SP()->primitives->admin_text('Last Visit'),
+                            'posts'             => SP()->primitives->admin_text('Posts'),
+                            'memberships'       => SP()->primitives->admin_text('Memberships'),
+                            'rank'              => SP()->primitives->admin_text('Forum Rank'),
                         );
                         return $columns;
                     }
@@ -57,13 +57,13 @@ function spa_users_members_form() {
 
                     function get_bulk_actions() {
                         $actions = array(
-                            'delete'    => spa_text('Delete')
+                            'delete'    => SP()->primitives->admin_text('Delete')
                         );
                         return $actions;
                     }
 
                     function no_items() {
-                        spa_etext('No members found');
+                        SP()->primitives->admin_etext('No members found');
                     }
 
                 	function get_table_classes() {
@@ -95,24 +95,24 @@ function spa_users_members_form() {
 
                                						$nonce = wp_create_nonce('bulk-users');
                             						$site = wp_nonce_url(SPAJAXURL.'profile&amp;targetaction=popup&amp;user='.$rec['user_id'], 'profile');
-                            						$title = spa_text('Member Profile');
+                            						$title = SP()->primitives->admin_text('Member Profile');
                             						$user_action = (is_multisite()) ? 'remove' : 'delete';
-													$actions = array(
-                                                        'edit'      => '<a href="'.admin_url('user-edit.php?user_id='.$rec['user_id']).'&amp;wp_http_referer=admin.php?page=simple-press/admin/panel-users/spa-users.php">'.spa_text('Edit').'</a>',
-                                                        'delete'   => '<a href="'.admin_url('users.php?action='.$user_action.'&amp;user='.$rec['user_id']."&amp;_wpnonce=$nonce&amp;wp_http_referer=admin.php?page=simple-press/admin/panel-users/spa-users.php").'">'.spa_text('Delete').'</a>',
-                                                        'profile'    => '<a id="memberprofile'.$rec['user_id'].'" class="spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="750" data-height="0" data-align="center">'.spa_text('Profile').'</a>',
+                                                    $actions = array(
+                                                        'edit'      => '<a href="'.admin_url('user-edit.php?user_id='.$rec['user_id']).'&amp;wp_http_referer=admin.php?page=simple-press/admin/panel-users/spa-users.php">'.SP()->primitives->admin_text('Edit').'</a>',
+                                                        'delete'   => '<a href="'.admin_url('users.php?action='.$user_action.'&amp;user='.$rec['user_id']."&amp;_wpnonce=$nonce&amp;wp_http_referer=admin.php?page=simple-press/admin/panel-users/spa-users.php").'">'.SP()->primitives->admin_text('Delete').'</a>',
+                                                        'profile'    => '<a id="memberprofile'.$rec['user_id'].'" class="spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="750" data-height="0" data-align="center">'.SP()->primitives->admin_text('Profile').'</a>',
                                                     );
 
                                                     echo $this->row_actions($actions);
                                                     break;
 
                                                 case 'display_name':
-                                                    echo sp_filter_name_display($rec['display_name']);
+                                                    echo SP()->displayFilters->name($rec['display_name']);
                                                     break;
 
                                                 case 'user_registered':
                                                 case 'lastvisit':
-                                                    echo sp_date('d', $rec[$column_name]).'<br />'.sp_date('t', $rec[$column_name]);
+                                                    echo SP()->dateTime->format_date('d', $rec[$column_name]).'<br />'.SP()->dateTime->format_date('t', $rec[$column_name]);
                                                     break;
 
                                                 case 'posts':
@@ -134,25 +134,23 @@ function spa_users_members_form() {
                 	function get_views() {
                 		$usergroup = isset($_REQUEST['usergroup']) ? (int) $_REQUEST['usergroup'] : '';
                 		$usergroups = spa_get_usergroups_all();
-                        $members = spdb_select('var', 'SELECT count(*) as count FROM '.SFMEMBERS);
+                        $members = SP()->DB->select('SELECT count(*) as count FROM '.SPMEMBERS, 'var');
 
                 		$class = empty($usergroup) ? ' class="current"' : '';
                 		$ug_links = array();
-                		$ug_links['all'] = "<a href='".SFADMINUSER."'$class>".spa_text('All')." <span class='count'>($members)</span></a>";
+                		$ug_links['all'] = "<a href='".SPADMINUSER."'$class>".SP()->primitives->admin_text('All')." <span class='count'>($members)</span></a>";
                 		foreach ($usergroups as $ug) {
                 			$class = ($ug->usergroup_id == $usergroup) ? ' class="current"' : '';
-                            $count = spdb_count(SFMEMBERSHIPS, "usergroup_id = $ug->usergroup_id");
+                            $count = SP()->DB->count(SPMEMBERSHIPS, "usergroup_id = $ug->usergroup_id");
                 			$name = $ug->usergroup_name.' <span class="count">('.$count.')</span>';
-                			$ug_links[$ug->usergroup_name] = "<a style='margin-left:-12px' href='".esc_url(add_query_arg('usergroup', $ug->usergroup_id, SFADMINUSER))."'$class>$name</a>";
+                			$ug_links[$ug->usergroup_name] = "<a style='margin-left:-12px' href='".esc_url(add_query_arg('usergroup', $ug->usergroup_id, SPADMINUSER))."'$class>$name</a>";
                 		}
 
-                    	$nomembership = spdb_select('var', '
-                    		SELECT count(*) as count
-                            FROM '.SFMEMBERS.'
-                    		WHERE user_id NOT IN (SELECT user_id FROM '.SFMEMBERSHIPS.') AND admin=0'
-                    	);
+                    	$nomembership = SP()->DB->select('SELECT count(*) as count
+                            FROM '.SPMEMBERS.'
+                    		WHERE user_id NOT IN (SELECT user_id FROM '.SPMEMBERSHIPS.') AND admin=0', 'var');
                			$class = ($usergroup === -1) ? ' class="current"' : '';
-                		$ug_links['No Membership'] = "<a style='margin-left:-12px' href='".esc_url(add_query_arg('usergroup', -1, SFADMINUSER))."'$class>".spa_text('No Membership')." <span class='count'>($nomembership)</span></a>";
+                		$ug_links['No Membership'] = "<a style='margin-left:-12px' href='".esc_url(add_query_arg('usergroup', -1, SPADMINUSER))."'$class>".SP()->primitives->admin_text('No Membership')." <span class='count'>($nomembership)</span></a>";
 
                 		return $ug_links;
                 	}
@@ -165,21 +163,21 @@ function spa_users_members_form() {
                         $this->_column_headers = array($columns, $hidden, $sortable);
 
                         # start the query
-                       	$spdb = new spdbComplex;
-                        $spdb->table        = SFMEMBERS;
-                        $spdb->found_rows   = true;
-                        $spdb->fields       = SFMEMBERS.'.user_id, '.SFMEMBERS.'.display_name, lastvisit, posts, admin, moderator, user_login, user_registered';
-        				$spdb->join         = array(SFUSERS.' ON '.SFMEMBERS.'.user_id = '.SFUSERS.'.ID');
+                       	$query = new stdClass();
+                        $query->table        = SPMEMBERS;
+                        $query->found_rows   = true;
+                        $query->fields       = SPMEMBERS.'.user_id, '.SPMEMBERS.'.display_name, lastvisit, posts, admin, moderator, user_login, user_registered';
+        				$query->join         = array(SPUSERS.' ON '.SPMEMBERS.'.user_id = '.SPUSERS.'.ID');
 
                         # handle specific usergroup
                 		$usergroup = isset($_REQUEST['usergroup']) ? (int) $_REQUEST['usergroup'] : '';
                         if ($usergroup) {
                             if ($usergroup == -1) {
-                				$spdb->left_join = array(SFMEMBERSHIPS.' ON '.SFMEMBERS.'.user_id = '.SFMEMBERSHIPS.'.user_id');
-                                $spdb->where = SFMEMBERSHIPS.".user_id IS NULL AND admin = 0";
+                				$query->left_join = array(SPMEMBERSHIPS.' ON '.SPMEMBERS.'.user_id = '.SPMEMBERSHIPS.'.user_id');
+                                $query->where = SPMEMBERSHIPS.".user_id IS NULL AND admin = 0";
                             } else {
-                				$spdb->join[] = SFMEMBERSHIPS.' ON '.SFMEMBERS.'.user_id = '.SFMEMBERSHIPS.'.user_id';
-                                $spdb->where = SFMEMBERSHIPS.".usergroup_id = $usergroup";
+                				$query->join[] = SPMEMBERSHIPS.' ON '.SPMEMBERS.'.user_id = '.SPMEMBERSHIPS.'.user_id';
+                                $query->where = SPMEMBERSHIPS.".usergroup_id = $usergroup";
                             }
 
                             # need to fool wp on request uri since our admin urls are wrong
@@ -187,41 +185,41 @@ function spa_users_members_form() {
                         }
 
                         # handle sort ordering
-                        $orderby = (!empty($_GET['orderby'])) ? sp_esc_sql($_GET['orderby']) : 'ASC';
-                        $order = (!empty($_GET['order'])) ? sp_esc_sql($_GET['order']) : '';
-                        $spdb->orderby = (!empty($orderby) && !empty($order)) ? "$orderby $order" : '';
+                        $orderby = (!empty($_GET['orderby'])) ? SP()->filters->esc_sql($_GET['orderby']) : 'ASC';
+                        $order = (!empty($_GET['order'])) ? SP()->filters->esc_sql($_GET['order']) : '';
+                        $query->orderby = (!empty($orderby) && !empty($order)) ? "$orderby $order" : '';
 
                         # pagination
                         $per_page = 50;
                         $current_page = $this->get_pagenum();
                         $offset = ($current_page - 1) * $per_page;
-            			$spdb->limits = "$offset, $per_page";
+            			$query->limits = "$offset, $per_page";
 
                         # searching
-                		$search_term = isset($_GET['s']) ? sp_filter_title_save(trim($_GET['s'])) : '';
+                		$search_term = isset($_GET['s']) ? SP()->saveFilters->title(trim($_GET['s'])) : '';
                         if ($search_term) {
                 			$searches = array();
-                			foreach (array('user_login', SFMEMBERS.'.display_name') as $col) {
+                			foreach (array('user_login', SPMEMBERS.'.display_name') as $col) {
                 				$searches[] = $col." LIKE '%$search_term%'";
                             }
                 			$where = implode(' OR ', $searches);
-                            $spdb->where = (!empty($spdb->where)) ? " AND ($where)" : $where;
+                            $query->where = (!empty($query->where)) ? " AND ($where)" : $where;
 
                             # if no ordering, list matches that start with the search term first
                             global $wpdb;
-                            if (empty($spdb->orderby)) $spdb->orderby = 'IF ('.SFMEMBERS.".display_name LIKE '".sp_esc_sql($wpdb->esc_like($search_term))."%', 0, IF (".SFMEMBERS.".display_name LIKE '%".sp_esc_sql($wpdb->esc_like($search_term))."%', 1, 2))";
+                            if (empty($query->orderby)) $query->orderby = 'IF ('.SPMEMBERS.".display_name LIKE '".SP()->filters->esc_sql($wpdb->esc_like($search_term))."%', 0, IF (".SPMEMBERS.".display_name LIKE '%".SP()->filters->esc_sql($wpdb->esc_like($search_term))."%', 1, 2))";
 
                             # need to fool wp on request uri since our admin urls are wrong
                             $_SERVER['REQUEST_URI'].= '&s='.$search_term;
                         }
 
                         # do our members query
-                        $spdb = apply_filters('sph_admin_members_list_query', $spdb);
+                        $query = apply_filters('sph_admin_members_list_query', $query);
 
-                        $records = $spdb->select();
+                        $records = SP()->DB->select($query);
 
                         # set up page links
-                        $total_items = spdb_select('var', 'SELECT FOUND_ROWS()');
+                        $total_items = SP()->DB->select('SELECT FOUND_ROWS()', 'var');
                         $this->set_pagination_args(array(
                             'total_items' => $total_items,
                             'per_page'    => $per_page
@@ -245,10 +243,10 @@ function spa_users_members_form() {
                             	}
 
                                 # get memberships for this member
-                            	$memberships = spdb_table(SFMEMBERSHIPS, "user_id=$data->user_id", '', '', '', ARRAY_A);
+                            	$memberships = SP()->DB->table(SPMEMBERSHIPS, "user_id=$data->user_id", '', '', '', ARRAY_A);
                             	if ($memberships) {
                             		foreach ($memberships as $membership) {
-                            			$name = spdb_table(SFUSERGROUPS, 'usergroup_id='.$membership['usergroup_id'], 'usergroup_name');
+                            			$name = SP()->DB->table(SPUSERGROUPS, 'usergroup_id='.$membership['usergroup_id'], 'usergroup_name');
                             			if ($start) {
                             				$user_memberships = $name;
                             				$start = 0;
@@ -257,11 +255,11 @@ function spa_users_members_form() {
                             			}
                             		}
                             	} else if ($start) {
-                            		$user_memberships = spa_text('No Memberships');
+                            		$user_memberships = SP()->primitives->admin_text('No Memberships');
                             	}
 
                                 # build the forum rank
-                            	$rank = sp_get_user_forum_rank($status, $data->user_id, $data->posts);
+                            	$rank = SP()->user->forum_rank($status, $data->user_id, $data->posts);
 
                                 # now fill in the members array
             					$members[$idx]['user_id']          = $data->user_id;
@@ -289,7 +287,7 @@ function spa_users_members_form() {
                        	$userids = array_map('intval', (array) $_REQUEST['users']);
                         $url = self_admin_url('users.php?action=delete&users[]='.implode('&users[]=', $userids).'&wp_http_referer=admin.php?page=simple-press/admin/panel-users/spa-users.php');
                         $url = str_replace('&amp;', '&', wp_nonce_url($url, 'bulk-users'));
-                        sp_redirect($url);
+                        SP()->primitives->redirect($url);
                         exit();
                 }
 
@@ -299,11 +297,11 @@ function spa_users_members_form() {
                 # display view links
                 $membersTable->views();
 ?>
-                <form id="members-filter" method="get" action="<?php echo SFADMINUSER; ?>">
+                <form id="members-filter" method="get" action="<?php echo SPADMINUSER; ?>">
                     <input type="hidden" name="page" value="<?php echo 'simple-press/admin/panel-users/spa-users.php'; ?>" />
 <?php
                     # dispaly the search box
-                    $membersTable->search_box(spa_text('Search Members'), 'search_id');
+                    $membersTable->search_box(SP()->primitives->admin_text('Search Members'), 'search_id');
 
                     # display the members list table
                     $membersTable->display();
@@ -318,4 +316,3 @@ function spa_users_members_form() {
 		spa_paint_close_container();
 	spa_paint_close_tab();
 }
-?>

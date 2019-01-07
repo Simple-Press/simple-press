@@ -14,7 +14,7 @@ if (!sp_nonce('integration-langs')) die();
 
 # ----------------------------------
 # Check Whether User Can Manage Integration
-if (!sp_current_user_can('SPF Manage Integration')) die();
+if (!SP()->auths->current_user_can('SPF Manage Integration')) die();
 
 if (isset($_GET['item'])) {
 	$item = $_GET['item'];
@@ -23,7 +23,7 @@ if (isset($_GET['item'])) {
 }
 
 function spa_download_language_file($item) {
-	global $spPaths, $locale;
+	global $locale;
 
 	$locale = get_locale();
 
@@ -32,23 +32,23 @@ function spa_download_language_file($item) {
 	if(isset($_GET['name'])) $itemName = $_GET['name'];
 
 	if($item == 'corefront' || $item == 'coreadmin') {
-		$url = 'https://glotpress.simple-press.com/glotpress/projects/simple-press-core/version-'.$_GET['version'].'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
-		$home = SF_STORE_DIR.'/'.$spPaths['language-sp'].'/'.$homeName.'-'.$locale.'.mo';
+		$url = 'http://glotpress.simple-press.com/glotpress/projects/simple-press-core/version-'.$_GET['version'].'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
+		$home = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/'.$homeName.'-'.$locale.'.mo';
 	}
 
 	if($item == 'theme') {
-		$url = 'https://glotpress.simple-press.com/glotpress/projects/simple-press-themes/'.$itemName.'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
-		$home = SF_STORE_DIR.'/'.$spPaths['language-sp-themes'].'/'.$homeName.'-'.$locale.'.mo';
+		$url = 'http://glotpress.simple-press.com/glotpress/projects/simple-press-themes/'.$itemName.'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
+		$home = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp-themes'].'/'.$homeName.'-'.$locale.'.mo';
 	}
 
 	if($item == 'plugin') {
-		$url = 'https://glotpress.simple-press.com/glotpress/projects/simple-press-plugins/'.$itemName.'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
-		$home = SF_STORE_DIR.'/'.$spPaths['language-sp-plugins'].'/'.$homeName.'-'.$locale.'.mo';
+		$url = 'http://glotpress.simple-press.com/glotpress/projects/simple-press-plugins/'.$itemName.'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
+		$home = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp-plugins'].'/'.$homeName.'-'.$locale.'.mo';
 	}
 
 	if(isset($_GET['remove'])) {
 		$status = unlink($home);
-		echo '<img src="'.SFADMINIMAGES.'sp_No.png" title="'.spa_text('Translation file removed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.spa_text('Translation file removed');
+		echo '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Translation file removed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Translation file removed');
 		die();
 	} else {
 		$fData = file_get_contents($url);
@@ -61,11 +61,10 @@ function spa_download_language_file($item) {
 	}
 
 	if($status) {
-		echo '<img src="'.SFADMINIMAGES.'sp_Yes.png" title="'.spa_text('Translation file installed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.spa_text('Translation file installed');
+		echo '<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Translation file installed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Translation file installed');
 	} else {
-		echo '<img src="'.SFADMINIMAGES.'sp_No.png" title="'.spa_text('Translation install failed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.spa_text('Install failed - or there is no available translation');
+		echo '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Translation install failed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Install failed - or there is no available translation');
 	}
 }
 
 die();
-?>

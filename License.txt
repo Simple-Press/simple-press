@@ -1,7 +1,7 @@
 Simple:Press - forum plugin for WordPress - License
 Version 5.0.0 and above
 
-Copyright 2006-2017 Simple:Press
+Copyright 2006-2018 Simple:Press
 Andy Staines and Steve Klasen
 
 The Official Bit:
@@ -42,7 +42,7 @@ Other than that, we hope this plugin meets a need and is able to enhance your Wo
 website in a positive way.
 
 Andy Staines / Steve Klasen
-2006-2017
+2006-2018
 
 
 GNU GENERAL PUBLIC LICENSE
@@ -326,6 +326,6 @@ POSSIBILITY OF SUCH DAMAGES.
 
 END OF TERMS AND CONDITIONS
 
-License text updated: 3rd January 2017
+License text updated: 1st January 2018
 
 

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Main database routines
-$LastChangedDate: 2014-06-14 19:34:16 -0500 (Sat, 14 Jun 2014) $
-$Rev: 11559 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -24,15 +24,13 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 # Returns the Group Name when only the forum id is known
 #	$forumid:		forum to lookup for group name
 # ------------------------------------------------------------------
-function sp_get_group_name_from_forum($forumid)
-{
+function sp_get_group_name_from_forum($forumid) {
 	if (!$forumid) return '';
 
-	return spdb_select('var',
-			"SELECT ".SFGROUPS.".group_name
-			 FROM ".SFGROUPS."
-			 JOIN ".SFFORUMS." ON ".SFFORUMS.".group_id = ".SFGROUPS.".group_id
-			 WHERE ".SFFORUMS.".forum_id=".$forumid);
+	return SP()->DB->select("SELECT ".SPGROUPS.".group_name
+			 FROM ".SPGROUPS."
+			 JOIN ".SPFORUMS." ON ".SPFORUMS.".group_id = ".SPGROUPS.".group_id
+			 WHERE ".SPFORUMS.".forum_id=".$forumid, 'var');
 }
 
 # ------------------------------------------------------------------
@@ -43,17 +41,14 @@ function sp_get_group_name_from_forum($forumid)
 #	$asArray:		return as an array if true
 # Note: No permission checking is performed
 # ------------------------------------------------------------------
-function sp_get_group_record_from_slug($forumslug, $asArray=false)
-{
+function sp_get_group_record_from_slug($forumslug, $asArray = false) {
 	if (!$forumslug) return '';
 
-	$sql=(
-			"SELECT *
-			 FROM ".SFFORUMS."
-			 JOIN ".SFGROUPS." ON ".SFFORUMS.".group_id = ".SFGROUPS.".group_id
+	$sql = ("SELECT *
+			 FROM ".SPFORUMS."
+			 JOIN ".SPGROUPS." ON ".SPFORUMS.".group_id = ".SPGROUPS.".group_id
 			 WHERE forum_slug='".$forumslug."';");
-	if ($asArray) return spdb_select('row', $sql, ARRAY_A);
-	return spdb_select('row', $sql);
-}
+	if ($asArray) return SP()->DB->select($sql, 'row', ARRAY_A);
 
-?>
+	return SP()->DB->select($sql, 'row');
+}

@@ -1,9 +1,440 @@
-eval((function(s){var a,c,e,i,j,o="",r,t="$%&*+/<>@[]^`~";for(i=0;i<s.length;i++){r=t+s[i][2];a=s[i][1].split("");for(j=a.length - 1;j>=0;j--){s[i][0]=s[i][0].split(r.charAt(j)).join(a[j]);}o+=s[i][0];}var p=3503;var x=function(r){var c,p,s,l='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789';if(r<63)c=l.charAt(r);else{r-=63;p=Math.floor(r/63);s=r%63;c=l.charAt(p)+l.charAt(s)}return c;};a=o.substr(p).split(':');r=a[1].split('?');a=a[0].split('?');o=o.substr(0,p);if(!''.replace(/^/,String)){var z={};for(i=0;i<95;i++){var y=x(i);z[y]=r[i]||y}t=/\b\w\w?\b/g;y=function(a){return z[a]||a};o=o.replace(t,y);}else{for(j=a[a.length-1]-1;j>=0;j--){if(r[j])o=o.replace(new RegExp('\b'+(j<63?c.charAt(j):c.charAt((j-63)/63)+c.charAt((j-63)%63))+'\b','g'),r[j])}}return o;})([["spa_toggle_layer.abbZ(h_.ajjas(0kak^c=='J'||af&c)){DelRow%h)}D#dNN^c=='J'||af&c)){DelRowRe@%ax)}7n]B&uvh*d*C*tWhah',b(aF(''8oaoLoadAjax%h*dUgag',b(f(Paaa',b(as(9.X<X~ll(hS.M<MUn~ll(h1.allAdminTool%h*dT.key-aE<key-aEKeywordSearch(v2.app6(g*r*B*z*y*DQC]celScript').f(b(ae){ae.4C]celScript(VOpenDialog6(g*r*B*z*y*D);c('#dialog, #spMobileP]el').one('opened',b(){Q.e()}F.3<3Troubleshooting%hw#amG');c('#am').5G"+
-"B&uvh*d*C*tupgrade*dminsaves[m*xuspTr]sferListTr]sferS>List(fromto*cexceedrecipyspUListUMultiS>List%uidzspFilterListFilterMultiS>List%uidimagenExp]dCollapseGroupExpColl$s(ghqAdd, spSlR]kDeleach(b(i){c(g).av('aq','aq')}mC]celZ&A);c(h).aF(''oShowToggleRow&A);K&r*d*CpFormc&A).asB&ubaseh*d*C,'at'IPluginUp@av('A','A');Y.sfpluginup@[m.aw(s~vatarDefaults').f(b(){~vatarDefaults(glProfileAvatarU').R(b(Av(htThemeDeleteConfirm').f(b"+
-"(ae^c=='J'||af&c)){return true}else{ae.4()}LThemeUp@av('A','A');Y.sfthemeup@[m.aw(EUsergroupShowMembersK%ad*CC$SetOptions').R(b(Set$Options(hx$SetSequence').R(b(){Set$Sequence(H('R','.sp$SetSlugSet$Slug(gvhtypec(Y).ready(b(){c('('admin[m@ed',b(){O_0D7W8UP9S12VFwuyznqmopIsltLECxH.e()});c('('troubleshooting[m@ed',b(){T.e()})});0?95:mydata?function?jQuery?sfmaincontainer?init?click?this?target??data?varprofile_avatar_u_priorities`c]cel"+
-"[ums_exp]d_collapse_group`show`[m`add?offprofile_avatar_defaultsthemes_delete_confirmmultis>_tr]sfer?urlaccordion_@_[mset_[um_sequencemultis>_umultis>_filter?disabled?LoadFormset_[um_op",
-"={e:b(){){k a=c(g).j})}};c('();a.').f(b(('f','.#d').5?spa_').r.e,');c('c(h).',b(pecia.spspj)SlRankc('.a#daForum(v(aacompone+nts_sc('.electloadforanif(ai a/l_r]k_CheckApdate",
-""],
-["t<s[_r&#_`mstgAcc]d<La_set_f]um_sl#pl#/?undefedjSMList$me/U'wR&t_l`e_scripchangeu@search(^)_d%C-'?docuj,L_row[.._$lpTp(v+tDefaulonjD%A*^_a*c-@SEL,?msg?img?ev+confirmR~Canc~F]m?typeof,RowwATool>f.m+uLLoadA*H~pLk>ected>ite>?)??attr>ubmi(?$ighwidth?loc?lab~?id?align?w]d?html",
-"oadForm?load?sp?spa_t?spa_load?spledete_rroubshncheckmentogghowinDeteRocancel__toolemberformdmt?Pruneayerspheialogea_jaxens_upion?s_allowor_s_eloougAllreop+T$cka",
-"#'(),-.0123456789:;=BGIJKNOQVWXYZqz{|}"]]));
+/* ---------------------------------
+ Simple:Press - Version 5.0
+ Forum Admin Event Handlers Javascript
+
+ $LastChangedDate: 2016-06-22 19:23:07 -0700 (Wed, 22 Jun 2016) $
+ $Rev: 14304 $
+ ------------------------------------ */
+
+(function(spj, $, undefined) {
+	// private properties
+	/*****************************
+	 general admin event handlers
+	 *****************************/
+
+	toggleLayer = {
+		init: function() {
+			$('.spLayerToggle').off();
+			$('.spLayerToggle').click(function() {
+				var mydata = $(this).data();
+				spj.toggleLayer(mydata.target);
+			});
+		}
+	};
+
+	toggleRow = {
+		init: function() {
+			$('.spToggleRow').off();
+			$('.spToggleRow').click(function() {
+				var mydata = $(this).data();
+				$(mydata.target).show();
+			});
+		}
+	};
+
+	deleteRow = {
+		init: function() {
+			$('#sfmaincontainer').off('click', '.spDeleteRow');
+			$('#sfmaincontainer').on('click', '.spDeleteRow', function() {
+				var mydata = $(this).data();
+				if (typeof mydata.msg == 'undefined' || confirm(mydata.msg)) {
+					spj.delRow(mydata.url, mydata.target);
+				}
+			});
+		}
+	};
+
+	deleteRowReload = {
+		init: function() {
+			$('#sfmaincontainer').off('click', '.spDeleteRowReload');
+			$('#sfmaincontainer').on('click', '.spDeleteRowReload', function() {
+				var mydata = $(this).data();
+				if (typeof mydata.msg == 'undefined' || confirm(mydata.msg)) {
+					spj.delRowReload(mydata.url, mydata.reload);
+				}
+			});
+		}
+	};
+
+	loadForm = {
+		init: function() {
+			$('#sfmaincontainer').off('click', '.spLoadForm');
+			$('#sfmaincontainer').on('click', '.spLoadForm', function() {
+				var mydata = $(this).data();
+				spj.loadForm(mydata.form, mydata.url, mydata.target, mydata.img, mydata.id, mydata.open);
+			});
+		}
+	};
+
+	cancelForm = {
+		init: function() {
+			$('#sfmaincontainer').off('click', '.spCancelForm');
+			$('#sfmaincontainer').on('click', '.spCancelForm', function() {
+				var mydata = $(this).data();
+				$(mydata.target).html('');
+			});
+		}
+	};
+
+	loadAjax = {
+		init: function() {
+			$('#sfmaincontainer').off('click', '.spLoadAjax');
+			$('#sfmaincontainer').on('click', '.spLoadAjax', function() {
+				var mydata = $(this).data();
+				spj.loadAjax(mydata.url, mydata.target, mydata.img);
+			});
+		}
+	};
+
+	reloadForm = {
+		init: function() {
+			$('#sfmaincontainer').off('click', '.spReloadForm');
+			$('#sfmaincontainer').on('click', '.spReloadForm', function() {
+				var mydata = $(this).data();
+				$(mydata.target).click();
+			});
+		}
+	};
+
+	showElement = {
+		init: function() {
+			$('#sfmaincontainer').off('click', '.spShowElement');
+			$('#sfmaincontainer').on('click', '.spShowElement', function() {
+				var mydata = $(this).data();
+				$(mydata.target).show();
+			});
+		}
+	};
+
+	checkAll = {
+		init: function() {
+			$('.spPruneCheckAll').off();
+			$('.spPruneCheckAll').click(function() {
+				var mydata = $(this).data();
+				spj.checkAll(mydata.target);
+			});
+		}
+	};
+
+	uncheckAll = {
+		init: function() {
+			$('.spPruneUncheckAll').off();
+			$('.spPruneUncheckAll').click(function() {
+				var mydata = $(this).data();
+				spj.uncheckAll(mydata.target);
+			});
+		}
+	};
+
+	adminTool = {
+		init: function() {
+			$('.spAdminTool').off();
+			$('.spAdminTool').click(function() {
+				var mydata = $(this).data();
+				spj.adminTool(mydata.url, mydata.target, mydata.img);
+			});
+		}
+	};
+
+	searchTool = {
+		init: function() {
+			$('.key-word').off();
+			$('.key-word').click(function() {
+				var mydata = $(this).data();
+				spj.keywordSearch(mydata.url);
+			});
+		}
+	};
+
+	adminHelp = {
+		init: function() {
+			$('.spHelpLink').off();
+			$('.spHelpLink').click(function() {
+				var mydata = $(this).data();
+				spj.dialogAjax(this, mydata.site, mydata.label, mydata.width, mydata.height, mydata.align);
+			});
+		}
+	};
+
+	spCancelScript = {
+		init: function() {
+			$('.spCancelScript').click(function(event) {
+				event.preventDefault();
+				spj.cancelScript();
+			});
+		}
+	};
+
+	openDialog = {
+		init: function() {
+			$('.spOpenDialog').click(function() {
+				var mydata = $(this).data();
+				spj.dialogAjax(this, mydata.site, mydata.label, mydata.width, mydata.height, mydata.align);
+				$('#dialog, #spMobilePanel').one('opened', function() {
+					spCancelScript.init();
+				});
+			});
+		}
+	};
+
+	troubleshooting = {
+		init: function() {
+			$('.spTroubleshoot').off();
+			$('.spTroubleshoot').click(function() {
+				var mydata = $(this).data();
+				spj.troubleshooting(mydata.url, mydata.target);
+			});
+		}
+	};
+
+	accordionLoadForm = {
+		init: function() {
+			$('#sfadminmenu').off('click', '.spAccordionLoadForm');
+			$('#sfadminmenu').on('click', '.spAccordionLoadForm', function() {
+				var mydata = $(this).data();
+				spj.loadForm(mydata.form, mydata.url, mydata.target, mydata.img, mydata.id, mydata.open, mydata.upgrade, mydata.admin, mydata.save, mydata.sform, mydata.reload);
+			});
+		}
+	};
+
+	/*****************************
+	 admin multiselect event handlers
+	 *****************************/
+
+	multiselectTransfer = {
+		init: function() {
+			$('#sfmaincontainer').on('click', '.spTransferList', function() {
+				var mydata = $(this).data();
+				spj.transferMultiSelectList(mydata.from, mydata.to, mydata.msg, mydata.exceed, mydata.recip);
+			});
+		}
+	};
+
+	multiselectUpdate = {
+		init: function() {
+			$('#sfmaincontainer').on('click', '.spUpdateList', function() {
+				var mydata = $(this).data();
+				spj.updateMultiSelectList(mydata.url, mydata.uid);
+			});
+		}
+	};
+
+	multiselectFilter = {
+		init: function() {
+			$('#sfmaincontainer').on('click', '.spFilterList', function() {
+				var mydata = $(this).data();
+				spj.filterMultiSelectList(mydata.url, mydata.uid, mydata.image);
+			});
+		}
+	};
+
+	/*****************************
+	 admin forums event handlers
+	 *****************************/
+
+	forumsExpandCollapseGroup = {
+		init: function() {
+			$('.spExpandCollapseGroup').click(function() {
+				var mydata = $(this).data();
+				spj.expandCollapseForums(this, mydata.target);
+			});
+		}
+	};
+
+	/*****************************
+	 admin components event handlers
+	 *****************************/
+
+	componentsSpecialRankAdd = {
+		init: function() {
+			$('.spSpecialRankAdd, spSpecialRankDel').click(function() {
+				var mydata = $(this).data();
+				$(mydata.target).each(function(i) {
+					$(this).attr('selected', 'selected');
+				});
+			});
+		}
+	};
+
+	componentsSpecialRankCancel = {
+		init: function() {
+			$('.spSpecialRankCancel').click(function() {
+				var mydata = $(this).data();
+				spj.toggleLayer(mydata.loc);
+				$(mydata.target).html('');
+			});
+		}
+	};
+
+	componentsSpecialRankShow = {
+		init: function() {
+			$('.spSpecialRankShow').click(function() {
+				var mydata = $(this).data();
+				spj.toggleRow(mydata.loc);
+				spj.showMemberList(mydata.site, mydata.img, mydata.id);
+			});
+		}
+	};
+
+	componentsSpecialRankForm = {
+		init: function() {
+			$('.spSpecialRankForm').click(function() {
+				var mydata = $(this).data();
+				$(mydata.loc).show();
+				spj.loadForm(mydata.form, mydata.base, mydata.target, mydata.img, mydata.id, 'open');
+			});
+		}
+	};
+
+	/*****************************
+	 admin plugins event handlers
+	 *****************************/
+
+	pluginsUpload = {
+		init: function() {
+			$('.spPluginUpload').click(function() {
+				var mydata = $(this).data();
+				$(mydata.target).attr('disabled', 'disabled');
+				document.sfpluginuploadform.submit();
+			});
+		}
+	};
+
+	/*****************************
+	 admin profiles event handlers
+	 *****************************/
+
+	profileAvatarDefaults = {
+		init: function() {
+			$('.spCheckAvatarDefaults').click(function() {
+				spj.checkAvatarDefaults(this);
+			});
+		}
+	};
+
+	profileAvatarUpdatePriorities = {
+		init: function() {
+			$('.spProfileAvatarUpdate').change(function() {
+				var mydata = $(this).data();
+				spj.avatarPriority(mydata.target);
+			});
+		}
+	};
+
+	/*****************************
+	 admin themes event handlers
+	 *****************************/
+
+	themesDeleteConfirm = {
+		init: function() {
+			$('.spThemeDeleteConfirm').click(function(event) {
+				var mydata = $(this).data();
+				if (typeof mydata.msg == 'undefined' || confirm(mydata.msg)) {
+					return true;
+				} else {
+					event.preventDefault();
+				}
+			});
+		}
+	};
+
+	themesUpload = {
+		init: function() {
+			$('.spThemeUpload').click(function() {
+				var mydata = $(this).data();
+				$(mydata.target).attr('disabled', 'disabled');
+				document.sfthemeuploadform.submit();
+			});
+		}
+	};
+
+	/*****************************
+	 admin usegroups event handlers
+	 *****************************/
+
+	ugShowMembers = {
+		init: function() {
+			$('.spUsergroupShowMembers').click(function() {
+				var mydata = $(this).data();
+				spj.showMemberList(mydata.url, mydata.img, mydata.id);
+			});
+		}
+	};
+
+	/*****************************
+	 admin forums event handlers
+	 *****************************/
+
+	setForumOptions = {
+		init: function() {
+			$('.spForumSetOptions').change(function() {
+				var mydata = $(this).data();
+				spj.setForumOptions(mydata.target);
+			});
+		}
+	};
+
+	setForumSequence = {
+		init: function() {
+			$('.spForumSetSequence').change(function() {
+				spj.setForumSequence();
+			});
+		}
+	};
+
+	setForumSlug = {
+		init: function() {
+			$('#sfmaincontainer').on('change', '.spForumSetSlug', function() {
+				var mydata = $(this).data();
+				spj.setForumSlug(this, mydata.url, mydata.target, mydata.type);
+			});
+		}
+	};
+
+	// public properties
+
+	// public methods
+	$(document).ready(function() {
+		$('#sfmaincontainer').on('adminformloaded', function() {
+			toggleLayer.init();
+			toggleRow.init();
+			deleteRow.init();
+			deleteRowReload.init();
+			loadForm.init();
+			cancelForm.init();
+			loadAjax.init();
+			reloadForm.init();
+			showElement.init();
+			checkAll.init();
+			uncheckAll.init();
+			adminTool.init();
+			adminHelp.init();
+			openDialog.init();
+			troubleshooting.init();
+			accordionLoadForm.init();
+			multiselectTransfer.init();
+			multiselectUpdate.init();
+			multiselectFilter.init();
+			forumsExpandCollapseGroup.init();
+			componentsSpecialRankAdd.init();
+			componentsSpecialRankCancel.init();
+			componentsSpecialRankShow.init();
+			componentsSpecialRankForm.init();
+			pluginsUpload.init();
+			profileAvatarDefaults.init();
+			profileAvatarUpdatePriorities.init();
+			themesDeleteConfirm.init();
+			themesUpload.init();
+			ugShowMembers.init();
+			setForumOptions.init();
+			setForumSequence.init();
+			setForumSlug.init();
+		});
+
+		$('#sfmaincontainer').on('troubleshootingformloaded', function() {
+			searchTool.init();
+		});
+	});
+
+	// private methods
+}(window.spj = window.spj || {}, jQuery));

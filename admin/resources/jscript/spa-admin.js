@@ -1,8 +1,288 @@
-eval((function(s){var a,c,e,i,j,o="",r,t="$%*@^`~";for(i=0;i<s.length;i++){r=t+s[i][2];a=s[i][1].split("");for(j=a.length - 1;j>=0;j--){s[i][0]=s[i][0].split(r.charAt(j)).join(a[j]);}o+=s[i][0];}var p=3044;var x=function(r){var c,p,s,l='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789';if(r<63)c=l.charAt(r);else{r-=63;p=Math.floor(r/63);s=r%63;c=l.charAt(p)+l.charAt(s)}return c;};a=o.substr(p).split(':');r=a[1].split('?');a=a[0].split('?');o=o.substr(0,p);if(!''.replace(/^/,String)){var z={};for(i=0;i<116;i++){var y=x(i);z[y]=r[i]||y}t=/\b\w\w?\b/g;y=function(a){return z[a]||a};o=o.replace(t,y);}else{for(j=a[a.length-1]-1;j>=0;j--){if(r[j])o=o.replace(new RegExp('\b'+(j<63?c.charAt(j):c.charAt((j-63)/63)+c.charAt((j-63)%63))+'\b','g'),r[j])}}return o.replace(//g,"\"");})([["var sfup*;Load(7^I,q^p^u^A,8,X^c^l,yd(N(isOpen)d(N('destroy')}aA===aY||aA==undefinedaS(x=g.aq.D-1;x>=0;x--g.aq[x].au!='C ajg.aq[x].au);aj!==aYaj.m'}}}}C aHq),currentBtn'c'+7),j=aI+'&*+7;au&au+au}X&X+X}ac&ac+ac}al&+al}y&y+y}j=AC u=d.noConflictu(gP(e(u('#lTaH.ap+'sp_WaitBox.gif />';u('#'+q).w(j,e(a,ba=Upgrade'u('#'+qewindow.location=8;2}NF@dmin*ed')})Ajax(aT,4d(gP(e(aTjax({h:'#l',beforeSubmit:e(lKlaZ(sp_plat_vars.pWait)},suc"+
-"cess:e(4!'lae4).V()}lfadeInlT(6000)}})ToggleLayer(og.fro`W}L g.allr=g.all[o].a`W}L g.aLr=g.aL[o].a`W}C objo);o=spPost'obj.scrollIntoView(S)}}ToggleRow(ard(ar).K()}AdminTool(k,h,nn!='m='+~'}hShowMemberList(k,n,HC ad'Q-'+H),hQ-'+H;ad.m=='n!='~'}L{m'}Q-'+HL{m'}}UpdateMultiSList(k^hC h#aK-'+ah;d(hFilterMultiSList(k^h,nC h#aK-'+ah;g.f('E-working~';E'list-E'+ah);k=url+'&E+J(E.t);d(hTransferSList(R^U,msg^M^OC aD=R"+
-"+' p:OD^B=aU%D;(aD+aB)>400alert(aM);2 S}aU+' p[t=-1]3R+' p:O3(ppendTo('#'+aU);selcountaZ(aO%D);!R%D)Rppend('<p t=-1>'+msg+'</p>');2 S}DelRowRe*(k,ylw(k,e(y).V()DelRow(k,PP).css({backgroundColor:'#ffcccc'});P).T@z');PCheckAll(Bd(BG@o[9=aw]:not(:I)ag(e(d@Q[aS+d(G_@u')+']F('V')UnCheckAll(Bd(BG@o[9=aw]:Iag(e(d@Q[aS+d(G_@u')+']F('V')SetForumOptions(99=forum'6ae5K()}L{5ae6K()}}SetForumSequence(block1K@z');block2K@z')}SetForumSlug(a"+
-"i,k,h^bk+&targetaction=slug&ai+escape(ai.t)+'&slugaction+ab;h).w(k,e(aCt=aC;disabled=STroubleshooting(aW,qq).w(aW,e(NF('troubleshooting*ed')AddDelMembers(aa,k,h,Z^f^s^x,_C M=0;d(_%ag(e(id(GX('O');M++});spjBatch(aa,k,h,Z^f^s^x,M);d(_%3()}CheckAvatarDefaults(vd(#av-browserG(ao:radiog(e(indexG.I&&v.t!none'G.aE!=v.aE&&G.t==v.tC aJ=G.aE;non-'+aJX(I,true)}}KeywordSearch(kC aR=atvalaR!'k+&at+J(aR);codexw(k)}}ExpCollForums(U,hh).css('s')=W'h).slide"+
-"UpU.aV+'}L{h).slideDownU.aV=String.fromCharCode(8211)}}0?116:???jQuery?function?getElementById?document?target???url?sfmsgspot?innerHTML?imageFile?whichLayer?option?targetDiv?style2?display?value?spfj?newChecked?*??re*?if?getTime?container?var?length?filter?trigger?this?groupID?checked?encodeURIComponent?show?else?totalNum?sfmaincontainer?sed?rowid?members?from?false?fadeOut?control?click?block?admin?Date?startMessage?source???return?remove?reLoad?groups?forums?ID?upgradeUrl?type?this"+
-"ID?slugAction?save?memberList?hide?endMessage?each?uid?title?t?style?s?rnd?new?input?imagePath?s?whichRow?startNum?keywords?id??checkbox?batchNum?src?slow?open?oldlist?newslug?newlist?name?img?find?busyDiv?baseURL?thisId?mslist?layers?exceed?dialog?recip?ready?label?key?for?a?to?text?site?prop?null?html?attr",
-"})}e spjajaxURLd('#'+e spjd('#').){+'&am='+g.f(h).j=+'=g.f(form).a='an Y().).w(k)}<aF ayelectForm();z(k=urlAm='+k;r.s=+' pload('a,a$r.s?:n+' /><br />",
-""]]));
+/* ---------------------------------
+ Simple:Press
+ Admin Javascript
+ $LastChangedDate: 2010-08-08 14:11:22 -0700 (Sun, 08 Aug 2010) $
+ $Rev: 4365 $
+ ------------------------------------ */
+
+(function(spj, $, undefined) {
+	// private properties
+
+	// public properties
+
+	// public methods
+	spj.loadForm = function(formID, baseURL, targetDiv, imagePath, id, open, upgradeUrl, admin, save, sform, reload) {
+		/* close a dialog (popup help) if one is open */
+		if ($().dialog("isOpen")) {
+			$().dialog('destroy');
+		}
+
+		/* remove any current form unless instructed to leave open */
+		if (open === null || open == undefined) {
+			for (x = document.forms.length - 1; x >= 0; x--) {
+				if (document.forms[x].id !== '') {
+					var tForm = document.getElementById(document.forms[x].id);
+					if (tForm !== null) {
+						tForm.innerHTML = '';
+					}
+				}
+			}
+		}
+
+		/* create vars we need */
+		var busyDiv = document.getElementById(targetDiv);
+		var currentFormBtn = document.getElementById('c' + formID);
+		var ajaxURL = baseURL + '&loadform=' + formID;
+
+		/* some sort of ID data? */
+		if (id) {
+			ajaxURL = ajaxURL + '&id=' + id;
+		}
+
+		/* user plugin? */
+		if (admin) {
+			ajaxURL = ajaxURL + '&admin=' + admin;
+		}
+		if (save) {
+			ajaxURL = ajaxURL + '&save=' + save;
+		}
+		if (sform) {
+			ajaxURL = ajaxURL + '&form=' + sform;
+		}
+		if (reload) {
+			ajaxURL = ajaxURL + '&reload=' + reload;
+		}
+
+		/* add random num to GET param to ensure its not cached */
+		ajaxURL = ajaxURL + '&rnd=' + new Date().getTime();
+
+		$(document).ready(function() {
+			/* fade out the msg area */
+			$('#sfmsgspot').fadeOut();
+
+			/* load the busy graphic */
+			busyDiv.innerHTML = '<img src="' + imagePath + 'sp_WaitBox.gif' + '" />';
+
+			/*  now load the form */
+			$('#' + targetDiv).load(ajaxURL, function(a, b) {
+				if (a == 'Upgrade') {
+					$('#' + targetDiv).hide();
+					window.location = upgradeUrl;
+					return;
+				}
+				$('#sfmaincontainer').trigger('adminformloaded');
+			});
+		});
+	};
+
+	spj.loadAjaxForm = function(aForm, reLoad) {
+		$(document).ready(function() {
+			$('#' + aForm).ajaxForm({
+				target: '#sfmsgspot',
+				beforeSubmit: function() {
+					$('#sfmsgspot').show();
+					$('#sfmsgspot').html(sp_platform_vars.pWait);
+				},
+				success: function() {
+					if (reLoad != '') {
+						$('#sfmsgspot').hide();
+						$('#' + reLoad).click();
+					}
+					$('#sfmsgspot').fadeIn();
+					$('#sfmsgspot').fadeOut(6000);
+				}
+			});
+		});
+	};
+
+	spj.toggleLayer = function(whichLayer) {
+		if (document.getElementById) {
+			/* this is the way the standards work */
+			style2 = document.getElementById(whichLayer).style;
+			style2.display = style2.display ? "" : "block";
+		} else if (document.all) {
+			/* this is the way old msie versions work */
+			style2 = document.all[whichLayer].style;
+			style2.display = style2.display ? "" : "block";
+		} else if (document.layers) {
+			/* this is the way nn4 works */
+			style2 = document.layers[whichLayer].style;
+			style2.display = style2.display ? "" : "block";
+		}
+		var obj = document.getElementById(whichLayer);
+		if (whichLayer == 'spPostForm') {
+			obj.scrollIntoView(false);
+		}
+	};
+
+	spj.toggleRow = function(whichRow) {
+		$(whichRow).show();
+	};
+
+	spj.delRowReload = function(url, reload) {
+		$('#sfmsgspot').load(url, function() {
+			$('#' + reload).click();
+		});
+	};
+
+	spj.delRow = function(url, rowid) {
+		$('#' + rowid).css({backgroundColor: '#ffcccc'});
+		$('#' + rowid).fadeOut('slow');
+		$('#' + rowid).load(url);
+	};
+
+	spj.adminTool = function(url, target, imageFile) {
+		if (imageFile !== '') {
+			document.getElementById(target).innerHTML = '<br /><br /><img src="' + imageFile + '" /><br />';
+		}
+		url = url + '&rnd=' + new Date().getTime();
+		$('#' + target).load(url);
+	};
+
+	spj.showMemberList = function(url, imageFile, groupID) {
+		var memberList = document.getElementById('members-' + groupID);
+		var target = 'members-' + groupID;
+
+		/* add random num to GET param to ensure its not cached */
+		url = url + '&rnd=' + new Date().getTime();
+
+		if (memberList.innerHTML === '') {
+			if (imageFile !== '') {
+				document.getElementById(target).innerHTML = '<img src="' + imageFile + '" />';
+			} else {
+				document.getElementById(target).innerHTML = '';
+			}
+			$('#members-' + groupID).load(url);
+		} else {
+			document.getElementById(target).innerHTML = '';
+		}
+	};
+
+	spj.updateMultiSelectList = function(url, uid) {
+		var target = '#mslist-' + uid;
+
+		/* add random num to GET param to ensure its not cached */
+		url = url + '&rnd=' + new Date().getTime();
+
+		$(target).load(url);
+	};
+
+	spj.filterMultiSelectList = function(url, uid, imageFile) {
+		var target = '#mslist-' + uid;
+
+		document.getElementById('filter-working').innerHTML = '<img src="' + imageFile + '" />';
+
+		filter = document.getElementById('list-filter' + uid);
+		url = url + '&filter=' + encodeURIComponent(filter.value);
+
+		/* add random num to GET param to ensure its not cached */
+		url = url + '&rnd=' + new Date().getTime();
+
+		$(target).load(url);
+	};
+
+	spj.transferMultiSelectList = function(from, to, msg, exceed, recip) {
+		/* can we add more? */
+		var newlist = $('#' + from + ' option:selected').length;
+		var oldlist = $('#' + to + ' option').length;
+		if ((newlist + oldlist) > 400) {
+			alert(exceed);
+			return false;
+		}
+
+		/* remove list empty message */
+		$('#' + to + ' option[value="-1"]').remove();
+		/* move the data from the from box to the to box */
+		$('#' + from + ' option:selected').remove().appendTo('#' + to);
+
+		$('#selcount').html($('#' + recip + ' option').length);
+
+		/* if the from box is now empty, display message */
+		if (!$('#' + from + ' option').length)
+			$('#' + from).append('<option value="-1">' + msg + '</option>');
+
+		return false;
+	};
+
+	spj.checkAll = function(container) {
+		$(container).find('input[type=checkbox]:not(:checked)').each(function() {
+			$('label[for=' + $(this).attr('id') + ']').trigger('click');
+		});
+	};
+
+	spj.uncheckAll = function(container) {
+		$(container).find('input[type=checkbox]:checked').each(function() {
+			$('label[for=' + $(this).attr('id') + ']').trigger('click');
+		});
+	};
+
+	spj.setForumOptions = function(type) {
+		if (type == 'forum') {
+			$('#forumselect').hide();
+			$('#groupselect').show();
+		} else {
+			$('#groupselect').hide();
+			$('#forumselect').show();
+		}
+	};
+
+	spj.setForumSequence = function() {
+		$('#block1').show('slow');
+		$('#block2').show('slow');
+	};
+
+	spj.setForumSlug = function(title, url, target, slugAction) {
+		url += '&targetaction=slug&title=' + escape(title.value) + '&slugaction=' + slugAction;
+		$('#' + target).load(url, function(newslug) {
+			document.getElementById(target).value = newslug;
+			document.getElementById(target).disabled = false;
+		});
+	};
+
+	spj.troubleshooting = function(site, targetDiv) {
+		$('#' + targetDiv).load(site, function() {
+			$('#sfmaincontainer').trigger('troubleshootingformloaded');
+		});
+	};
+
+	spj.addDelMembers = function(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, source) {
+		var totalNum = 0;
+		$(source + ' option').each(function(i) {
+			$(this).prop('selected');
+			totalNum++;
+		});
+		spj.batch(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum);
+		$(source + ' option').remove();
+	};
+
+	spj.checkAvatarDefaults = function(newChecked) {
+		$("#av-browser").find("input:radio").each(function(index) {
+			if (this.checked && newChecked.value != 'none') {
+				if (this.name != newChecked.name && this.value == newChecked.value) {
+					var thisId = this.name;
+					$('#non-' + thisId).prop("checked", true);
+				}
+			}
+		});
+	};
+
+	spj.keywordSearch = function(url) {
+		var key = $('#keywords').val();
+		if (key != '') {
+			url += '&keywords=' + encodeURIComponent(key);
+			$('#codex').load(url);
+		}
+	};
+
+	spj.expandCollapseForums = function(control, target) {
+		if ($('#' + target).css('display') == 'block') {
+			$('#' + target).slideUp();
+			control.text = '+';
+		} else {
+			$('#' + target).slideDown();
+			control.text = String.fromCharCode(8211);
+		}
+	};
+
+	// private methods
+}(window.spj = window.spj || {}, jQuery));

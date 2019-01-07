@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Topic/Post Form Component Rendering
-$LastChangedDate: 2016-11-05 14:40:56 -0500 (Sat, 05 Nov 2016) $
-$Rev: 14705 $
+$LastChangedDate: 2017-04-10 14:41:40 -0500 (Mon, 10 Apr 2017) $
+$Rev: 15327 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -17,11 +17,9 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 # ----------------------------------
 # Begin the toolbar filter functions
 # ----------------------------------
-
-global $spGlobals;
 $toolbar = false;
-if (!empty($spGlobals['display']['editor']['toolbar'])) {
-	$toolbar = $spGlobals['display']['editor']['toolbar'];
+if (!empty(SP()->core->forumData['display']['editor']['toolbar'])) {
+	$toolbar = SP()->core->forumData['display']['editor']['toolbar'];
 }
 
 if ($toolbar) {
@@ -48,31 +46,32 @@ if ($toolbar) {
 # Topic Form Submit section
 # ----------------------------------
 function sp_topic_editor_submit_buttons($out, $spThisForum, $a, $toolbar) {
-	global $spDevice, $tab;
+	global $tab;
 
 	extract($a, EXTR_SKIP);
 
     # sanitize
+	$hide			        = (int) $hide;
 	$controlSubmit		    = esc_attr($controlSubmit);
+	$controlSubmitMobile	= esc_attr($controlSubmitMobile);
 	$controlOrder		    = esc_attr($controlOrder);
-	$labelPostButtonReady	= sp_filter_title_display($labelPostButtonReady);
-	$labelPostButtonMath	= sp_filter_title_display($labelPostButtonMath);
-	$labelPostCancel		= sp_filter_title_display($labelPostCancel);
+	$toolbarSubmitClassRight	= esc_attr($toolbarSubmitClassRight);
+	$labelPostButtonReady	= SP()->displayFilters->title($labelPostButtonReady);
+	$labelPostButtonMath	= SP()->displayFilters->title($labelPostButtonMath);
+	$labelPostCancel		= SP()->displayFilters->title($labelPostCancel);
 	$tipSubmitButton		= esc_attr($tipSubmitButton);
 	$tipCancelButton		= esc_attr($tipCancelButton);
 
-	if (sp_get_auth('bypass_math_question', $spThisForum->forum_id) ? $usemath = false : $usemath = true);
+	if (SP()->auths->get('bypass_math_question', $spThisForum->forum_id) ? $usemath = false : $usemath = true);
 	$cOrder = (isset($controlOrder)) ? explode('|', $controlOrder) : array('save', 'cancel');
 	$enabled = ' ';
 	if ($usemath) $enabled = 'disabled="disabled"';
-	if ($toolbar == 'toolbar' ? $class=' spRight' :  $class='');
 	$buttontext = $labelPostButtonReady;
 	if ($usemath) $buttontext = $labelPostButtonMath;
     $buttontext = apply_filters('sph_topic_editor_button_text', $buttontext, $a);
     $enabled = apply_filters('sph_topic_editor_button_enable', $enabled, $a);
 
-	if ($toolbar=='inline') $out.= '<div class="spEditorSubmit">'."\n";
-	$out.= "<div class='spEditorSubmitButton$class'>\n";
+	$out.= "<div class='spEditorSubmitButton $toolbarSubmitClassRight'>\n";
 
 	# let plugins add stuff to editor controls
 	$out = apply_filters('sph_topic_editor_controls', $out, $spThisForum, $a, $toolbar);
@@ -80,10 +79,10 @@ function sp_topic_editor_submit_buttons($out, $spThisForum, $a, $toolbar) {
 	foreach ($cOrder as $c) {
 		switch($c) {
 			case 'save':
-    			if ($spDevice == 'mobile' && array_key_exists('iconMobileSubmit', $a) && !empty($a['iconMobileSubmit'])) {
+    			if (SP()->core->device == 'mobile' && array_key_exists('iconMobileSubmit', $a) && !empty($a['iconMobileSubmit'])) {
     				# display mobile icon
-    				$out.= "<button type='submit' tabindex='".$tab++."' style='background:transparent;' class='spIcon' name='newtopic' id='sfsave' />";
-    				$out.= sp_paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileSubmit, '');
+    				$out.= "<button type='submit' tabindex='".$tab++."' style='background:transparent;' class='$controlSubmitMobile' name='newtopic' id='sfsave' />";
+    				$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileSubmit, '');
     				$out.= "</button>";
     			} else {
     				# display default button
@@ -93,11 +92,11 @@ function sp_topic_editor_submit_buttons($out, $spThisForum, $a, $toolbar) {
 
 			case 'cancel':
                 if ($hide) {
-        			$msg = esc_attr(sp_text('Are you sure you want to cancel?'));
-        			if ($spDevice == 'mobile' && array_key_exists('iconMobileCancel', $a) && !empty($a['iconMobileCancel'])) {
+        			$msg = esc_attr(SP()->primitives->front_text('Are you sure you want to cancel?'));
+        			if (SP()->core->device == 'mobile' && array_key_exists('iconMobileCancel', $a) && !empty($a['iconMobileCancel'])) {
         				# display mobile icon
-        				$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='spIcon spCancelEditor' name='cancel' id='sfcancel' data-msg='$msg'>\n";
-        				$out.= sp_paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileCancel, '');
+        				$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='$controlSubmitMobile spCancelEditor' name='cancel' id='sfcancel' data-msg='$msg'>\n";
+        				$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileCancel, '');
         				$out.= "</button>";
         			} else {
         				# display default button
@@ -111,8 +110,6 @@ function sp_topic_editor_submit_buttons($out, $spThisForum, $a, $toolbar) {
 	}
 
 	$out.= '</div>'."\n";
-	if ($toolbar=='inline') $out.= '</div>'."\n";
-
 	return $out;
 }
 
@@ -120,31 +117,32 @@ function sp_topic_editor_submit_buttons($out, $spThisForum, $a, $toolbar) {
 # Post Form Submit section
 # ----------------------------------
 function sp_post_editor_submit_buttons($out, $spThisTopic, $a, $toolbar) {
-	global $tab, $spDevice;
+	global $tab;
 
 	extract($a, EXTR_SKIP);
 
     # sanitize
+	$hide			        = (int) $hide;
 	$controlSubmit		    = esc_attr($controlSubmit);
+	$controlSubmitMobile	= esc_attr($controlSubmitMobile);
 	$controlOrder		    = esc_attr($controlOrder);
-	$labelPostButtonReady	= sp_filter_title_display($labelPostButtonReady);
-	$labelPostButtonMath	= sp_filter_title_display($labelPostButtonMath);
-	$labelPostCancel		= sp_filter_title_display($labelPostCancel);
+	$toolbarSubmitClassRight	= esc_attr($toolbarSubmitClassRight);
+	$labelPostButtonReady	= SP()->displayFilters->title($labelPostButtonReady);
+	$labelPostButtonMath	= SP()->displayFilters->title($labelPostButtonMath);
+	$labelPostCancel		= SP()->displayFilters->title($labelPostCancel);
 	$tipSubmitButton		= esc_attr($tipSubmitButton);
 	$tipCancelButton		= esc_attr($tipCancelButton);
 
-	if (sp_get_auth('bypass_math_question', $spThisTopic->forum_id) ? $usemath = false : $usemath = true);
+	if (SP()->auths->get('bypass_math_question', $spThisTopic->forum_id) ? $usemath = false : $usemath = true);
 	$cOrder = (isset($controlOrder)) ? explode('|', $controlOrder) : array('save', 'cancel');
 	$enabled = ' ';
 	if ($usemath) $enabled = 'disabled="disabled"';
-	if ($toolbar == 'toolbar' ? $class=' spRight' :  $class='');
 	$buttontext = $labelPostButtonReady;
 	if ($usemath) $buttontext = $labelPostButtonMath;
     $buttontext = apply_filters('sph_post_editor_button_text', $buttontext, $a);
     $enabled = apply_filters('sph_post_editor_button_enable', $enabled, $a);
 
-	if ($toolbar=='inline') $out.= '<div class="spEditorSubmit">'."\n";
-	$out.= "<div class='spEditorSubmitButton$class'>\n";
+	$out.= "<div class='spEditorSubmitButton $toolbarSubmitClassRight'>\n";
 
 	# let plugins add stuff to editor controls
 	$out = apply_filters('sph_post_editor_controls', $out, $spThisTopic, $a, $toolbar);
@@ -152,10 +150,10 @@ function sp_post_editor_submit_buttons($out, $spThisTopic, $a, $toolbar) {
 	foreach ($cOrder as $c) {
 		switch($c) {
 			case 'save':
-    			if ($spDevice == 'mobile' && array_key_exists('iconMobileSubmit', $a) && !empty($a['iconMobileSubmit'])) {
+    			if (SP()->core->device == 'mobile' && array_key_exists('iconMobileSubmit', $a) && !empty($a['iconMobileSubmit'])) {
     				# display mobile icon
-    				$out.= "<button type='submit' tabindex='".$tab++."' style='background:transparent;' class='spIcon' name='newpost' id='sfsave' />";
-    				$out.= sp_paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileSubmit, '');
+    				$out.= "<button type='submit' tabindex='".$tab++."' style='background:transparent;' class='$controlSubmitMobile' name='newpost' id='sfsave' />";
+    				$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileSubmit, '');
     				$out.= "</button>";
     			} else {
     				# display default button
@@ -165,11 +163,11 @@ function sp_post_editor_submit_buttons($out, $spThisTopic, $a, $toolbar) {
 
 			case 'cancel':
                 if ($hide) {
-        			$msg = esc_attr(sp_text('Are you sure you want to cancel?'));
-        			if ($spDevice == 'mobile' && array_key_exists('iconMobileCancel', $a) && !empty($a['iconMobileCancel'])) {
+        			$msg = esc_attr(SP()->primitives->front_text('Are you sure you want to cancel?'));
+        			if (SP()->core->device == 'mobile' && array_key_exists('iconMobileCancel', $a) && !empty($a['iconMobileCancel'])) {
         				# display mobile icon
-        				$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='spIcon spCancelEditor' name='cancel' id='sfcancel' data-msg='$msg'>\n";
-        				$out.= sp_paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileCancel, '');
+        				$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='$controlSubmitMobile spCancelEditor' name='cancel' id='sfcancel' data-msg='$msg'>\n";
+        				$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileCancel, '');
         				$out.= "</button>";
         			} else {
         				# display default button
@@ -183,8 +181,6 @@ function sp_post_editor_submit_buttons($out, $spThisTopic, $a, $toolbar) {
 	}
 
 	$out.= '</div>'."\n";
-	if ($toolbar == 'inline') $out.= '</div>'."\n";
-
 	return $out;
 }
 
@@ -192,22 +188,23 @@ function sp_post_editor_submit_buttons($out, $spThisTopic, $a, $toolbar) {
 # Post Edit Form Submit section
 # ----------------------------------
 function sp_post_editor_edit_submit_buttons($out, $spThisTopic, $a, $toolbar) {
-	global $tab, $spDevice;
+	global $tab;
 
 	extract($a, EXTR_SKIP);
 
     # sanitize
 	$controlSubmit		    = esc_attr($controlSubmit);
+	$controlSubmitMobile	= esc_attr($controlSubmitMobile);
 	$controlOrder		    = esc_attr($controlOrder);
-	$labelPostButton       	= sp_filter_title_display($labelPostButton);
-	$labelPostCancel		= sp_filter_title_display($labelPostCancel);
+	$toolbarSubmitClassRight	= esc_attr($toolbarSubmitClassRight);
+	$labelPostButton       	= SP()->displayFilters->title($labelPostButton);
+	$labelPostCancel		= SP()->displayFilters->title($labelPostCancel);
 	$tipSubmitButton		= esc_attr($tipSubmitButton);
 	$tipCancelButton		= esc_attr($tipCancelButton);
 
 	$cOrder = (isset($controlOrder)) ? explode('|', $controlOrder) : array('save', 'cancel');
-	if ($toolbar == 'toolbar' ? $class=' spRight' :  $class='');
-	if ($toolbar=='inline') $out.= '<div class="spEditorSubmit">'."\n";
-	$out.= "<div class='spEditorSubmitButton$class'>\n";
+
+	$out.= "<div class='spEditorSubmitButton $toolbarSubmitClassRight'>\n";
 
 	# let plugins add stuff to editor controls
 	$out = apply_filters('sph_post_editor_controls', $out, $spThisTopic, $a, $toolbar);
@@ -215,10 +212,10 @@ function sp_post_editor_edit_submit_buttons($out, $spThisTopic, $a, $toolbar) {
 	foreach ($cOrder as $c) {
 		switch($c) {
 			case 'save':
-    			if ($spDevice == 'mobile' && array_key_exists('iconMobileSubmit', $a) && !empty($a['iconMobileSubmit'])) {
+    			if (SP()->core->device == 'mobile' && array_key_exists('iconMobileSubmit', $a) && !empty($a['iconMobileSubmit'])) {
     				# display mobile icon
-    				$out.= "<button type='submit' tabindex='".$tab++."' style='background:transparent;' class='spIcon' name='editpost' id='sfsave' />";
-    				$out.= sp_paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileSubmit, '');
+    				$out.= "<button type='submit' tabindex='".$tab++."' style='background:transparent;' class='$controlSubmitMobile' name='editpost' id='sfsave' />";
+    				$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileSubmit, '');
     				$out.= "</button>";
     			} else {
     				# display default button
@@ -227,11 +224,11 @@ function sp_post_editor_edit_submit_buttons($out, $spThisTopic, $a, $toolbar) {
     			break;
 
 			case 'cancel':
-    			$msg = esc_attr(sp_text('Are you sure you want to cancel?'));
-    			if ($spDevice == 'mobile' && array_key_exists('iconMobileCancel', $a) && !empty($a['iconMobileCancel'])) {
+    			$msg = esc_attr(SP()->primitives->front_text('Are you sure you want to cancel?'));
+    			if (SP()->core->device == 'mobile' && array_key_exists('iconMobileCancel', $a) && !empty($a['iconMobileCancel'])) {
     				# display mobile icon
-    				$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='spIcon spCancelEditor' name='cancel' id='sfcancel' data-msg='$msg'>\n";
-    				$out.= sp_paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileCancel, '');
+    				$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='$controlSubmitMobile spCancelEditor' name='cancel' id='sfcancel' data-msg='$msg'>\n";
+    				$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileCancel, '');
     				$out.= "</button>";
     			} else {
     				# display default button
@@ -244,8 +241,6 @@ function sp_post_editor_edit_submit_buttons($out, $spThisTopic, $a, $toolbar) {
 	}
 
 	$out.= '</div>'."\n";
-	if ($toolbar=='inline') $out.= '</div>'."\n";
-
 	return $out;
 }
 
@@ -255,36 +250,40 @@ function sp_post_editor_edit_submit_buttons($out, $spThisTopic, $a, $toolbar) {
 function sp_topic_editor_section_math($out, $spThisForum, $a) {
 	global $tab;
 	# Start Spam Measures
-	if (sp_get_auth('bypass_math_question', $spThisForum->forum_id) ? $usemath = false : $usemath = true);
+	if (SP()->auths->get('bypass_math_question', $spThisForum->forum_id) ? $usemath = false : $usemath = true);
 	if ($usemath) {
 		extract($a, EXTR_SKIP);
 
         # sanitize
     	$controlInput		    = esc_attr($controlInput);
     	$controlSubmit		    = esc_attr($controlSubmit);
-    	$labelMath		        = sp_filter_title_display($labelMath);
-    	$labelMathSum		    = sp_filter_title_display($labelMathSum);
-    	$labelPostButtonReady	= sp_filter_title_display($labelPostButtonReady);
-    	$labelPostButtonMath	= sp_filter_title_display($labelPostButtonMath);
-    	$labelPostCancel		= sp_filter_title_display($labelPostCancel);
+    	$mathSection			= esc_attr($mathSection);
+    	$mathPadding			= esc_attr($mathPadding);
+		$mathLabels				= esc_attr($mathLabels);
+    	$labelMath		        = SP()->displayFilters->title($labelMath);
+    	$labelMathSum		    = SP()->displayFilters->title($labelMathSum);
+    	$labelPostButtonReady	= SP()->displayFilters->title($labelPostButtonReady);
+    	$labelPostButtonMath	= SP()->displayFilters->title($labelPostButtonMath);
+    	$labelPostCancel		= SP()->displayFilters->title($labelPostCancel);
 
-		$out.= '<div class="spEditorSubmit">'."\n";
+		$out.= "<div class='$mathPadding'>\n";
 		$out.= '<div class="spInlineSection">'."\n";
 		$out.= 'Guest URL (required)<br />'."\n";
 		$out.= "<input type='text' tabindex='".$tab++."' class='$controlInput' size='30' name='url' value='' />\n";
 		$out.= "</div>\n";
 
 		$spammath = sp_math_spam_build();
-		$uKey = sp_get_option('spukey');
+		$uKey = SP()->options->get('spukey');
 		$uKey1 = $uKey.'1';
 		$uKey2 = $uKey.'2';
+		$out.= "<div class='$mathSection'>\n";
 		$out.= "<div class='spEditorTitle'>$labelMath</div>\n";
-		$out.= "<div class='spEditorSpam'>$labelMathSum:</div>\n";
-		$out.= "<div class='spEditorSpam'>$spammath[0] + $spammath[1]</div>\n";
+		$out.= "<div class='$mathLabels'>$labelMathSum:</div>\n";
+		$out.= "<div class='$mathLabels'>$spammath[0] + $spammath[1]</div>\n";
 		$out.= "<div class='spEditorSpam'>\n";
 		$out.= "<input type='text' tabindex='".$tab++."' class='$controlInput spMathCheck' size='20' name='$uKey1' id='$uKey1' value='' data-type='topic' data-val1='$spammath[0]', data-val2='$spammath[1]' data-buttongood='$labelPostButtonReady' data-buttonbad='$labelPostButtonMath' />\n";
 		$out.= "<input type='hidden' name='$uKey2' value='$spammath[2]' />\n";
-		$out.= "</div></div>\n";
+		$out.= "</div></div></div>\n";
 	}
 	# End Spam Measures
 	return $out;
@@ -295,34 +294,39 @@ function sp_topic_editor_section_math($out, $spThisForum, $a) {
 # ----------------------------------
 function sp_post_editor_section_math($out, $spThisData, $a) {
 	# Start Spam Measures
-	if (sp_get_auth('bypass_math_question', $spThisData->forum_id) ? $usemath = false : $usemath = true);
+	if (SP()->auths->get('bypass_math_question', $spThisData->forum_id) ? $usemath = false : $usemath = true);
 	if ($usemath) {
 		extract($a, EXTR_SKIP);
 
         # sanitize
     	$controlInput		    = esc_attr($controlInput);
-    	$labelMath		        = sp_filter_title_display($labelMath);
-    	$labelMathSum		    = sp_filter_title_display($labelMathSum);
-    	$labelPostButtonReady	= sp_filter_title_display($labelPostButtonReady);
-    	$labelPostButtonMath	= sp_filter_title_display($labelPostButtonMath);
+    	$controlSubmit		    = esc_attr($controlSubmit);
+		$mathSection			= esc_attr($mathSection);
+		$mathPadding			= esc_attr($mathPadding);
+		$mathLabels				= esc_attr($mathLabels);
+    	$labelMath		        = SP()->displayFilters->title($labelMath);
+    	$labelMathSum		    = SP()->displayFilters->title($labelMathSum);
+    	$labelPostButtonReady	= SP()->displayFilters->title($labelPostButtonReady);
+    	$labelPostButtonMath	= SP()->displayFilters->title($labelPostButtonMath);
 
-		$out.= '<div class="spEditorSubmit">'."\n";
+		$out.= "<div class='$mathPadding'>\n";
 		$out.= '<div class="spInlineSection">'."\n";
 		$out.= 'Guest URL (required)<br />'."\n";
 		$out.= "<input type='text' class='$controlInput' size='30' name='url' value='' />\n";
 		$out.= "</div>\n";
 
 		$spammath = sp_math_spam_build();
-		$uKey = sp_get_option('spukey');
+		$uKey = SP()->options->get('spukey');
 		$uKey1 = $uKey.'1';
 		$uKey2 = $uKey.'2';
+		$out.= "<div class='$mathSection'>\n";
 		$out.= "<div class='spEditorTitle'>$labelMath</div>\n";
-		$out.= "<div class='spEditorSpam'>$labelMathSum:</div>\n";
-		$out.= "<div class='spEditorSpam'>$spammath[0] + $spammath[1]</div>\n";
+		$out.= "<div class='$mathLabels'>$labelMathSum:</div>\n";
+		$out.= "<div class='$mathLabels'>$spammath[0] + $spammath[1]</div>\n";
 		$out.= "<div class='spEditorSpam'>\n";
 		$out.= "<input type='text' tabindex='105' class='$controlInput spMathCheck' size='20' name='$uKey1' id='$uKey1' value='' data-type='post' data-val1='$spammath[0]', data-val2='$spammath[1]' data-buttongood='$labelPostButtonReady' data-buttonbad='$labelPostButtonMath' />\n";
 		$out.= "<input type='hidden' name='$uKey2' value='$spammath[2]' />\n";
-		$out.= "</div></div>\n";
+		$out.= "</div></div></div>\n";
 	}
 	# End Spam Measures
 	return $out;
@@ -332,15 +336,15 @@ function sp_post_editor_section_math($out, $spThisData, $a) {
 # Smileys/Options Section - Topic
 # ----------------------------------
 function sp_topic_editor_default_buttons($out, $spThisForum, $a, $toolbar) {
-	global $tab, $spGlobals, $spThisUser, $spDevice;
+	global $tab;
 
 	extract($a, EXTR_SKIP);
 
     # sanitize
-	$hide			        = (int) $hide;
-	$tagClass		        = esc_attr($tagClass);
-	$labelSmileys		    = sp_filter_title_display($labelSmileys);
-	$labelOptions		    = sp_filter_title_display($labelOptions);
+	$controlSubmit		    = esc_attr($controlSubmit);
+	$controlSubmitMobile	= esc_attr($controlSubmitMobile);
+	$labelSmileys		    = SP()->displayFilters->title($labelSmileys);
+	$labelOptions		    = SP()->displayFilters->title($labelOptions);
 	$tipSmileysButton		= esc_attr($tipSmileysButton);
 	$tipOptionsButton		= esc_attr($tipOptionsButton);
 
@@ -349,53 +353,60 @@ function sp_topic_editor_default_buttons($out, $spThisForum, $a, $toolbar) {
 	$display['smileys'] = false;
 	$display['options'] = false;
 
-	if (sp_get_auth('can_use_smileys', $spThisForum->forum_id)) $display['smileys'] = true;
-	if (sp_get_auth('lock_topics', $spThisForum->forum_id) ||
-	   sp_get_auth('pin_topics', $spThisForum->forum_id) ||
-	   $spThisUser->admin ||
-	   $spThisUser->moderator) {
+	if (SP()->auths->get('can_use_smileys', $spThisForum->forum_id)) $display['smileys'] = true;
+	if (SP()->auths->get('lock_topics', $spThisForum->forum_id) ||
+	   SP()->auths->get('pin_topics', $spThisForum->forum_id) ||
+	   SP()->user->thisUser->admin ||
+	   SP()->user->thisUser->moderator) {
 	   $display['options'] = true;
 	}
     $display = apply_filters('sph_topic_editor_display_options', $display);
 
 	if ($display['smileys']) {
-		if ($spDevice == 'mobile' && array_key_exists('iconMobileSmileys', $a) && !empty($a['iconMobileSmileys'])) {
+		if (SP()->core->device == 'mobile' && array_key_exists('iconMobileSmileys', $a) && !empty($a['iconMobileSmileys'])) {
 			# display mobile icon
-			$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='spIcon spEditorBoxOpen' name='spSmileysButton' id='spSmileysButton' data-box='spSmileysBox'>\n";
-			$out.= sp_paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileSmileys, '');
+			$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='$controlSubmitMobile spEditorBoxOpen' name='spSmileysButton' id='spSmileysButton' data-box='spSmileysBox'>\n";
+			$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileSmileys, '');
 			$out.= "</button>";
 		} else {
 			# display default button
-			$out.= "<input type='button' tabindex='".$tab++."' class='spSubmit spLeft spEditorBoxOpen' title='$tipSmileysButton' id='spSmileysButton' value='$labelSmileys' data-box='spSmileysBox' />";
+			$out.= "<input type='button' tabindex='".$tab++."' class='$controlSubmit spEditorBoxOpen' title='$tipSmileysButton' id='spSmileysButton' value='$labelSmileys' data-box='spSmileysBox' />";
 		}
 	}
 	if ($display['options']) {
-		if ($spDevice == 'mobile' && array_key_exists('iconMobileOptions', $a) && !empty($a['iconMobileOptions'])) {
+		if (SP()->core->device == 'mobile' && array_key_exists('iconMobileOptions', $a) && !empty($a['iconMobileOptions'])) {
 			# display mobile icon
-			$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='spIcon spEditorBoxOpen' name='spOptionsButton' id='spOptionsButton'  data-box='spOptionsBox'>\n";
-			$out.= sp_paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileOptions, '');
+			$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='$controlSubmitMobile spEditorBoxOpen' name='spOptionsButton' id='spOptionsButton'  data-box='spOptionsBox'>\n";
+			$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileOptions, '');
 			$out.= "</button>";
 		} else {
 			# display default button
-		$out.= "<input type='button' tabindex='".$tab++."' class='spSubmit spLeft spEditorBoxOpen' title='$tipOptionsButton' id='spOptionsButton' value='$labelOptions' data-box='spOptionsBox' />";
+		$out.= "<input type='button' tabindex='".$tab++."' class='$controlSubmit spEditorBoxOpen' title='$tipOptionsButton' id='spOptionsButton' value='$labelOptions' data-box='spOptionsBox' />";
 		}
 	}
 	return $out;
 }
 
 function sp_topic_editor_smileys_options($out, $spThisForum, $a, $toolbar) {
-	global $tab, $spGlobals, $spThisUser;
+	global $tab;
 
 	extract($a, EXTR_SKIP);
 
     # sanitize
 	$controlInput		    = esc_attr($controlInput);
-	$labelSmileys		    = sp_filter_title_display($labelSmileys);
-	$labelOptions		    = sp_filter_title_display($labelOptions);
-	$labelOptionLock		= sp_filter_title_display($labelOptionLock);
-	$labelOptionPin		    = sp_filter_title_display($labelOptionPin);
-	$labelOptionTime		= sp_filter_title_display($labelOptionTime);
-
+	$editorSection			= esc_attr($editorSection);
+	$noToolbar				= esc_attr($noToolbar);
+	$halfLeft				= esc_attr($halfLeft);
+	$halfRight				= esc_attr($halfRight);
+	$sectionHeading			= esc_attr($sectionHeading);
+	$optionLabel			= esc_attr($optionLabel);
+	$timeStamp				= esc_attr($timeStamp);
+	$labelSmileys		    = SP()->displayFilters->title($labelSmileys);
+	$labelOptions		    = SP()->displayFilters->title($labelOptions);
+	$labelOptionLock		= SP()->displayFilters->title($labelOptionLock);
+	$labelOptionPin		    = SP()->displayFilters->title($labelOptionPin);
+	$labelOptionTime		= SP()->displayFilters->title($labelOptionTime);
+	
 	$smileysBox = '';
 	$optionsBox = '';
 
@@ -404,29 +415,32 @@ function sp_topic_editor_smileys_options($out, $spThisForum, $a, $toolbar) {
 	$display['smileys'] = false;
 	$display['options'] = false;
 
-	if (sp_get_auth('can_use_smileys', $spThisForum->forum_id)) $display['smileys'] = true;
-	if (sp_get_auth('lock_topics', $spThisForum->forum_id) ||
-	   sp_get_auth('pin_topics', $spThisForum->forum_id) ||
-	   $spThisUser->admin ||
-	   $spThisUser->moderator) {
+	if (SP()->auths->get('can_use_smileys', $spThisForum->forum_id)) $display['smileys'] = true;
+	if (SP()->auths->get('lock_topics', $spThisForum->forum_id) ||
+	   SP()->auths->get('pin_topics', $spThisForum->forum_id) ||
+	   SP()->user->thisUser->admin ||
+	   SP()->user->thisUser->moderator) {
 	   $display['options'] = true;
 	}
     $display = apply_filters('sph_topic_editor_display_options', $display);
 
 	# Now start the displays
-	$class = ($toolbar=='toolbar') ? ' spInlineSection' : '';
+	$class = ($toolbar=='toolbar') ? ' spInlineSection' : ' ';
 
-	if ($display['smileys'] || $display['options']) $out.= sp_InsertBreak('echo=0')."<div>\n";
+	if ($display['smileys'] || $display['options']) {
+		$out.= sp_InsertBreak('echo=0&spacer=25px');
+		$out.= "<div class='$noToolbar'>\n";
+	}
 
 	# Smileys
 	if ($display['smileys']) {
 		$smileysBox = apply_filters('sph_topic_smileys_display', $smileysBox, $spThisForum, $a);
 		if ($display['options'] && $toolbar=='inline') {
-			$smileysBox.= "<div id='spSmileysBox' class='spEditorSection spEditorSectionLeft$class'>\n";
+			$smileysBox.= "<div id='spSmileysBox' class='$halfLeft $editorSection$class'>\n";
 		} else {
-			$smileysBox.= "<div id='spSmileysBox' class='spEditorSection$class'>\n";
+			$smileysBox.= "<div id='spSmileysBox' class='$editorSection$class'>\n";
 		}
-		$smileysBox.= "<div class='spEditorHeading'>$labelSmileys\n";
+		$smileysBox.= "<div class='$sectionHeading'>$labelSmileys\n";
 		$smileysBox = apply_filters('sph_topic_smileys_header_add', $smileysBox, $spThisForum, $a);
 		$smileysBox.= '</div>';
 		$smileysBox.= '<div class="spEditorSmileys">'."\n";
@@ -441,30 +455,30 @@ function sp_topic_editor_smileys_options($out, $spThisForum, $a, $toolbar) {
 	if ($display['options']) {
 		$optionsBox = apply_filters('sph_topic_options_display', $optionsBox, $spThisForum, $a);
 		if ($display['smileys'] && $toolbar=='inline') {
-			$optionsBox.= "<div id='spOptionsBox' class='spEditorSection spEditorSectionRight$class'>\n";
+			$optionsBox.= "<div id='spOptionsBox' class='$halfRight $editorSection$class'>\n";
 		} else {
-			$optionsBox.= "<div id='spOptionsBox' class='spEditorSection$class'>\n";
+			$optionsBox.= "<div id='spOptionsBox' class='$editorSection$class'>\n";
 		}
-		$optionsBox.= "<div class='spEditorHeading'>$labelOptions\n";
+		$optionsBox.= "<div class='$sectionHeading'>$labelOptions\n";
 		$optionsBox = apply_filters('sph_topic_options_header_add', $optionsBox, $spThisForum, $a);
 		$optionsBox.= '</div>';
-		if (sp_get_auth('lock_topics', $spThisForum->forum_id)) {
+		if (SP()->auths->get('lock_topics', $spThisForum->forum_id)) {
 			$optionsBox.= "<input type='checkbox' tabindex='".$tab++."' class='$controlInput' name='topiclock' id='sftopiclock' />\n";
-			$optionsBox.= "<label class='spLabel spCheckbox' for='sftopiclock'>$labelOptionLock</label>\n";
-			$optionsBox.= "<br />\n";
+			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sftopiclock'>$labelOptionLock</label>\n";
+			$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
 		}
-		if (sp_get_auth('pin_topics', $spThisForum->forum_id)) {
+		if (SP()->auths->get('pin_topics', $spThisForum->forum_id)) {
 			$optionsBox.= "<input type='checkbox' tabindex='".$tab++."' class='$controlInput' name='topicpin' id='sftopicpin' />\n";
-			$optionsBox.= "<label class='spLabel spCheckbox' for='sftopicpin'>$labelOptionPin</label>\n";
-			$optionsBox.= "<br />\n";
+			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sftopicpin'>$labelOptionPin</label>\n";
+			$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
 		}
-		if ($spThisUser->admin) {
+		if (SP()->user->thisUser->admin) {
 			$optionsBox.= "<input type='checkbox' class='$controlInput' tabindex='".$tab++."' id='sfeditTimestamp' name='editTimestamp' />\n";
-			$optionsBox.= "<label class='spLabel spCheckbox' for='sfeditTimestamp'>$labelOptionTime</label>\n";
-			$optionsBox.= "<br />\n";
+			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sfeditTimestamp'>$labelOptionTime</label>\n";
+			$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
 		}
 
-		if ($spThisUser->admin) {
+		if (SP()->user->thisUser->admin) {
 			global $wp_locale, $month;
 			$time_adj = time() + (get_option('gmt_offset') * 3600);
 			$dd = gmdate( 'd', $time_adj );
@@ -475,7 +489,7 @@ function sp_topic_editor_smileys_options($out, $spThisForum, $a, $toolbar) {
 			$ss = gmdate( 's', $time_adj );
 
 			$optionsBox.= '<div id="spHiddenTimestamp">'."\n";
-			$optionsBox.= "<select class='$controlInput spEditTimestampCheckbox' tabindex='".$tab++."' name='tsMonth'>\n";
+			$optionsBox.= "<select class='$timeStamp spEditTimestampCheckbox' tabindex='".$tab++."' name='tsMonth'>\n";
 			for ($i = 1; $i < 13; $i = $i +1) {
 				$optionsBox.= "\t\t\t<option value=\"$i\"";
 				if ($i == $mm ) $optionsBox.= " selected='selected'";
@@ -486,11 +500,11 @@ function sp_topic_editor_smileys_options($out, $spThisForum, $a, $toolbar) {
 				}
 			}
 			$optionsBox.= '</select> ';
-			$optionsBox.= "<input class='$controlInput' tabindex='".$tab++."' type='text' id='tsDay' name='tsDay' value='$dd' size='2' maxlength='2'/> \n";
-			$optionsBox.= "<input class='$controlInput' tabindex='".$tab++."' type='text' id='tsYear' name='tsYear' value='$yy' size='4' maxlength='5'/> @\n";
-			$optionsBox.= "<input class='$controlInput' tabindex='".$tab++."' type='text' id='tsHour' name='tsHour' value='$hh' size='2' maxlength='2'/> :\n";
-			$optionsBox.= "<input class='$controlInput' tabindex='".$tab++."' type='text' id='tsMinute' name='tsMinute' value='$mn' size='2' maxlength='2'/> \n";
-			$optionsBox.= "<input class='$controlInput' tabindex='".$tab++."' type='hidden' id='tsSecond' name='tsSecond' value='$ss' /> \n";
+			$optionsBox.= "<input class='$timeStamp' tabindex='".$tab++."' type='text' id='tsDay' name='tsDay' value='$dd' size='2' maxlength='2'/> \n";
+			$optionsBox.= "<input class='$timeStamp' tabindex='".$tab++."' type='text' id='tsYear' name='tsYear' value='$yy' size='4' maxlength='5'/> @\n";
+			$optionsBox.= "<input class='$timeStamp' tabindex='".$tab++."' type='text' id='tsHour' name='tsHour' value='$hh' size='2' maxlength='2'/> :\n";
+			$optionsBox.= "<input class='$timeStamp' tabindex='".$tab++."' type='text' id='tsMinute' name='tsMinute' value='$mn' size='2' maxlength='2'/> \n";
+			$optionsBox.= "<input class='$timeStamp' tabindex='".$tab++."' type='hidden' id='tsSecond' name='tsSecond' value='$ss' /> \n";
 			$optionsBox.= "</div>";
 		}
 
@@ -515,13 +529,15 @@ function sp_topic_editor_smileys_options($out, $spThisForum, $a, $toolbar) {
 # ----------------------------------
 
 function sp_post_editor_default_buttons($out, $spThisTopic, $a, $toolbar) {
-	global $tab, $spGlobals, $spVars, $spThisUser, $spDevice;
+	global $tab;
 
 	extract($a, EXTR_SKIP);
 
     # sanitize
-	$labelSmileys		    = sp_filter_title_display($labelSmileys);
-	$labelOptions		    = sp_filter_title_display($labelOptions);
+	$controlSubmit		    = esc_attr($controlSubmit);
+	$controlSubmitMobile	= esc_attr($controlSubmitMobile);
+	$labelSmileys		    = SP()->displayFilters->title($labelSmileys);
+	$labelOptions		    = SP()->displayFilters->title($labelOptions);
 	$tipSmileysButton		= esc_attr($tipSmileysButton);
 	$tipOptionsButton		= esc_attr($tipOptionsButton);
 
@@ -530,36 +546,36 @@ function sp_post_editor_default_buttons($out, $spThisTopic, $a, $toolbar) {
 	$display['smileys'] = false;
 	$display['options'] = false;
 
-	if (sp_get_auth('can_use_smileys', $spThisTopic->forum_id)) $display['smileys'] = true;
-	if (sp_get_auth('lock_topics', $spThisTopic->forum_id) ||
-		   sp_get_auth('pin_posts', $spThisTopic->forum_id) ||
-		   $spThisUser->admin ||
-		   $spThisUser->moderator) {
+	if (SP()->auths->get('can_use_smileys', $spThisTopic->forum_id)) $display['smileys'] = true;
+	if (SP()->auths->get('lock_topics', $spThisTopic->forum_id) ||
+		   SP()->auths->get('pin_posts', $spThisTopic->forum_id) ||
+		   SP()->user->thisUser->admin ||
+		   SP()->user->thisUser->moderator) {
 		   $display['options'] = true;
 	}
 	$display = apply_filters('sph_post_editor_display_options', $display);
 
 	if ($display['smileys']) {
-		if ($spDevice == 'mobile' && array_key_exists('iconMobileSmileys', $a) && !empty($a['iconMobileSmileys'])) {
+		if (SP()->core->device == 'mobile' && array_key_exists('iconMobileSmileys', $a) && !empty($a['iconMobileSmileys'])) {
 			# display mobile icon
-			$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='spIcon spEditorBoxOpen' name='spSmileysButton' id='spSmileysButton' data-box='spSmileysBox'>\n";
-			$out.= sp_paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileSmileys, '');
+			$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='$controlSubmitMobile spEditorBoxOpen' name='spSmileysButton' id='spSmileysButton' data-box='spSmileysBox'>\n";
+			$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileSmileys, '');
 			$out.= "</button>";
 		} else {
 			# display default button
-			$out.= "<input type='button' tabindex='".$tab++."' class='spSubmit spLeft spEditorBoxOpen' title='$tipSmileysButton' id='spSmileysButton' value='$labelSmileys' data-box='spSmileysBox' />";
+			$out.= "<input type='button' tabindex='".$tab++."' class='$controlSubmit spEditorBoxOpen' title='$tipSmileysButton' id='spSmileysButton' value='$labelSmileys' data-box='spSmileysBox' />";
 		}
 	}
 
 	if ($display['options']) {
-		if ($spDevice == 'mobile' && array_key_exists('iconMobileOptions', $a) && !empty($a['iconMobileOptions'])) {
+		if (SP()->core->device == 'mobile' && array_key_exists('iconMobileOptions', $a) && !empty($a['iconMobileOptions'])) {
 			# display mobile icon
-			$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='spIcon spEditorBoxOpen' name='spOptionsButton' id='spOptionsButton' data-box='spOptionsBox'>\n";
-			$out.= sp_paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileOptions, '');
+			$out.= "<button type='button' tabindex='".$tab++."' style='background:transparent;' class='$controlSubmitMobile spEditorBoxOpen' name='spOptionsButton' id='spOptionsButton' data-box='spOptionsBox'>\n";
+			$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, $iconMobileOptions, '');
 			$out.= "</button>";
 		} else {
 			# display default button
-		$out.= "<input type='button' tabindex='".$tab++."' class='spSubmit spLeft spEditorBoxOpen' title='$tipOptionsButton' id='spOptionsButton' value='$labelOptions' data-box='spOptionsBox' />";
+		$out.= "<input type='button' tabindex='".$tab++."' class='$controlSubmit spEditorBoxOpen' title='$tipOptionsButton' id='spOptionsButton' value='$labelOptions' data-box='spOptionsBox' />";
 		}
 	}
 
@@ -567,15 +583,20 @@ function sp_post_editor_default_buttons($out, $spThisTopic, $a, $toolbar) {
 }
 
 function sp_post_editor_smileys_options($out, $spThisTopic, $a, $toolbar) {
-	global $spGlobals, $spVars, $spThisUser;
-
 	extract($a, EXTR_SKIP);
 
     # sanitize
 	$controlInput		    = esc_attr($controlInput);
-	$labelSmileys		    = sp_filter_title_display($labelSmileys);
-	$labelOptions		    = sp_filter_title_display($labelOptions);
-	$labelOptionTime		= sp_filter_title_display($labelOptionTime);
+	$editorSection			= esc_attr($editorSection);
+	$noToolbar				= esc_attr($noToolbar);
+	$halfLeft				= esc_attr($halfLeft);
+	$halfRight				= esc_attr($halfRight);
+	$sectionHeading			= esc_attr($sectionHeading);
+	$optionLabel			= esc_attr($optionLabel);
+	$timeStamp				= esc_attr($timeStamp);
+	$labelSmileys		    = SP()->displayFilters->title($labelSmileys);
+	$labelOptions		    = SP()->displayFilters->title($labelOptions);
+	$labelOptionTime		= SP()->displayFilters->title($labelOptionTime);
 
 	$smileysBox = '';
 	$optionsBox = '';
@@ -585,10 +606,10 @@ function sp_post_editor_smileys_options($out, $spThisTopic, $a, $toolbar) {
 	$display['smileys'] = false;
 	$display['options'] = false;
 
-	if (sp_get_auth('can_use_smileys', $spThisTopic->forum_id)) $display['smileys'] = true;
-	if (((sp_get_auth('lock_topics', $spThisTopic->forum_id) || sp_get_auth('pin_posts', $spThisTopic->forum_id)) && $spVars['displaymode'] != 'edit') ||
-		   $spThisUser->admin ||
-		   $spThisUser->moderator) {
+	if (SP()->auths->get('can_use_smileys', $spThisTopic->forum_id)) $display['smileys'] = true;
+	if (((SP()->auths->get('lock_topics', $spThisTopic->forum_id) || SP()->auths->get('pin_posts', $spThisTopic->forum_id)) && SP()->rewrites->pageData['displaymode'] != 'edit') ||
+		   SP()->user->thisUser->admin ||
+		   SP()->user->thisUser->moderator) {
 		   $display['options'] = true;
 	}
 	$display = apply_filters('sph_post_editor_display_options', $display);
@@ -596,17 +617,20 @@ function sp_post_editor_smileys_options($out, $spThisTopic, $a, $toolbar) {
 	# Now start the displays
 	$class = ($toolbar=='toolbar') ? ' spInlineSection' : '';
 
-	if ($display['smileys'] || $display['options']) $out.= sp_InsertBreak('echo=0')."<div>\n";
+	if ($display['smileys'] || $display['options']) {
+		$out.= sp_InsertBreak('echo=0&spacer=25px');
+		$out.= "<div class='$noToolbar'>\n";
+	}
 
 	# Smileys
 	if ($display['smileys']) {
 		$smileysBox = apply_filters('sph_post_smileys_display', $smileysBox, $spThisTopic, $a);
 		if ($display['options'] && $toolbar=='inline') {
-			$smileysBox.= "<div id='spSmileysBox' class='spEditorSection spEditorSectionLeft$class'>\n";
+			$smileysBox.= "<div id='spSmileysBox' class='$halfLeft $editorSection$class'>\n";
 		} else {
-			$smileysBox.= "<div id='spSmileysBox' class='spEditorSection$class'>\n";
+			$smileysBox.= "<div id='spSmileysBox' class='$editorSection$class'>\n";
 		}
-		$smileysBox.= "<div class='spEditorHeading'>$labelSmileys\n";
+		$smileysBox.= "<div class='$sectionHeading'>$labelSmileys\n";
 		$smileysBox = apply_filters('sph_post_smileys_header_add', $smileysBox, $spThisTopic, $a);
 		$smileysBox.= '</div>';
 		$smileysBox.= '<div class="spEditorSmileys">'."\n";
@@ -621,36 +645,36 @@ function sp_post_editor_smileys_options($out, $spThisTopic, $a, $toolbar) {
 	if ($display['options']) {
 		$optionsBox = apply_filters('sph_post_options_display', $optionsBox, $spThisTopic, $a);
 		if ($display['smileys'] && $toolbar=='inline') {
-			$optionsBox.= "<div id='spOptionsBox' class='spEditorSection spEditorSectionRight$class'>\n";
+			$optionsBox.= "<div id='spOptionsBox' class='$halfRight $editorSection$class'>\n";
 		} else {
-			$optionsBox.= "<div id='spOptionsBox' class='spEditorSection$class'>\n";
+			$optionsBox.= "<div id='spOptionsBox' class='$editorSection$class'>\n";
 		}
-		$optionsBox.= "<div class='spEditorHeading'>$labelOptions\n";
+		$optionsBox.= "<div class='$sectionHeading'>$labelOptions\n";
 		$optionsBox = apply_filters('sph_post_options_header_add', $optionsBox, $spThisTopic, $a);
 		$optionsBox.= '</div>';
-		if (($spVars['displaymode'] != 'edit')) {
-        	$labelOptionLock = sp_filter_title_display($labelOptionLock);
-            $labelOptionPin	= sp_filter_title_display($labelOptionPin);
-    		if (sp_get_auth('lock_topics', $spThisTopic->forum_id)) {
+		if ((SP()->rewrites->pageData['displaymode'] != 'edit')) {
+        	$labelOptionLock = SP()->displayFilters->title($labelOptionLock);
+            $labelOptionPin	= SP()->displayFilters->title($labelOptionPin);
+    		if (SP()->auths->get('lock_topics', $spThisTopic->forum_id)) {
     			$optionsBox.= "<input type='checkbox' class='$controlInput' name='topiclock' id='sftopiclock' tabindex='110' />\n";
-    			$optionsBox.= "<label class='spLabel spCheckbox' for='sftopiclock'>$labelOptionLock</label>\n";
-    			$optionsBox.= "<br />\n";
+    			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sftopiclock'>$labelOptionLock</label>\n";
+				$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
     		}
-    		if (sp_get_auth('pin_topics', $spThisTopic->forum_id)) {
+    		if (SP()->auths->get('pin_topics', $spThisTopic->forum_id)) {
     			$optionsBox.= "<input type='checkbox' class='$controlInput' name='postpin' id='sfpostpin' tabindex='111' />\n";
-    			$optionsBox.= "<label class='spLabel spCheckbox' for='sfpostpin'>$labelOptionPin</label>\n";
-    			$optionsBox.= "<br />\n";
+    			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sfpostpin'>$labelOptionPin</label>\n";
+				$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
     		}
         }
 
-		if ($spThisUser->admin) {
+		if (SP()->user->thisUser->admin) {
 			$optionsBox.= "<input type='checkbox' class='$controlInput' tabindex='112' id='sfeditTimestamp' name='editTimestamp' />\n";
-			$optionsBox.= "<label class='spLabel spCheckbox' for='sfeditTimestamp'>$labelOptionTime</label>\n";
-   			$optionsBox.= "<br />\n";
+			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sfeditTimestamp'>$labelOptionTime</label>\n";
+			$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
 		}
 
-		if ($spThisUser->admin) {
-			global $wp_locale, $month, $spThisPost;
+		if (SP()->user->thisUser->admin) {
+			global $wp_locale, $month;
 
    			$time_adj = time() + (get_option('gmt_offset') * 3600);
 			$dd = gmdate( 'd', $time_adj );
@@ -661,7 +685,7 @@ function sp_post_editor_smileys_options($out, $spThisTopic, $a, $toolbar) {
 			$ss = gmdate( 's', $time_adj );
 
 			$optionsBox.= '<div id="spHiddenTimestamp">'."\n";
-			$optionsBox.= "<select class='$controlInput' tabindex='114' name='tsMonth'>\n";
+			$optionsBox.= "<select class='$timeStamp' tabindex='114' name='tsMonth'>\n";
 			for ($i = 1; $i < 13; $i = $i +1) {
 				$optionsBox.= "\t\t\t<option value=\"$i\"";
 				if ($i == $mm ) $optionsBox.= " selected='selected'";
@@ -672,15 +696,15 @@ function sp_post_editor_smileys_options($out, $spThisTopic, $a, $toolbar) {
 				}
 			}
 			$optionsBox.= '</select> ';
-			$optionsBox.= "<input class='$controlInput' tabindex='115' type='text' id='tsDay' name='tsDay' value='$dd' size='2' maxlength='2'/> \n";
-			$optionsBox.= "<input class='$controlInput' tabindex='116' type='text' id='tsYear' name='tsYear' value='$yy' size='4' maxlength='5'/> @\n";
-			$optionsBox.= "<input class='$controlInput' tabindex='117' type='text' id='tsHour' name='tsHour' value='$hh' size='2' maxlength='2'/> :\n";
-			$optionsBox.= "<input class='$controlInput' tabindex='118' type='text' id='tsMinute' name='tsMinute' value='$mn' size='2' maxlength='2'/> \n";
-			$optionsBox.= "<input class='$controlInput' tabindex='119' type='hidden' id='tsSecond' name='tsSecond' value='$ss' /> \n";
+			$optionsBox.= "<input class='$timeStamp' tabindex='115' type='text' id='tsDay' name='tsDay' value='$dd' size='2' maxlength='2'/> \n";
+			$optionsBox.= "<input class='$timeStamp' tabindex='116' type='text' id='tsYear' name='tsYear' value='$yy' size='4' maxlength='5'/> @\n";
+			$optionsBox.= "<input class='$timeStamp' tabindex='117' type='text' id='tsHour' name='tsHour' value='$hh' size='2' maxlength='2'/> :\n";
+			$optionsBox.= "<input class='$timeStamp' tabindex='118' type='text' id='tsMinute' name='tsMinute' value='$mn' size='2' maxlength='2'/> \n";
+			$optionsBox.= "<input class='$timeStamp' tabindex='119' type='hidden' id='tsSecond' name='tsSecond' value='$ss' /> \n";
 			$optionsBox.= "</div>";
 		}
 
-		if ($spVars['displaymode'] == 'edit') {
+		if (SP()->rewrites->pageData['displaymode'] == 'edit') {
             $optionsBox = apply_filters('sph_post_edit_options_add', $optionsBox, $spThisTopic, $a);
         } else {
              $optionsBox = apply_filters('sph_post_options_add', $optionsBox, $spThisTopic, $a);
@@ -702,5 +726,3 @@ function sp_post_editor_smileys_options($out, $spThisTopic, $a, $toolbar) {
 
 	return $out;
 }
-
-?>

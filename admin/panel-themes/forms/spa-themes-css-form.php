@@ -12,17 +12,15 @@ function spa_themes_css_form() {
 	$css = '';
 	$id = 0;
 	# get current theme
-	$curTheme = sp_get_option('sp_current_theme');
-	$rec = sp_get_sfmeta('css', $curTheme['theme']);
+	$curTheme = SP()->options->get('sp_current_theme');
+	$rec = SP()->meta->get('css', $curTheme['theme']);
 	if($rec) {
 		$css = $rec[0]['meta_value'];
 		$id = $rec[0]['meta_id'];
 	}
 ?>
-<script type="text/javascript">
-jQuery(document).ready(function() {
-	spjAjaxForm('speditcss', '');
-});
+<script>
+	spj.loadAjaxForm('speditcss', '');
 </script>
 <?php
     $ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=css', 'themes-loader');
@@ -32,9 +30,9 @@ jQuery(document).ready(function() {
 <?php
 
 	spa_paint_options_init();
-	spa_paint_open_tab(spa_text('CSS Editor').' - '.spa_text('Custom Simple:Press Theme CSS'), true);
+	spa_paint_open_tab(SP()->primitives->admin_text('CSS Editor').' - '.SP()->primitives->admin_text('Custom Simple:Press Theme CSS'), true);
 	spa_paint_open_panel();
-	spa_paint_open_fieldset(spa_text('CSS Editor'), true, 'css-editor');
+	spa_paint_open_fieldset(SP()->primitives->admin_text('CSS Editor'), true, 'css-editor');
 
 	echo '<div>';
 	echo '<textarea rows="25" name="spnewcontent" id="spnewcontent" tabindex="1">'.$css.'</textarea>';
@@ -46,12 +44,10 @@ jQuery(document).ready(function() {
 	spa_paint_close_container();
 ?>
     	<div class="sfform-submit-bar">
-    	   <input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php spa_etext('Update CSS'); ?>" />
+    	   <input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update CSS'); ?>" />
     	</div>
 <?php
 	spa_paint_close_tab();
 
 	echo '</form>';
 }
-
-?>

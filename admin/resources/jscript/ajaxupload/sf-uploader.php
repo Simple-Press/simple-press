@@ -20,10 +20,10 @@ if (!function_exists('exif_imagetype')) {
     }
 }
 
-$uploaddir = sp_esc_str($_POST['saveloc']);
+$uploaddir = SP()->filters->str($_POST['saveloc']);
 
 # Clean up file name just in case
-$uploadfile = $uploaddir.sp_filter_filename_save(basename($_FILES['uploadfile']['name']));
+$uploadfile = $uploaddir.SP()->saveFilters->filename(basename($_FILES['uploadfile']['name']));
 
 # check image file mimetype
 $mimetype = 0;
@@ -58,5 +58,3 @@ if (move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploadfile)) {
 }
 
 die();
-
-?>

@@ -2,19 +2,19 @@
 /*
 Simple:Press
 Admin themes editor
-$LastChangedDate: 2016-06-25 05:55:17 -0500 (Sat, 25 Jun 2016) $
-$Rev: 14322 $
+$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
+$Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_themes_editor_form() {
 	# get current theme
-	$curTheme = sp_get_option('sp_current_theme');
+	$curTheme = SP()->options->get('sp_current_theme');
 
 	$themedir = SPTHEMEBASEDIR.$curTheme['theme'];
-	$file = (isset($_GET['file'])) ? sp_esc_str($_GET['file']) : '';
-	$type = (isset($_GET['type'])) ? sp_esc_str($_GET['type']) : 'style';
+	$file = (isset($_GET['file'])) ? SP()->filters->str($_GET['file']) : '';
+	$type = (isset($_GET['type'])) ? SP()->filters->str($_GET['type']) : 'style';
 	if (empty($file)) {
 	    $file = $themedir.'/styles/'.$curTheme['style'];
 		$filename = $curTheme['style'];
@@ -38,10 +38,8 @@ function spa_themes_editor_form() {
 		}
 	}
 ?>
-<script type="text/javascript">
-jQuery(document).ready(function() {
-	spjAjaxForm('spedittheme', '');
-});
+<script>
+	spj.loadAjaxForm('spedittheme', '');
 </script>
 <?php
     $ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=editor', 'themes-loader');
@@ -50,14 +48,14 @@ jQuery(document).ready(function() {
 	<?php echo sp_create_nonce('forum-adminform_theme-editor'); ?>
 <?php
 	spa_paint_options_init();
-	spa_paint_open_tab(spa_text('SP Theme Editor').' - '.spa_text('Edit Simple:Press Themes'), true);
+	spa_paint_open_tab(SP()->primitives->admin_text('SP Theme Editor').' - '.SP()->primitives->admin_text('Edit Simple:Press Themes'), true);
 	spa_paint_open_panel();
-	spa_paint_open_fieldset(spa_text('SP Theme Editor'), true, 'theme-editor');
+	spa_paint_open_fieldset(SP()->primitives->admin_text('SP Theme Editor'), true, 'theme-editor');
 
 	echo '<div id="sfeditside">';
 
 	# list the template files
-	echo '<h3>'.spa_text('Template Files').'</h3>';
+	echo '<h3>'.SP()->primitives->admin_text('Template Files').'</h3>';
     $templates = sp_themes_read_templates($themedir.'/templates');
 	if ($templates) {
 		echo '<ul>';
@@ -72,7 +70,7 @@ jQuery(document).ready(function() {
 	}
 
 	# list the stylesheets files
-	echo '<h3>'.spa_text('Stylesheets').'</h3>';
+	echo '<h3>'.SP()->primitives->admin_text('Stylesheets').'</h3>';
 	$stylesheets = array();
 	$stylesheets_dir = @opendir($themedir.'/styles');
 	if ($stylesheets_dir) {
@@ -97,7 +95,7 @@ jQuery(document).ready(function() {
 
 	# list the overlay files
     if (file_exists($themedir.'/styles/overlays')) { # make sure theme has overlays
-    	echo '<h3>'.spa_text('Overlays').'</h3>';
+    	echo '<h3>'.SP()->primitives->admin_text('Overlays').'</h3>';
     	$overlays = array();
     	$overlays_dir = @opendir($themedir.'/styles/overlays');
     	if ($overlays_dir) {
@@ -125,7 +123,7 @@ jQuery(document).ready(function() {
 	echo '</div>';
 
 	echo '<div id="sfeditwindow">';
-	echo '<h3>'.spa_text('Editing Theme File').': '.$filename.'</h3>';
+	echo '<h3>'.SP()->primitives->admin_text('Editing Theme File').': '.$filename.'</h3>';
 	echo '<textarea rows="25" name="spnewcontent" id="spnewcontent" tabindex="1">'.$content.'</textarea>';
 	echo '<input type="hidden" name="file" value="'.esc_attr($file).'" />';
 	echo '</div>';
@@ -136,11 +134,11 @@ jQuery(document).ready(function() {
 	if (is_writeable($file)) {
 ?>
     	<div class="sfform-submit-bar">
-    	   <input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php spa_etext('Update File'); ?>" />
+    	   <input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update File'); ?>" />
     	</div>
 <?php
 	} else {
-		echo '<p><em>'.spa_text('You need to make this file writable before you can save your changes. See the <a href="http://codex.wordpress.org/Changing_File_Permissions">WP Codex</a> for more information').'</em></p>';
+		echo '<p><em>'.SP()->primitives->admin_text('You need to make this file writable before you can save your changes. See the <a href="http://codex.wordpress.org/Changing_File_Permissions">WP Codex</a> for more information').'</em></p>';
 	}
 	spa_paint_close_tab();
 	echo '</form>';
@@ -168,5 +166,3 @@ function sp_themes_read_templates($dir, $base='') {
 	@closedir($handle);
     return $files;
 }
-
-?>

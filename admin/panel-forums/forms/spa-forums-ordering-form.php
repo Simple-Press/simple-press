@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Forums Ordering Form
-$LastChangedDate: 2016-10-21 20:37:22 -0500 (Fri, 21 Oct 2016) $
-$Rev: 14651 $
+$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
+$Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -11,49 +11,51 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function spa_forums_ordering_form($groupId=0) {
 	$where = '';
 	if ($groupId) $where = "group_id=$groupId";
-	$groups = spdb_table(SFGROUPS, $where, '', 'group_seq');
+	$groups = SP()->DB->table(SPGROUPS, $where, '', 'group_seq');
 ?>
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-    	<?php if ($groupId != 0) { ?>
-    	<?php } ?>
-    	jQuery('#groupList').nestedSortable({
-    		handle: 'div',
-    		items: 'li',
-    		tolerance: 'intersect',
-    		listType: 'ul',
-    		protectRoot: true,
-    		placeholder: 'sortable-placeholder',
-    		forcePlaceholderSize: true,
-    		helper: 'clone',
-    		tabSize: 30,
-    		maxLevels: 10,
-            scroll: true,
-            scrollSensitivity: 1,
-            scrollSpeed: 1
-    	});
+<script>
+	(function(spj, $, undefined) {
+		$(document).ready(function() {
+			<?php if ($groupId != 0) { ?>
+			<?php } ?>
+			$('#groupList').nestedSortable({
+				handle: 'div',
+				items: 'li',
+				tolerance: 'intersect',
+				listType: 'ul',
+				protectRoot: true,
+				placeholder: 'sortable-placeholder',
+				forcePlaceholderSize: true,
+				helper: 'clone',
+				tabSize: 30,
+				maxLevels: 10,
+				scroll: true,
+				scrollSensitivity: 1,
+				scrollSpeed: 1
+			});
 
-    	jQuery('#sfforumorder').ajaxForm({
-    		target: '#sfmsgspot',
-    		beforeSubmit: function() {
-    			jQuery('#sfmsgspot').show();
-    			jQuery('#sfmsgspot').html(sp_platform_vars.pWait);
-    		},
-    		success: function() {
-    			jQuery('#sfmsgspot').hide();
-    			<?php if ($groupId == 0) { ?>
-    			jQuery('#sfreloadfo').click();
-    			<?php } else { ?>
-    			jQuery('#sfreloadfb').click();
-    			<?php } ?>
-    			jQuery('#sfmsgspot').fadeIn();
-    			jQuery('#sfmsgspot').fadeOut(6000);
-    		},
-    		beforeSerialize: function() {
-    			jQuery("input#spForumsOrder").val(jQuery("#groupList").nestedSortable('serialize'));
-    		}
-    	});
-    });
+			$('#sfforumorder').ajaxForm({
+				target: '#sfmsgspot',
+				beforeSubmit: function() {
+					$('#sfmsgspot').show();
+					$('#sfmsgspot').html(sp_platform_vars.pWait);
+				},
+				success: function() {
+					$('#sfmsgspot').hide();
+					<?php if ($groupId == 0) { ?>
+					$('#sfreloadfo').click();
+					<?php } else { ?>
+					$('#sfreloadfb').click();
+					<?php } ?>
+					$('#sfmsgspot').fadeIn();
+					$('#sfmsgspot').fadeOut(6000);
+				},
+				beforeSerialize: function() {
+					$("input#spForumsOrder").val($("#groupList").nestedSortable('serialize'));
+				}
+			});
+		});
+	}(window.spj = window.spj || {}, jQuery));
 </script>
 <?php
 	spa_paint_options_init();
@@ -63,13 +65,13 @@ function spa_forums_ordering_form($groupId=0) {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumorder" name="sfforumorder">
 <?php
 		echo sp_create_nonce('forum-adminform_forumorder');
-		spa_paint_open_tab(spa_text('Forums').' - '.spa_text('Group and Forum Ordering'), true);
+		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Group and Forum Ordering'), true);
 			spa_paint_open_panel();
-				spa_paint_open_fieldset(spa_text('Order Groups and Forums'), 'true', 'order-forums');
+				spa_paint_open_fieldset(SP()->primitives->admin_text('Order Groups and Forums'), 'true', 'order-forums');
 				?>
 				<input type="hidden" id="cgroup" name="cgroup" value="<?php echo $groupId; ?>" />
 				<?php
-				echo '<div class="sfoptionerror">'.spa_text('Here you can set the order of Groups, Forums and SubForums by dragging and dropping below. After ordering, push the save button.').'</div>';
+				echo '<div class="sfoptionerror">'.SP()->primitives->admin_text('Here you can set the order of Groups, Forums and SubForums by dragging and dropping below. After ordering, push the save button.').'</div>';
 
 				if (!empty($groups)) {
 					echo '<ul id="groupList" class="groupList menu">';
@@ -102,9 +104,9 @@ function spa_forums_ordering_form($groupId=0) {
 		spa_paint_close_container();
 ?>
 		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php spa_etext('Save Ordering'); ?>" />
+		<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Save Ordering'); ?>" />
         <?php if ($groupId) { ?>
-		<input type="button" class="button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="sforder<?php echo $group->group_id; ?>" name="groupordercancel<?php echo $group->group_id; ?>" value="<?php spa_etext('Cancel'); ?>" />
+		<input type="button" class="button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="sforder<?php echo $group->group_id; ?>" name="groupordercancel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
         <?php } ?>
 
 		</div>
@@ -153,5 +155,3 @@ function sp_sort_by_seq($subForums, $allForums) {
 	ksort($order);
 	return $order;
 }
-
-?>

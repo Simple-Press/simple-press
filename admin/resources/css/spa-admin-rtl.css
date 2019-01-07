@@ -5,92 +5,106 @@ $Rev:2099 $
 */
 
 body {
-	direction:rtl;
-	unicode-bidi:embed;
+    direction: rtl;
+    unicode-bidi: embed;
 }
 
 .wrap.sfatag {
-	padding:15px 5px 0 15px !important;
+    padding: 15px 5px 0 15px !important;
 }
 
 #sfmaincontainer {
-	margin:0 180px 10px 0px !important;
+    margin: 0 180px 10px 0 !important;
 }
 
 .sfalignright {
-	float:left !important;
+    float: left !important;
 }
+
 .sfalignleft {
-	float:right !important;
+    float: right !important;
 }
+
 .clearleft {
-	clear:right !important;
+    clear: right !important;
 }
 
 .mainicon {
-	margin:6px 0px 0 5px !important;
-	float:right !important;
+    margin: 6px 0 0 5px !important;
+    float: right !important;
 }
+
 .sfamenutable {
-	float:right !important;
+    float: right !important;
 }
+
 ul.memberlist li {
-	float:right !important;
+    float: right !important;
 }
 
 .form-table th {
-	text-align:right !important;
-	padding:5px 3px 5px 10px;
+    text-align: right !important;
+    padding: 5px 3px 5px 10px;
 }
+
 .form-table td.td-cbox {
-	padding:3px 0px 3px 5px !important;
+    padding: 3px 0 3px 5px !important;
 }
 
 td input.sfpostcontrol {
-	text-align:right !important;
-	padding:5px 3px 0 0px;
+    text-align: right !important;
+    padding: 5px 3px 0 0;
 }
+
 ul.memberlist li {
-	float:right !important;
+    float: right !important;
 }
 
 #sfmsgspot {
-	margin:0 180px 0 20px !important;
+    margin: 0 180px 0 20px !important;
 }
+
 .sffieldset ul li {
-	margin:0 20px 0 0px !important;
+    margin: 0 20px 0 0 !important;
 }
+
 .sffieldset p {
-	padding:8px 15px 6px 0px !important;
+    padding: 8px 15px 6px 0 !important;
 }
+
 #sfavataroptions {
-	text-align:right !important;
+    text-align: right !important;
 }
+
 #sfavataroptions li {
-	height:20px !important;
-	margin-top:10px !important;
+    height: 20px !important;
+    margin-top: 10px !important;
 }
 
 /* ACCORDION =======================================================================================*/
 
 #sfsidepanel {
-	float:right !important;
+    float: right !important;
 }
+
 .sfsidebutton, .sfsidebutton a {
-	text-align:right !important;
+    text-align: right !important;
 }
+
 .sfsidebutton img {
-	float:right !important;
+    float: right !important;
 }
+
 .ui-accordion .ui-accordion-header .ui-icon {
-	right:.5em !important;
+    right: .5em !important;
 }
+
 .ui-accordion .ui-accordion-content a {
-	text-align:right !important;
+    text-align: right !important;
 }
 
 /* POPUP HELP================================================================================*/
 
 .sfhelplink {
-	float:left !important;
+    float: left !important;
 }

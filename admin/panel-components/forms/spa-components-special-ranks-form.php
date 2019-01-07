@@ -2,19 +2,17 @@
 /*
 Simple:Press
 Admin Components Special Ranks Form
-$LastChangedDate: 2016-10-21 16:27:53 -0500 (Fri, 21 Oct 2016) $
-$Rev: 14650 $
+$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
+$Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_special_rankings_form($rankings) {
-	global $tab, $spPaths;
+	global $tab;
 ?>
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-    	spjAjaxForm('sfaddspecialrank', 'sfreloadfr');
-    });
+<script>
+   	spj.loadAjaxForm('sfaddspecialrank', 'sfreloadfr');
 </script>
 <?php
 	spa_paint_options_init();
@@ -23,12 +21,12 @@ function spa_special_rankings_form($rankings) {
 	<form action="<?php echo $ajaxURL; ?>" method="post" name="sfaddspecialrank" id="sfaddspecialrank">
 <?php
 	echo sp_create_nonce('special-rank-new');
-	spa_paint_open_tab(spa_text('Components').' - '.spa_text('Special Forum Ranks'), true);
+	spa_paint_open_tab(SP()->primitives->admin_text('Components').' - '.SP()->primitives->admin_text('Special Forum Ranks'), true);
 		spa_paint_open_panel();
-			spa_paint_open_fieldset(spa_text('Special Forum Ranks'), true, 'special-ranks');
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Special Forum Ranks'), true, 'special-ranks');
 
-				spa_paint_input(spa_text('New Special Rank Name'), 'specialrank', '', false, true);
-				echo '<input type="submit" class="button-primary" id="addspecialrank" name="addspecialrank" value="'.spa_text('Add Special Rank').'" />';
+				spa_paint_input(SP()->primitives->admin_text('New Special Rank Name'), 'specialrank', '', false, true);
+				echo '<input type="submit" class="button-primary" id="addspecialrank" name="addspecialrank" value="'.SP()->primitives->admin_text('Add Special Rank').'" />';
 
 			spa_paint_close_fieldset();
 
@@ -48,9 +46,9 @@ function spa_special_rankings_form($rankings) {
 		<table class="widefat fixed striped">
     		<thead>
     			<tr>
-    				<th><?php spa_etext('Special Rank Name') ?></strong></th>
-    				<th><?php spa_etext('Special Rank Badge') ?></strong></th>
-    				<th style="text-align: center;"><?php spa_etext('Special Rank Manage') ?></strong></th>
+    				<th><?php SP()->primitives->admin_etext('Special Rank Name') ?></strong></th>
+    				<th><?php SP()->primitives->admin_etext('Special Rank Badge') ?></strong></th>
+    				<th style="text-align: center;"><?php SP()->primitives->admin_etext('Special Rank Manage') ?></strong></th>
     			</tr>
     		</thead>
     		<tbody>
@@ -61,7 +59,7 @@ function spa_special_rankings_form($rankings) {
 
     		$base = wp_nonce_url(SPAJAXURL.'components-loader', 'components-loader');
     		$target = 'members-'.$rank['meta_id'];
-    		$image = SFADMINIMAGES;
+    		$image = SPADMINIMAGES;
 ?>
 				<tr id="srank<?php echo $rank['meta_id']; ?>">
                     <td colspan="3">
@@ -77,18 +75,18 @@ function spa_special_rankings_form($rankings) {
             						<br />
 <?php
             						$thisRank = $rank['meta_key'];
-            						sp_display_item_stats(SFSPECIALRANKS, 'special_rank', "'$thisRank'", spa_text('Members in Rank'));
+            						sp_display_item_stats(SPSPECIALRANKS, 'special_rank', "'$thisRank'", SP()->primitives->admin_text('Members in Rank'));
 ?>
             					</td>
             					<td>
-            						<?php spa_select_icon_dropdown('specialrankbadge['.$rank['meta_id'].']', spa_text('Select Badge'), SF_STORE_DIR.'/'.$spPaths['ranks'].'/', $rank['meta_value']['badge'], true, 105); ?>
+            						<?php spa_select_icon_dropdown('specialrankbadge['.$rank['meta_id'].']', SP()->primitives->admin_text('Select Badge'), SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/', $rank['meta_value']['badge'], true, 105); ?>
             					</td>
             					<td>
             						<div class="sp-half-row-left">
-                						<img class="spDeleteRow" data-url="<?php echo $delsite; ?>" data-target="srank<?php echo $rank['meta_id']; ?>" src="<?php echo SFCOMMONIMAGES; ?>delete.png" title="<?php spa_etext('Delete Special Rank'); ?>" alt="" />
+                						<img class="spDeleteRow" data-url="<?php echo $delsite; ?>" data-target="srank<?php echo $rank['meta_id']; ?>" src="<?php echo SPCOMMONIMAGES; ?>delete.png" title="<?php SP()->primitives->admin_etext('Delete Special Rank'); ?>" alt="" />
             						</div>
             						<div class="sp-half-row-right">
-                                        <input type="submit" class="button-primary" id="updatespecialrank<?php echo $rank['meta_id']; ?>" name="updatespecialrank<?php echo $rank['meta_id']; ?>" value="<?php spa_etext('Update Rank'); ?>" />
+                                        <input type="submit" class="button-primary" id="updatespecialrank<?php echo $rank['meta_id']; ?>" name="updatespecialrank<?php echo $rank['meta_id']; ?>" value="<?php SP()->primitives->admin_etext('Update Rank'); ?>" />
             						</div>
             					</td>
                             </tr>
@@ -97,13 +95,13 @@ function spa_special_rankings_form($rankings) {
 <?php
             			            $loc = '#sfrankshow-'.$rank['meta_id'];
             			            $site = wp_nonce_url(SPAJAXURL.'components&amp;targetaction=show&amp;key='.$rank['meta_id'], 'components');
-            						$gif = SFCOMMONIMAGES.'working.gif';
-            						$text = esc_js(spa_text('Show/Hide Members'));
+            						$gif = SPCOMMONIMAGES.'working.gif';
+            						$text = esc_js(SP()->primitives->admin_text('Show/Hide Members'));
 ?>
             						<input type="button" id="show<?php echo $rank['meta_id']; ?>" class="button-secondary spSpecialRankShow" value="<?php echo $text; ?>" data-loc="<?php echo $loc; ?>" data-site="<?php echo $site; ?>" data-img="<?php echo $gif; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
 
-            						<input type="button" id="remove<?php echo $rank['meta_id']; ?>" class="button-secondary spSpecialRankForm" value="<?php spa_etext('Remove Members'); ?>" data-loc="<?php echo $loc; ?>" data-form="delmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
-            						<input type="button" id="add<?php echo $rank['meta_id']; ?>" class="button-secondary spSpecialRankForm" value="<?php spa_etext('Add Members'); ?>" data-loc="<?php echo $loc; ?>" data-form="addmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
+            						<input type="button" id="remove<?php echo $rank['meta_id']; ?>" class="button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Remove Members'); ?>" data-loc="<?php echo $loc; ?>" data-form="delmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
+            						<input type="button" id="add<?php echo $rank['meta_id']; ?>" class="button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" data-loc="<?php echo $loc; ?>" data-form="addmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
             					</td>
             				</tr>
 
@@ -116,10 +114,8 @@ function spa_special_rankings_form($rankings) {
             			</form>
                     </td>
                </tr>
-                <script type="text/javascript">
-                    jQuery(document).ready(function() {
-                    	spjAjaxForm('sfspecialrankupdate<?php echo $rank['meta_id']; ?>', '');
-                    });
+                <script>
+                   	spj.loadAjaxForm('sfspecialrankupdate<?php echo $rank['meta_id']; ?>', '');
                 </script>
 <?php
 		}
@@ -133,4 +129,3 @@ function spa_special_rankings_form($rankings) {
 	spa_paint_close_tab();
 	}
 }
-?>

@@ -1,7 +1,228 @@
-eval((function(s){var a,c,e,i,j,o="",r,t="$%@^`~";for(i=0;i<s.length;i++){r=t+s[i][2];a=s[i][1].split("");for(j=a.length - 1;j>=0;j--){s[i][0]=s[i][0].split(r.charAt(j)).join(a[j]);}o+=s[i][0];}var p=2466;var x=function(r){var c,p,s,l='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789';if(r<63)c=l.charAt(r);else{r-=63;p=Math.floor(r/63);s=r%63;c=l.charAt(p)+l.charAt(s)}return c;};a=o.substr(p).split(':');r=a[1].split('?');a=a[0].split('?');o=o.substr(0,p);if(!''.replace(/^/,String)){var z={};for(i=0;i<108;i++){var y=x(i);z[y]=r[i]||y}t=/\b\w\w?\b/g;y=function(a){return z[a]||a};o=o.replace(t,y);}else{for(j=a[a.length-1]-1;j>=0;j--){if(r[j])o=o.replace(new RegExp('\b'+(j<63?c.charAt(j):c.charAt((j-63)/63)+c.charAt((j-63)%63))+'\b','g'),r[j])}}return o.replace(//g,"\"");})([["func spjLoadAjax(H,m,anM(an!='D.getElemById(m)TML<img src='+an+' />'}H=url+'&rnd+~.axTal(Hf as(P,H,m,K,Q,q,E,xM(q==0H+&m+m+'&x+x+'&'+#'+P).serializeT8(Ku).u({G:0}B 2=((q/x)*100u).u('L','G',2B aw=H+'&q+q+'&E+E;#onFinish@l(aw,f(a,bq=(q+E)q<xas(P,H,m,K,Q,q,E,xd(#u).VT8(Q+m).fadeOut(6000});aB ap}f Ajax(e,H,p,adM(!p)dZ'(j.aG!m%'&&j.ao=forum')||(j.ao=admin')||(j.m%theme==ap)||adM($aF)$'ar'aC(_).X(<ay aOg'></ay>);al(H,f(aiai)l.aq('az')="+
-"block'l.V:'5'},'aa'aq('az','none'aq('5','-1px'3(e,H,p}f Html(e,C,pM(!p)dZ'$aF)$'ar'aC(_).X(<ay aOg'></ay>);Cf CB S=windoweight;S=(S-j.ah-60)n>S)n=S;B h=(n==0)?'aR':n,w=(s==0)?'aR':s;8(C);g({modal:av,zindex:100000,autoOpen:ap,T:'aP',V:'aP',s:w,n:h,maxHeight:S,draggable:av,resizable:av,I:title,closeText:'',d:p,ar:f(aK,aI#postitem').4('closed',ao:f(aK,aI4('aD'})r===0r,{my:5 aJ,at:aN aH,of:e}M(s>0&&j.aG=desktop's,sM(n>0n,nB t=.aI-g@q('aJ')t"+
-".charAt(0)=-'B c=Math.round(au(t)-au(j.ah));r,{my:5 aJ+c,at:aN aH,of:e}.aI-g@q('z-index','999999');g('open')j.tooltips.aI-tooltip').V(}f 3(e,H,pal(Hremove(add(pT,'ak'X(<aj aOac'></aj>);#v').4('aD');aQ@L('J'V,'ak'aL('J',f(ee.Y(f PanelHTML(e,aA),C=d(aA).8(8(CT,'ak'X(<aj aOac'></aj>);aQ@L('J'V,'ak'aL('J',f(ee.Y(d.y=f(7,G,kM(ae G!undefined'k=ops||{}G===aMG';^=-1}B o'^&&(ae ^=aE'||^.af)B Wae ^=aE'W=~;W.setTime(W.ax()+(^*24*60*60*1"+
-"000)W=^}expires; o+W.af(B 6=k.6?'; 6+(k.6):'',N=k.N?'; N+(k.N):'',U=k.U?'; U':'';D.y=[7,',encodeURICompon(G),o,6,N,U].join(''B O=aMD.y&&D.y!='B ab=D.y.split(';');for(B i=0;i<ab.ag;i++B y=d.trim(ab[i])y.am(0,7.ag+1)==(7+')O=decodeURICompon(y.am(7.ag+1));break}}}aB O}};0?108:???jQuery??func?d???sp_platform_vars?ops?panel?target?height?expires?d?startNum?posi?width??progressbar?spM%Panel??totalNum?cooki`?direc?var?cont?docum?batchNum?PopUp?valu`url?titl`mousedown?startMess"+
-"ag`op?if?domain?cookieValu`thisFormID?endMessag`slid`winH?show?secur`hid`dat`append?stopPropaga?spDDefault?dcontainer???currProgress?Panel?trigger?right?path?nam`html?els`down?cookies?spPanelClos`m%Scroll?typeof?toUTCString?length?headpadding?ajaxCont?span?slow?load?substring?imag`focus?fals`css?clos`spjBatch??parseInt?tru`thisUrl?getTim`div?display?sourc`return?remov`opened?number?isOpen?devic`bottom?ui?top?ev?on?null?left?id?fold?body?auto?Date",
-"d('#g').);d('#'(+m).ialog);l.;M(){,I,s,n,r('R',{A,f(l.Classtiond('='g(L,:'aa'});d(#spjD)}9{ent)}B l=#v'F(e,p,d().g(obile').ak.oe?new aS().innerH",
-""]]));
+/*
+ $LastChangedDate: 2017-12-31 06:56:06 -0600 (Sun, 31 Dec 2017) $
+ $Rev: 15612 $
+ */
+
+(function(spj, $, undefined) {
+	// private properties
+
+	// public properties
+
+	// private methods
+	function dialogPopup(e, title, width, height, position, dClass, content) {
+		// calc the available height
+		var winH = window.innerHeight;
+		winH = (winH - sp_platform_vars.headpadding - 60);
+		if (height > winH)
+			height = winH;
+
+		// set width and height values
+		var h = (height == 0) ? 'auto' : height;
+		var w = (width == 0) ? 'auto' : width;
+
+		$('#dialog').html(content);
+		$('#dialog').dialog({
+			modal: true,
+			zindex: 100000,
+			autoOpen: false,
+			show: 'fold',
+			hide: 'fold',
+			width: w,
+			height: h,
+			maxHeight: winH,
+			draggable: true,
+			resizable: true,
+			title: title,
+			closeText: '',
+			dialogClass: dClass,
+			close: function(event, ui) {
+				$('#postitem').trigger('closed');
+			},
+			focus: function(event, ui) {
+				$('#dialog').trigger('opened');
+			}
+		});
+
+		if (position === 0) {
+			$('#dialog').dialog("option", "position", {my: "right top", at: "left bottom", of: e});
+		}
+
+		if (width > 0 && sp_platform_vars.device == 'desktop') {
+			$('#dialog').dialog("option", "width", width);
+		}
+		if (height > 0) {
+			$('#dialog').dialog("option", "height", height);
+		}
+
+		// check top position for a minus
+		var t = $('.ui-dialog').css('top');
+		if (t.charAt(0) == '-') {
+			var c = Math.round(parseInt(t) - parseInt(sp_platform_vars.headpadding));
+			$('#dialog').dialog("option", "position", {my: "right top" + c, at: "left bottom", of: e});
+		}
+		// and z-index
+		$('.ui-dialog').css('z-index', '999999');
+
+		$('#dialog').dialog('open');
+
+		// hide any initial tooltip that wants to open
+		if (sp_platform_vars.tooltips) {
+			$('.ui-tooltip').hide();
+		}
+	}
+
+	// public methods
+
+	spj.loadAjax = function(url, target, image) {
+		if (image !== '') {
+			document.getElementById(target).innerHTML = '<img src="' + image + '" />';
+		}
+		url = url + '&rnd=' + new Date().getTime();
+		$('#' + target).show();
+		$('#' + target).load(url);
+	};
+
+	spj.batch = function(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum) {
+		if (startNum == 0) {
+			url += '&target=' + target + '&totalNum=' + totalNum + '&' + $('#' + thisFormID).serialize();
+			$('#' + target).show();
+			$('#' + target).html(startMessage);
+			$("#progressbar").progressbar({value: 0});
+		} else {
+			var currentProgress = ((startNum / totalNum) * 100);
+			$("#progressbar").progressbar('option', 'value', currentProgress);
+		}
+
+		var thisUrl = url + '&startNum=' + startNum + '&batchNum=' + batchNum;
+
+		$('#onFinish').load(thisUrl, function(a, b) {
+			startNum = (startNum + batchNum);
+			if (startNum < totalNum) {
+				spj.batch(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum);
+			} else {
+				$("#progressbar").hide();
+				$('#' + target).show();
+				$('#' + target).html(endMessage);
+				$('#' + target).fadeOut(6000);
+			}
+		});
+
+		return false;
+	};
+
+	spj.dialogAjax = function(e, url, title, width, height, position, dClass, mobileScroll) {
+		if (!dClass)
+			dClass = 'spDialogDefault';
+		if ((sp_platform_vars.device != 'mobile' && sp_platform_vars.focus == 'forum') || (sp_platform_vars.focus == 'admin') || (sp_platform_vars.mobiletheme == false) || mobileScroll) {
+			// close and remove any existing dialog. remove hdden div and recreate it */
+			if ($().dialog("isOpen")) {
+				$().dialog('close');
+			}
+			$('#dialog').remove();
+			$("#dialogcontainer").append("<div id='dialog'></div>");
+			$('#dialog').load(url, function(ajaxContent) {
+				dialogPopup(e, title, width, height, position, dClass, ajaxContent);
+			});
+		} else {
+			var panel = $('#spMobilePanel');
+			// grab new position and set up the top
+			if (panel.css('display') == 'block') {
+				panel.hide('slide', {direction: 'right'}, 'down', function() {
+					panel.css('display', 'none');
+					panel.css('right', '-1px');
+				});
+			}
+			spj.dialogPanel(e, url, dClass);
+		}
+	};
+
+	spj.dialogHtml = function(e, content, title, width, height, position, dClass) {
+		if (!dClass)
+			dClass = 'spDialogDefault';
+		// close and remove any existing dialog. remove hdden div and recreate it */
+		if ($().dialog("isOpen")) {
+			$().dialog('close');
+		}
+		$('#dialog').remove();
+		$("#dialogcontainer").append("<div id='dialog'></div>");
+		dialogPopup(e, title, width, height, position, dClass, content);
+	};
+
+	spj.dialogPanel = function(e, url, dClass) {
+		var panel = $('#spMobilePanel');
+		panel.load(url, function() {
+			panel.removeClass();
+			panel.addClass(dClass);
+			panel.show('slide', {direction: 'down'}, 'slow', function() {
+				panel.append("<span id='spPanelClose'></span>");
+				$('#spMobilePanel').trigger('opened');
+			});
+		});
+		// bind the 'mousedown' event to the document so we can close panel
+		$('body').on('mousedown', function() {
+			panel.hide('slide', {direction: 'down'}, 'slow');
+		});
+		// don't close panel when clicking inside it
+		panel.on('mousedown', function(e) {
+			e.stopPropagation();
+		});
+	};
+
+	spj.dialogPanelHtml = function(e, source) {
+		var panel = $('#spMobilePanel');
+		var content = $(source).html();
+		panel.html(content);
+		panel.show('slide', {direction: 'down'}, 'slow');
+		panel.append("<span id='spPanelClose'></span>");
+		// bind the 'mousedown' event to the document so we can close panel
+		$('body').on('mousedown', function() {
+			panel.hide('slide', {direction: 'down'}, 'slow');
+		});
+		// don't close panel when clicking inside it
+		panel.on('mousedown', function(e) {
+			e.stopPropagation();
+		});
+	};
+
+	spj.cookie = function(name, value, options) {
+		if (typeof value != 'undefined') { // name and value given, set cookie
+			options = options || {};
+			if (value === null) {
+				value = '';
+				options.expires = -1;
+			}
+			var expires = '';
+			if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+				var date;
+				if (typeof options.expires == 'number') {
+					date = new Date();
+					date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+				} else {
+					date = options.expires;
+				}
+				expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+			}
+			// CAUTION: Needed to parenthesize options.path and options.domain
+			// in the following expressions, otherwise they evaluate to undefined
+			// in the packed version for some reason...
+			var path = options.path ? '; path=' + (options.path) : '';
+			var domain = options.domain ? '; domain=' + (options.domain) : '';
+			var secure = options.secure ? '; secure' : '';
+			document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+		} else { // only name given, get cookie
+			var cookieValue = null;
+			if (document.cookie && document.cookie !== '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = $.trim(cookies[i]);
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) == (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+	};
+}(window.spj = window.spj || {}, jQuery));

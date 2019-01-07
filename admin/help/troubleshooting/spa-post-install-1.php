@@ -2,7 +2,7 @@
 
 	<div id="welcome">
 		<h2>Welcome to</h2>
-		<img class="welcome-logo" src="<?php echo SFCOMMONIMAGES; ?>sp-full-logo.png" alt="" title="" /><br />
+		<img class="welcome-logo" src="<?php echo SPCOMMONIMAGES; ?>sp-full-logo.png" alt="" title="" /><br />
 		<div class="clearboth"></div>
 		<p class="codex-head">We would like to recommend...</p>
 		<p>That before you define your forums, user groups, permission etc., you rough out what you believe you need
@@ -15,7 +15,7 @@
 	<div class="sfform-panel-spacer"></div>
 
 
-	<img class="spLeft" src="<?php echo SFCOMMONIMAGES; ?>question.png" alt="" title="" />
+	<img class="spLeft" src="<?php echo SPCOMMONIMAGES; ?>question.png" alt="" title="" />
 	<div class="codex-head">Getting you Started</div>
 	<div class="clearboth"></div>
 

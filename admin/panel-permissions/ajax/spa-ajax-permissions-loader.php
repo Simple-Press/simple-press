@@ -2,8 +2,8 @@
 /*
 Simple:Press Permissions Admin
 Ajax form loader - Permissions
-$LastChangedDate: 2016-12-03 14:06:51 -0600 (Sat, 03 Dec 2016) $
-$Rev: 14745 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -12,23 +12,22 @@ spa_admin_ajax_support();
 
 if (!sp_nonce('permissions-loader')) die();
 
-global $spStatus;
-if ($spStatus != 'ok') {
-	echo $spStatus;
+if (SP()->core->status != 'ok') {
+	echo SP()->core->status;
 	die();
 }
 
-include_once SF_PLUGIN_DIR.'/admin/panel-permissions/spa-permissions-display.php';
-include_once SF_PLUGIN_DIR.'/admin/panel-permissions/support/spa-permissions-prepare.php';
-include_once SF_PLUGIN_DIR.'/admin/panel-permissions/support/spa-permissions-save.php';
-include_once SF_PLUGIN_DIR.'/admin/library/spa-tab-support.php';
+require_once SP_PLUGIN_DIR.'/admin/panel-permissions/spa-permissions-display.php';
+include_once SP_PLUGIN_DIR.'/admin/panel-permissions/support/spa-permissions-prepare.php';
+include_once SP_PLUGIN_DIR.'/admin/panel-permissions/support/spa-permissions-save.php';
+include_once SP_PLUGIN_DIR.'/admin/library/spa-tab-support.php';
 
 global $adminhelpfile;
 $adminhelpfile = 'admin-permissions';
 
 # ----------------------------------
 # Check Whether User Can Manage Forums
-if (!sp_current_user_can('SPF Manage Permissions')) die();
+if (!SP()->auths->current_user_can('SPF Manage Permissions')) die();
 
 if (isset($_GET['loadform'])) {
 	spa_render_permissions_container($_GET['loadform']);
@@ -59,5 +58,3 @@ if (isset($_GET['saveform'])) {
 }
 
 die();
-
-?>

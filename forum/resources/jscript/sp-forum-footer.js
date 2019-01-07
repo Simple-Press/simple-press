@@ -1,4 +1,132 @@
-eval((function(s){var a,c,e,i,j,o="",r,t="$%*/456789<?@BGHJKVWXYZ^`~";for(i=0;i<s.length;i++){r=t+s[i][2];a=s[i][1].split("");for(j=a.length - 1;j>=0;j--){s[i][0]=s[i][0].split(r.charAt(j)).join(a[j]);}o+=s[i][0];}return o.replace(//g,"\"");})([["W.~ady(4{devicedeskp'&&s=Z<W.({Class:'t?p',posi:{my:my,at:at},track:false,c:4{$.prop('nodeNameIFRAME'||$.closest('.mce-containerlVgth){7''}else{7 $.a%?tle}}})}'lVgth<'appVd('#qlC)/sF9Select, SelectmsDropDown4/sF94/4}var *=loK).a%*;*&&Xdding>0)Hh=*.split(#);*='#'+h[1]/^, bodyanimate({scrollTop:(Math.round(*).offset4.p)-(Xdding))},'fast}wait62);wait@wai?;B62);B@Bi;failu~62);failu~@faili;|`f9{GKs^4!=null){GKs^4!='{GKs4;spjOpVEJ('spPForm"+
-"','p}}}Y)spjAuU8(Ylist,Y?me);tryHbtn=jQuery.fn.butn.noConflict4;jQuery.fn.btn=btn}catch(e){}|`f9HC=false,edC=''; cExit4{saveprocess==0&&Formcss('displayblock{(eJ)==1)edC=?nymce.ac?veEJ.getC4;C||edC!='7 sp_foru.lVtry}}window.onbefo~unload=cExit;(eJ)!=1<'#pitemkeyup(4{CZ})}}cusmizertest<'a~moveA%h~f/a~moveA%onclick}});",
-"sp_platfjQuery(m_varsor.mageif(')#spQuicktooltipontentLinktionosttopageviesTopiconfirmfuncshow=='.parseInt'#spPthis)ttr('hash;'()I=new I5(32,3returnpdateorum){tiI.src=successNo?fi{var dircaendocumVt)headpaauu8=truehtmlwre`pic'|",
-""]]));
+/* ---------------------------------
+ Simple:Press - Version 5.0
+ Forum Javascript loaded in footer after page loads
+
+ $LastChangedDate: 2017-12-31 06:56:06 -0600 (Sun, 31 Dec 2017) $
+ $Rev: 15612 $
+ ------------------------------------ */
+
+(function(spj, $, undefined) {
+	// private properties
+
+	// public properties
+
+	// public methods
+	$(document).ready(function() {
+		setupTooltips();
+		moveQuickLinks();
+		headPadding();
+		preLoadImages();
+		failedSaveCheck();
+
+		if (sp_platform_vars.autoupdate) {
+			spj.autoUpdate(sp_platform_vars.autoupdatelist, sp_platform_vars.autoupdatetime);
+		}
+
+		bootstrapFix();
+		pageLeaveCheck();
+		customizerTest();
+	});
+
+	// private methods
+	function setupTooltips() {
+		if (sp_platform_vars.device == 'desktop' && sp_platform_vars.tooltips == true) {
+			$(document).tooltip({
+				tooltipClass: 'ttip',
+				position: {
+					my: sp_platform_vars.tooltipmy,
+					at: sp_platform_vars.tooltipat
+				},
+				track: false,
+				content: function() {
+					if ($(this).prop('nodeName') == 'IFRAME' || $(this).closest('.mce-container').length) {
+						return '';
+					} else {
+						return $(this).attr('title');
+					}
+				}
+			});
+		}
+	}
+
+	function moveQuickLinks() {
+		if ($('#spQuickLinksTopic').length) {
+			/* move the quicklinks html */
+			$('#spQuickLinksTopic').append($('#qlContent'));
+
+			/* Quicklinks selects */
+			$('#spQuickLinksForumSelect, #spQuickLinksTopicSelect').msDropDown();
+			$('#spQuickLinksForum').show();
+			$('#spQuickLinksTopic').show();
+		}
+	}
+
+	function headPadding() {
+		var hash = $(location).attr('hash');
+		if (hash && sp_platform_vars.headpadding > 0) {
+			var h = hash.split("#");
+			hash = '#' + h[1];
+			$('html, body').animate({scrollTop: (Math.round($(hash).offset().top) - parseInt(sp_platform_vars.headpadding))}, 'fast');
+		}
+	}
+
+	function preLoadImages() {
+		waitImage = new Image(32, 32);
+		waitImage.src = sp_platform_vars.waitimage;
+		successImage = new Image(32, 32);
+		successImage.src = sp_platform_vars.successimage;
+		failureImage = new Image(32, 32);
+		failureImage.src = sp_platform_vars.failimage;
+	}
+
+	function failedSaveCheck() {
+		if (sp_platform_vars.pageview == 'topic' || sp_platform_vars.pageview == 'forum') {
+			if ($('#spPostNotifications').html() != null) {
+				if ($('#spPostNotifications').html() != '') {
+					$('#spPostNotifications').show();
+					spj.openEditor('spPostForm', 'post');
+				}
+			}
+		}
+	}
+
+	function bootstrapFix() {
+		try {
+			/* fix for Bootstrap stealing button object from $ UI */
+			var btn = $.fn.button; // reverts $.fn.button to jqueryui btn
+			$.fn.btn = btn; // assigns bootstrap button functionality to $.fn.btn
+		} catch (e) {
+		}
+	}
+
+	function pageLeaveCheck() {
+		/* Show message if leaving page during edit */
+		if (sp_platform_vars.pageview == 'topic' || sp_platform_vars.pageview == 'forum') {
+			var showConfirm = false;
+			var edContent = '';
+
+			function confirmExit() {
+				if (sp_platform_vars.saveprocess == 0 && $('#spPostForm').css('display') == 'block') {
+					if (parseInt(sp_platform_vars.editor) == 1)
+						edContent = tinymce.activeEditor.getContent();
+					if (showConfirm || edContent != '')
+						return sp_forum_vars.lostentry;
+				}
+			}
+
+			window.onbeforeunload = confirmExit;
+			if (parseInt(sp_platform_vars.editor) != 1) {
+				$('#postitem').keyup(function() {
+					showConfirm = true;
+				});
+			}
+		}
+	}
+
+	function customizerTest() {
+		if (sp_platform_vars.customizertest) {
+			$('a').removeAttr('href');
+			$('a').removeAttr('onclick');
+		}
+	}
+}(window.spj = window.spj || {}, jQuery));

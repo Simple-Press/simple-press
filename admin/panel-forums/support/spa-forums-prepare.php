@@ -2,22 +2,20 @@
 /*
 Simple:Press
 Admin Forums Data Prep Support Functions
-$LastChangedDate: 2016-10-29 14:08:09 -0500 (Sat, 29 Oct 2016) $
-$Rev: 14686 $
+$LastChangedDate: 2017-04-02 14:20:25 -0500 (Sun, 02 Apr 2017) $
+$Rev: 15314 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_paint_custom_icons() {
-	global $spPaths;
-
 	$out = '';
 
 	# Open custom icons folder and get cntents for matching
-	$path = SF_STORE_DIR.'/'.$spPaths['custom-icons'].'/';
+	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/';
 	$dlist = @opendir($path);
 	if (!$dlist) {
-		echo '<table><tr><td class="sflabel"><strong>'.spa_text('The custom icons folder does not exist').'</strong></td></tr></table>';
+		echo '<table><tr><td class="sflabel"><strong>'.SP()->primitives->admin_text('The custom icons folder does not exist').'</strong></td></tr></table>';
 		return;
 	}
 
@@ -31,9 +29,9 @@ function spa_paint_custom_icons() {
 
 	# start the table display
 	$out.= '<table class="wp-list-table widefat"><tr>';
-	$out.= '<th style="width:30%;text-align:center">'.spa_text('Icon').'</th>';
-	$out.= '<th style="width:50%;text-align:center">'.spa_text('Filename').'</th>';
-	$out.= '<th style="text-align:center">'.spa_text('Remove').'</th>';
+	$out.= '<th style="width:30%;text-align:center">'.SP()->primitives->admin_text('Icon').'</th>';
+	$out.= '<th style="width:50%;text-align:center">'.SP()->primitives->admin_text('Filename').'</th>';
+	$out.= '<th style="text-align:center">'.SP()->primitives->admin_text('Remove').'</th>';
 	$out.= '</tr>';
 
     $out.= '<tr><td colspan="3">';
@@ -45,13 +43,13 @@ function spa_paint_custom_icons() {
 		foreach ($files as $file) {
 		    $out.= '<table id="icon'.$row.'" style="width:100%">';
 			$out.= '<tr>';
-			$out.= '<td style="text-align:center;width:30%" class="spWFBorder"><img class="sfcustomicon " src="'.esc_url(SFCUSTOMURL.$file).'" alt="" /></td>';
+			$out.= '<td style="text-align:center;width:30%" class="spWFBorder"><img class="sfcustomicon " src="'.esc_url(SPCUSTOMURL.$file).'" alt="" /></td>';
 			$out.= '<td style="text-align:center;width:50%"  class="spWFBorder sflabel">';
 			$out.= $file;
 			$out.= '</td>';
 			$out.= '<td style="text-align:center"  class="spWFBorder">';
 			$site = esc_url(wp_nonce_url(SPAJAXURL."forums&amp;targetaction=delicon&amp;file=$file", 'forums'));
-			$out.= '<img src="'.SFCOMMONIMAGES.'delete.png" title="'.spa_text('Delete custom icon').'" alt="" class="spDeleteRow" data-url="'.$site.'" data-target="icon'.$row.'" />';
+			$out.= '<img src="'.SPCOMMONIMAGES.'delete.png" title="'.SP()->primitives->admin_text('Delete custom icon').'" alt="" class="spDeleteRow" data-url="'.$site.'" data-target="icon'.$row.'" />';
 			$out.= '</td>';
 			$out.= '</tr>';
 			$out.= '</table>';
@@ -66,15 +64,13 @@ function spa_paint_custom_icons() {
 }
 
 function spa_paint_featured_images() {
-	global $spPaths;
-
 	$out = '';
 
 	# Open forum images folder and get contents for matching
-	$path = SF_STORE_DIR.'/'.$spPaths['forum-images'].'/';
+	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/';
 	$dlist = @opendir($path);
 	if (!$dlist) {
-		echo '<table><tr><td class="sflabel"><strong>'.spa_text('The forum feauted images folder does not exist').'</strong></td></tr></table>';
+		echo '<table><tr><td class="sflabel"><strong>'.SP()->primitives->admin_text('The forum feauted images folder does not exist').'</strong></td></tr></table>';
 		return;
 	}
 
@@ -88,9 +84,9 @@ function spa_paint_featured_images() {
 
 	# start the table display
 	$out.= '<table class="wp-list-table widefat"><tr>';
-	$out.= '<th style="width:30%;text-align:center">'.spa_text('Image').'</th>';
-	$out.= '<th style="width:50%;text-align:center">'.spa_text('Filename').'</th>';
-	$out.= '<th style="text-align:center">'.spa_text('Remove').'</th>';
+	$out.= '<th style="width:30%;text-align:center">'.SP()->primitives->admin_text('Image').'</th>';
+	$out.= '<th style="width:50%;text-align:center">'.SP()->primitives->admin_text('Filename').'</th>';
+	$out.= '<th style="text-align:center">'.SP()->primitives->admin_text('Remove').'</th>';
 	$out.= '</tr>';
 
     $out.= '<tr><td colspan="3">';
@@ -100,13 +96,13 @@ function spa_paint_featured_images() {
 		foreach ($files as $file) {
 		    $out.= '<table style="width:100%">';
 			$out.= '<tr>';
-			$out.= '<td style="text-align:center;width:30%" class="spWFBorder"><img class="sffeaturedimage " src="'.esc_url(SFFEATUREDURL.$file).'" alt="" /></td>';
+			$out.= '<td style="text-align:center;width:30%" class="spWFBorder"><img class="sffeaturedimage " src="'.esc_url(SPOGIMAGEURL.$file).'" alt="" /></td>';
 			$out.= '<td style="text-align:center;width:50%"  class="spWFBorder sflabel">';
 			$out.= $file;
 			$out.= '</td>';
 			$out.= '<td style="text-align:center"  class="spWFBorder">';
 			$site = esc_url(wp_nonce_url(SPAJAXURL."forums&amp;targetaction=delimage&amp;file=$file", 'forums'));
-			$out.= '<img src="'.SFCOMMONIMAGES.'delete.png" title="'.spa_text('Delete featured image').'" alt="" class="spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadfi" />';
+			$out.= '<img src="'.SPCOMMONIMAGES.'delete.png" title="'.SP()->primitives->admin_text('Delete featured image').'" alt="" class="spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadfi" />';
 			$out.= '</td>';
 			$out.= '</tr>';
 			$out.= '</table>';
@@ -117,5 +113,3 @@ function spa_paint_featured_images() {
 
 	echo $out;
 }
-
-?>

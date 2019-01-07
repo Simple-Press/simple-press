@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin plugins Update Support Functions
-$LastChangedDate: 2016-02-25 21:14:11 -0600 (Thu, 25 Feb 2016) $
-$Rev: 13987 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -12,14 +12,16 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function spa_save_theme_data() {
 	check_admin_referer('forum-adminform_themes', 'forum-adminform_themes');
 
-	$theme = sp_esc_str($_POST['theme']);
-	$style = sp_esc_str($_POST['style']);
-	$color = (isset($_POST['color-'.$theme])) ? sp_esc_str($_POST['color-'.$theme]) : '';
-	$parent = (isset($_POST['parent'])) ? sp_esc_str($_POST['parent']) : '';
+	require_once SPBOOT.'site/sp-site-support-functions.php';
+
+	$theme = SP()->filters->str($_POST['theme']);
+	$style = SP()->filters->str($_POST['style']);
+	$color = (isset($_POST['color-'.$theme])) ? SP()->filters->str($_POST['color-'.$theme]) : '';
+	$parent = (isset($_POST['parent'])) ? SP()->filters->str($_POST['parent']) : '';
 
 	if (isset($_POST['activate']) || isset($_POST['update'])) {
-		if (empty($theme) || empty($style)) return spa_text('An error occurred activating the Theme!');
-		if (empty($color)) $color = sp_esc_str($_POST['default-color']);
+		if (empty($theme) || empty($style)) return SP()->primitives->admin_text('An error occurred activating the Theme!');
+		if (empty($color)) $color = SP()->filters->str($_POST['default-color']);
 
 		# activate the theme
 		$current = array();
@@ -35,44 +37,45 @@ function spa_save_theme_data() {
             } else {
                 $f = SPTHEMEBASEDIR.$theme.'/styles/overlays/'.$color.'.php';
             }
-			$icons = sp_esc_str(sp_get_overlay_icons($f));
+			$icons = SP()->filters->str(SP()->theme->get_overlay_icons($f));
 		}
 		$current['icons'] = $icons;
 
-		sp_update_option('sp_current_theme', $current);
+		SP()->options->update('sp_current_theme', $current);
 
 		# load theme functions file in case it wants to hook into activation
 		if (file_exists(SPTHEMEBASEDIR.$theme.'/templates/spFunctions.php')) {
-			include_once SPTHEMEBASEDIR.$theme.'/templates/spFunctions.php';
+			require_once SPTHEMEBASEDIR.$theme.'/templates/spFunctions.php';
 		}
 
 		# clean out the combined css file
-		sp_clear_combined_css('all');
-		sp_clear_combined_css('mobile');
-		sp_clear_combined_css('tablet');
+		SP()->plugin->clear_css_cache('all');
+		SP()->plugin->clear_css_cache('mobile');
+		SP()->plugin->clear_css_cache('tablet');
 
 		# theme activation action
 		do_action('sph_activate_theme', $current);
 		do_action('sph_activate_theme_'.$theme, $current);
 
-		return spa_text('Theme updated');
+		return SP()->primitives->admin_text('Theme updated');
 	} else if (isset($_POST['delete']) == 'delete' && (!is_multisite() || is_super_admin())) {
-		$mess = sp_delete_sp_theme($theme);
+		$mess = SP()->theme->delete($theme);
 		return $mess;
 	}
+	return '';
 }
 
 function spa_save_theme_mobile_data() {
 	check_admin_referer('forum-adminform_themes', 'forum-adminform_themes');
 
-   	$mobileTheme = sp_get_option('sp_mobile_theme');
-   	$curTheme = sp_get_option('sp_current_theme');
+   	$mobileTheme = SP()->options->get('sp_mobile_theme');
+   	$curTheme = SP()->options->get('sp_current_theme');
 
    	$mobile = array();
    	$active = isset($_POST['active']);
 
     if (isset($_POST['saveit'])) {
-		$pagetemplate = (isset($_POST['pagetemplate'])) ? sp_esc_str($_POST['pagetemplate']) : $mobileTheme['pagetemplate'];
+		$pagetemplate = (isset($_POST['pagetemplate'])) ? SP()->filters->str($_POST['pagetemplate']) : $mobileTheme['pagetemplate'];
 
 		if (isset($_POST['pagetemplate'])) {
 			$usetemplate = isset($_POST['usetemplate']);
@@ -92,13 +95,13 @@ function spa_save_theme_mobile_data() {
 		$mobile['notitle'] = $notitle;
     } else {
     	if ($active && $mobileTheme['active']) {
-    		$theme = (isset($_POST['theme'])) ? sp_esc_str($_POST['theme']) : $mobileTheme['theme'];
-    		$style = (isset($_POST['style'])) ? sp_esc_str($_POST['style']) : $mobileTheme['style'];
-    		$color = (isset($_POST['color-'.$theme])) ? sp_esc_str($_POST['color-'.$theme]) : '';
-    		$parent = isset($_POST['parent']) ? sp_esc_str($_POST['parent']) : $mobileTheme['parent'];
+    		$theme = (isset($_POST['theme'])) ? SP()->filters->str($_POST['theme']) : $mobileTheme['theme'];
+    		$style = (isset($_POST['style'])) ? SP()->filters->str($_POST['style']) : $mobileTheme['style'];
+    		$color = (isset($_POST['color-'.$theme])) ? SP()->filters->str($_POST['color-'.$theme]) : '';
+    		$parent = isset($_POST['parent']) ? SP()->filters->str($_POST['parent']) : $mobileTheme['parent'];
 
-    		if (empty($theme) || empty($style)) return spa_text('No data changed');
-    		if (empty($color)) $color = sp_esc_str($_POST['default-color']);
+    		if (empty($theme) || empty($style)) return SP()->primitives->admin_text('No data changed');
+    		if (empty($color)) $color = SP()->filters->str($_POST['default-color']);
 
     		$mobile['active'] = true;
     		$mobile['theme'] = $theme;
@@ -115,7 +118,7 @@ function spa_save_theme_mobile_data() {
     		$mobile['color'] = $curTheme['color'];
     		$mobile['parent'] = $curTheme['parent'];
     		$mobile['usetemplate'] = false;
-    		$mobile['pagetemplate'] = spdb_table(SFWPPOSTMETA, "meta_key='_wp_page_template' AND post_id=".sp_get_option('sfpage'), 'meta_value');
+    		$mobile['pagetemplate'] = SP()->DB->table(SPWPPOSTMETA, "meta_key='_wp_page_template' AND post_id=".SP()->options->get('sfpage'), 'meta_value');
     		$mobile['notitle'] = true;
     	}
     }
@@ -127,34 +130,34 @@ function spa_save_theme_mobile_data() {
         } else {
             $f = SPTHEMEBASEDIR.$mobile['theme'].'/styles/overlays/'.$mobile['color'].'.php';
         }
-		$icons = sp_esc_str(sp_get_overlay_icons($f));
+		$icons = SP()->filters->str(SP()->theme->get_overlay_icons($f));
 	}
 	$mobile['icons'] = $icons;
 
-   	sp_update_option('sp_mobile_theme', $mobile);
+   	SP()->options->update('sp_mobile_theme', $mobile);
 
 	# clean out the combined css file
-	sp_clear_combined_css('mobile');
-	sp_clear_combined_css('tablet');
+	SP()->plugin->clear_css_cache('mobile');
+	SP()->plugin->clear_css_cache('tablet');
 
 	# theme activation action
 	do_action('sph_activate_mobile_theme', $mobile);
 	do_action('sph_activate_mobile_theme_'.$mobile['theme'], $mobile);
 
-	return spa_text('Phone theme updated');
+	return SP()->primitives->admin_text('Phone theme updated');
 }
 
 function spa_save_theme_tablet_data() {
 	check_admin_referer('forum-adminform_themes', 'forum-adminform_themes');
 
-	$tabletTheme = sp_get_option('sp_tablet_theme');
-	$curTheme = sp_get_option('sp_current_theme');
+	$tabletTheme = SP()->options->get('sp_tablet_theme');
+	$curTheme = SP()->options->get('sp_current_theme');
 
 	$tablet = array();
 	$active = isset($_POST['active']);
 
     if (isset($_POST['saveit'])) {
-		$pagetemplate = (isset($_POST['pagetemplate'])) ? sp_esc_str($_POST['pagetemplate']) : $tabletTheme['pagetemplate'];
+		$pagetemplate = (isset($_POST['pagetemplate'])) ? SP()->filters->str($_POST['pagetemplate']) : $tabletTheme['pagetemplate'];
 
 		if (isset($_POST['pagetemplate'])) {
 			$usetemplate = isset($_POST['usetemplate']);
@@ -174,13 +177,13 @@ function spa_save_theme_tablet_data() {
 		$tablet['notitle'] = $notitle;
     } else {
     	if ($active && $tabletTheme['active']) {
-    		$theme = (isset($_POST['theme'])) ? sp_esc_str($_POST['theme']) : $tabletTheme['theme'];
-    		$style = (isset($_POST['style'])) ? sp_esc_str($_POST['style']) : $tabletTheme['style'];
-    		$color = (isset($_POST['color-'.$theme])) ? sp_esc_str($_POST['color-'.$theme]) : '';
-    		$parent = isset($_POST['parent']) ? sp_esc_str($_POST['parent']) : $tabletTheme['parent'];
+    		$theme = (isset($_POST['theme'])) ? SP()->filters->str($_POST['theme']) : $tabletTheme['theme'];
+    		$style = (isset($_POST['style'])) ? SP()->filters->str($_POST['style']) : $tabletTheme['style'];
+    		$color = (isset($_POST['color-'.$theme])) ? SP()->filters->str($_POST['color-'.$theme]) : '';
+    		$parent = isset($_POST['parent']) ? SP()->filters->str($_POST['parent']) : $tabletTheme['parent'];
 
-    		if (empty($theme) || empty($style)) return spa_text('No data changed');
-    		if (empty($color)) $color = sp_esc_str($_POST['default-color']);
+    		if (empty($theme) || empty($style)) return SP()->primitives->admin_text('No data changed');
+    		if (empty($color)) $color = SP()->filters->str($_POST['default-color']);
 
     		$tablet['active'] = true;
     		$tablet['theme'] = $theme;
@@ -197,7 +200,7 @@ function spa_save_theme_tablet_data() {
     		$tablet['color'] = $curTheme['color'];
     		$tablet['parent'] = $curTheme['parent'];
     		$tablet['usetemplate'] = false;
-    		$tablet['pagetemplate'] = spdb_table(SFWPPOSTMETA, "meta_key='_wp_page_template' AND post_id=".sp_get_option('sfpage'), 'meta_value');
+    		$tablet['pagetemplate'] = SP()->DB->table(SPWPPOSTMETA, "meta_key='_wp_page_template' AND post_id=".SP()->options->get('sfpage'), 'meta_value');
     		$tablet['notitle'] = true;
     	}
     }
@@ -209,21 +212,21 @@ function spa_save_theme_tablet_data() {
         } else {
             $f = SPTHEMEBASEDIR.$tablet['theme'].'/styles/overlays/'.$tablet['color'].'.php';
         }
-		$icons = sp_esc_str(sp_get_overlay_icons($f));
+		$icons = SP()->filters->str(SP()->theme->get_overlay_icons($f));
 	}
 	$tablet['icons'] = $icons;
 
-	sp_update_option('sp_tablet_theme', $tablet);
+	SP()->options->update('sp_tablet_theme', $tablet);
 
 	# clean out the combined css file
-	sp_clear_combined_css('mobile');
-	sp_clear_combined_css('tablet');
+	SP()->plugin->clear_css_cache('mobile');
+	SP()->plugin->clear_css_cache('tablet');
 
 	# theme activation action
 	do_action('sph_activate_tablet_theme', $tablet);
 	do_action('sph_activate_tablet_theme_'.$tablet['theme'], $tablet);
 
-	return spa_text('Tablet theme updated');
+	return SP()->primitives->admin_text('Tablet theme updated');
 }
 
 function spa_save_editor_data() {
@@ -236,12 +239,12 @@ function spa_save_editor_data() {
 		if ($f !== false) {
 			fwrite($f, $newcontent);
 			fclose($f);
-			$msg = spa_text('Theme file updated!');
+			$msg = SP()->primitives->admin_text('Theme file updated!');
 		} else {
-			$msg = spa_text('Unable to save theme file');
+			$msg = SP()->primitives->admin_text('Unable to save theme file');
 		}
 	} else {
-		$msg = spa_text('Theme file is not writable!');
+		$msg = SP()->primitives->admin_text('Theme file is not writable!');
 	}
 
 	return $msg;
@@ -249,17 +252,15 @@ function spa_save_editor_data() {
 
 function spa_save_css_data() {
 	$css = '';
-	$curTheme = sp_get_option('sp_current_theme');
+	$curTheme = SP()->options->get('sp_current_theme');
 	$css = esc_attr($_POST['spnewcontent']);
-	$css = sp_filter_save_nohtml($css);
+	$css = SP()->saveFilters->nohtml($css);
 	if($_POST['metaId']==0)	{
-		sp_add_sfmeta('css', $curTheme['theme'], $css, true);
+		SP()->meta->add('css', $curTheme['theme'], $css);
 	} else {
-		sp_update_sfmeta('css', $curTheme['theme'], $css, $_POST['metaId'], true);
+		SP()->meta->update('css', $curTheme['theme'], $css, $_POST['metaId']);
 	}
 
-	$msg = spa_text('Custom theme CSS updated');
+	$msg = SP()->primitives->admin_text('Custom theme CSS updated');
 	return $msg;
 }
-
-?>

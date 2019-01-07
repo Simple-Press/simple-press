@@ -1,6 +1,6 @@
 <div class="codex">
 
-	<img class="spLeft" src="<?php echo SFCOMMONIMAGES; ?>custom-theme.png" alt="" title="" />
+	<img class="spLeft" src="<?php echo SPCOMMONIMAGES; ?>custom-theme.png" alt="" title="" />
 	<div class="codex-head">Customisation Service</div>
 	<div class="clearboth"></div>
 
@@ -9,8 +9,8 @@
 	but for that extra something - to match your WP theme perhaps - we can help.</p>
 	<p>We can also create custom icon sets for you forums and groups and they can really
 	ake your forunm stand out.</p>
-	<p>For details please visit <a href="<?php echo SFHOMESITE; ?>/custom-simplepress-themes-for-every-need/">
-	Custom Themes</a> and <a href="<?php echo SFHOMESITE; ?>/custom-simplepress-plugin-development-services/">
+	<p>For details please visit <a href="<?php echo SPHOMESITE; ?>/custom-simplepress-themes-for-every-need/">
+	Custom Themes</a> and <a href="<?php echo SPHOMESITE; ?>/custom-simplepress-plugin-development-services/">
 	Custom Plugins</a></p>
 
 </div>

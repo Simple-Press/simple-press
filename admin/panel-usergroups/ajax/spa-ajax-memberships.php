@@ -12,21 +12,21 @@ spa_admin_ajax_support();
 
 if (!sp_nonce('memberships')) die();
 
-$action = sp_esc_str($_GET['targetaction']);
-$startNum = sp_esc_int($_GET['startNum']);
-$batchNum = sp_esc_int($_GET['batchNum']);
+$action = SP()->filters->str($_GET['targetaction']);
+$startNum = SP()->filters->integer($_GET['startNum']);
+$batchNum = SP()->filters->integer($_GET['batchNum']);
 
 if ($action == 'add') {
 	check_admin_referer('forum-adminform_membernew', 'forum-adminform_membernew');
 	# add the users to the user group membership
-	$usergroup_id = sp_esc_int($_GET['usergroup_id']);
+	$usergroup_id = SP()->filters->integer($_GET['usergroup_id']);
 	if (isset($_GET['amid'])) $user_id_list = array_unique($_GET['amid']);
 
 	if (isset($user_id_list)) {
 		for ($x = $startNum; $x < ($startNum + $batchNum); $x++) {
 			if (isset($user_id_list[$x])) {
-				$user_id = sp_esc_int($user_id_list[$x]);
-				sp_add_membership($usergroup_id, $user_id);
+				$user_id = SP()->filters->integer($user_id_list[$x]);
+				SP()->user->add_membership($usergroup_id, $user_id);
 			}
 		}
 	}
@@ -35,7 +35,7 @@ if ($action == 'add') {
 if ($action == 'del') {
     check_admin_referer('forum-adminform_memberdel', 'forum-adminform_memberdel');
 
-    $usergroup_id = sp_esc_int($_GET['usergroupid']);
+    $usergroup_id = SP()->filters->integer($_GET['usergroupid']);
     $new_usergroup_id = $_GET['usergroup_id'];
     if (isset($_GET['dmid'])) $user_id_list = array_unique($_GET['dmid']);
 
@@ -46,24 +46,22 @@ if ($action == 'del') {
 
 	for ($x = $startNum; $x < ($startNum + $batchNum); $x++) {
 		if (isset($user_id_list[$x])) {
-			$user_id = sp_esc_int($user_id_list[$x]);
-			$success = spdb_query('DELETE FROM '.SFMEMBERSHIPS." WHERE user_id=$user_id AND usergroup_id=$usergroup_id");
+			$user_id = SP()->filters->integer($user_id_list[$x]);
+			$success = SP()->DB->execute('DELETE FROM '.SPMEMBERSHIPS." WHERE user_id=$user_id AND usergroup_id=$usergroup_id");
 
-			if ($new_usergroup_id != -1) $success = sp_add_membership($new_usergroup_id, $user_id);
+			if ($new_usergroup_id != -1) $success = SP()->user->add_membership($new_usergroup_id, $user_id);
 
 			# reset auths and memberships for added user
-			sp_reset_memberships($user_id);
-			sp_reset_auths($user_id);
+			SP()->user->reset_memberships($user_id);
+			SP()->auths->reset_cache($user_id);
 
 			# update mod flag
-			sp_update_member_moderator_flag($user_id);
+			SP()->user->update_moderator_flag($user_id);
 		}
 	}
 }
 
 # rebuiuld the new user list just in case
-sp_rebuild_newuser();
+SP()->user->rebuild_new();
 
 die();
-
-?>

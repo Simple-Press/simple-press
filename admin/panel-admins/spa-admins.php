@@ -2,22 +2,19 @@
 /*
 Simple:Press
 Admin ADmins
-$LastChangedDate: 2016-12-03 14:06:51 -0600 (Sat, 03 Dec 2016) $
-$Rev: 14745 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
-# Check Whether User Can Manage Admins
-global $spStatus;
+if (!SP()->auths->current_user_can('SPF Manage Admins') && !SP()->user->thisUser->admin && !SP()->user->thisUser->moderator) die();
 
-if (!sp_current_user_can('SPF Manage Admins') && !$spThisUser->admin && !$spThisUser->moderator) die();
+include_once SP_PLUGIN_DIR.'/admin/panel-admins/spa-admins-display.php';
+include_once SP_PLUGIN_DIR.'/admin/panel-admins/support/spa-admins-prepare.php';
+include_once SP_PLUGIN_DIR.'/admin/library/spa-tab-support.php';
 
-include_once SF_PLUGIN_DIR.'/admin/panel-admins/spa-admins-display.php';
-include_once SF_PLUGIN_DIR.'/admin/panel-admins/support/spa-admins-prepare.php';
-include_once SF_PLUGIN_DIR.'/admin/library/spa-tab-support.php';
-
-if ($spStatus != 'ok') {
+if (SP()->core->status != 'ok') {
     include_once SPLOADINSTALL;
     die();
 }
@@ -30,4 +27,3 @@ $tab = (isset($_GET['tab'])) ? $_GET['tab'] : 'youradmin';
 spa_panel_header();
 spa_render_admins_panel($tab);
 spa_panel_footer();
-?>

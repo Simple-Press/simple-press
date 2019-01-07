@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Panels - Options/Components Tab Rendering Support
-$LastChangedDate: 2016-10-21 13:40:36 -0500 (Fri, 21 Oct 2016) $
-$Rev: 14649 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -200,12 +200,12 @@ function spa_paint_file($label, $name, $disabled, $large, $path) {
 	echo "$label:</div>";
 
 	if (is_writable($path)) {
-		echo '<div id="sf-upload-button" class="button-primary">'.spa_text('Browse').'</div>';
+		echo '<div id="sf-upload-button" class="button-primary">'.SP()->primitives->admin_text('Browse').'</div>';
 		echo '<div id="sf-upload-status"></div>';
 	} else {
 		echo '<div id="sf-upload-button" class="button-primary sfhidden"></div>';
 		echo '<div id="sf-upload-status">';
-		echo '<p class="sf-upload-status-fail">'.spa_text('Sorry, uploads disabled! Storage location does not exist or is not writable. Please see forum - integration - storage locations to correct').'</p>';
+		echo '<p class="sf-upload-status-fail">'.SP()->primitives->admin_text('Sorry, uploads disabled! Storage location does not exist or is not writable. Please see forum - integration - storage locations to correct').'</p>';
 		echo '</div>';
 	}
 	echo '<div class="clearboth"></div>';
@@ -241,7 +241,7 @@ function spa_paint_radiogroup($label, $name, $values, $current, $large=false, $d
 		$check = '';
 		if ($current == $pos) $check = ' checked="checked" ';
 		echo '<input type="radio" '.$class.'name="'.$name.'" id="sfradio-'.$tab.'"  tabindex="'.$tab.'" value="'.$pos.'" '.$check.' />'."\n";
-		echo '<label for="sfradio-'.$tab.'" class="wp-core-ui">'.esc_html(spa_text($value)).'</label>'."\n<br />";
+		echo '<label for="sfradio-'.$tab.'" class="wp-core-ui">'.esc_html(SP()->primitives->admin_text($value)).'</label>'."\n<br />";
 		$tab++;
 	}
 	echo '</div>';
@@ -256,16 +256,14 @@ function spa_paint_spacer() {
 
 function spa_paint_help($name, $helpfile, $show=true) {
 	$site = wp_nonce_url(SPAJAXURL."help&amp;file=$helpfile&amp;item=$name", 'help');
-	$title = spa_text('Simple:Press Help');
+	$title = SP()->primitives->admin_text('Simple:Press Help');
 	$out = '';
 
 	$out.= '<div class="sfhelplink">';
 	if ($show) {
 		$out.= '<a id="'.$name.'" class="button-secondary sfhelplink spHelpLink" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">';
-		$out.= spa_text('Help').'</a>';
+		$out.= SP()->primitives->admin_text('Help').'</a>';
 	}
 	$out.= '</div>';
 	return $out;
 }
-
-?>

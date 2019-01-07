@@ -1,12 +1,673 @@
-eval((function(s){var a,c,e,i,j,o="",r,t="$@`~";for(i=0;i<s.length;i++){r=t+s[i][2];a=s[i][1].split("");for(j=a.length - 1;j>=0;j--){s[i][0]=s[i][0].split(r.charAt(j)).join(a[j]);}o+=s[i][0];}var p=3560;var x=function(r){var c,p,s,l='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789';if(r<63)c=l.charAt(r);else{r-=63;p=Math.floor(r/63);s=r%63;c=l.charAt(p)+l.charAt(s)}return c;};a=o.substr(p).split(':');r=a[1].split('?');a=a[0].split('?');o=o.substr(0,p);if(!''.replace(/^/,String)){var z={};for(i=0;i<147;i++){var y=x(i);z[y]=r[i]||y}t=/\b\w\w?\b/g;y=function(a){return z[a]||a};o=o.replace(t,y);}else{for(j=a[a.length-1]-1;j>=0;j--){if(r[j])o=o.replace(new RegExp('\b'+(j<63?c.charAt(j):c.charAt((j-63)/63)+c.charAt((j-63)%63))+'\b','g'),r[j])}}return o.replace(//g,"\"");})([["(c(c bn(al(aC)!='a_'&&al(aC.bn`c'bri.unshift[Ajax Upload]'aC.bn(bri.join ')x(G,ay,bpGqGq(ay,bp,J)GMGM('on'+ay,c(bpo(G68('bm a1 or DOM bm loaded'addResizeEv(bpad;x(Q,'resizeadclearTimeout(adad=aQ(bp,100)~rs.sak=c(GaL=G.s(),S=G.ownerDocum,u=S.u,K=Ss,P=K.P||u.P||0,M=K.M||u.M||0,X=1;F(u.sa6=u.s(X=(a6a-a6.z)/u.Width~X>1P=0;M=0}o R=aL.RgeYOffset||K&&K2/X||u2/X)-P,z=aL.zgeXOffset||K&&KR/X||uR/X)-M;g{R:top,}}}6{o ak=c(GR=0,z=0;do{R+=GTop||0;z+=GLeft||0;"+
-"G=elPar}while(Gg{,R:top}}bi(Gz,aa,R,ap,aI=ak(Gz=aI.z;R=aI.R;aa=z+GJ;ap=R+GE;g{,aa:right,R:top,ap:bottom}_(G,ambo(o y in amam.W(y)G.U[y]=am[y]}}aX(aW,toaL=bi(aW_(to,{ar$z:aL.z@,R:aL.R@,width:aWJ@,height:aWE@}o ah=(c(T=r.L('T'g c(afTj=af;o G=T.I;g TH(G})(o bh=(c(bf=0;g c(g 'ValumsAjaxUpload'+bf++}})(c 5(vg vz(/.*(\\/|\\\\)/,)aK(vg(-1!==v.indexOf('.'))?vz(/.*[.]/,''):''bb(G,ybl=a3 bk('\\\\b'+y+'\\\\b'g bl.bs(G.Z)au(G,y!bb(G,y)G.Z+=' '+y}E(G,ybl=a3 bk('\\\\b"+
-"'+y+'\\\\b'G.Z=G.Zz(bl,'')B(GG.CH(GQZ=c(n,aed.f={aN:'upload.php',y:'userfile',8:{},aY:bc,4:J,H:'hover',Y:'7',ba:c(v,a5},a9:c(v,a5},aU:c(v,m}};bo(o i in aeae.W(i)d.f[i]=ae[i]}~n.jqueryn=[0]al n==string/^#.*/.bs(n)n=.slice(1n=r.getElemById(n)~!n||n.nodeType!==1)8(Please make sure that you'bl passing a valid elem)~n.N.9(`A'x(n,'click',c(ee&&ewew()Q.bqQ.bq.returnValue=J}}d.p=n;=aV;d.2=J;d.bj(dx(;aZi={setData:c(8d.f.8=data},:c(au.Yd.2=bc;o N=d.p.N.9(F(N=="+
-"'INPUT'||N=='BUTTON'd.p7','7')~.C.Uc='an'}},bj:c(E.Yd.p.removeAttribute('7'd.2=J},Oq=d,t=r.L(ttay','v'ty',d.f.y_(t,{'ar'$'aabgbefontSize':'480px','cursor':'pointer'}o T=r.L(T_(T,{'aB':'block','ar'$'overflow':'an','bgbeaAdirection':'ltr','zIndex':2147483583}F(T.UA!==0al(T.filters`a_')8('Opacity bm a1 by the browser'T.U.filter=alpha(aA=0)}x(t,'change!t||tg===''g}o v=5(tgF(J===q.f.bao(q,v,aK(v))qb(g~q.fYqG(}x(t,'a4',c(auq.f.Hx(t,'mouseout',c(E"+
-"q.f.Ht.C.Uc='an'}T.w(tr.u.w(T=t},ab:c(!g}B(.C=aV;d.O(E.H,axq=d;x'a4q.2g~!q.kq.O(o T=q.k.C;aXTT.Uc='visible'},aDbf=bh(),h=ah('<h bd=V:J; y='+bf+' />'hbf',bfh.UB='bu';r.u.w(hg h},aO:c(hl=d.f,D=ah('<D method=post enctype=multipart/D-8></D>'DaN',lNDtarget',h.yD.UB='bu';r.u.w(Dbo(o aT in l.8l.8.W(aT)G=r.L(tGay','an'Gy',aTGag',l.8[aT]D.w(G}g D},aF:c(h,v3=J,q=d,l=d.f;x(h,'loadh.bd==V:'%3Chtml%3E%3C/af%3E';||h.bd==V:'<af></af>';3aQ(c("+
-"B(h,0g}o S=ht?ht:Q.frames[h.bf].r;F(SS&&SS!='complete'g~S.u&&S.uj==Jg}o m;F(SPm=SPS.um=S.uj;F(l.4&&l.4.toLowerCase(`json'S.u.I&&S.u.I.N.9(`PRE'm=S.u.I.firstChild.nodeValue~mm=eval((+m+)6{m={}}}}6{m=S}lUo(q,v,m3=bc;h.bd=V:'<af></af>';},aGq=d,l=d.f;F(!||g===''g}o v=5(gF(J===l9o(d,v,aK(v))db(g}o h=dD(),D=dO(hB(.CEq.f.HD.w(DG(B(DD=aV;B(=aV;dF(h,vd.O(}})(0?147:??function?this??_settings?return?iframe??setAttribute?_input?settings?response"+
-"??var?_?self?docum?getBoundingCliRect?input?body?file?appendChild?addEv?name?left??removeNode?parNode?form?removeClass?if?el?hoverClass?firstChild?false?docElem?createElem?Left?nodeName?_createInput?Top?window?top?doc?div?style?javascript?hasOwnProperty?zoom?dClass?className?addStyles???_d?toDeleteFla",
-"',c(){F(:c(){o button':0,'){o d.k.a{a0 a3 a.offsetclient(q.p,){F(}c );(d.p,d.fdisablez:left}6 F(.j('ent){/X+(Q.pao(a7,':'av',+'bt')=='}F()}",
-""],
-["/reTfi`FmPh%ls@da?UpperCasr_c`1Inpuvi3bilt'~tml?valupt)#HTMLOff4typeof?sty`~5den?ca&6tm(Lis+#?po3?d*tDab,utp$vD7aul_$u+Clicks?t$8-'-8.*,Iframe9He_getRs?$m0Child99W5thEx6x?t-h(?-?F:m?XMLD?4tTL7$;yStppComp`tnu&fm?c'yLayouauS?AjaxU8o;?27)thw?supp:tT'?new?mou40r%x+n3on?62?1gums?ErrSChanghastrusrc?p;d)/5?m1g)UIDBox%n@RegExp?rnolo/f:?fn%v?Arr.+spx?none",
-"Element?ocument?offseubmit?getente?imeout?esponsight?tionypro_createClass?scllity?ed?t??add?ontodisreablles?hatner?ell?opEvincontesolacay?g?ovearundsiseidboefpltorad",
-"#%&'()*+,-./0123456789:;<=>GJKNQVYZ[]^qz{|}"]]));
+/**
+ * AJAX Upload ( http://valums.com/ajax-upload/ )
+ * Copyright (c) Andris Valums
+ * Licensed under the MIT license ( http://valums.com/mit-license/ )
+ * Thanks to Gary Haran, David Mark, Corey Burns and others for contributions
+ */
+(function () {
+    /* global window */
+    /* jslint browser: true, devel: true, undef: true, nomen: true, bitwise: true, regexp: true, newcap: true, immed: true */
+
+    /**
+     * Wrapper for FireBug's console.log
+     */
+    function log(){
+        if (typeof(console) != 'undefined' && typeof(console.log) == 'function'){
+            Array.prototype.unshift.call(arguments, '[Ajax Upload]');
+            console.log( Array.prototype.join.call(arguments, ' '));
+        }
+    }
+
+    /**
+     * Attaches event to a dom element.
+     * @param {Element} el
+     * @param type event name
+     * @param fn callback This refers to the passed element
+     */
+    function addEvent(el, type, fn){
+        if (el.addEventListener) {
+            el.addEventListener(type, fn, false);
+        } else if (el.attachEvent) {
+            el.attachEvent('on' + type, function(){
+                fn.call(el);
+	        });
+	    } else {
+            throw new Error('not supported or DOM not loaded');
+        }
+    }
+
+    /**
+     * Attaches resize event to a window, limiting
+     * number of event fired. Fires only when encounteres
+     * delay of 100 after series of events.
+     *
+     * Some browsers fire event multiple times when resizing
+     * http://www.quirksmode.org/dom/events/resize.html
+     *
+     * @param fn callback This refers to the passed element
+     */
+    function addResizeEvent(fn){
+        var timeout;
+
+	    addEvent(window, 'resize', function(){
+            if (timeout){
+                clearTimeout(timeout);
+            }
+            timeout = setTimeout(fn, 100);
+        });
+    }
+
+    // Needs more testing, will be rewriten for next version
+    // getOffset function copied from jQuery lib (http://jquery.com/)
+    if (document.documentElement.getBoundingClientRect){
+        // Get Offset using getBoundingClientRect
+        // http://ejohn.org/blog/getboundingclientrect-is-awesome/
+        var getOffset = function(el){
+            var box = el.getBoundingClientRect();
+            var doc = el.ownerDocument;
+            var body = doc.body;
+            var docElem = doc.documentElement; // for ie
+            var clientTop = docElem.clientTop || body.clientTop || 0;
+            var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+
+            // In Internet Explorer 7 getBoundingClientRect property is treated as physical,
+            // while others are logical. Make all logical, like in IE8.
+            var zoom = 1;
+            if (body.getBoundingClientRect) {
+                var bound = body.getBoundingClientRect();
+                zoom = (bound.right - bound.left) / body.clientWidth;
+            }
+
+            if (zoom > 1) {
+                clientTop = 0;
+                clientLeft = 0;
+            }
+
+            var top = box.top / zoom + (window.pageYOffset || docElem && docElem.scrollTop / zoom || body.scrollTop / zoom) - clientTop, left = box.left / zoom + (window.pageXOffset || docElem && docElem.scrollLeft / zoom || body.scrollLeft / zoom) - clientLeft;
+
+            return {
+                top: top,
+                left: left
+            };
+        };
+    } else {
+        // Get offset adding all offsets
+        var getOffset = function(el){
+            var top = 0, left = 0;
+            do {
+                top += el.offsetTop || 0;
+                left += el.offsetLeft || 0;
+                el = el.offsetParent;
+            } while (el);
+
+            return {
+                left: left,
+                top: top
+            };
+        };
+    }
+
+    /**
+     * Returns left, top, right and bottom properties describing the border-box,
+     * in pixels, with the top-left relative to the body
+     * @param {Element} el
+     * @return {Object} Contains left, top, right,bottom
+     */
+    function getBox(el){
+        var left, right, top, bottom;
+        var offset = getOffset(el);
+        left = offset.left;
+        top = offset.top;
+
+        right = left + el.offsetWidth;
+        bottom = top + el.offsetHeight;
+
+        return {
+            left: left,
+            right: right,
+            top: top,
+            bottom: bottom
+        };
+    }
+
+    /**
+     * Helper that takes object literal
+     * and add all properties to element.style
+     * @param {Element} el
+     * @param {Object} styles
+     */
+    function addStyles(el, styles){
+        for (var name in styles) {
+            if (styles.hasOwnProperty(name)) {
+                el.style[name] = styles[name];
+            }
+        }
+    }
+
+    /**
+     * Function places an absolutely positioned
+     * element on top of the specified element
+     * copying position and dimentions.
+     * @param {Element} from
+     * @param {Element} to
+     */
+    function copyLayout(from, to){
+	    var box = getBox(from);
+
+        addStyles(to, {
+	        position: 'absolute',
+	        left : box.left + 'px',
+	        top : box.top + 'px',
+	        width : from.offsetWidth + 'px',
+	        height : from.offsetHeight + 'px'
+	    });
+    }
+
+    /**
+    * Creates and returns element from html chunk
+    * Uses innerHTML to create an element
+    */
+    var toElement = (function(){
+        var div = document.createElement('div');
+        return function(html){
+            div.innerHTML = html;
+            var el = div.firstChild;
+            return div.removeChild(el);
+        };
+    })();
+
+    /**
+     * Function generates unique id
+     * @return unique id
+     */
+    var getUID = (function(){
+        var id = 0;
+        return function(){
+            return 'ValumsAjaxUpload' + id++;
+        };
+    })();
+
+    /**
+     * Get file name from path
+     * @param {String} file path to file
+     * @return filename
+     */
+    function fileFromPath(file){
+        return file.replace(/.*(\/|\\)/, "");
+    }
+
+    /**
+     * Get file extension lowercase
+     * @param {String} file name
+     * @return file extenstion
+     */
+    function getExt(file){
+        return (-1 !== file.indexOf('.')) ? file.replace(/.*[.]/, '') : '';
+    }
+
+    function hasClass(el, name){
+        var re = new RegExp('\\b' + name + '\\b');
+        return re.test(el.className);
+    }
+    function addClass(el, name){
+        if ( ! hasClass(el, name)){
+            el.className += ' ' + name;
+        }
+    }
+    function removeClass(el, name){
+        var re = new RegExp('\\b' + name + '\\b');
+        el.className = el.className.replace(re, '');
+    }
+
+    function removeNode(el){
+        el.parentNode.removeChild(el);
+    }
+
+    /**
+     * Easy styling and uploading
+     * @constructor
+     * @param button An element you want convert to
+     * upload button. Tested dimentions up to 500x500px
+     * @param {Object} options See defaults below.
+     */
+    window.AjaxUpload = function(button, options){
+        this._settings = {
+            // Location of the server-side upload script
+            action: 'upload.php',
+            // File upload name
+            name: 'userfile',
+            // Additional data to send
+            data: {},
+            // Submit file as soon as it's selected
+            autoSubmit: true,
+            // The type of data that you're expecting back from the server.
+            // html and xml are detected automatically.
+            // Only useful when you are using json data as a response.
+            // Set to "json" in that case.
+            responseType: false,
+            // Class applied to button when mouse is hovered
+            hoverClass: 'hover',
+            // Class applied to button when AU is disabled
+            disabledClass: 'disabled',
+            // When user selects a file, useful with autoSubmit disabled
+            // You can return false to cancel upload
+            onChange: function(file, extension){
+            },
+            // Callback to fire before file is uploaded
+            // You can return false to cancel upload
+            onSubmit: function(file, extension){
+            },
+            // Fired when file upload is completed
+            // WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!
+            onComplete: function(file, response){
+            }
+        };
+
+        // Merge the users options with our defaults
+        for (var i in options) {
+            if (options.hasOwnProperty(i)){
+                this._settings[i] = options[i];
+            }
+        }
+
+        // button isn't necessary a dom element
+        if (button.jquery){
+            // jQuery object was passed
+            button = button[0];
+        } else if (typeof button == "string") {
+            if (/^#.*/.test(button)){
+                // If jQuery user passes #elementId don't break it
+                button = button.slice(1);
+            }
+
+            button = document.getElementById(button);
+        }
+
+        if ( ! button || button.nodeType !== 1){
+            throw new Error("Please make sure that you're passing a valid element");
+        }
+
+        if ( button.nodeName.toUpperCase() == 'A'){
+            // disable link
+            addEvent(button, 'click', function(e){
+                if (e && e.preventDefault){
+                    e.preventDefault();
+                } else if (window.event){
+                    window.event.returnValue = false;
+                }
+            });
+        }
+
+        // DOM element
+        this._button = button;
+        // DOM element
+        this._input = null;
+        // If disabled clicking on button won't do anything
+        this._disabled = false;
+
+        // if the button was disabled before refresh if will remain
+        // disabled in FireFox, let's fix it
+        this.enable();
+
+        this._rerouteClicks();
+    };
+
+    // assigning methods to our class
+    AjaxUpload.prototype = {
+        setData: function(data){
+            this._settings.data = data;
+        },
+        disable: function(){
+            addClass(this._button, this._settings.disabledClass);
+            this._disabled = true;
+
+            var nodeName = this._button.nodeName.toUpperCase();
+            if (nodeName == 'INPUT' || nodeName == 'BUTTON'){
+                this._button.setAttribute('disabled', 'disabled');
+            }
+
+            // hide input
+            if (this._input){
+                // We use visibility instead of display to fix problem with Safari 4
+                // The problem is that the value of input doesn't change if it
+                // has display none when user selects a file
+                this._input.parentNode.style.visibility = 'hidden';
+            }
+        },
+        enable: function(){
+            removeClass(this._button, this._settings.disabledClass);
+            this._button.removeAttribute('disabled');
+            this._disabled = false;
+
+        },
+        /**
+         * Creates invisible file input
+         * that will hover above the button
+         * <div><input type='file' /></div>
+         */
+        _createInput: function(){
+            var self = this;
+
+            var input = document.createElement("input");
+            input.setAttribute('type', 'file');
+            input.setAttribute('name', this._settings.name);
+
+            addStyles(input, {
+                'position' : 'absolute',
+                // in Opera only 'browse' button
+                // is clickable and it is located at
+                // the right side of the input
+                'right' : 0,
+                'margin' : 0,
+                'padding' : 0,
+                'fontSize' : '480px',
+                'cursor' : 'pointer'
+            });
+
+            var div = document.createElement("div");
+            addStyles(div, {
+                'display' : 'block',
+                'position' : 'absolute',
+                'overflow' : 'hidden',
+                'margin' : 0,
+                'padding' : 0,
+                'opacity' : 0,
+                // Make sure browse button is in the right side
+                // in Internet Explorer
+                'direction' : 'ltr',
+                //Max zIndex supported by Opera 9.0-9.2
+                'zIndex': 2147483583
+            });
+
+            // Make sure that element opacity exists.
+            // Otherwise use IE filter
+            if ( div.style.opacity !== "0") {
+                if (typeof(div.filters) == 'undefined'){
+                    throw new Error('Opacity not supported by the browser');
+                }
+                div.style.filter = "alpha(opacity=0)";
+            }
+
+            addEvent(input, 'change', function(){
+
+                if ( ! input || input.value === ''){
+                    return;
+                }
+
+                // Get filename from input, required
+                // as some browsers have path instead of it
+                var file = fileFromPath(input.value);
+
+                if (false === self._settings.onChange.call(self, file, getExt(file))){
+                    self._clearInput();
+                    return;
+                }
+
+                // Submit form when value is changed
+                if (self._settings.autoSubmit) {
+                    self.submit();
+                }
+            });
+
+            addEvent(input, 'mouseover', function(){
+                addClass(self._button, self._settings.hoverClass);
+            });
+
+            addEvent(input, 'mouseout', function(){
+                removeClass(self._button, self._settings.hoverClass);
+
+                // We use visibility instead of display to fix problem with Safari 4
+                // The problem is that the value of input doesn't change if it
+                // has display none when user selects a file
+                input.parentNode.style.visibility = 'hidden';
+
+            });
+
+	        div.appendChild(input);
+            document.body.appendChild(div);
+
+            this._input = input;
+        },
+        _clearInput : function(){
+            if (!this._input){
+                return;
+            }
+
+            // this._input.value = ''; Doesn't work in IE6
+            removeNode(this._input.parentNode);
+            this._input = null;
+            this._createInput();
+
+            removeClass(this._button, this._settings.hoverClass);
+        },
+        /**
+         * Function makes sure that when user clicks upload button,
+         * the this._input is clicked instead
+         */
+        _rerouteClicks: function(){
+            var self = this;
+
+            // IE will later display 'access denied' error
+            // if you use using self._input.click()
+            // other browsers just ignore click()
+
+            addEvent(self._button, 'mouseover', function(){
+                if (self._disabled){
+                    return;
+                }
+
+                if ( ! self._input){
+	                self._createInput();
+                }
+
+                var div = self._input.parentNode;
+                copyLayout(self._button, div);
+                div.style.visibility = 'visible';
+
+            });
+
+
+            // commented because we now hide input on mouseleave
+            /**
+             * When the window is resized the elements
+             * can be misaligned if button position depends
+             * on window size
+             */
+            //addResizeEvent(function(){
+            //    if (self._input){
+            //        copyLayout(self._button, self._input.parentNode);
+            //    }
+            //});
+
+        },
+        /**
+         * Creates iframe with unique name
+         * @return {Element} iframe
+         */
+        _createIframe: function(){
+            // We can't use getTime, because it sometimes return
+            // same value in safari :(
+            var id = getUID();
+
+            // We can't use following code as the name attribute
+            // won't be properly registered in IE6, and new window
+            // on form submit will open
+            // var iframe = document.createElement('iframe');
+            // iframe.setAttribute('name', id);
+
+            var iframe = toElement('<iframe src="javascript:false;" name="' + id + '" />');
+            // src="javascript:false; was added
+            // because it possibly removes ie6 prompt
+            // "This page contains both secure and nonsecure items"
+            // Anyway, it doesn't do any harm.
+            iframe.setAttribute('id', id);
+
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+
+            return iframe;
+        },
+        /**
+         * Creates form, that will be submitted to iframe
+         * @param {Element} iframe Where to submit
+         * @return {Element} form
+         */
+        _createForm: function(iframe){
+            var settings = this._settings;
+
+            // We can't use the following code in IE6
+            // var form = document.createElement('form');
+            // form.setAttribute('method', 'post');
+            // form.setAttribute('enctype', 'multipart/form-data');
+            // Because in this case file won't be attached to request
+            var form = toElement('<form method="post" enctype="multipart/form-data"></form>');
+
+            form.setAttribute('action', settings.action);
+            form.setAttribute('target', iframe.name);
+            form.style.display = 'none';
+            document.body.appendChild(form);
+
+            // Create hidden input element for each data key
+            for (var prop in settings.data) {
+                if (settings.data.hasOwnProperty(prop)){
+                    var el = document.createElement("input");
+                    el.setAttribute('type', 'hidden');
+                    el.setAttribute('name', prop);
+                    el.setAttribute('value', settings.data[prop]);
+                    form.appendChild(el);
+                }
+            }
+            return form;
+        },
+        /**
+         * Gets response from iframe and fires onComplete event when ready
+         * @param iframe
+         * @param file Filename to use in onComplete callback
+         */
+        _getResponse : function(iframe, file){
+            // getting response
+            var toDeleteFlag = false, self = this, settings = this._settings;
+
+            addEvent(iframe, 'load', function(){
+
+                if (// For Safari
+                    iframe.src == "javascript:'%3Chtml%3E%3C/html%3E';" ||
+                    // For FF, IE
+                    iframe.src == "javascript:'<html></html>';"){
+                        // First time around, do not delete.
+                        // We reload to blank page, so that reloading main page
+                        // does not re-submit the post.
+
+                        if (toDeleteFlag) {
+                            // Fix busy state in FF3
+                            setTimeout(function(){
+                                removeNode(iframe);
+                            }, 0);
+                        }
+
+                        return;
+                }
+
+                var doc = iframe.contentDocument ? iframe.contentDocument : window.frames[iframe.id].document;
+
+                // fixing Opera 9.26,10.00
+                if (doc.readyState && doc.readyState != 'complete') {
+                   // Opera fires load event multiple times
+                   // Even when the DOM is not ready yet
+                   // this fix should not affect other browsers
+                   return;
+                }
+
+                // fixing Opera 9.64
+                if (doc.body && doc.body.innerHTML == "false") {
+                    // In Opera 9.64 event was fired second time
+                    // when body.innerHTML changed from false
+                    // to server response approx. after 1 sec
+                    return;
+                }
+
+                var response;
+
+                if (doc.XMLDocument) {
+                    // response is a xml document Internet Explorer property
+                    response = doc.XMLDocument;
+                } else if (doc.body){
+                    // response is html document or plain text
+                    response = doc.body.innerHTML;
+
+                    if (settings.responseType && settings.responseType.toLowerCase() == 'json') {
+                        // If the document was sent as 'application/javascript' or
+                        // 'text/javascript', then the browser wraps the text in a <pre>
+                        // tag and performs html encoding on the contents.  In this case,
+                        // we need to pull the original text content from the text node's
+                        // nodeValue property to retrieve the unmangled content.
+                        // Note that IE6 only understands text/html
+                        if (doc.body.firstChild && doc.body.firstChild.nodeName.toUpperCase() == 'PRE') {
+                            response = doc.body.firstChild.firstChild.nodeValue;
+                        }
+
+                        if (response) {
+                            response = eval("(" + response + ")");
+                        } else {
+                            response = {};
+                        }
+                    }
+                } else {
+                    // response is a xml document
+                    response = doc;
+                }
+
+                settings.onComplete.call(self, file, response);
+
+                // Reload blank page, so that reloading main page
+                // does not re-submit the post. Also, remember to
+                // delete the frame
+                toDeleteFlag = true;
+
+                // Fix IE mixed content issue
+                iframe.src = "javascript:'<html></html>';";
+            });
+        },
+        /**
+         * Upload file contained in this._input
+         */
+        submit: function(){
+            var self = this, settings = this._settings;
+
+            if ( ! this._input || this._input.value === ''){
+                return;
+            }
+
+            var file = fileFromPath(this._input.value);
+
+            // user returned false to cancel upload
+            if (false === settings.onSubmit.call(this, file, getExt(file))){
+                this._clearInput();
+                return;
+            }
+
+            // sending request
+            var iframe = this._createIframe();
+            var form = this._createForm(iframe);
+
+            // assuming following structure
+            // div -> input type='file'
+            removeNode(this._input.parentNode);
+            removeClass(self._button, self._settings.hoverClass);
+
+            form.appendChild(this._input);
+
+            form.submit();
+
+            // request set, clean up
+            removeNode(form); form = null;
+            removeNode(this._input); this._input = null;
+
+            // Get response from iframe and fire onComplete event when ready
+            this._getResponse(iframe, file);
+
+            // get ready for next request
+            this._createInput();
+        }
+    };
+})();

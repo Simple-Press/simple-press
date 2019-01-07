@@ -1,6 +1,6 @@
 --- WordPress Integration ---
-$LastChangedDate: 2015-01-19 05:45:18 -0600 (Mon, 19 Jan 2015) $
-$Rev: 12369 $
+$LastChangedDate: 2018-07-23 09:34:40 -0500 (Mon, 23 Jul 2018) $
+$Rev: 15668 $
 
 [forum-page-details]
 <strong>Forum Page Slug</strong><br /><br />
@@ -97,7 +97,7 @@ Simple:Press uses these WordPress transients for some tasks.  If you have many s
 [language-select]
 Simple:Press will try and match your WordPress language setting from the WPLANG constant in the wp-config.php file (for older, established
 sites) or the newer WordPress langage setting (introduced in WordPress version 4.0) to an available language available on our
-<a href="http://glotpress.simple-press.com">translations website</a>. This may sometimes need to be set manually from the select list as some
+<a href="http://glotpress.simple-press.com/glotpress/">translations website</a>. This may sometimes need to be set manually from the select list as some
 WordPress language codes may be non-standard.<br /><br />
 <b>If your language is not listed</b><br />
 If you language is not listed this means we have had no prior requests for it and have not yet created the base projects for translations to be made.

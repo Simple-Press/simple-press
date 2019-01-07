@@ -2,37 +2,33 @@
 /*
 Simple:Press
 Admin integration Update Global Options Support Functions
-$LastChangedDate: 2015-01-19 05:45:18 -0600 (Mon, 19 Jan 2015) $
-$Rev: 12369 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_get_integration_page_data() {
-	global $wp_rewrite;
-
 	$sfoptions = array();
-	$sfoptions['sfslug'] = sp_get_option('sfslug');
-	$sfoptions['sfpage'] = sp_get_option('sfpage');
-	$sfoptions['sfpermalink'] = sp_get_option('sfpermalink');
+	$sfoptions['sfslug'] = SP()->options->get('sfslug');
+	$sfoptions['sfpage'] = SP()->options->get('sfpage');
+	$sfoptions['sfpermalink'] = SP()->options->get('sfpermalink');
 
-	$sfoptions['sfuseob'] = sp_get_option('sfuseob');
-	$sfoptions['sfwplistpages'] = sp_get_option('sfwplistpages');
-	$sfoptions['sfscriptfoot'] = sp_get_option('sfscriptfoot');
+	$sfoptions['sfuseob'] = SP()->options->get('sfuseob');
+	$sfoptions['sfwplistpages'] = SP()->options->get('sfwplistpages');
+	$sfoptions['sfscriptfoot'] = SP()->options->get('sfscriptfoot');
 
-	$sfoptions['sfinloop'] = sp_get_option('sfinloop');
-	$sfoptions['sfmultiplecontent'] = sp_get_option('sfmultiplecontent');
-	$sfoptions['sfwpheadbypass'] = sp_get_option('sfwpheadbypass');
-	$sfoptions['spheaderspace'] = sp_get_option('spheaderspace');
-	$sfoptions['spwptexturize'] = sp_get_option('spwptexturize');
+	$sfoptions['sfinloop'] = SP()->options->get('sfinloop');
+	$sfoptions['sfmultiplecontent'] = SP()->options->get('sfmultiplecontent');
+	$sfoptions['sfwpheadbypass'] = SP()->options->get('sfwpheadbypass');
+	$sfoptions['spheaderspace'] = SP()->options->get('spheaderspace');
+	$sfoptions['spwptexturize'] = SP()->options->get('spwptexturize');
 
 	return $sfoptions;
 }
 
 function spa_get_storage_data() {
 	$sfstorage = array();
-	$sfstorage = sp_get_option('sfconfig');
+	$sfstorage = SP()->options->get('sfconfig');
 	return $sfstorage;
 }
-
-?>

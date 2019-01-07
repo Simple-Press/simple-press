@@ -2,8 +2,8 @@
 /*
 Simple:Press Admin
 Ajax call for permalink update/integration
-$LastChangedDate: 2016-12-03 14:06:51 -0600 (Sat, 03 Dec 2016) $
-$Rev: 14745 $
+$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
+$Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -14,7 +14,7 @@ if (!sp_nonce('integration-perm')) die();
 
 # ----------------------------------
 # Check Whether User Can Manage Integration
-if (!sp_current_user_can('SPF Manage Integration')) die();
+if (!SP()->auths->current_user_can('SPF Manage Integration')) die();
 
 if (isset($_GET['item'])) {
 	$item = $_GET['item'];
@@ -22,12 +22,13 @@ if (isset($_GET['item'])) {
 }
 
 function spa_update_permalink_tool() {
-	echo '<strong>&nbsp;'.sp_update_permalink(true).'</strong>';
+	echo '<strong>&nbsp;'.SP()->spPermalinks->update_permalink(true).'</strong>';
 ?>
-	<script type="text/javascript">window.location= "<?php echo SFADMININTEGRATION; ?>";</script>
+	<script>
+		window.location= "<?php echo SPADMININTEGRATION; ?>";
+	</script>
 <?php
 	die();
 }
 
 die();
-?>

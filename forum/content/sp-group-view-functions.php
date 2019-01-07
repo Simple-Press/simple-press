@@ -2,18 +2,11 @@
 /*
 Simple:Press
 Template Function Handler
-$LastChangedDate: 2016-06-13 07:54:28 -0500 (Mon, 13 Jun 2016) $
-$Rev: 14269 $
+$LastChangedDate: 2018-08-15 07:59:04 -0500 (Wed, 15 Aug 2018) $
+$Rev: 15704 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
-
-# ======================================================================================
-#
-# GROUP VIEW
-# Group Loop Functions
-#
-# ======================================================================================
 
 # --------------------------------------------------------------------------------------
 #
@@ -23,31 +16,29 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
-function sp_GroupHeaderIcon($args='') {
-	global $spThisGroup;
-	$defs = array('tagId' 		=> 'spGroupHeaderIcon%ID%',
-				  'tagClass' 	=> 'spHeaderIcon',
-				  'icon' 		=> 'sp_GroupIcon.png',
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_GroupHeaderIcon_args', $a);
+function sp_GroupHeaderIcon($args = '') {
+	$defs = array('tagId'    => 'spGroupHeaderIcon%ID%',
+	              'tagClass' => 'spHeaderIcon',
+	              'icon'     => 'sp_GroupIcon.png',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_GroupHeaderIcon_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisGroup->group_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisGroup->group_id, $tagId);
 
 	# Check if a custom icon
-	if (!empty($spThisGroup->group_icon)) {
-		$icon = sp_paint_custom_icon($tagClass, SFCUSTOMURL.$spThisGroup->group_icon);
+	if (!empty(SP()->forum->view->thisGroup->group_icon)) {
+		$icon = SP()->theme->paint_custom_icon($tagClass, SPCUSTOMURL.SP()->forum->view->thisGroup->group_icon);
 	} else {
-		$icon = sp_paint_icon($tagClass, SPTHEMEICONSURL, sanitize_file_name($icon));
+		$icon = SP()->theme->paint_icon($tagClass, SPTHEMEICONSURL, sanitize_file_name($icon));
 	}
 
 	if ($get) return $icon;
@@ -74,39 +65,37 @@ function sp_GroupHeaderIcon($args='') {
 #			'collapse' argument added
 #
 # --------------------------------------------------------------------------------------
-function sp_GroupHeaderName($args='') {
-	global $spThisGroup;
-	$defs = array('tagId' 		=> 'spGroupHeaderName%ID%',
-				  'tagClass' 	=> 'spHeaderName',
-				  'toggleTagId' => 'spGroupOpenClose%ID%',
-				  'collapse'	=> 1,
-				  'truncate'	=> 0,
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_GroupHeaderName_args', $a);
+function sp_GroupHeaderName($args = '') {
+	$defs = array('tagId'       => 'spGroupHeaderName%ID%',
+	              'tagClass'    => 'spHeaderName',
+	              'toggleTagId' => 'spGroupOpenClose%ID%',
+	              'collapse'    => 1,
+	              'truncate'    => 0,
+	              'echo'        => 1,
+	              'get'         => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_GroupHeaderName_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$toggleTagId= esc_attr($toggleTagId);
-	$collapse	= (int) $collapse;
-	$truncate	= (int) $truncate;
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId       = esc_attr($tagId);
+	$tagClass    = esc_attr($tagClass);
+	$toggleTagId = esc_attr($toggleTagId);
+	$collapse    = (int) $collapse;
+	$truncate    = (int) $truncate;
+	$echo        = (int) $echo;
+	$get         = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisGroup->group_id, $tagId);
-	$toggleTagId = '#'.str_ireplace('%ID%', $spThisGroup->group_id, $toggleTagId);
+	$tagId       = str_ireplace('%ID%', SP()->forum->view->thisGroup->group_id, $tagId);
+	$toggleTagId = '#'.str_ireplace('%ID%', SP()->forum->view->thisGroup->group_id, $toggleTagId);
 
-	if ($get) return sp_truncate($spThisGroup->group_name, $truncate);
+	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisGroup->group_name, $truncate);
 
 	$out = '';
-	if (!empty($spThisGroup->group_name)) {
-		$out.= "<div id='$tagId' class='$tagClass spGroupHeaderOpen' data-id='$toggleTagId' data-collapse='$collapse'";
-		if ($collapse) $out.= " style='cursor: pointer;'";
-		$out.= ">".sp_truncate($spThisGroup->group_name, $truncate)."</div>\n";
+	if (!empty(SP()->forum->view->thisGroup->group_name)) {
+		$out .= "<div id='$tagId' class='$tagClass spGroupHeaderOpen' data-id='$toggleTagId' data-collapse='$collapse'";
+		if ($collapse) $out .= " style='cursor: pointer;'";
+		$out .= ">".SP()->primitives->truncate_name(SP()->forum->view->thisGroup->group_name, $truncate)."</div>\n";
 	}
 
 	$out = apply_filters('sph_GroupHeaderName', $out, $a);
@@ -126,28 +115,26 @@ function sp_GroupHeaderName($args='') {
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
-function sp_GroupHeaderDescription($args='') {
-	global $spThisGroup;
-	$defs = array('tagId' 		=> 'spGroupHeaderDescription%ID%',
-				  'tagClass' 	=> 'spHeaderDescription',
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_GroupHeaderDescription_args', $a);
+function sp_GroupHeaderDescription($args = '') {
+	$defs = array('tagId'    => 'spGroupHeaderDescription%ID%',
+	              'tagClass' => 'spHeaderDescription',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_GroupHeaderDescription_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisGroup->group_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisGroup->group_id, $tagId);
 
-	if ($get) return $spThisGroup->group_desc;
+	if ($get) return SP()->forum->view->thisGroup->group_desc;
 
-	$out = (empty($spThisGroup->group_desc)) ? '' : "<div id='$tagId' class='$tagClass'>$spThisGroup->group_desc</div>\n";
+	$out = (empty(SP()->forum->view->thisGroup->group_desc)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->forum->view->thisGroup->group_desc."</div>\n";
 	$out = apply_filters('sph_GroupHeaderDescription', $out, $a);
 
 	if ($echo) {
@@ -167,31 +154,29 @@ function sp_GroupHeaderDescription($args='') {
 #	default values= 'open', 'closed'
 #
 # --------------------------------------------------------------------------------------
-function sp_GroupOpenClose($args='', $toolTipOpen='', $toolTipClose='') {
-	global $spThisGroup;
-	$defs = array('tagId' 		=> 'spGroupOpenClose%ID%',
-				  'tagClass' 	=> 'spIcon',
-				  'openIcon' 	=> 'sp_GroupOpen.png',
-				  'closeIcon' 	=> 'sp_GroupClose.png',
-				  'default'		=> 'open',
-				  'echo'		=> 1
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_GroupOpenClose_args', $a);
+function sp_GroupOpenClose($args = '', $toolTipOpen = '', $toolTipClose = '') {
+	$defs = array('tagId'     => 'spGroupOpenClose%ID%',
+	              'tagClass'  => 'spIcon',
+	              'openIcon'  => 'sp_GroupOpen.png',
+	              'closeIcon' => 'sp_GroupClose.png',
+	              'default'   => 'open',
+	              'echo'      => 1);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_GroupOpenClose_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$openIcon	= sp_paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($openIcon));
-	$closeIcon	= sp_paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($closeIcon));
-	$toolTipOpen	= esc_attr($toolTipOpen);
-	$toolTipClose	= esc_attr($toolTipClose);
-	$default	= esc_attr($default);
-	$echo		= (int) $echo;
+	$tagId        = esc_attr($tagId);
+	$tagClass     = esc_attr($tagClass);
+	$openIcon     = SP()->theme->paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($openIcon));
+	$closeIcon    = SP()->theme->paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($closeIcon));
+	$toolTipOpen  = esc_attr($toolTipOpen);
+	$toolTipClose = esc_attr($toolTipClose);
+	$default      = esc_attr($default);
+	$echo         = (int) $echo;
 
-	$tagId = str_ireplace('%ID%', $spThisGroup->group_id, $tagId);
-	$div = 'forumlist'.$spThisGroup->group_id;
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisGroup->group_id, $tagId);
+	$div   = 'groupViewForums'.SP()->forum->view->thisGroup->group_id;
 
 	if (isset($_COOKIE[$div])) $default = $_COOKIE[$div];
 
@@ -199,7 +184,7 @@ function sp_GroupOpenClose($args='', $toolTipOpen='', $toolTipClose='') {
 	($default == 'open') ? $tooltip = $toolTipClose : $tooltip = $toolTipOpen;
 
 	if ($default == 'closed') {
-		echo '<style type="text/css">#'.$div.' {display:none;}</style>';
+		echo '<style>#'.$div.' {display:none;}</style>';
 	}
 
 	$out = "<span id='$tagId' class='spOpenCloseGroup' data-target='$div' data-tag='$tagId' data-tclass='$tagClass' data-open='$openIcon' data-close='$closeIcon' data-toolopen='$toolTipOpen' data-toolclose='$toolTipClose'><img class='$tagClass' title='$tooltip' src='$icon' alt='' /></span>\n";
@@ -220,28 +205,28 @@ function sp_GroupOpenClose($args='', $toolTipOpen='', $toolTipClose='') {
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
-function sp_GroupHeaderMessage($args='') {
-	global $spThisGroup;
-	$defs = array('tagId' 		=> 'spGroupHeaderMessage%ID%',
-				  'tagClass' 	=> 'spHeaderMessage',
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_GroupHeaderMessage_args', $a);
+function sp_GroupHeaderMessage($args = '') {
+	$defs = array('tagId'    => 'spGroupHeaderMessage%ID%',
+	              'tagClass' => 'spHeaderMessage',
+				  'fontClass'=> '',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_GroupHeaderMessage_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$fontClass= esc_attr($fontClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisGroup->group_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisGroup->group_id, $tagId);
 
-	if ($get) return $spThisGroup->group_message;
+	if ($get) return SP()->forum->view->thisGroup->group_message;
 
-	$out = (empty($spThisGroup->group_message)) ? '' : "<div id='$tagId' class='$tagClass'>$spThisGroup->group_message</div>\n";
+	$out = (empty(SP()->forum->view->thisGroup->group_message)) ? '' : "<div id='$tagId' class='$tagClass'><span class='$fontClass'>".SP()->forum->view->thisGroup->group_message."</span></div>\n";
 	$out = apply_filters('sph_GroupHeaderMessage', $out, $a);
 
 	if ($echo) {
@@ -259,52 +244,49 @@ function sp_GroupHeaderMessage($args='') {
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
-function sp_GroupHeaderRSSButton($args='', $label='', $toolTip='') {
-	global $spThisUser, $spThisGroup;
+function sp_GroupHeaderRSSButton($args = '', $label = '', $toolTip = '') {
+	if (!SP()->forum->view->thisGroup->group_rss_active) return;
 
-	if (!$spThisGroup->group_rss_active) return;
-
-	$defs = array('tagId' 		=> 'spGroupHeaderRSSButton%ID%',
-				  'tagClass' 	=> 'spLink',
-				  'icon' 		=> 'sp_Feed.png',
-				  'iconClass'	=> 'spIcon',
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_GroupHeaderRSSButton_args', $a);
+	$defs = array('tagId'     => 'spGroupHeaderRSSButton%ID%',
+	              'tagClass'  => 'spLink',
+	              'icon'      => 'sp_Feed.png',
+	              'iconClass' => 'spIcon',
+	              'echo'      => 1,
+	              'get'       => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_GroupHeaderRSSButton_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$icon		= sanitize_file_name($icon);
-	$iconClass 	= esc_attr($iconClass);
-	$toolTip	= esc_attr($toolTip);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$icon      = sanitize_file_name($icon);
+	$iconClass = esc_attr($iconClass);
+	$toolTip   = esc_attr($toolTip);
+	$echo      = (int) $echo;
+	$get       = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisGroup->group_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisGroup->group_id, $tagId);
 
 	# Get or construct rss url
-	if (empty($spThisGroup->rss)) {
-		$rssOpt = sp_get_option('sfrss');
-		if ($rssOpt['sfrssfeedkey'] && isset($spThisUser->feedkey)) {
-            $rssUrl = sp_get_sfqurl(trailingslashit(sp_build_url('', '', 0, 0, 0, 1)).user_trailingslashit($spThisUser->feedkey)).'group='.$spThisGroup->group_id;
+	if (empty(SP()->forum->view->thisGroup->rss)) {
+		$rssOpt = SP()->options->get('sfrss');
+		if ($rssOpt['sfrssfeedkey'] && isset(SP()->user->thisUser->feedkey)) {
+			$rssUrl = SP()->spPermalinks->get_query_url(trailingslashit(SP()->spPermalinks->build_url('', '', 0, 0, 0, 1)).user_trailingslashit(SP()->user->thisUser->feedkey)).'group='.SP()->forum->view->thisGroup->group_id;
 		} else {
-            $sym = (strpos(sp_url(), '?')) ? '&' : '?';
-   			$rssUrl = trailingslashit(sp_build_url('', '', 0, 0, 0, 1)).sp_add_get()."group=$spThisGroup->group_id";
+			$sym    = (strpos(SP()->spPermalinks->get_url(), '?')) ? '&' : '?';
+			$rssUrl = trailingslashit(SP()->spPermalinks->build_url('', '', 0, 0, 0, 1)).SP()->spPermalinks->get_query_char()."group=".SP()->forum->view->thisGroup->group_id;
 		}
 	} else {
-		$rssUrl = $spThisGroup->rss;
+		$rssUrl = SP()->forum->view->thisGroup->rss;
 	}
 
 	if ($get) return $rssUrl;
 
 	$out = "<a class='$tagClass' id='$tagId' title='$toolTip' rel='nofollow' href='$rssUrl'>";
-	if (!empty($icon)) $out.= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-	if (!empty($label)) $out.= sp_filter_title_display($label);
-	$out.= "</a>\n";
+	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+	if (!empty($label)) $out .= SP()->displayFilters->title($label);
+	$out .= "</a>\n";
 	$out = apply_filters('sph_GroupHeaderRSSButton', $out, $a);
 
 	if ($echo) {
@@ -322,28 +304,26 @@ function sp_GroupHeaderRSSButton($args='', $label='', $toolTip='') {
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
-function sp_NoGroupMessage($args='', $deniedMessage='', $definedMessage='') {
-	global $spGroupView;
-	$defs = array('tagId'		=> 'spNoGroupMessage',
-				  'tagClass'	=> 'spMessage',
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_NoGroupMessage_args', $a);
+function sp_NoGroupMessage($args = '', $deniedMessage = '', $definedMessage = '') {
+	$defs = array('tagId'    => 'spNoGroupMessage',
+	              'tagClass' => 'spMessage',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_NoGroupMessage_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
 	# is Access denied to all groups
-	if ($spGroupView->groupViewStatus == 'no access') {
-		$m = sp_filter_title_display($deniedMessage);
-	} elseif ($spGroupView->groupViewStatus == 'no data') {
-		$m = sp_filter_title_display($definedMessage);
+	if (SP()->forum->view->groups->groupViewStatus == 'no access') {
+		$m = SP()->displayFilters->title($deniedMessage);
+	} elseif (SP()->forum->view->groups->groupViewStatus == 'no data') {
+		$m = SP()->displayFilters->title($definedMessage);
 	} else {
 		return;
 	}
@@ -376,57 +356,55 @@ function sp_NoGroupMessage($args='', $deniedMessage='', $definedMessage='') {
 #   Version: 5.5 added default locked forum icon
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexIcon($args='') {
-	global $spThisForum;
-	$defs = array('tagId' 		=> 'spForumIndexIcon%ID%',
-				  'tagClass' 	=> 'spRowIcon',
-				  'icon' 		=> 'sp_ForumIcon.png',
-				  'iconUnread'	=> 'sp_ForumIconPosts.png',
-				  'iconLocked'	=> 'sp_ForumIconLocked.png',
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexIcon_args', $a);
+function sp_ForumIndexIcon($args = '') {
+	$defs = array('tagId'      => 'spForumIndexIcon%ID%',
+	              'tagClass'   => 'spRowIcon',
+	              'icon'       => 'sp_ForumIcon.png',
+	              'iconUnread' => 'sp_ForumIconPosts.png',
+	              'iconLocked' => 'sp_ForumIconLocked.png',
+	              'echo'       => 1,
+	              'get'        => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexIcon_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
 
 	# Check if a custom icon
 	$path = SPTHEMEICONSDIR;
-	$url = SPTHEMEICONSURL;
-	if ($spThisForum->forum_status) {
+	$url  = SPTHEMEICONSURL;
+	if (SP()->forum->view->thisForum->forum_status) {
 		$fIcon = sanitize_file_name($iconLocked);
-        if (!empty($spThisForum->forum_icon_locked)) {
-    		$fIcon = sanitize_file_name($spThisForum->forum_icon_locked);
-    		$path = SFCUSTOMDIR;
-    		$url = SFCUSTOMURL;
-        }
-	} elseif ($spThisForum->unread) {
+		if (!empty(SP()->forum->view->thisForum->forum_icon_locked)) {
+			$fIcon = sanitize_file_name(SP()->forum->view->thisForum->forum_icon_locked);
+			$path  = SPCUSTOMDIR;
+			$url   = SPCUSTOMURL;
+		}
+	} elseif (SP()->forum->view->thisForum->unread) {
 		$fIcon = sanitize_file_name($iconUnread);
-		if (!empty($spThisForum->forum_icon_new)) {
-			$fIcon = sanitize_file_name($spThisForum->forum_icon_new);
-			$path = SFCUSTOMDIR;
-			$url = SFCUSTOMURL;
+		if (!empty(SP()->forum->view->thisForum->forum_icon_new)) {
+			$fIcon = sanitize_file_name(SP()->forum->view->thisForum->forum_icon_new);
+			$path  = SPCUSTOMDIR;
+			$url   = SPCUSTOMURL;
 		}
 	} else {
 		$fIcon = sanitize_file_name($icon);
-		if (!empty($spThisForum->forum_icon)) {
-			$fIcon = sanitize_file_name($spThisForum->forum_icon);
-			$path = SFCUSTOMDIR;
-			$url = SFCUSTOMURL;
+		if (!empty(SP()->forum->view->thisForum->forum_icon)) {
+			$fIcon = sanitize_file_name(SP()->forum->view->thisForum->forum_icon);
+			$path  = SPCUSTOMDIR;
+			$url   = SPCUSTOMURL;
 		}
 	}
 	if (!file_exists($path.$fIcon)) {
-		$fIcon = sp_paint_icon($tagClass, SPTHEMEICONSURL, sanitize_file_name($fIcon));
+		$fIcon = SP()->theme->paint_icon($tagClass, SPTHEMEICONSURL, sanitize_file_name($fIcon));
 	} else {
-		$fIcon = sp_paint_custom_icon($tagClass, $url.$fIcon);
+		$fIcon = SP()->theme->paint_custom_icon($tagClass, $url.$fIcon);
 	}
 	if ($get) return $fIcon;
 
@@ -448,32 +426,30 @@ function sp_ForumIndexIcon($args='') {
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexName($args='', $toolTip='') {
-	global $spThisForum;
-	$defs = array('tagId'    	=> 'spForumIndexName%ID%',
-			      'tagClass' 	=> 'spRowName',
-			      'truncate'	=> 0,
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexName_args', $a);
+function sp_ForumIndexName($args = '', $toolTip = '') {
+	$defs = array('tagId'    => 'spForumIndexName%ID%',
+	              'tagClass' => 'spRowName',
+	              'truncate' => 0,
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexName_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$truncate	= (int) $truncate;
-	$toolTip	= esc_attr($toolTip);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$truncate = (int) $truncate;
+	$toolTip  = esc_attr($toolTip);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
-	$toolTip = str_ireplace('%NAME%', htmlspecialchars($spThisForum->forum_name, ENT_QUOTES, SFCHARSET), $toolTip);
+	$tagId   = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
+	$toolTip = str_ireplace('%NAME%', htmlspecialchars(SP()->forum->view->thisForum->forum_name, ENT_QUOTES, SPCHARSET), $toolTip);
 
-	if ($get) return sp_truncate($spThisForum->forum_name, $truncate);
+	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisForum->forum_name, $truncate);
 
-	$out = "<a href='$spThisForum->forum_permalink' id='$tagId' class='$tagClass' title='$toolTip'>".sp_truncate($spThisForum->forum_name, $truncate)."</a>\n";
+	$out = "<a href='".SP()->forum->view->thisForum->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>".SP()->primitives->truncate_name(SP()->forum->view->thisForum->forum_name, $truncate)."</a>\n";
 	$out = apply_filters('sph_ForumIndexName', $out, $a);
 
 	if ($echo) {
@@ -491,28 +467,26 @@ function sp_ForumIndexName($args='', $toolTip='') {
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexDescription($args='') {
-	global $spThisForum;
-	$defs = array('tagId'    	=> 'spForumIndexDescription%ID%',
-			      'tagClass' 	=> 'spRowDescription',
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumDescription_args', $a);
+function sp_ForumIndexDescription($args = '') {
+	$defs = array('tagId'    => 'spForumIndexDescription%ID%',
+	              'tagClass' => 'spRowDescription',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumDescription_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
 
-	if ($get) return $spThisForum->forum_desc;
+	if ($get) return SP()->forum->view->thisForum->forum_desc;
 
-	$out = (empty($spThisForum->forum_desc)) ? '' : "<div id='$tagId' class='$tagClass'>$spThisForum->forum_desc</div>\n";
+	$out = (empty(SP()->forum->view->thisForum->forum_desc)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->forum->view->thisForum->forum_desc."</div>\n";
 	$out = apply_filters('sph_ForumIndexDescription', $out, $a);
 
 	if ($echo) {
@@ -530,48 +504,45 @@ function sp_ForumIndexDescription($args='') {
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexPageLinks($args='', $toolTip='') {
-	global $spThisForum, $spGlobals;
+function sp_ForumIndexPageLinks($args = '', $toolTip = '') {
+	$topics_per_page = SP()->core->forumData['display']['topics']['perpage'];
+	if ($topics_per_page >= SP()->forum->view->thisForum->topic_count) return '';
 
-	$topics_per_page = $spGlobals['display']['topics']['perpage'];
-	if ($topics_per_page >= $spThisForum->topic_count) return '';
-
-	$defs = array('tagId'    		=> 'spForumIndexPageLinks%ID%',
-				  'tagClass' 		=> 'spInRowPageLinks',
-				  'icon'			=> 'sp_ArrowRightSmall.png',
-				  'iconClass'		=> 'spIconSmall',
-				  'pageLinkClass'	=> 'spInRowForumPageLink',
-				  'showLinks'		=> 4,
-				  'echo'			=> 1,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexPageLinks_args', $a);
+	$defs = array('tagId'         => 'spForumIndexPageLinks%ID%',
+	              'tagClass'      => 'spInRowPageLinks',
+	              'icon'          => 'sp_ArrowRightSmall.png',
+	              'iconClass'     => 'spIconSmall',
+	              'pageLinkClass' => 'spInRowForumPageLink',
+	              'showLinks'     => 4,
+	              'echo'          => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexPageLinks_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$icon			= sanitize_file_name($icon);
-	$iconClass		= esc_attr($iconClass);
-	$pageLinkClass	= esc_attr($pageLinkClass);
-	$showLinks		= (int) $showLinks;
-	$toolTip		= esc_attr($toolTip);
-	$echo			= (int) $echo;
+	$tagId         = esc_attr($tagId);
+	$tagClass      = esc_attr($tagClass);
+	$icon          = sanitize_file_name($icon);
+	$iconClass     = esc_attr($iconClass);
+	$pageLinkClass = esc_attr($pageLinkClass);
+	$showLinks     = (int) $showLinks;
+	$toolTip       = esc_attr($toolTip);
+	$echo          = (int) $echo;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
 
-	$out = "<div id='$tagId' class='$tagClass'>\n";
-	$total_pages = ($spThisForum->topic_count / $topics_per_page);
-	if (!is_int($total_pages)) $total_pages=intval($total_pages) + 1;
+	$out         = "<div id='$tagId' class='$tagClass'>\n";
+	$total_pages = (SP()->forum->view->thisForum->topic_count / $topics_per_page);
+	if (!is_int($total_pages)) $total_pages = intval($total_pages) + 1;
 	($total_pages > $showLinks ? $max_count = $showLinks : $max_count = $total_pages);
 	for ($x = 1; $x <= $max_count; $x++) {
-		$out.= "<a class='$pageLinkClass' href='".sp_build_url($spThisForum->forum_slug, '', $x, 0)."' title='".str_ireplace('%PAGE%', $x, $toolTip)."'>$x</a>\n";
+		$out .= "<a class='$pageLinkClass' href='".SP()->spPermalinks->build_url(SP()->forum->view->thisForum->forum_slug, '', $x, 0)."' title='".str_ireplace('%PAGE%', $x, $toolTip)."'>$x</a>\n";
 	}
 	if ($total_pages > $showLinks) {
-		if (!empty($icon)) $out.= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out.= "<a class='$pageLinkClass' href='".sp_build_url($spThisForum->forum_slug, '', $total_pages, 0)."' title='".str_ireplace('%PAGE%', $total_pages, $toolTip)."'>$total_pages</a>\n";
+		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+		$out .= "<a class='$pageLinkClass' href='".SP()->spPermalinks->build_url(SP()->forum->view->thisForum->forum_slug, '', $total_pages, 0)."' title='".str_ireplace('%PAGE%', $total_pages, $toolTip)."'>$total_pages</a>\n";
 	}
-	$out.= "</div>\n";
+	$out .= "</div>\n";
 
 	$out = apply_filters('sph_ForumIndexPageLinks', $out, $a);
 
@@ -595,85 +566,82 @@ function sp_ForumIndexPageLinks($args='', $toolTip='') {
 #			Added tooltip parameter toolTipDeneied
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexStatusIcons($args='', $toolTipLock='', $toolTipPost='', $toolTipAdd='', $toolTipDenied='') {
-	global $spThisForum, $spGlobals, $spThisUser;
-
-	$defs = array('tagId' 			=> 'spForumIndexStatus%ID%',
-				  'tagClass' 		=> 'spStatusIcon',
-				  'showLock'		=> 1,
-				  'showNewPost'		=> 1,
-				  'showAddTopic'	=> 1,
-				  'showDenied'		=> 1,
-				  'iconLock'		=> 'sp_ForumStatusLock.png',
-				  'iconPost'		=> 'sp_ForumStatusPost.png',
-				  'iconAdd'		    => 'sp_ForumStatusAdd.png',
-				  'iconDenied'		=> 'sp_WriteDenied.png',
-                  'first'           => 0,
-				  'echo'			=> 1,
-				  'get'				=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexStatusIcons_args', $a);
+function sp_ForumIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPost = '', $toolTipAdd = '', $toolTipDenied = '') {
+	$defs = array('tagId'        => 'spForumIndexStatus%ID%',
+	              'tagClass'     => 'spStatusIcon',
+	              'showLock'     => 1,
+	              'showNewPost'  => 1,
+	              'showAddTopic' => 1,
+	              'showDenied'   => 1,
+	              'iconLock'     => 'sp_ForumStatusLock.png',
+	              'iconPost'     => 'sp_ForumStatusPost.png',
+	              'iconAdd'      => 'sp_ForumStatusAdd.png',
+	              'iconDenied'   => 'sp_WriteDenied.png',
+	              'first'        => 0,
+	              'echo'         => 1,
+	              'get'          => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexStatusIcons_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$showLock		= (int) $showLock;
-	$showNewPost	= (int) $showNewPost;
-	$showAddTopic	= (int) $showAddTopic;
-	$showDenied		= (int) $showDenied;
-	$toolTipPost	= esc_attr($toolTipPost);
-	$toolTipLock	= esc_attr($toolTipLock);
-	$toolTipAdd	    = esc_attr($toolTipAdd);
-	$toolTipDenied	= esc_attr($toolTipDenied);
-	$first   	    = (int) $first;
-	$echo			= (int) $echo;
-	$get			= (int) $get;
+	$tagId         = esc_attr($tagId);
+	$tagClass      = esc_attr($tagClass);
+	$showLock      = (int) $showLock;
+	$showNewPost   = (int) $showNewPost;
+	$showAddTopic  = (int) $showAddTopic;
+	$showDenied    = (int) $showDenied;
+	$toolTipPost   = esc_attr($toolTipPost);
+	$toolTipLock   = esc_attr($toolTipLock);
+	$toolTipAdd    = esc_attr($toolTipAdd);
+	$toolTipDenied = esc_attr($toolTipDenied);
+	$first         = (int) $first;
+	$echo          = (int) $echo;
+	$get           = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
 
-	if ($get) return $spThisForum->forum_status;
+	if ($get) return SP()->forum->view->thisForum->forum_status;
 
 	$out = "<div id='$tagId' class='$tagClass'>\n";
 
 	# Dislay if global lock down or forum locked
 	if ($showLock && !empty($iconLock)) {
-		if ($spGlobals['lockdown'] || $spThisForum->forum_status)  {
-			$out.= sp_paint_icon('', SPTHEMEICONSURL, sanitize_file_name($iconLock), $toolTipLock);
+		if (SP()->core->forumData['lockdown'] || SP()->forum->view->thisForum->forum_status) {
+			$out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, sanitize_file_name($iconLock), $toolTipLock);
 		}
 	}
 
 	# New Post Popup
 	if ($showNewPost && !empty($iconPost)) {
-		if ($spThisForum->unread) {
-			$toolTipPost = str_ireplace('%COUNT%', $spThisForum->unread, $toolTipPost);
-			$site = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=forum&amp;id=$spThisForum->forum_id&amp;first=$first", 'spUnreadPostsPopup');
-			$linkId = 'spNewPostPopup'.$spThisForum->forum_id;
-			$out.= "<a rel='nofollow' id='$linkId' class='spUnreadPostsPopup' data-popup='1' data-site='$site' data-label='$toolTipPost' data-width='600' data-height='0' data-align='0'>";
-			$out.= sp_paint_icon('', SPTHEMEICONSURL, sanitize_file_name($iconPost), $toolTipPost);
-			$out.= "</a>\n";
+		if (SP()->forum->view->thisForum->unread) {
+			$toolTipPost = str_ireplace('%COUNT%', SP()->forum->view->thisForum->unread, $toolTipPost);
+			$site        = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=forum&amp;id=".SP()->forum->view->thisForum->forum_id."&amp;first=$first", 'spUnreadPostsPopup');
+			$linkId      = 'spNewPostPopup'.SP()->forum->view->thisForum->forum_id;
+			$out .= "<a rel='nofollow' id='$linkId' class='spUnreadPostsPopup' data-popup='1' data-site='$site' data-label='$toolTipPost' data-width='600' data-height='0' data-align='0'>";
+			$out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, sanitize_file_name($iconPost), $toolTipPost);
+			$out .= "</a>\n";
 		}
 	}
 
-    # add new topic icon
-    if ($showAddTopic && !empty($iconAdd)) {
-		if (sp_get_auth('start_topics', $spThisForum->forum_id) && ((!$spThisForum->forum_status && !$spGlobals['lockdown']) || $spThisUser->admin)) {
-			$url = sp_build_url($spThisForum->forum_slug, '', 1, 0).sp_add_get().'new=topic';
-			$out.= "<a href='$url' title='$toolTipAdd'>\n";
-			$out.= sp_paint_icon('', SPTHEMEICONSURL, sanitize_file_name($iconAdd));
-			$out.= "</a>\n";
+	# add new topic icon
+	if ($showAddTopic && !empty($iconAdd)) {
+		if (SP()->auths->get('start_topics', SP()->forum->view->thisForum->forum_id) && ((!SP()->forum->view->thisForum->forum_status && !SP()->core->forumData['lockdown']) || SP()->user->thisUser->admin)) {
+			$url = SP()->spPermalinks->build_url(SP()->forum->view->thisForum->forum_slug, '', 1, 0).SP()->spPermalinks->get_query_char().'new=topic';
+			$out .= "<a href='$url' title='$toolTipAdd'>\n";
+			$out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, sanitize_file_name($iconAdd));
+			$out .= "</a>\n";
 		}
 	}
 
 	# Display if user not allowed to start topics
-	if ($showDenied && !$spThisForum->start_topics && !empty($toolTipDenied)) {
-		$out.= sp_paint_icon('', SPTHEMEICONSURL, sanitize_file_name($iconDenied), $toolTipDenied);
+	if ($showDenied && !SP()->forum->view->thisForum->start_topics && !empty($toolTipDenied)) {
+		$out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, sanitize_file_name($iconDenied), $toolTipDenied);
 	}
 
 	$out = apply_filters('sph_ForumIndexStatusIconsLast', $out, $a);
 
-	$out.= "</div>\n";
+	$out .= "</div>\n";
 
 	$out = apply_filters('sph_ForumIndexStatusIcons', $out, $a);
 
@@ -695,38 +663,35 @@ function sp_ForumIndexStatusIcons($args='', $toolTipLock='', $toolTipPost='', $t
 #	5.2.3	Added 'statusClass' to icons with no action
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexLockIcon($args='', $toolTip='') {
-	global $spThisForum, $spGlobals, $spThisUser;
-
-	$defs = array('tagId' 			=> 'spForumIndexLockIcon%ID%',
-				  'tagClass' 		=> 'spIcon',
-				  'statusClass'		=> 'spIconNoAction',
-				  'icon'			=> 'sp_ForumStatusLock.png',
-				  'echo'			=> 1,
-				  'get'				=> 0
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexLockIcon_args', $a);
+function sp_ForumIndexLockIcon($args = '', $toolTip = '') {
+	$defs = array('tagId'       => 'spForumIndexLockIcon%ID%',
+	              'tagClass'    => 'spIcon',
+	              'statusClass' => 'spIconNoAction',
+	              'icon'        => 'sp_ForumStatusLock.png',
+	              'echo'        => 1,
+	              'get'         => 0);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexLockIcon_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$statusClass	= esc_attr($statusClass);
-	$icon			= sanitize_file_name($icon);
-	$echo			= (int) $echo;
-	$get			= (int) $get;
+	$tagId       = esc_attr($tagId);
+	$tagClass    = esc_attr($tagClass);
+	$statusClass = esc_attr($statusClass);
+	$icon        = sanitize_file_name($icon);
+	$echo        = (int) $echo;
+	$get         = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
 
-	if ($get) return $spThisForum->forum_status;
-	$out='';
+	if ($get) return SP()->forum->view->thisForum->forum_status;
+	$out = '';
 
-	if ($spGlobals['lockdown'] || $spThisForum->forum_status)  {
+	if (SP()->core->forumData['lockdown'] || SP()->forum->view->thisForum->forum_status) {
 		$out = "<div id='$tagId' class='$tagClass $statusClass' title='$toolTip' >\n";
 		# Dislay if global lock down or forum locked
-		if (!empty($icon)) $out.= sp_paint_icon('', SPTHEMEICONSURL, $icon);
-		$out.= "</div>\n";
+		if (!empty($icon)) $out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, $icon);
+		$out .= "</div>\n";
 		$out = apply_filters('sph_ForumIndexLockIcon', $out, $a);
 	}
 
@@ -747,45 +712,34 @@ function sp_ForumIndexLockIcon($args='', $toolTip='') {
 #	New for 5.4.2
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexDeniedIcon($args='', $toolTip='') {
-	global $spThisForum, $spGlobals, $spThisUser;
-
-	$defs = array('tagId' 			=> 'spForumIndexDeniedIcon%ID%',
-				  'tagClass' 		=> 'spIcon',
-				  'statusClass'		=> 'spIconNoAction',
-				  'icon'			=> 'sp_WriteDenied.png',
-				  'echo'			=> 1,
-				  'get'				=> 0
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexDeniedIcon_args', $a);
+function sp_ForumIndexDeniedIcon($args = '', $toolTip = '') {
+	$defs = array('tagId'       => 'spForumIndexDeniedIcon%ID%',
+	              'tagClass'    => 'spIcon',
+	              'statusClass' => 'spIconNoAction',
+	              'icon'        => 'sp_WriteDenied.png',
+	              'echo'        => 1,
+	              'get'         => 0);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexDeniedIcon_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$statusClass	= esc_attr($statusClass);
-	$icon			= sanitize_file_name($icon);
-	$echo			= (int) $echo;
-	$get			= (int) $get;
+	$tagId       = esc_attr($tagId);
+	$tagClass    = esc_attr($tagClass);
+	$statusClass = esc_attr($statusClass);
+	$icon        = sanitize_file_name($icon);
+	$echo        = (int) $echo;
+	$get         = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
 
-	if ($get) return $spThisForum->start_topics;
-	$out='';
+	if ($get) return SP()->forum->view->thisForum->start_topics;
+	$out = '';
 
-	if ($spGlobals['lockdown'] || $spThisForum->forum_status)  {
+	if (!SP()->forum->view->thisForum->start_topics) {
 		$out = "<div id='$tagId' class='$tagClass $statusClass' title='$toolTip' >\n";
-		# Dislay if global lock down or forum locked
-		if (!empty($icon)) $out.= sp_paint_icon('', SPTHEMEICONSURL, $icon);
-		$out.= "</div>\n";
-		$out = apply_filters('sph_ForumIndexLockIcon', $out, $a);
-	}
-
-	if (!$spThisForum->start_topics) {
-		$out = "<div id='$tagId' class='$tagClass $statusClass' title='$toolTip' >\n";
-		if (!empty($icon)) $out.= sp_paint_icon('', SPTHEMEICONSURL, $icon);
-		$out.= "</div>\n";
+		if (!empty($icon)) $out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, $icon);
+		$out .= "</div>\n";
 		$out = apply_filters('sph_ForumIndexDeniedIcon', $out, $a);
 	}
 
@@ -804,34 +758,32 @@ function sp_ForumIndexDeniedIcon($args='', $toolTip='') {
 #	Version: 5.1
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexAddIcon($args='', $toolTip='') {
-	global $spThisForum, $spGlobals, $spThisUser;
-
-	$defs = array('tagId' 			=> 'spForumIndexAddIcon%ID%',
-				  'tagClass' 		=> 'spIcon',
-				  'icon'			=> 'sp_ForumStatusAdd.png',
-				  'echo'			=> 1,
-				  'get'				=> 0
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexAddIcon_args', $a);
+function sp_ForumIndexAddIcon($args = '', $toolTip = '', $label = '') {
+	$defs = array('tagId'    => 'spForumIndexAddIcon%ID%',
+	              'tagClass' => 'spIcon',
+	              'icon'     => 'sp_ForumStatusAdd.png',
+	              'echo'     => 1,
+	              'get'      => 0);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexAddIcon_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$icon			= sanitize_file_name($icon);
-	$echo			= (int) $echo;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$icon     = sanitize_file_name($icon);
+	$echo     = (int) $echo;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
-	$out='';
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
+	$out   = '';
 
-    # add new topic icon
-	if (sp_get_auth('start_topics', $spThisForum->forum_id) && ((!$spThisForum->forum_status && !$spGlobals['lockdown']) || $spThisUser->admin)) {
-		$url = sp_build_url($spThisForum->forum_slug, '', 1, 0).sp_add_get().'new=topic';
-		$out.= "<a id='$tagId' class='$tagClass' title='$toolTip' href='$url'>\n";
-		if (!empty($icon)) $out.= sp_paint_icon('', SPTHEMEICONSURL, "$icon");
-		$out.= "</a>\n";
+	# add new topic icon
+	if (SP()->auths->get('start_topics', SP()->forum->view->thisForum->forum_id) && ((!SP()->forum->view->thisForum->forum_status && !SP()->core->forumData['lockdown']) || SP()->user->thisUser->admin)) {
+		$url = SP()->spPermalinks->build_url(SP()->forum->view->thisForum->forum_slug, '', 1, 0).SP()->spPermalinks->get_query_char().'new=topic';
+		$out.= "<a id ='$tagId' class='$tagClass' title='$toolTip' href='$url'>\n";
+		if (!empty($icon)) $out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, "$icon");
+		if (!empty($label)) $out .= SP()->displayFilters->title($label);
+		$out.= "</a>";
 		$out = apply_filters('sph_ForumIndexAddIcon', $out, $a);
 	}
 
@@ -850,54 +802,51 @@ function sp_ForumIndexAddIcon($args='', $toolTip='') {
 #	Version: 5.2
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexPostsIcon($args='', $toolTip='') {
-	global $spThisForum, $spGlobals, $spThisUser;
+function sp_ForumIndexPostsIcon($args = '', $toolTip = '') {
+	if (!SP()->forum->view->thisForum->unread) return;
 
-	if (!$spThisForum->unread) return;
-
-	$defs = array('tagId' 		=> 'spForumIndexPostsIcon%ID%',
-				  'tagClass' 	=> 'spIcon',
-				  'icon'		=> 'sp_ForumStatusPost.png',
-				  'openIcon' 	=> 'sp_GroupOpen.png',
-				  'closeIcon' 	=> 'sp_GroupClose.png',
-				  'popup'		=> 1,
-                  'first'       => 0,
-				  'echo'		=> 1,
-				  'get'			=> 0
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexPostsIcon_args', $a);
+	$defs = array('tagId'     => 'spForumIndexPostsIcon%ID%',
+	              'tagClass'  => 'spIcon',
+	              'icon'      => 'sp_ForumStatusPost.png',
+	              'openIcon'  => 'sp_GroupOpen.png',
+	              'closeIcon' => 'sp_GroupClose.png',
+	              'popup'     => 1,
+	              'first'     => 0,
+	              'echo'      => 1,
+	              'get'       => 0);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexPostsIcon_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$popupIcon		= sp_paint_icon('', SPTHEMEICONSURL, sanitize_file_name($icon));
-	$openIcon		= sp_paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($openIcon));
-	$closeIcon		= sp_paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($closeIcon));
-	$popup			= (int) $popup;
-	$first   	    = (int) $first;
-	$echo			= (int) $echo;
-	$get			= (int) $get;
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$popupIcon = SP()->theme->paint_icon('', SPTHEMEICONSURL, sanitize_file_name($icon));
+	$openIcon  = SP()->theme->paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($openIcon));
+	$closeIcon = SP()->theme->paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($closeIcon));
+	$popup     = (int) $popup;
+	$first     = (int) $first;
+	$echo      = (int) $echo;
+	$get       = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
-	$out='';
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
+	$out   = '';
 
-    # show new posts icon
-	if ($spThisForum->unread) {
-		$toolTip = str_ireplace('%COUNT%', $spThisForum->unread, $toolTip);
-		$site = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=forum&amp;id=$spThisForum->forum_id&amp;popup=$popup&amp;first=$first", 'spUnreadPostsPopup');
-		$linkId = 'spNewPostPopup'.$spThisForum->forum_id;
-		$target = 'spInlineTopics'.$spThisForum->forum_id;
-		$spinner = SFCOMMONIMAGES.'working.gif';
+	# show new posts icon
+	if (SP()->forum->view->thisForum->unread) {
+		$toolTip = str_ireplace('%COUNT%', SP()->forum->view->thisForum->unread, $toolTip);
+		$site    = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=forum&amp;id=".SP()->forum->view->thisForum->forum_id."&amp;popup=$popup&amp;first=$first", 'spUnreadPostsPopup');
+		$linkId  = 'spNewPostPopup'.SP()->forum->view->thisForum->forum_id;
+		$target  = 'spInlineTopics'.SP()->forum->view->thisForum->forum_id;
+		$spinner = SPCOMMONIMAGES.'working.gif';
 		if ($popup) {
-            $out.= "<a id='$tagId' class='$tagClass spUnreadPostsPopup' title='$toolTip' rel='nofollow' id='$linkId' data-popup='1' data-site='$site' data-label='$toolTip' data-width='600' data-height='0' data-align='0'>";
-			$out.= $popupIcon;
+			$out .= "<a id='$tagId' class='$tagClass spUnreadPostsPopup' title='$toolTip' rel='nofollow' id='$linkId' data-popup='1' data-site='$site' data-label='$toolTip' data-width='600' data-height='0' data-align='0'>";
+			$out .= $popupIcon;
 		} else {
-            $out.= "<a id='$tagId' class='$tagClass spUnreadPostsPopup' title='$toolTip' rel='nofollow' id='$linkId' data-popup='0' data-site='$site' data-target='$target' data-spinner='$spinner' data-id='$tagId' data-open='$openIcon' data-close='$closeIcon'>";
-			$out.= "<img src='$openIcon' alt=''>";
+			$out .= "<a id='$tagId' class='$tagClass spUnreadPostsPopup' title='$toolTip' rel='nofollow' id='$linkId' data-popup='0' data-site='$site' data-target='$target' data-spinner='$spinner' data-id='$tagId' data-open='$openIcon' data-close='$closeIcon'>";
+			$out .= "<img src='$openIcon' alt=''>";
 		}
-		$out.= "</a>\n";
+		$out .= "</a>\n";
 		$out = apply_filters('sph_ForumIndexPostsIcon', $out, $a);
 	}
 
@@ -908,7 +857,6 @@ function sp_ForumIndexPostsIcon($args='', $toolTip='') {
 	}
 }
 
-
 # --------------------------------------------------------------------------------------
 #
 #	sp_ForumIndexInlinePosts()
@@ -918,8 +866,7 @@ function sp_ForumIndexPostsIcon($args='', $toolTip='') {
 #
 # --------------------------------------------------------------------------------------
 function sp_ForumIndexInlinePosts() {
-	global $spThisForum;
-	echo "<div class='spInlineTopics' id='spInlineTopics".$spThisForum->forum_id."' style='display:none;'></div>";
+	echo "<div class='spInlineTopics' id='spInlineTopics".SP()->forum->view->thisForum->forum_id."' style='display:none;'></div>";
 	sp_InsertBreak();
 }
 
@@ -931,45 +878,43 @@ function sp_ForumIndexInlinePosts() {
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexPostCount($args='', $label='', $rtlLabel='') {
-	global $spThisForum;
-	$defs = array('tagId'    		=> 'spForumIndexPostCount%ID%',
-				  'tagClass' 		=> 'spInRowCount',
-				  'labelClass'		=> 'spInRowLabel',
-				  'numberClass'		=> 'spInRowNumber',
-				  'includeSubs'		=> 1,
-				  'stack'			=> 0,
-				  'echo'			=> 1,
-				  'get'				=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexPostCount_args', $a);
+function sp_ForumIndexPostCount($args = '', $label = '', $rtlLabel = '') {
+	$defs = array('tagId'       => 'spForumIndexPostCount%ID%',
+	              'tagClass'    => 'spInRowCount',
+	              'labelClass'  => 'spInRowLabel',
+	              'numberClass' => 'spInRowNumber',
+	              'includeSubs' => 1,
+	              'stack'       => 0,
+	              'echo'        => 1,
+	              'get'         => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexPostCount_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$labelClass		= esc_attr($labelClass);
-	$numberClass	= esc_attr($numberClass);
-	$includeSubs	= (int) $includeSubs;
-	$stack			= (int) $stack;
-	$echo			= (int) $echo;
-	$get			= (int) $get;
+	$tagId       = esc_attr($tagId);
+	$tagClass    = esc_attr($tagClass);
+	$labelClass  = esc_attr($labelClass);
+	$numberClass = esc_attr($numberClass);
+	$includeSubs = (int) $includeSubs;
+	$stack       = (int) $stack;
+	$echo        = (int) $echo;
+	$get         = (int) $get;
 
-	if ($includeSubs && $spThisForum->forum_id_sub == 0) $includeSubs = 0;
+	if ($includeSubs && SP()->forum->view->thisForum->forum_id_sub == 0) $includeSubs = 0;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
-	($stack ? $att='<br />' : $att= ' ');
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
+	($stack ? $att = '<br />' : $att = ' ');
 
-	$data = ($includeSubs ? $spThisForum->post_count_sub : $spThisForum->post_count);
+	$data = ($includeSubs ? SP()->forum->view->thisForum->post_count_sub : SP()->forum->view->thisForum->post_count);
 	if ($get) return $data;
 
 	if (is_rtl() && $data == 1) $label = $rtlLabel;
 
 	$out = "<div id='$tagId' class='$tagClass'>\n";
-	$out.= "<span class='$labelClass'>".sp_filter_title_display($label)."$att</span>\n";
-	$out.= "<span class='$numberClass'>$data</span>\n";
-	$out.= "</div>\n";
+	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>\n";
+	$out .= "<span class='$numberClass'>$data</span>\n";
+	$out .= "</div>\n";
 	$out = apply_filters('sph_ForumIndexPostCount', $out, $a);
 
 	if ($echo) {
@@ -989,45 +934,43 @@ function sp_ForumIndexPostCount($args='', $label='', $rtlLabel='') {
 #	5.5.1 = $rtlLabel parameter added
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexTopicCount($args='', $label='', $rtlLabel='') {
-	global $spThisForum;
-	$defs = array('tagId'    		=> 'spForumIndexTopicCount%ID%',
-				  'tagClass' 		=> 'spInRowCount',
-				  'labelClass'		=> 'spInRowLabel',
-				  'numberClass'		=> 'spInRowNumber',
-				  'includeSubs'		=> 1,
-				  'stack'			=> 0,
-				  'echo'			=> 1,
-				  'get'				=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexTopicCount_args', $a);
+function sp_ForumIndexTopicCount($args = '', $label = '', $rtlLabel = '') {
+	$defs = array('tagId'       => 'spForumIndexTopicCount%ID%',
+	              'tagClass'    => 'spInRowCount',
+	              'labelClass'  => 'spInRowLabel',
+	              'numberClass' => 'spInRowNumber',
+	              'includeSubs' => 1,
+	              'stack'       => 0,
+	              'echo'        => 1,
+	              'get'         => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexTopicCount_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$labelClass		= esc_attr($labelClass);
-	$numberClass	= esc_attr($numberClass);
-	$includeSubs	= (int) $includeSubs;
-	$stack			= (int) $stack;
-	$echo			= (int) $echo;
-	$get			= (int) $get;
+	$tagId       = esc_attr($tagId);
+	$tagClass    = esc_attr($tagClass);
+	$labelClass  = esc_attr($labelClass);
+	$numberClass = esc_attr($numberClass);
+	$includeSubs = (int) $includeSubs;
+	$stack       = (int) $stack;
+	$echo        = (int) $echo;
+	$get         = (int) $get;
 
-	if ($includeSubs && $spThisForum->forum_id_sub == 0) $includeSubs = 0;
+	if ($includeSubs && SP()->forum->view->thisForum->forum_id_sub == 0) $includeSubs = 0;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
-	($stack ? $att='<br />' : $att= ' ');
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
+	($stack ? $att = '<br />' : $att = ' ');
 
-	$data = ($includeSubs ? $spThisForum->topic_count_sub : $spThisForum->topic_count);
+	$data = ($includeSubs ? SP()->forum->view->thisForum->topic_count_sub : SP()->forum->view->thisForum->topic_count);
 	if ($get) return $data;
 
 	if (is_rtl() && $data == 1) $label = $rtlLabel;
 
 	$out = "<div id='$tagId' class='$tagClass'>\n";
-	$out.= "<span class='$labelClass'>".sp_filter_title_display($label)."$att</span>\n";
-	$out.= "<span class='$numberClass'>$data</span>\n";
-	$out.= "</div>\n";
+	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>\n";
+	$out .= "<span class='$numberClass'>$data</span>\n";
+	$out .= "</div>\n";
 	$out = apply_filters('sph_ForumIndexTopicCount', $out, $a);
 
 	if ($echo) {
@@ -1045,155 +988,163 @@ function sp_ForumIndexTopicCount($args='', $label='', $rtlLabel='') {
 #	Version: 5.0
 #
 #	Changelog:
-#	5.1 - 'Order' argument added
-#	5.1	- 'ItemBreak' argument added
+#	5.1.0 - 'Order' argument added
+#	5.1.0 - 'ItemBreak' argument added
 #	5.2.3 - 'L' Linebreak - added to Order argument
-#	5.5.1 = $rtlLabel parameter added
+#	5.5.1 - $rtlLabel parameter added
+#	6.0.0 - Added 'icon' and 'iconclass' to bring into line with forum view
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexLastPost($args='', $lastPostLabel='', $noTopicsLabel='') {
-	global $spThisForum;
-
-	$defs = array('tagId'    		=> 'spForumIndexLastPost%ID%',
-				  'tagClass' 		=> 'spInRowPostLink',
-				  'labelClass'		=> 'spInRowLabel',
-				  'infoClass'		=> 'spInRowInfo',
-				  'linkClass'		=> 'spInRowLastPostLink',
-				  'includeSubs'		=> 1,
-				  'tip'   			=> 1,
-				  'order'			=> 'UTD',
-				  'nicedate'		=> 1,
-				  'date'  			=> 0,
-				  'time'  			=> 0,
-				  'stackdate'		=> 0,
-				  'user'  			=> 1,
-				  'truncate'		=> 0,
-				  'truncateUser'	=> 0,
-				  'itemBreak'		=> '<br />',
-				  'echo'			=> 1,
-				  'get'				=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexLastPost_args', $a);
+function sp_ForumIndexLastPost($args = '', $lastPostLabel = '', $noTopicsLabel = '') {
+	$defs = array('tagId'        => 'spForumIndexLastPost%ID%',
+	              'tagClass'     => 'spInRowPostLink',
+	              'labelClass'   => 'spInRowLabel',
+	              'infoClass'    => 'spInRowInfo',
+	              'linkClass'    => 'spInRowLastPostLink',
+	              'iconClass'    => 'spIcon',
+	              'icon'         => 'sp_ArrowRight.png',
+	              'includeSubs'  => 1,
+	              'tip'          => 1,
+	              'order'        => 'UTD',
+	              'nicedate'     => 1,
+	              'date'         => 0,
+	              'time'         => 0,
+	              'stackdate'    => 0,
+	              'user'         => 1,
+	              'truncate'     => 0,
+	              'truncateUser' => 0,
+	              'itemBreak'    => '<br />',
+	              'echo'         => 1,
+	              'get'          => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexLastPost_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$labelClass		= esc_attr($labelClass);
-	$infoClass		= esc_attr($infoClass);
-	$linkClass		= esc_attr($linkClass);
-	$includeSubs	= (int) $includeSubs;
-	$tip			= (int) $tip;
-	$order			= esc_attr($order);
-	$nicedate		= (int) $nicedate;
-	$date			= (int) $date;
-	$time			= (int) $time;
-	$stackdate		= (int) $stackdate;
-	$user			= (int) $user;
-	$truncate		= (int) $truncate;
-	$truncateUser	= (int) $truncateUser;
-	$echo			= (int) $echo;
-	$get			= (int) $get;
+	$tagId        = esc_attr($tagId);
+	$tagClass     = esc_attr($tagClass);
+	$labelClass   = esc_attr($labelClass);
+	$infoClass    = esc_attr($infoClass);
+	$linkClass    = esc_attr($linkClass);
+	$iconClass    = esc_attr($iconClass);
+	$icon         = sanitize_file_name($icon);
+	$includeSubs  = (int) $includeSubs;
+	$tip          = (int) $tip;
+	$order        = esc_attr($order);
+	$nicedate     = (int) $nicedate;
+	$date         = (int) $date;
+	$time         = (int) $time;
+	$stackdate    = (int) $stackdate;
+	$user         = (int) $user;
+	$truncate     = (int) $truncate;
+	$truncateUser = (int) $truncateUser;
+	$echo         = (int) $echo;
+	$get          = (int) $get;
 
-	if ($includeSubs && $spThisForum->forum_id_sub == 0) $includeSubs = 0;
-	$postCount = ($includeSubs ? $spThisForum->post_count_sub : $spThisForum->post_count);
+	if ($includeSubs && SP()->forum->view->thisForum->forum_id_sub == 0) $includeSubs = 0;
+	$postCount = ($includeSubs ? SP()->forum->view->thisForum->post_count_sub : SP()->forum->view->thisForum->post_count);
 
 	if ($postCount) {
-    	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
-    	$posttip = ($includeSubs ? $spThisForum->post_tip_sub : $spThisForum->post_tip);
-    	if ($tip && !empty($posttip)) {
-    		$title = "title='$posttip'";
-    		$linkClass.= '';
-    	} else {
-    		$title='';
-    	}
+		$tagId   = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
+		$posttip = ($includeSubs ? SP()->forum->view->thisForum->post_tip_sub : SP()->forum->view->thisForum->post_tip);
+		if ($tip && !empty($posttip)) {
+			$title = "title='$posttip'";
+			$linkClass .= '';
+		} else {
+			$title = '';
+		}
 
-    	($stackdate ? $dlb='<br />' : $dlb=' - ');
+		($stackdate ? $dlb = '<br />' : $dlb = ' - ');
 
-    	# user
-    	$poster = ($includeSubs ? sp_build_name_display($spThisForum->user_id_sub, sp_truncate($spThisForum->display_name_sub, $truncateUser)) : sp_build_name_display($spThisForum->user_id, sp_truncate($spThisForum->display_name, $truncateUser)));
-    	if (empty($poster)) $poster = ($includeSubs ? sp_truncate($spThisForum->guest_name_sub, $truncateUser) : sp_truncate($spThisForum->guest_name, $truncateUser));
+		# user
+		$poster = ($includeSubs ? SP()->user->name_display(SP()->forum->view->thisForum->user_id_sub, SP()->primitives->truncate_name(SP()->forum->view->thisForum->display_name_sub, $truncateUser)) : SP()->user->name_display(SP()->forum->view->thisForum->user_id, SP()->primitives->truncate_name(SP()->forum->view->thisForum->display_name, $truncateUser)));
+		if (empty($poster)) $poster = ($includeSubs ? SP()->primitives->truncate_name(SP()->forum->view->thisForum->guest_name_sub, $truncateUser) : SP()->primitives->truncate_name(SP()->forum->view->thisForum->guest_name, $truncateUser));
 
-    	# other items
-    	$permalink = ($includeSubs ? $spThisForum->post_permalink_sub : $spThisForum->post_permalink);
-    	$topicname = ($includeSubs ? sp_truncate($spThisForum->topic_name_sub, $truncate) : sp_truncate($spThisForum->topic_name, $truncate));
-    	$postdate  = ($includeSubs ? $spThisForum->post_date_sub : $spThisForum->post_date);
+		# other items
+		$permalink = ($includeSubs ? SP()->forum->view->thisForum->post_permalink_sub : SP()->forum->view->thisForum->post_permalink);
+		$topicname = ($includeSubs ? SP()->primitives->truncate_name(SP()->forum->view->thisForum->topic_name_sub, $truncate) : SP()->primitives->truncate_name(SP()->forum->view->thisForum->topic_name, $truncate));
+		$postdate  = ($includeSubs ? SP()->forum->view->thisForum->post_date_sub : SP()->forum->view->thisForum->post_date);
 
-    	if ($get) {
-    		$getData = new stdClass();
-    		$getData->permalink = $permalink;
-    		$getData->topic_name = $topicname;
-    		$getData->post_date = $postdate;
-    		$getData->user = $poster;
-    		return $getData;
-    	}
+		if ($get) {
+			$getData             = new stdClass();
+			$getData->permalink  = $permalink;
+			$getData->topic_name = $topicname;
+			$getData->post_date  = $postdate;
+			$getData->user       = $poster;
 
-    	$U = $poster;
-    	$T = "<a class='$linkClass' $title href='$permalink'>$topicname</a>";
-    	if ($nicedate) {
-    		$D = sp_nicedate($postdate);
-    	} else {
-    		if ($date) {
-    			$D = sp_date('d', $postdate);
-    			if ($time) $D.= $dlb.sp_date('t', $postdate);
-    		}
-    	}
-    } else {
-    	if ($get) {
-    		$getData = new stdClass();
-    		return $getData;
-    	}
-    }
+			return $getData;
+		}
+
+		$U = $poster;
+		$T = "<a class='$linkClass' $title href='$permalink'>$topicname</a>";
+		if ($nicedate) {
+			$D = SP()->dateTime->nice_date($postdate);
+		} else {
+			if ($date) {
+				$D = SP()->dateTime->format_date('d', $postdate);
+				if ($time) $D .= $dlb.SP()->dateTime->format_date('t', $postdate);
+			}
+		}
+	} else {
+		if ($get) {
+			$getData = new stdClass();
+
+			return $getData;
+		}
+	}
 
 	$out = "<div id='$tagId' class='$tagClass'>\n";
 	if ($postCount) {
-		$out.= "<span class='$labelClass'>".sp_filter_title_display($lastPostLabel)." \n";
-		for ($x=0; $x<strlen($order); $x++) {
+		$out .= "<span class='$labelClass'>".SP()->displayFilters->title($lastPostLabel)." \n";
+		$out .= "<a class='$linkClass' $title href='$permalink'>\n";
+		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+		$out .= "</a>\n";
+
+		for ($x = 0; $x < strlen($order); $x++) {
 			$i = substr($order, $x, 1);
 			switch ($i) {
 				case 'U':
 					if ($user) {
-						if ($x != 0) $out.= "<span class='$labelClass'>";
-						$out.= $U. "</span>\n";
+						if ($x != 0) $out .= "<span class='$labelClass'>";
+						$out .= $U."</span>\n";
 					}
-					if ($x != (strlen($order)-1)) {
-						if (substr($order, $x+1, 1) != 'L') {
-							$out.= "<span class='$labelClass'>$itemBreak</span>";
+					if ($x != (strlen($order) - 1)) {
+						if (substr($order, $x + 1, 1) != 'L') {
+							$out .= "<span class='$labelClass'>$itemBreak</span>";
 						}
 					}
 					break;
 				case 'T':
-					if ($x == 0) $out.= $itemBreak."</span>";
-					$out.= "<span class='$linkClass'>";
+					if ($x == 0) $out .= $itemBreak."</span>";
+					$out .= "<span class='$linkClass'>";
 
-					$out.= $T. "</span>\n";
-					if ($x != (strlen($order)-1)) {
-						if (substr($order, $x+1, 1) != 'L') {
-							$out.= "<span class='$labelClass'>$itemBreak</span>";
+					$out .= $T."</span>\n";
+					if ($x != (strlen($order) - 1)) {
+						if (substr($order, $x + 1, 1) != 'L') {
+							$out .= "<span class='$labelClass'>$itemBreak</span>";
 						}
 					}
 					break;
 				case 'D':
-					if ($x != 0) $out.= "<span class='$labelClass'>";
-					$out.= $D. "</span>\n";
-					if ($x != (strlen($order)-1)) {
-						if (substr($order, $x+1, 1) != 'L') {
-							$out.= "<span class='$labelClass'>$itemBreak</span>";
+					if ($x != 0) $out .= "<span class='$labelClass'>";
+					$out .= $D."</span>\n";
+					if ($x != (strlen($order) - 1)) {
+						if (substr($order, $x + 1, 1) != 'L') {
+							$out .= "<span class='$labelClass'>$itemBreak</span>";
 						}
 					}
 					break;
 				case 'L':
-					$out.= '<br />';
+					$out .= '<br />';
 					break;
 			}
 		}
 	} else {
-		$out.= "<span class='$labelClass'>".sp_filter_title_display($noTopicsLabel)." \n";
-		$out.= "</span>\n";
+		$out .= "<span class='$labelClass'>".SP()->displayFilters->title($noTopicsLabel)." \n";
+		$out .= "</span>\n";
 	}
 
-	$out.= "</div>\n";
+	$out .= "</div>\n";
 	$out = apply_filters('sph_ForumIndexLastPost', $out, $a);
 
 	if ($echo) {
@@ -1211,53 +1162,53 @@ function sp_ForumIndexLastPost($args='', $lastPostLabel='', $noTopicsLabel='') {
 #	Version: 5.2
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexModerators($args='', $label='') {
-	global $spGlobals, $spThisForum;
-	$defs = array('tagId'    		=> 'spForumModerators%ID%',
-				  'tagClass' 		=> 'spForumModeratorList',
-				  'listClass'		=> 'spInRowLabel',
-				  'labelClass'		=> 'spRowDescription',
-                  'showEmpty'       => 0,
-				  'echo'			=> 1,
-				  'get'				=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexModerators_args', $a);
+function sp_ForumIndexModerators($args = '', $label = '') {
+	$defs = array('tagId'      => 'spForumModerators%ID%',
+	              'tagClass'   => 'spForumModeratorList',
+	              'listClass'  => 'spInRowLabel',
+	              'labelClass' => 'spRowDescription',
+	              'showEmpty'  => 0,
+	              'echo'       => 1,
+	              'get'        => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexModerators_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$listClass		= esc_attr($listClass);
-	$labelClass		= esc_attr($labelClass);
-	$showEmpty		= (int) $showEmpty;
-	$echo			= (int) $echo;
-	$get			= (int) $get;
+	$tagId      = esc_attr($tagId);
+	$tagClass   = esc_attr($tagClass);
+	$listClass  = esc_attr($listClass);
+	$labelClass = esc_attr($labelClass);
+	$showEmpty  = (int) $showEmpty;
+	$echo       = (int) $echo;
+	$get        = (int) $get;
 
-	$tagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
 
-	$mods = $spGlobals['forum_moderators']['users'][$spThisForum->forum_id];
+	$mods_data = SP()->meta->get_value('forum_moderators', 'users');
+	$mods      = $mods_data[SP()->forum->view->thisForum->forum_id];
+
 	if ($get) return $mods;
 
-    # build mods list with name display
-    if (!empty($mods)) {
-        $modList = '';
-        $first = true;
-        foreach ($mods as $mod) {
-            if (!$first) $modList.= ', ';
-            $first = false;
-            $modList.= sp_build_name_display($mod['user_id'], $mod['display_name']);
-        }
-    } else if ($showEmpty) {
-        $modList = 'none';
-    } else {
-        return '';
-    }
+	# build mods list with name display
+	if (!empty($mods)) {
+		$modList = '';
+		$first   = true;
+		foreach ($mods as $mod) {
+			if (!$first) $modList .= ', ';
+			$first = false;
+			$modList .= SP()->user->name_display($mod['user_id'], $mod['display_name']);
+		}
+	} else if ($showEmpty) {
+		$modList = 'none';
+	} else {
+		return '';
+	}
 
 	$out = "<div id='$tagId' class='$tagClass'>\n";
-	$out.= "<span class='$labelClass'>".sp_filter_title_display($label)."</span>\n";
-	$out.= "<span class='$listClass'>$modList</span>\n";
-	$out.= "</div>\n";
+	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."</span>\n";
+	$out .= "<span class='$listClass'>$modList</span>\n";
+	$out .= "</div>\n";
 	$out = apply_filters('sph_ForumIndexModerators', $out, $a);
 
 	if ($echo) {
@@ -1278,98 +1229,99 @@ function sp_ForumIndexModerators($args='', $label='') {
 #	5.4.2 - 'iconWidth' argument added
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexSubForums($args='', $label='', $toolTip='') {
-	global $spThisForum, $spThisForumSubs;
+function sp_ForumIndexSubForums($args = '', $label = '', $toolTip = '') {
+	if (empty(SP()->forum->view->thisForumSubs)) return;
 
-	if (empty($spThisForumSubs)) return;
-
-	$defs = array('tagId'    		=> 'spForumIndexSubForums%ID%',
-				  'tagClass' 		=> 'spInRowSubForums',
-				  'labelClass'		=> 'spInRowLabel',
-				  'linkClass'		=> 'spInRowSubForumlink',
-				  'icon'			=> 'sp_SubForumIcon.png',
-				  'unreadIcon'		=> 'sp_SubForumIcon.png',
-				  'iconClass'		=> 'spIconSmall',
-				  'iconWidth'		=> 20,
-				  'topicCount'		=> 1,
-				  'allNested'		=> 1,
-				  'stack'			=> 0,
-				  'truncate'		=> 0,
-				  'echo'			=> 1,
-				  'get'				=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_ForumIndexSubForums_args', $a);
+	$defs = array('tagId'      => 'spForumIndexSubForums%ID%',
+	              'tagClass'   => 'spInRowSubForums',
+	              'labelClass' => 'spInRowLabel',
+	              'linkClass'  => 'spInRowSubForumlink',
+	              'icon'       => 'sp_SubForumIcon.png',
+	              'unreadIcon' => 'sp_SubForumIcon.png',
+	              'iconClass'  => 'spIconSmall',
+	              'iconWidth'  => 20,
+	              'topicCount' => 1,
+	              'allNested'  => 1,
+	              'stack'      => 0,
+				  'rule'	   => 0,
+	              'truncate'   => 0,
+	              'echo'       => 1,
+	              'get'        => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexSubForums_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			= esc_attr($tagId);
-	$tagClass		= esc_attr($tagClass);
-	$labelClass		= esc_attr($labelClass);
-	$linkClass		= esc_attr($linkClass);
-	$icon			= sanitize_file_name($icon);
-	$unreadIcon		= sanitize_file_name($unreadIcon);
-	$iconClass		= esc_attr($iconClass);
-	$iconWidth		= (int) $iconWidth;
-	$topicCount		= (int) $topicCount;
-	$allNested		= (int) $allNested;
-	$stack			= (int) $stack;
-	$truncate		= (int) $truncate;
-	$echo			= (int) $echo;
-	$get			= (int) $get;
-	$toolTip		= esc_attr($toolTip);
+	$tagId      = esc_attr($tagId);
+	$tagClass   = esc_attr($tagClass);
+	$labelClass = esc_attr($labelClass);
+	$linkClass  = esc_attr($linkClass);
+	$icon       = sanitize_file_name($icon);
+	$unreadIcon = sanitize_file_name($unreadIcon);
+	$iconClass  = esc_attr($iconClass);
+	$iconWidth  = (int) $iconWidth;
+	$topicCount = (int) $topicCount;
+	$allNested  = (int) $allNested;
+	$stack      = (int) $stack;
+	$rule		= (int) $rule;
+	$truncate   = (int) $truncate;
+	$echo       = (int) $echo;
+	$get        = (int) $get;
+	$toolTip    = esc_attr($toolTip);
 
-	$thisTagId = str_ireplace('%ID%', $spThisForum->forum_id, $tagId);
+	$thisTagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
 
-	if ($get) return $spThisForumSubs;
+	if ($get) return SP()->forum->view->thisForumSubs;
 
-	$out = "<div id='$thisTagId' class='$tagClass'>\n";
+	$out = '';
+	if ($rule) $out.= '<hr />';
+	$out.= "<div id='$thisTagId' class='$tagClass'>\n";
 	if ($stack) {
-		$out.= "<ul class='$labelClass'><li>".sp_filter_title_display($label)."<ul>";
+		$out .= "<ul class='$labelClass'><li>".SP()->displayFilters->title($label)."<ul>";
 	} else {
-		$out.= "<span class='$labelClass'>".sp_filter_title_display($label)."</span>\n";
+		$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."</span>\n";
 	}
-	foreach ($spThisForumSubs as $sub) {
+	foreach (SP()->forum->view->thisForumSubs as $sub) {
 
 		# Check if a custom icon
 		$path = SPTHEMEICONSDIR;
-		$url = SPTHEMEICONSURL;
+		$url  = SPTHEMEICONSURL;
 		if ($sub->unread) {
 			$fIcon = sanitize_file_name($unreadIcon);
 			if (!empty($sub->forum_icon_new)) {
 				$fIcon = sanitize_file_name($sub->forum_icon_new);
-				$path = SFCUSTOMDIR;
-				$url = SFCUSTOMURL;
+				$path  = SPCUSTOMDIR;
+				$url   = SPCUSTOMURL;
 			}
 		} else {
 			$fIcon = sanitize_file_name($icon);
 			if (!empty($sub->forum_icon)) {
 				$fIcon = sanitize_file_name($sub->forum_icon);
-				$path = SFCUSTOMDIR;
-				$url = SFCUSTOMURL;
+				$path  = SPCUSTOMDIR;
+				$url   = SPCUSTOMURL;
 			}
 		}
 		if (!file_exists($path.$fIcon)) {
-			$fIcon = sp_paint_icon($iconClass, SPTHEMEICONSURL, sanitize_file_name($fIcon));
+			$fIcon = SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, sanitize_file_name($fIcon));
 		} else {
-			$fIcon = sp_paint_custom_icon($iconClass, $url.$fIcon);
+			$fIcon = SP()->theme->paint_custom_icon($iconClass, $url.$fIcon);
 		}
 
-		if ($sub->parent == $spThisForum->forum_id || $allNested == true) {
-			$thisToolTip = str_ireplace('%NAME%', htmlspecialchars($sub->forum_name, ENT_QUOTES, SFCHARSET), $toolTip);
-			if ($stack) $out.= "<li>";
+		if ($sub->parent == SP()->forum->view->thisForum->forum_id || $allNested == true) {
+			$thisToolTip = str_ireplace('%NAME%', htmlspecialchars($sub->forum_name, ENT_QUOTES, SPCHARSET), $toolTip);
+			if ($stack) $out .= "<li>";
 
-			$out.= str_replace("<img ", "<img width='".$iconWidth."' ", $fIcon);
+			$out .= str_replace("<img ", "<img width='".$iconWidth."' ", $fIcon);
 
 			$thisTagId = str_ireplace('%ID%', $sub->forum_id, $tagId);
-			$out.= "<a href='$sub->forum_permalink' id='$thisTagId' class='$linkClass' title='$thisToolTip'>".sp_truncate($sub->forum_name, $truncate)."</a>\n";
-			if ($topicCount) $out.= " ($sub->topic_count)\n";
-			if ($stack) $out.= "</li>";
+			$out .= "<a href='$sub->forum_permalink' id='$thisTagId' class='$linkClass' title='$thisToolTip'>".SP()->primitives->truncate_name($sub->forum_name, $truncate)."</a>\n";
+			if ($topicCount) $out .= " ($sub->topic_count)\n";
+			if ($stack) $out .= "</li>";
 		}
 	}
-	if ($stack) $out.= "</ul></li></ul>";
+	if ($stack) $out .= "</ul></li></ul>";
 
-	$out.= "</div>\n";
+	$out .= "</div>\n";
 	$out = apply_filters('sph_ForumIndexSubForums', $out, $a);
 
 	if ($echo) {
@@ -1387,26 +1339,24 @@ function sp_ForumIndexSubForums($args='', $label='', $toolTip='') {
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
-function sp_NoForumsInGroupMessage($args='', $definedMessage='') {
-	global $spForumView;
-	$defs = array('tagId'		=> 'spNoForumsInGroupMessage',
-				  'tagClass'	=> 'spMessage',
-				  'echo'		=> 1,
-				  'get'			=> 0,
-				  );
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_NoForumsInGroupMessage_args', $a);
+function sp_NoForumsInGroupMessage($args = '', $definedMessage = '') {
+	$defs = array('tagId'    => 'spNoForumsInGroupMessage',
+	              'tagClass' => 'spMessage',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_NoForumsInGroupMessage_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$echo		= (int) $echo;
-	$get		= (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
-	if ($get) return sp_filter_title_display($definedMessage);
+	if ($get) return SP()->displayFilters->title($definedMessage);
 
-	$out = "<div id='$tagId' class='$tagClass'>".sp_filter_title_display($definedMessage)."</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>".SP()->displayFilters->title($definedMessage)."</div>\n";
 	$out = apply_filters('sph_NoForumsInGroupMessage', $out, $a);
 
 	if ($echo) {
@@ -1415,5 +1365,3 @@ function sp_NoForumsInGroupMessage($args='', $definedMessage='') {
 		return $out;
 	}
 }
-
-?>

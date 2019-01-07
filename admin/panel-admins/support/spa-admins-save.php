@@ -2,15 +2,13 @@
 /*
 Simple:Press
 Admin Admins Update Your Options Support Functions
-$LastChangedDate: 2017-01-28 19:18:44 -0600 (Sat, 28 Jan 2017) $
-$Rev: 15136 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_save_admins_your_options_data() {
-	global $spThisUser;
-
     check_admin_referer('my-admin_options', 'my-admin_options');
 
 	# admin settings group
@@ -21,18 +19,18 @@ function spa_save_admins_your_options_data() {
 
 	$sfadminoptions = apply_filters('sph_admin_your_options_change', $sfadminoptions);
 
-	sp_update_member_item($spThisUser->ID, 'admin_options', $sfadminoptions);
+	SP()->memberData->update(SP()->user->thisUser->ID, 'admin_options', $sfadminoptions);
 
-	$mess = spa_text('Your admin options have been updated');
+	$mess = SP()->primitives->admin_text('Your admin options have been updated');
 
 	# do we update moderator options as well?
-	if ($spThisUser->admin && isset($_POST['setmods'])) {
-		$mods = sp_get_option('spModStats');
+	if (SP()->user->thisUser->admin && isset($_POST['setmods'])) {
+		$mods = SP()->options->get('spModStats');
 		if ($mods) {
 			foreach ($mods as $mod) {
-				sp_update_member_item($mod['user_id'], 'admin_options', $sfadminoptions);
+				SP()->memberData->update($mod['user_id'], 'admin_options', $sfadminoptions);
 			}
-			$mess.= '<br />'.spa_text('Your moderators options have been updated');
+			$mess.= '<br />'.SP()->primitives->admin_text('Your moderators options have been updated');
 		}
 	}
 
@@ -51,17 +49,15 @@ function spa_save_admins_global_options_data() {
     $sfadminsettings['sfmoderapprove'] = isset($_POST['sfmoderapprove']);
     $sfadminsettings['editnotice'] = isset($_POST['editnotice']);
     $sfadminsettings['movenotice'] = isset($_POST['movenotice']);
-	sp_update_option('sfadminsettings', $sfadminsettings);
+	SP()->options->update('sfadminsettings', $sfadminsettings);
 
     do_action('sph_admin_global_options_save');
 
-	$mess = spa_text('Admin global options updated');
+	$mess = SP()->primitives->admin_text('Admin global options updated');
 	return $mess;
 }
 
 function spa_save_admins_caps_data() {
-	global $spThisUser;
-
     check_admin_referer('forum-adminform_sfupdatecaps', 'forum-adminform_sfupdatecaps');
 
     $users = array_unique($_POST['uids']);
@@ -94,7 +90,6 @@ function spa_save_admins_caps_data() {
     if (isset($_POST['old-themes'])) { $old_themes = $_POST['old-themes']; } else { $old_themes = ''; }
     if (isset($_POST['old-integration'])) { $old_integration = $_POST['old-integration']; } else { $old_integration = ''; }
 
-	$data_changed = false;
     for ($index = 0; $index < count($users); $index++) {
 		# get user index and sanitize
 		$uid = intval($users[$index]);
@@ -130,7 +125,7 @@ function spa_save_admins_caps_data() {
 		    			isset($manage_themes[$uid]) ||
 		    			isset($manage_integration[$uid]));
 		$still_admin = apply_filters('sph_admin_caps_update', $still_admin, $remove_admin, $user);
-		if (empty($still_admin)) sp_update_member_item($uid, 'admin', 0);
+		if (empty($still_admin)) SP()->memberData->update($uid, 'admin', 0);
 
 		if (isset($manage_opts[$uid])) {
 			$user->add_cap('SPF Manage Options');
@@ -205,13 +200,13 @@ function spa_save_admins_caps_data() {
 		}
 
         # reset auths and memberships for updated admins
-        sp_reset_memberships($uid);
-        sp_reset_auths($uid);
+        SP()->user->reset_memberships($uid);
+        SP()->auths->reset_cache($uid);
 	}
 
     do_action('sph_admin_update_save');
 
-    $mess = spa_text('Admin capabilities updated!');
+    $mess = SP()->primitives->admin_text('Admin capabilities updated!');
     return $mess;
 }
 
@@ -221,7 +216,7 @@ function spa_save_admins_newadmin_data() {
     if (isset($_POST['member_id'])) {
 		$newadmins = array_unique($_POST['member_id']);
 	} else {
-	    $mess = spa_text('No users selected!');
+	    $mess = SP()->primitives->admin_text('No users selected!');
 		return $mess;
     }
 
@@ -242,7 +237,7 @@ function spa_save_admins_newadmin_data() {
     for ($index = 0; $index < count($newadmins); $index++) {
 		# get user index and sanitize
 		$uid = intval($newadmins[$index]);
-		$user = new WP_User(sp_esc_int($uid));
+		$user = new WP_User(SP()->filters->integer($uid));
 
 		if ($opts == 'on') $user->add_cap('SPF Manage Options');
 		if ($forums == 'on') $user->add_cap('SPF Manage Forums');
@@ -263,35 +258,34 @@ function spa_save_admins_newadmin_data() {
 			$added = true;
 
 			# flag as admin with remove moderator flag
-			sp_update_member_item($uid, 'admin', 1);
-			sp_update_member_item($uid, 'moderator', 0);
+			SP()->memberData->update($uid, 'admin', 1);
+			SP()->memberData->update($uid, 'moderator', 0);
 
             # admin default options
         	$sfadminoptions = array();
             $sfadminoptions['sfnotify'] = false;
             $sfadminoptions['notify-edited'] = false;
             $sfadminoptions['bypasslogout'] = false;
-            sp_update_member_item($uid, 'admin_options', $sfadminoptions);
+            SP()->memberData->update($uid, 'admin_options', $sfadminoptions);
 
 			# remove any usergroup permissions
-			spdb_query('DELETE FROM '.SFMEMBERSHIPS." WHERE user_id=$uid");
+			SP()->DB->execute('DELETE FROM '.SPMEMBERSHIPS." WHERE user_id=$uid");
 
             do_action('sph_admin_new_admin', $uid);
 		}
 
         # reset auths and memberships for new admins
-        sp_reset_memberships($uid);
-        sp_reset_auths($uid);
+        SP()->user->reset_memberships($uid);
+        SP()->auths->reset_cache($uid);
 	}
 
     do_action('sph_admin_new_save');
 
 	if ($added) {
-	    $mess = spa_text('New admins added!');
+	    $mess = SP()->primitives->admin_text('New admins added!');
  	} else {
-		$mess = spa_text('No data changed!');
+		$mess = SP()->primitives->admin_text('No data changed!');
 	}
 
 	return $mess;
 }
-?>

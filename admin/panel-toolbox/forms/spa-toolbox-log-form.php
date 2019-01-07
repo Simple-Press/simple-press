@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Toolbox Uninstall Form
-$LastChangedDate: 2016-10-23 14:15:28 -0500 (Sun, 23 Oct 2016) $
-$Rev: 14665 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -13,21 +13,21 @@ function spa_toolbox_log_form() {
 
     #== log Tab ==========================================================
 
-	spa_paint_open_tab(spa_text('Toolbox')." - ".spa_text('Install Log'), true);
+	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox')." - ".SP()->primitives->admin_text('Install Log'), true);
 			if (!$sflog) {
-				spa_etext("There are no Install Log Entries");
+				SP()->primitives->admin_etext("There are no Install Log Entries");
 				return;
 			}
 
 		spa_paint_open_panel();
-			spa_paint_open_fieldset(spa_text('Install Log'), false);
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Install Log'), false);
 				echo "<table class='wp-list-table widefat'><tr>";
-				echo '<th>'.spa_text('Version').'</th>';
+				echo '<th>'.SP()->primitives->admin_text('Version').'</th>';
 				echo "<th class='logDetail'>"."</th>";
-				echo '<th>'.spa_text('Build').'</th>';
-				echo "<th class='logRelease'>".spa_text('Release')."</th>";
-				echo '<th>'.spa_text('Installed').'</th>';
-				echo "<th class='logBy'>".spa_text('By')."</th>";
+				echo '<th>'.SP()->primitives->admin_text('Build').'</th>';
+				echo "<th class='logRelease'>".SP()->primitives->admin_text('Release')."</th>";
+				echo '<th>'.SP()->primitives->admin_text('Installed').'</th>';
+				echo "<th class='logBy'>".SP()->primitives->admin_text('By')."</th>";
 				echo '</tr>';
 
 				foreach ($sflog as $log) {
@@ -37,13 +37,13 @@ function spa_toolbox_log_form() {
 					echo '<tr>';
 					echo "<td class='sflabel'>".$log['version']."</td>";
 				    $site = wp_nonce_url(SPAJAXURL.'install-log&amp;log='.$idQVer, 'install-log');
-					$gif = SFCOMMONIMAGES.'working.gif';
-					echo '<td class="logDetail"><input type="button" class="logDetail button spLoadAjax" value="'.spa_text('Details').'" data-url="'.$site.'" data-target="'.$idVer.'" data-img="'.$gif.'" /></td>';
+					$gif = SPCOMMONIMAGES.'working.gif';
+					echo '<td class="logDetail"><input type="button" class="logDetail button spLoadAjax" value="'.SP()->primitives->admin_text('Details').'" data-url="'.$site.'" data-target="'.$idVer.'" data-img="'.$gif.'" /></td>';
 
 					echo "<td class='sflabel'>".$log['build']."</td>";
 					echo "<td class='sflabel logRelease'>".$log['release_type']."</td>";
-					echo "<td class='sflabel'>".sp_date('d', $log['install_date'])."</td>";
-					echo "<td class='sflabel logBy'>".sp_filter_name_display($log['display_name'])."</td>";
+					echo "<td class='sflabel'>".SP()->dateTime->format_date('d', $log['install_date'])."</td>";
+					echo "<td class='sflabel logBy'>".SP()->displayFilters->name($log['display_name'])."</td>";
 					echo '</tr>';
 					echo "<tr><td style='display:none;' class='sflabel' id='".$idVer."' colspan='6'></td></tr>";
 				}
@@ -56,4 +56,3 @@ function spa_toolbox_log_form() {
 		echo '<div class="sfform-panel-spacer"></div>';
 	spa_paint_close_tab();
 }
-?>

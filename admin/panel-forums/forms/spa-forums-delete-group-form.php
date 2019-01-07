@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Forums Delete Group Form
-$LastChangedDate: 2016-10-21 20:37:22 -0500 (Fri, 21 Oct 2016) $
-$Rev: 14651 $
+$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
+$Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -11,13 +11,11 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 # function to display the delete group form.  It is hidden until the delete group link is clicked
 function spa_forums_delete_group_form($group_id) {
 ?>
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-    	spjAjaxForm('sfgroupdel<?php echo $group_id; ?>', 'sfreloadfb');
-    });
+<script>
+   	spj.loadAjaxForm('sfgroupdel<?php echo $group_id; ?>', 'sfreloadfb');
 </script>
 <?php
-	$group = spdb_table(SFGROUPS, "group_id=$group_id", 'row');
+	$group = SP()->DB->table(SPGROUPS, "group_id=$group_id", 'row');
 
 	spa_paint_options_init();
 
@@ -26,24 +24,24 @@ function spa_forums_delete_group_form($group_id) {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfgroupdel<?php echo $group->group_id; ?>" name="sfgroupdel<?php echo $group->group_id; ?>">
 <?php
 		echo sp_create_nonce('forum-adminform_groupdelete');
-		spa_paint_open_tab(spa_text('Forums').' - '.spa_text('Manage Groups and Forums'), true);
+		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
 			spa_paint_open_panel();
-				spa_paint_open_fieldset(spa_text('Delete Group'), 'true', 'delete-forum-group');
+				spa_paint_open_fieldset(SP()->primitives->admin_text('Delete Group'), 'true', 'delete-forum-group');
 ?>
 					<input type="hidden" name="group_id" value="<?php echo $group->group_id; ?>" />
 					<input type="hidden" name="cgroup_seq" value="<?php echo $group->group_seq; ?>" />
 <?php
 					echo '<p>';
-					spa_etext('Warning! You are about to delete a group');
+					SP()->primitives->admin_etext('Warning! You are about to delete a group');
 					echo '</p>';
 					echo '<p>';
-					spa_etext('This will remove ALL forums, topics and posts contained in this group');
+					SP()->primitives->admin_etext('This will remove ALL forums, topics and posts contained in this group');
 					echo '</p>';
 					echo '<p>';
-					echo sprintf(spa_text('Please note that this action %s can NOT be reversed %s'), '<strong>', '</strong>');
+					echo sprintf(SP()->primitives->admin_text('Please note that this action %s can NOT be reversed %s'), '<strong>', '</strong>');
 					echo '</p>';
 					echo '<p>';
-					spa_etext('Click on the delete group button below to proceed');
+					SP()->primitives->admin_etext('Click on the delete group button below to proceed');
 					echo '</p>';
 
 				spa_paint_close_fieldset();
@@ -52,12 +50,11 @@ function spa_forums_delete_group_form($group_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sfform-submit-bar">
-    		<input type="submit" class="button-primary" id="groupdel<?php echo $group->group_id; ?>" name="groupdel<?php echo $group->group_id; ?>" value="<?php spa_etext('Delete Group'); ?>" />
-    		<input type="button" class="button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="sfgroupdel<?php echo $group->group_id; ?>" name="groupdelcancel<?php echo $group->group_id; ?>" value="<?php spa_etext('Cancel'); ?>" />
+    		<input type="submit" class="button-primary" id="groupdel<?php echo $group->group_id; ?>" name="groupdel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Delete Group'); ?>" />
+    		<input type="button" class="button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="sfgroupdel<?php echo $group->group_id; ?>" name="groupdelcancel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
 	<div class="sfform-panel-spacer"></div>
 <?php
 }
-?>

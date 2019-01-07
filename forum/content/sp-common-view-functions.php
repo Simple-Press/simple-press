@@ -3,609 +3,12 @@
 /*
   Simple:Press
   Template Function Handler
-  $LastChangedDate: 2017-05-20 17:44:46 -0500 (Sat, 20 May 2017) $
-  $Rev: 15386 $
+  $LastChangedDate: 2018-08-15 07:59:04 -0500 (Wed, 15 Aug 2018) $
+  $Rev: 15704 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
-# --------------------------------------------------------------------------------------
-#
-#	sp_SectionStart()
-#	Scope:	Forum
-#	Version: 5.0
-#
-#	Changelog:
-#		5.6 Added:	'context'
-#
-# --------------------------------------------------------------------------------------
-
-function sp_SectionStart($args = '', $sectionName = '') {
-	$defs	 = array(
-		'tagClass'	 => 'spPlainSection',
-		'tagId'		 => '',
-		'context'	 => '',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_SectionStart_args', $a);
-	extract($a, EXTR_SKIP);
-
-	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$tagId		 = esc_attr($tagId);
-	$context	 = esc_attr($context);
-	$echo		 = (int) $echo;
-
-	# notifiy custom code before we start the section code
-	do_action('sph_BeforeSectionStart', $sectionName, $a);
-	do_action('sph_BeforeSectionStart_'.$sectionName, $a);
-
-	# check for context. At this stage only 'postLoop' is active
-	if ($context == 'postLoop') {
-		global $spThisPost;
-		$tagId = $tagId.$spThisPost->post_id;
-	}
-
-	# specific formatting based on 'defined' names
-	$rowClass	 = '';
-	$rowId		 = '';
-	switch ($sectionName) {
-		case 'group':
-			global $spGroupView, $spThisGroup;
-			if (isset($spGroupView)) $rowClass	 .= ($spGroupView->currentGroup % 2) ? ' spOdd' : ' spEven';
-			if (isset($spThisGroup)) $rowId		 .= "group$spThisGroup->group_id";
-			break;
-
-		case 'forumlist':
-			global $spThisGroup;
-			if (isset($spThisGroup)) $rowId .= "forumlist$spThisGroup->group_id";
-			break;
-
-		case 'subforumlist':
-			global $spThisForum;
-			if (isset($spThisForum)) $rowId .= "subforumlist$spThisForum->forum_id";
-			break;
-
-		case 'topiclist':
-			global $spThisForum;
-			if (isset($spThisForum)) $rowId .= "topiclist$spThisForum->forum_id";
-			break;
-
-		case 'postlist':
-			global $spThisTopic;
-			if (isset($spThisTopic)) $rowId .= "postlist$spThisTopic->topic_id";
-			break;
-
-		case 'forum':
-			global $spGroupView, $spThisForum;
-			if (isset($spGroupView)) $rowClass .= ($spGroupView->currentForum % 2) ? ' spOdd' : ' spEven';
-			if (isset($spThisForum)) {
-				if ($spThisForum->forum_status) $rowClass	 .= ' spLockedForum';
-				if (isset($spThisForum->unread) && $spThisForum->unread) $rowClass	 .= ' spUnreadPosts';
-				$rowId		 .= "forum$spThisForum->forum_id";
-			}
-			break;
-
-		case 'subForum':
-			global $spForumView, $spThisSubForum;
-			if (isset($spForumView)) $rowClass .= ($spForumView->currentChild % 2) ? ' spOdd' : ' spEven';
-			if (isset($spThisSubForum)) {
-				if ($spThisSubForum->forum_status) $rowClass	 .= ' spLockedForum';
-				if ($spThisSubForum->unread) $rowClass	 .= ' spUnreadPosts';
-				$rowId		 .= "subforum$spThisSubForum->forum_id";
-			}
-			break;
-
-		case 'topic':
-			global $spForumView, $spThisTopic;
-			if (isset($spForumView)) $rowClass .= ($spForumView->currentTopic % 2) ? ' spOdd' : ' spEven';
-			if (isset($spThisTopic)) {
-				if ($spThisTopic->topic_status) $rowClass	 .= ' spLockedTopic';
-				if ($spThisTopic->topic_pinned) $rowClass	 .= ' spPinnedTopic';
-				if ($spThisTopic->unread) $rowClass	 .= ' spUnreadPosts';
-				$rowId		 .= "topic$spThisTopic->topic_id";
-			}
-			break;
-
-		case 'post':
-			global $spThisUser, $spTopicView, $spThisTopic, $spThisPost;
-			if (isset($spTopicView)) $rowClass .= ($spTopicView->currentPost % 2) ? ' spOdd' : ' spEven';
-			if (isset($spThisPost)) {
-				if ($spThisPost->post_pinned) $rowClass	 .= ' spPinnedPost';
-				if ($spThisPost->new_post) $rowClass	 .= ' spUnreadPosts';
-				if ($spThisPost->post_index == 1) $rowClass	 .= ' spFirstPost';
-				$rowClass	 .= ' spType-'.$spThisPost->postUser->usertype;
-				if (!empty($spThisPost->postUser->rank)) $rowClass	 .= ' spRank-'.sp_create_slug($spThisPost->postUser->rank[0]['name'], false);
-				if (!empty($spThisPost->postUser->special_rank)) {
-					foreach ($spThisPost->postUser->special_rank as $rank) {
-						$rowClass .= ' spSpecialRank-'.sp_create_slug($rank['name'], false);
-					}
-				}
-				if (!empty($spThisPost->postUser->memberships)) {
-					foreach ($spThisPost->postUser->memberships as $membership) {
-						$rowClass .= ' spUsergroup-'.sp_create_slug($membership['usergroup_name'], false);
-					}
-				}
-				if ($spThisPost->user_id) {
-					if ($spThisPost->user_id == $spThisUser->ID) {
-						$rowClass .= ' spCurUserPost';
-					} else {
-						$rowClass .= ' spUserPost';
-					}
-					if ($spThisTopic->topic_starter == $spThisPost->user_id) $rowClass .= ' spAuthorPost';
-				} else {
-					$rowClass .= ' spGuestPost';
-				}
-				$rowId .= "post$spThisPost->post_id";
-			}
-			break;
-
-		case 'list':
-			global $spListView, $spThisListTopic;
-			if (isset($spListView)) $rowClass	 .= ($spListView->currentTopic % 2) ? ' spOdd' : ' spEven';
-			if (isset($spThisListTopic)) $rowId		 .= "listtopic$spThisListTopic->topic_id";
-			break;
-
-		case 'usergroup':
-			global $spMembersList;
-			if (isset($spMembersList)) $rowClass .= ($spMembersList->currentMemberGroup % 2) ? ' spOdd' : ' spEven';
-			break;
-
-		case 'member':
-			global $spMembersList;
-			if (isset($spMembersList)) $rowClass .= ($spMembersList->currentMember % 2) ? ' spOdd' : ' spEven';
-			break;
-
-		case 'memberGroup':
-			global $spThisMemberGroup;
-			if (isset($spThisMemberGroup)) $rowClass .= ' spUsergroup-'.sp_create_slug($spThisMemberGroup->usergroup_name, false);
-			break;
-
-		default:
-			if (!empty($tagId)) $rowId .= $tagId;
-			break;
-	}
-
-	# allow filtering of the row class
-	$rowClass	 = apply_filters('sph_SectionStartRowClass', $rowClass, $sectionName, $a);
-	$rowId		 = apply_filters('sph_SectionStartRowID', $rowId, $sectionName, $a);
-
-	# output section starting div
-	$class	 = '';
-	if (!empty($rowId)) $rowId	 = " id='$rowId'";
-	if (!empty($tagClass) || !empty($rowClass)) $class	 = " class='$tagClass$rowClass'";
-	$out	 = "<div$class$rowId>\n";
-
-	$out = apply_filters('sph_SectionStart', $out, $sectionName, $a);
-
-	if ($echo) {
-		echo $out;
-
-		# notifiy custom code that section has started
-		# only valid if content is echoed out ($display=1)
-		do_action('sph_AfterSectionStart', $sectionName, $a);
-		do_action('sph_AfterSectionStart_'.$sectionName, $a);
-	} else {
-		return $out;
-	}
-}
-
-# --------------------------------------------------------------------------------------
-#
-#	sp_SectionEnd()
-#	Closes a previously started container section (div)
-#	Scope:	Forum
-#	Version: 5.0
-#
-# --------------------------------------------------------------------------------------
-
-function sp_SectionEnd($args = '', $sectionName = '') {
-	$defs	 = array(
-		'tagClass'	 => '',
-		'tagId'		 => '',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_SectionEnd_args', $a);
-	extract($a, EXTR_SKIP);
-
-	# sanitize before use
-	if (!empty($tagId)) $tagId		 = " id='".esc_attr($tagId)."'";
-	if (!empty($tagClass)) $tagClass	 = " class='".esc_attr($tagClass)."'";
-	$echo		 = (int) $echo;
-
-	# notifiy custom code before we end the section code
-	do_action('sph_BeforeSectionEnd', $sectionName, $a);
-	do_action('sph_BeforeSectionEnd_'.$sectionName, $a);
-
-	$out = '';
-	if (!empty($tagClass) || !empty($tagId)) $out .= "<div$tagId$tagClass></div>\n";
-
-	$out = apply_filters('sph_SectionEnd', $out, $sectionName, $a);
-	do_action('sph_SectionEnd_'.$sectionName, $a);
-
-	# close the secton begin
-	$out .= "</div>\n";
-
-	if ($echo) {
-		echo $out;
-
-		# notifiy custom code that section has ended
-		# only valid if content is echoed out ($show=1)
-		do_action('sph_AfterSectionEnd', $sectionName, $a);
-		do_action('sph_AfterSectionEnd_'.$sectionName, $a);
-	} else {
-		return $out;
-	}
-}
-
-# --------------------------------------------------------------------------------------
-#
-#	sp_ColumnStart()
-#	Defines a new column (div) in all list views
-#	Scope:	Forum
-#	Version: 5.0
-#
-# --------------------------------------------------------------------------------------
-
-function sp_ColumnStart($args = '', $columnName = '') {
-	$defs	 = array(
-		'tagClass'	 => 'spColumnSection',
-		'tagId'		 => '',
-		'width'		 => 'auto',
-		'height'	 => '60px',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_ColumnStart_args', $a);
-	extract($a, EXTR_SKIP);
-
-	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	if (!empty($tagId)) $tagId		 = " id='".esc_attr($tagId).rand()."'";
-	$width		 = esc_attr($width);
-	$height		 = esc_attr($height);
-	$echo		 = (int) $echo;
-
-	# notifiy custom code before we start the column code
-	do_action('sph_BeforeColumnStart', $columnName, $a);
-	do_action('sph_BeforeColumnStart_'.$columnName, $a);
-
-	# specific formatting based on 'defined' names
-	$colClass = '';
-	switch ($columnName) {
-		default:
-			break;
-	}
-
-	# allow filtering of the column class
-	$colClass = apply_filters('sph_ColumnStartColumnClass', $colClass, $columnName);
-
-	($width != 0) ? $wStyle	 = "width: $width;" : $wStyle	 = '';
-	($height != 0) ? $hStyle	 = "min-height: $height;" : $hStyle	 = '';
-
-	$out = "<div class='$tagClass$colClass'$tagId";
-	if ($wStyle != '' || $hStyle != '') $out .= " style='$wStyle $hStyle'";
-	$out .= ">\n";
-
-	$out = apply_filters('sph_ColumnStart', $out, $columnName, $a);
-
-	if ($echo) {
-		echo $out;
-
-		# notifiy custom code that column has ended
-		# only valid if content is echoed out ($show=1)
-		do_action('sph_AfterColumnStart', $columnName, $a);
-		do_action('sph_AfterColumnStart_'.$columnName, $a);
-	} else {
-		return $out;
-	}
-}
-
-# --------------------------------------------------------------------------------------
-#
-#	sp_ColumnEnd()
-#	Closes a previously started column (div)
-#	Scope:	Forum
-#	Version: 5.0
-#
-# --------------------------------------------------------------------------------------
-
-function sp_ColumnEnd($args = '', $columnName = '') {
-	$defs	 = array(
-		'tagClass'	 => '',
-		'tagId'		 => '',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_ColumnEnd_args', $a);
-	extract($a, EXTR_SKIP);
-
-	# sanitize before use
-	if (!empty($tagClass)) $tagClass	 = " class='".esc_attr($tagClass)."'";
-	if (!empty($tagId)) $tagId		 = " id='".esc_attr($tagId)."'";
-	$echo		 = (int) $echo;
-
-	# notifiy custom code before we end the column code
-	do_action('sph_BeforeColumnEnd', $columnName, $a);
-	do_action('sph_BeforeColumnEnd_'.$columnName, $a);
-
-	$out = '';
-	if (!empty($tagClass) || !empty($tagId)) $out .= "<div$tagId$tagClass></div>\n";
-
-	$out = apply_filters('sph_ColumnEnd', $out, $columnName, $a);
-	do_action('sph_ColumnEnd_'.$columnName, $a);
-
-	# close the colmumn start
-	$out .= "</div>\n";
-
-	if ($echo) {
-		echo $out;
-
-		# notifiy custom code that column has ended
-		# only valid if content is echoed out ($show=1)
-		do_action('sph_AfterColumnEnd', $columnName, $a);
-		do_action('sph_AfterColumnEnd_'.$columnName, $a);
-	} else {
-		return $out;
-	}
-}
-
-# --------------------------------------------------------------------------------------
-#
-#	sp_InsertBreak()
-#	Defines a Break (CSS Clear)
-#	Scope:	Forum
-#	Version: 5.0
-#		5.2 - Added Spacer argument for determining height of clear
-# --------------------------------------------------------------------------------------
-
-function sp_InsertBreak($args = '') {
-	$defs	 = array(
-		'tagClass'	 => '',
-		'tagId'		 => '',
-		'direction'	 => 'both',
-		'spacer'	 => '1px',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_InsertBreak_args', $a);
-	extract($a, EXTR_SKIP);
-
-	# sanitize before use
-	if (!empty($tagId)) $tagId = " id='".esc_attr($tagId)."'";
-	if (!empty($tagClass)) {
-		$tagClass = " class='".esc_attr($tagClass)."'";
-	} else if (!empty($direction)) {
-		$tagClass = " style='clear: $direction; height:$spacer;'";
-	} else {
-		$tagClass = '';
-	}
-	$echo = (int) $echo;
-
-	# notifiy custom code before we insert the break
-	do_action('sph_BeforeInsertBreak', $a);
-
-	$out = '';
-	if (!empty($tagClass) || !empty($tagId)) $out .= "<div$tagId$tagClass></div>\n";
-
-	$out = apply_filters('sph_InsertBreak', $out, $a);
-
-	if ($echo) {
-		echo $out;
-
-		# notifiy custom code that break has been inserted
-		# only valid if content is echoed out ($show=1)
-		do_action('sph_AfterInsertBreak', $a);
-	} else {
-		return $out;
-	}
-}
-
-# --------------------------------------------------------------------------------------
-#
-#	sp_InsertLineBreak()
-#	Defines a Line Break (HTML 'br') - saves littering up a template with echo's
-#	Scope:	Forum
-#	Version: 5.2
-#
-# --------------------------------------------------------------------------------------
-
-function sp_InsertLineBreak() {
-	echo '<div class="spLineBreak"><br /></div>';
-}
-
-# --------------------------------------------------------------------------------------
-#
-#	sp_MobileMenuStart()
-#	Starts a Mobile Menu
-#	Scope:	Forum
-#	Version: 5.2
-#	Change log:
-#		Added 5.6:
-#		tagClass, context, linkClass, icon, iconClass
-#
-# --------------------------------------------------------------------------------------
-
-function sp_MobileMenuStart($args = '', $header = '') {
-	$defs	 = array(
-		'tagId'		 => 'spMobileMenuId',
-		'tagClass'	 => '',
-		'context'	 => '',
-		'linkClass'	 => 'spButton',
-		'icon'		 => 'sp_MobileMenu.png',
-		'iconClass'	 => 'spIcon',
-		'echo'		 => 1
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_MobileMenu_args', $a);
-	extract($a, EXTR_SKIP);
-
-	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$context	 = esc_attr($context);
-	$linkClass	 = esc_attr($linkClass);
-	$icon		 = sanitize_file_name($icon);
-	$iconClass	 = esc_attr($iconClass);
-	$echo		 = (int) $echo;
-
-	# check for context. At this stage only 'postLoop' is active
-	if ($context == 'postLoop') {
-		global $spThisPost;
-		$tagId = $tagId.$spThisPost->post_id;
-	}
-
-	$out	 = '';
-	$source	 = '#'.$tagId;
-	$out	 = "<a class='$tagClass spMobileMenuOpen' title='".esc_attr($header)."' href='#' data-source='$source'>";
-	if (!empty($icon)) $out	 .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-	if (!empty($header)) $out	 .= $header;
-	$out	 .= "</a>\n";
-
-	$out .= "<div id='$tagId' class='spAdminLinksPopup' style='display:none;'>";
-	$out .= "<div class='spAdminLinksPopup'>";
-
-	$out .= '<div class="spForumToolsHeader">';
-	$out .= '<div class="spForumToolsHeaderTitle">'.$header.'</div>';
-	$out .= '</div>';
-
-	$out .= sp_open_grid();
-
-	$out = apply_filters('sph_MobileMenuStart', $out, $a);
-
-	if ($echo) {
-		echo $out;
-	} else {
-		return $out;
-	}
-}
-
-# --------------------------------------------------------------------------------------
-#
-#	sp_MobileMenuEnd()
-#	Ends a Mobile Menu
-#	Scope:	Forum
-#	Version: 5.2
-#
-# --------------------------------------------------------------------------------------
-
-function sp_MobileMenuEnd($args = '') {
-	$defs		 = array(
-		'tagClass'	 => 'spMobileMenu',
-		'listTagId'	 => 'spMobileMenuId',
-		'echo'		 => 1
-	);
-	$a			 = wp_parse_args($args, $defs);
-	extract($a, EXTR_SKIP);
-	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$listTagId	 = esc_attr($listTagId);
-	$echo		 = (int) $echo;
-
-	$out = '';
-	$out = apply_filters('sph_MobileMenuEnd_before', $out);
-
-	$out .= sp_close_grid();
-	$out .= '</div></div>';
-
-	$out = apply_filters('sph_MobileMenuEnd_after', $out);
-
-	if ($echo) {
-		echo $out;
-	} else {
-		return $out;
-	}
-}
-
-# --------------------------------------------------------------------------------------
-#
-#	sp_OpenCloseControl()
-#	Generic Display Open and Close function
-#	Scope:	Anywhere
-#	Version: 5.4.2
-#
-#	default values= 'open', 'closed'
-#
-#	Change Log:
-#		5.6		Argument 'setCookie' added
-#				Argument 'asLabel' added
-#				Argument 'context' added
-#				Argument 'labelClass' added
-#
-# --------------------------------------------------------------------------------------
-
-function sp_OpenCloseControl($args = '', $toolTipOpen = '', $toolTipClose = '') {
-	$defs	 = array(
-		'targetId'	 => '',
-		'tagId'		 => 'sp_OpenCloseControl',
-		'tagClass'	 => 'spIcon',
-		'context'	 => '',
-		'openIcon'	 => 'sp_ControlOpen.png',
-		'closeIcon'	 => 'sp_ControlClose.png',
-		'default'	 => 'open',
-		'setCookie'	 => 1,
-		'asLabel'	 => 0,
-		'linkClass'	 => 'spButton',
-		'echo'		 => 1
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_OpenCloseControl_args', $a);
-	extract($a, EXTR_SKIP);
-
-	# sanitize before use
-	$targetId		 = esc_attr($targetId);
-	$tagId			 = esc_attr($tagId);
-	$tagClass		 = esc_attr($tagClass);
-	$context		 = esc_attr($context);
-	$openIcon		 = sp_paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($openIcon));
-	$closeIcon		 = sp_paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($closeIcon));
-	$toolTipOpen	 = esc_attr($toolTipOpen);
-	$toolTipClose	 = esc_attr($toolTipClose);
-	$default		 = esc_attr($default);
-	$setCookie		 = (int) $setCookie;
-	$asLabel		 = (int) $asLabel;
-	$linkClass		 = esc_attr($linkClass);
-	$echo			 = (int) $echo;
-
-	if (isset($_COOKIE[$targetId]) && $setCookie) $default = $_COOKIE[$targetId];
-	$icon	 = ($default == 'open') ? $closeIcon : $openIcon;
-	$toolTip = ($default == 'open') ? $toolTipClose : $toolTipOpen;
-
-	# check for context. At this stage only 'postLoop' is active
-	if ($context == 'postLoop') {
-		global $spThisPost;
-		$targetId	 = $targetId.$spThisPost->post_id;
-		$tagId		 = $tagId.$spThisPost->post_id;
-	}
-
-	if ($default == 'closed') {
-		echo '<style type="text/css">#'.$targetId.' {display:none;}</style>';
-	}
-	$out = "<span id='$tagId' class='$linkClass spOpenClose' data-targetid='$targetId' data-tagid='$tagId' data-tagclass='$tagClass' data-openicon='$openIcon' data-closeicon='$closeIcon' data-tipopen='$toolTipOpen' data-tipclose='$toolTipClose' data-setcookie='$setCookie' data-label='$asLabel' data-linkclass='$linkClass'>";
-	if ($asLabel) {
-		$out .= $toolTip;
-	} else {
-		$out .= "<img class='$tagClass' title='$toolTip' src='$icon' alt='' />";
-	}
-	$out .= "</span>\n";
-
-	$out = apply_filters('sph_OpenCloseControl', $out, $a);
-
-	if ($echo) {
-		echo $out;
-	} else {
-		return $out;
-	}
-}
-
-# **************************************************************************************
-# --------------------------------------------------------------------------------------
-#
-# Template top level function handler
-#
-# --------------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------------
 #
 #	sp_UserNewPostFlag()
@@ -616,23 +19,19 @@ function sp_OpenCloseControl($args = '', $toolTipOpen = '', $toolTipClose = '') 
 # --------------------------------------------------------------------------------------
 
 function sp_UserNewPostFlag($args = '', $view = '') {
-	global $spThisUser, $spDevice;
+	if (!SP()->user->thisUser->member || empty($view)) return;
 
-	if (!$spThisUser->member || empty($view)) return;
+	$defs = array('locationClass' => 'spLeft');
 
-	$defs = array(
-		'locationClass' => 'spLeft'
-	);
-
-	$a				 = wp_parse_args($args, $defs);
-	$a				 = apply_filters('sp_UserNewPostFlag_args', $a);
+	$a = wp_parse_args($args, $defs);
+	$a = apply_filters('sp_UserNewPostFlag_args', $a);
 	extract($a, EXTR_SKIP);
-	$locationClass	 = esc_attr($locationClass);
+	$locationClass = esc_attr($locationClass);
 
-	$sfc = sp_get_option('sfcontrols');
+	$sfc = SP()->options->get('sfcontrols');
 
-	$flagstext	 = ($sfc['flagsuse']) ? $sfc['flagstext'] : __sp('new');
-	$tagClass	 = 'spNewFlag '.$locationClass;
+	$flagstext = ($sfc['flagsuse']) ? $sfc['flagstext'] : SP()->primitives->front_text('new');
+	$tagClass  = 'spNewFlag '.$locationClass;
 
 	$out = '';
 
@@ -640,36 +39,32 @@ function sp_UserNewPostFlag($args = '', $view = '') {
 
 		case 'group':
 			if (!$sfc['flagsuse']) return;
-			global $spThisForum;
-			if (!$spThisForum->unread) return;
-			if ($spDevice == 'desktop') {
-				$out .= sp_UnreadPostsLink("tagId=spUnreadPostsInfo&tagClass=$tagClass&popup=1&echo=0&first=1&id=".$spThisForum->forum_id."&targetaction=forum", $flagstext, __sp('View listing of topics with new posts'), $spThisForum->forum_name);
+			if (!SP()->forum->view->thisForum->unread) return;
+			if (SP()->core->device == 'desktop') {
+				$out .= sp_UnreadPostsLink("tagId=spUnreadPostsInfo&tagClass=$tagClass&popup=1&echo=0&first=1&id=".SP()->forum->view->thisForum->forum_id."&targetaction=forum", $flagstext, SP()->primitives->front_text('View listing of topics with new posts'), SP()->forum->view->thisForum->forum_name);
 			} else {
-				$out .= sp_UnreadPostsLink("tagId=spUnreadPostsInfo&tagClass=$tagClass&popup=0&echo=0&first=1&id=".$spThisForum->forum_id."&targetaction=forum", $flagstext, __sp('View listing of topics with new posts'), $spThisForum->forum_name);
+				$out .= sp_UnreadPostsLink("tagId=spUnreadPostsInfo&tagClass=$tagClass&popup=0&echo=0&first=1&id=".SP()->forum->view->thisForum->forum_id."&targetaction=forum", $flagstext, SP()->primitives->front_text('View listing of topics with new posts'), SP()->forum->view->thisForum->forum_name);
 			}
 			break;
 
 		case 'forum':
 			if (!$sfc['flagsuse']) return;
-			global $spThisForum, $spThisTopic;
-			if (!$spThisTopic->unread) return;
-			$idx = array_search($spThisTopic->topic_id, $spThisUser->newposts['topics']);
+			if (!SP()->forum->view->thisTopic->unread) return;
+			$idx = array_search(SP()->forum->view->thisTopic->topic_id, SP()->user->thisUser->newposts['topics']);
 			if ($idx !== false) {
-				$out .= "<a class='$tagClass' href='".sp_build_url($spThisForum->forum_slug, $spThisTopic->topic_slug, 0, $spThisUser->newposts['post'][$idx], 0)."'>".$flagstext."</a>";
+				$out .= "<a class='$tagClass' href='".SP()->spPermalinks->build_url(SP()->forum->view->thisForum->forum_slug, SP()->forum->view->thisTopic->topic_slug, 0, SP()->user->thisUser->newposts['post'][$idx], 0)."'>".$flagstext."</a>";
 			}
 			break;
 
 		case 'topic':
-			global $spThisPost;
-			if (!$spThisPost->new_post) return;
+			if (!SP()->forum->view->thisPost->new_post) return;
 			$out .= sp_PostIndexNewPost("tagClass=$tagClass&echo=0", $flagstext);
 			break;
 
 		case 'list':
-			global $spThisListTopic;
-			if (!isset($spThisListTopic->new_post_count) || $spThisListTopic->new_post_count == 0) return;
-			if ($spDevice == 'desktop') {
-				$out .= sp_ListNewPostButton("tagClass=$tagClass&icon=&echo=0", $flagstext.': %COUNT%', __sp('View the first new post in this topic'));
+			if (!isset(SP()->forum->view->thisListTopic->new_post_count) || SP()->forum->view->thisListTopic->new_post_count == 0) return;
+			if (SP()->core->device == 'desktop') {
+				$out .= sp_ListNewPostButton("tagClass=$tagClass&icon=&echo=0", $flagstext.': %COUNT%', SP()->primitives->front_text('View the first new post in this topic'));
 			} else {
 				$out .= sp_ListNewPostButton("tagClass=$tagClass&icon=&echo=0", $flagstext.': %COUNT%', '');
 			}
@@ -690,44 +85,40 @@ function sp_UserNewPostFlag($args = '', $view = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_UserAvatar($args = '', $contextData = '') {
-	global $spThisUser, $spGlobals;
-
-	$defs	 = array(
-		'tagClass'	 => 'spAvatar',
-		'imgClass'	 => 'spAvatar',
-		'size'		 => '',
-		'link'		 => 'profile',
-		'context'	 => 'current',
-		'wp'		 => '',
-		'echo'		 => 1,
-		'get'		 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_Avatar_args', $a);
+	$defs = array('tagClass' => 'spAvatar',
+	              'imgClass' => 'spAvatar',
+	              'size'     => '',
+	              'link'     => 'profile',
+	              'context'  => 'current',
+	              'wp'       => '',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_Avatar_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$imgClass	 = esc_attr($imgClass);
-	$link		 = esc_attr($link);
-	$size		 = (int) $size;
-	$echo		 = (int) $echo;
-	$get		 = (int) $get;
-	$wp			 = esc_attr($wp);
+	$tagClass = esc_attr($tagClass);
+	$imgClass = esc_attr($imgClass);
+	$link     = esc_attr($link);
+	$size     = (int) $size;
+	$echo     = (int) $echo;
+	$get      = (int) $get;
+	$wp       = esc_attr($wp);
 
 	# init some vars
 	$forceWidth = false;
 
 	# make sure we are displaying avatars
-	$spAvatars = sp_get_option('sfavatars');
+	$spAvatars = SP()->options->get('sfavatars');
 	if ($spAvatars['sfshowavatars'] == true) {
-		$avatarData				 = new stdClass();
-		$avatarData->object		 = false;
-		$avatarData->userId		 = 0; # need user id OR email
-		$avatarData->email		 = '';
-		$avatarData->avatar		 = '';
-		$avatarData->admin		 = '';
-		$avatarData->moderator	 = '';
+		$avatarData            = new stdClass();
+		$avatarData->object    = false;
+		$avatarData->userId    = 0; # need user id OR email
+		$avatarData->email     = '';
+		$avatarData->avatar    = '';
+		$avatarData->admin     = '';
+		$avatarData->moderator = '';
 
 		# determine avatar size
 		$avatarData->size = (!empty($size)) ? $size : $spAvatars['sfavatarsize'];
@@ -736,9 +127,9 @@ function sp_UserAvatar($args = '', $contextData = '') {
 		switch ($context) {
 			case 'current':
 				# we want the avatar for the current user
-				$avatarData->userId	 = $spThisUser->ID;
-				$avatarData->email	 = (!empty($avatarData->userId)) ? $spThisUser->user_email : '';
-				if (isset($spThisUser->avatar)) $avatarData->avatar	 = $spThisUser->avatar;
+				$avatarData->userId = SP()->user->thisUser->ID;
+				$avatarData->email  = (!empty($avatarData->userId)) ? SP()->user->thisUser->user_email : '';
+				if (isset(SP()->user->thisUser->avatar)) $avatarData->avatar = SP()->user->thisUser->avatar;
 				break;
 
 			case 'user':
@@ -746,14 +137,14 @@ function sp_UserAvatar($args = '', $contextData = '') {
 				if (is_object($contextData)) {
 					# sp user object passed in
 					# can contain anything, but must contain id or email, avatar array and admin flag
-					$avatarData->object		 = true;
-					$avatarData->userId		 = $contextData->ID;
-					$avatarData->avatar		 = $contextData->avatar;
-					$avatarData->admin		 = $contextData->admin;
-					$avatarData->moderator	 = sp_is_forum_mod($contextData->ID);
+					$avatarData->object    = true;
+					$avatarData->userId    = $contextData->ID;
+					$avatarData->avatar    = $contextData->avatar;
+					$avatarData->admin     = $contextData->admin;
+					$avatarData->moderator = SP()->auths->forum_mod($contextData->ID);
 
 					# get email address handling sp user objects with type of guest
-					if ($contextData instanceof spUser && $contextData->guest) {
+					if ($contextData instanceof spcUser && $contextData->guest) {
 						$avatarData->email = $contextData->guest_email;
 					} else {
 						$avatarData->email = $contextData->user_email;
@@ -764,12 +155,12 @@ function sp_UserAvatar($args = '', $contextData = '') {
 						$user = get_userdata((int) $contextData);
 					} else {
 						# email address passed in
-						$user = get_user_by('email', sp_esc_str($contextData));
+						$user = get_user_by('email', SP()->filters->str($contextData));
 					}
 					if ($user) {
-						$avatarData->userId	 = $user->ID;
-						$avatarData->email	 = $user->user_email;
-						$avatarData->avatar	 = sp_get_member_item($user->ID, 'avatar');
+						$avatarData->userId = $user->ID;
+						$avatarData->email  = $user->user_email;
+						$avatarData->avatar = SP()->memberData->get($user->ID, 'avatar');
 					}
 				}
 				break;
@@ -780,7 +171,7 @@ function sp_UserAvatar($args = '', $contextData = '') {
 				break;
 		}
 
-		# loop through prorities until we find an avatar to use
+		# loop through priorities until we find an avatar to use
 		foreach ($spAvatars['sfavatarpriority'] as $priority) {
 			switch ($priority) {
 				case 0: # Gravatars
@@ -789,8 +180,8 @@ function sp_UserAvatar($args = '', $contextData = '') {
 						if (empty($avatarData->url)) {
 							$gravatar = false;
 						} else {
-							$gravatar	 = true;
-							$forceWidth	 = true; # force width to request since we only cache one size
+							$gravatar   = true;
+							$forceWidth = true; # force width to request since we only cache one size
 						}
 					} else {
 						$rating = $spAvatars['sfgmaxrating'];
@@ -813,8 +204,8 @@ function sp_UserAvatar($args = '', $contextData = '') {
 						$avatarData->url = 'https://www.gravatar.com/avatar/'.md5(strtolower($avatarData->email))."?d=404&size=$avatarData->size&rating=$grating";
 
 						# Is there an gravatar?
-						$headers	 = wp_get_http_headers($avatarData->url);
-						$gravatar	 = (!empty($headers['Content-Disposition']));
+						$headers  = wp_get_http_headers($avatarData->url);
+						$gravatar = (!empty($headers['Content-Disposition']));
 					}
 
 					# ignore gravatar blank images
@@ -829,8 +220,8 @@ function sp_UserAvatar($args = '', $contextData = '') {
 					if (!empty($wp)) {
 						$avatar .= sp_build_avatar_display($avatarData->userId, $wp, $link);
 					} else {
-						if ($avatarData->userId) $avatarData->email	 = $avatarData->userId;
-						$avatar				 .= sp_build_avatar_display($avatarData->userId, get_avatar($avatarData->email, $avatarData->size), $link);
+						if ($avatarData->userId) $avatarData->email = $avatarData->userId;
+						$avatar .= sp_build_avatar_display($avatarData->userId, get_avatar($avatarData->email, $avatarData->size), $link);
 					}
 					$avatar .= '</div>';
 
@@ -841,20 +232,21 @@ function sp_UserAvatar($args = '', $contextData = '') {
 						return $avatar;
 					} else {
 						echo $avatar."\n";
+
 						return;
 					}
 
 				case 2: # Uploaded avatars
 					$userAvatar = $avatarData->avatar;
 					if (empty($userAvatar) && !empty($avatarData->userId)) {
-						$userAvatar = (isset($spThisUser) && $avatarData->userId == $spThisUser->ID) ? $spThisUser->avatar : sp_get_member_item($avatarData->userId, 'avatar');
+						$userAvatar = (isset(SP()->user->thisUser) && $avatarData->userId == SP()->user->thisUser->ID) ? SP()->user->thisUser->avatar : SP()->memberData->get($avatarData->userId, 'avatar');
 					}
 
 					if (!empty($userAvatar['uploaded'])) {
-						$avfile			 = $userAvatar['uploaded'];
-						$avatarData->url = SFAVATARURL.$avfile;
-						if (file_exists(SFAVATARDIR.$avfile)) {
-							$avatarData->path = SFAVATARDIR.$avfile;
+						$avfile          = $userAvatar['uploaded'];
+						$avatarData->url = SPAVATARURL.$avfile;
+						if (file_exists(SPAVATARDIR.$avfile)) {
+							$avatarData->path = SPAVATARDIR.$avfile;
 							break 2; # if uploaded avatar exists, show it
 						}
 					}
@@ -863,41 +255,41 @@ function sp_UserAvatar($args = '', $contextData = '') {
 				case 3: # SP default avatars
 				default:
 					if (empty($avatarData->userId)) {
-						$image = $spGlobals['defAvatars']['guest'];
+						$image = SP()->core->forumData['defAvatars']['guest'];
 					} else {
 						if ($avatarData->object) {
 							if ($avatarData->admin) {
-								$image = $spGlobals['defAvatars']['admin'];
+								$image = SP()->core->forumData['defAvatars']['admin'];
 							} elseif ($avatarData->moderator) {
-								$image = $spGlobals['defAvatars']['mod'];
+								$image = SP()->core->forumData['defAvatars']['mod'];
 							} else {
-								$image = $spGlobals['defAvatars']['member'];
+								$image = SP()->core->forumData['defAvatars']['member'];
 							}
 						} else {
-							if (sp_is_forum_admin($avatarData->userId)) {
-								$image = $spGlobals['defAvatars']['admin'];
-							} elseif (sp_is_forum_mod($avatarData->userId)) {
-								$image = $spGlobals['defAvatars']['mod'];
+							if (SP()->auths->forum_admin($avatarData->userId)) {
+								$image = SP()->core->forumData['defAvatars']['admin'];
+							} elseif (SP()->auths->forum_mod($avatarData->userId)) {
+								$image = SP()->core->forumData['defAvatars']['mod'];
 							} else {
-								$image = $spGlobals['defAvatars']['member'];
+								$image = SP()->core->forumData['defAvatars']['member'];
 							}
 						}
 					}
-					$avatarData->url	 = SFAVATARURL.'defaults/'.$image;
-					$avatarData->path	 = SFAVATARDIR.'defaults/'.$image;
+					$avatarData->url  = SPAVATARURL.'defaults/'.$image;
+					$avatarData->path = SPAVATARDIR.'defaults/'.$image;
 					break 2; # defaults, so show it
 
 				case 4: # Pool avatars
 					$userAvatar = $avatarData->avatar;
-					if (empty($userAvatar) && !empty($avatarData->userId) && isset($spThisUser)) {
-						$userAvatar = ($avatarData->userId == $spThisUser->ID) ? $spThisUser->avatar : sp_get_member_item($avatarData->userId, 'avatar');
+					if (empty($userAvatar) && !empty($avatarData->userId) && isset(SP()->user->thisUser)) {
+						$userAvatar = ($avatarData->userId == SP()->user->thisUser->ID) ? SP()->user->thisUser->avatar : SP()->memberData->get($avatarData->userId, 'avatar');
 					}
 
 					if (!empty($userAvatar['pool'])) {
-						$pavfile		 = $userAvatar['pool'];
-						$avatarData->url = SFAVATARPOOLURL.$pavfile;
-						if (file_exists(SFAVATARPOOLDIR.$pavfile)) {
-							$avatarData->path = SFAVATARPOOLDIR.$pavfile;
+						$pavfile         = $userAvatar['pool'];
+						$avatarData->url = SPAVATARDIR.$pavfile;
+						if (file_exists(SPAVATARPOOLDIR.$pavfile)) {
+							$avatarData->path = SPAVATARPOOLDIR.$pavfile;
 							break 2; # if pool avatar exists, show it
 						}
 					}
@@ -905,15 +297,15 @@ function sp_UserAvatar($args = '', $contextData = '') {
 
 				case 5: # Remote avatars
 					$userAvatar = $avatarData->avatar;
-					if (empty($userAvatar) && !empty($avatarData->userId) && isset($spThisUser)) {
-						$userAvatar = ($avatarData->userId == $spThisUser->ID) ? $spThisUser->avatar : sp_get_member_item($avatarData->userId, 'avatar');
+					if (empty($userAvatar) && !empty($avatarData->userId) && isset(SP()->user->thisUser)) {
+						$userAvatar = ($avatarData->userId == SP()->user->thisUser->ID) ? SP()->user->thisUser->avatar : SP()->memberData->get($avatarData->userId, 'avatar');
 					}
 
 					if (!empty($userAvatar['remote'])) {
-						$ravfile		 = $userAvatar['remote'];
+						$ravfile         = $userAvatar['remote'];
 						$avatarData->url = $ravfile;
 						# see if file exists
-						$response		 = wp_remote_get($avatarData->url);
+						$response = wp_remote_get($avatarData->url);
 						if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) == 200) {
 							$avatarData->path = $avatarData->url;
 							break 2; # if remote avatar exists, show it
@@ -929,10 +321,10 @@ function sp_UserAvatar($args = '', $contextData = '') {
 		if ($get) return $avatarData;
 
 		# now display the avatar
-		$width		 = ($forceWidth) ? " width='$avatarData->size'" : "";
-		$maxwidth	 = ($avatarData->size > 0) ? " style='max-width: {$avatarData->size}px'" : '';
+		$width    = ($forceWidth) ? " width='$avatarData->size'" : "";
+		$maxwidth = ($avatarData->size > 0) ? " style='max-width: {$avatarData->size}px'" : '';
 
-		$avatar = sp_build_avatar_display($avatarData->userId, "<img src='".esc_url($avatarData->url)."' class='$imgClass'$width$maxwidth alt='".sp_text('Avatar')."' />", $link);
+		$avatar = sp_build_avatar_display($avatarData->userId, "<img src='".esc_url($avatarData->url)."' class='$imgClass'$width$maxwidth alt='".SP()->primitives->front_text('Avatar')."' />", $link);
 
 		$avatar = "<div class='$tagClass'>$avatar</div>\n";
 
@@ -954,25 +346,21 @@ function sp_UserAvatar($args = '', $contextData = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_UserForumRank($args = '', $ranks) {
-	$defs	 = array(
-		'tagClass'	 => 'spForumRank',
-		'titleClass' => 'spForumRank',
-		'badgeClass' => 'spForumRank',
-		'showTitle'	 => 1,
-		'showBadge'	 => 1,
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_ForumRank_args', $a);
+	$defs = array('titleClass' => 'spForumRank',
+	              'badgeClass' => 'spForumRank',
+	              'showTitle'  => 1,
+	              'showBadge'  => 1,
+	              'echo'       => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumRank_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$titleClass	 = esc_attr($titleClass);
-	$badgeClass	 = esc_attr($badgeClass);
-	$showTitle	 = (int) $showTitle;
-	$showBadge	 = (int) $showBadge;
-	$echo		 = (int) $echo;
+	$titleClass = esc_attr($titleClass);
+	$badgeClass = esc_attr($badgeClass);
+	$showTitle  = (int) $showTitle;
+	$showBadge  = (int) $showBadge;
+	$echo       = (int) $echo;
 
 	if (!$showTitle && !$showBadge) return;
 
@@ -1005,25 +393,21 @@ function sp_UserForumRank($args = '', $ranks) {
 # --------------------------------------------------------------------------------------
 
 function sp_UserSpecialRank($args = '', $ranks) {
-	$defs	 = array(
-		'tagClass'	 => 'spSpecialRank',
-		'titleClass' => 'spSpecialRank',
-		'badgeClass' => 'spSpecialRank',
-		'showTitle'	 => 1,
-		'showBadge'	 => 1,
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_SpecialRank_args', $a);
+	$defs = array('titleClass' => 'spSpecialRank',
+	              'badgeClass' => 'spSpecialRank',
+	              'showTitle'  => 1,
+	              'showBadge'  => 1,
+	              'echo'       => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_SpecialRank_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$titleClass	 = esc_attr($titleClass);
-	$badgeClass	 = esc_attr($badgeClass);
-	$showTitle	 = (int) $showTitle;
-	$showBadge	 = (int) $showBadge;
-	$echo		 = (int) $echo;
+	$titleClass = esc_attr($titleClass);
+	$badgeClass = esc_attr($badgeClass);
+	$showTitle  = (int) $showTitle;
+	$showBadge  = (int) $showBadge;
+	$echo       = (int) $echo;
 
 	if (!$showTitle && !$showBadge) return;
 
@@ -1049,32 +433,26 @@ function sp_UserSpecialRank($args = '', $ranks) {
 # --------------------------------------------------------------------------------------
 #
 #	sp_UserMembership()
-#	Display a users usegroup memberships
+#	Display a users usergroup memberships
 #	Scope:	Site
 #	Version: 5.5.7
 #
 # --------------------------------------------------------------------------------------
 
 function sp_UserMembership($args = '', $memberships) {
-	global $spPaths;
-
-	$defs	 = array(
-		'tagClass'	 => 'spUserMemberships',
-		'titleClass' => 'spUserMemberships',
-		'badgeClass' => 'spUserMemberships',
-		'showTitle'	 => 1,
-		'showBadge'	 => 1,
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_UserMemberships_args', $a);
+	$defs = array('titleClass' => 'spUserMemberships',
+	              'badgeClass' => 'spUserMemberships',
+	              'showTitle'  => 1,
+	              'showBadge'  => 1,
+	              'echo'       => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_UserMemberships_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$showTitle	 = (int) $showTitle;
-	$showBadge	 = (int) $showBadge;
-	$echo		 = (int) $echo;
+	$showTitle = (int) $showTitle;
+	$showBadge = (int) $showBadge;
+	$echo      = (int) $echo;
 
 	if (!$showTitle && !$showBadge) return;
 
@@ -1082,7 +460,7 @@ function sp_UserMembership($args = '', $memberships) {
 	$out = '';
 	if (!empty($memberships)) {
 		foreach ($memberships as $membership) {
-			if ($membership['usergroup_badge'] && $showBadge) $out .= "<img src='".SF_STORE_URL.'/'.$spPaths['ranks'].'/'.$membership['usergroup_badge']."' class='$badgeClass' title='".esc_attr($membership['usergroup_name'])."' />";
+			if ($membership['usergroup_badge'] && $showBadge) $out .= "<img src='".SP_STORE_URL.'/'.SP()->plugin->storage['ranks'].'/'.$membership['usergroup_badge']."' class='$badgeClass' title='".esc_attr($membership['usergroup_name'])."' />";
 			if ($showTitle) {
 				$out .= "<p class='$titleClass'>".$membership['usergroup_name'].'</p>';
 			}
@@ -1105,32 +483,29 @@ function sp_UserMembership($args = '', $memberships) {
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
+
 function sp_LoggedInOutLabel($args = '', $inLabel = '', $outLabel = '', $outLabelMember = '') {
-	$defs	 = array(
-		'tagId'		 => 'spLoggedInOutLabel',
-		'tagClass'	 => 'spLabel',
-		'echo'		 => 1,
-	);
-	$a = wp_parse_args($args, $defs);
-	$a = apply_filters('sph_LoggedInOutLabel_args', $a);
+	$defs = array('tagId'    => 'spLoggedInOutLabel',
+	              'tagClass' => 'spLabel',
+	              'echo'     => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_LoggedInOutLabel_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		= esc_attr($tagId);
-	$tagClass	= esc_attr($tagClass);
-	$echo		= (int) $echo;
-
-	global $spThisUser, $spGuestCookie;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
 
 	if (is_user_logged_in() == true) {
-		$label = sp_filter_text_display(str_replace('%USERNAME%', $spThisUser->display_name, $inLabel));
-	} elseif ($spThisUser->offmember) {
-		$label = sp_filter_text_display(str_replace('%USERNAME%', $spThisUser->offmember, $outLabelMember));
+		$label = SP()->displayFilters->title(str_replace('%USERNAME%', SP()->user->thisUser->display_name, $inLabel));
+	} elseif (SP()->user->thisUser->offmember) {
+		$label = SP()->displayFilters->title(str_replace('%USERNAME%', SP()->user->thisUser->offmember, $outLabelMember));
 	} else {
 		# if they can not register then nothing to display
-		if (get_option('users_can_register') == false) return;		
-		if (!empty($spGuestCookie->display_name)) $outLabel	 .= ' ('.$spGuestCookie->display_name.')';
-		$label = sp_filter_text_display($outLabel);
+		if (get_option('users_can_register') == false) return;
+		if (!empty(SP()->user->guest_cookie->display_name)) $outLabel .= ' ('.SP()->user->guest_cookie->display_name.')';
+		$label = SP()->displayFilters->title($outLabel);
 	}
 	$out = "<div id='$tagId' class='$tagClass'>$label</div>\n";
 	$out = apply_filters('sph_LoggedInOutLabel', $out, $a);
@@ -1153,23 +528,18 @@ function sp_LoggedInOutLabel($args = '', $inLabel = '', $outLabel = '', $outLabe
 # --------------------------------------------------------------------------------------
 
 function sp_LogInOutButton($args = '', $inLabel = '', $outLabel = '', $toolTip = '') {
-	global $spGlobals;
-
-	$splogin = sp_get_option('sflogin');
+	$splogin = SP()->options->get('sflogin');
 	if ($splogin['spshowlogin'] == false) return;
 
-	$login	 = sp_get_option('sflogin');
-	$defs	 = array(
-		'tagId'		 => 'spLogInOutButton',
-		'tagClass'	 => 'spButton',
-		'logInLink'	 => '',
-		'logOutLink' => esc_url(wp_logout_url()),
-		'logInIcon'	 => 'sp_LogInOut.png',
-		'logOutIcon' => 'sp_LogInOut.png',
-		'iconClass'	 => 'spIcon',
-		'mobileMenu' => 0,
-		'echo'		 => 1,
-	);
+	$defs = array('tagId'      => 'spLogInOutButton',
+	              'tagClass'   => 'spButton',
+	              'logInLink'  => '',
+	              'logOutLink' => esc_url(wp_logout_url()),
+	              'logInIcon'  => 'sp_LogInOut.png',
+	              'logOutIcon' => 'sp_LogInOut.png',
+	              'iconClass'  => 'spIcon',
+	              'mobileMenu' => 0,
+	              'echo'       => 1,);
 
 	# check if alt urls in options and change before
 	if (empty($defs['logInLink']) && !empty($splogin['spaltloginurl'])) {
@@ -1180,39 +550,39 @@ function sp_LogInOutButton($args = '', $inLabel = '', $outLabel = '', $toolTip =
 		$defs['logOutLink'] = esc_url($splogin['spaltlogouturl']);
 	}
 
-	$a	 = wp_parse_args($args, $defs);
-	$a	 = apply_filters('sph_LogInOutButton_args', $a);
+	$a = wp_parse_args($args, $defs);
+	$a = apply_filters('sph_LogInOutButton_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$logInLink	 = esc_url($logInLink);
-	$logOutLink	 = esc_url($logOutLink);
-	$logInIcon	 = sanitize_file_name($logInIcon);
-	$logOutIcon	 = sanitize_file_name($logOutIcon);
-	$iconClass	 = esc_attr($iconClass);
-	$toolTip	 = esc_attr($toolTip);
-	$mobileMenu	 = (int) $mobileMenu;
-	$echo		 = (int) $echo;
+	$tagId      = esc_attr($tagId);
+	$tagClass   = esc_attr($tagClass);
+	$logInLink  = esc_url($logInLink);
+	$logOutLink = esc_url($logOutLink);
+	$logInIcon  = sanitize_file_name($logInIcon);
+	$logOutIcon = sanitize_file_name($logOutIcon);
+	$iconClass  = esc_attr($iconClass);
+	$toolTip    = esc_attr($toolTip);
+	$mobileMenu = (int) $mobileMenu;
+	$echo       = (int) $echo;
 
-	$br	 = ($mobileMenu) ? '<br />' : '';
+	$br  = ($mobileMenu) ? '<br />' : '';
 	$out = '';
 
 	if (is_user_logged_in() == true) {
 		if ($mobileMenu) $out .= sp_open_grid_cell();
 		$out .= "<a class='$tagClass' id='$tagId' title='$toolTip' ";
 		$out .= "href='$logOutLink'>";
-		if (!empty($logOutIcon)) $out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $logOutIcon).$br;
-		if (!empty($outLabel)) $out .= sp_filter_title_display($outLabel);
+		if (!empty($logOutIcon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $logOutIcon).$br;
+		if (!empty($outLabel)) $out .= SP()->displayFilters->title($outLabel);
 		$out .= "</a>\n";
 		if ($mobileMenu) $out .= sp_close_grid_cell();
 	} else {
 		if ($mobileMenu) $out .= sp_open_grid_cell();
 
 		# add classname for event listener
-		if (empty($logInLink)) $tagClass	 .= ' spLogInOut';
-		$out		 .= "<a class='$tagClass' id='$tagId' title='$toolTip' ";
+		if (empty($logInLink)) $tagClass .= ' spLogInOut';
+		$out .= "<a class='$tagClass' id='$tagId' title='$toolTip' ";
 		if (!empty($logInLink)) {
 			$out .= "href='$logInLink'>";
 		} else {
@@ -1223,8 +593,8 @@ function sp_LogInOutButton($args = '', $inLabel = '', $outLabel = '', $toolTip =
 			}
 		}
 
-		if (!empty($logInIcon)) $out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $logInIcon).$br;
-		if (!empty($inLabel)) $out .= sp_filter_title_display($inLabel);
+		if (!empty($logInIcon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $logInIcon).$br;
+		if (!empty($inLabel)) $out .= SP()->displayFilters->title($inLabel);
 		$out .= "</a>\n";
 		if ($mobileMenu) $out .= sp_close_grid_cell();
 	}
@@ -1252,32 +622,31 @@ function sp_LoginForm($args = '') {
 	# no form if logged in
 	if (is_user_logged_in() == true) return;
 
-	$splogin = sp_get_option('sflogin');
+	$splogin = SP()->options->get('sflogin');
 	if ($splogin['spshowlogin'] == false) return;
 
-	$defs = array(
-		'tagId'				 => 'spLoginForm',
-		'tagClass'			 => 'spForm',
-		'controlFieldset'	 => 'spControl',
-		'controlInput'		 => 'spControl',
-		'controlSubmit'		 => 'spSubmit',
-		'controlIcon'		 => 'spIcon',
-		'controlLink'		 => 'spLink',
-		'iconName'			 => 'sp_LogInOut.png',
-		'labelUserName'		 => '',
-		'labelPassword'		 => '',
-		'labelRemember'		 => '',
-		'labelRegister'		 => '',
-		'labelLostPass'		 => '',
-		'labelSubmit'		 => '',
-		'showRegister'		 => 1,
-		'showLostPass'		 => 1,
-		'loginLink'			 => esc_url(wp_login_url()),
-		'registerLink'		 => esc_url(wp_registration_url()),
-		'passwordLink'		 => esc_url(wp_lostpassword_url()),
-		'separator'			 => ' | ',
-		'echo'				 => 1
-	);
+	$defs = array('tagId'           => 'spLoginForm',
+	              'tagClass'        => 'spForm',
+				  'labelClass'		=> '',
+	              'controlFieldset' => 'spControl',
+	              'controlInput'    => 'spControl',
+	              'controlSubmit'   => 'spSubmit',
+	              'controlIcon'     => 'spIcon',
+	              'controlLink'     => 'spLink',
+	              'iconName'        => 'sp_LogInOut.png',
+	              'labelUserName'   => '',
+	              'labelPassword'   => '',
+	              'labelRemember'   => '',
+	              'labelRegister'   => '',
+	              'labelLostPass'   => '',
+	              'labelSubmit'     => '',
+	              'showRegister'    => 1,
+	              'showLostPass'    => 1,
+	              'loginLink'       => esc_url(wp_login_url()),
+	              'registerLink'    => esc_url(wp_registration_url()),
+	              'passwordLink'    => esc_url(wp_lostpassword_url()),
+	              'separator'       => ' | ',
+	              'echo'            => 1);
 
 	# check if alt urls in options and change before
 	if ($defs['loginLink'] == esc_url(wp_login_url()) && !empty($splogin['spaltloginurl'])) {
@@ -1287,31 +656,32 @@ function sp_LoginForm($args = '') {
 		$defs['registerLink'] = esc_url($splogin['spaltregisterurl']);
 	}
 
-	$a	 = wp_parse_args($args, $defs);
-	$a	 = apply_filters('sph_LoginForm_args', $a);
+	$a = wp_parse_args($args, $defs);
+	$a = apply_filters('sph_LoginForm_args', $a);
 
 	# sanitize before use
-	$a['tagId']				 = esc_attr($a['tagId']);
-	$a['tagClass']			 = esc_attr($a['tagClass']);
-	$a['controlFieldset']	 = esc_attr($a['controlFieldset']);
-	$a['controlInput']		 = esc_attr($a['controlInput']);
-	$a['controlSubmit']		 = esc_attr($a['controlSubmit']);
-	$a['controlIcon']		 = esc_attr($a['controlIcon']);
-	$a['controlLink']		 = esc_attr($a['controlLink']);
-	$a['iconName']			 = sanitize_file_name($a['iconName']);
-	$a['showRegister']		 = (int) $a['showRegister'];
-	$a['showLostPass']		 = (int) $a['showLostPass'];
-	$a['labelUserName']		 = sp_filter_title_display($a['labelUserName']);
-	$a['labelPassword']		 = sp_filter_title_display($a['labelPassword']);
-	$a['labelRemember']		 = sp_filter_title_display($a['labelRemember']);
-	$a['labelRegister']		 = sp_filter_title_display($a['labelRegister']);
-	$a['labelLostPass']		 = sp_filter_title_display($a['labelLostPass']);
-	$a['labelSubmit']		 = sp_filter_title_display($a['labelSubmit']);
-	$a['loginLink']			 = esc_url($a['loginLink']);
-	$a['registerLink']		 = esc_url($a['registerLink']);
-	$a['passwordLink']		 = esc_url($a['passwordLink']);
-	$a['separator']			 = esc_attr($a['separator']);
-	$a['echo']				 = (int) $a['echo'];
+	$a['tagId']           = esc_attr($a['tagId']);
+	$a['labelClass']	  = esc_attr($a['labelClass']);
+	$a['tagClass']        = esc_attr($a['tagClass']);
+	$a['controlFieldset'] = esc_attr($a['controlFieldset']);
+	$a['controlInput']    = esc_attr($a['controlInput']);
+	$a['controlSubmit']   = esc_attr($a['controlSubmit']);
+	$a['controlIcon']     = esc_attr($a['controlIcon']);
+	$a['controlLink']     = esc_attr($a['controlLink']);
+	$a['iconName']        = sanitize_file_name($a['iconName']);
+	$a['showRegister']    = (int) $a['showRegister'];
+	$a['showLostPass']    = (int) $a['showLostPass'];
+	$a['labelUserName']   = SP()->displayFilters->title($a['labelUserName']);
+	$a['labelPassword']   = SP()->displayFilters->title($a['labelPassword']);
+	$a['labelRemember']   = SP()->displayFilters->title($a['labelRemember']);
+	$a['labelRegister']   = SP()->displayFilters->title($a['labelRegister']);
+	$a['labelLostPass']   = SP()->displayFilters->title($a['labelLostPass']);
+	$a['labelSubmit']     = SP()->displayFilters->title($a['labelSubmit']);
+	$a['loginLink']       = esc_url($a['loginLink']);
+	$a['registerLink']    = esc_url($a['registerLink']);
+	$a['passwordLink']    = esc_url($a['passwordLink']);
+	$a['separator']       = esc_attr($a['separator']);
+	$a['echo']            = (int) $a['echo'];
 
 	$out = "<div id='".$a['tagId']."' class='".$a['tagClass']."'>\n";
 	$out .= sp_inline_login_form($a);
@@ -1336,50 +706,46 @@ function sp_LoginForm($args = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_RegisterButton($args = '', $label = '', $toolTip = '') {
-	global $spGlobals;
-
-	$splogin = sp_get_option('sflogin');
+	$splogin = SP()->options->get('sflogin');
 	if ($splogin['spshowregister'] == false) return;
 
 	# should we show the register button?
-	if (is_user_logged_in() == true || get_option('users_can_register') == false || $spGlobals['lockdown'] == true) return;
+	if (is_user_logged_in() == true || get_option('users_can_register') == false || SP()->core->forumData['lockdown'] == true) return;
 
-	$defs = array(
-		'tagId'		 => 'spRegisterButton',
-		'tagClass'	 => 'spButton',
-		'link'		 => esc_url(wp_registration_url()),
-		'icon'		 => 'sp_Registration.png',
-		'iconClass'	 => 'spIcon',
-		'mobileMenu' => 0,
-		'echo'		 => 1,
-	);
+	$defs = array('tagId'      => 'spRegisterButton',
+	              'tagClass'   => 'spButton',
+	              'link'       => esc_url(wp_registration_url()),
+	              'icon'       => 'sp_Registration.png',
+	              'iconClass'  => 'spIcon',
+	              'mobileMenu' => 0,
+	              'echo'       => 1,);
 
 	# check if alt urls in options and change before
 	if ($defs['link'] == esc_url(wp_registration_url()) && !empty($splogin['spaltregisterurl'])) {
 		$defs['link'] = esc_url($splogin['spaltregisterurl']);
 	}
 
-	$a	 = wp_parse_args($args, $defs);
-	$a	 = apply_filters('sph_RegisterButton_args', $a);
+	$a = wp_parse_args($args, $defs);
+	$a = apply_filters('sph_RegisterButton_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$link		 = esc_url($link);
-	$icon		 = sanitize_file_name($icon);
-	$iconClass	 = esc_attr($iconClass);
-	$toolTip	 = esc_attr($toolTip);
-	$mobileMenu	 = (int) $mobileMenu;
-	$echo		 = (int) $echo;
+	$tagId      = esc_attr($tagId);
+	$tagClass   = esc_attr($tagClass);
+	$link       = esc_url($link);
+	$icon       = sanitize_file_name($icon);
+	$iconClass  = esc_attr($iconClass);
+	$toolTip    = esc_attr($toolTip);
+	$mobileMenu = (int) $mobileMenu;
+	$echo       = (int) $echo;
 
 	$br = ($mobileMenu) ? '<br />' : '';
 
 	$out = '';
 	if ($mobileMenu) $out .= sp_open_grid_cell();
 	$out .= "<a class='$tagClass' id='$tagId' title='$toolTip' href='$link'>";
-	if (!empty($icon)) $out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
-	if (!empty($label)) $out .= sp_filter_title_display($label);
+	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
+	if (!empty($label)) $out .= SP()->displayFilters->title($label);
 	$out .= "</a>\n";
 	if ($mobileMenu) $out .= sp_close_grid_cell();
 
@@ -1404,41 +770,38 @@ function sp_RegisterButton($args = '', $label = '', $toolTip = '') {
 
 function sp_ProfileEditButton($args = '', $label = '', $toolTip = '') {
 	if (!is_user_logged_in()) return;
-	global $spThisUser;
 
-	$defs	 = array(
-		'tagId'		 => 'spProfileEditButton',
-		'tagClass'	 => 'spButton',
-		'link'		 => sp_build_profile_formlink($spThisUser->ID),
-		'icon'		 => 'sp_ProfileForm.png',
-		'iconClass'	 => 'spIcon',
-		'mobileMenu' => 0,
-		'echo'		 => 1
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_ProfileEditButton_args', $a);
+	$defs = array('tagId'      => 'spProfileEditButton',
+	              'tagClass'   => 'spButton',
+	              'link'       => sp_build_profile_formlink(SP()->user->thisUser->ID),
+	              'icon'       => 'sp_ProfileForm.png',
+	              'iconClass'  => 'spIcon',
+	              'mobileMenu' => 0,
+	              'echo'       => 1);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ProfileEditButton_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$link		 = esc_url($link);
-	$icon		 = sanitize_file_name($icon);
-	$iconClass	 = esc_attr($iconClass);
-	$toolTip	 = esc_attr($toolTip);
-	$mobileMenu	 = (int) $mobileMenu;
-	$echo		 = (int) $echo;
+	$tagId      = esc_attr($tagId);
+	$tagClass   = esc_attr($tagClass);
+	$link       = esc_url($link);
+	$icon       = sanitize_file_name($icon);
+	$iconClass  = esc_attr($iconClass);
+	$toolTip    = esc_attr($toolTip);
+	$mobileMenu = (int) $mobileMenu;
+	$echo       = (int) $echo;
 
-	$br	 = ($mobileMenu) ? '<br />' : '';
+	$br  = ($mobileMenu) ? '<br />' : '';
 	$out = '';
 
-	if ($mobileMenu) $out		 .= sp_open_grid_cell();
-	if ($mobileMenu) $tagClass	 = '';
-	$out		 .= "<a rel='nofollow' class='$tagClass' id='$tagId' title='$toolTip' href='$link'>";
-	if (!empty($icon)) $out		 .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
-	if (!empty($label)) $out		 .= sp_filter_title_display($label);
-	$out		 .= "</a>\n";
-	if ($mobileMenu) $out		 .= sp_close_grid_cell();
+	if ($mobileMenu) $out .= sp_open_grid_cell();
+	if ($mobileMenu) $tagClass = '';
+	$out .= "<a rel='nofollow' class='$tagClass' id='$tagId' title='$toolTip' href='$link'>";
+	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
+	if (!empty($label)) $out .= SP()->displayFilters->title($label);
+	$out .= "</a>\n";
+	if ($mobileMenu) $out .= sp_close_grid_cell();
 
 	$out = apply_filters('sph_ProfileEditButton', $out, $a);
 
@@ -1460,39 +823,36 @@ function sp_ProfileEditButton($args = '', $label = '', $toolTip = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_MemberButton($args = '', $label = '', $toolTip = '') {
-	global $spVars;
-	if (!sp_get_auth('view_members_list', $spVars['forumid'])) return;
+	if (!SP()->auths->get('view_members_list', SP()->rewrites->pageData['forumid'])) return;
 
-	$defs	 = array(
-		'tagId'		 => 'spMemberButton',
-		'tagClass'	 => 'spButton',
-		'link'		 => SPMEMBERLIST,
-		'icon'		 => 'sp_MemberList.png',
-		'iconClass'	 => 'spIcon',
-		'mobileMenu' => 0,
-		'echo'		 => 1
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_MemberButton_args', $a);
+	$defs = array('tagId'      => 'spMemberButton',
+	              'tagClass'   => 'spButton',
+	              'link'       => SPMEMBERLIST,
+	              'icon'       => 'sp_MemberList.png',
+	              'iconClass'  => 'spIcon',
+	              'mobileMenu' => 0,
+	              'echo'       => 1);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_MemberButton_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$link		 = esc_url($link);
-	$icon		 = sanitize_file_name($icon);
-	$iconClass	 = esc_attr($iconClass);
-	$toolTip	 = esc_attr($toolTip);
-	$mobileMenu	 = (int) $mobileMenu;
-	$echo		 = (int) $echo;
+	$tagId      = esc_attr($tagId);
+	$tagClass   = esc_attr($tagClass);
+	$link       = esc_url($link);
+	$icon       = sanitize_file_name($icon);
+	$iconClass  = esc_attr($iconClass);
+	$toolTip    = esc_attr($toolTip);
+	$mobileMenu = (int) $mobileMenu;
+	$echo       = (int) $echo;
 
-	$br	 = ($mobileMenu) ? '<br />' : '';
+	$br  = ($mobileMenu) ? '<br />' : '';
 	$out = '';
 
 	if ($mobileMenu) $out .= sp_open_grid_cell();
 	$out .= "<a class='$tagClass' id='$tagId' title='$toolTip' href='$link'>";
-	if (!empty($icon)) $out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
-	if (!empty($label)) $out .= sp_filter_title_display($label);
+	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
+	if (!empty($label)) $out .= SP()->displayFilters->title($label);
 	$out .= '</a>';
 	if ($mobileMenu) $out .= sp_close_grid_cell();
 
@@ -1516,28 +876,25 @@ function sp_MemberButton($args = '', $label = '', $toolTip = '') {
 
 function sp_LastVisitLabel($args = '', $label = '') {
 	# should we show the last visit label?
-	global $spThisUser;
-	if (empty($spThisUser->lastvisit)) return;
+	if (empty(SP()->user->thisUser->lastvisit)) return;
 
-	$defs	 = array(
-		'tagId'		 => 'spLastVisitLabel',
-		'tagClass'	 => 'spLabelSmall',
-		'echo'		 => 1,
-		'get'		 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_LastVisitLabel_args', $a);
+	$defs = array('tagId'    => 'spLastVisitLabel',
+	              'tagClass' => 'spLabelSmall',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_LastVisitLabel_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$echo		 = (int) $echo;
-	$get		 = (int) $get;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
-	if ($get) return $spThisUser->lastvisit;
+	if ($get) return SP()->user->thisUser->lastvisit;
 
-	$label = sp_filter_title_display(str_replace('%LASTVISIT%', sp_date('d', $spThisUser->lastvisit), $label));
+	$label = SP()->displayFilters->title(str_replace('%LASTVISIT%', SP()->dateTime->format_date('d', SP()->user->thisUser->lastvisit), $label));
 
 	$out = "<span id='$tagId' class='$tagClass'>$label</span>\n";
 	$out = apply_filters('sph_LastVisitLabel', $out, $a);
@@ -1561,47 +918,46 @@ function sp_LastVisitLabel($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_QuickLinksForum($args = '', $label = '') {
-	$defs	 = array(
-		'tagId'		 => 'spQuickLinksForum',
-		'tagClass'	 => 'spControl',
-		'length'	 => 40,
-		'showSubs'	 => 1,
-		'echo'		 => 1
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_QuickLinksForum_args', $a);
+	$defs = array('tagId'    => 'spQuickLinksForum',
+	              'tagClass' => 'spControl',
+	              'length'   => 40,
+	              'showSubs' => 1,
+	              'echo'     => 1);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_QuickLinksForum_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$length		 = (int) $length;
-	$showSubs	 = (int) $showSubs;
-	$echo		 = (int) $echo;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$length   = (int) $length;
+	$showSubs = (int) $showSubs;
+	$echo     = (int) $echo;
 
 	# load data and check if empty or denied
-	$groups = new spGroupView('', false);
+	$groups = new spcGroupView('', false);
 	if ($groups->groupViewStatus == 'no access' || $groups->groupViewStatus == 'no data') return;
 
-	$out = "<div class='$tagClass' id='$tagId'>\n";
+	$out = "<div class='spQuickLinks $tagClass' id='$tagId'>\n";
 
 	if (!empty($label)) {
-		$label	 = sp_filter_title_display($label);
-		$indent	 = '&nbsp;&nbsp;';
+		$label  = SP()->displayFilters->title($label);
+//		$indent = '&nbsp;&nbsp;';
+		$indent = '';
 	}
-	if (empty($length)) $length	 = 40;
-	$level	 = 0;
+	if (empty($length)) $length = 40;
+	$level = 0;
 
 	if ($groups->pageData) {
-		$out .= "<select id='spQuickLinksForumSelect' class='$tagClass' name='spQuickLinksForumSelect'>\n";
+		$out .= "<select id='spQuickLinksForumSelect' class='quick-links $tagClass' name='spQuickLinksForumSelect'>\n";
 
 		if ($label) $out .= '<option>'.$label.'</option>'."\n";
 		foreach ($groups->pageData as $group) {
-			$out .= '<optgroup class="spList" label="'.esc_attr($indent.sp_create_name_extract($group->group_name)).'">'."\n";
+			$out .= '<optgroup class="spList" label="'.esc_attr($indent.SP()->primitives->create_name_extract($group->group_name)).'">'."\n";
 			if ($group->forums) {
 				foreach ($group->forums as $forum) {
 					$out .= '<option value="'.$forum->forum_permalink.'">';
-					$out .= str_repeat($indent, $level).sp_create_name_extract($forum->forum_name, $length).'</option>'."\n";
+					$out .= str_repeat($indent, $level).SP()->primitives->create_name_extract($forum->forum_name, $length).'</option>'."\n";
 					if (!empty($forum->subforums) && $showSubs) $out .= sp_compile_forums($forum->subforums, $forum->forum_id, 1, true);
 				}
 			}
@@ -1632,31 +988,27 @@ function sp_QuickLinksForum($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_QuickLinksTopic($args = '', $label = '') {
-	global $spThisUser, $spVars;
-
-	$defs	 = array(
-		'tagClass'	 => 'spControl',
-		'length'	 => 40,
-		'show'		 => 20,
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_QuickLinksTopic_args', $a);
+	$defs = array('tagClass' => 'spControl',
+	              'length'   => 40,
+	              'show'     => 20,
+	              'echo'     => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_QuickLinksTopic_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr('spQuickLinksTopic');
-	$tagClass	 = esc_attr($tagClass);
-	$length		 = (int) $length;
-	$show		 = (int) $show;
-	$echo		 = (int) $echo;
+	$tagId    = esc_attr('spQuickLinksTopic');
+	$tagClass = esc_attr($tagClass);
+	$length   = (int) $length;
+	$show     = (int) $show;
+	$echo     = (int) $echo;
 
-	$spVars['QuickLinks']['length']	 = $length;
-	$spVars['QuickLinks']['show']	 = $show;
-	$spVars['QuickLinks']['label']	 = $label;
+	SP()->rewrites->pageData['QuickLinks']['length'] = $length;
+	SP()->rewrites->pageData['QuickLinks']['show']   = $show;
+	SP()->rewrites->pageData['QuickLinks']['label']  = $label;
 
 	$out = '';
-	$out .= "<div class='$tagClass' id='$tagId'>\n";
+	$out .= "<div class='spQuickLinks $tagClass' id='$tagId'>\n";
 	$out .= "</div>\n";
 
 	if ($echo) {
@@ -1679,41 +1031,39 @@ function sp_QuickLinksTopic($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_PopulateQuickLinksTopic() {
-	global $spThisUser, $spVars;
-
-	$length	 = $spVars['QuickLinks']['length'];
-	$show	 = $spVars['QuickLinks']['show'];
-	$label	 = $spVars['QuickLinks']['label'];
+	$length = SP()->rewrites->pageData['QuickLinks']['length'];
+	$show   = SP()->rewrites->pageData['QuickLinks']['show'];
+	$label  = SP()->rewrites->pageData['QuickLinks']['label'];
 
 	$out = '';
 
-	if (!empty($spThisUser->newposts['topics'])) {
-		$spList = new spTopicList(array_slice($spThisUser->newposts['topics'], 0, $show, true), $show, true, '', 0, 1, 'topic quick links');
+	if (!empty(SP()->user->thisUser->newposts['topics'])) {
+		$spList = new spcTopicList(array_slice(SP()->user->thisUser->newposts['topics'], 0, $show, true), $show, true, '', 0, 1, 'topic quick links');
 	} else {
-		$spList = new spTopicList('', $show, true, '', 0, 1, 'topic quick links');
+		$spList = new spcTopicList('', $show, true, '', 0, 1, 'topic quick links');
 	}
 	if (!empty($spList->listData)) {
-		$out		 .= "<select id='spQuickLinksTopicSelect'>\n";
-		$out		 .= "<option>$label</option>\n";
-		$thisForum	 = 0;
-		$group		 = false;
+		$out .= "<select class='quick-inks' id='spQuickLinksTopicSelect'>\n";
+		$out .= "<option>$label</option>\n";
+		$thisForum = 0;
+		$group     = false;
 		foreach ($spList->listData as $spPost) {
 			if ($spPost->forum_id != $thisForum) {
-				if ($group) $out		 .= '</optgroup>';
-				$out		 .= "<optgroup class='spList' label='".esc_attr(sp_create_name_extract($spPost->forum_name, $length))."'>\n";
-				$thisForum	 = $spPost->forum_id;
-				$group		 = true;
+				if ($group) $out .= '</optgroup>';
+				$out .= "<optgroup class='spList' label='".esc_attr(SP()->primitives->create_name_extract($spPost->forum_name, $length))."'>\n";
+				$thisForum = $spPost->forum_id;
+				$group     = true;
 			}
-			$class	 = 'spPostRead';
-			$title	 = "title='".sp_paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonNone.png")."'";
+			$class = 'spPostRead';
+			$title = "title='".SP()->theme->paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonNone.png")."'";
 			if ($spPost->post_status != 0) {
-				$class	 = 'spPostMod';
-				$title	 = "title='".sp_paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonRed.png")."'";
+				$class = 'spPostMod';
+				$title = "title='".SP()->theme->paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonRed.png")."'";
 			} elseif (sp_is_in_users_newposts($spPost->topic_id)) {
-				$class	 = 'spPostNew';
-				$title	 = "title='".sp_paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonBlue.png")."'";
+				$class = 'spPostNew';
+				$title = "title='".SP()->theme->paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonBlue.png")."'";
 			}
-			$out .= "<option class='$class' $title value='$spPost->post_permalink'>".sp_create_name_extract($spPost->topic_name, $length)."</option>\n";
+			$out .= "<option class='$class' $title value='$spPost->post_permalink'>".SP()->primitives->create_name_extract($spPost->topic_name, $length)."</option>\n";
 		}
 		$out .= "</optgroup>\n";
 		$out .= "</select>\n";
@@ -1734,45 +1084,40 @@ function sp_PopulateQuickLinksTopic() {
 # --------------------------------------------------------------------------------------
 
 function sp_QuickLinksForumMobile($args = '', $label = '') {
-	global $spThisUser;
+	$defs = array('tagIdControl'  => 'spQuickLinksForumMobile',
+	              'tagClass'      => 'spControl',
+	              'tagIdList'     => 'spQuickLinksMobileForumList',
+	              'listClass'     => 'spQuickLinksList',
+	              'listDataClass' => 'spQuickLinksGroup',
+	              'length'        => 40,
+	              'showSubs'      => 1,
+	              'openIcon'      => 'sp_GroupOpen.png',
+	              'closeIcon'     => 'sp_GroupClose.png',
+	              'echo'          => 1);
 
-	$defs = array(
-		'tagIdControl'	 => 'spQuickLinksForumMobile',
-		'tagClass'		 => 'spControl',
-		'tagIdList'		 => 'spQuickLinksMobileForumList',
-		'listClass'		 => 'spQuickLinksList',
-		'listDataClass'	 => 'spQuickLinksGroup',
-		'length'		 => 40,
-		'showSubs'		 => 1,
-		'openIcon'		 => 'sp_GroupOpen.png',
-		'closeIcon'		 => 'sp_GroupClose.png',
-		'echo'			 => 1
-	);
-
-	$a	 = wp_parse_args($args, $defs);
-	$a	 = apply_filters('sph_QuickLinksForumMobile_args', $a);
+	$a = wp_parse_args($args, $defs);
+	$a = apply_filters('sph_QuickLinksForumMobile_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagIdControl	 = esc_attr($tagIdControl);
-	$tagClass		 = esc_attr($tagClass);
-	$tagIdList		 = esc_attr($tagIdList);
-	$listClass		 = esc_attr($listClass);
-	$listDataClass	 = esc_attr($listDataClass);
-	$openIcon		 = sp_paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($openIcon));
-	$closeIcon		 = sp_paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($closeIcon));
-	$showSubs		 = (int) $showSubs;
-	$length			 = (int) $length;
-	$echo			 = (int) $echo;
+	$tagIdControl  = esc_attr($tagIdControl);
+	$tagClass      = esc_attr($tagClass);
+	$tagIdList     = esc_attr($tagIdList);
+	$listClass     = esc_attr($listClass);
+	$listDataClass = esc_attr($listDataClass);
+	$openIcon      = SP()->theme->paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($openIcon));
+	$closeIcon     = SP()->theme->paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($closeIcon));
+	$showSubs      = (int) $showSubs;
+	$length        = (int) $length;
+	$echo          = (int) $echo;
 
 	# load data and check if empty or denied
-	$groups = new spGroupView('', false);
+	$groups = new spcGroupView('', false);
 	if ($groups->groupViewStatus == 'no access' || $groups->groupViewStatus == 'no data') return;
 
-	if (!empty($label)) $label	 = sp_filter_title_display($label);
-	if (empty($length)) $length	 = 40;
-	$level	 = 0;
-	$indent	 = '&nbsp;&nbsp;';
+	if (!empty($label)) $label = SP()->displayFilters->title($label);
+	if (empty($length)) $length = 40;
+	$indent = '&nbsp;&nbsp;';
 
 	$out = '';
 	if ($groups->pageData) {
@@ -1784,11 +1129,11 @@ function sp_QuickLinksForumMobile($args = '', $label = '') {
 
 		$out .= "<div id='$tagIdList' class='$listClass' style='display:none'>\n";
 		foreach ($groups->pageData as $group) {
-			$out .= "<div class='$listDataClass'><div>".esc_attr($indent.sp_create_name_extract($group->group_name))."</div>\n";
+			$out .= "<div class='$listDataClass'><div>".esc_attr($indent.SP()->primitives->create_name_extract($group->group_name))."</div>\n";
 			if ($group->forums) {
 				foreach ($group->forums as $forum) {
 					$out .= '<p><a href="'.$forum->forum_permalink.'">';
-					$out .= sp_create_name_extract($forum->forum_name, $length).'</a></p>'."\n";
+					$out .= SP()->primitives->create_name_extract($forum->forum_name, $length).'</a></p>'."\n";
 					if (!empty($forum->subforums) && $showSubs) $out .= sp_compile_forums_mobile($forum->subforums, $forum->forum_id, 1, true);
 				}
 			}
@@ -1816,73 +1161,69 @@ function sp_QuickLinksForumMobile($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_QuickLinksTopicMobile($args = '', $label = '') {
-	global $spThisUser;
-
-	$defs	 = array(
-		'tagIdControl'	 => 'spQuickLinksTopicMobile',
-		'tagClass'		 => 'spControl',
-		'tagIdList'		 => 'spQuickLinksMobileList',
-		'listClass'		 => 'spQuickLinksList',
-		'listDataClass'	 => 'spQuickLinksGroup',
-		'openIcon'		 => 'sp_GroupOpen.png',
-		'closeIcon'		 => 'sp_GroupClose.png',
-		'length'		 => 40,
-		'show'			 => 20,
-		'echo'			 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_QuickLinksTopicMobile_args', $a);
+	$defs = array('tagIdControl'  => 'spQuickLinksTopicMobile',
+	              'tagClass'      => 'spControl',
+	              'tagIdList'     => 'spQuickLinksMobileList',
+	              'listClass'     => 'spQuickLinksList',
+	              'listDataClass' => 'spQuickLinksGroup',
+	              'openIcon'      => 'sp_GroupOpen.png',
+	              'closeIcon'     => 'sp_GroupClose.png',
+	              'length'        => 40,
+	              'show'          => 20,
+	              'echo'          => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_QuickLinksTopicMobile_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagIdControl	 = esc_attr($tagIdControl);
-	$tagClass		 = esc_attr($tagClass);
-	$tagIdList		 = esc_attr($tagIdList);
-	$listClass		 = esc_attr($listClass);
-	$listDataClass	 = esc_attr($listDataClass);
-	$openIcon		 = sp_paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($openIcon));
-	$closeIcon		 = sp_paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($closeIcon));
-	$length			 = (int) $length;
-	$show			 = (int) $show;
-	$echo			 = (int) $echo;
+	$tagIdControl  = esc_attr($tagIdControl);
+	$tagClass      = esc_attr($tagClass);
+	$tagIdList     = esc_attr($tagIdList);
+	$listClass     = esc_attr($listClass);
+	$listDataClass = esc_attr($listDataClass);
+	$openIcon      = SP()->theme->paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($openIcon));
+	$closeIcon     = SP()->theme->paint_file_icon(SPTHEMEICONSURL, sanitize_file_name($closeIcon));
+	$length        = (int) $length;
+	$show          = (int) $show;
+	$echo          = (int) $echo;
 
-	if (!empty($label)) $label	 = sp_filter_title_display($label);
-	if (empty($length)) $length	 = 40;
+	if (!empty($label)) $label = SP()->displayFilters->title($label);
+	if (empty($length)) $length = 40;
 
 	$out = '';
-	if (!empty($spThisUser->newposts['topics'])) {
-		$spList = new spTopicList(array_slice($spThisUser->newposts['topics'], 0, $show, true), $show, true, '', 0, 1, 'topic quick links mobile');
+	if (!empty(SP()->user->thisUser->newposts['topics'])) {
+		$spList = new spcTopicList(array_slice(SP()->user->thisUser->newposts['topics'], 0, $show, true), $show, true, '', 0, 1, 'topic quick links mobile');
 	} else {
-		$spList = new spTopicList('', $show, true, '', 0, 1, 'topic quick links mobile');
+		$spList = new spcTopicList('', $show, true, '', 0, 1, 'topic quick links mobile');
 	}
 
 	if (!empty($spList->listData)) {
 		$out .= "<div class='$tagClass' id='$tagIdControl'>\n";
-		$out .= "<p id='spQLTitle'	data-tagidlist='$tagIdList' data-target='pQLFOpener' data-open='$openIcon' data-close='$closeIcon'>$label<span id='spQLOpener'><img src='$openIcon' /></span></p>\n";
+		$out .= "<p id='spQLTitle'  data-tagidlist='$tagIdList' data-target='pQLFOpener' data-open='$openIcon' data-close='$closeIcon'>$label<span id='spQLOpener'><img src='$openIcon' /></span></p>\n";
 		$out .= "</div>";
 
 		$out .= sp_InsertBreak('echo=false');
 
-		$out		 .= "<div id='$tagIdList' class='$listClass' style='display:none'>\n";
-		$thisForum	 = 0;
-		$group		 = false;
+		$out .= "<div id='$tagIdList' class='$listClass' style='display:none'>\n";
+		$thisForum = 0;
+		$group     = false;
 		foreach ($spList->listData as $spPost) {
 			if ($spPost->forum_id != $thisForum) {
-				if ($group) $out		 .= '</div>';
-				$out		 .= "<div class='$listDataClass'><p>".sp_create_name_extract($spPost->forum_name, $length)."</p>\n";
-				$thisForum	 = $spPost->forum_id;
-				$group		 = true;
+				if ($group) $out .= '</div>';
+				$out .= "<div class='$listDataClass'><p>".SP()->primitives->create_name_extract($spPost->forum_name, $length)."</p>\n";
+				$thisForum = $spPost->forum_id;
+				$group     = true;
 			}
-			$class	 = 'spPostRead';
-			$image	 = "<img src='".sp_paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonNone.png")."' alt='' />";
+			$class = 'spPostRead';
+			$image = "<img src='".SP()->theme->paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonNone.png")."' alt='' />";
 			if ($spPost->post_status != 0) {
-				$class	 = 'spPostMod';
-				$image	 = "<img src='".sp_paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonRed.png")."' alt='' />";
+				$class = 'spPostMod';
+				$image = "<img src='".SP()->theme->paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonRed.png")."' alt='' />";
 			} elseif (sp_is_in_users_newposts($spPost->topic_id)) {
-				$class	 = 'spPostNew';
-				$image	 = "<img src='".sp_paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonBlue.png")."' alt='' />";
+				$class = 'spPostNew';
+				$image = "<img src='".SP()->theme->paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonBlue.png")."' alt='' />";
 			}
-			$out .= "<p><a class='$class' href='$spPost->post_permalink'>$image&nbsp;&nbsp;".sp_create_name_extract($spPost->topic_name, $length)."</a></p>\n";
+			$out .= "<p><a class='$class' href='$spPost->post_permalink'>$image&nbsp;&nbsp;".SP()->primitives->create_name_extract($spPost->topic_name, $length)."</a></p>\n";
 		}
 		$out .= "</div></div>\n";
 	}
@@ -1907,66 +1248,64 @@ function sp_QuickLinksTopicMobile($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_BreadCrumbs($args = '', $homeLabel = '') {
-	$defs	 = array(
-		'tagId'			 => 'spBreadCrumbs',
-		'tagClass'		 => 'spBreadCrumbs',
-		'spanClass'		 => 'spBreadCrumbs',
-		'linkClass'		 => 'spLink',
-		'curClass'		 => 'spCurrentBreadcrumb',
-		'homeLink'		 => user_trailingslashit(SFSITEURL),
-		'groupLink'		 => 0,
-		'tree'			 => 0,
-		'truncate'		 => 0,
-		'icon'			 => 'sp_ArrowRight.png',
-		'iconClass'		 => 'spIcon',
-		'iconText'		 => '',
-		'homeIcon'		 => 'sp_ArrowRight.png',
-		'homeIconClass'	 => 'spIcon',
-		'homeText'		 => '',
-		'echo'			 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_BreadCrumbs_args', $a);
+	$defs = array('tagId'         => 'spBreadCrumbs',
+	              'tagClass'      => 'spBreadCrumbs',
+	              'spanClass'     => 'spBreadCrumbs',
+	              'linkClass'     => 'spLink',
+	              'curClass'      => 'spCurrentBreadcrumb',
+	              'homeLink'      => user_trailingslashit(SPSITEURL),
+	              'groupLink'     => 0,
+	              'tree'          => 0,
+	              'truncate'      => 0,
+	              'icon'          => 'sp_ArrowRight.png',
+	              'iconClass'     => 'spIcon',
+	              'iconText'      => '',
+	              'homeIcon'      => 'sp_ArrowRight.png',
+	              'homeIconClass' => 'spIcon',
+	              'homeText'      => '',
+	              'echo'          => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_BreadCrumbs_args', $a);
 	extract($a, EXTR_SKIP);
 
-	global $spVars, $post;
+	global $post;
 
 	# sanitize before use
-	$tagId			 = esc_attr($tagId);
-	$tagClass		 = esc_attr($tagClass);
-	$spanClass		 = esc_attr($spanClass);
-	$linkClass		 = esc_attr($linkClass);
-	$curClass		 = esc_attr($curClass);
-	$homeLink		 = esc_url($homeLink);
-	$groupLink		 = (int) $groupLink;
-	$tree			 = (int) $tree;
-	$truncate		 = (int) $truncate;
-	$icon			 = sanitize_file_name($icon);
-	$iconClass		 = esc_attr($iconClass);
-	$iconText		 = sp_filter_save_kses($iconText);
-	$homeIcon		 = sanitize_file_name($homeIcon);
-	$homeIconClass	 = esc_attr($homeIconClass);
-	$homeText		 = sp_filter_save_kses($homeText);
-	$echo			 = (int) $echo;
-	if (!empty($homeLabel)) $homeLabel		 = sp_filter_title_display($homeLabel);
+	$tagId         = esc_attr($tagId);
+	$tagClass      = esc_attr($tagClass);
+	$spanClass     = esc_attr($spanClass);
+	$linkClass     = esc_attr($linkClass);
+	$curClass      = esc_attr($curClass);
+	$homeLink      = esc_url($homeLink);
+	$groupLink     = (int) $groupLink;
+	$tree          = (int) $tree;
+	$truncate      = (int) $truncate;
+	$icon          = sanitize_file_name($icon);
+	$iconClass     = esc_attr($iconClass);
+	$iconText      = SP()->saveFilters->kses($iconText);
+	$homeIcon      = sanitize_file_name($homeIcon);
+	$homeIconClass = esc_attr($homeIconClass);
+	$homeText      = SP()->saveFilters->kses($homeText);
+	$echo          = (int) $echo;
+	if (!empty($homeLabel)) $homeLabel = SP()->displayFilters->title($homeLabel);
 
 	# init some vars
 	$breadCrumbs = '';
-	$treeCount	 = 0;
-	$crumbEnd	 = ($tree) ? '<br />' : '';
-	$crumbSpace	 = ($tree) ? "<span class='$spanClass'></span>" : '';
+	$treeCount   = 0;
+	$crumbEnd    = ($tree) ? '<br />' : '';
+	$crumbSpace  = ($tree) ? "<span class='$spanClass'></span>" : '';
 
 	if (!empty($icon)) {
-		$icon = sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+		$icon = SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	} else {
 		if (!empty($iconText)) $icon = $iconText;
 	}
 	$firstIcon = $icon;
 
-	# set up the home and breadcrumb sepearators - can be text or icon
+	# set up the home and breadcrumb separators - can be text or icon
 	# to get text, must clear icon first
 	if (!empty($homeIcon)) {
-		$homeIcon = sp_paint_icon($homeIconClass, SPTHEMEICONSURL, $homeIcon);
+		$homeIcon = SP()->theme->paint_icon($homeIconClass, SPTHEMEICONSURL, $homeIcon);
 	} else {
 		if (!empty($homeText)) $homeIcon = $homeText;
 	}
@@ -1976,70 +1315,69 @@ function sp_BreadCrumbs($args = '', $homeLabel = '') {
 	$breadCrumbs .= "<div id='$tagId' class='$tagClass'>";
 
 	# home link
-	if (!empty($homeLink) && !empty($homeLabel) && !(get_option('page_on_front') == sp_get_option('sfpage') && get_option('show_on_front') == 'page')) {
+	if (!empty($homeLink) && !empty($homeLabel) && !(get_option('page_on_front') == SP()->options->get('sfpage') && get_option('show_on_front') == 'page')) {
 		$breadCrumbs .= "<a class='$linkClass' href='$homeLink'>".$homeIcon.$homeLabel."</a>";
 		$treeCount++;
 	}
 
 	# wp page link for forum
-	$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount)."<a class='$linkClass' href='".sp_url()."'>$firstIcon$post->post_title</a>";
+	$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount)."<a class='$linkClass' href='".SP()->spPermalinks->get_url()."'>$firstIcon$post->post_title</a>";
 	$treeCount++;
 
 	if ($groupLink) {
 		if (isset($_GET['group'])) {
-			$groupId = sp_esc_int($_GET['group']);
-			$group	 = spdb_table(SFGROUPS, "group_id=$groupId", "row");
-		} elseif (isset($spVars['forumslug'])) {
-			$group = sp_get_group_record_from_slug($spVars['forumslug']);
+			$groupId = SP()->filters->integer($_GET['group']);
+			$group   = SP()->DB->table(SPGROUPS, "group_id=$groupId", "row");
+		} elseif (isset(SP()->rewrites->pageData['forumslug'])) {
+			$group = sp_get_group_record_from_slug(SP()->rewrites->pageData['forumslug']);
 		}
 		if ($group) {
-			$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".add_query_arg(array(
-					'group' => $group->group_id), sp_url())."'>".sp_truncate(sp_filter_title_display($group->group_name), $truncate).'</a>';
+			$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".add_query_arg(array('group' => $group->group_id), SP()->spPermalinks->get_url())."'>".SP()->primitives->truncate_name(SP()->displayFilters->title($group->group_name), $truncate).'</a>';
 			$treeCount++;
 		}
 	}
 
 	# parent forum links if current forum is a sub-forum
-	if (isset($spVars['parentforumid'])) {
-		$forumNames	 = array_reverse($spVars['parentforumname']);
-		$forumSlugs	 = array_reverse($spVars['parentforumslug']);
+	if (isset(SP()->rewrites->pageData['parentforumid'])) {
+		$forumNames = array_reverse(SP()->rewrites->pageData['parentforumname']);
+		$forumSlugs = array_reverse(SP()->rewrites->pageData['parentforumslug']);
 		for ($x = 0; $x < count($forumNames); $x++) {
-			$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".sp_build_url($forumSlugs[$x], '', 0, 0)."'>".sp_truncate(sp_filter_title_display($forumNames[$x]), $truncate).'</a>';
+			$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".SP()->spPermalinks->build_url($forumSlugs[$x], '', 0, 0)."'>".SP()->primitives->truncate_name(SP()->displayFilters->title($forumNames[$x]), $truncate).'</a>';
 			$treeCount++;
 		}
 	}
 
-	# forum link (parent or dhild forum)
-	if (!empty($spVars['forumslug']) && ($spVars['forumslug'] != 'all') && (!empty($spVars['forumname']))) {
+	# forum link (parent or child forum)
+	if (!empty(SP()->rewrites->pageData['forumslug']) && (SP()->rewrites->pageData['forumslug'] != 'all') && (!empty(SP()->rewrites->pageData['forumname']))) {
 		# if showing a topic then check the return page of forum in transient store
-		$returnPage	 = (empty($spVars['topicslug'])) ? 1 : sp_pop_topic_page($spVars['forumid']);
-		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".sp_build_url($spVars['forumslug'], '', $returnPage, 0)."'>".sp_truncate(sp_filter_title_display($spVars['forumname']), $truncate).'</a>';
+		$returnPage = (empty(SP()->rewrites->pageData['topicslug'])) ? 1 : sp_pop_topic_page(SP()->rewrites->pageData['forumid']);
+		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".SP()->spPermalinks->build_url(SP()->rewrites->pageData['forumslug'], '', $returnPage, 0)."'>".SP()->primitives->truncate_name(SP()->displayFilters->title(SP()->rewrites->pageData['forumname']), $truncate).'</a>';
 		$treeCount++;
 	}
 
 	# topic link
-	if (!empty($spVars['topicslug']) && !empty($spVars['topicname'])) {
-		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount)."$icon<a class='$linkClass' href='".sp_build_url($spVars['forumslug'], $spVars['topicslug'], $spVars['page'], 0)."'>".sp_truncate(sp_filter_title_display($spVars['topicname']), $truncate).'</a>';
+	if (!empty(SP()->rewrites->pageData['topicslug']) && !empty(SP()->rewrites->pageData['topicname'])) {
+		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount)."$icon<a class='$linkClass' href='".SP()->spPermalinks->build_url(SP()->rewrites->pageData['forumslug'], SP()->rewrites->pageData['topicslug'], SP()->rewrites->pageData['page'], 0)."'>".SP()->primitives->truncate_name(SP()->displayFilters->title(SP()->rewrites->pageData['topicname']), $truncate).'</a>';
 	}
 
 	# profile link
-	if (!empty($spVars['profile'])) {
-		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".sp_url('profile')."'>".sp_text('Profile').'</a>';
+	if (!empty(SP()->rewrites->pageData['profile'])) {
+		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".SP()->spPermalinks->get_url('profile')."'>".SP()->primitives->front_text('Profile').'</a>';
 	}
 
 	# profile link
-	if (!empty($spVars['members']) && $spVars['members'] == 'list') {
-		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".sp_url('members')."'>".sp_text('Members List').'</a>';
+	if (!empty(SP()->rewrites->pageData['members']) && SP()->rewrites->pageData['members'] == 'list') {
+		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".SP()->spPermalinks->get_url('members')."'>".SP()->primitives->front_text('Members List').'</a>';
 	}
 
 	# recent post list (as page)
-	if (!empty($spVars['pageview']) && $spVars['pageview'] == 'newposts') {
-		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".sp_url('newposts')."'>".sp_text('Recent Posts').'</a>';
+	if (!empty(SP()->rewrites->pageData['pageview']) && SP()->rewrites->pageData['pageview'] == 'newposts') {
+		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".SP()->spPermalinks->get_url('newposts')."'>".SP()->primitives->front_text('Recent Posts').'</a>';
 	}
 
 	# search results - no link
-	if (!empty($spVars['searchpage']) && $spVars['searchpage'] > 0) {
-		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='#'>".sp_text('Search Results').'</a>';
+	if (!empty(SP()->rewrites->pageData['searchpage']) && SP()->rewrites->pageData['searchpage'] > 0) {
+		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='#'>".SP()->primitives->front_text('Search Results').'</a>';
 	}
 
 	# allow plugins/themes to filter the breadcrumbs
@@ -2049,10 +1387,12 @@ function sp_BreadCrumbs($args = '', $homeLabel = '') {
 	$breadCrumbs .= '</div>';
 
 	$breadCrumbs .= '
-		<script type="text/javascript">
-		jQuery(document).ready(function() {
-			jQuery("#'.$tagId.' a:last-child").addClass("'.$curClass.'");
-		})
+		<script>
+			(function(spj, $, undefined) {
+				$(document).ready(function() {
+					$("#'.$tagId.' a:last-child").addClass("'.$curClass.'");
+				});
+			}(window.spj = window.spj || {}, jQuery));
 		</script>
 	';
 
@@ -2074,60 +1414,56 @@ function sp_BreadCrumbs($args = '', $homeLabel = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_BreadCrumbsMobile($args = '', $forumLabel = '') {
-	$defs	 = array(
-		'tagId'		 => 'spBreadCrumbsMobile',
-		'tagClass'	 => 'spButton',
-		'curClass'	 => 'spCurrentBreadcrumb',
-		'truncate'	 => 0,
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_BreadCrumbsMobile_args', $a);
+	$defs = array('tagId'    => 'spBreadCrumbsMobile',
+	              'tagClass' => 'spButton',
+	              'curClass' => 'spCurrentBreadcrumb',
+	              'truncate' => 0,
+	              'echo'     => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_BreadCrumbsMobile_args', $a);
 	extract($a, EXTR_SKIP);
 
-	global $spVars, $post;
-
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$curClass	 = esc_attr($curClass);
-	$truncate	 = (int) $truncate;
-	$echo		 = (int) $echo;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$curClass = esc_attr($curClass);
+	$truncate = (int) $truncate;
+	$echo     = (int) $echo;
 
 	# init some vars
 	$breadCrumbs = '';
-	if (!empty($forumLabel)) $forumLabel	 = sp_filter_title_display($forumLabel);
+	if (!empty($forumLabel)) $forumLabel = SP()->displayFilters->title($forumLabel);
 
 	# main container for breadcrumbs
 	$breadCrumbs .= "<div id='$tagId'>";
 
 	# wp page link for forum
-	$breadCrumbs .= "<a class='$tagClass' href='".sp_url()."'>$forumLabel</a>\n";
+	$breadCrumbs .= "<a class='$tagClass' href='".SP()->spPermalinks->get_url()."'>$forumLabel</a>\n";
 
 	# parent forum links if current forum is a sub-forum
-	if (isset($spVars['parentforumid'])) {
-		$forumNames	 = array_reverse($spVars['parentforumname']);
-		$forumSlugs	 = array_reverse($spVars['parentforumslug']);
+	if (isset(SP()->rewrites->pageData['parentforumid'])) {
+		$forumNames = array_reverse(SP()->rewrites->pageData['parentforumname']);
+		$forumSlugs = array_reverse(SP()->rewrites->pageData['parentforumslug']);
 		for ($x = 0; $x < count($forumNames); $x++) {
-			$breadCrumbs .= "<a class='$tagClass' href='".sp_build_url($forumSlugs[$x], '', 0, 0)."'>".sp_truncate(sp_filter_title_display($forumNames[$x]), $truncate)."</a>\n";
+			$breadCrumbs .= "<a class='$tagClass $curClass' href='".SP()->spPermalinks->build_url($forumSlugs[$x], '', 0, 0)."'>".SP()->primitives->truncate_name(SP()->displayFilters->title($forumNames[$x]), $truncate)."</a>\n";
 		}
 	}
 
 	# forum link (parent or child forum)
-	if (!empty($spVars['forumslug']) && ($spVars['forumslug'] != 'all') && (!empty($spVars['forumname']))) {
+	if (!empty(SP()->rewrites->pageData['forumslug']) && (SP()->rewrites->pageData['forumslug'] != 'all') && (!empty(SP()->rewrites->pageData['forumname']))) {
 		# if showing a topic then check the return page of forum in transient store
-		$returnPage	 = (empty($spVars['topicslug'])) ? 1 : sp_pop_topic_page($spVars['forumid']);
-		$breadCrumbs .= "<a class='$tagClass' href='".sp_build_url($spVars['forumslug'], '', $returnPage, 0)."'>".sp_truncate(sp_filter_title_display($spVars['forumname']), $truncate)."</a>\n";
+		$returnPage = (empty(SP()->rewrites->pageData['topicslug'])) ? 1 : sp_pop_topic_page(SP()->rewrites->pageData['forumid']);
+		$breadCrumbs .= "<a class='$tagClass $curClass' href='".SP()->spPermalinks->build_url(SP()->rewrites->pageData['forumslug'], '', $returnPage, 0)."'>".SP()->primitives->truncate_name(SP()->displayFilters->title(SP()->rewrites->pageData['forumname']), $truncate)."</a>\n";
 	}
 
 	# profile link
-	if (!empty($spVars['profile'])) {
-		$breadCrumbs .= "<a class='$tagClass' href='".sp_url('profile')."'>".sp_text('Profile')."</a>\n";
+	if (!empty(SP()->rewrites->pageData['profile'])) {
+		$breadCrumbs .= "<a class='$tagClass $curClass' href='".SP()->spPermalinks->get_url('profile')."'>".SP()->primitives->front_text('Profile')."</a>\n";
 	}
 
 	# recent post list (as page)
-	if (!empty($spVars['pageview']) && $spVars['pageview'] == 'newposts') {
-		$breadCrumbs .= "<a class='$tagClass' href='".sp_url('newposts')."'>".sp_text('Recent Posts').'</a>';
+	if (!empty(SP()->rewrites->pageData['pageview']) && SP()->rewrites->pageData['pageview'] == 'newposts') {
+		$breadCrumbs .= "<a class='$tagClass $curClass' href='".SP()->spPermalinks->get_url('newposts')."'>".SP()->primitives->front_text('Recent Posts').'</a>';
 	}
 
 	# allow plugins/themes to filter the breadcrumbs
@@ -2137,10 +1473,12 @@ function sp_BreadCrumbsMobile($args = '', $forumLabel = '') {
 	$breadCrumbs .= '</div>';
 
 	$breadCrumbs .= '
-		<script type="text/javascript">
-		jQuery(document).ready(function() {
-			jQuery("#'.$tagId.' a:last-child").addClass("'.$curClass.'");
-		})
+		<script>
+			(function(spj, $, undefined) {
+				$(document).ready(function() {
+					$("#'.$tagId.' a:last-child").addClass("'.$curClass.'");
+				}(window.spj = window.spj || {}, jQuery));
+			});
 		</script>
 	';
 
@@ -2161,39 +1499,35 @@ function sp_BreadCrumbsMobile($args = '', $forumLabel = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_UserNotices($args = '', $label = '') {
-	global $spThisUser;
+	$defs = array('tagId'     => 'spUserNotices',
+	              'tagClass'  => 'spMessage',
+	              'textClass' => 'spNoticeText',
+	              'linkClass' => 'spNoticeLink',
+	              'echo'      => 1,
+	              'get'       => 0,);
 
-	$defs = array(
-		'tagId'		 => 'spUserNotices',
-		'tagClass'	 => 'spMessage',
-		'textClass'	 => 'spNoticeText',
-		'linkClass'	 => 'spNoticeLink',
-		'echo'		 => 1,
-		'get'		 => 0,
-	);
-
-	$a	 = wp_parse_args($args, $defs);
-	$a	 = apply_filters('sph_UserNotices_args', $a);
+	$a = wp_parse_args($args, $defs);
+	$a = apply_filters('sph_UserNotices_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$textClass	 = esc_attr($textClass);
-	$linkClass	 = esc_attr($linkClass);
-	$echo		 = (int) $echo;
-	$get		 = (int) $get;
-	$m			 = '';
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$textClass = esc_attr($textClass);
+	$linkClass = esc_attr($linkClass);
+	$echo      = (int) $echo;
+	$get       = (int) $get;
+	$m         = '';
 
-	if (!empty($spThisUser->user_notices)) {
-		foreach ($spThisUser->user_notices as $notice) {
-			$site	 = wp_nonce_url(SPAJAXURL.'spUserNotice&amp;notice='.$notice->notice_id, 'spUserNotice');
-			$nid	 = 'noticeid-'.$notice->notice_id;
-			$m		 .= "<div id='$nid'>\n";
-			$m		 .= "<p class='$textClass'>".sp_filter_title_display($notice->message)." ";
-			if (!empty($notice->link_text)) $m		 .= "<a class='$linkClass' href='".esc_url($notice->link)."'>".sp_filter_title_display($notice->link_text)."</a>";
-			if (!empty($label)) $m		 .= "&nbsp;&nbsp;<a class='spLabelSmall spUserNotice' data-site='$site' data-nid='$nid'>".sp_filter_title_display($label)."</a>";
-			$m		 .= "</p></div>\n";
+	if (!empty(SP()->user->thisUser->user_notices)) {
+		foreach (SP()->user->thisUser->user_notices as $notice) {
+			$site = wp_nonce_url(SPAJAXURL.'spUserNotice&amp;notice='.$notice->notice_id, 'spUserNotice');
+			$nid  = 'noticeid-'.$notice->notice_id;
+			$m .= "<div id='$nid'>\n";
+			$m .= "<p class='$textClass'>".SP()->displayFilters->title($notice->message)." ";
+			if (!empty($notice->link_text)) $m .= "<a class='$linkClass' href='".esc_url($notice->link)."'>".SP()->displayFilters->title($notice->link_text)."</a>";
+			if (!empty($label)) $m .= "&nbsp;&nbsp;<a class='spLabelSmall spUserNotice' data-site='$site' data-nid='$nid'>".SP()->displayFilters->title($label)."</a>";
+			$m .= "</p></div>\n";
 		}
 	}
 
@@ -2226,66 +1560,63 @@ function sp_UserNotices($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_UnreadPostsInfo($args = '', $label = '', $unreadToolTip = '', $markToolTip = '', $popupLabel = '') {
-	global $spThisUser;
-	if (!$spThisUser->member) return;# only valid for members
+	if (!SP()->user->thisUser->member) return;# only valid for members
 
-	$defs	 = array(
-		'tagId'			 => 'spUnreadPostsInfo',
-		'tagClass'		 => 'spUnreadPostsInfo',
-		'markId'		 => 'spMarkRead',
-		'unreadLinkId'	 => 'spUnreadPostsLink',
-		'unreadIcon'	 => 'sp_UnRead.png',
-		'markIcon'		 => 'sp_markRead.png',
-		'spanClass'		 => 'spLabel',
-		'iconClass'		 => 'spIcon',
-		'order'			 => 'TLM',
-		'popup'			 => 1,
-		'count'			 => 0,
-		'first'			 => 0,
-		'group'			 => 1,
-		'mobileMenu'	 => 0,
-		'echo'			 => 1,
-		'get'			 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_UnreadPostsInfo_args', $a);
+	$defs = array('tagId'        => 'spUnreadPostsInfo',
+	              'tagClass'     => 'spUnreadPostsInfo',
+	              'markId'       => 'spMarkRead',
+	              'unreadLinkId' => 'spUnreadPostsLink',
+	              'unreadIcon'   => 'sp_UnRead.png',
+	              'markIcon'     => 'sp_markRead.png',
+	              'spanClass'    => 'spLabel',
+	              'iconClass'    => 'spIcon',
+	              'order'        => 'TLM',
+	              'popup'        => 1,
+	              'count'        => 0,
+	              'first'        => 0,
+	              'group'        => 1,
+	              'mobileMenu'   => 0,
+	              'echo'         => 1,
+	              'get'          => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_UnreadPostsInfo_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			 = esc_attr($tagId);
-	$tagClass		 = esc_attr($tagClass);
-	$markId			 = esc_attr($markId);
-	$unreadLinkId	 = esc_attr($unreadLinkId);
-	$unreadIcon		 = sanitize_file_name($unreadIcon);
-	$markIcon		 = sanitize_file_name($markIcon);
-	$spanClass		 = esc_attr($spanClass);
-	$iconClass		 = esc_attr($iconClass);
-	$order			 = esc_attr($order);
-	$popup			 = (int) $popup;
-	$count			 = (int) $count;
-	$first			 = (int) $first;
-	$group			 = (int) $group;
-	$mobileMenu		 = (int) $mobileMenu;
-	$echo			 = (int) $echo;
-	$get			 = (int) $get;
-	if (!empty($unreadToolTip)) $unreadToolTip	 = esc_attr($unreadToolTip);
-	if (!empty($markToolTip)) $markToolTip	 = esc_attr($markToolTip);
+	$tagId        = esc_attr($tagId);
+	$tagClass     = esc_attr($tagClass);
+	$markId       = esc_attr($markId);
+	$unreadLinkId = esc_attr($unreadLinkId);
+	$unreadIcon   = sanitize_file_name($unreadIcon);
+	$markIcon     = sanitize_file_name($markIcon);
+	$spanClass    = esc_attr($spanClass);
+	$iconClass    = esc_attr($iconClass);
+	$order        = esc_attr($order);
+	$popup        = (int) $popup;
+	$count        = (int) $count;
+	$first        = (int) $first;
+	$group        = (int) $group;
+	$mobileMenu   = (int) $mobileMenu;
+	$echo         = (int) $echo;
+	$get          = (int) $get;
+	if (!empty($unreadToolTip)) $unreadToolTip = esc_attr($unreadToolTip);
+	if (!empty($markToolTip)) $markToolTip = esc_attr($markToolTip);
 	if (!empty($popupLabel)) {
 		$popupLabel = esc_attr($popupLabel);
 	} else {
-		$popupLabel = $unreadToolTip; # backwards compat for when $popupLabel didnt exist and $popuplabel was used
+		$popupLabel = $unreadToolTip; # backwards compat for when $popupLabel did not exist and $popuplabel was used
 	}
 
 	# Mark all as read
-	$unreads = (empty($spThisUser->newposts['topics'])) ? 0 : count($spThisUser->newposts['topics']);
-	$label	 = str_ireplace('%COUNT%', '<span id="spUnreadCount">'.$unreads.'</span>', $label);
-	if (!empty($label)) $label	 = sp_filter_title_display($label);
+	$unreads = (empty(SP()->user->thisUser->newposts['topics'])) ? 0 : count(SP()->user->thisUser->newposts['topics']);
+	$label   = str_ireplace('%COUNT%', '<span id="spUnreadCount">'.$unreads.'</span>', $label);
+	if (!empty($label)) $label = SP()->displayFilters->title($label);
 
 	if ($get) return $unreads;
 
-	$br		 = ($mobileMenu) ? '<br />' : '';
-	if ($mobileMenu) $label	 = str_replace(' (', '<br />(', $label);
-	$out	 = '';
+	$br = ($mobileMenu) ? '<br />' : '';
+	if ($mobileMenu) $label = str_replace(' (', '<br />(', $label);
+	$out = '';
 
 	$ajaxUrl = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=mark-read", 'spUnreadPostsPopup');
 	if ($mobileMenu) {
@@ -2293,21 +1624,21 @@ function sp_UnreadPostsInfo($args = '', $label = '', $unreadToolTip = '', $markT
 		if ($unreads > 0) {
 			if ($mobileMenu) $out .= sp_open_grid_cell();
 			$out .= "<a href='#$markId'>";
-			if ($mobileMenu) $out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $markIcon, $markToolTip).$br;
+			if ($mobileMenu) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $markIcon, $markToolTip).$br;
 			if (!empty($markToolTip)) $out .= $markToolTip;
 			$out .= "</a>\n";
 			if ($mobileMenu) $out .= sp_close_grid_cell();
 
-			$args			 = array();
-			$args['first']	 = $first;
-			$args['group']	 = $group;
-			$args['count']	 = $count;
-			$url			 = add_query_arg($args, sp_url('newposts'));
-			if ($mobileMenu) $out			 .= sp_open_grid_cell();
-			$out			 .= "<a rel='nofollow' id='$unreadLinkId' href='$url'>";
-			if ($mobileMenu) $out			 .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $unreadIcon, $unreadToolTip).$br;
-			$out			 .= "$label</a>\n";
-			if ($mobileMenu) $out			 .= sp_close_grid_cell();
+			$args          = array();
+			$args['first'] = $first;
+			$args['group'] = $group;
+			$args['count'] = $count;
+			$url           = add_query_arg($args, SP()->spPermalinks->get_url('newposts'));
+			if ($mobileMenu) $out .= sp_open_grid_cell();
+			$out .= "<a rel='nofollow' id='$unreadLinkId' href='$url'>";
+			if ($mobileMenu) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $unreadIcon, $unreadToolTip).$br;
+			$out .= "$label</a>\n";
+			if ($mobileMenu) $out .= sp_close_grid_cell();
 		}
 	} else {
 		$out .= "<div id='$tagId' class='$tagClass'>";
@@ -2322,20 +1653,20 @@ function sp_UnreadPostsInfo($args = '', $label = '', $unreadToolTip = '', $markT
 			if ($unreads > 0 && $item != 'T') {
 				if ($item == 'L') {
 					if ($popup) {
-						$site	 = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=all&amp;first=$first&amp;group=$group&amp;count=$count", 'spUnreadPostsPopup');
-						$out	 .= "<a rel='nofollow' id='$unreadLinkId' class='spUnreadPostsPopup' data-popup='1' data-site='$site' data-label='$popupLabel' data-width='700' data-height='500' data-align='center'>";
+						$site = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=all&amp;first=$first&amp;group=$group&amp;count=$count", 'spUnreadPostsPopup');
+						$out .= "<a rel='nofollow' id='$unreadLinkId' class='spUnreadPostsPopup' data-popup='1' data-site='$site' data-label='$popupLabel' data-width='700' data-height='500' data-align='center'>";
 					} else {
-						$args			 = array();
-						$args['first']	 = $first;
-						$args['group']	 = $group;
-						$args['count']	 = $count;
-						$url			 = add_query_arg($args, sp_url('newposts'));
-						$out			 .= "<a rel='nofollow' id='$unreadLinkId' href='$url'>";
+						$args          = array();
+						$args['first'] = $first;
+						$args['group'] = $group;
+						$args['count'] = $count;
+						$url           = add_query_arg($args, SP()->spPermalinks->get_url('newposts'));
+						$out .= "<a rel='nofollow' id='$unreadLinkId' href='$url'>";
 					}
-					$out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $unreadIcon, $unreadToolTip)."</a>\n";
+					$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $unreadIcon, $unreadToolTip)."</a>\n";
 				}
 				if ($item == 'M') {
-					$out .= "<a class='spMarkAllRead' data-ajaxurl='$ajaxUrl' data-mobile='0'>".sp_paint_icon($iconClass, SPTHEMEICONSURL, $markIcon, $markToolTip)."</a>";
+					$out .= "<a class='spMarkAllRead' data-ajaxurl='$ajaxUrl' data-mobile='0'>".SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $markIcon, $markToolTip)."</a>";
 				}
 			}
 		}
@@ -2359,71 +1690,67 @@ function sp_UnreadPostsInfo($args = '', $label = '', $unreadToolTip = '', $markT
 #	Version: 5.5.9
 #
 #	Changelog:
-#		5.7.2: Added arg 'id' to allow for passign a single forum id
+#		5.7.2: Added arg 'id' to allow for passing a single forum id
 #		5.7.2: Added targetaction to allow for it to be overwritten at call time
 #
 # --------------------------------------------------------------------------------------
 
 function sp_UnreadPostsLink($args = '', $label = '', $unreadToolTip = '', $popupLabel = '') {
-	global $spThisUser;
-	if (!$spThisUser->member) return;# only valid for members
+	if (!SP()->user->thisUser->member) return;# only valid for members
 
-	$defs	 = array(
-		'tagId'			 => 'spUnreadPostsInfo',
-		'tagClass'		 => 'spLink',
-		'popup'			 => 1,
-		'count'			 => 0,
-		'first'			 => 0,
-		'group'			 => 1,
-		'id'			 => 0,
-		'targetaction'	 => 'all',
-		'mobileMenu'	 => 0,
-		'echo'			 => 1,
-		'get'			 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_UnreadPostsLink_args', $a);
+	$defs = array('tagId'        => 'spUnreadPostsInfo',
+	              'tagClass'     => 'spLink',
+	              'popup'        => 1,
+	              'count'        => 0,
+	              'first'        => 0,
+	              'group'        => 1,
+	              'id'           => 0,
+	              'targetaction' => 'all',
+	              'mobileMenu'   => 0,
+	              'echo'         => 1,
+	              'get'          => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_UnreadPostsLink_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId			 = esc_attr($tagId);
-	$tagClass		 = esc_attr($tagClass);
-	$popup			 = (int) $popup;
-	$count			 = (int) $count;
-	$first			 = (int) $first;
-	$group			 = (int) $group;
-	$id				 = (int) $id;
-	$targetaction	 = esc_attr($targetaction);
-	$echo			 = (int) $echo;
-	$get			 = (int) $get;
+	$tagId        = esc_attr($tagId);
+	$tagClass     = esc_attr($tagClass);
+	$popup        = (int) $popup;
+	$count        = (int) $count;
+	$first        = (int) $first;
+	$group        = (int) $group;
+	$id           = (int) $id;
+	$targetaction = esc_attr($targetaction);
+	$echo         = (int) $echo;
+	$get          = (int) $get;
 
 	if (!empty($unreadToolTip)) $unreadToolTip = esc_attr($unreadToolTip);
 	if (!empty($popupLabel)) {
 		$popupLabel = esc_attr($popupLabel);
 	} else {
-		$popupLabel = $unreadToolTip; # backwards compat for when $popupLabel didnt exist and $popuplabel was used
+		$popupLabel = $unreadToolTip; # backwards compat for when $popupLabel did not exist and $popuplabel was used
 	}
 
-	global $spThisUser;
-	$unreads = (empty($spThisUser->newposts['topics'])) ? 0 : count($spThisUser->newposts['topics']);
-	$label	 = str_ireplace('%COUNT%', '<span id="spUnreadCount">'.$unreads.'</span>', $label);
-	if (!empty($label)) $label	 = sp_filter_title_display($label);
+	$unreads = (empty(SP()->user->thisUser->newposts['topics'])) ? 0 : count(SP()->user->thisUser->newposts['topics']);
+	$label   = str_ireplace('%COUNT%', '<span id="spUnreadCount" class="badge">'.$unreads.'</span>', $label);
+	if (!empty($label)) $label = SP()->displayFilters->title($label);
 
 	if ($get) return $unreads;
 	$out = '';
 
 	if ($popup) {
-		$site	 = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=$targetaction&amp;first=$first&amp;group=$group&amp;id=$id&amp;count=$count", 'spUnreadPostsPopup');
-		$out	 .= "<a rel='nofollow' id='$tagId' class='$tagClass spUnreadPostsPopup' title='$unreadToolTip' data-popup='1' data-site='$site' data-label='$popupLabel' data-width='700' data-height='500' data-align='center'>$label</a>";
+		$site = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=$targetaction&amp;first=$first&amp;group=$group&amp;id=$id&amp;count=$count", 'spUnreadPostsPopup');
+		$out .= "<a rel='nofollow' id='$tagId' class='$tagClass spUnreadPostsPopup' title='$unreadToolTip' data-popup='1' data-site='$site' data-label='$popupLabel' data-width='700' data-height='500' data-align='center'>$label</a>";
 	} else {
-		$args					 = array();
-		$args['first']			 = $first;
-		$args['group']			 = $group;
-		$args['count']			 = $count;
-		$args['targetaction']	 = $targetaction;
-		$args['id']				 = $id;
-		$url					 = add_query_arg($args, sp_url('newposts'));
-		$out					 .= "<a rel='nofollow' id='$tagId' class='$tagClass' title='$unreadToolTip' href='$url'>$label</a>";
+		$args                 = array();
+		$args['first']        = $first;
+		$args['group']        = $group;
+		$args['count']        = $count;
+		$args['targetaction'] = $targetaction;
+		$args['id']           = $id;
+		$url                  = add_query_arg($args, SP()->spPermalinks->get_url('newposts'));
+		$out .= "<a rel='nofollow' id='$tagId' class='$tagClass' title='$unreadToolTip' href='$url'>$label</a>";
 	}
 
 	$out = apply_filters('sph_UnreadPostsLink', $out, $a);
@@ -2445,30 +1772,25 @@ function sp_UnreadPostsLink($args = '', $label = '', $unreadToolTip = '', $popup
 # --------------------------------------------------------------------------------------
 
 function sp_MarkReadLink($args = '', $label = '', $markToolTip = '') {
-	global $spThisUser;
-	if (!$spThisUser->member) return;# only valid for members
+	if (!SP()->user->thisUser->member) return;# only valid for members
 
-	$defs	 = array(
-		'tagId'		 => 'spMarkRead',
-		'tagClass'	 => 'spLink',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_MarkReadLink_args', $a);
+	$defs = array('tagId'    => 'spMarkRead',
+	              'tagClass' => 'spLink',
+	              'echo'     => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_MarkReadLink_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$echo		 = (int) $echo;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
 
 	if (!empty($markToolTip)) $markToolTip = esc_attr($markToolTip);
 
-	global $spThisUser;
-	$unreads = (empty($spThisUser->newposts['topics'])) ? 0 : count($spThisUser->newposts['topics']);
-	if (empty($label) || empty($spThisUser->newposts['topics'])) return;
+	if (empty($label) || empty(SP()->user->thisUser->newposts['topics'])) return;
 
-	$out	 = '';
+	$out     = '';
 	$ajaxUrl = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=mark-read", 'spUnreadPostsPopup');
 
 	$out .= "<a id='$tagId' class='$tagClass spMarkAllRead' title='$markToolTip' data-ajaxurl='$ajaxUrl' data-mobile='0'>$label</a>";
@@ -2492,26 +1814,22 @@ function sp_MarkReadLink($args = '', $label = '', $markToolTip = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_MarkReadMobile($args = '', $label = '', $text = '') {
-	global $spDevice;
-
-	$defs = array(
-		'tagId'			 => 'spMarkRead',
-		'buttonClass'	 => 'spButton',
-	);
+	$defs = array('tagId'       => 'spMarkRead',
+	              'buttonClass' => 'spButton',);
 
 	$a = wp_parse_args($args, $defs);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
+	$tagId       = esc_attr($tagId);
 	$buttonClass = esc_attr($buttonClass);
-	$label		 = sp_filter_title_display($label);
-	$text		 = sp_filter_title_display($text);
+	$label       = SP()->displayFilters->title($label);
+	$text        = SP()->displayFilters->title($text);
 
 	$out = '';
 	$out .= "<div id='$tagId'>";
 
-	if ($spDevice == 'mobile') {
+	if (SP()->core->device == 'mobile') {
 		$out .= "<div class='spRight'>";
 		$out .= "<a id='spPanelClose' href='#'></a>";
 		$out .= "</div>";
@@ -2520,7 +1838,7 @@ function sp_MarkReadMobile($args = '', $label = '', $text = '') {
 	if (!empty($text)) $out .= "<p>$text</p>";
 
 	$ajaxUrl = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=mark-read", 'spUnreadPostsPopup');
-	$out	 .= "<p><a class='$buttonClass spMarkAllRead' data-ajaxurl='$ajaxUrl' data-mobile='1' data-tagid='$tagId'>$label</a></p>";
+	$out .= "<p><a class='$buttonClass spMarkAllRead' data-ajaxurl='$ajaxUrl' data-mobile='1' data-tagid='$tagId'>$label</a></p>";
 
 	$out .= '</div>';
 
@@ -2537,30 +1855,26 @@ function sp_MarkReadMobile($args = '', $label = '', $text = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_MarkForumReadMobile($args = '', $label = '', $text = '') {
-	global $spDevice, $spVars, $spThisUser;
-
-	$defs = array(
-		'tagId'			 => 'spMarkReadForum',
-		'buttonClass'	 => 'spButton',
-	);
+	$defs = array('tagId'       => 'spMarkReadForum',
+	              'buttonClass' => 'spButton',);
 
 	$a = wp_parse_args($args, $defs);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
+	$tagId       = esc_attr($tagId);
 	$buttonClass = esc_attr($buttonClass);
-	$label		 = sp_filter_title_display($label);
-	$text		 = sp_filter_title_display($text);
+	$label       = SP()->displayFilters->title($label);
+	$text        = SP()->displayFilters->title($text);
 
-	$forum_unreads	 = (empty($spThisUser->newposts['forums'])) ? '' : array_keys($spThisUser->newposts['forums'], $spVars['forumid']);
+	$forum_unreads = (empty(SP()->user->thisUser->newposts['forums'])) ? '' : array_keys(SP()->user->thisUser->newposts['forums'], SP()->rewrites->pageData['forumid']);
 	if (empty($forum_unreads)) return;
-	$count			 = count($forum_unreads);
+	$count = count($forum_unreads);
 
 	$out = '';
 	$out .= "<div id='$tagId'>";
 
-	if ($spDevice == 'mobile') {
+	if (SP()->core->device == 'mobile') {
 		$out .= "<div class='spRight'>";
 		$out .= "<a id='spPanelClose' href='#'></a>";
 		$out .= "</div>";
@@ -2568,8 +1882,8 @@ function sp_MarkForumReadMobile($args = '', $label = '', $text = '') {
 
 	if (!empty($text)) $out .= "<p>$text</p>";
 
-	$ajaxUrl = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=mark-forum-read&amp;forum=".$spVars['forumid'], 'spUnreadPostsPopup');
-	$out	 .= "<p><a class='$buttonClass spMarkThisForumRead' data-ajaxurl='$ajaxUrl' data-count='$count' data-mobile='1' data-tagid='$tagId'>$label</a></p>";
+	$ajaxUrl = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=mark-forum-read&amp;forum=".SP()->rewrites->pageData['forumid'], 'spUnreadPostsPopup');
+	$out .= "<p><a class='$buttonClass spMarkThisForumRead' data-ajaxurl='$ajaxUrl' data-count='$count' data-mobile='1' data-tagid='$tagId'>$label</a></p>";
 
 	$out .= '</div>';
 
@@ -2586,45 +1900,39 @@ function sp_MarkForumReadMobile($args = '', $label = '', $text = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_MarkForumRead($args = '', $label = '', $markToolTip = '') {
-	global $spVars, $spThisUser;
+	if (!SP()->user->thisUser->member) return;# only valid for members
+	if (SP()->rewrites->pageData['pageview'] != 'forum' && SP()->rewrites->pageData['pageview'] != 'topic') return;# only display on forum and topic view
 
-	if (!$spThisUser->member) return;# only valid for members
-	if ($spVars['pageview'] != 'forum' && $spVars['pageview'] != 'topic') return;# only display on forum and topic view
-
-	$defs	 = array(
-		'tagId'		 => 'spMarkForumRead',
-		'tagClass'	 => 'spMarkForumRead',
-		'iconClass'	 => 'spIcon',
-		'markId'	 => 'spMarkReadForum',
-		'markIcon'	 => 'sp_MarkForumRead.png',
-		'mobileMenu' => 0,
-		'echo'		 => 1,
-		'get'		 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_MarkForumRead_args', $a);
+	$defs = array('tagId'      => 'spMarkForumRead',
+	              'tagClass'   => 'spMarkForumRead',
+	              'iconClass'  => 'spIcon',
+	              'markIcon'   => 'sp_MarkForumRead.png',
+	              'mobileMenu' => 0,
+	              'echo'       => 1,
+	              'get'        => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_MarkForumRead_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$iconClass	 = esc_attr($iconClass);
-	$markId		 = esc_attr($markId);
-	$markIcon	 = sanitize_file_name($markIcon);
-	$mobileMenu	 = (int) $mobileMenu;
-	$echo		 = (int) $echo;
-	$get		 = (int) $get;
+	$tagId      = esc_attr($tagId);
+	$tagClass   = esc_attr($tagClass);
+	$iconClass  = esc_attr($iconClass);
+	$markIcon   = sanitize_file_name($markIcon);
+	$mobileMenu = (int) $mobileMenu;
+	$echo       = (int) $echo;
+	$get        = (int) $get;
 
 	if (!empty($markToolTip)) $markToolTip = esc_attr($markToolTip);
 
-	$forum_unreads = (empty($spThisUser->newposts['forums'])) ? '' : array_keys($spThisUser->newposts['forums'], $spVars['forumid']);
+	$forum_unreads = (empty(SP()->user->thisUser->newposts['forums'])) ? '' : array_keys(SP()->user->thisUser->newposts['forums'], SP()->rewrites->pageData['forumid']);
 
 	if ($get) return $forum_unreads;
 	if (empty($forum_unreads)) return;
 
-	$br		 = ($mobileMenu) ? '<br />' : '';
-	$out	 = '';
-	$ajaxUrl = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=mark-forum-read&amp;forum=".$spVars['forumid'], 'spUnreadPostsPopup');
+	$br      = ($mobileMenu) ? '<br />' : '';
+	$out     = '';
+	$ajaxUrl = wp_nonce_url(SPAJAXURL."spUnreadPostsPopup&amp;targetaction=mark-forum-read&amp;forum=".SP()->rewrites->pageData['forumid'], 'spUnreadPostsPopup');
 
 	if ($mobileMenu) {
 		$out .= sp_open_grid_cell();
@@ -2634,13 +1942,13 @@ function sp_MarkForumRead($args = '', $label = '', $markToolTip = '') {
 	}
 	$count = count($forum_unreads);
 	if (!empty($markIcon)) {
-		if (!$mobileMenu) $label	 = '';
-		$out	 .= "<a class='spMarkThisForumRead' data-ajaxurl='$ajaxUrl' data-count='$count' data-mobile='$mobileMenu' data-tagid='$tagId'>";
-		$out	 .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $markIcon, $markToolTip).$br;
-		$out	 .= $label.'</a>';
+		if (!$mobileMenu) $label = '';
+		$out .= "<a class='spMarkThisForumRead' data-ajaxurl='$ajaxUrl' data-count='$count' data-mobile='$mobileMenu' data-tagid='$tagId'>";
+		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $markIcon, $markToolTip).$br;
+		$out .= $label.'</a>';
 	} else {
 		$out .= "<a class='spMarkThisForumRead' data-ajaxurl='$ajaxUrl' data-count='$count' data-mobile='$mobileMenu' data-tagid='$tagId'>";
-		$out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $markIcon, $markToolTip).$br;
+		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $markIcon, $markToolTip).$br;
 		$out .= $label.'</a>';
 	}
 	$out .= '</div>';
@@ -2665,33 +1973,78 @@ function sp_MarkForumRead($args = '', $label = '', $markToolTip = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_MobileMenuSearch($args = '', $label = '') {
-	$defs	 = array(
-		'searchTagId'	 => 'spSearchForm',
-		'icon'			 => 'sp_Search.png',
-		'iconClass'		 => 'spIcon',
-		'echo'			 => 1
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_MobileMenuSearch_args', $a);
+	$defs = array('searchTagId' => 'spSearchForm',
+	              'icon'        => 'sp_Search.png',
+	              'iconClass'   => 'spIcon',
+	              'echo'        => 1);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_MobileMenuSearch_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
 	$searchTagId = esc_attr($searchTagId);
-	$icon		 = sanitize_file_name($icon);
-	$iconClass	 = esc_attr($iconClass);
-	$echo		 = (int) $echo;
-	if (!empty($label)) $label		 = sp_filter_text_display($label);
-	$br			 = '<br />';
-	$out		 = '';
+	$icon        = sanitize_file_name($icon);
+	$iconClass   = esc_attr($iconClass);
+	$echo        = (int) $echo;
+	if (!empty($label)) $label = SP()->displayFilters->text($label);
+	$br  = '<br />';
+	$out = '';
 
 	$out .= sp_open_grid_cell();
 	$out .= "<a href='#$searchTagId'>";
-	if (!empty($icon)) $out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
+	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
 	if (!empty($label)) $out .= $label;
 	$out .= "</a>\n";
 	$out .= sp_close_grid_cell();
 
 	$out = apply_filters('sph_MobileMenuSearch', $out, $a);
+
+	if ($echo) {
+		echo $out;
+	} else {
+		return $out;
+	}
+}
+
+
+
+# --------------------------------------------------------------------------------------
+#
+#	sp_SearchToggleButton()
+#	Display simple search Button
+#	Scope:	Forum
+#	Version: 6.0
+#
+# --------------------------------------------------------------------------------------
+
+function sp_SearchToggleButton($args = '', $label = '',$toolTip = '') {
+
+	$defs = array('tagId'      => 'spSearchToggleButton',
+	              'tagClass'   => 'spButton',
+	              'icon'	   => 'sp_Search.png',
+	              'iconClass'  => 'spIcon',
+	              'echo'       => 1,);
+
+	$a = wp_parse_args($args, $defs);
+	$a = apply_filters('sph_SearchToggleButton_args', $a);
+	extract($a, EXTR_SKIP);
+
+	# sanitize before use
+	$tagId      = esc_attr($tagId);
+	$tagClass   = esc_attr($tagClass);
+	$icon		= sanitize_file_name($icon);
+	$iconClass  = esc_attr($iconClass);
+	$toolTip    = esc_attr($toolTip);
+	$echo       = (int) $echo;
+
+	$out = '';
+
+	$out .= "<a class='$tagClass spOpenSearch' id='$tagId' title='$toolTip' >";
+	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+	if (!empty($label)) $out .= SP()->displayFilters->title($label);
+	$out .= "</a>\n";
+
+	$out = apply_filters('sph_SearchToggleButton', $out, $a);
 
 	if ($echo) {
 		echo $out;
@@ -2709,101 +2062,119 @@ function sp_MobileMenuSearch($args = '', $label = '') {
 #
 #	Change log
 #		5.3.1:	Added mobile display support (close button)
-#		5.3.1:	Added missing 'Match' label. Note that I have ledft this for translation
+#		5.3.1:	Added missing 'Match' label. Note that I have left this for translation
 #				in this 'sp' domain so people do not suddenly lose it now it is theme
 #				That should really be removed in the future.
 # --------------------------------------------------------------------------------------
 
 function sp_SearchForm($args = '') {
-	global $spGlobals, $spDevice, $spVars;
-	$defs = array(
-		'tagId'				 => 'spSearchForm',
-		'tagClass'			 => 'spSearchSection',
-		'icon'				 => 'sp_Search.png',
-		'iconClass'			 => 'spIcon',
-		'inputClass'		 => 'spControl',
-		'inputWidth'		 => 20,
-		'submitId'			 => 'spSearchButton',
-		'submitId2'			 => 'spSearchButton2',
-		'submitClass'		 => 'spButton',
-		'submitClass2'		 => 'spButton',
-		'advSearchLinkClass' => 'spLink',
-		'advSearchLink'		 => '',
-		'advSearchId'		 => 'spSearchFormAdvanced',
-		'advSearchClass'	 => 'spSearchFormAdvanced',
-		'searchIncludeDef'	 => 1,
-		'searchScope'		 => 1,
-		'submitLabel'		 => '',
-		'placeHolder'		 => __sp('Search'),
-		'advancedLabel'		 => '',
-		'lastSearchLabel'	 => '',
-		'toolTip'			 => '',
-		'labelLegend'		 => '',
-		'labelScope'		 => '',
-		'labelCurrent'		 => '',
-		'labelAll'			 => '',
-		'labelMatch'		 => sp_text('Match'),
-		'labelMatchAny'		 => '',
-		'labelMatchAll'		 => '',
-		'labelMatchPhrase'	 => '',
-		'labelOptions'		 => '',
-		'labelPostTitles'	 => '',
-		'labelPostsOnly'	 => '',
-		'labelTitlesOnly'	 => '',
-		'labelWildcards'	 => '',
-		'labelMatchAnyChars' => '',
-		'labelMatchOneChar'	 => '',
-		'labelMinLength'	 => '',
-		'labelMemberSearch'	 => '',
-		'labelTopicsPosted'	 => '',
-		'labelTopicsStarted' => '',
-		'echo'				 => 1,
-	);
+	$defs = array('containerClass'	   => '',
+				  'tagId'              => 'spSearchForm',
+	              'tagClass'           => 'spSearchSection',
+	              'icon'               => 'sp_Search.png',
+	              'iconClass'          => 'spIcon',
+	              'inputClass'         => 'spControl',
+	              'inputWidth'         => 20,
+	              'submitId'           => 'spSearchButton',
+	              'submitId2'          => 'spSearchButton2',
+	              'submitClass'        => 'spButton',
+	              'submitClass2'       => 'spButton',
+	              'advSearchLinkClass' => 'spLink',
+				  'lastSearchLinkClass' => 'spLink',
+				  'searchOptionsSection' => '',
+	              'advSearchLink'      => '',
+	              'advSearchId'        => 'spSearchFormAdvanced',
+	              'advSearchClass'     => 'spSearchFormAdvanced',
+	              'searchIncludeDef'   => 1,
+	              'searchScope'        => 1,
+	              'submitLabel'        => '',
+	              'placeHolder'        => SP()->primitives->front_text('Search'),
+	              'advancedLabel'      => '',
+	              'lastSearchLabel'    => '',
+	              'toolTip'            => '',
+	              'labelLegend'        => '',
+				  'scopeSection'	   => '',
+				  'matchSection'	   => '',
+				  'optionSection'	   => '',
+	              'labelScope'         => '',
+	              'labelCurrent'       => '',
+	              'labelAll'           => '',
+	              'labelMatch'         => SP()->primitives->front_text('Match'),
+	              'labelMatchAny'      => '',
+	              'labelMatchAll'      => '',
+	              'labelMatchPhrase'   => '',
+	              'labelOptions'       => '',
+	              'labelPostTitles'    => '',
+	              'labelPostsOnly'     => '',
+	              'labelTitlesOnly'    => '',
+	              'labelWildcards'     => '',
+	              'labelMatchAnyChars' => '',
+	              'labelMatchOneChar'  => '',
+	              'labelMinLength'     => '',
+	              'labelMemberSearch'  => '',
+	              'labelTopicsPosted'  => '',
+	              'labelTopicsStarted' => '',
+				  'spSearchInfo'	   => '',
+				  'lineBreak'		   => 1,
+				  'useSeperator'	   => 1,
+	              'echo'               => 1
+				);
 
-	$a	 = wp_parse_args($args, $defs);
-	$a	 = apply_filters('sph_SearchForm_args', $a);
+	$a = wp_parse_args($args, $defs);
+	$a = apply_filters('sph_SearchForm_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId				 = esc_attr($tagId);
-	$tagClass			 = esc_attr($tagClass);
-	$icon				 = sanitize_file_name($icon);
-	$iconClass			 = esc_attr($iconClass);
-	$inputClass			 = esc_attr($inputClass);
-	$inputWidth			 = (int) $inputWidth;
-	$submitId			 = esc_attr($submitId);
-	$submitId2			 = esc_attr($submitId2);
-	$submitClass		 = esc_attr($submitClass);
-	$advSearchLinkClass	 = esc_attr($advSearchLinkClass);
-	$advSearchLink		 = esc_url($advSearchLink);
-	$advSearchId		 = esc_attr($advSearchId);
-	$advSearchClass		 = esc_attr($advSearchClass);
-	$searchIncludeDef	 = (int) $searchIncludeDef;
-	$searchScope		 = (int) $searchScope;
-	$placeHolder		 = esc_attr($placeHolder);
-	$echo				 = (int) $echo;
+	$containerClass		= esc_attr($containerClass);
+	$tagId              = esc_attr($tagId);
+	$tagClass           = esc_attr($tagClass);
+	$icon               = sanitize_file_name($icon);
+	$iconClass          = esc_attr($iconClass);
+	$inputClass         = esc_attr($inputClass);
+	$inputWidth         = (int) $inputWidth;
+	$submitId           = esc_attr($submitId);
+	$submitId2          = esc_attr($submitId2);
+	$submitClass        = esc_attr($submitClass);
+	$advSearchLinkClass = esc_attr($advSearchLinkClass);
+	$searchOptionsSection = esc_attr($searchOptionsSection);
+	$advSearchLink      = esc_url($advSearchLink);
+	$advSearchId        = esc_attr($advSearchId);
+	$advSearchClass     = esc_attr($advSearchClass);
+	$scopeSection		= esc_attr($scopeSection);
+	$matchSection		= esc_attr($matchSection);
+	$optionSection		= esc_attr($optionSection);
+	$searchIncludeDef   = (int) $searchIncludeDef;
+	$searchScope        = (int) $searchScope;
+	$placeHolder        = esc_attr($placeHolder);
+	$useSeperator		= (int) $useSeperator;
+	$echo               = (int) $echo;
 
-	if (!empty($submitLabel)) $submitLabel	 = sp_filter_title_display($submitLabel);
-	if (!empty($advancedLabel)) $advancedLabel	 = sp_filter_title_display($advancedLabel);
-	if (!empty($lastSearchLabel)) $lastSearchLabel = sp_filter_title_display($lastSearchLabel);
-	if (!empty($toolTip)) $toolTip		 = esc_attr($toolTip);
+	if (!empty($submitLabel)) $submitLabel = SP()->displayFilters->title($submitLabel);
+	if (!empty($advancedLabel)) $advancedLabel = SP()->displayFilters->title($advancedLabel);
+	if (!empty($lastSearchLabel)) $lastSearchLabel = SP()->displayFilters->title($lastSearchLabel);
+	if (!empty($toolTip)) $toolTip = esc_attr($toolTip);
+
+	$out = '';
+
+	# start full search form outer container
+	$out.= "<div id='spSearchContainer' class='$containerClass'>";
 
 	# render the search form and advanced link
-	$out = "<form id='$tagId' class='spSubmitSearchForm' action='".wp_nonce_url(SPAJAXURL.'search', 'search')."' method='post' name='sfsearch' data-id='' data-type='form' data-min='".SPSEARCHMIN."'>";
+	$out .= "<form id='$tagId' class='spSubmitSearchForm' action='".wp_nonce_url(SPAJAXURL.'search', 'search')."' method='post' name='sfsearch' data-id='' data-type='form' data-min='".SPSEARCHMIN."'>";
 	$out .= "<div class='$tagClass'>";
 
 	# Add a close button if using a mobile phone
-	if ($spDevice == 'mobile') {
+	if (SP()->core->device == 'mobile') {
 		$out .= "<div class='spRight'>";
 		$out .= "<a id='spPanelClose' href='#'></a>";
 		$out .= "</div>";
 	}
 
-	$terms	 = (isset($spVars['searchvalue']) && $spVars['searchtype'] != 4 && $spVars['searchtype'] != 5) ? $spVars['searchvalue'] : '';
-	$out	 .= "<input type='text' id='searchvalue' class='$inputClass' size='$inputWidth' name='searchvalue' value='$terms' placeholder='$placeHolder...' />";
-	$out	 .= "<a rel='nofollow' id='$submitId' class='$submitClass spSearchSubmit' title='$toolTip' data-id='$submitId' data-type='link' data-min='".SPSEARCHMIN."'>";
+	$terms = (isset(SP()->rewrites->pageData['searchvalue']) && SP()->rewrites->pageData['searchtype'] != 4 && SP()->rewrites->pageData['searchtype'] != 5) ? SP()->rewrites->pageData['searchvalue'] : '';
+	$out .= "<input type='text' id='searchvalue' class='$inputClass' size='$inputWidth' name='searchvalue' value='$terms' placeholder='$placeHolder...' />";
+	$out .= "<a rel='nofollow' id='$submitId' class='$submitClass spSearchSubmit' title='$toolTip' data-id='$submitId' data-type='link' data-min='".SPSEARCHMIN."'>";
 	if (!empty($icon)) {
-		$out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	}
 	$out .= "$submitLabel</a>";
 
@@ -2817,25 +2188,27 @@ function sp_SearchForm($args = '') {
 	}
 	$out .= "$advancedLabel</a>";
 
-	# are the search results we can return to?
+	# are there search results we can return to?
 	if (!isset($_GET['search']) && !empty($lastSearchLabel)) {
-		$r = sp_get_cache('search');
+		$r = SP()->cache->get('search');
 		if ($r) {
-			$p	 = $r[0]['page'];
+			$p   = $r[0]['page'];
 			$url = $r[0]['url']."&amp;search=$p";
-			$out .= "<span class='spSearchLinkSep'>|</span>";
-			$out .= "<a class='$advSearchLinkClass' rel='nofollow' href='$url'>$lastSearchLabel</a>";
+			if($useSeperator) $out .= "<span class='spSearchLinkSep'>|</span>";
+			$out .= "<a class='$lastSearchLinkClass' rel='nofollow' href='$url'>$lastSearchLabel</a>";
 		}
 	}
 
 	$out .= "</div>\n";
-
 	$out .= sp_InsertBreak('echo=0');
 	$out .= "<div id='$advSearchId' class='$advSearchClass'>".sp_inline_search_form($a).'</div>';
 	$out .= "</form>\n";
 
 	# finish it up
 	$out = apply_filters('sph_SearchForm', $out, $a);
+
+	# end full search form outer container
+	$out .= '</div>';
 
 	if ($echo) {
 		echo $out;
@@ -2854,28 +2227,26 @@ function sp_SearchForm($args = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_GoToTop($args = '', $label = '', $toolTip = '') {
-	$defs	 = array(
-		'tagClass'	 => 'spGoToTop',
-		'icon'		 => 'sp_ArrowUp.png',
-		'iconClass'	 => 'spGoToTop',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_GoToTop_args', $a);
+	$defs = array('tagClass'  => 'spGoToTop',
+	              'icon'      => 'sp_ArrowUp.png',
+	              'iconClass' => 'spGoToTop',
+	              'echo'      => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_GoToTop_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$iconClass	 = esc_attr($iconClass);
-	$icon		 = sanitize_file_name($icon);
-	$echo		 = (int) $echo;
-	if (!empty($label)) $label		 = sp_filter_title_display($label);
-	if (!empty($toolTip)) $toolTip	 = esc_attr($toolTip);
+	$tagClass  = esc_attr($tagClass);
+	$iconClass = esc_attr($iconClass);
+	$icon      = sanitize_file_name($icon);
+	$echo      = (int) $echo;
+	if (!empty($label)) $label = SP()->displayFilters->title($label);
+	if (!empty($toolTip)) $toolTip = esc_attr($toolTip);
 
 	# render the go to bottom link
 	$out = "<div class='$tagClass'>";
 	$out .= "<a class='$tagClass' href='#spForumTop'>";
-	if (!empty($icon)) $out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon, $toolTip);
+	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon, $toolTip);
 	$out .= "$label</a>";
 	$out .= "</div>\n";
 
@@ -2898,29 +2269,27 @@ function sp_GoToTop($args = '', $label = '', $toolTip = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_GoToBottom($args = '', $label = '', $toolTip = '') {
-	$defs	 = array(
-		'tagClass'	 => 'spGoToBottom',
-		'icon'		 => 'sp_ArrowDown.png',
-		'iconClass'	 => 'spGoToBottom',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_GoToBottom_args', $a);
+	$defs = array('tagClass'  => 'spGoToBottom',
+	              'icon'      => 'sp_ArrowDown.png',
+	              'iconClass' => 'spGoToBottom',
+	              'echo'      => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_GoToBottom_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$iconClass	 = esc_attr($iconClass);
-	$icon		 = sanitize_file_name($icon);
-	$echo		 = (int) $echo;
+	$tagClass  = esc_attr($tagClass);
+	$iconClass = esc_attr($iconClass);
+	$icon      = sanitize_file_name($icon);
+	$echo      = (int) $echo;
 
-	if (!empty($label)) $label	 = sp_filter_title_display($label);
+	if (!empty($label)) $label = SP()->displayFilters->title($label);
 	if (!empty($toolTip)) $toolTip = esc_attr($toolTip);
 
 	# render the go to bottom link
 	$out = "<div class='$tagClass'>";
 	$out .= "<a class='$tagClass spGoBottom'>";
-	if (!empty($icon)) $out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon, $toolTip);
+	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon, $toolTip);
 	$out .= "$label</a>";
 	$out .= "</div>\n";
 
@@ -2943,39 +2312,35 @@ function sp_GoToBottom($args = '', $label = '', $toolTip = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_AllRSSButton($args = '', $label = '', $toolTip = '') {
-	global $spThisUser;
+	if (!SP()->auths->get('view_forum')) return;
 
-	if (!sp_get_auth('view_forum')) return;
-
-	$defs	 = array(
-		'tagId'		 => 'spAllRSSButton',
-		'tagClass'	 => 'spLink',
-		'icon'		 => 'sp_Feed.png',
-		'iconClass'	 => 'spIcon',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_AllRSSButton_args', $a);
+	$defs = array('tagId'     => 'spAllRSSButton',
+	              'tagClass'  => 'spLink',
+	              'icon'      => 'sp_Feed.png',
+	              'iconClass' => 'spIcon',
+	              'echo'      => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_AllRSSButton_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$icon		 = sanitize_file_name($icon);
-	$iconClass	 = esc_attr($iconClass);
-	$toolTip	 = esc_attr($toolTip);
-	$echo		 = (int) $echo;
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$icon      = sanitize_file_name($icon);
+	$iconClass = esc_attr($iconClass);
+	$toolTip   = esc_attr($toolTip);
+	$echo      = (int) $echo;
 
 	# only display all rss feed if at least one forum has rss on
-	$forums = spdb_table(SFFORUMS, 'forum_rss_private=0');
+	$forums = SP()->DB->table(SPFORUMS, 'forum_rss_private=0');
 	if ($forums) {
-		$rssUrl = sp_get_option('sfallRSSurl');
+		$rssUrl = SP()->options->get('sfallRSSurl');
 		if (empty($rssUrl)) {
-			$rssopt = sp_get_option('sfrss');
-			if ($rssopt['sfrssfeedkey'] && isset($spThisUser->feedkey)) {
-				$rssUrl = trailingslashit(sp_build_url('', '', 0, 0, 0, 1)).user_trailingslashit($spThisUser->feedkey);
+			$rssopt = SP()->options->get('sfrss');
+			if ($rssopt['sfrssfeedkey'] && isset(SP()->user->thisUser->feedkey)) {
+				$rssUrl = trailingslashit(SP()->spPermalinks->build_url('', '', 0, 0, 0, 1)).user_trailingslashit(SP()->user->thisUser->feedkey);
 			} else {
-				$rssUrl = sp_build_url('', '', 0, 0, 0, 1);
+				$rssUrl = SP()->spPermalinks->build_url('', '', 0, 0, 0, 1);
 			}
 		}
 	} else {
@@ -2983,8 +2348,8 @@ function sp_AllRSSButton($args = '', $label = '', $toolTip = '') {
 	}
 
 	$out = "<a class='$tagClass' id='$tagId' title='$toolTip' rel='nofollow' href='$rssUrl'>";
-	if (!empty($icon)) $out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-	if (!empty($label)) $out .= sp_filter_title_display($label);
+	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+	if (!empty($label)) $out .= SP()->displayFilters->title($label);
 	$out .= "</a>\n";
 	$out = apply_filters('sph_AllRSSButton', $out, $a);
 
@@ -3005,24 +2370,21 @@ function sp_AllRSSButton($args = '', $label = '', $toolTip = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_ForumLockdown($args = '', $Message = '') {
-	global $spGlobals;
-	if ($spGlobals['lockdown'] == false) return;
+	if (SP()->core->forumData['lockdown'] == false) return;
 
-	$defs	 = array(
-		'tagId'		 => 'spForumLockdown',
-		'tagClass'	 => 'spMessage',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_ForumLockdown_args', $a);
+	$defs = array('tagId'    => 'spForumLockdown',
+	              'tagClass' => 'spMessage',
+	              'echo'     => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumLockdown_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$echo		 = (int) $echo;
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
 
-	$out = "<div id='$tagId' class='$tagClass'>".sp_filter_title_display($Message)."</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>".SP()->displayFilters->title($Message)."</div>\n";
 	$out = apply_filters('sph_ForumLockdown', $out, $a);
 
 	if ($echo) {
@@ -3035,60 +2397,55 @@ function sp_ForumLockdown($args = '', $Message = '') {
 # --------------------------------------------------------------------------------------
 #
 #	sp_RecentPostList()
-#	Displasys the recent post list (as used on front page by default)
+#	Displays the recent post list (as used on front page by default)
 #	Scope:	Forum
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
 
 function sp_RecentPostList($args = '', $label = '') {
-	global $spGroupView, $spThisUser, $spListView, $spThisListTopic;
-
 	# check if group view is set as this may be called from elsewhere
-	if (isset($spGroupView) && $spGroupView->groupViewStatus == 'no access') return;
+	if (isset(SP()->forum->view->groups) && SP()->forum->view->groups->groupViewStatus == 'no access') return;
 
-	$defs	 = array(
-		'tagId'		 => 'spRecentPostList',
-		'tagClass'	 => 'spRecentPostSection',
-		'labelClass' => 'spMessage',
-		'template'	 => 'spListView.php',
-		'show'		 => 20,
-		'group'		 => 0,
-		'admins'	 => 0,
-		'mods'		 => 1,
-		'first'		 => 0,
-		'get'		 => 0
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_RecentPostList_args', $a);
+	$defs = array('tagId'      => 'spRecentPostList',
+	              'tagClass'   => 'spRecentPostSection',
+	              'labelClass' => 'spMessage',
+	              'template'   => 'spListView.php',
+	              'show'       => 20,
+	              'group'      => 0,
+	              'admins'     => 0,
+	              'mods'       => 1,
+	              'first'      => 0,
+	              'get'        => 0);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_RecentPostList_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$labelClass	 = esc_attr($labelClass);
-	$template	 = sanitize_file_name($template);
-	$show		 = (int) $show;
-	$group		 = (int) $group;
-	$admins		 = (int) $admins;
-	$mods		 = (int) $mods;
-	$first		 = (int) $first;
-	$label		 = sp_filter_title_display($label);
-	$get		 = (int) $get;
+	$tagId      = esc_attr($tagId);
+	$tagClass   = esc_attr($tagClass);
+	$labelClass = esc_attr($labelClass);
+	$template   = sanitize_file_name($template);
+	$show       = (int) $show;
+	$group      = (int) $group;
+	$admins     = (int) $admins;
+	$mods       = (int) $mods;
+	$first      = (int) $first;
+	$label      = SP()->displayFilters->title($label);
+	$get        = (int) $get;
 
-	if ((!$admins && $spThisUser->admin) || (!$mods && $spThisUser->moderator)) return;
+	if ((!$admins && SP()->user->thisUser->admin) || (!$mods && SP()->user->thisUser->moderator)) return;
 
 	echo "<div id='$tagId' class='$tagClass'>\n";
 	echo "<div class='$labelClass'>$label</div>\n";
-	$topics = (!empty($spThisUser->newposts['topics'])) ? $spThisUser->newposts['topics'] : '';
+	$topics = (!empty(SP()->user->thisUser->newposts['topics'])) ? SP()->user->thisUser->newposts['topics'] : '';
 
 	if ($get) return $topics;
 
-	$spListView = new spTopicList($topics, $show, $group, '', $first, 1, 'recent posts');
+	SP()->forum->view->listTopics = new spcTopicList($topics, $show, $group, '', $first, 1, 'recent posts');
 
 	# special filter for list view result set
-	do_action_ref_array('sph_RecentPostListResults', array(
-		&$spListView));
+	do_action_ref_array('sph_RecentPostListResults', array(&SP()->forum->view->listTopics));
 
 	sp_load_template($template);
 	echo '</div>';
@@ -3105,39 +2462,37 @@ function sp_RecentPostList($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_Acknowledgements($args = '', $label = '', $toolTip = '', $siteToolTip = '') {
-	$defs	 = array(
-		'tagId'		 => 'spAck',
-		'tagClass'	 => 'spAck',
-		'icon'		 => 'sp_Information.png',
-		'iconClass'	 => 'spIcon',
-		'linkClass'	 => 'spLink',
-		'showPopup'	 => 1,
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_AcknowledgementsLink_args', $a);
+	$defs = array('tagId'     => 'spAck',
+	              'tagClass'  => 'spAck',
+	              'icon'      => 'sp_Information.png',
+	              'iconClass' => 'spIcon',
+	              'linkClass' => 'spLink',
+	              'showPopup' => 1,
+	              'echo'      => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_AcknowledgementsLink_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$icon		 = sanitize_file_name($icon);
-	$iconClass	 = esc_attr($iconClass);
-	$showPopup	 = (int) $showPopup;
-	$echo		 = (int) $echo;
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$icon      = sanitize_file_name($icon);
+	$iconClass = esc_attr($iconClass);
+	$showPopup = (int) $showPopup;
+	$echo      = (int) $echo;
 
-	if (!empty($label)) $label		 = sp_filter_title_display($label);
-	if (!empty($toolTip)) $toolTip	 = esc_attr($toolTip);
+	if (!empty($label)) $label = SP()->displayFilters->title($label);
+	if (!empty($toolTip)) $toolTip = esc_attr($toolTip);
 	if (!empty($siteToolTip)) $siteToolTip = esc_attr($siteToolTip);
 
 	# build acknowledgements url and render link to SP and popup
 	$out = "<div id='$tagId' class='$tagClass'>";
 	$out .= "&copy; <a class='spLink' title='$siteToolTip' href='https://simple-press.com' target='_blank'>Simple:Press</a>";
 	if ($showPopup) {
-		$site	 = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
-		$out	 .= "<a rel='nofollow' class='$linkClass spOpenDialog' title='$toolTip' data-site='$site' data-label='$toolTip' data-width='600' data-height='0' data-align='center'>";
-		if (!empty($icon)) $out	 .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out	 .= "$label</a>";
+		$site = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
+		$out .= "&nbsp;&mdash;<a rel='nofollow' class='$linkClass spOpenDialog' title='$toolTip' data-site='$site' data-label='$toolTip' data-width='600' data-height='0' data-align='center'>";
+		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+		$out .= "$label</a>";
 	}
 	$out .= "</div>\n";
 	if ($showPopup) {
@@ -3161,28 +2516,26 @@ function sp_Acknowledgements($args = '', $label = '', $toolTip = '', $siteToolTi
 # --------------------------------------------------------------------------------------
 
 function sp_ForumTimeZone($args = '', $label = '') {
-	$defs	 = array(
-		'tagClass'	 => 'spForumTimeZone',
-		'echo'		 => 1,
-		'get'		 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_ForumTimeZone_args', $a);
+	$defs = array('tagClass' => 'spForumTimeZone',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumTimeZone_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$echo		 = (int) $echo;
-	$get		 = (int) $get;
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
 	# render the forum timezone
-	$tz	 = get_option('timezone_string');
-	if (empty($tz)) $tz	 = 'UTC '.get_option('gmt_offset');
+	$tz = get_option('timezone_string');
+	if (empty($tz)) $tz = 'UTC '.get_option('gmt_offset');
 
 	if ($get) return $tz;
 
 	$out = "<div class='$tagClass'>";
-	if (!empty($label)) $out .= '<span>'.sp_filter_title_display($label).'</span>';
+	if (!empty($label)) $out .= '<span>'.SP()->displayFilters->title($label).'</span>';
 	$out .= $tz;
 	$out .= '</div>';
 	$out = apply_filters('sph_ForumTimeZone', $out, $a);
@@ -3204,30 +2557,27 @@ function sp_ForumTimeZone($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_UserTimeZone($args = '', $label = '') {
-	global $spThisUser;
-	if ($spThisUser->guest) return;
+	if (SP()->user->thisUser->guest) return;
 
-	$defs	 = array(
-		'tagClass'	 => 'spUserTimeZone',
-		'echo'		 => 1,
-		'get'		 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_UserTimeZone_args', $a);
+	$defs = array('tagClass' => 'spUserTimeZone',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_UserTimeZone_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$echo		 = (int) $echo;
-	$get		 = (int) $get;
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
 
 	# render the user timezone
-	$tz = (!empty($spThisUser->timezone_string)) ? $spThisUser->timezone_string : get_option('timezone_string');
+	$tz = (!empty(SP()->user->thisUser->timezone_string)) ? SP()->user->thisUser->timezone_string : get_option('timezone_string');
 
 	if ($get) return $tz;
 
 	$out = "<div class='$tagClass'>";
-	if (!empty($label)) $out .= '<span>'.sp_filter_title_display($label).'</span>';
+	if (!empty($label)) $out .= '<span>'.SP()->displayFilters->title($label).'</span>';
 	$out .= $tz;
 	$out .= '</div>';
 	$out = apply_filters('sph_UserTimeZone', $out, $a);
@@ -3249,82 +2599,80 @@ function sp_UserTimeZone($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsingLabel = '', $guestLabel = '') {
-	$defs	 = array(
-		'pMostClass'	 => 'spMostOnline',
-		'pCurrentClass'	 => 'spCurrentOnline',
-		'pBrowsingClass' => 'spCurrentBrowsing',
-		'link_names'	 => 1,
-		'usersOnly'		 => 0,
-		'echo'			 => 1,
-		'get'			 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_OnlineStats_args', $a);
+	$defs = array('pMostClass'     => 'spMostOnline',
+	              'pCurrentClass'  => 'spCurrentOnline',
+	              'pBrowsingClass' => 'spCurrentBrowsing',
+	              'linkNames'      => 1,
+	              'usersOnly'      => 0,
+	              'echo'           => 1,
+	              'get'            => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_OnlineStats_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$pMostClass		 = esc_attr($pMostClass);
-	$pCurrentClass	 = esc_attr($pCurrentClass);
-	$pBrowsingClass	 = esc_attr($pBrowsingClass);
-	$link_names		 = (int) $link_names;
-	$usersOnly		 = (int) $usersOnly;
-	$echo			 = (int) $echo;
-	$get			 = (int) $get;
-	if (!empty($mostLabel)) $mostLabel		 = sp_filter_title_display($mostLabel);
-	if (!empty($currentLabel)) $currentLabel	 = sp_filter_title_display($currentLabel);
-	if (!empty($browsingLabel)) $browsingLabel	 = sp_filter_title_display($browsingLabel);
-	if (!empty($guestLabel)) $guestLabel		 = sp_filter_title_display($guestLabel);
+	$pMostClass     = esc_attr($pMostClass);
+	$pCurrentClass  = esc_attr($pCurrentClass);
+	$pBrowsingClass = esc_attr($pBrowsingClass);
+	$linkNames      = (int) $linkNames;
+	$usersOnly      = (int) $usersOnly;
+	$echo           = (int) $echo;
+	$get            = (int) $get;
+	if (!empty($mostLabel)) $mostLabel = SP()->displayFilters->title($mostLabel);
+	if (!empty($currentLabel)) $currentLabel = SP()->displayFilters->title($currentLabel);
+	if (!empty($browsingLabel)) $browsingLabel = SP()->displayFilters->title($browsingLabel);
+	if (!empty($guestLabel)) $guestLabel = SP()->displayFilters->title($guestLabel);
 
 	# grab most online stat and update if new most
-	$max	 = sp_get_option('spMostOnline');
-	$online	 = spdb_count(SFTRACK);
+	$max    = SP()->options->get('spMostOnline');
+	$online = SP()->DB->count(SPTRACK);
 	if ($online > $max) {
 		$max = $online;
-		sp_update_option('spMostOnline', $max);
+		SP()->options->update('spMostOnline', $max);
 	}
+
+	require_once SP_PLUGIN_DIR.'/forum/database/sp-db-statistics.php';
 	$members = sp_get_members_online();
 
 	if ($get) {
-		$getData			 = new stdClass();
-		$getData->max		 = $max;
-		$getData->members	 = $members;
+		$getData          = new stdClass();
+		$getData->max     = $max;
+		$getData->members = $members;
+
 		return $getData;
 	}
 
 	# render the max online stats
-	$out = "<p class='$pMostClass'><span>$mostLabel</span>$max</p>";
+	$out = "<div class='$pMostClass'><span>$mostLabel</span>$max</div>";
 
 	# render the current online stats
-	$browse	 = '';
-	$out	 .= "<p class='$pCurrentClass'><span>$currentLabel</span>";
+	$browse = '';
+	$out .= "<div class='$pCurrentClass'><span>$currentLabel</span>";
 
 	# members online
 	if ($members) {
-		global $spThisUser, $spVars;
-
-		$firstOnline	 = true;
-		$firstBrowsing	 = true;
-		$spMemberOpts	 = sp_get_option('sfmemberopts');
+		$firstOnline   = true;
+		$firstBrowsing = true;
+		$spMemberOpts  = SP()->options->get('sfmemberopts');
 		foreach ($members as $user) {
-			$userOpts				 = unserialize($user->user_options);
-			if (!isset($userOpts['hidestatus'])) $userOpts['hidestatus']	 = false;
-			if ($spThisUser->admin || !$spMemberOpts['sfhidestatus'] || !$userOpts['hidestatus']) {
-				if (!$firstOnline) $out		 .= ', ';
-				$out		 .= "<span class='spOnlineUser ".$user->display."'>";
-				$out		 .= sp_build_name_display($user->trackuserid, sp_filter_name_display($user->display_name), $link_names);
-				$out		 .= '</span>';
+			$userOpts = unserialize($user->user_options);
+			if (!isset($userOpts['hidestatus'])) $userOpts['hidestatus'] = false;
+			if (SP()->user->thisUser->admin || !$spMemberOpts['sfhidestatus'] || !$userOpts['hidestatus']) {
+				if (!$firstOnline) $out .= ', ';
+				$out .= "<span class='spOnlineUser ".$user->display."'>";
+				$out .= SP()->user->name_display($user->trackuserid, SP()->displayFilters->name($user->display_name), $linkNames);
+				$out .= '</span>';
 				$firstOnline = false;
 
-				# Set up the members browsing curent item list while here
+				# Set up the members browsing current item list while here
 				# Check that pageview is  set as this might be called from outside of the forum
-				if (!empty($spVars['pageview'])) {
-					if (($spVars['pageview'] == 'forum' && $user->forum_id == $spVars['forumid']) ||
-						($spVars['pageview'] == 'topic' && $user->topic_id == $spVars['topicid'])) {
-						if (!$firstBrowsing) $browse			 .= ', ';
-						$browse			 .= "<span class='spOnlineUser ".$user->display."'>";
-						$browse			 .= sp_build_name_display($user->trackuserid, sp_filter_name_display($user->display_name), $link_names);
-						$browse			 .= '</span>';
-						$firstBrowsing	 = false;
+				if (!empty(SP()->rewrites->pageData['pageview'])) {
+					if ((SP()->rewrites->pageData['pageview'] == 'forum' && $user->forum_id == SP()->rewrites->pageData['forumid']) || (SP()->rewrites->pageData['pageview'] == 'topic' && $user->topic_id == SP()->rewrites->pageData['topicid'])) {
+						if (!$firstBrowsing) $browse .= ', ';
+						$browse .= "<span class='spOnlineUser ".$user->display."'>";
+						$browse .= SP()->user->name_display($user->trackuserid, SP()->displayFilters->name($user->display_name), $linkNames);
+						$browse .= '</span>';
+						$firstBrowsing = false;
 					}
 				}
 			}
@@ -3333,18 +2681,18 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 
 	# guests online
 	if (!$usersOnly && $online && ($online > count($members))) {
-		$guests	 = ($online - count($members));
-		$out	 .= "<br />$guests <span class='spOnlineUser spType-Guest'>$guestLabel</span>";
+		$guests = ($online - count($members));
+		$out .= "<br />$guests <div class='spOnlineUser spType-Guest'>$guestLabel</div>";
 	}
-	$out .= '</p>';
+	$out .= '</div>';
 
 	# Members and guests browsing
-	$out			 .= "<p class='$pBrowsingClass'>";
-	$guestBrowsing	 = sp_guests_browsing();
-	if ($browse || $guestBrowsing) $out			 .= "<span>$browsingLabel</span>";
-	if ($browse) $out			 .= $browse;
-	if (!$usersOnly && $guestBrowsing != 0) $out			 .= "<br />$guestBrowsing <span class='spOnlineUser spType-Guest'>$guestLabel</span>";
-	$out			 .= "</p>\n";
+	$out .= "<div class='$pBrowsingClass'>";
+	$guestBrowsing = sp_guests_browsing();
+	if ($browse || $guestBrowsing) $out .= "<span>$browsingLabel</span>";
+	if ($browse) $out .= $browse;
+	if (!$usersOnly && $guestBrowsing != 0) $out .= "<br />$guestBrowsing <span class='spOnlineUser spType-Guest'>$guestLabel</span>";
+	$out .= "</div>\n";
 
 	# finish it up
 	$out = apply_filters('sph_OnlineStats', $out, $a);
@@ -3359,42 +2707,40 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 # --------------------------------------------------------------------------------------
 #
 #	sp_DeviceStats()
-#	Display the deviced being used stats
+#	Display the device being used stats
 #	Scope:	Site
 #	Version: 5.3
 #
 # --------------------------------------------------------------------------------------
 
 function sp_DeviceStats($args = '', $statLabel = '', $phoneLabel = '', $tabletLabel = '', $desktopLabel = '') {
-	$defs	 = array(
-		'tagClass'	 => 'spDeviceStats',
-		'echo'		 => 1,
-		'get'		 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_DeviceStats_args', $a);
+	$defs = array('tagClass' => 'spDeviceStats',
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_DeviceStats_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass		 = esc_attr($tagClass);
-	$echo			 = (int) $echo;
-	$get			 = (int) $get;
-	if (!empty($statLabel)) $statLabel		 = sp_filter_title_display($statLabel);
-	if (!empty($phoneLabel)) $phoneLabel		 = sp_filter_title_display($phoneLabel);
-	if (!empty($tabletLabel)) $tabletLabel	 = sp_filter_title_display($tabletLabel);
-	if (!empty($desktopLabel)) $desktopLabel	 = sp_filter_title_display($desktopLabel);
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
+	if (!empty($statLabel)) $statLabel = SP()->displayFilters->title($statLabel);
+	if (!empty($phoneLabel)) $phoneLabel = SP()->displayFilters->title($phoneLabel);
+	if (!empty($tabletLabel)) $tabletLabel = SP()->displayFilters->title($tabletLabel);
+	if (!empty($desktopLabel)) $desktopLabel = SP()->displayFilters->title($desktopLabel);
 
 	# grab device stats data
-	$device = spdb_select('set', 'SELECT device, COUNT(device) AS total FROM '.SFTRACK.' GROUP BY device');
+	$device = SP()->DB->select('SELECT device, COUNT(device) AS total FROM '.SPTRACK.' GROUP BY device');
 	if (empty($device)) return;
 	if ($get) return $device;
 
 	# render the device stats
-	$out	 = "<p class='$tagClass'><span>$statLabel</span>";
-	$first	 = true;
+	$out   = "<p class='$tagClass'><span>$statLabel</span>";
+	$first = true;
 	foreach ($device as $d) {
-		if (!$first) $out	 .= ', ';
-		$first	 = false;
+		if (!$first) $out .= ', ';
+		$first = false;
 
 		switch ($d->device) {
 			case 'D':
@@ -3430,44 +2776,42 @@ function sp_DeviceStats($args = '', $statLabel = '', $phoneLabel = '', $tabletLa
 # --------------------------------------------------------------------------------------
 
 function sp_ForumStats($args = '', $titleLabel = '', $groupsLabel = '', $forumsLabel = '', $topicsLabel = '', $postsLabel = '') {
-	$defs	 = array(
-		'pTitleClass'	 => 'spForumStatsTitle',
-		'pGroupsClass'	 => 'spGroupsStats',
-		'pForumsClass'	 => 'spForumsStats',
-		'pTopicsClass'	 => 'spTopicsStats',
-		'pPostsClass'	 => 'spPostsStats',
-		'echo'			 => 1,
-		'get'			 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_ForumStats_args', $a);
+	$defs = array('pTitleClass'  => 'spForumStatsTitle',
+	              'pGroupsClass' => 'spGroupsStats',
+	              'pForumsClass' => 'spForumsStats',
+	              'pTopicsClass' => 'spTopicsStats',
+	              'pPostsClass'  => 'spPostsStats',
+	              'echo'         => 1,
+	              'get'          => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumStats_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$pTitleClass	 = esc_attr($pTitleClass);
-	$pGroupsClass	 = esc_attr($pGroupsClass);
-	$pForumsClass	 = esc_attr($pForumsClass);
-	$pTopicsClass	 = esc_attr($pTopicsClass);
-	$pPostsClass	 = esc_attr($pPostsClass);
-	$echo			 = (int) $echo;
-	$get			 = (int) $get;
-	if (!empty($titleLabel)) $titleLabel		 = sp_filter_title_display($titleLabel);
-	if (!empty($groupsLabel)) $groupsLabel	 = sp_filter_title_display($groupsLabel);
-	if (!empty($forumsLabel)) $forumsLabel	 = sp_filter_title_display($forumsLabel);
-	if (!empty($topicsLabel)) $topicsLabel	 = sp_filter_title_display($topicsLabel);
-	if (!empty($postsLabel)) $postsLabel		 = sp_filter_title_display($postsLabel);
+	$pTitleClass  = esc_attr($pTitleClass);
+	$pGroupsClass = esc_attr($pGroupsClass);
+	$pForumsClass = esc_attr($pForumsClass);
+	$pTopicsClass = esc_attr($pTopicsClass);
+	$pPostsClass  = esc_attr($pPostsClass);
+	$echo         = (int) $echo;
+	$get          = (int) $get;
+	if (!empty($titleLabel)) $titleLabel = SP()->displayFilters->title($titleLabel);
+	if (!empty($groupsLabel)) $groupsLabel = SP()->displayFilters->title($groupsLabel);
+	if (!empty($forumsLabel)) $forumsLabel = SP()->displayFilters->title($forumsLabel);
+	if (!empty($topicsLabel)) $topicsLabel = SP()->displayFilters->title($topicsLabel);
+	if (!empty($postsLabel)) $postsLabel = SP()->displayFilters->title($postsLabel);
 
 	# get stats for forum stats
-	$counts = sp_get_option('spForumStats');
+	$counts = SP()->options->get('spForumStats');
 
 	if ($get) return $counts;
 
 	# render the forum stats
-	$out = "<p class='$pTitleClass'>$titleLabel</p>";
-	$out .= "<p class='$pGroupsClass'>".$groupsLabel.$counts->groups.'</p>';
-	$out .= "<p class='$pForumsClass'>".$forumsLabel.$counts->forums.'</p>';
-	$out .= "<p class='$pTopicsClass'>".$topicsLabel.$counts->topics.'</p>';
-	$out .= "<p class='$pPostsClass'>".$postsLabel.$counts->posts."</p>\n";
+	$out = "<div class='$pTitleClass'>$titleLabel</div>";
+	$out .= "<div class='$pGroupsClass'>".$groupsLabel.$counts->groups.'</div>';
+	$out .= "<div class='$pForumsClass'>".$forumsLabel.$counts->forums.'</div>';
+	$out .= "<div class='$pTopicsClass'>".$topicsLabel.$counts->topics.'</div>';
+	$out .= "<div class='$pPostsClass'>".$postsLabel.$counts->posts."</div>\n";
 
 	# finish it up
 	$out = apply_filters('sph_ForumStats', $out, $a);
@@ -3482,52 +2826,50 @@ function sp_ForumStats($args = '', $titleLabel = '', $groupsLabel = '', $forumsL
 # --------------------------------------------------------------------------------------
 #
 #	sp_MembershipStats()
-#	Display the membeship stats section
+#	Display the membership stats section
 #	Scope:	Site
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
 
 function sp_MembershipStats($args = '', $titleLabel = '', $membersLabel = '', $guestsLabel = '', $modsLabel = '', $adminsLabel = '') {
-	$defs	 = array(
-		'pTitleClass'	 => 'spMembershipStatsTitle',
-		'pMembersClass'	 => 'spMemberStats',
-		'pGuestsClass'	 => 'spGuestsStats',
-		'pModsClass'	 => 'spModsStats',
-		'pAdminsClass'	 => 'spAdminsStats',
-		'echo'			 => 1,
-		'get'			 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_MembershipStats_args', $a);
+	$defs = array('pTitleClass'   => 'spMembershipStatsTitle',
+	              'pMembersClass' => 'spMemberStats',
+	              'pGuestsClass'  => 'spGuestsStats',
+	              'pModsClass'    => 'spModsStats',
+	              'pAdminsClass'  => 'spAdminsStats',
+	              'echo'          => 1,
+	              'get'           => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_MembershipStats_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$pTitleClass	 = esc_attr($pTitleClass);
-	$pMembersClass	 = esc_attr($pMembersClass);
-	$pGuestsClass	 = esc_attr($pGuestsClass);
-	$pModsClass		 = esc_attr($pModsClass);
-	$pAdminsClass	 = esc_attr($pAdminsClass);
-	$echo			 = (int) $echo;
-	$get			 = (int) $get;
-	if (!empty($titleLabel)) $titleLabel		 = sp_filter_title_display($titleLabel);
+	$pTitleClass   = esc_attr($pTitleClass);
+	$pMembersClass = esc_attr($pMembersClass);
+	$pGuestsClass  = esc_attr($pGuestsClass);
+	$pModsClass    = esc_attr($pModsClass);
+	$pAdminsClass  = esc_attr($pAdminsClass);
+	$echo          = (int) $echo;
+	$get           = (int) $get;
+	if (!empty($titleLabel)) $titleLabel = SP()->displayFilters->title($titleLabel);
 
 	# get stats for membership stats
-	$stats = sp_get_option('spMembershipStats');
+	$stats = SP()->options->get('spMembershipStats');
 
 	if ($get) return $stats;
 
-	if (!empty($guestsLabel)) $guestsLabel	 = sp_filter_title_display(str_replace('%COUNT%', $stats['guests'], $guestsLabel));
-	if (!empty($membersLabel)) $membersLabel	 = sp_filter_title_display(str_replace('%COUNT%', $stats['members'], $membersLabel));
-	if (!empty($modsLabel)) $modsLabel		 = sp_filter_title_display(str_replace('%COUNT%', $stats['mods'], $modsLabel));
-	if (!empty($adminsLabel)) $adminsLabel	 = sp_filter_title_display(str_replace('%COUNT%', $stats['admins'], $adminsLabel));
+	if (!empty($guestsLabel)) $guestsLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['guests'], $guestsLabel));
+	if (!empty($membersLabel)) $membersLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['members'], $membersLabel));
+	if (!empty($modsLabel)) $modsLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['mods'], $modsLabel));
+	if (!empty($adminsLabel)) $adminsLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['admins'], $adminsLabel));
 
 	# render the forum stats
-	$out = "<p class='$pTitleClass'>$titleLabel</p>";
-	$out .= "<p class='$pGuestsClass'>$guestsLabel</p>";
-	$out .= "<p class='$pMembersClass'>$membersLabel</p>";
-	$out .= "<p class='$pModsClass'>$modsLabel</p>";
-	$out .= "<p class='$pAdminsClass'>$adminsLabel</p>\n";
+	$out = "<div class='$pTitleClass'>$titleLabel</div>";
+	$out .= "<div class='$pGuestsClass'>$guestsLabel</div>";
+	$out .= "<div class='$pMembersClass'>$membersLabel</div>";
+	$out .= "<div class='$pModsClass'>$modsLabel</div>";
+	$out .= "<div class='$pAdminsClass'>$adminsLabel</div>\n";
 
 	# finish it up
 	$out = apply_filters('sph_MembershipStats', $out, $a);
@@ -3549,35 +2891,33 @@ function sp_MembershipStats($args = '', $titleLabel = '', $membersLabel = '', $g
 # --------------------------------------------------------------------------------------
 
 function sp_TopPostersStats($args = '', $titleLabel = '') {
-	$defs	 = array(
-		'pTitleClass'	 => 'spTopPosterStatsTitle',
-		'pPosterClass'	 => 'spPosterStats',
-		'link_names'	 => 1,
-		'echo'			 => 1,
-		'get'			 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_TopStats_args', $a);
+	$defs = array('pTitleClass'  => 'spTopPosterStatsTitle',
+	              'pPosterClass' => 'spPosterStats',
+	              'linkNames'    => 1,
+	              'echo'         => 1,
+	              'get'          => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_TopStats_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$pTitleClass	 = esc_attr($pTitleClass);
-	$pPosterClass	 = esc_attr($pPosterClass);
-	$link_names		 = (int) $link_names;
-	$echo			 = (int) $echo;
-	$get			 = (int) $get;
-	if (!empty($titleLabel)) $titleLabel		 = sp_filter_title_display($titleLabel);
+	$pTitleClass  = esc_attr($pTitleClass);
+	$pPosterClass = esc_attr($pPosterClass);
+	$linkNames    = (int) $linkNames;
+	$echo         = (int) $echo;
+	$get          = (int) $get;
+	if (!empty($titleLabel)) $titleLabel = SP()->displayFilters->title($titleLabel);
 
 	# get stats for top poster stats
-	$topPosters = sp_get_option('spPosterStats');
+	$topPosters = SP()->options->get('spPosterStats');
 
 	if ($get) return $topPosters;
 
 	# render the forum stats
-	$out = "<p class='$pTitleClass'>$titleLabel</p>";
+	$out = "<div class='$pTitleClass'>$titleLabel</div>";
 	if ($topPosters) {
 		foreach ($topPosters as $poster) {
-			if ($poster->posts > 0) $out .= "<p class='$pPosterClass'>".sp_build_name_display($poster->user_id, sp_filter_name_display($poster->display_name), $link_names).': '.$poster->posts.'</p>';
+			if ($poster->posts > 0) $out .= "<div class='$pPosterClass'>".SP()->user->name_display($poster->user_id, SP()->displayFilters->name($poster->display_name), $linkNames).': '.$poster->posts.'</div>';
 		}
 	}
 
@@ -3603,49 +2943,47 @@ function sp_TopPostersStats($args = '', $titleLabel = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_NewMembers($args = '', $titleLabel = '') {
-	$defs	 = array(
-		'tagClass'		 => 'spNewMembers',
-		'pTitleClass'	 => 'spNewMembersTitle',
-		'pPosterClass'	 => 'spPosterStats',
-		'spanClass'		 => 'spNewMembersList',
-		'link_names'	 => 1,
-		'list'			 => 0,
-		'echo'			 => 1,
-		'get'			 => 0
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_NewMembers_args', $a);
+	$defs = array('tagClass'     => 'spNewMembers',
+	              'pTitleClass'  => 'spNewMembersTitle',
+	              'pPosterClass' => 'spPosterStats',
+	              'spanClass'    => 'spNewMembersList',
+	              'linkNames'    => 1,
+	              'list'         => 0,
+	              'echo'         => 1,
+	              'get'          => 0);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_NewMembers_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass		 = esc_attr($tagClass);
-	$pTitleClass	 = esc_attr($pTitleClass);
-	$pPosterClass	 = esc_attr($pPosterClass);
-	$spanClass		 = esc_attr($spanClass);
-	$link_names		 = (int) $link_names;
-	$listClass		 = (int) $list;
-	$echo			 = (int) $echo;
-	$get			 = (int) $get;
-	if (!empty($titleLabel)) $titleLabel		 = sp_filter_title_display($titleLabel);
+	$tagClass     = esc_attr($tagClass);
+	$pTitleClass  = esc_attr($pTitleClass);
+	$pPosterClass = esc_attr($pPosterClass);
+	$spanClass    = esc_attr($spanClass);
+	$linkNames    = (int) $linkNames;
+	$list         = (int) $list;
+	$echo         = (int) $echo;
+	$get          = (int) $get;
+	if (!empty($titleLabel)) $titleLabel = SP()->displayFilters->title($titleLabel);
 
 	# render the forum stats
 	$out = '';
 	if (!$list) $out .= "<div class='$tagClass'>";
-	$out .= "<p class='$pTitleClass'><span class='$pTitleClass'>$titleLabel</span></p>";
+	$out .= "<div class='$pTitleClass'><span class='$pTitleClass'>$titleLabel</span></div>";
 
-	$newMemberList = sp_get_option('spRecentMembers');
+	$newMemberList = SP()->options->get('spRecentMembers');
 
 	if ($get) return $newMemberList;
 
 	if ($newMemberList) {
-		$first	 = true;
-		if (!$list) $out	 .= "<span class='$spanClass'>";
+		$first = true;
+		if (!$list) $out .= "<span class='$spanClass'>";
 		foreach ($newMemberList as $member) {
-			$comma	 = (!$first && !$list) ? ', ' : '';
-			if ($list) $out	 .= "<p class='$pPosterClass'>";
-			$out	 .= sp_build_name_display($member['id'], $comma.sp_filter_name_display($member['name']), $link_names);
-			if ($list) $out	 .= '</p>';
-			$first	 = false;
+			$comma = (!$first && !$list) ? ', ' : '';
+			if ($list) $out .= "<div class='$pPosterClass'>";
+			$out .= SP()->user->name_display($member['id'], $comma.SP()->displayFilters->name($member['name']), $linkNames);
+			if ($list) $out .= '</div>';
+			$first = false;
 		}
 		if (!$list) $out .= '</span>';
 	}
@@ -3674,33 +3012,31 @@ function sp_NewMembers($args = '', $titleLabel = '') {
 function sp_ModsList($args = '', $titleLabel = '') {
 
 	# get stats for moderator stats
-	$mods = sp_get_option('spModStats');
+	$mods = SP()->options->get('spModStats');
 	if (empty($mods)) return;
 
-	$defs	 = array(
-		'tagClass'		 => 'spModerators',
-		'pTitleClass'	 => 'spModeratorsTitle',
-		'spanClass'		 => 'spModeratorList',
-		'link_names'	 => 1,
-		'postCount'		 => 1,
-		'stack'			 => 0,
-		'echo'			 => 1,
-		'get'			 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_ModsList_args', $a);
+	$defs = array('tagClass'    => 'spModerators',
+	              'pTitleClass' => 'spModeratorsTitle',
+	              'spanClass'   => 'spModeratorList',
+	              'linkNames'   => 1,
+	              'postCount'   => 1,
+	              'stack'       => 0,
+	              'echo'        => 1,
+	              'get'         => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ModsList_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
+	$tagClass    = esc_attr($tagClass);
 	$pTitleClass = esc_attr($pTitleClass);
-	$spanClass	 = esc_attr($spanClass);
-	$link_names	 = (int) $link_names;
-	$postCount	 = (int) $postCount;
-	$stack		 = (int) $stack;
-	$echo		 = (int) $echo;
-	$get		 = (int) $get;
-	if (!empty($titleLabel)) $titleLabel	 = sp_filter_title_display($titleLabel);
+	$spanClass   = esc_attr($spanClass);
+	$linkNames   = (int) $linkNames;
+	$postCount   = (int) $postCount;
+	$stack       = (int) $stack;
+	$echo        = (int) $echo;
+	$get         = (int) $get;
+	if (!empty($titleLabel)) $titleLabel = SP()->displayFilters->title($titleLabel);
 
 	if ($get) return $mods;
 
@@ -3708,21 +3044,21 @@ function sp_ModsList($args = '', $titleLabel = '') {
 
 	# render the moderators list
 	$out = "<div class='$tagClass'>";
-	$out .= "<p class='$pTitleClass'><span class='$pTitleClass'>$titleLabel</span>";
+	$out .= "<div class='$pTitleClass'><span class='$pTitleClass'>$titleLabel</span>";
 	if ($mods) {
-		$first	 = true;
-		if ($stack) $out	 .= $delim;
-		$out	 .= "<span class='$spanClass'>";
+		$first = true;
+		if ($stack) $out .= $delim;
+		$out .= "<span class='$spanClass'>";
 		foreach ($mods as $mod) {
-			$comma			 = (!$first) ? $delim : '';
-			if ($mod['posts'] < 0) $mod['posts']	 = 0;
-			$userPosts		 = ($postCount) ? ': '.$mod['posts'] : '';
-			$out			 .= sp_build_name_display($mod['user_id'], $comma.sp_filter_name_display($mod['display_name']).$userPosts, $link_names);
-			$first			 = false;
+			$comma = (!$first) ? $delim : '';
+			if ($mod['posts'] < 0) $mod['posts'] = 0;
+			$userPosts = ($postCount) ? ': '.$mod['posts'] : '';
+			$out .= SP()->user->name_display($mod['user_id'], $comma.SP()->displayFilters->name($mod['display_name']).$userPosts, $linkNames);
+			$first = false;
 		}
 		$out .= '</span>';
 	}
-	$out .= '</p>';
+	$out .= '</div>';
 
 	# finish it up
 	$out .= "</div>\n";
@@ -3745,33 +3081,31 @@ function sp_ModsList($args = '', $titleLabel = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_AdminsList($args = '', $titleLabel = '') {
-	$defs	 = array(
-		'tagClass'		 => 'spAdministrators',
-		'pTitleClass'	 => 'spAdministratorsTitle',
-		'spanClass'		 => 'spAdministratorsList',
-		'link_names'	 => 1,
-		'postCount'		 => 1,
-		'stack'			 => 0,
-		'echo'			 => 1,
-		'get'			 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_AdminsList_args', $a);
+	$defs = array('tagClass'    => 'spAdministrators',
+	              'pTitleClass' => 'spAdministratorsTitle',
+	              'spanClass'   => 'spAdministratorsList',
+	              'linkNames'   => 1,
+	              'postCount'   => 1,
+	              'stack'       => 0,
+	              'echo'        => 1,
+	              'get'         => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_AdminsList_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
+	$tagClass    = esc_attr($tagClass);
 	$pTitleClass = esc_attr($pTitleClass);
-	$spanClass	 = esc_attr($spanClass);
-	$link_names	 = (int) $link_names;
-	$postCount	 = (int) $postCount;
-	$stack		 = (int) $stack;
-	$echo		 = (int) $echo;
-	$get		 = (int) $get;
-	if (!empty($titleLabel)) $titleLabel	 = sp_filter_title_display($titleLabel);
+	$spanClass   = esc_attr($spanClass);
+	$linkNames   = (int) $linkNames;
+	$postCount   = (int) $postCount;
+	$stack       = (int) $stack;
+	$echo        = (int) $echo;
+	$get         = (int) $get;
+	if (!empty($titleLabel)) $titleLabel = SP()->displayFilters->title($titleLabel);
 
 	# get stats for admin stats
-	$admins = sp_get_option('spAdminStats');
+	$admins = SP()->options->get('spAdminStats');
 
 	if ($get) return $admins;
 
@@ -3779,21 +3113,21 @@ function sp_AdminsList($args = '', $titleLabel = '') {
 
 	# render the admins list
 	$out = "<div class='$tagClass'>";
-	$out .= "<p class='$pTitleClass'><span class='$pTitleClass'>$titleLabel</span>";
+	$out .= "<div class='$pTitleClass'><span class='$pTitleClass'>$titleLabel</span>";
 	if ($admins) {
-		$first	 = true;
-		if ($stack) $out	 .= $delim;
-		$out	 .= "<span class='$spanClass'>";
+		$first = true;
+		if ($stack) $out .= $delim;
+		$out .= "<span class='$spanClass'>";
 		foreach ($admins as $admin) {
-			$comma			 = (!$first) ? $delim : '';
-			if ($admin['posts'] < 0) $admin['posts']	 = 0;
-			$userPosts		 = ($postCount) ? ': '.$admin['posts'] : '';
-			$out			 .= sp_build_name_display($admin['user_id'], $comma.sp_filter_name_display($admin['display_name']).$userPosts, $link_names);
-			$first			 = false;
+			$comma = (!$first) ? $delim : '';
+			if ($admin['posts'] < 0) $admin['posts'] = 0;
+			$userPosts = ($postCount) ? ': '.$admin['posts'] : '';
+			$out .= SP()->user->name_display($admin['user_id'], $comma.SP()->displayFilters->name($admin['display_name']).$userPosts, $linkNames);
+			$first = false;
 		}
 		$out .= '</span>';
 	}
-	$out .= '</p>';
+	$out .= '</div>';
 
 	# finish it up
 	$out .= "</div>\n";
@@ -3818,37 +3152,33 @@ function sp_AdminsList($args = '', $titleLabel = '') {
 function sp_UserGroupList($args = '', $titleLabel = '', $userGroup = 0) {
 	if (!$userGroup) return;
 
-	$defs	 = array(
-		'tagClass'		 => 'spUserGroupList',
-		'pTitleClass'	 => 'spUserGroupListTitle',
-		'spanClass'		 => 'spUserGroupListList',
-		'link_names'	 => 1,
-		'postCount'		 => 1,
-		'echo'			 => 1,
-		'get'			 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_UserGroupList_args', $a);
+	$defs = array('tagClass'    => 'spUserGroupList',
+	              'pTitleClass' => 'spUserGroupListTitle',
+	              'spanClass'   => 'spUserGroupListList',
+	              'postCount'   => 1,
+	              'echo'        => 1,
+	              'get'         => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_UserGroupList_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
+	$tagClass    = esc_attr($tagClass);
 	$pTitleClass = esc_attr($pTitleClass);
-	$spanClass	 = esc_attr($spanClass);
-	$link_names	 = (int) $link_names;
-	$postCount	 = (int) $postCount;
-	$echo		 = (int) $echo;
-	$userGroup	 = (int) $userGroup;
-	$get		 = (int) $get;
-	if (!empty($titleLabel)) $titleLabel	 = sp_filter_title_display($titleLabel);
+	$spanClass   = esc_attr($spanClass);
+	$postCount   = (int) $postCount;
+	$echo        = (int) $echo;
+	$userGroup   = (int) $userGroup;
+	$get         = (int) $get;
+	if (!empty($titleLabel)) $titleLabel = SP()->displayFilters->title($titleLabel);
 
 	# get user group member list
-	$sql	 = "SELECT ".SFMEMBERSHIPS.".user_id, display_name, posts
-			FROM ".SFMEMBERSHIPS."
-			JOIN ".SFMEMBERS." ON ".SFMEMBERS.".user_id = ".SFMEMBERSHIPS.".user_id
-			WHERE ".SFMEMBERSHIPS.".usergroup_id=".$userGroup."
+	$sql     = "SELECT ".SPMEMBERSHIPS.".user_id, display_name, posts
+			FROM ".SPMEMBERSHIPS."
+			JOIN ".SPMEMBERS." ON ".SPMEMBERS.".user_id = ".SPMEMBERSHIPS.".user_id
+			WHERE ".SPMEMBERSHIPS.".usergroup_id=".$userGroup."
 			ORDER BY display_name";
-	$members = spdb_select('set', $sql);
+	$members = SP()->DB->select($sql);
 
 	if ($get) return $members;
 
@@ -3856,14 +3186,14 @@ function sp_UserGroupList($args = '', $titleLabel = '', $userGroup = 0) {
 	$out = "<div class='$tagClass'>";
 	$out .= "<p class='$pTitleClass'><span class='$pTitleClass'>$titleLabel</span>";
 	if ($members) {
-		$first	 = true;
-		$out	 .= "<span class='$spanClass'>";
+		$first = true;
+		$out .= "<span class='$spanClass'>";
 		foreach ($members as $member) {
-			$comma			 = (!$first) ? ', ' : '';
-			if ($member->posts < 0) $member->posts	 = 0;
-			$userPosts		 = ($postCount) ? ': '.$member->posts : '';
-			$out			 .= sp_build_name_display($member->user_id, $comma.sp_filter_name_display($member->display_name).$userPosts);
-			$first			 = false;
+			$comma = (!$first) ? ', ' : '';
+			if ($member->posts < 0) $member->posts = 0;
+			$userPosts = ($postCount) ? ': '.$member->posts : '';
+			$out .= SP()->user->name_display($member->user_id, $comma.SP()->displayFilters->name($member->display_name).$userPosts);
+			$first = false;
 		}
 		$out .= '</span>';
 	}
@@ -3890,20 +3220,18 @@ function sp_UserGroupList($args = '', $titleLabel = '', $userGroup = 0) {
 # --------------------------------------------------------------------------------------
 
 function sp_Signature($args, $sig) {
-	$defs	 = array(
-		'tagClass'	 => 'spSignature',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_Signature_args', $a);
+	$defs = array('tagClass' => 'spSignature',
+	              'echo'     => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_Signature_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$echo		 = (int) $echo;
+	$tagClass = esc_attr($tagClass);
+	$echo     = (int) $echo;
 
 	# force sig to have no follow in links and follow size limits
-	$sig = sp_filter_save_nofollow($sig);
+	$sig = SP()->saveFilters->nofollow($sig);
 
 	# render the signature
 	$out = "<div class='$tagClass'>";
@@ -3929,36 +3257,32 @@ function sp_Signature($args, $sig) {
 # --------------------------------------------------------------------------------------
 
 function sp_OnlineStatus($args = '', $user, $userProfile = '') {
-	global $spThisUser;
-	$defs	 = array(
-		'tagClass'		 => 'spOnlineStatus',
-		'onlineIcon'	 => 'sp_UserOnline.png',
-		'offlineIcon'	 => 'sp_UserOffline.png',
-		'echo'			 => 1,
-		'get'			 => 0,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_OnlineStatus_args', $a);
+	$defs = array('tagClass'    => 'spOnlineStatus',
+	              'onlineIcon'  => 'sp_UserOnline.png',
+	              'offlineIcon' => 'sp_UserOffline.png',
+	              'echo'        => 1,
+	              'get'         => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_OnlineStatus_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$onlineIcon	 = sanitize_file_name($onlineIcon);
+	$onlineIcon  = sanitize_file_name($onlineIcon);
 	$offlineIcon = sanitize_file_name($offlineIcon);
-	$user		 = (int) $user;
-	$echo		 = (int) $echo;
-	$get		 = (int) $get;
+	$user        = (int) $user;
+	$echo        = (int) $echo;
+	$get         = (int) $get;
 
 	# output display name
-	$out		 = '';
-	if (empty($userProfile)) $userProfile = sp_get_user($user);
+	$out = '';
+	if (empty($userProfile)) $userProfile = SP()->user->get($user);
 
-	$spMemberOpts = sp_get_option('sfmemberopts');
-	if (($spThisUser->admin || (!$spMemberOpts['sfhidestatus'] || !$userProfile->hidestatus)) && sp_is_online($user)) {
-		$icon = sp_paint_icon('', SPTHEMEICONSURL, sanitize_file_name($onlineIcon));
+	$spMemberOpts = SP()->options->get('sfmemberopts');
+	if ((SP()->user->thisUser->admin || (!$spMemberOpts['sfhidestatus'] || !$userProfile->hidestatus)) && sp_is_online($user)) {
+		$icon = SP()->theme->paint_icon('', SPTHEMEICONSURL, sanitize_file_name($onlineIcon));
 		if ($get) return true;
 	} else {
-		$icon = sp_paint_icon('', SPTHEMEICONSURL, sanitize_file_name($offlineIcon));
+		$icon = SP()->theme->paint_icon('', SPTHEMEICONSURL, sanitize_file_name($offlineIcon));
 		if ($get) return false;
 	}
 
@@ -3980,46 +3304,42 @@ function sp_OnlineStatus($args = '', $user, $userProfile = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_AddButton($args = '', $label = '', $toolTip = '', $perm = '', $buttonID = '') {
-	global $spThisUser;
-
-	$defs	 = array(
-		'tagId'		 => $buttonID,
-		'tagClass'	 => 'spButton',
-		'link'		 => sp_url(),
-		'icon'		 => '',
-		'iconClass'	 => 'spIcon',
-		'mobileMenu' => 0,
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_AddButton_args', $a);
+	$defs = array('tagId'      => $buttonID,
+	              'tagClass'   => 'spButton',
+	              'link'       => SP()->spPermalinks->get_url(),
+	              'icon'       => '',
+	              'iconClass'  => 'spIcon',
+	              'mobileMenu' => 0,
+	              'echo'       => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_AddButton_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# verify optional 'simple' permission check
-	if (!empty($perm) && !sp_get_auth($perm)) return;
+	if (!empty($perm) && !SP()->auths->get($perm)) return;
 
 	# allow for complex permission checking
 	$auth = apply_filters('sph_add_button_auth_check', true, $buttonID, $a);
 	if (!$auth) return;
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$link		 = esc_url($link);
-	$icon		 = sanitize_file_name($icon);
-	$iconClass	 = esc_attr($iconClass);
-	$mobileMenu	 = (int) $mobileMenu;
-	$echo		 = (int) $echo;
+	$tagId      = esc_attr($tagId);
+	$tagClass   = esc_attr($tagClass);
+	$link       = esc_url($link);
+	$icon       = sanitize_file_name($icon);
+	$iconClass  = esc_attr($iconClass);
+	$mobileMenu = (int) $mobileMenu;
+	$echo       = (int) $echo;
 
 	$toolTip = esc_attr($toolTip);
 
-	$br	 = ($mobileMenu) ? '<br />' : '';
+	$br  = ($mobileMenu) ? '<br />' : '';
 	$out = '';
 
 	if ($mobileMenu) if ($mobileMenu) $out .= sp_open_grid_cell();
 	$out .= "<a class='$tagClass' id='$tagId' title='$toolTip' href='$link'>";
-	if (!empty($icon)) $out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
-	if (!empty($label)) $out .= sp_filter_title_display($label);
+	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
+	if (!empty($label)) $out .= SP()->displayFilters->title($label);
 	$out .= "</a>\n";
 	if ($mobileMenu) $out .= sp_close_grid_cell();
 
@@ -4038,15 +3358,15 @@ function sp_AddButton($args = '', $label = '', $toolTip = '', $perm = '', $butto
 #	sp_page_next()
 #	sp_page_url()
 #
-#	Internally used page link procesing - can not be called directly
+#	Internally used page link processing - can not be called directly
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
 
 function sp_page_prev($curPage, $pnShow, $baseUrl, $linkClass, $iconClass, $prevIcon, $nextIcon, $toolTip, $search = '', $ug = '') {
-	$start	 = max($curPage - $pnShow, 1);
-	$end	 = $curPage - 1;
-	$out	 = '';
+	$start = max($curPage - $pnShow, 1);
+	$end   = $curPage - 1;
+	$out   = '';
 
 	if ($start > 1) {
 		$out .= sp_page_url(1, $baseUrl, 'none', $linkClass, $iconClass, $prevIcon, $nextIcon, $toolTip, $search, $ug);
@@ -4057,16 +3377,15 @@ function sp_page_prev($curPage, $pnShow, $baseUrl, $linkClass, $iconClass, $prev
 		for ($i = $start; $i <= $end; $i++) {
 			$out .= sp_page_url($i, $baseUrl, 'none', $linkClass, $iconClass, $prevIcon, $nextIcon, $toolTip, $search, $ug);
 		}
-	} else {
-		$end = 0;
 	}
+
 	return $out;
 }
 
 function sp_page_next($curPage, $totalPages, $pnShow, $baseUrl, $linkClass, $iconClass, $prevIcon, $nextIcon, $toolTip, $search = '', $ug = '') {
-	$start	 = $curPage + 1;
-	$end	 = min($curPage + $pnShow, $totalPages);
-	$out	 = '';
+	$start = $curPage + 1;
+	$end   = min($curPage + $pnShow, $totalPages);
+	$out   = '';
 
 	if ($start <= $totalPages) {
 		for ($i = $start; $i <= $end; $i++) {
@@ -4076,9 +3395,8 @@ function sp_page_next($curPage, $totalPages, $pnShow, $baseUrl, $linkClass, $ico
 			$out .= sp_page_url($curPage + 1, $baseUrl, 'next', $linkClass, $iconClass, $prevIcon, $nextIcon, $toolTip, $search, $ug);
 			$out .= sp_page_url($totalPages, $baseUrl, 'none', $linkClass, $iconClass, $prevIcon, $nextIcon, $toolTip, $search, $ug);
 		}
-	} else {
-		$start = 0;
 	}
+
 	return $out;
 }
 
@@ -4093,14 +3411,14 @@ function sp_page_url($thisPage, $baseUrl, $iconType, $linkClass, $iconClass, $pr
 		$url = user_trailingslashit($url);
 		$url = apply_filters('sph_page_link', $url, $thisPage);
 		if (!empty($search)) { # members list search
-			$param['msearch']	 = $search;
-			$url				 = add_query_arg($param, esc_url($url));
-			$url				 = sp_filter_wp_ampersand($url);
+			$param['msearch'] = $search;
+			$url              = add_query_arg($param, esc_url($url));
+			$url              = SP()->filters->ampersand($url);
 		}
 		if (!empty($ug)) { # members list usergroup
 			$param['ug'] = $ug;
-			$url		 = add_query_arg($param, esc_url($url));
-			$url		 = sp_filter_wp_ampersand($url);
+			$url         = add_query_arg($param, esc_url($url));
+			$url         = SP()->filters->ampersand($url);
 		}
 		$out .= $url;
 	}
@@ -4124,6 +3442,7 @@ function sp_page_url($thisPage, $baseUrl, $iconType, $linkClass, $iconClass, $pr
 			}
 			break;
 	}
+
 	return $out;
 }
 
@@ -4137,22 +3456,20 @@ function sp_page_url($thisPage, $baseUrl, $iconType, $linkClass, $iconClass, $pr
 # --------------------------------------------------------------------------------------
 
 function sp_UniversalTitle($args = '', $label = '') {
-	$defs	 = array(
-		'tagClass'	 => 'spUniversalLabel',
-		'labelClass' => 'spInRowLabel',
-		'echo'		 => 1
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_UniversalTitle_args', $a);
+	$defs = array('tagClass'   => 'spUniversalLabel',
+	              'labelClass' => 'spInRowLabel',
+	              'echo'       => 1);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_UniversalTitle_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# sanitize before use
-	$tagClass	 = esc_attr($tagClass);
-	$labelClass	 = esc_attr($labelClass);
-	$echo		 = (int) $echo;
+	$tagClass   = esc_attr($tagClass);
+	$labelClass = esc_attr($labelClass);
+	$echo       = (int) $echo;
 
 	$out = "<div class='$tagClass'>";
-	$out .= "<span class='$labelClass'>".sp_filter_title_display($label)."</span>";
+	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."</span>";
 	$out .= "</div>\n";
 	$out = apply_filters('sph_UniversalTitle', $out, $a);
 
@@ -4171,15 +3488,13 @@ function sp_UniversalTitle($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 
 function sp_AddIcon($args = '', $toolTip = '') {
-	$defs	 = array(
-		'tagId'		 => '',
-		'tagClass'	 => '',
-		'icon'		 => '',
-		'iconClass'	 => 'spIcon',
-		'echo'		 => 1,
-	);
-	$a		 = wp_parse_args($args, $defs);
-	$a		 = apply_filters('sph_AddIcon_args', $a);
+	$defs = array('tagId'     => '',
+	              'tagClass'  => '',
+	              'icon'      => '',
+	              'iconClass' => 'spIcon',
+	              'echo'      => 1,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_AddIcon_args', $a);
 	extract($a, EXTR_SKIP);
 
 	# must have an icon passed
@@ -4187,15 +3502,15 @@ function sp_AddIcon($args = '', $toolTip = '') {
 	if (empty($icon)) return '';
 
 	# sanitize before use
-	$tagId		 = esc_attr($tagId);
-	$tagClass	 = esc_attr($tagClass);
-	$iconClass	 = esc_attr($iconClass);
-	$echo		 = (int) $echo;
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$iconClass = esc_attr($iconClass);
+	$echo      = (int) $echo;
 
 	$toolTip = esc_attr($toolTip);
 
 	$out = "<div id='$tagId' class='$tagClass' title='$toolTip'>";
-	$out .= sp_paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+	$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	$out .= "</div>\n";
 
 	$out = apply_filters('sph_AddIcon', $out, $a);
@@ -4204,6 +3519,260 @@ function sp_AddIcon($args = '', $toolTip = '') {
 		echo $out;
 	} else {
 		return $out;
+	}
+}
+
+# ------------------------------------------------------------------
+# sp_build_avatar_display()
+#
+# Version: 5.0
+# Will attach profile, website or nothing to avatar
+#	userid:		id of the user
+#	avatar:		Avatar display code
+#   link:       attachment to make (profile, website, none)
+# ------------------------------------------------------------------
+
+function sp_build_avatar_display($userid, $avatar, $link) {
+	switch ($link) {
+		case 'profile':
+			# for profiles, do we have a user and can current user view a profile?
+			$forumid = (!empty(SP()->rewrites->pageData['forumid'])) ? SP()->rewrites->pageData['forumid'] : '';
+			if (!empty($userid) && SP()->auths->get('view_profiles', $forumid)) $avatar = sp_attach_user_profile_link($userid, $avatar);
+			break;
+
+		case 'website':
+			# for website, do we have a user?
+			if (!empty($userid)) $avatar = sp_attach_user_web_link($userid, $avatar);
+			break;
+
+		default:
+			# fire action for plugins that might add other display type
+			$avatar = apply_filters('sph_BuildAvatarDisplay_'.$link, $avatar, $userid);
+			break;
+	}
+
+	$avatar = apply_filters('sph_BuildAvatarDisplay', $avatar, $userid);
+
+	return $avatar;
+}
+
+# ------------------------------------------------------------------
+# sp_attach_user_web_link()
+#
+# Version: 5.0
+# Create a link to a users website if they have entered one in their
+# profile record.
+#	userid:		id of the user
+#	targetitem:	user name, avatar or web icon - sent as code
+#	returnitem:	return targetitem if nothing found
+# ------------------------------------------------------------------
+
+function sp_attach_user_web_link($userid, $targetitem, $returnitem = true) {
+	global $session_weblink;
+
+	# is the website url cached?
+	$webSite = (empty($session_weblink[$userid])) ? $webSite = SP()->DB->table(SPUSERS, "ID=$userid", 'user_url') : $session_weblink[$userid];
+	if (empty($webSite)) $webSite = '#';
+
+	# update cache (may be same)
+	$session_weblink[$userid] = $webSite;
+
+	# now attach the website url - ignoring if not defined
+	if ($webSite != '#') {
+		$webSite = SP()->primitives->check_url($webSite);
+		if (!empty($webSite)) {
+			$content   = "<a href='$webSite' class='spLink spWebLink' title=''>$targetitem</a>";
+			$sffilters = SP()->options->get('sffilters');
+			if ($sffilters['sftarget']) $content = SP()->saveFilters->target($content);
+			if ($sffilters['sfnofollow']) $content = SP()->saveFilters->nofollow($content);
+
+			return $content;
+		}
+	}
+
+	# No website link exists
+	if ($returnitem) {
+		return $targetitem;
+	} else {
+		return '';
+	}
+}
+
+# ------------------------------------------------------------------
+# sp_attach_user_profile_link()
+#
+# Version: 5.0
+# Create a link to a users profile using the global profile display
+# settings
+#	userid:		id of the user
+#	targetitem:	user name, avatar or web icon - sent as code
+# ------------------------------------------------------------------
+
+function sp_attach_user_profile_link($userid, $targetitem) {
+	if (!SP()->auths->get('view_profiles')) return $targetitem;
+
+	$title = esc_attr(SP()->primitives->front_text('Profile'));
+
+	$sfprofile = SP()->options->get('sfprofile');
+	$mode      = $sfprofile['displaymode'];
+
+	# if display mode is BP or Mingle but they are not active, switch back to popup profile
+	require_once ABSPATH.'wp-admin/includes/plugin.php';
+	if (($mode == 3 && !is_plugin_active('buddypress/bp-loader.php')) || ($mode == 6 && !is_plugin_active('mingle/mingle.php'))) {
+		$mode = 1;
+	}
+
+	# for mobiles force a new page if popup is preferred
+	if (SP()->core->device == 'mobile' && $mode == 1) $mode = 2;
+
+	switch ($mode) {
+		case 1:
+			# SF Popup profile
+			$site     = wp_nonce_url(SPAJAXURL."profile&amp;targetaction=popup&amp;user=$userid", 'profile');
+			$position = 'center';
+
+			return "<a rel='nofollow' class='spLink spOpenDialog' title='$title' data-site='$site' data-label='$title' data-width='750' data-height='0' data-align='$position'>$targetitem</a>";
+
+		case 2:
+			# SF Profile page
+			$site = SP()->spPermalinks->get_url('profile/'.$userid);
+
+			return "<a href='$site' class='spLink spProfilePage' title='$title'>$targetitem</a>";
+
+		case 3:
+			# BuddyPress profile page
+			$user = new WP_User($userid);
+
+			# try to handle BP switches between username and login ussge
+			$username = bp_is_username_compatibility_mode() ? $user->user_login : $user->user_nicename;
+			if (strstr($username, ' ')) {
+				$username = $user->user_nicename;
+			} else {
+				$username = urlencode($username);
+			}
+
+			# build BP user profile based on bp options
+			$bp      = get_option('bp-pages');
+			$baseurl = get_permalink($bp['members']);
+
+			$site = user_trailingslashit($baseurl.str_replace(' ', '', $username).'/profile');
+			$site = apply_filters('sph_buddypress_profile', $site, $user);
+
+			return "<a href='$site' class='spLink spBPProfile' title='$title'>$targetitem</a>";
+
+		case 4:
+			# WordPress authors page
+			$userkey = SP()->DB->table(SPUSERS, "ID=$userid", 'user_nicename');
+			if ($userkey) {
+				$site = SPSITEURL.user_trailingslashit('author/'.$userkey);
+
+				return "<a href='$site' class='spLink spWPProfile' title='$title'>$targetitem</a>";
+			} else {
+				return $targetitem;
+			}
+
+		case 5:
+			# Handoff to user specified page
+			if ($sfprofile['displaypage']) {
+				$title = esc_attr(SP()->primitives->front_text('Profile'));
+				$out   = "<a href='".$sfprofile['displaypage'];
+				if ($sfprofile['displayquery']) $out .= '?'.SP()->displayFilters->title($sfprofile['displayquery']).'='.$userid;
+				$out .= "' class='spLink spUserDefinedProfile' title='$title'>$targetitem</a>";
+			} else {
+				$out = $targetitem;
+			}
+
+			return $out;
+
+		case 6:
+			# Mingle profile page
+			$user = new WP_User($userid);
+			$site = SPSITEURL.user_trailingslashit(urlencode($user->user_login));
+			$site = apply_filters('sph_mingle_profile', $site, $user);
+
+			return "<a href='$site' class='spLink spMingleProfile' title='$title'>$targetitem</a>";
+
+		default:
+			# plugins offering new type?
+			$targetitem = apply_filters('AttachUserProfileLink_'.$sfprofile['displaymode'], $targetitem, $userid);
+
+			return $targetitem;
+	}
+}
+
+# ------------------------------------------------------------------
+# sp_build_profile_formlink()
+#
+# Version: 5.0
+# Create a link to the profile form preferred
+#	$userid:		id of the user
+# ------------------------------------------------------------------
+
+function sp_build_profile_formlink($userid) {
+	$sfprofile = SP()->options->get('sfprofile');
+	$mode      = $sfprofile['formmode'];
+
+	# if profile mode is BP or Mingle but they are not active, switch back to popup profile
+	require_once ABSPATH.'wp-admin/includes/plugin.php';
+	if (($mode == 3 && !is_plugin_active('buddypress/bp-loader.php')) || ($mode == 5 && !is_plugin_active('mingle/mingle.php'))) {
+		$mode = 1;
+	}
+
+	switch ($mode) {
+		case 1:
+			# SPF form
+			$edit = '';
+			if ($userid != SP()->user->thisUser->ID) {
+				$user = new WP_User($userid);
+				$edit = $user->ID.'/edit';
+			}
+			$site = SP()->spPermalinks->get_url('profile/'.$edit);
+
+			return $site;
+
+		case 2:
+			# WordPress form
+			return SPHOMEURL.'wp-admin/user-edit.php?user_id='.$userid;
+
+		case 3:
+			# BuddyPress profile page
+			$user = new WP_User($userid);
+
+			# try to handle BP switches between username and login ussge
+			$username = bp_is_username_compatibility_mode() ? $user->user_login : $user->user_nicename;
+			if (strstr($username, ' ')) {
+				$username = $user->user_nicename;
+			} else {
+				$username = urlencode($username);
+			}
+
+			# build BP user profile based on bp options
+			$bp      = get_option('bp-pages');
+			$baseurl = get_permalink($bp['members']);
+
+			$site = user_trailingslashit($baseurl.str_replace(' ', '', $username).'/profile');
+			$site = apply_filters('sph_buddypress_profile', $site, $user);
+
+			return $site;
+
+		case 4:
+			# Handoff to user specified form
+			if ($sfprofile['formpage']) {
+				$out = $sfprofile['formpage'];
+				if ($sfprofile['formquery']) $out .= '?'.SP()->displayFilters->title($sfprofile['formquery']).'='.$userid;
+			} else {
+				$out = '';
+			}
+
+			return $out;
+
+		case 5:
+			# Mingle account page
+			$user = new WP_User($userid);
+			$site = SPSITEURL.user_trailingslashit('account');
+			$site = apply_filters('sph_mingle_profile', $site, $user);
+
+			return $site;
 	}
 }
 
@@ -4217,13 +3786,12 @@ function sp_AddIcon($args = '', $toolTip = '') {
 add_action('sph_FooterEnd', 'populate_quicklinks_script');
 
 function populate_quicklinks_script() {
-	global $spDevice;
-	if ($spDevice == 'mobile') return;
+	if (SP()->core->device == 'mobile' && !current_theme_supports('sp-mobile-quicklinks-off')) {
+		return;
+	}
 
 	$out = '<div id="qlContent">';
 	$out .= sp_PopulateQuickLinksTopic();
 	$out .= '</div>';
 	echo $out;
 }
-
-?>

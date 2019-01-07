@@ -12,9 +12,8 @@ spa_admin_ajax_support();
 
 if (!sp_nonce('install-log')) die();
 
-global $spStatus;
-if ($spStatus != 'ok') {
-	echo $spStatus;
+if (SP()->core->status != 'ok') {
+	echo SP()->core->status;
 	die();
 }
 
@@ -22,20 +21,18 @@ $log = 0;
 if (isset($_GET['log'])) $log = $_GET['log'];
 if ($log > 0) {
 	$log = str_replace('-', '.', $log);
-	$details = spdb_table(SFLOGMETA, "version='$log'", '', 'id DESC');
+	$details = SP()->DB->table(SPLOGMETA, "version='$log'", '', 'id DESC');
 	if ($details) {
-		echo '<p>'.spa_text('Version').': '.$log.'</p>';
+		echo '<p>'.SP()->primitives->admin_text('Version').': '.$log.'</p>';
 		foreach ($details as $d) {
 			$section = unserialize($d->log_data);
-			echo '<p>'.spa_text('Section').': '.$section['section'].'<br />';
-			echo spa_text('Status').':  '.$section['status'].'<br />';
-			echo spa_text('Response').': '.$section['response'].'<br /></p>';
+			echo '<p>'.SP()->primitives->admin_text('Section').': '.$section['section'].'<br />';
+			echo SP()->primitives->admin_text('Status').':  '.$section['status'].'<br />';
+			echo SP()->primitives->admin_text('Response').': '.$section['response'].'<br /></p>';
 		}
 	} else {
-		echo spa_text('Not Recorded');
+		echo SP()->primitives->admin_text('Not Recorded');
 	}
 }
 
 die();
-
-?>

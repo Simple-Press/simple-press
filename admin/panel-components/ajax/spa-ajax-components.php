@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Component Specials
-$LastChangedDate: 2016-12-03 14:06:51 -0600 (Sat, 03 Dec 2016) $
-$Rev: 14745 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -13,90 +13,84 @@ spa_admin_ajax_support();
 if (!sp_nonce('components')) die();
 
 # Check Whether User Can Manage Components
-if (!sp_current_user_can('SPF Manage Components')) die();
-
-global $spPaths;
+if (!SP()->auths->current_user_can('SPF Manage Components')) die();
 
 $action = $_GET['targetaction'];
 
 if ($action == 'del_rank') {
-	$key = sp_esc_int($_GET['key']);
+	$key = SP()->filters->integer($_GET['key']);
 
 	# remove the forum rank
-	$sql = 'DELETE FROM '.SFMETA." WHERE meta_type='forum_rank' AND meta_id='$key'";
-	spdb_query($sql);
+	SP()->meta->delete($key);
 }
 
 if ($action == 'del_specialrank') {
-	$key = sp_esc_int($_GET['key']);
-	$specialRank = sp_get_sfmeta('special_rank', false, $key);
+	$key = SP()->filters->integer($_GET['key']);
+	$specialRank = SP()->meta->get('special_rank', false, $key);
 
     # remove members rank first
-	spdb_query('DELETE FROM '.SFSPECIALRANKS.' WHERE special_rank="'.$specialRank[0]['meta_key'].'"');
+	SP()->DB->execute('DELETE FROM '.SPSPECIALRANKS.' WHERE special_rank="'.$specialRank[0]['meta_key'].'"');
 
 	# remove the forum rank
-	$sql = 'DELETE FROM '.SFMETA." WHERE meta_type='special_rank' AND meta_id='$key'";
-	spdb_query($sql);
+	SP()->meta->delete($key);
 }
 
 if ($action == 'show') {
-    $key = sp_esc_int($_GET['key']);
-    $specialRank = sp_get_sfmeta('special_rank', false, $key);
+    $key = SP()->filters->integer($_GET['key']);
+    $specialRank = SP()->meta->get('special_rank', false, $key);
 
-	$users = spdb_select('col', 'SELECT display_name
-						  FROM '.SFSPECIALRANKS.'
-						  JOIN '.SFMEMBERS.' ON '.SFSPECIALRANKS.'.user_id = '.SFMEMBERS.'.user_id
+	$users = SP()->DB->select('SELECT display_name
+						  FROM '.SPSPECIALRANKS.'
+						  JOIN '.SPMEMBERS.' ON '.SPSPECIALRANKS.'.user_id = '.SPMEMBERS.'.user_id
 						  WHERE special_rank = "'.$specialRank[0]['meta_key'].'"
-						  ORDER BY display_name');
+						  ORDER BY display_name', 'col');
 
     echo '<fieldset class="sfsubfieldset">';
-    echo '<legend>'.spa_text('Special Rank Members').'</legend>';
+    echo '<legend>'.SP()->primitives->admin_text('Special Rank Members').'</legend>';
     if ($users) {
     	echo '<ul class="memberlist">';
     	for ($x = 0; $x < count($users); $x++) {
-    		echo '<li>'.sp_filter_name_display($users[$x]).'</li>';
+    		echo '<li>'.SP()->displayFilters->name($users[$x]).'</li>';
     	}
     	echo '</ul>';
     } else {
-    	spa_etext('No users with this special rank');
+    	SP()->primitives->admin_etext('No users with this special rank');
     }
 
     echo '</fieldset>';
 }
 
 if ($action == 'delsmiley') {
-	$file = sp_esc_str($_GET['file']);
-	$path = SF_STORE_DIR.'/'.$spPaths['smileys'].'/'.$file;
+	$file = SP()->filters->str($_GET['file']);
+	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/'.$file;
 	@unlink($path);
 
 	# load smiles from sfmeta
-	$meta = sp_get_sfmeta('smileys', 'smileys');
+	$meta = SP()->meta->get('smileys', 'smileys');
 
 	# now cycle through to remove this entry and resave
 	if (!empty($meta[0]['meta_value'])) {
 		$newsmileys = array();
 		foreach ($meta[0]['meta_value'] as $name => $info) {
 			if ($info[0] != $file) {
-				$newsmileys[$name][0] = sp_filter_title_save($info[0]);
-				$newsmileys[$name][1] = sp_filter_name_save($info[1]);
-				$newsmileys[$name][2] = sp_filter_name_save($info[2]);
+				$newsmileys[$name][0] = SP()->saveFilters->title($info[0]);
+				$newsmileys[$name][1] = SP()->saveFilters->name($info[1]);
+				$newsmileys[$name][2] = SP()->saveFilters->name($info[2]);
 				$newsmileys[$name][3] = $info[3];
 				$newsmileys[$name][4] = $info[4];
 			}
 		}
-		sp_update_sfmeta('smileys', 'smileys', $newsmileys, $meta[0]['meta_id'], true);
+		SP()->meta->update('smileys', 'smileys', $newsmileys, $meta[0]['meta_id']);
 	}
 
 	echo '1';
 }
 
 if ($action == 'delbadge') {
-	$file = sp_esc_str($_GET['file']);
-	$path = SF_STORE_DIR.'/'.$spPaths['ranks'].'/'.$file;
+	$file = SP()->filters->str($_GET['file']);
+	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$file;
 	@unlink($path);
 	echo '1';
 }
 
 die();
-
-?>

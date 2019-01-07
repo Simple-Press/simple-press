@@ -16,4 +16,3 @@ $sfatooltips['plugins'] = 'Manage Plugins for Simple:Press';
 $sfatooltips['themes'] = 'Manage Themes for Simple:Press';
 
 $sfatooltips = apply_filters('sph_menu_tooltips', $sfatooltips);
-?>

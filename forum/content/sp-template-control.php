@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Template handler
-$LastChangedDate: 2016-08-23 03:28:59 -0500 (Tue, 23 Aug 2016) $
-$Rev: 14518 $
+$LastChangedDate: 2017-08-21 04:25:50 -0500 (Mon, 21 Aug 2017) $
+$Rev: 15517 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -13,15 +13,13 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 # sp_process_template()
 #
 # The main control center for the loading up of the required templates.
-# Uses the $spVars 'pageview' to determine which template to load.
+# Uses the pageData 'pageview' to determine which template to load.
 # Templates are always surrounded by the spMainContainer div
 #
 # --------------------------------------------------------------------------------------
 function sp_process_template() {
-	global $spVars, $spGlobals, $spThisUser, $spNewPosts;
-
 	# grab the pageview, checking to see if its a search page
-	$pageview = $spVars['pageview'];
+	$pageview = SP()->rewrites->pageData['pageview'];
 
 	# determine page template to load
 	switch ($pageview) {
@@ -71,9 +69,9 @@ function sp_process_template() {
 	# SP display starts here
 
 	# Any control data item inspection needed
-	if (sp_current_user_can('SPF Manage Toolbox') && !empty($spThisUser->inspect)) sp_display_inspector('control', '');
+	if (SP()->auths->current_user_can('SPF Manage Toolbox') && !empty(SP()->user->thisUser->inspect)) sp_display_inspector('control', '');
 
-    # forum top anchor
+	# forum top anchor
 	echo '<a id="spForumTop"></a>';
 
 	# Define the main forum container
@@ -93,7 +91,7 @@ function sp_process_template() {
 	do_action('sph_BeforeDisplayEnd', $pageview, $tempName);
 
 	# Display any queued messages
-	sp_render_queued_notification();
+	SP()->notifications->render_queued();
 
 	echo '</div>';
 	echo "\n\n<!-- Simple:Press display end -->\n\n";
@@ -118,7 +116,6 @@ function sp_process_template() {
 #
 # --------------------------------------------------------------------------------------
 function sp_process_group_view() {
-	global $spGroupView;
 	return 'spGroupView.php';
 }
 
@@ -130,10 +127,8 @@ function sp_process_group_view() {
 #
 # --------------------------------------------------------------------------------------
 function sp_process_forum_view() {
-	global $spForumView, $spVars;
-
 	# Store the topic page so that we can get back to it later (breadcrumb usage)
-	sp_push_topic_page($spVars['forumid'], $spVars['page']);
+	sp_push_topic_page(SP()->rewrites->pageData['forumid'], SP()->rewrites->pageData['page']);
 
 	return 'spForumView.php';
 }
@@ -146,7 +141,6 @@ function sp_process_forum_view() {
 #
 # --------------------------------------------------------------------------------------
 function sp_process_topic_view() {
-	global $spTopicView, $spVars, $spThisUser;
 	return 'spTopicView.php';
 }
 
@@ -158,7 +152,6 @@ function sp_process_topic_view() {
 #
 # --------------------------------------------------------------------------------------
 function sp_process_search_view() {
-	global $spSearchView;
 	return 'spSearchView.php';
 }
 
@@ -170,7 +163,6 @@ function sp_process_search_view() {
 #
 # --------------------------------------------------------------------------------------
 function sp_process_members_view() {
-	global $spMembersList;
 	return 'spMembersView.php';
 }
 
@@ -193,20 +185,20 @@ function sp_process_profileedit_view() {
 #
 # --------------------------------------------------------------------------------------
 function sp_process_profileshow_view() {
-	global $spVars, $spThisUser;
-	if (!empty($spVars['member'])) {
-		$userid = (int )$spVars['member'];
-		$userid = spdb_table(SFMEMBERS, "user_id=$userid", 'user_id');
+	if (!empty(SP()->rewrites->pageData['member'])) {
+		$userid = (int ) SP()->rewrites->pageData['member'];
+		$userid = SP()->DB->table(SPMEMBERS, "user_id=$userid", 'user_id');
 	} else {
-		$userid = $spThisUser->ID;
+		$userid = SP()->user->thisUser->ID;
 	}
 
-    if (!sp_get_auth('view_profiles') || empty($userid) || $userid < 0) {
-		sp_notify(SPFAILURE, sp_text('Invalid profile request'));
+	if (!SP()->auths->get('view_profiles') || empty($userid) || $userid < 0) {
+		SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Invalid profile request'));
+
 		return 'spDefault.php';
-    } else {
-		global $spProfileUser;
+	} else {
 		sp_SetupUserProfileData();
+
 		return 'spProfileShow.php';
 	}
 }
@@ -246,11 +238,11 @@ function sp_process_default_view($pageview) {
 	# try building standard template name based on unknown pageview type
 	$template = 'sp'.ucfirst($pageview).'.php';
 
-    # let plugins change the template name
-   	$template = apply_filters('sph_DefaultViewTemplate', $template, $pageview);
+	# let plugins change the template name
+	$template = apply_filters('sph_DefaultViewTemplate', $template, $pageview);
 
-    # if template doesnt exist, revert to default template
-    if (!file_exists($template)) $template = 'spDefault.php';
+	# if template doesnt exist, revert to default template
+	if (!file_exists($template)) $template = 'spDefault.php';
 
 	return $template;
 }
@@ -266,39 +258,41 @@ function sp_process_default_view($pageview) {
 #
 # --------------------------------------------------------------------------------------
 function sp_load_template($tempName) {
-	# set up some globals for theme template files to use directly
-	global $spGroupView, $spThisGroup, $spForumView, $spThisForum, $spThisSubForum, $spThisForumSubs,
-	$spTopicView, $spThisTopic, $spThisPost, $spThisPostUser, $spListView, $spThisListTopic,
-    $spThisUser, $spProfileUser, $spMembersList, $spThisMemberGroup, $spThisMember,
-    $spGlobals, $spVars, $spDevice, $spMobile;
 
-    # some beginning hooks
-    $tempName = apply_filters('sph_template_load_name', $tempName);
-    do_action('sph_template_load_begin', $tempName);
-    do_action('sph_template_load_begin_'.$tempName);
+	# check if legacy level/version 1 theme support is needed
+	if (!current_theme_supports('level-2-theme')) {
+		include_once SP_PLUGIN_DIR.'/forum/content/legacy/sp-legacy-theme-support.php';
+		include SP_PLUGIN_DIR.'/forum/content/legacy/sp-legacy-theme-globals.php';
+	}
+	
+	# some beginning hooks
+	$tempName = apply_filters('sph_template_load_name', $tempName);
+	$thisTemplate = $tempName;
+	do_action('sph_template_load_begin', $thisTemplate);
+	do_action('sph_template_load_begin_'.$thisTemplate);
 
-    # find the template
-	$curTheme = $spGlobals['theme'];
+	# find the template
+	$curTheme = SP()->core->forumData['theme'];
 	if (!empty($tempName) && file_exists($tempName)) {
-		include ($tempName);
+		require_once $tempName;
 	} else if (!empty($tempName) && file_exists(SPTEMPLATES.$tempName)) {
-		include (SPTEMPLATES.$tempName);
+		require_once SPTEMPLATES.$tempName;
 	} else if (!empty($tempName) && !empty($curTheme['parent']) && file_exists(SPTHEMEBASEDIR.$curTheme['parent'].'/templates/'.$tempName)) {
-		include (SPTHEMEBASEDIR.$curTheme['parent'].'/templates/'.$tempName);
+		require_once SPTHEMEBASEDIR.$curTheme['parent'].'/templates/'.$tempName;
 	} else {
 		$tempName = explode('/', $tempName);
-		echo '<p class="spCenter spHeaderName">['.$tempName[count($tempName) - 1].'] - '.sp_text('Template File Not Found').'</p>';
-        echo '<div class="spHeaderMessage">';
-        echo '<p>'.spa_text('Sorry, but the required template file could not be found or could not be opened.').'</p>';
-        echo '<br/><p>';
-        spa_etext('This can be caused by a missing/corrupt theme or theme file. Please check the Simple:Press Theme List admin panel and make sure a valid theme is selected. Or please check the location of the selected theme on your server and make sure the theme and the required template file exist.');
-        echo '</p>';
-        echo '</div>';
+		echo '<p class="spCenter spHeaderName">['.$tempName[count($tempName) - 1].'] - '.SP()->primitives->front_text('Template File Not Found').'</p>';
+		echo '<div class="spHeaderMessage">';
+		echo '<p>'.SP()->primitives->admin_text('Sorry, but the required template file could not be found or could not be opened.').'</p>';
+		echo '<br/><p>';
+		SP()->primitives->admin_etext('This can be caused by a missing/corrupt theme or theme file. Please check the Simple:Press Theme List admin panel and make sure a valid theme is selected. Or please check the location of the selected theme on your server and make sure the theme and the required template file exist.');
+		echo '</p>';
+		echo '</div>';
+		$thisTemplate = $tempName[count($tempName) - 1];
 	}
-
-    # some ending hooks
-    do_action('sph_template_load_end', $tempName);
-    do_action('sph_template_load_end_'.$tempName);
+	# some ending hooks
+	do_action('sph_template_load_end', $thisTemplate);
+	do_action('sph_template_load_end_'.$thisTemplate);
 }
 
 # --------------------------------------------------------------------------------------
@@ -308,12 +302,11 @@ function sp_load_template($tempName) {
 #
 # --------------------------------------------------------------------------------------
 function sp_post_display_processing($pageview) {
-	global $spThisTopic;
-	if ($pageview == 'topic' && !empty($spThisTopic)) {
-		$tid = sp_get_cache('topic');
-		if (empty($tid) || $tid != $spThisTopic->topic_id) {
-			sp_update_opened($spThisTopic->topic_id);
-			sp_add_cache('topic', $spThisTopic->topic_id);
+	if ($pageview == 'topic' && !empty(SP()->forum->view->thisTopic)) {
+		$tid = SP()->cache->get('topic');
+		if (empty($tid) || $tid != SP()->forum->view->thisTopic->topic_id) {
+			sp_update_opened(SP()->forum->view->thisTopic->topic_id);
+			SP()->cache->add('topic', SP()->forum->view->thisTopic->topic_id);
 		}
 	}
 }
@@ -370,8 +363,7 @@ function sp_FooterEnd() {
 # --------------------------------------------------------------------------------------
 
 function __sp($text) {
-    global $spGlobals;
-    $domain = (isset($spGlobals['themedomain'])) ? $spGlobals['themedomain'] : '';
-    return __($text, $domain);
+	$domain = (isset(SP()->core->forumData['themedomain'])) ? SP()->core->forumData['themedomain'] : '';
+
+	return __($text, $domain);
 }
-?>

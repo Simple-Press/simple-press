@@ -6,7 +6,7 @@ $LastChangedDate: 2015-08-04 11:06:48 +0100 (Tue, 04 Aug 2015) $
 $Rev: 13244 $
 */
 
-if (isset($_GET['targetaction'])) $action = sp_esc_str($_GET['targetaction']);
+if (isset($_GET['targetaction'])) $action = SP()->filters->str($_GET['targetaction']);
 
 spa_admin_ajax_support();
 
@@ -16,19 +16,19 @@ if($action == 'gettasks') sp_search_admin_tasks();
 
 function sp_search_admin_tasks() {
 	if(isset($_GET['keyword']) && !empty($_GET['keyword'])) {
-		$keyword = sp_esc_str($_GET['keyword']);
-		$key = sp_esc_int($_GET['id']);
-		$sql = 'SELECT * FROM '.SFADMINTASKS.' WHERE keyword_id='.$key;
-		$tasks = spdb_select('set', $sql);
+		$keyword = SP()->filters->str($_GET['keyword']);
+		$key = SP()->filters->integer($_GET['id']);
+		$sql = 'SELECT * FROM '.SPADMINTASKS.' WHERE keyword_id='.$key;
+		$tasks = SP()->DB->select($sql);
 
 		if($tasks) {
 			# get the base url
-			$base = SFHOMEURL.'wp-admin/admin.php?page=simple-press/admin';
+			$base = SPHOMEURL.'wp-admin/admin.php?page=simple-press/admin';
 
-			echo '<img class="spLeft" src="'.SFCOMMONIMAGES.'task.png" alt="" title="" />';
+			echo '<img class="spLeft" src="'.SPCOMMONIMAGES.'task.png" alt="" title="" />';
 			echo '<div class="codex-head">'.$keyword.'</div>';
 			echo '<div class="clearboth"></div>';
-			spa_etext('The links below will load the admin panel where the selected item is located');
+			SP()->primitives->admin_etext('The links below will load the admin panel where the selected item is located');
 			echo '<p></p>';
 			echo '<div class="clearboth"></div>';
 
@@ -44,5 +44,3 @@ function sp_search_admin_tasks() {
 }
 
 die();
-
-?>

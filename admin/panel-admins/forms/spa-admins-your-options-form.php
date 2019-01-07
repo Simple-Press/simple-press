@@ -2,19 +2,16 @@
 /*
 Simple:Press
 Admin Admins Your Options Form
-$LastChangedDate: 2016-06-25 05:55:17 -0500 (Sat, 25 Jun 2016) $
-$Rev: 14322 $
+$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
+$Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_admins_your_options_form() {
-	global $spThisUser;
 ?>
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-    	spjAjaxForm('sfmyadminoptionsform', 'sfreloadao');
-    });
+<script>
+   	spj.loadAjaxForm('sfmyadminoptionsform', 'sfreloadao');
 </script>
 <?php
 	$sfadminsettings = spa_get_admins_your_options_data();
@@ -25,35 +22,35 @@ function spa_admins_your_options_form() {
 	<?php echo sp_create_nonce('my-admin_options'); ?>
 <?php
 	spa_paint_options_init();
-	spa_paint_open_tab(spa_text('Admins').' - '.spa_text('Your Admin Options'), true);
+	spa_paint_open_tab(SP()->primitives->admin_text('Admins').' - '.SP()->primitives->admin_text('Your Admin Options'), true);
 
 		spa_paint_open_panel();
-			spa_paint_open_fieldset(spa_text('Your Admin/Moderator Options'), 'true', 'your-admin-options');
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Your Admin/Moderator Options'), 'true', 'your-admin-options');
 
-				if ($spThisUser->admin) {
+				if (SP()->user->thisUser->admin) {
 					echo '<br /><div class="sfoptionerror"><strong>';
-					spa_etext('The following options are personal - each admin and moderator needs to visit this panel to set their own options');
+					SP()->primitives->admin_etext('The following options are personal - each admin and moderator needs to visit this panel to set their own options');
 					echo '</strong><br />';
-					spa_etext('Alternatively you can check the option below to apply to all moderators and when you update this panel they will inherit the same option settings');
+					SP()->primitives->admin_etext('Alternatively you can check the option below to apply to all moderators and when you update this panel they will inherit the same option settings');
 					echo '</div><br />';
 				}
 
-				spa_paint_checkbox(spa_text('Receive email notification on new topic/post'), 'sfnotify', $sfadminsettings['sfnotify']);
-				spa_paint_checkbox(spa_text('Receive notification (within forum - not email) on topic/post edits'), 'notify-edited', $sfadminsettings['notify-edited']);
-				spa_paint_checkbox(spa_text('Bypass the Simple Press logout redirect'), 'bypasslogout', $sfadminsettings['bypasslogout']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Receive email notification on new topic/post'), 'sfnotify', $sfadminsettings['sfnotify']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Receive notification (within forum - not email) on topic/post edits'), 'notify-edited', $sfadminsettings['notify-edited']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Bypass the Simple Press logout redirect'), 'bypasslogout', $sfadminsettings['bypasslogout']);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 		do_action('sph_admins_options_top_panel');
 
-		if ($spThisUser->admin) {
+		if (SP()->user->thisUser->admin) {
 			spa_paint_open_panel();
-				spa_paint_open_fieldset(spa_text('Set Your Moderator Options'), 'true', 'set-moderator-options');
-					spa_paint_checkbox(spa_text('Grant all moderators the same option settings as above'), 'setmods', $sfadminsettings['setmods']);
+				spa_paint_open_fieldset(SP()->primitives->admin_text('Set Your Moderator Options'), 'true', 'set-moderator-options');
+					spa_paint_checkbox(SP()->primitives->admin_text('Grant all moderators the same option settings as above'), 'setmods', $sfadminsettings['setmods']);
 
 					echo '<br /><div class="sfoptionerror"><strong>';
-					spa_etext('If you check this option so that all your moderators inherit the settings above - note that after you update this panel this checkbox will return to an unchecked state');
+					SP()->primitives->admin_etext('If you check this option so that all your moderators inherit the settings above - note that after you update this panel this checkbox will return to an unchecked state');
 					echo '</strong><br />';
-					spa_etext('Inheritance ONLY takes place when this box is checked and the panel updated. Any updated changes you make with the box iunchecked ONLY apply to you');
+					SP()->primitives->admin_etext('Inheritance ONLY takes place when this box is checked and the panel updated. Any updated changes you make with the box iunchecked ONLY apply to you');
 					echo '</div><br />';
 
 				spa_paint_close_fieldset();
@@ -63,7 +60,7 @@ function spa_admins_your_options_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php spa_etext('Update Your Admin Options'); ?>" />
+	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Your Admin Options'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();
@@ -71,4 +68,3 @@ function spa_admins_your_options_form() {
 	</form>
 <?php
 }
-?>

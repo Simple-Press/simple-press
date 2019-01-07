@@ -15,18 +15,18 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 # table sfadminkeywords
 # ------------------------------------------------------------
 
-$sql = "DROP TABLE IF EXISTS ".SFADMINKEYWORDS;
-spdb_query($sql);
+$sql = "DROP TABLE IF EXISTS ".SPADMINKEYWORDS;
+SP()->DB->execute($sql);
 
-$sql = "CREATE TABLE ".SFADMINKEYWORDS." (
+$sql = "CREATE TABLE ".SPADMINKEYWORDS." (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `keyword` varchar(25) NOT NULL DEFAULT '',
   `plugin` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ".spdb_charset();
-spdb_query($sql);
+) ".SP()->DB->charset();
+SP()->DB->execute($sql);
 
-$sql = "INSERT INTO ".SFADMINKEYWORDS." (`id`, `keyword`)
+$sql = "INSERT INTO ".SPADMINKEYWORDS." (`id`, `keyword`)
 VALUES
 	(1,'Forum Groups'),
 	(2,'Forums'),
@@ -83,15 +83,15 @@ VALUES
 	(53,'Housekeeping'),
 	(54,'Development'),
 	(55,'Cron');";
-spdb_query($sql);
+SP()->DB->execute($sql);
 
 # table sfadmintasks
 # ------------------------------------------------------------
 
-$sql = "DROP TABLE IF EXISTS ".SFADMINTASKS;
-spdb_query($sql);
+$sql = "DROP TABLE IF EXISTS ".SPADMINTASKS;
+SP()->DB->execute($sql);
 
-$sql = "CREATE TABLE ".SFADMINTASKS." (
+$sql = "CREATE TABLE ".SPADMINTASKS." (
   `id` int(4) unsigned NOT NULL AUTO_INCREMENT,
   `keyword_id` int(4) NOT NULL,
   `task` varchar(80) NOT NULL DEFAULT '',
@@ -99,10 +99,10 @@ $sql = "CREATE TABLE ".SFADMINTASKS." (
   `plugin` varchar(25) DEFAULT NULL,
    PRIMARY KEY (`id`),
    KEY `keyword` (`keyword_id`)
-)  ".spdb_charset();
-spdb_query($sql);
+)  ".SP()->DB->charset();
+SP()->DB->execute($sql);
 
-$sql = "INSERT INTO ".SFADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
+$sql = "INSERT INTO ".SPADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
 VALUES
 	(1,2,'Create a new forum','panel-forums/spa-forums.php&tab=createforum'),
 	(2,2,'Edit an existing forum','panel-forums/spa-forums.php'),
@@ -124,9 +124,9 @@ VALUES
 	(18,8,'Cached list of new posts','panel-options/spa-options.php'),
 	(19,4,'Flood Control','panel-options/spa-options.php'),
 	(20,5,'RSS Options','panel-options/spa-options.php')";
-spdb_query($sql);
+SP()->DB->execute($sql);
 
-$sql = "INSERT INTO ".SFADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
+$sql = "INSERT INTO ".SPADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
 VALUES
 	(21,8,'Cached CSS and JavaScript files','panel-options/spa-options.php'),
 	(22,43,'Set the default editor and editing limits','panel-options/spa-options.php'),
@@ -148,9 +148,9 @@ VALUES
 	(38,44,'Set users unread post count and options','panel-options/spa-options.php&tab=display'),
 	(39,2,'Single forum site option','panel-options/spa-options.php&tab=display'),
 	(40,10,'Control statistics display','panel-options/spa-options.php&tab=display')";
-spdb_query($sql);
+SP()->DB->execute($sql);
 
-$sql = "INSERT INTO ".SFADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
+$sql = "INSERT INTO ".SPADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
 VALUES
 	(41,45,'Control statistics display','panel-options/spa-options.php&tab=display'),
 	(42,28,'Delete all forum permission set assignments','panel-forums/spa-forums.php&tab=removeperms'),
@@ -172,9 +172,9 @@ VALUES
 	(58,15,'Members - links on their name','panel-options/spa-options.php&tab=members'),
 	(59,13,'Members - links on their name','panel-options/spa-options.php&tab=members'),
 	(60,16,'Guest user settings','panel-options/spa-options.php&tab=members')";
-spdb_query($sql);
+SP()->DB->execute($sql);
 
-$sql = "INSERT INTO ".SFADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
+$sql = "INSERT INTO ".SPADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
 VALUES
 	(61,15,'Members account removal','panel-options/spa-options.php&tab=members'),
 	(62,15,'Member post count control','panel-options/spa-options.php&tab=members'),
@@ -196,9 +196,9 @@ VALUES
 	(78,22,'Open Graph - forum settings','panel-components/spa-components.php&tab=seo'),
 	(79,23,'SEO - forum settings','panel-components/spa-components.php&tab=seo'),
 	(80,23,'Meta Tags - forum settings','panel-components/spa-components.php&tab=seo')";
-spdb_query($sql);
+SP()->DB->execute($sql);
 
-$sql = "INSERT INTO ".SFADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
+$sql = "INSERT INTO ".SPADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
 VALUES
 	(81,23,'Open Graph - forum settings','panel-components/spa-components.php&tab=seo'),
 	(82,24,'SEO - forum settings','panel-components/spa-components.php&tab=seo'),
@@ -220,9 +220,9 @@ VALUES
 	(98,27,'Edit a user group','panel-usergroups/spa-usergroups.php'),
 	(99,27,'Add, move or delete members from a user group','panel-usergroups/spa-usergroups.php'),
 	(100,27,'Display user group members','panel-usergroups/spa-usergroups.php')";
-spdb_query($sql);
+SP()->DB->execute($sql);
 
-$sql = "INSERT INTO ".SFADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
+$sql = "INSERT INTO ".SPADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
 VALUES
 	(101,15,'Display user group members','panel-usergroups/spa-usergroups.php'),
 	(102,27,'Map WordPress user roles to forum user groups','panel-usergroups/spa-usergroups.php&tab=mapusers'),
@@ -244,9 +244,9 @@ VALUES
 	(118,29,'WordPress theme display options','panel-integration/spa-integration.php'),
 	(119,31,'Create, move and check all forum storage folders','panel-integration/spa-integration.php&tab=storage'),
 	(120,32,'Download and install translations (language packs)','panel-integration/spa-integration.php&tab=language')";
-spdb_query($sql);
+SP()->DB->execute($sql);
 
-$sql = "INSERT INTO ".SFADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
+$sql = "INSERT INTO ".SPADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
 VALUES
 	(121,51,'Download and install translations (language packs)','panel-integration/spa-integration.php&tab=language'),
 	(122,33,'Selecting member display name format','panel-profiles/spa-profiles.php'),
@@ -268,9 +268,9 @@ VALUES
 	(138,37,'Set global admin/moderator settings','panel-admins/spa-admins.php&tab=globaladmin'),
 	(139,37,'Manage admin/moderator access capabilities','panel-admins/spa-admins.php&tab=manageadmin'),
 	(140,37,'Add a new forum admin','panel-admins/spa-admins.php&tab=manageadmin')";
-spdb_query($sql);
+SP()->DB->execute($sql);
 
-$sql = "INSERT INTO ".SFADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
+$sql = "INSERT INTO ".SPADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
 VALUES
 	(141,15,'Complete members listing','panel-users/spa-users.php'),
 	(142,38,'Activate, deactivate and delete Simple:Press plugins','panel-plugins/spa-plugins.php'),
@@ -292,9 +292,9 @@ VALUES
 	(158,41,'Cron task inspector and scheduler','panel-toolbox/spa-toolbox.php&tab=cron'),
 	(159,55,'Cron task inspector and scheduler','panel-toolbox/spa-toolbox.php&tab=cron'),
 	(160,41,'The forum error log','panel-toolbox/spa-toolbox.php&tab=errorlog')";
-spdb_query($sql);
+SP()->DB->execute($sql);
 
-$sql = "INSERT INTO ".SFADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
+$sql = "INSERT INTO ".SPADMINTASKS." (`id`, `keyword_id`, `task`, `url`)
 VALUES
 	(161,9,'The forum error log','panel-toolbox/spa-toolbox.php&tab=errorlog'),
 	(162,41,'Details of your forum and website environment','panel-toolbox/spa-toolbox.php&tab=environment'),
@@ -303,6 +303,4 @@ VALUES
 	(165,41,'Uninstall Simple:Press ands remove','panel-toolbox/spa-toolbox.php&tab=uninstall'),
 	(166,42,'Uninstall Simple:Press ands remove','panel-toolbox/spa-toolbox.php&tab=uninstall'),
 	(167,6,'Login using social network credentials','panel-components/spa-components.php&tab=login')";
-spdb_query($sql);
-
-?>
+SP()->DB->execute($sql);

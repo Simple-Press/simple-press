@@ -2,17 +2,16 @@
 /*
 Simple:Press
 Edit Tools - Move Topic/Move Post
-$LastChangedDate: 2018-08-11 20:19:32 -0500 (Sat, 11 Aug 2018) $
-$Rev: 15697 $
+$LastChangedDate: 2018-08-10 20:33:38 -0500 (Fri, 10 Aug 2018) $
+$Rev: 15690 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
-
 sp_forum_ajax_support();
 
 # get out of here if no action specified
 if (empty($_GET['targetaction'])) die();
-$action = sp_esc_str($_GET['targetaction']);
+$action = SP()->filters->str($_GET['targetaction']);
 
 # check the autocomplete task before the nonce check
 if ($action == 'notify-search') sp_search_user();
@@ -20,9 +19,9 @@ if ($action == 'notify-search') sp_search_user();
 # now check the nonce
 if (!sp_nonce('spForumTools')) die();
 
+if ($action == 'edit-title') sp_edit_title_popup();
 if ($action == 'move-topic') sp_move_topic_popup();
 if ($action == 'move-post') sp_move_post_popup();
-if ($action == 'edit-title') sp_edit_title_popup();
 if ($action == 'reassign') sp_reassign_post_popup();
 if ($action == 'properties') sp_show_properties();
 if ($action == 'sort-forum') sp_forum_sort_order();
@@ -37,63 +36,54 @@ if ($action == 'lock-topic') sp_lock_topic();
 
 die();
 
-function sp_move_topic_popup() {
-	$topicid = sp_esc_int($_GET['topicid']);
-	$forumid = sp_esc_int($_GET['forumid']);
-	if (!sp_get_auth('move_topics', $forumid)) die();
-
-	$thistopic = spdb_table(SFTOPICS, "topic_id=$topicid", 'row');
-	$thisforum = spdb_table(SFFORUMS, "forum_id=$forumid", 'row');
-    if (empty($thistopic) || empty($thisforum)) die();
-
-	include_once(SPAPI.'sp-api-common-display.php');
-?>
-	<div id="spMainContainer" class="spForumToolsPopup">
-		<div class="spForumToolsHeader">
-			<div class="spForumToolsHeaderTitle"><?php sp_etext('Select new forum for this topic').':'; ?></div>
-			<div class="spForumToolsHeaderTitle"><?php echo sp_filter_title_display($thistopic->topic_name); ?></div>
-		</div>
-		<form action="<?php echo sp_build_url($thisforum->forum_slug, '', 1, 0); ?>" method="post" name="movetopicform">
-			<input type="hidden" name="currenttopicid" value="<?php echo $topicid; ?>" />
-			<input type="hidden" name="currentforumid" value="<?php echo $forumid; ?>" />
-			<div class="spCenter">
-				<?php echo sp_render_group_forum_select(false, false, true, true, sp_text('Select forum'), 'forumid', 'spSelect');	?><br /><br />
-				<input type="submit" class="spSubmit" name="maketopicmove" value="<?php sp_etext('Move Topic to Selected Forum') ?>" />
-				<input type="button" class="spSubmit spCancelScript" name="cancel" value="<?php sp_etext('Cancel') ?>" />
-			</div>
-		</form>
-	</div>
-<?php
-}
-
 function sp_edit_title_popup() {
-	global $spThisUser, $spDevice;
+	$defs = array('tagClass'		=> 'spForumToolsPopup',
+	              'formClass'		=> 'spPopupForm',
+				  'titleClass'		=> 'spHeaderName',
+				  'controlClass'	=> 'spControl',
+				  'buttonClass'		=> 'spSubmit'
+				 );
 
-	$topicid = sp_esc_int($_GET['topicid']);
-	$forumid = sp_esc_int($_GET['forumid']);
-	$userid  = sp_esc_int($_GET['userid']);
-	$thistopic = spdb_table(SFTOPICS, "topic_id=$topicid", 'row');
+	$data = array();
+	if (file_exists(SPTEMPLATES.'data/popup-form-data.php')) {
+		include SPTEMPLATES.'data/popup-form-data.php';
+		$data = sp_edit_title_popup_data();
+	}
 
-	if (!(sp_get_auth('edit_own_topic_titles', $forumid) && $userid == $spThisUser->ID) && !sp_get_auth('edit_any_topic_titles', $forumid)) die();
+	$a = wp_parse_args($data, $defs);
+	extract($a, EXTR_SKIP);
+	# sanitize before use
+	$tagClass		= esc_attr($tagClass);
+	$formClass		= esc_attr($formClass);
+	$titleClass		= esc_attr($titleClass);
+	$controlClass	= esc_attr($controlClass);
+	$buttonClass	= esc_attr($buttonClass);
 
-	$thisforum = spdb_table(SFFORUMS, "forum_id=$thistopic->forum_id", 'row');
+	$topicid = SP()->filters->integer($_GET['topicid']);
+	$forumid = SP()->filters->integer($_GET['forumid']);
+	$userid  = SP()->filters->integer($_GET['userid']);
+	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
+
+	if (!(SP()->auths->get('edit_own_topic_titles', $forumid) && $userid == SP()->user->thisUser->ID) && !SP()->auths->get('edit_any_topic_titles', $forumid)) die();
+
+	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$thistopic->forum_id", 'row');
     $page = sp_get_page_from_url();
 
-	$out = '<div id="spMainContainer" class="spForumToolsPopup">';
-	$out.= '<form action="'.sp_build_url($thisforum->forum_slug, '', $page, 0).'" method="post" name="edittopicform">';
+	$out = "<div id='spMainContainer' class='$tagClass'>";
+	$out.= '<form class="'.$formClass.'" action="'.SP()->spPermalinks->build_url($thisforum->forum_slug, '', $page, 0).'" method="post" name="edittopicform">';
 	$out.= '<input type="hidden" name="tid" value="'.$thistopic->topic_id.'" />';
     $out.= '<div class="spCenter">';
-	$out.= '<div class="spHeaderName">'.sp_text('Topic Title').':</div>';
-	$out.= '<div><textarea class="spControl" name="topicname" rows="2">'.esc_textarea($thistopic->topic_name).'</textarea></div>';
+	$out.= "<div class='$titleClass'>".SP()->primitives->front_text('Topic Title').':</div>';
+	$out.= "<div><textarea class='$controlClass' name='topicname' rows='2'>".esc_textarea($thistopic->topic_name).'</textarea></div>';
 
-	$s = ($spThisUser->admin) ? '' : " style='display:none;'";
-	$out.= "<div class='spHeaderName' $s>".sp_text('Topic Slug').':</div>';
-	$out.= "<div><textarea class='spControl' $s name='topicslug' rows='2'>".esc_textarea($thistopic->topic_slug).'</textarea></div>';
+	$s = (SP()->user->thisUser->admin) ? '' : " style='display:none;'";
+	$out.= "<div class='$titleClass' $s>".SP()->primitives->front_text('Topic Slug').':</div>';
+	$out.= "<div><textarea class='$controlClass' $s name='topicslug' rows='2'>".esc_textarea($thistopic->topic_slug).'</textarea></div>';
 
     $out = apply_filters('sph_topic_title_edit' , $out, $thistopic);
 	$out.= '<div class="spCenter"><br />';
-	$out.= '<input type="submit" class="spSubmit" name="edittopic" value="'.sp_text('Save').'" />';
-	$out.= '<input type="button" class="spSubmit spCancelScript" name="cancel" value="'.sp_text('Cancel').'" />';
+	$out.= "<input type='submit' class='$buttonClass' name='edittopic' value='".SP()->primitives->front_text('Save')."' />";
+	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
 
 	$out.= '</div>';
     $out.= '</div>';
@@ -102,293 +92,461 @@ function sp_edit_title_popup() {
     echo $out;
 }
 
+function sp_move_topic_popup() {
+	$defs = array('tagClass'		=> 'spForumToolsPopup',
+	              'formClass'		=> 'spPopupForm',
+				  'titleClass'		=> 'spForumToolsHeaderTitle',
+				  'highlightClass'	=> 'spForumToolsHeaderTitle',
+				  'controlClass'	=> 'spControl',
+				  'buttonClass'		=> 'spSubmit'
+				 );
+
+	$data = array();
+	if (file_exists(SPTEMPLATES.'data/popup-form-data.php')) {
+		include SPTEMPLATES.'data/popup-form-data.php';
+		$data = sp_move_topic_popup_data();
+	}
+
+	$a = wp_parse_args($data, $defs);
+	extract($a, EXTR_SKIP);
+	# sanitize before use
+	$tagClass		= esc_attr($tagClass);
+	$formClass		= esc_attr($formClass);
+	$titleClass		= esc_attr($titleClass);
+	$highlightClass	= esc_attr($highlightClass);
+	$controlClass	= esc_attr($controlClass);
+	$buttonClass	= esc_attr($buttonClass);
+
+	$topicid = SP()->filters->integer($_GET['topicid']);
+	$forumid = SP()->filters->integer($_GET['forumid']);
+	if (!SP()->auths->get('move_topics', $forumid)) die();
+
+	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
+	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$forumid", 'row');
+    if (empty($thistopic) || empty($thisforum)) die();
+
+	require_once SPBOOT.'core/sp-core-support-functions.php';
+
+	$out = "<div id='spMainContainer' class='$tagClass'>";
+	$out.= "<div class='spForumToolsHeader'>";
+	$out.= "<div class='$titleClass'>".SP()->primitives->front_text('Select new forum for this topic')."</div>";
+	$out.= "<div class='$highlightClass'>".SP()->displayFilters->title($thistopic->topic_name)."</div>";
+	$out.= '</div>';
+	$out.= "<form classs='$formClass' action='".SP()->spPermalinks->build_url($thisforum->forum_slug, '', 1, 0)."' method='post' name='movetopicform'>";
+	$out.= "<input type='hidden' name='currenttopicid' value='$topicid' />";
+	$out.= "<input type='hidden' name='currentforumid' value='$forumid' />";
+	$out.= "<div class='spCenter'>";
+	$out.= sp_render_group_forum_select(false, false, true, true, SP()->primitives->front_text('Select forum'), 'forumid', 'spSelect $controlClass');
+	$out.= sp_InsertBreak('echo=0');
+	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
+	$out.= "<input type='submit' class='$buttonClass' name='maketopicmove' value='".SP()->primitives->front_text('Move Topic to Selected Forum')."' />";
+	$out.= '</div></form></div>';
+
+	echo $out;
+}
+
 function sp_reassign_post_popup() {
-	$thispost = sp_esc_int($_GET['pid']);
-	$thisuser = sp_esc_int($_GET['uid']);
-    $thistopic = sp_esc_int($_GET['id']);
+	$defs = array('tagClass'		=> 'spForumToolsPopup',
+	              'formClass'		=> 'spPopupForm',
+				  'titleClass'		=> 'spForumToolsHeaderTitle',
+				  'controlClass'	=> 'spControl',
+				  'buttonClass'		=> 'spSubmit'
+				 );
+
+	$data = array();
+	if (file_exists(SPTEMPLATES.'data/popup-form-data.php')) {
+		include SPTEMPLATES.'data/popup-form-data.php';
+		$data = sp_reassign_post_popup_data();
+	}
+
+	$a = wp_parse_args($data, $defs);
+	extract($a, EXTR_SKIP);
+	# sanitize before use
+	$tagClass		= esc_attr($tagClass);
+	$formClass		= esc_attr($formClass);
+	$titleClass		= esc_attr($titleClass);
+	$controlClass	= esc_attr($controlClass);
+	$buttonClass	= esc_attr($buttonClass);
+
+	$thispost = SP()->filters->integer($_GET['pid']);
+	$thisuser = SP()->filters->integer($_GET['uid']);
+    $thistopic = SP()->filters->integer($_GET['id']);
     if (empty($thispost) || empty($thistopic)) die();
 
-	$thistopic = spdb_table(SFTOPICS, "topic_id=$thistopic", 'row');
-	if (!sp_get_auth('reassign_posts', $thistopic->forum_id)) die();
+	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$thistopic", 'row');
+	if (!SP()->auths->get('reassign_posts', $thistopic->forum_id)) die();
 
-	$thisforum = spdb_table(SFFORUMS, "forum_id=$thistopic->forum_id", 'row');
-?>
-	<div id="spMainContainer" class="spForumToolsPopup">
-		<div class="spForumToolsHeader">
-			<div class="spForumToolsHeaderTitle"><?php echo sp_text('Reassign post to new user').' ('.sp_text('current ID').': '.$thisuser.')'; ?></div>
-		</div>
-		<form action="<?php echo sp_build_url($thisforum->forum_slug, $thistopic->topic_slug, 0, $thispost); ?>" method="post" name="reassignpostform">
-            <div class="spCenter">
-    			<input type="hidden" name="postid" value="<?php echo $thispost; ?>" />
-    			<input type="hidden" name="olduserid" value="<?php echo $thisuser; ?>" />
-    			<?php sp_etext('New user ID'); ?>
-    			<input type="text" class="spControl" size="80" name="newuserid" value="" /><br /><br />
-    			<input type="submit" class="spSubmit" name="makepostreassign" value="<?php sp_etext('Reassign Post') ?>" />
-    			<input type="button" class="spSubmit spCancelScript" name="cancel" value="<?php sp_etext('Cancel') ?>" />
-            </div>
-		</form>
-	</div>
-<?php
+	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$thistopic->forum_id", 'row');
+
+	$out = "<div id='spMainContainer' class='$tagClass'>";
+	$out.= "<div class='spForumToolsHeader'>";
+	$out.= "<div class='$titleClass'>".SP()->primitives->front_text('Reassign post to new user')." (".SP()->primitives->front_text('current ID').': '.$thisuser.")</div>";
+	$out.= '</div>';
+	$out.= "<form class='$formClass' action='".SP()->spPermalinks->build_url($thisforum->forum_slug, $thistopic->topic_slug, 0, $thispost)."' method='post' name='reassignpostform'>";
+	$out.= '<div class="spCenter">';
+	$out.= "<input type='hidden' name='postid' value='".$thispost."' />";
+	$out.= "<input type='hidden' name='olduserid' value='".$thisuser."' />";
+	$out.= SP()->primitives->front_text('New user ID');
+	$out.= "<input type='text' class='$controlClass' size='80' name='newuserid' value='' /><br /><br />";
+	$out.= "<input type='submit' class='$buttonClass' name='makepostreassign' value=".SP()->primitives->front_text('Reassign Post')."' />";
+	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
+	$out.= '</div></form></div>';
+	echo $out;
 }
 
 function sp_show_properties() {
-	global $spThisUser;
+	$defs = array('tableClass'		=> 'spPopupTable',
+	              'labelClass'		=> 'spLabel',
+				  'dataClass'		=> 'spLabel',
+				  'buttonClass'		=> 'spSubmit'
+				 );
 
-    $forumid = sp_esc_int($_GET['forum']);
-    $topicid = sp_esc_int($_GET['topic']);
-    if (empty($forumid) || empty($topicid)) die();
-
-	$thistopic = spdb_table(SFTOPICS, "topic_id=$topicid", 'row');
-
-	if (!$spThisUser->admin && !$spThisUser->moderator) die();
-
-	$thisforum = spdb_table(SFFORUMS, "forum_id=$forumid", 'row');
-
-	if (isset($_GET['post'])) {
-		$groupid = sp_esc_int($thisforum->group_id);
-		$thisgroup = spdb_table(SFGROUPS, "group_id=$groupid", 'row');
-	} else {
-        $groupid = sp_esc_int($_GET['group']);
-        if (empty($groupid)) die();
-		$thisgroup = spdb_table(SFGROUPS, "group_id=$groupid", 'row');
+	$data = array();
+	if (file_exists(SPTEMPLATES.'data/popup-form-data.php')) {
+		include SPTEMPLATES.'data/popup-form-data.php';
+		$data = sp_properties_popup_data();
 	}
 
-	$posts = spdb_table(SFPOSTS, "topic_id=$thistopic->topic_id", '', 'post_id');
+	$a = wp_parse_args($data, $defs);
+	extract($a, EXTR_SKIP);
+	# sanitize before use
+	$tableClass		= esc_attr($tableClass);
+	$labelClass		= esc_attr($labelClass);
+	$dataClass		= esc_attr($dataClass);
+	$buttonClass	= esc_attr($buttonClass);
+
+    $forumid = SP()->filters->integer($_GET['forum']);
+    $topicid = SP()->filters->integer($_GET['topic']);
+    if (empty($forumid) || empty($topicid)) die();
+
+	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
+
+	if (!SP()->user->thisUser->admin && !SP()->user->thisUser->moderator) die();
+
+	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$forumid", 'row');
+
+	if (isset($_GET['post'])) {
+		$groupid = SP()->filters->integer($thisforum->group_id);
+		$thisgroup = SP()->DB->table(SPGROUPS, "group_id=$groupid", 'row');
+	} else {
+        $groupid = SP()->filters->integer($_GET['group']);
+        if (empty($groupid)) die();
+		$thisgroup = SP()->DB->table(SPGROUPS, "group_id=$groupid", 'row');
+	}
+
+	$posts = SP()->DB->table(SPPOSTS, "topic_id=$thistopic->topic_id", '', 'post_id');
 	if ($posts) {
 		$first = $posts[0]->post_id;
 		$last  = $posts[count($posts) - 1]->post_id;
 	}
 
 	# set timezone onto the started date
-	$topicstart = sp_apply_timezone($thistopic->topic_date);
+	$topicstart = SP()->dateTime->apply_timezone($thistopic->topic_date);
 
-?>
-	<div id="spMainContainer">
-	<table class="spPopupTable">
-		<tr><td class="spLabel" style="width:35%"><?php sp_etext('Group ID'); ?></td><td colspan="2" class="spLabel"><?php echo $thisgroup->group_id; ?></td></tr>
-		<tr><td class="spLabel"><?php sp_etext('Group Title'); ?></td><td colspan="2" class="spLabel"><?php echo sp_filter_title_display($thisgroup->group_name); ?></td></tr>
-		<tr><td class="spLabel"><?php sp_etext('Forum ID'); ?></td><td class="spLabel"><?php echo $thisforum->forum_id; ?></td><td class="sfdata"><?php echo sp_rebuild_forum_form($thisforum->forum_id, $thistopic->topic_id, $thisforum->forum_slug, $thistopic->topic_slug); ?></td></tr>
-		<tr><td class="spLabel"><?php sp_etext('Forum Title'); ?></td><td colspan="2" class="spLabel"><?php echo sp_filter_title_display($thisforum->forum_name); ?></td></tr>
-		<tr><td class="spLabel"><?php sp_etext('Forum Slug'); ?></td><td colspan="2" class="spLabel"><?php echo $thisforum->forum_slug; ?></td></tr>
-		<tr><td class="spLabel"><?php sp_etext('Topics in Forum'); ?></td><td colspan="2" class="spLabel"><?php echo $thisforum->topic_count; ?></td></tr>
-		<tr><td class="spLabel"><?php sp_etext('Topic ID'); ?></td><td class="spLabel"><?php echo $thistopic->topic_id; ?></td><td class="sfdata"><?php echo sp_rebuild_topic_form($thisforum->forum_id, $thistopic->topic_id, $thisforum->forum_slug, $thistopic->topic_slug); ?></td></tr>
-		<tr><td class="spLabel"><?php sp_etext('Topic Title'); ?></td><td colspan="2" class="spLabel"><?php echo sp_filter_title_display($thistopic->topic_name); ?></td></tr>
-		<tr><td class="spLabel"><?php sp_etext('Topic Slug'); ?></td><td colspan="2" class="spLabel"><?php echo $thistopic->topic_slug; ?></td></tr>
-		<tr><td class="spLabel"><?php sp_etext('Posts in Topic'); ?></td><td colspan="2" class="spLabel"><?php echo $thistopic->post_count; ?></td></tr>
+	$out = "<div id='spMainContainer'>";
+	$out.= "<table class='$tableClass'>";
 
-		<tr><td class="spLabel"><?php sp_etext('Topic Started'); ?></td><td colspan="2" class="spLabel"><?php echo $topicstart; ?></td></tr>
+	$out.= "<tr><td class='$labelClass' style='width:35%'>".SP()->primitives->front_text('Group ID')."</td>";
+	$out.= "<td colspan='2' class='$dataClass'>".$thisgroup->group_id."</td></tr>";
 
-		<tr><td class="spLabel"><?php sp_etext('First Post ID'); ?></td><td colspan="2" class="spLabel"><?php echo $first; ?></td></tr>
-		<tr><td class="spLabel"><?php sp_etext('Last Post ID'); ?></td><td colspan="2" class="spLabel"><?php echo $last; ?></td></tr>
-<?php
-		if (isset($_GET['post'])) {
-			$postid = sp_esc_int($_GET['post']);
-			$post = spdb_table(SFPOSTS, "post_id=$postid");
-?>
-			<tr><td class="spLabel"><?php sp_etext('This Post ID'); ?></td><td colspan="2" class="spLabel"><?php echo $postid; ?></td></tr>
-			<tr><td class="spLabel"><?php sp_etext('Poster ID'); ?></td><td colspan="2" class="spLabel"><?php echo $post[0]->user_id; ?></td></tr>
-			<tr><td class="spLabel"><?php sp_etext('Poster IP'); ?></td><td colspan="2" class="spLabel"><?php echo $post[0]->poster_ip; ?></td></tr>
-<?php
-		}
-?>
-	</table>
-	</div>
-<?php
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Group Title')."</td>";
+	$out.= "<td colspan='2' class='$dataClass'>".SP()->displayFilters->title($thisgroup->group_name)."</td></tr>";
+
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Forum ID')."</td>";
+	$out.= "<td class='$dataClass'>".$thisforum->forum_id."</td>";
+	$out.= "<td class='sfdata'>".sp_rebuild_forum_form($thisforum->forum_id, $thistopic->topic_id, $thisforum->forum_slug, $thistopic->topic_slug, $buttonClass)."</td></tr>";
+
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Forum Title')."</td>";
+	$out.= "<td colspan='2' class='$dataClass'>".SP()->displayFilters->title($thisforum->forum_name)."</td></tr>";
+
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Forum Slug')."</td>";
+	$out.= "<td colspan='2' class='$dataClass'>".$thisforum->forum_slug."</td></tr>";
+
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Topics in Forum')."</td>";
+	$out.= "<td colspan='2' class='$dataClass'>".$thisforum->topic_count."</td></tr>";
+
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Topic ID')."</td>";
+	$out.= "<td class='$dataClass'>".$thistopic->topic_id."</td>";
+	$out.= "<td class='sfdata'>".sp_rebuild_topic_form($thisforum->forum_id, $thistopic->topic_id, $thisforum->forum_slug, $thistopic->topic_slug, $buttonClass)."</td></tr>";
+
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Topic Title')."</td>";
+	$out.= "<td colspan='2' class='$dataClass'>".SP()->displayFilters->title($thistopic->topic_name)."</td></tr>";
+
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Topic Slug')."</td>";
+	$out.= "<td colspan='2' class='$dataClass'>".$thistopic->topic_slug."</td></tr>";
+
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Posts in Topic')."</td>";
+	$out.= "<td colspan='2' class='$dataClass'>".$thistopic->post_count."</td></tr>";
+
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Topic Started')."</td>";
+	$out.= "<td colspan='2' class='$dataClass'>".$topicstart."</td></tr>";
+
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('First Post ID')."</td>";
+	$out.= "<td colspan='2' class='$dataClass'>".$first."</td></tr>";
+
+	$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Last Post ID')."</td>";
+	$out.= "<td colspan='2' class='$dataClass'>".$last."</td></tr>";
+
+	if (isset($_GET['post'])) {
+		$postid = SP()->filters->integer($_GET['post']);
+		$post = SP()->DB->table(SPPOSTS, "post_id=$postid");
+
+		$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('This Post ID')."</td>";
+		$out.= "<td colspan='2' class='$dataClass'>".$postid."</td></tr>";
+		$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Poster ID')."</td>";
+		$out.= "<td colspan='2' class='$dataClass'>".$post[0]->user_id."</td></tr>";
+		$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('Poster IP')."</td>";
+		$out.= "<td colspan='2' class='$dataClass'>".$post[0]->poster_ip."</td></tr>";
+	}
+
+	$out.= "</table></div>";
+	echo $out;
+}
+
+# Support functions for the properties tool
+function sp_rebuild_forum_form($forumid, $topicid, $forumslug, $topicslug, $class) {
+	$out = '<form action="'.SP()->spPermalinks->build_url($forumslug, $topicslug, 1, 0).'" method="post" name="forumrebuild">'."\n";
+	$out.= '<input type="hidden" name="forumid" value="'.$forumid.'" />'."\n";
+	$out.= '<input type="hidden" name="topicid" value="'.$topicid.'" />'."\n";
+	$out.= '<input type="hidden" name="forumslug" value="'.esc_attr($forumslug).'" />'."\n";
+	$out.= '<input type="hidden" name="topicslug" value="'.esc_attr($topicslug).'" />'."\n";
+	$out.= '<input type="submit" class="'.$class.'" name="rebuildforum" value="'.SP()->primitives->front_text('Verify').'" />';
+	$out.= '</form>'."\n";
+	return $out;
+}
+
+function sp_rebuild_topic_form($forumid, $topicid, $forumslug, $topicslug, $class) {
+	$out = '<form action="'.SP()->spPermalinks->build_url($forumslug, $topicslug, 1, 0).'" method="post" name="topicrebuild">'."\n";
+	$out.= '<input type="hidden" name="forumid" value="'.$forumid.'" />'."\n";
+	$out.= '<input type="hidden" name="topicid" value="'.$topicid.'" />'."\n";
+	$out.= '<input type="hidden" name="forumslug" value="'.esc_attr($forumslug).'" />'."\n";
+	$out.= '<input type="hidden" name="topicslug" value="'.esc_attr($topicslug).'" />'."\n";
+	$out.= '<input type="submit" class="'.$class.'" name="rebuildtopic" value="'.SP()->primitives->front_text('Verify').'" />';
+	$out.= '</form>'."\n";
+	return $out;
 }
 
 function sp_forum_sort_order() {
-	global $spThisUser, $spGlobals;
-
-	$forumid = sp_esc_int($_GET['forumid']);
-	if (!$spThisUser->admin) die();
+	$forumid = SP()->filters->integer($_GET['forumid']);
+	if (!SP()->user->thisUser->admin) die();
 
     # make sure we have valid forum
-	$thisforum = spdb_table(SFFORUMS, "forum_id=$forumid", 'row');
+	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$forumid", 'row');
     if (empty($thisforum)) die();
 
     # if already reversed remove flag or reverse if not
     $key = false;
-    if (isset($spGlobals['sort_order']['forum'])) {
-	    $key = array_search($forumid, (array) $spGlobals['sort_order']['forum']);
+	$sort_data = SP()->meta->get_value('sort_order', 'forum');
+    if (!empty($sort_data)) {
+	    $key = array_search($forumid, (array) $sort_data);
 	}
     if ($key === false) {
-        $spGlobals['sort_order']['forum'][] = $forumid;
+        $sort_data[] = $forumid;
     } else {
-        unset($spGlobals['sort_order']['forum'][$key]);
-        $spGlobals['sort_order']['forum'] = array_keys($spGlobals['sort_order']['forum']);
+        unset($sort_data[$key]);
+        $sort_data = array_keys($sort_data);
+		if (empty($sort_data)) $sort_data = '';
     }
-    sp_add_sfmeta('sort_order', 'forum', $spGlobals['sort_order']['forum'], 1);
-    sp_redirect(sp_build_url($thisforum->forum_slug, '', 1));
+
+	SP()->meta->delete(0, 'forum', 'sort_order');
+    SP()->meta->add('sort_order', 'forum', $sort_data);
+
+    SP()->primitives->redirect(SP()->spPermalinks->build_url($thisforum->forum_slug, '', 1));
 
     die();
 }
 
 function sp_topic_sort_order() {
-	global $spThisUser, $spGlobals;
-
-	$topicid = sp_esc_int($_GET['topicid']);
-	if (!$spThisUser->admin) die();
+	$topicid = SP()->filters->integer($_GET['topicid']);
+	if (!SP()->user->thisUser->admin) die();
 
     # make sure we have valid forum
-	$thistopic = spdb_table(SFTOPICS, "topic_id=$topicid", 'row');
-	$thisforum = spdb_table(SFFORUMS, "forum_id=$thistopic->forum_id", 'row');
+	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
+	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$thistopic->forum_id", 'row');
     if (empty($thistopic)) die();
 
     # if already reversed remove flag or reverse if not
     $key = false;
-    if (isset($spGlobals['sort_order']['topic'])) {
-	    $key = array_search($topicid, (array) $spGlobals['sort_order']['topic']);
+	$sort_data = SP()->meta->get_value('sort_order', 'topic');
+    if (!empty($sort_data)) {
+	    $key = array_search($topicid, (array) $sort_data);
 	}
     if ($key === false) {
-        $spGlobals['sort_order']['topic'][] = $topicid;
+        $sort_data[] = $topicid;
     } else {
-        unset($spGlobals['sort_order']['topic'][$key]);
-        $spGlobals['sort_order']['topic'] = array_keys($spGlobals['sort_order']['topic']);
+        unset($sort_data[$key]);
+        $sort_data = array_keys($sort_data);
+		if (empty($sort_data)) $sort_data = '';
     }
-    sp_add_sfmeta('sort_order', 'topic', $spGlobals['sort_order']['topic'], 1);
-    sp_redirect(sp_build_url($thisforum->forum_slug, $thistopic->topic_slug, 1));
+
+	SP()->meta->delete(0, 'topic', 'sort_order');
+    SP()->meta->add('sort_order', 'topic', $sort_data);
+
+    SP()->primitives->redirect(SP()->spPermalinks->build_url($thisforum->forum_slug, $thistopic->topic_slug, 1));
 
     die();
 }
 
-function sp_rebuild_forum_form($forumid, $topicid, $forumslug, $topicslug) {
-	$out = '<form action="'.sp_build_url($forumslug, $topicslug, 1, 0).'" method="post" name="forumrebuild">'."\n";
-	$out.= '<input type="hidden" name="forumid" value="'.$forumid.'" />'."\n";
-	$out.= '<input type="hidden" name="topicid" value="'.$topicid.'" />'."\n";
-	$out.= '<input type="hidden" name="forumslug" value="'.esc_attr($forumslug).'" />'."\n";
-	$out.= '<input type="hidden" name="topicslug" value="'.esc_attr($topicslug).'" />'."\n";
-	$out.= '<input type="submit" class="spSubmit" name="rebuildforum" value="'.sp_text('Verify').'" />';
-	$out.= '</form>'."\n";
-	return $out;
-}
-
-function sp_rebuild_topic_form($forumid, $topicid, $forumslug, $topicslug) {
-	$out = '<form action="'.sp_build_url($forumslug, $topicslug, 1, 0).'" method="post" name="topicrebuild">'."\n";
-	$out.= '<input type="hidden" name="forumid" value="'.$forumid.'" />'."\n";
-	$out.= '<input type="hidden" name="topicid" value="'.$topicid.'" />'."\n";
-	$out.= '<input type="hidden" name="forumslug" value="'.esc_attr($forumslug).'" />'."\n";
-	$out.= '<input type="hidden" name="topicslug" value="'.esc_attr($topicslug).'" />'."\n";
-	$out.= '<input type="submit" class="spSubmit" name="rebuildtopic" value="'.sp_text('Verify').'" />';
-	$out.= '</form>'."\n";
-	return $out;
-}
-
 function sp_move_post_popup() {
-	$thispost = sp_esc_int($_GET['pid']);
-	$topicid = sp_esc_int($_GET['id']);
-	$thispostindex = sp_esc_int($_GET['pix']);
-	$thistopic = spdb_table(SFTOPICS, "topic_id=$topicid", 'row');
+	$defs = array('tagClass'		=> 'spForumToolsPopup',
+	              'formClass'		=> 'spPopupForm',
+	              'setClass'		=> '',
+	              'radioClass'		=> '',
+				  'titleClass'		=> 'spForumToolsHeaderTitle',
+				  'highlightClass'	=> 'spForumToolsHeaderTitle',
+				  'controlClass'	=> 'spSelect',
+				  'buttonClass'		=> 'spSubmit'
+				 );
+
+	$data = array();
+	if (file_exists(SPTEMPLATES.'data/popup-form-data.php')) {
+		include SPTEMPLATES.'data/popup-form-data.php';
+		$data = sp_move_post_popup_data();
+	}
+
+	$a = wp_parse_args($data, $defs);
+	extract($a, EXTR_SKIP);
+	# sanitize before use
+	$tagClass		= esc_attr($tagClass);
+	$formClass		= esc_attr($formClass);
+	$setClass		= esc_attr($setClass);
+	$radioClass		= esc_attr($radioClass);
+	$titleClass		= esc_attr($titleClass);
+	$highlightClass	= esc_attr($highlightClass);
+	$controlClass	= esc_attr($controlClass);
+	$buttonClass	= esc_attr($buttonClass);
+
+	$thispost = SP()->filters->integer($_GET['pid']);
+	$topicid = SP()->filters->integer($_GET['id']);
+	$thispostindex = SP()->filters->integer($_GET['pix']);
+	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
     if (empty($thispost) || empty($thistopic)) die();
 
-	$thisforum = spdb_table(SFFORUMS, "forum_id=$thistopic->forum_id", 'row');
-	if (!sp_get_auth('move_posts', $thistopic->forum_id)) die();
+	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$thistopic->forum_id", 'row');
+	if (!SP()->auths->get('move_posts', $thistopic->forum_id)) die();
 
-	$thisPostData = spdb_table(SFPOSTS, "post_id=$thispost", 'row');
-?>
-	<div id="spMainContainer" class="spForumToolsPopup">
-		<div class="spForumToolsHeader">
-			<div class="spForumToolsHeaderTitle"><?php echo sp_text('Move post'); ?></div>
-		</div>
+	$thisPostData = SP()->DB->table(SPPOSTS, "post_id=$thispost", 'row');
 
-		<form action="<?php echo sp_build_url($thisforum->forum_slug, $thistopic->topic_slug, 1, 0); ?>" method="post" name="movepostform">
+	$out = "<div id='spMainContainer' class='$tagClass'>";
 
-			<input type="hidden" name="postid" value="<?php echo $thispost; ?>" />
-			<input type="hidden" name="oldtopicid" value="<?php echo $topicid; ?>" />
-			<input type="hidden" name="oldforumid" value="<?php echo $thisforum->forum_id; ?>" />
-			<input type="hidden" name="oldpostindex" value="<?php echo $thispostindex; ?>" />
+	$out.= "<form class='$formClass' action='".SP()->spPermalinks->build_url($thisforum->forum_slug, $thistopic->topic_slug, 1, 0)."' method='post' name='movepostform'>";
 
-			<fieldset><legend><?php sp_etext('Select Operation'); ?></legend>
+	$out.= "<input type='hidden' name='postid' value='".$thispost."' />";
+	$out.= "<input type='hidden' name='oldtopicid' value='".$topicid."' />";
+	$out.= "<input type='hidden' name='oldforumid' value='".$thisforum->forum_id."' />";
+	$out.= "<input type='hidden' name='oldpostindex' value='".$thispostindex."' />";
 
-				<?php do_action('sph_move_topic_form_top', $thisforum, $thistopic, $thisPostData); ?>
+	$out.= "<fieldset class='$setClass'><legend>".SP()->primitives->front_text('Select Operation')."</legend>";
 
-				<input type="radio" name="moveop" id="single" value="single" checked="checked" />
-				<label for="single">&nbsp;<?php sp_etext('Move this post only'); ?></label><br />
+	do_action('sph_move_topic_form_top', $thisforum, $thistopic, $thisPostData);
 
-				<input type="radio" name="moveop" id="tostart" value="tostart" />
-				<label for="tostart">&nbsp;<?php sp_etext('Move this post and ALL preceding posts'); ?></label><br />
+	$out.= "<input type='radio' class='$radioClass' name='moveop' id='single' value='single' checked='checked' />";
+	$out.= "<label for='single'>&nbsp;".SP()->primitives->front_text('Move this post only')."</label>";
 
-				<input type="radio" name="moveop" id="toend" value="toend" />
-				<label for="toend">&nbsp;<?php sp_etext('Move this post and ALL succeeding posts'); ?></label><br />
+	$out.= "<input type='radio' class='$radioClass' name='moveop' id='tostart' value='tostart' />";
+	$out.= "<label for='tostart'>&nbsp;".SP()->primitives->front_text('Move this post and ALL preceding posts')."</label>";
 
-				<?php do_action('sph_move_topic_form_middle', $thisforum, $thistopic, $thisPostData); ?>
+	$out.= "<input type='radio' class='$radioClass' name='moveop' id='toend' value='toend' />";
+	$out.= "<label for='toend'>&nbsp;".SP()->primitives->front_text('Move this post and ALL succeeding posts')."</label>";
 
-				<input type="radio" name="moveop" id="select" value="select" />
-				<label for="select">&nbsp;<?php sp_etext('Move the posts listed below'); ?>:</label><br />
+	do_action('sph_move_topic_form_middle', $thisforum, $thistopic, $thisPostData);
 
-				<?php do_action('sph_move_topic_form_bottom', $thisforum, $thistopic, $thisPostData); ?>
+	$out.= "<input type='radio' class='$radioClass' name='moveop' id='select' value='select' />";
+	$out.= "<label for='select'>&nbsp;".SP()->primitives->front_text('Move the posts listed below').":</label>";
 
-				<label for="idList"><?php sp_etext('Post Numbers to move - separated by commas'); ?></label><br />
-				<input type="text" class="spControl" name="idlist" value="<?php echo $thispostindex; ?>," /><br /><br />
+	do_action('sph_move_topic_form_bottom', $thisforum, $thistopic, $thisPostData);
 
-				<span>
-				<input type="button" class="spSubmit spStackBtnLong" id="movetonew" name="movetonew" value="<?php echo sp_text('Move to a NEW topic'); ?>" />
-				<input type="button" class="spSubmit spStackBtnLong" id="movetoold" name="movetoold" value="<?php echo sp_text('Move to an EXISTING topic'); ?>" />
-				<input type="button" class="spSubmit spStackBtnLong spCancelScript" name="cancel" value="<?php echo sp_text('Cancel Move') ?>" />
-				</span>
+	$out.= "<label class='$titleClass' for='idList'>".SP()->primitives->front_text('Post Numbers to move - separated by commas')."</label>";
+	$out.= "<input type='text' class='spControl' name='idlist' value='".$thispostindex.",' /><br />";
 
-			</fieldset>
+	$out.= "<span>";
+	$out.= "<input type='button' class='$buttonClass spStackBtnLong' id='movetonew' name='movetonew' value='".SP()->primitives->front_text('Move to a NEW topic')."' />";
+	$out.= "<input type='button' class='$buttonClass spStackBtnLong' id='movetoold' name='movetoold' value='".SP()->primitives->front_text('Move to an EXISTING topic')."' />";
+	$out.= "<input type='button' class='$buttonClass spStackBtnLong spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel Move')."' />";
+	$out.= "</span>";
 
-			<div id="newtopic" class="spCenter" style="display:none;">
-				<p class="spCenter" ><b><?php sp_etext('Move to a NEW topic'); ?></b></p>
-				<?php echo sp_render_group_forum_select(false, false, true, true, sp_text('Select forum'), 'forumid', 'spSelect');	?><br /><br />
-				<p class="spCenter"><?php sp_etext('New topic name'); ?></p>
-				<input type="text" class="spControl" size="80" name="newtopicname" value="" /><br /><br />
-				<?php do_action('sph_move_post_form', $thispost, $topicid); ?>
-				<input type="submit" class="spSubmit" name="makepostmove1" value="<?php sp_etext('Move') ?>" />
-			</div>
+	$out.= "</fieldset>";
 
-			<div id="oldtopic" class="spCenter" style="display:none;">
-				<p class="spCenter" ><b><?php sp_etext('Move to a EXISTING topic'); ?></b></p>
-				<p class="spCenter" ><?php sp_etext('Click on the Move button below and when the page refreshes navigate to the target topic to complete the move'); ?></p>
-				<?php do_action('sph_move_post_form', $thispost, $topicid); ?>
-				<input type="submit" class="spSubmit" name="makepostmove2" value="<?php sp_etext('Move') ?>" />
-			</div>
+	$out.= "<div id='newtopic' class='spCenter' style='display:none;'>";
+	$out.= "<p class='$highlightClass spCenter' ><b>".SP()->primitives->front_text('Move to a NEW topic')."</b></p>";
+	$out.= sp_render_group_forum_select(false, false, true, true, SP()->primitives->front_text('Select forum'), 'forumid', $controlClass);
+	$out.= "<br /><br />";
+	$out.= "<p class='$highlightClass spCenter'>".SP()->primitives->front_text('New topic name')."</p>";
+	$out.= "<input type='text' class='$controlClass' size='80' name='newtopicname' value='' />";
 
-		</form>
+	do_action('sph_move_post_form', $thispost, $topicid);
 
-	</div>
-<?php
+	$out.= "<input type='submit' class='$buttonClass' name='makepostmove1' value='".SP()->primitives->front_text('Move')."' />";
+	$out.= "</div>";
+
+	$out.= "<div id='oldtopic' class='spCenter' style='display:none;'>";
+	$out.= "<p class='$highlightClass' ><b>".SP()->primitives->front_text('Move to a EXISTING topic')."</b></p>";
+	$out.= "<p class='$highlightClass' >".SP()->primitives->front_text('Click on the Move button below and when the page refreshes navigate to the target topic to complete the move')."</p>";
+
+	do_action('sph_move_post_form', $thispost, $topicid);
+
+	$out.= "<input type='submit' class='$buttonClass' name='makepostmove2' value='".SP()->primitives->front_text('Move')."' />";
+	$out.= "</div></form></div>";
+
+	echo $out;
 }
 
 function sp_notify_user() {
-	global $spThisUser;
-
-	$thisPost = sp_esc_int($_GET['pid']);
+	$thisPost = SP()->filters->integer($_GET['pid']);
     if (empty($thisPost)) die();
+	if (!SP()->user->thisUser->admin && !SP()->user->thisUser->moderator) die();
 
-	if (!$spThisUser->admin && !$spThisUser->moderator) die();
+	$defs = array('tagClass'		=> 'spForumToolsPopup',
+	              'formClass'		=> 'spPopupForm',
+				  'titleClass'		=> 'spLabel',
+				  'controlClass'	=> 'spControl',
+				  'buttonClass'		=> 'spSubmit'
+				 );
+
+	$data = array();
+	if (file_exists(SPTEMPLATES.'data/popup-form-data.php')) {
+		include SPTEMPLATES.'data/popup-form-data.php';
+		$data = sp_notify_user_popup_data();
+	}
+
+	$a = wp_parse_args($data, $defs);
+	extract($a, EXTR_SKIP);
+	# sanitize before use
+	$tagClass		= esc_attr($tagClass);
+	$formClass		= esc_attr($formClass);
+	$titleClass		= esc_attr($titleClass);
+	$controlClass	= esc_attr($controlClass);
+	$buttonClass	= esc_attr($buttonClass);
 
     $site = SPAJAXURL.'spForumTools&targetaction=notify-search&rand='.rand();
 ?>
-    <script type="text/javascript">
-    jQuery(document).ready(function() {
-    	jQuery('#sp_notify_user').autocomplete({
-    		source : '<?php echo $site; ?>',
-    		disabled : false,
-    		delay : 200,
-    		minLength: 1,
-    	});
-    });
+    <script>
+		(function(spj, $, undefined) {
+			$(document).ready(function() {
+				$('#sp_notify_user').autocomplete({
+					source : '<?php echo $site; ?>',
+					disabled : false,
+					delay : 200,
+					minLength: 1,
+				});
+			});
+		}(window.spj = window.spj || {}, jQuery));
     </script>
 
-	<div id="spMainContainer" class="spForumToolsPopup">
-		<div class="spForumToolsHeader">
-			<div class="spForumToolsHeaderTitle"><?php echo sp_text('Notify user of this post'); ?></div>
-		</div>
-		<form action="<?php echo sp_permalink_from_postid($thisPost); ?>" method="post" name="notifyuserform">
-            <div class="spCenter">
-    			<input type="hidden" name="postid" value="<?php echo $thisPost; ?>" />
-        		<label class='spLabel' for='sp_notify_user'><?php sp_etext('User to notify'); ?>: </label>
-        		<input type='text' id='sp_notify_user' class='spControl' name='sp_notify_user' />
-        		<p class="spLabelSmall"><?php sp_etext("Start typing a member's name above and it will auto-complete"); ?></p>
-        		<label class='spLabel' for='sp_notify_user'><?php sp_etext('Message'); ?>: </label>
-        		<input type='text' id='message' class='spControl' name='message' />
-    			<input type="submit" class="spSubmit" name="notifyuser" value="<?php sp_etext('Notify') ?>" />
-    			<input type="button" class="spSubmit spCancelScript" name="cancel" value="<?php sp_etext('Cancel') ?>" />
-            </div>
-		</form>
-	</div>
 <?php
+	$out = "<div id='spMainContainer' class='$tagClass'>";
+	$out.= "<form class='$formClass' action='".SP()->spPermalinks->permalink_from_postid($thisPost)."' method='post' name='notifyuserform'>";
+	$out.= "<div class='spCenter'>";
+	$out.= "<input type='hidden' name='postid' value='".$thisPost."' />";
+	$out.= "<label class='$titleClass' for='sp_notify_user'>".SP()->primitives->front_text('User to notify').": </label>";
+	$out.= "<input type='text' id='sp_notify_user' class='$controlClass' name='sp_notify_user' />";
+	$out.= "<p class='$titleClass'>".SP()->primitives->front_text("Start typing a member's name above and it will auto-complete")."</p>";
+	$out.= "<label class='$titleClass' for='sp_notify_user'>".SP()->primitives->front_text('Message').": </label>";
+	$out.= "<input type='text' id='message' class='$controlClass' name='message' />";
+	$out.= "<input type='submit' class='$buttonClass' name='notifyuser' value='".SP()->primitives->front_text('Notify')."' />";
+	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
+	$out.= "</div></form></div>";
+	echo $out;
 }
 
 function sp_search_user() {
@@ -397,13 +555,13 @@ function sp_search_user() {
 	$out = '[]';
 
 	$query = $_GET['term'];
-	$where = "display_name LIKE '%".sp_esc_sql($wpdb->esc_like($query))."%'";
-	$users = spdb_table(SFMEMBERS, $where, '', 'display_name DESC', 25);
+	$where = "display_name LIKE '%".SP()->filters->esc_sql($wpdb->esc_like($query))."%'";
+	$users = SP()->DB->table(SPMEMBERS, $where, '', 'display_name DESC', 25);
 	if ($users) {
 		$primary = '';
 		$secondary = '';
 		foreach ($users as $user) {
-			$uname = sp_filter_name_display($user->display_name);
+			$uname = SP()->displayFilters->name($user->display_name);
 			$cUser = array ('id' => $user->user_id, 'value' => $uname);
 			if (strcasecmp($query, substr($uname, 0, strlen($query))) == 0) {
 				$primary.= json_encode($cUser).',';
@@ -422,80 +580,95 @@ function sp_search_user() {
 }
 
 function sp_order_topic_pins() {
-	$topicid = sp_esc_int($_GET['topicid']);
-	$forumid = sp_esc_int($_GET['forumid']);
-	if (!sp_get_auth('pin_topics', $forumid)) die();
+	$forumid = SP()->filters->integer($_GET['forumid']);
+	if (!SP()->auths->get('pin_topics', $forumid)) die();
 
-	$thisforum = spdb_table(SFFORUMS, "forum_id=$forumid", 'row');
-	$topics = spdb_table(SFTOPICS, "forum_id=$forumid AND topic_pinned > 0", '', 'topic_pinned DESC');
+	$defs = array('tagClass'		=> 'spForumToolsPopup',
+				  'formClass'		=> '',
+				  'tableClass'		=> 'spPopupTable',
+	              'labelClass'		=> 'spLabel',
+				  'dataClass'		=> 'spControl',
+				  'buttonClass'		=> 'spSubmit'
+				 );
+
+	$data = array();
+	if (file_exists(SPTEMPLATES.'data/popup-form-data.php')) {
+		include SPTEMPLATES.'data/popup-form-data.php';
+		$data = sp_order_pins_popup_data();
+	}
+
+	$a = wp_parse_args($data, $defs);
+	extract($a, EXTR_SKIP);
+	# sanitize before use
+	$tagClass		= esc_attr($tagClass);
+	$formClass		= esc_attr($formClass);
+	$tableClass		= esc_attr($tableClass);
+	$labelClass		= esc_attr($labelClass);
+	$dataClass		= esc_attr($dataClass);
+	$buttonClass	= esc_attr($buttonClass);
+
+	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$forumid", 'row');
+	$topics = SP()->DB->table(SPTOPICS, "forum_id=$forumid AND topic_pinned > 0", '', 'topic_pinned DESC');
 
     if (empty($topics) || empty($forumid)) die();
 
-?>
-	<div id="spMainContainer" class="spForumToolsPopup">
-		<div class="spForumToolsHeader">
-			<div class="spForumToolsHeaderTitle"><?php sp_etext('Please note: The HIGHER numbered topics will appear at the top of the list'); ?></div>
-		</div>
-		<form action="<?php echo sp_build_url($thisforum->forum_slug, '', 1, 0); ?>" method="post" name="ordertopicpinsform">
-			<input type="hidden" name="orderpinsforumid" value="<?php echo $forumid; ?>" />
-			<table class="spPopupTable">
-<?php
-			foreach ($topics as $topic) {
-?>
-				<tr><td class="spLabel" style="width:85%;border:1px solid #ddd""><?php echo sp_filter_title_display($topic->topic_name); ?>
-				<input type="hidden" name="topicid[]" value="<?php echo $topic->topic_id; ?>" /></td>
-				<td style="border: 1px solid #ddd">
-					<input type="text" size="6" name="porder[]" value="<?php echo $topic->topic_pinned; ?>" />
-				</td></tr>
-<?php
-			}
-?>
-			</table>
-			<div class="spCenter">
-				<input type="submit" class="spSubmit" name="ordertopicpins" value="<?php sp_etext('Save Pin Order Changes') ?>" />
-				<input type="button" class="spSubmit spCancelScript" name="cancel" value="<?php sp_etext('Cancel') ?>" />
-			</div>
-		</form>
-	</div>
-<?php
+	$out = "<div id='spMainContainer' class='spForumToolsPopup'>";
+	$out.= "<div class='spForumToolsHeader'>";
+	$out.= "<div class='spForumToolsHeaderTitle'>".SP()->primitives->front_text('Please note: The HIGHER numbered topics will appear at the top of the list')."</div>";
+	$out.= "</div>";
+	$out.= "<form class='$formClass' action='".SP()->spPermalinks->build_url($thisforum->forum_slug, '', 1, 0)."' method='post' name='ordertopicpinsform'>";
+	$out.= "<input type='hidden' name='orderpinsforumid' value='".$forumid."' />";
+	$out.= "<table class='$tableClass'>";
+	foreach ($topics as $topic) {
+		$out.= "<tr><td class='$labelClass' style='width:85%;border:1px solid #ddd'>".SP()->displayFilters->title($topic->topic_name);
+		$out.= "<input type='hidden' name='topicid[]' value='".$topic->topic_id."' /></td>";
+		$out.= "<td style='border: 1px solid #ddd'>";
+		$out.= "<input type='text' class='$dataClass' size='6' name='porder[]' value='".$topic->topic_pinned."' />";
+		$out.= "</td></tr>";
+	}
+	$out.= "</table>";
+	$out.= "<div class='spCenter'>";
+	$out.= "<input type='submit' class='$buttonClass' name='ordertopicpins' value='".SP()->primitives->front_text('Save Pin Order Changes')."' />";
+	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
+	$out.= "</div></form></div>";
+	echo $out;
 }
 
 function sp_post_delete() {
-    sp_delete_post(sp_esc_int($_GET['killpost']));
+    sp_delete_post(SP()->filters->integer($_GET['killpost']));
 
-    if ($_GET['count'] == 1) {
-    	$forumslug = spdb_table(SFFORUMS, 'forum_id='.sp_esc_int($_GET['killpostforum']), 'forum_slug');
-       	$topicslug = spdb_table(SFTOPICS, 'topic_id='.sp_esc_int($_GET['killposttopic']), 'topic_slug');
-        $page = sp_esc_int($_GET['page']);
+	if ($_GET['count'] == 1) {
+    	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.SP()->filters->integer($_GET['killpostforum']), 'forum_slug');
+       	$topicslug = SP()->DB->table(SPTOPICS, 'topic_id='.SP()->filters->integer($_GET['killposttopic']), 'topic_slug');
+        $page = SP()->filters->integer($_GET['page']);
         if ($page == 1) {
-            $returnURL = sp_build_url($forumslug, '', 0);
+            $returnURL = SP()->spPermalinks->build_url($forumslug, '', 0);
         } else {
             $page = $page - 1;
-            $returnURL = sp_build_url($forumslug, $topicslug, $page);
+            $returnURL = SP()->spPermalinks->build_url($forumslug, $topicslug, $page);
         }
-        echo $returnURL;
+		echo $returnURL;
     }
-
     die();
 }
 
 function sp_topic_delete() {
 
-    sp_delete_topic(sp_esc_int($_GET['killtopic']), sp_esc_int($_GET['killtopicforum']), false);
+    sp_delete_topic(SP()->filters->integer($_GET['killtopic']), SP()->filters->integer($_GET['killtopicforum']), false);
 
-    $view = sp_esc_str($_GET['view']);
+    $view = SP()->filters->str($_GET['view']);
     if ($view == 'topic') {
-      	$forumslug = spdb_table(SFFORUMS, 'forum_id='.sp_esc_int($_GET['killtopicforum']), 'forum_slug');
-        $returnURL = sp_build_url($forumslug, '', 0);
+      	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.SP()->filters->integer($_GET['killtopicforum']), 'forum_slug');
+        $returnURL = SP()->spPermalinks->build_url($forumslug, '', 0);
         echo $returnURL;
     } else if ($_GET['count'] == 1) {
-      	$forumslug = spdb_table(SFFORUMS, 'forum_id='.sp_esc_int($_GET['killtopicforum']), 'forum_slug');
-        $page = sp_esc_int($_GET['page']);
+      	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.SP()->filters->integer($_GET['killtopicforum']), 'forum_slug');
+        $page = SP()->filters->integer($_GET['page']);
         if ($page == 1) {
-            $returnURL = sp_build_url($forumslug, '', 0);
+            $returnURL = SP()->spPermalinks->build_url($forumslug, '', 0);
         } else {
             $page = $page - 1;
-            $returnURL = sp_build_url($forumslug, '', $page);
+            $returnURL = SP()->spPermalinks->build_url($forumslug, '', $page);
         }
         echo $returnURL;
     }
@@ -504,17 +677,17 @@ function sp_topic_delete() {
 }
 
 function sp_pin_post() {
-     sp_pin_post_toggle(sp_esc_int($_GET['post']), sp_esc_int($_GET['forum']));
+     sp_pin_post_toggle(SP()->filters->integer($_GET['post']), SP()->filters->integer($_GET['forum']));
      die();
 }
 
 function sp_pin_topic() {
-     sp_pin_topic_toggle(sp_esc_int($_GET['topic']), sp_esc_int($_GET['forum']));
+     sp_pin_topic_toggle(SP()->filters->integer($_GET['topic']), SP()->filters->integer($_GET['forum']));
      die();
 }
 
 function sp_lock_topic() {
-    sp_lock_topic_toggle(sp_esc_int($_GET['topic']), sp_esc_int($_GET['forum']));
+    sp_lock_topic_toggle(SP()->filters->integer($_GET['topic']), SP()->filters->integer($_GET['forum']));
     die();
 }
 
@@ -523,5 +696,3 @@ function sp_get_page_from_url() {
 	$p = ($s) ? (int) substr($_SERVER['HTTP_REFERER'], ($s+6)) : 1;
 	return $p;
 }
-
-?>

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Help
-$LastChangedDate: 2016-06-25 08:14:16 -0500 (Sat, 25 Jun 2016) $
-$Rev: 14331 $
+$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
+$Rev: 15187 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -14,8 +14,8 @@ if (!sp_nonce('help')) die();
 
 if (!isset($_GET['file'])) die();
 
-$file = sp_esc_str($_GET['file']);
-$tag = sp_esc_str($_GET['item']);
+$file = SP()->filters->str($_GET['file']);
+$tag = SP()->filters->str($_GET['item']);
 $tag = '['.$tag.']';
 $folder = 'panels/';
 
@@ -28,7 +28,7 @@ echo '<fieldset>';
 echo $helptext;
 echo '</fieldset>';
 echo '<div class="sfhelptextlogo">';
-echo '<img src="'.SFCOMMONIMAGES.'sp-mini-logo.png" alt="" title="" />';
+echo '<img src="'.SPCOMMONIMAGES.'sp-mini-logo.png" alt="" title="" />';
 echo '</div></div>';
 
 die();
@@ -45,9 +45,9 @@ function sp_retrieve_help($file, $tag, $folder) {
 	if (file_exists($helpfile) == false) {
 		$helpfile = str_replace('.'.$lang, '.en', $helpfile);
 		if (file_exists($helpfile) == false) {
-			return spa_text('No help file can be located');
+			return SP()->primitives->admin_text('No help file can be located');
 		} else {
-			$note = spa_text('Sorry but a help file can not be found in your language');
+			$note = SP()->primitives->admin_text('Sorry but a help file can not be found in your language');
 		}
 	}
 
@@ -81,5 +81,3 @@ function sp_convert_tag($tag) {
 	$tag = str_replace ('_', ' ', $tag);
 	return ucwords($tag);
 }
-
-?>

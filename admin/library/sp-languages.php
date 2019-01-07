@@ -16,6 +16,7 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 
 $langSets = array(
 	'en'	=> array('wpCode' => 'en_US',	'langName' => 'English (USA)'),
+	'en-gb'	=> array('wpCode' => 'en_GB',	'langName' => 'English (UK)'),
 	'af'	=> array('wpCode' => 'af',		'langName' => 'Afrikaans'),
 	'sq'	=> array('wpCode' => 'sq',		'langName' => 'Albanian'),
 	'ar'	=> array('wpCode' => 'ar',		'langName' => 'Arabic'),
@@ -76,5 +77,3 @@ $langSets = array(
 	'uz'	=> array('wpCode' => 'uz_UZ',	'langName' => 'Uzbek'),
 	'vi'	=> array('wpCode' => 'vi',		'langName' => 'Vietnamese')
 );
-
-?>

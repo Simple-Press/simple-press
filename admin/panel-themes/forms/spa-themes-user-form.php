@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin themes user form
-$LastChangedDate: 2016-06-25 05:55:17 -0500 (Sat, 25 Jun 2016) $
-$Rev: 14322 $
+$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
+$Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -11,19 +11,21 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function spa_themes_user_form($admin, $save, $form, $reload) {
 	if ($form) {
 ?>
-        <script type="text/javascript">
-            jQuery(document).ready(function() {
-            	jQuery('#sfthemesuser').ajaxForm({
-            		target: '#sfmsgspot',
-            		success: function() {
-<?php
-       		if (!empty($reload)) echo "jQuery('#".$reload."').click();";
-?>
-            			jQuery('#sfmsgspot').fadeIn();
-            			jQuery('#sfmsgspot').fadeOut(6000);
-            		}
-            	});
-            });
+        <script>
+			(function(spj, $, undefined) {
+				$(document).ready(function() {
+					$('#sfthemesuser').ajaxForm({
+						target: '#sfmsgspot',
+						success: function() {
+	<?php
+				if (!empty($reload)) echo "jQuery('#".$reload."').click();";
+	?>
+							$('#sfmsgspot').fadeIn();
+							$('#sfmsgspot').fadeOut(6000);
+						}
+					});
+				});
+			}(window.spj = window.spj || {}, jQuery));
         </script>
 <?php
 		spa_paint_options_init();
@@ -37,7 +39,7 @@ function spa_themes_user_form($admin, $save, $form, $reload) {
 	if ($form) {
 ?>
     	<div class="sfform-submit-bar">
-    	   <input type="submit" class="button-primary" value="<?php spa_etext('Update'); ?>" />
+    	   <input type="submit" class="button-primary" value="<?php SP()->primitives->admin_etext('Update'); ?>" />
     	</div>
         </form>
 
@@ -45,4 +47,3 @@ function spa_themes_user_form($admin, $save, $form, $reload) {
 <?php
 	}
 }
-?>

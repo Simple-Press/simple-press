@@ -2,8 +2,8 @@
 /*
 Simple:Press Admin
 Ajax form loader - themes
-$LastChangedDate: 2016-12-03 14:06:51 -0600 (Sat, 03 Dec 2016) $
-$Rev: 14745 $
+$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
+$Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -12,16 +12,15 @@ spa_admin_ajax_support();
 
 if (!sp_nonce('themes-loader')) die();
 
-global $spStatus;
-if ($spStatus != 'ok') {
-	echo $spStatus;
+if (SP()->core->status != 'ok') {
+	echo SP()->core->status;
 	die();
 }
 
-include_once SF_PLUGIN_DIR.'/admin/panel-themes/spa-themes-display.php';
-include_once SF_PLUGIN_DIR.'/admin/panel-themes/support/spa-themes-prepare.php';
-include_once SF_PLUGIN_DIR.'/admin/panel-themes/support/spa-themes-save.php';
-include_once SF_PLUGIN_DIR.'/admin/library/spa-tab-support.php';
+require_once SP_PLUGIN_DIR.'/admin/panel-themes/spa-themes-display.php';
+include_once SP_PLUGIN_DIR.'/admin/panel-themes/support/spa-themes-prepare.php';
+include_once SP_PLUGIN_DIR.'/admin/panel-themes/support/spa-themes-save.php';
+include_once SP_PLUGIN_DIR.'/admin/library/spa-tab-support.php';
 
 global $adminhelpfile;
 $adminhelpfile = 'admin-themes';
@@ -29,7 +28,7 @@ $adminhelpfile = 'admin-themes';
 
 # ----------------------------------
 # Check Whether User Can Manage Options
-if (!sp_current_user_can('SPF Manage Themes')) die();
+if (!SP()->auths->current_user_can('SPF Manage Themes')) die();
 
 if (isset($_GET['loadform'])) {
 	spa_render_themes_container($_GET['loadform']);
@@ -41,12 +40,14 @@ if (isset($_GET['saveform'])) {
 		case 'theme':
 			$msg = spa_save_theme_data();
 ?>
-        	<script type="text/javascript">
-            	jQuery(document).ready(function(){
-            		jQuery("#sfmsgspot").fadeIn("fast");
-            		jQuery("#sfmsgspot").html("<?php echo $msg; ?>");
-            		jQuery("#sfmsgspot").fadeOut(8000);
-            	});
+        	<script>
+				(function(spj, $, undefined) {
+					$(document).ready(function(){
+						$("#sfmsgspot").fadeIn("fast");
+						$("#sfmsgspot").html("<?php echo $msg; ?>");
+						$("#sfmsgspot").fadeOut(8000);
+					});
+				}(window.spj = window.spj || {}, jQuery));
         	</script>
 <?php
 			break;
@@ -54,12 +55,14 @@ if (isset($_GET['saveform'])) {
 		case 'mobile':
 			$msg = spa_save_theme_mobile_data();
 ?>
-        	<script type="text/javascript">
-            	jQuery(document).ready(function(){
-            		jQuery("#sfmsgspot").fadeIn("fast");
-            		jQuery("#sfmsgspot").html("<?php echo $msg; ?>");
-            		jQuery("#sfmsgspot").fadeOut(8000);
-            	});
+        	<script>
+				(function(spj, $, undefined) {
+					$(document).ready(function(){
+						$("#sfmsgspot").fadeIn("fast");
+						$("#sfmsgspot").html("<?php echo $msg; ?>");
+						$("#sfmsgspot").fadeOut(8000);
+	            	});
+				}(window.spj = window.spj || {}, jQuery));
             	</script>
 <?php
 			break;
@@ -67,12 +70,14 @@ if (isset($_GET['saveform'])) {
 		case 'tablet':
 			$msg = spa_save_theme_tablet_data();
 ?>
-        	<script type="text/javascript">
-            	jQuery(document).ready(function(){
-            		jQuery("#sfmsgspot").fadeIn("fast");
-            		jQuery("#sfmsgspot").html("<?php echo $msg; ?>");
-            		jQuery("#sfmsgspot").fadeOut(8000);
-            	});
+        	<script>
+				(function(spj, $, undefined) {
+					$(document).ready(function(){
+						$("#sfmsgspot").fadeIn("fast");
+						$("#sfmsgspot").html("<?php echo $msg; ?>");
+						$("#sfmsgspot").fadeOut(8000);
+	            	});
+				}(window.spj = window.spj || {}, jQuery));
         	</script>
 <?php
 			break;
@@ -89,4 +94,3 @@ if (isset($_GET['saveform'])) {
 }
 
 die();
-?>
