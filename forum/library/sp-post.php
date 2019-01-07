@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Forum Topic/Post Saves
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-10-24 12:03:43 -0500 (Wed, 24 Oct 2018) $
+$Rev: 15768 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -27,7 +27,7 @@ $p->guest     = SP()->user->thisUser->guest;
 $p->call = 'post';
 
 # Set data items needed for initial needed permission checks -----------------------
-if (isset($_POST['newaction'])) $p->action = $_POST['newaction'];
+if (isset($_POST['newaction'])) $p->action = SP()->filters->str($_POST['newaction']);
 
 if (isset($_POST['forumid'])) $p->newpost['forumid'] = SP()->filters->integer($_POST['forumid']);
 if (isset($_POST['forumslug'])) $p->newpost['forumslug'] = SP()->filters->str($_POST['forumslug']);
@@ -54,7 +54,7 @@ if ($p->abort) {
 
 # setup and prepare post data ready for validation ---------------------------------
 if ($p->action == 'topic') {
-	$p->newpost['topicname']   = $_POST['newtopicname'];
+	$p->newpost['topicname']   = SP()->filters->str($_POST['newtopicname']);
 	$p->newpost['topicpinned'] = isset($_POST['topicpin']);
 }
 
@@ -65,15 +65,15 @@ if ($p->action == 'post') {
 
 # Both
 if (SP()->user->thisUser->guest) {
-	if (!empty($_POST['guestname'])) $p->newpost['guestname'] = $_POST['guestname'];
-	if (!empty($_POST['guestemail'])) $p->newpost['guestemail'] = $_POST['guestemail'];
+	if (!empty($_POST['guestname'])) $p->newpost['guestname'] = SP()->filters->str($_POST['guestname']);
+	if (!empty($_POST['guestemail'])) $p->newpost['guestemail'] = SP()->filters->str($_POST['guestemail']);
 } else {
 	$p->newpost['postername']  = SP()->user->thisUser->display_name;
 	$p->newpost['posteremail'] = SP()->user->thisUser->user_email;
 	$p->newpost['userid']      = SP()->user->thisUser->ID;
 }
 
-$p->newpost['postcontent'] = $_POST['postitem'];
+$p->newpost['postcontent'] = $_POST['postitem']; # Sanitised when used in the post class code
 $p->newpost['posterip']    = sp_get_ip();
 
 if (isset($_POST['topiclock'])) $p->newpost['topicstatus'] = 1;
@@ -143,10 +143,10 @@ function sp_return_to_post($returnURL, $message) {
 	# place details in the cache
 	$failure            = array();
 	$failure['message'] = SP()->primitives->front_text('Unable to save').'<br>'.$message;
-	if (isset($_POST['newtopicname']) ? $failure['newtopicname'] = $_POST['newtopicname'] : $failure['newtopicname'] = '') ;
-	if (isset($_POST['guestname']) ? $failure['guestname'] = $_POST['guestname'] : $failure['guestname'] = '') ;
-	if (isset($_POST['guestemail']) ? $failure['guestemail'] = $_POST['guestemail'] : $failure['guestemail'] = '') ;
-	$failure['postitem'] = $_POST['postitem'];
+	if (isset($_POST['newtopicname']) ? $failure['newtopicname'] = SP()->filters->str($_POST['newtopicname']) : $failure['newtopicname'] = '') ;
+	if (isset($_POST['guestname']) ? $failure['guestname'] = SP()->filters->str($_POST['guestname']) : $failure['guestname'] = '') ;
+	if (isset($_POST['guestemail']) ? $failure['guestemail'] = SP()->filters->str($_POST['guestemail']) : $failure['guestemail'] = '') ;
+	$failure['postitem'] = SP()->filters->str($_POST['postitem']);
 
 	SP()->cache->add('post', $failure);
 	wp_redirect($returnURL);

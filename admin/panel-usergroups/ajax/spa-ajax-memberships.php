@@ -36,7 +36,7 @@ if ($action == 'del') {
     check_admin_referer('forum-adminform_memberdel', 'forum-adminform_memberdel');
 
     $usergroup_id = SP()->filters->integer($_GET['usergroupid']);
-    $new_usergroup_id = $_GET['usergroup_id'];
+    $new_usergroup_id = SP()->filters->integer($_GET['usergroup_id']);
     if (isset($_GET['dmid'])) $user_id_list = array_unique($_GET['dmid']);
 
 	# make sure not moving to same user group

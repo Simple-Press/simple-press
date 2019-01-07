@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin integration Update Support Functions
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-10-15 21:45:40 -0500 (Mon, 15 Oct 2018) $
+$Rev: 15753 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -90,7 +90,7 @@ function spa_save_integration_storage_data() {
 function spa_save_integration_language_data() {
 	check_admin_referer('forum-adminform_language', 'forum-adminform_language');
 	$spLang = SP()->options->get('spLang');
-	if(isset($_POST['spLang'])) $spLang['spLang'] = $_POST['spLang'];
+	if (isset($_POST['spLang'])) $spLang['spLang'] = SP()->filters->str($_POST['spLang']);
 	$spLang['spRTL'] = isset($_POST['spRTL']);
 	SP()->options->update('spLang', $spLang);
 	$mess = SP()->primitives->admin_text('Translation settings updated');

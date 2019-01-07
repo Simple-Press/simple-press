@@ -70,7 +70,6 @@ function sp_Raw2Html($text) {
 }
 
 function sp_Html2Raw($text) {
-	global $text;
 	$text = trim($text);
 	$text = str_replace("\n\n", "\n", $text);
 	$text = str_replace('<div class="sfcode">', "<code>", $text);

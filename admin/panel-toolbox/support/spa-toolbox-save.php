@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Toolbox Update Options Support Functions
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-10-16 23:45:35 -0500 (Tue, 16 Oct 2018) $
+$Rev: 15754 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -61,7 +61,7 @@ function spa_save_housekeeping_data() {
 
 	$mess = '';
 	if (isset($_POST['rebuild-fidx'])) {
-		$forumid = $_POST['forum_id'];
+		$forumid = (int) $_POST['forum_id'];
 		if (is_numeric($forumid)) {
 			$topics = SP()->DB->table(SPTOPICS, "forum_id=$forumid");
 			if ($topics) {

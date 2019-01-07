@@ -47,6 +47,9 @@ function sp_privacy_exporter($email_address, $page = 1) {
 
 # Specific profile data exporter using general profile filter hook
 function sp_privacy_profile_export($exportItems, $spUserData, $groupID, $groupLabel) {
+	$data = array();
+	
+	# Additional Profile Data from UserMeta
 	$items = array(
 		'display_name' 	=> SP()->primitives->admin_text('Forum Display Name'),
 		'location'		=> SP()->primitives->admin_text('Location'),
@@ -62,7 +65,6 @@ function sp_privacy_profile_export($exportItems, $spUserData, $groupID, $groupLa
 		'photos'		=> SP()->primitives->admin_text('Photo URL')
 	);
 
-	$data = array();
 	foreach($items as $item => $label) {
 		if (!empty($spUserData->$item)) {
 			# checkfor photos as this is an array
@@ -81,7 +83,29 @@ function sp_privacy_profile_export($exportItems, $spUserData, $groupID, $groupLa
 			}
 		}
 	}
+
+	# Add any IP addresses used in forum posts
+	$query				= new stdClass();
+	$query->type		= 'col';
+	$query->table		= SPPOSTS;
+	$query->fields		= 'poster_ip';
+	$query->distinct	=	true;
+	$query->where		= "user_id = ".$spUserData->ID." AND poster_ip != ''";
+	$query->orderby		= 'poster_ip';
+	$ips = SP()->DB->select($query);
 	
+	if (!empty($ips)) {
+		$ipList = '';
+		foreach($ips as $ip) {
+			$ipList.= $ip.'</br>';		
+		}
+		$data[] = array(
+			'name'	=>	SP()->primitives->admin_text('Used IP Addresses'),
+			'value'	=>	$ipList
+		);
+	}
+	
+	# Now to export the base forum profile data
 	$exportItems[] = array(
 		'group_id'		=> $groupID,
 		'group_label' 	=> $groupLabel,

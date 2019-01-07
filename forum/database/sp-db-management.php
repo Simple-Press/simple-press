@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Desc:
-$LastChangedDate: 2018-08-10 20:33:38 -0500 (Fri, 10 Aug 2018) $
-$Rev: 15690 $
+$LastChangedDate: 2018-10-19 06:34:14 -0500 (Fri, 19 Oct 2018) $
+$Rev: 15760 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -77,8 +77,7 @@ function sp_save_edited_post() {
 	}
 
 	# post info
-	$newpost['postcontent'] = $_POST['postitem'];
-	$newpost['postcontent'] = SP()->saveFilters->content($newpost['postcontent'], 'edit', true, SPPOSTS, 'post_content');
+	$newpost['postcontent'] = SP()->saveFilters->content($_POST['postitem'], 'edit', true, SPPOSTS, 'post_content');
 
 	$newpost['forumid']   = SP()->filters->integer($_POST['forumid']);
 	$newpost['forumslug'] = SP()->filters->str($_POST['forumslug']);
@@ -761,7 +760,7 @@ function sp_pin_topic_toggle($topicid, $forumid = '') {
 # ------------------------------------------------------------------
 function sp_promote_pinned_topic() {
 	if (empty($_POST['orderpinsforumid'])) return;
-	$forumid = $_POST['orderpinsforumid'];
+	$forumid = SP()->filters->integer($_POST['orderpinsforumid']);
 
 	if (!SP()->auths->get('pin_topics', $forumid)) return;
 
@@ -770,7 +769,7 @@ function sp_promote_pinned_topic() {
 			if (empty($_POST['porder'][$x]) || $_POST['porder'][$x] == 0) {
 				$o = 1;
 			} else {
-				$o = $_POST['porder'][$x];
+				$o = SP()->filters->integer($_POST['porder'][$x]);
 			}
 
 			if (SP()->DB->execute('UPDATE '.SPTOPICS." SET topic_pinned=$o WHERE topic_id=".SP()->filters->integer($_POST['topicid'][$x])) == false) {

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Forum Tools Links
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-10-17 15:14:27 -0500 (Wed, 17 Oct 2018) $
+$Rev: 15755 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -17,7 +17,7 @@ if (isset($_GET['forum'])) $fid = SP()->filters->integer($_GET['forum']);
 
 # get out of here if no action specified
 if (empty($_GET['targetaction'])) die();
-$action = $_GET['targetaction'];
+$action = SP()->filters->str($_GET['targetaction']);
 
 if ($action == 'topictools') {
 	# admins topic tool set

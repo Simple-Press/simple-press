@@ -2,8 +2,8 @@
 /*
 Simple:Press Admin
 Ajax call for permalink update/integration
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
+$LastChangedDate: 2018-10-17 15:14:27 -0500 (Wed, 17 Oct 2018) $
+$Rev: 15755 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -17,7 +17,7 @@ if (!sp_nonce('integration-perm')) die();
 if (!SP()->auths->current_user_can('SPF Manage Integration')) die();
 
 if (isset($_GET['item'])) {
-	$item = $_GET['item'];
+	$item = SP()->filters->str($_GET['item']);
 	if ($item == 'upperm') spa_update_permalink_tool();
 }
 

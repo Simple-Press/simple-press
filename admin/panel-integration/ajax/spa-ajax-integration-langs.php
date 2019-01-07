@@ -17,7 +17,7 @@ if (!sp_nonce('integration-langs')) die();
 if (!SP()->auths->current_user_can('SPF Manage Integration')) die();
 
 if (isset($_GET['item'])) {
-	$item = $_GET['item'];
+	$item = SP()->filters->str($_GET['item']);
 	spa_download_language_file($item);
 	die();
 }
@@ -27,9 +27,9 @@ function spa_download_language_file($item) {
 
 	$locale = get_locale();
 
-	$langCode = $_GET['langcode'];
-	$homeName = $_GET['textdom'];
-	if(isset($_GET['name'])) $itemName = $_GET['name'];
+	$langCode = SP()->filters->str($_GET['langcode']);
+	$homeName = SP()->filters->str($_GET['textdom']);
+	if(isset($_GET['name'])) $itemName = SP()->filters->str($_GET['name']);
 
 	if($item == 'corefront' || $item == 'coreadmin') {
 		$url = 'http://glotpress.simple-press.com/glotpress/projects/simple-press-core/version-'.$_GET['version'].'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';

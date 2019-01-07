@@ -5,8 +5,8 @@
  * These function form the framework of the page loads setting up WP header and footer actions
  * and the main rendering of the forum via the WP the_content hook.
  *
- *  $LastChangedDate: 2018-08-15 07:59:04 -0500 (Wed, 15 Aug 2018) $
- *  $Rev: 15704 $
+ *  $LastChangedDate: 2018-10-19 06:34:14 -0500 (Fri, 19 Oct 2018) $
+ *  $Rev: 15760 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -478,7 +478,7 @@ function sp_render_forum($content) {
 		# Set display mode if topic view (for editing posts)
 		if (SP()->rewrites->pageData['pageview'] == 'topic' && isset($_POST['postedit'])) {
 			SP()->rewrites->pageData['displaymode'] = 'edit';
-			SP()->rewrites->pageData['postedit'] = $_POST['postedit'];
+			SP()->rewrites->pageData['postedit'] = SP()->filters->integer($_POST['postedit']);
 		} else {
 			SP()->rewrites->pageData['displaymode'] = 'posts';
 		}

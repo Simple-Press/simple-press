@@ -18,7 +18,7 @@ if (SP()->core->status != 'ok') {
 }
 
 $log = 0;
-if (isset($_GET['log'])) $log = $_GET['log'];
+if (isset($_GET['log'])) $log = SP()->filters->str($_GET['log']);
 if ($log > 0) {
 	$log = str_replace('-', '.', $log);
 	$details = SP()->DB->table(SPLOGMETA, "version='$log'", '', 'id DESC');

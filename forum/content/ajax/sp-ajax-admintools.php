@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Edit Tools - Move Topic/Move Post
-$LastChangedDate: 2018-08-10 20:33:38 -0500 (Fri, 10 Aug 2018) $
-$Rev: 15690 $
+$LastChangedDate: 2018-10-17 15:14:27 -0500 (Wed, 17 Oct 2018) $
+$Rev: 15755 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -554,7 +554,7 @@ function sp_search_user() {
 
 	$out = '[]';
 
-	$query = $_GET['term'];
+	$query = SP()->filters->str($_GET['term']);
 	$where = "display_name LIKE '%".SP()->filters->esc_sql($wpdb->esc_like($query))."%'";
 	$users = SP()->DB->table(SPMEMBERS, $where, '', 'display_name DESC', 25);
 	if ($users) {

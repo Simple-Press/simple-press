@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Profile Update Support Functions
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-10-16 23:45:35 -0500 (Tue, 16 Oct 2018) $
+$Rev: 15754 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -225,7 +225,7 @@ function spa_save_avatars_data() {
 	if (empty($sfavatars['sfavatarsize']) || $sfavatars['sfavatarsize'] == 0) $sfavatars['sfavatarsize'] = 50;
 	if (empty($sfavatars['sfavatarfilesize']) || $sfavatars['sfavatarfilesize'] == 0) $sfavatars['sfavatarfilesize'] = 10240;
 
-	if(!isset($_POST['sfgmaxrating'])) {
+	if (!isset($_POST['sfgmaxrating'])) {
 		$sfavatars['sfgmaxrating'] = 1;
 	} else {
 		$sfavatars['sfgmaxrating'] = SP()->filters->integer($_POST['sfgmaxrating']);
@@ -246,11 +246,11 @@ function spa_save_avatars_data() {
 		foreach ($list as $item) {
 			$thisone = explode('=', $item);
 			$add = true;
-			if($thisone[1] == 1 && $sfavatars['sfavatarreplace'] == true) $add = false;
-			if($thisone[1] == 2 && $sfavatars['sfavataruploads'] == false) $add = false;
-			if($thisone[1] == 4 && $sfavatars['sfavatarpool'] == false) $add = false;
-			if($thisone[1] == 5 && $sfavatars['sfavatarremote'] == false) $add = false;
-			if($add) {
+			if ($thisone[1] == 1 && $sfavatars['sfavatarreplace'] == true) $add = false;
+			if ($thisone[1] == 2 && $sfavatars['sfavataruploads'] == false) $add = false;
+			if ($thisone[1] == 4 && $sfavatars['sfavatarpool'] == false) $add = false;
+			if ($thisone[1] == 5 && $sfavatars['sfavatarremote'] == false) $add = false;
+			if ($add) {
 				$newarray[] = SP()->filters->str($thisone[1]);
 			}
 		}
@@ -258,11 +258,11 @@ function spa_save_avatars_data() {
 		foreach ($list as $item) {
 			$thisone = explode('=', $item);
 			$add = false;
-			if($thisone[1] == 1 && $sfavatars['sfavatarreplace'] == true) $add = true;
-			if($thisone[1] == 2 && $sfavatars['sfavataruploads'] == false) $add = true;
-			if($thisone[1] == 4 && $sfavatars['sfavatarpool'] == false) $add = true;
-			if($thisone[1] == 5 && $sfavatars['sfavatarremote'] == false) $add = true;
-			if($add) {
+			if ($thisone[1] == 1 && $sfavatars['sfavatarreplace'] == true) $add = true;
+			if ($thisone[1] == 2 && $sfavatars['sfavataruploads'] == false) $add = true;
+			if ($thisone[1] == 4 && $sfavatars['sfavatarpool'] == false) $add = true;
+			if ($thisone[1] == 5 && $sfavatars['sfavatarremote'] == false) $add = true;
+			if ($add) {
 				$newarray[] = SP()->filters->str($thisone[1]);
 			}
 		}
@@ -286,9 +286,10 @@ function spa_save_avatars_data() {
 		while (false !== ($file = readdir($dlist))) {
 			if ($file != "." && $file != "..") {
 				$thisFile = str_replace('.', 'z1z2z3', $file);
-				if(isset($_POST[$thisFile])) {
-					if($_POST[$thisFile] != 'none') {
-						$defs[$_POST[$thisFile]] = $file;
+				$index = SP()->filters->str($_POST[$thisFile]);
+				if (isset($index)) {
+					if ($index != 'none') {
+						$defs[$index] = $file;
 					}
 				}
 			}

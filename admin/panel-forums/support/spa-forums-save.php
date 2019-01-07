@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Forums Data Sae Support Functions
-$LastChangedDate: 2017-11-12 17:27:02 -0600 (Sun, 12 Nov 2017) $
-$Rev: 15583 $
+$LastChangedDate: 2018-10-15 21:45:40 -0500 (Mon, 15 Oct 2018) $
+$Rev: 15753 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -48,7 +48,7 @@ function spa_save_forums_create_group() {
 
 	# save the default permissions for the group
 	for ($x = 0; $x < count($ug_list); $x++) {
-		if ($perm_list[$x] != -1) spa_add_defpermission_row($group_id, (int)$ug_list[$x], (int)$perm_list[$x]);
+		if ($perm_list[$x] != -1) spa_add_defpermission_row($group_id, (int) $ug_list[$x], (int) $perm_list[$x]);
 	}
 
 	if ($success == false) {

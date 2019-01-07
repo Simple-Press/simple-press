@@ -2,8 +2,8 @@
 /*
   Simple:Press
   Upgrade Path Routines - Version 5.0
-  $LastChangedDate: 2018-10-07 14:59:42 -0500 (Sun, 07 Oct 2018) $
-  $Rev: 15747 $
+  $LastChangedDate: 2018-10-27 18:37:55 -0500 (Sat, 27 Oct 2018) $
+  $Rev: 15776 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -32,7 +32,7 @@ if (!isset($_GET['start'])) {
 	die();
 }
 
-$checkval = $_GET['start'];
+$checkval = SP()->filters->integer($_GET['start']);
 $build    = intval($checkval);
 
 # double check that the next build section has not reset for any reason - which it should not
@@ -274,9 +274,9 @@ if ($build < $section) {
 	sp_response($section, true, 'success', '', $list);
 }
 
-$section = 15746;
-sp_bump_build($build, $section);
+sp_bump_build($build, 15746);
 
+sp_bump_build($build, 15766);
 
 
 # ****** IMPORTANT: THE FINAL $section values MUST be the same as the SPBUILD constant

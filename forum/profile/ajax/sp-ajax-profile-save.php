@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Ajax call save Profile data
-$LastChangedDate: 2017-12-16 12:14:27 -0600 (Sat, 16 Dec 2017) $
-$Rev: 15596 $
+$LastChangedDate: 2018-10-19 06:34:14 -0500 (Fri, 19 Oct 2018) $
+$Rev: 15760 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -81,8 +81,8 @@ function sp_UpdateProfile() {
 
 	if (isset(SP()->user->thisUser->sp_change_pw) && SP()->user->thisUser->sp_change_pw) {
 		$pass1 = $pass2 = '';
-		if (isset($_POST['pass1'])) $pass1 = $_POST['pass1'];
-		if (isset($_POST['pass2'])) $pass2 = $_POST['pass2'];
+		if (isset($_POST['pass1'])) $pass1 = SP()->filters->str($_POST['pass1']);
+		if (isset($_POST['pass2'])) $pass2 = SP()->filters->str($_POST['pass2']);
 		if (empty($pass1) || empty($pass2) || ($pass1 != $pass2)) {
 			$message['type'] = 'error';
 			$message['text'] = SP()->primitives->front_text('Cannot save profile until password has been changed');
@@ -125,8 +125,8 @@ function sp_UpdateProfile() {
 		case 'account-settings': # update account settings
 			# check for password update
 			$pass1 = $pass2 = '';
-			if (isset($_POST['pass1'])) $pass1 = $_POST['pass1'];
-			if (isset($_POST['pass2'])) $pass2 = $_POST['pass2'];
+			if (isset($_POST['pass1'])) $pass1 = SP()->filters->str($_POST['pass1']);
+			if (isset($_POST['pass2'])) $pass2 = SP()->filters->str($_POST['pass2']);
 			if (!empty($pass1) || !empty($pass2)) {
 				if ($pass1 != $pass2) {
 					$message['type'] = 'error';

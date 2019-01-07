@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin plugins Update Support Functions
-$LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-$Rev: 15187 $
+$LastChangedDate: 2018-10-16 23:45:35 -0500 (Tue, 16 Oct 2018) $
+$Rev: 15754 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -232,7 +232,7 @@ function spa_save_theme_tablet_data() {
 function spa_save_editor_data() {
 	check_admin_referer('forum-adminform_theme-editor', 'forum-adminform_theme-editor');
 
-	$file = stripslashes($_POST['file']);
+	$file = SP()->filters->str($_POST['file']);
 	$newcontent = stripslashes($_POST['spnewcontent']);
 	if (is_writeable($file)) {
 		$f = fopen($file, 'w+');
@@ -255,7 +255,7 @@ function spa_save_css_data() {
 	$curTheme = SP()->options->get('sp_current_theme');
 	$css = esc_attr($_POST['spnewcontent']);
 	$css = SP()->saveFilters->nohtml($css);
-	if($_POST['metaId']==0)	{
+	if ($_POST['metaId']==0)	{
 		SP()->meta->add('css', $curTheme['theme'], $css);
 	} else {
 		SP()->meta->update('css', $curTheme['theme'], $css, $_POST['metaId']);

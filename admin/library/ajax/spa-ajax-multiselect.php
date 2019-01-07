@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Common Ajax
-$LastChangedDate: 2017-11-12 17:27:02 -0600 (Sun, 12 Nov 2017) $
-$Rev: 15583 $
+$LastChangedDate: 2018-10-27 11:16:46 -0500 (Sat, 27 Oct 2018) $
+$Rev: 15773 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -13,7 +13,7 @@ spa_admin_ajax_support();
 # subseqeent page loads,,,
 if (isset($_GET['page_msbox'])) {
 	if (!sp_nonce('multiselect')) die();
-	$msbox = $_GET['msbox'];
+	$msbox = SP()->filters->str($_GET['msbox']);
 	$uid = SP()->filters->integer($_GET['uid']);
 	$name = esc_attr($_GET['name']);
 	$from = esc_html($_GET['from']);

@@ -2,8 +2,8 @@
 /*
   Simple:Press
   Admin Options Save Options Support Functions
-  $LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-  $Rev: 15187 $
+  $LastChangedDate: 2018-10-15 21:45:40 -0500 (Mon, 15 Oct 2018) $
+  $Rev: 15753 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -107,7 +107,7 @@ function spa_save_login_data() {
 		require_once SPBOOT.'core/credentials/sp-rpx.php';
 
 		$post_data = array(
-			'apiKey' => $_POST['sfrpxkey'],
+			'apiKey' => SP()->filters->str($_POST['sfrpxkey']),
 			'format' => 'json');
 		$raw = sp_rpx_http_post('https://rpxnow.com/plugin/lookup_rp', $post_data);
 		$r = sp_rpx_parse_lookup_rp($raw);
@@ -230,8 +230,8 @@ function spa_update_specialrank($id) {
 		SP()->meta->update('special_rank', SP()->saveFilters->title(trim($desc[$id])), $rank[0]['meta_value'], $id);
 		if ($_POST['currentname'][$id] != $desc[$id]) {
 			SP()->DB->execute("UPDATE ".SPSPECIALRANKS."
-						SET special_rank = '".$desc[$id]."'
-						WHERE special_rank = '".$_POST['currentname'][$id]."'");
+						SET special_rank = '".SP()->filters->integer($desc[$id])."'
+						WHERE special_rank = '".SP()->filters->str($_POST['currentname'][$id])."'");
 		}
 	}
 
