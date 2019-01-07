@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Desc:
-$LastChangedDate: 2018-10-19 06:34:14 -0500 (Fri, 19 Oct 2018) $
-$Rev: 15760 $
+$LastChangedDate: 2018-12-20 17:32:38 -0600 (Thu, 20 Dec 2018) $
+$Rev: 15863 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -473,21 +473,17 @@ function sp_move_post() {
 
 	if (isset($_POST['makepostmove3'])) {
 		# if a re-entry for move to exisiting - clear the sfmeta record
-		$meta = SP()->meta->get('post_move', 'post_move');
-		if ($meta) {
-			$id = $meta[0]['meta_id'];
-			SP()->meta->delete($id);
-			unset(SP()->core->forumData['post_move']);
-		}
+		$meta = SP()->meta->delete(0, 'post_move');
 	}
 }
 
 add_filter('sph_UserNotices_Custom', 'sp_move_post_notice', 1, 2);
 function sp_move_post_notice($m, $a) {
-	if (array_key_exists('post_move', SP()->core->forumData) && SP()->auths->get('move_posts', SP()->rewrites->pageData['forumid'])) {
+	$p = SP()->meta->get_value('post_move');
+	if (!empty($p) && SP()->auths->get('move_posts', SP()->rewrites->pageData['forumid'])) {
 		$m .= "<div id='spPostMove'>\n";
 		$m .= "<p class='".$a['textClass']."'>";
-		if (SP()->rewrites->pageData['pageview'] != 'topic' || (SP()->rewrites->pageData['pageview'] == 'topic' && SP()->rewrites->pageData['topicid'] == SP()->core->forumData['post_move']['post_move']['oldtopicid'])) {
+		if (SP()->rewrites->pageData['pageview'] != 'topic' || (SP()->rewrites->pageData['pageview'] == 'topic' && SP()->rewrites->pageData['topicid'] == $p['oldtopicid'])) {
 			$m .= SP()->primitives->front_text('You have posts queued to be moved').' - '.SP()->primitives->front_text('Navigate to the target topic to complete the move operation');
 			$m .= '</p>';
 			$m .= '<form action="'.SP()->spPermalinks->build_url(SP()->rewrites->pageData['forumslug'], SP()->rewrites->pageData['topicslug'], 1, 0).'" method="post" name="movepostform">';
@@ -495,7 +491,6 @@ function sp_move_post_notice($m, $a) {
 			$m .= '<input type="submit" class="spSubmit" name="cancelpostmove" value="'.SP()->primitives->front_text('Cancel').'" />';
 			$m .= '</span></form></div>';
 		} else {
-			$p = SP()->core->forumData['post_move']['post_move'];
 			$m .= SP()->primitives->front_text('You have posts queued to be moved').' - '.SP()->primitives->front_text('Click on the move button to move to this topic');
 			$m .= "</p>\n";
 

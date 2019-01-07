@@ -5,8 +5,8 @@
  * These function form the framework of the page loads setting up WP header and footer actions
  * and the main rendering of the forum via the WP the_content hook.
  *
- *  $LastChangedDate: 2018-11-13 22:52:58 -0600 (Tue, 13 Nov 2018) $
- *  $Rev: 15821 $
+ *  $LastChangedDate: 2018-12-20 17:32:38 -0600 (Thu, 20 Dec 2018) $
+ *  $Rev: 15863 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -461,12 +461,7 @@ function sp_render_forum($content) {
 
 		# cancel a post move
 		if (isset($_POST['cancelpostmove'])) {
-			$meta = SP()->meta->get('post_move', 'post_move');
-			if ($meta) {
-				$id = $meta[0]['meta_id'];
-				SP()->meta->delete($id);
-				unset(SP()->core->forumData['post_move']);
-			}
+			$meta = SP()->meta->delete(0, 'post_move');
 		}
 
 		# rebuild the forum and post indexes
