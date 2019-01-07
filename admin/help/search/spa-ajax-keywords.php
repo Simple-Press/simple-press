@@ -23,7 +23,7 @@ function sp_search_admin_tasks() {
 
 		if($tasks) {
 			# get the base url
-			$base = SPHOMEURL.'wp-admin/admin.php?page=simple-press/admin';
+			$base = SPHOMEURL.'wp-admin/admin.php?page='.SP_FOLDER_NAME.'/admin';
 
 			echo '<img class="spLeft" src="'.SPCOMMONIMAGES.'task.png" alt="" title="" />';
 			echo '<div class="codex-head">'.$keyword.'</div>';

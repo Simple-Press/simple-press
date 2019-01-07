@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name: 		Simple:Press
  * Plugin URI: 			https://simple-press.com
- * Version: 			6.0.3
+ * Version: 			6.0.4
  * Description: 		The most versatile and feature-rich forums plugin for WordPress
  * Author: 				The Simple:Press Team
  * Author URI: 			https://simple-press.com/about
@@ -21,8 +21,8 @@
  *
  * For full acknowledgments click on the copyright/version strip at the bottom of forum pages.
  *
- * $LastChangedDate: 2018-11-05 07:39:53 -0600 (Mon, 05 Nov 2018) $
- * $Rev: 15808 $
+ * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $Rev: 15817 $
  *
  */
 if (!class_exists('spcSimplePress')) {
@@ -340,8 +340,8 @@ if (!class_exists('spcSimplePress')) {
 
 			# version and system control constants
 			define('SPPLUGNAME', 'Simple:Press');
-			define('SPVERSION', '6.0.3');
-			define('SPBUILD', 15810);
+			define('SPVERSION', '6.0.4');
+			define('SPBUILD', 15814);
 			define('SPSILENT', 15810);
 			define('SPRELEASE', 'Release');
 
@@ -365,9 +365,10 @@ if (!class_exists('spcSimplePress')) {
 
 			define('SP_PLUGIN_DIR', WP_PLUGIN_DIR.'/'.basename(dirname(__file__)));
 			define('SP_PLUGIN_URL', plugins_url().'/'.basename(dirname(__file__)));
+			define('SP_FOLDER_NAME', basename(__DIR__));
 			define('SPBOOT', dirname(__file__).'/sp-startup/');
 			define('SPAPI', dirname(__file__).'/sp-api/');
-			define('SPINSTALLPATH', 'simple-press/sp-startup/sp-load-install.php');
+			define('SPINSTALLPATH', SP_FOLDER_NAME.'/sp-startup/sp-load-install.php');
 
 			# Set the table prefix that can be overridden in wp-config.sys
 			global $wpdb;
@@ -449,7 +450,7 @@ if (!class_exists('spcSimplePress')) {
 				$this->isAdmin = true;
 
 				# is it an SP admin page load
-				if ((isset($_GET['page'])) && (stristr($_GET['page'], 'simple-press')) !== false) {
+				if ((isset($_GET['page'])) && (stristr($_GET['page'], SP_FOLDER_NAME)) !== false) {
 					$this->isForumAdmin = true;
 				}
 			}

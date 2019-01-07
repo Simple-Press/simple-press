@@ -12,8 +12,8 @@
  * after()
  * bulk_footer()
  *
- * $LastChangedDate: 2018-08-15 07:59:04 -0500 (Wed, 15 Aug 2018) $
- * $Rev: 15704 $
+ * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $Rev: 15817 $
  */
 
 require_once ABSPATH.'wp-admin/includes/class-wp-upgrader.php';
@@ -85,7 +85,7 @@ class spcThemeUpgraderSkin extends Bulk_Upgrader_Skin {
 	 */
 	public function bulk_footer() {
 		parent::bulk_footer();
-		$update_actions = array('plugins_page' => '<a href="'.admin_url('admin.php?page=simple-press/admin/panel-themes/spa-themes.php').'" title="'.SP()->primitives->admin_text('Go to SP themes page').'" target="_parent">'.SP()->primitives->admin_text('Go to SP themes page').'</a>', 'updates_page' => '<a href="'.self_admin_url('update-core.php').'" title="'.SP()->primitives->admin_text('Go to WordPress updates page').'" target="_parent">'.SP()->primitives->admin_text('Return to WordPress updates').'</a>');
+		$update_actions = array('plugins_page' => '<a href="'.admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php').'" title="'.SP()->primitives->admin_text('Go to SP themes page').'" target="_parent">'.SP()->primitives->admin_text('Go to SP themes page').'</a>', 'updates_page' => '<a href="'.self_admin_url('update-core.php').'" title="'.SP()->primitives->admin_text('Go to WordPress updates page').'" target="_parent">'.SP()->primitives->admin_text('Return to WordPress updates').'</a>');
 
 		$update_actions = apply_filters('sph_update_bulk_themes_complete_actions', $update_actions, $this->theme_info);
 		if (!empty($update_actions)) $this->feedback(implode(' | ', (array)$update_actions));

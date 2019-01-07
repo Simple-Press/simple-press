@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Users Members Form
-$LastChangedDate: 2017-11-12 17:27:02 -0600 (Sun, 12 Nov 2017) $
-$Rev: 15583 $
+$LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+$Rev: 15817 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -98,8 +98,8 @@ function spa_users_members_form() {
                             						$title = SP()->primitives->admin_text('Member Profile');
                             						$user_action = (is_multisite()) ? 'remove' : 'delete';
                                                     $actions = array(
-                                                        'edit'      => '<a href="'.admin_url('user-edit.php?user_id='.$rec['user_id']).'&amp;wp_http_referer=admin.php?page=simple-press/admin/panel-users/spa-users.php">'.SP()->primitives->admin_text('Edit').'</a>',
-                                                        'delete'   => '<a href="'.admin_url('users.php?action='.$user_action.'&amp;user='.$rec['user_id']."&amp;_wpnonce=$nonce&amp;wp_http_referer=admin.php?page=simple-press/admin/panel-users/spa-users.php").'">'.SP()->primitives->admin_text('Delete').'</a>',
+                                                        'edit'      => '<a href="'.admin_url('user-edit.php?user_id='.$rec['user_id']).'&amp;wp_http_referer=admin.php?page='.SP_FOLDER_NAME.'/admin/panel-users/spa-users.php">'.SP()->primitives->admin_text('Edit').'</a>',
+                                                        'delete'   => '<a href="'.admin_url('users.php?action='.$user_action.'&amp;user='.$rec['user_id']."&amp;_wpnonce=$nonce&amp;wp_http_referer=admin.php?page=".SP_FOLDER_NAME."/admin/panel-users/spa-users.php").'">'.SP()->primitives->admin_text('Delete').'</a>',
                                                         'profile'    => '<a id="memberprofile'.$rec['user_id'].'" class="spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="750" data-height="0" data-align="center">'.SP()->primitives->admin_text('Profile').'</a>',
                                                     );
 
@@ -285,7 +285,7 @@ function spa_users_members_form() {
                 switch ($membersTable->current_action()) {
                     case 'delete':
                        	$userids = array_map('intval', (array) $_REQUEST['users']);
-                        $url = self_admin_url('users.php?action=delete&users[]='.implode('&users[]=', $userids).'&wp_http_referer=admin.php?page=simple-press/admin/panel-users/spa-users.php');
+                        $url = self_admin_url('users.php?action=delete&users[]='.implode('&users[]=', $userids).'&wp_http_referer=admin.php?page='.SP_FOLDER_NAME.'/admin/panel-users/spa-users.php');
                         $url = str_replace('&amp;', '&', wp_nonce_url($url, 'bulk-users'));
                         SP()->primitives->redirect($url);
                         exit();
@@ -298,7 +298,7 @@ function spa_users_members_form() {
                 $membersTable->views();
 ?>
                 <form id="members-filter" method="get" action="<?php echo SPADMINUSER; ?>">
-                    <input type="hidden" name="page" value="<?php echo 'simple-press/admin/panel-users/spa-users.php'; ?>" />
+                    <input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME.'/admin/panel-users/spa-users.php'; ?>" />
 <?php
                     # dispaly the search box
                     $membersTable->search_box(SP()->primitives->admin_text('Search Members'), 'search_id');

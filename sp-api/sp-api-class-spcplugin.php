@@ -28,8 +28,8 @@
  * combine_scripts()
  * clear_scripts_cache($media)
  *
- * $LastChangedDate: 2018-10-07 19:35:49 -0500 (Sun, 07 Oct 2018) $
- * $Rev: 15748 $
+ * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $Rev: 15817 $
  *
  */
 class spcPlugin {
@@ -138,15 +138,15 @@ class spcPlugin {
 	 * The metadata of the plugin's data searches for the following in the plugin's
 	 * header. All plugin data must be on its own line. For plugin description, it
 	 * must not have any newlines or only parts of the description will be displayed
-	 * and the same goes for the plugin data. 
+	 * and the same goes for the plugin data.
 	 *
 	 * You'll notice that the elements are the same as a standard WordPress plugin header.
 	 * Just ignore the "x" prefix; we have to include that in our comments below otherwise
-	 * WP will actually parse the comment and treat it as an actual header and 
+	 * WP will actually parse the comment and treat it as an actual header and
 	 * go on a wildgoose chase looking for things.
 	 *
 	 * The below is formatted for printing.
-	 * 
+	 *
 	 * x Plugin Name: Name of Plugin
 	 * x Plugin URI: Link to plugin information
 	 * x Description: Plugin Description
@@ -181,12 +181,12 @@ class spcPlugin {
 	 * The metadata of the plugin's data searches for the following in the plugin's
 	 * header. All plugin data must be on its own line. For plugin description, it
 	 * must not have any newlines or only parts of the description will be displayed
-	 * and the same goes for the plugin data. 
+	 * and the same goes for the plugin data.
 	 *
 	 * You'll notice that the elements are the same as a standard WordPress plugin header.
 	 * Just ignore the "x" prefix; we have to include that in our comments below otherwise
-	 * WP will actually parse the comment and treat it as an actual header and 
-	 * go on a wildgoose chase looking for things.	 
+	 * WP will actually parse the comment and treat it as an actual header and
+	 * go on a wildgoose chase looking for things.
 	 *
 	 * The below is formatted for printing.
 	 *
@@ -443,7 +443,7 @@ class spcPlugin {
 		# okay, lets add the new panel
 		$panel_data = array($name,
 		                    $capability,
-		                    'simple-press/admin/panel-plugins/spa-plugins.php',
+		                    SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins.php',
 		                    $tooltop,
 		                    $icon,
 		                    wp_nonce_url(SPAJAXURL.'plugins-loader', 'plugins-loader'),

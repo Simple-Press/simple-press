@@ -2,8 +2,8 @@
 /*
   Simple:Press
   Main Forum Installer (New Instalations)
-  $LastChangedDate: 2018-11-05 07:39:53 -0600 (Mon, 05 Nov 2018) $
-  $Rev: 15808 $
+  $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+  $Rev: 15817 $
  */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -736,7 +736,7 @@ function sp_perform_install($phase, $subphase = 0) {
 				3,
 				1,
 				4,
-				5);  
+				5);
 			SP()->options->add('sfavatars', $sfavatars);
 
 			# default avatars
@@ -1177,14 +1177,14 @@ function sp_perform_install($phase, $subphase = 0) {
 					echo $image.'<p>[';
 					SP()->primitives->admin_etext('Resources part 1 file failed to copy');
 					echo '] - ';
-					echo SP()->primitives->admin_text("You will need to manually copy and extract the file '/simple-press/sp-startup/install/sp-resources-install-part1.zip' to the new folder").': '.get_option('sp_storage1');
+					echo SP()->primitives->admin_text("You will need to manually copy and extract the file ".SP_FOLDER_NAME."/sp-startup/install/sp-resources-install-part1.zip' to the new folder").': '.get_option('sp_storage1');
 					echo '</p>';
 				}
 				if (!$sCopy2) {
 					echo $image.'<p>[';
 					SP()->primitives->admin_etext('Resources part 2 file failed to copy');
 					echo '] - ';
-					echo SP()->primitives->admin_text("You will need to manually copy and extract the file '/simple-press/sp-startup/install/sp-resources-install-part2.zip' to the new folder").': '.get_option('sp_storage2');
+					echo SP()->primitives->admin_text("You will need to manually copy and extract the file ".SP_FOLDER_NAME."/sp-startup/install/sp-resources-install-part2.zip' to the new folder").': '.get_option('sp_storage2');
 					echo '</p>';
 				}
 				if (!$sUnzip1) {

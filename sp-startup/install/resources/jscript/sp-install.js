@@ -16,7 +16,7 @@
 	// public properties
 
 	// public methods
-	spj.performInstall = function(phpUrl, phaseCount, currentPhase, subPhaseCount, currentSubPhase, image, messages) {
+	spj.performInstall = function(phpUrl, phaseCount, currentPhase, subPhaseCount, currentSubPhase, image, messages, folder) {
 		try {
 			var phaseTotal = (parseInt(phaseCount) + parseInt(subPhaseCount));
 
@@ -68,11 +68,11 @@
 				/* are we finished yet */
 				if (currentPhase > phaseCount) {
 					$("#progressbar").progressbar('option', 'value', 100);
-					$('#finishzone').html('<p>' + endInstall(messageStrings[0]) + '</p>');
+					$('#finishzone').html('<p>' + endInstall(messageStrings[0], folder) + '</p>');
 					$('#imagezone').html('<p>' + messageStrings[2] + '</p>');
 					return;
 				} else {
-					spj.performInstall(phpUrl, phaseCount, currentPhase, subPhaseCount, currentSubPhase, image, messages);
+					spj.performInstall(phpUrl, phaseCount, currentPhase, subPhaseCount, currentSubPhase, image, messages, folder);
 				}
 			});
 		} catch (e) {
@@ -87,7 +87,7 @@
 		}
 	};
 
-	spj.performUpgrade = function(phpUrl, startBuild, endBuild, currentBuild, image, messages, homeUrl) {
+	spj.performUpgrade = function(phpUrl, startBuild, endBuild, currentBuild, image, messages, homeUrl, folder) {
 		try {
 			var currentProgress = 0;
 			var buildSpan = (endBuild - startBuild);
@@ -122,7 +122,7 @@
 						returnVal = response.section; /* get completed section */
 						if (returnVal == endBuild) {
 							/* last section complete - finish up */
-							$('#finishzone').html('<p>' + endUpgrade(messageStrings[0], messageStrings[4], homeUrl) + '</p>');
+							$('#finishzone').html('<p>' + endUpgrade(messageStrings[0], messageStrings[4], homeUrl, folder) + '</p>');
 							$('#imagezone').html('<p>' + messageStrings[2] + '</p>');
 							$("#progressbar").progressbar('option', 'value', 100);
 
@@ -134,7 +134,7 @@
 							return;
 						} else {
 							/* run next upgrade section */
-							spj.performUpgrade(phpUrl, startBuild, endBuild, returnVal, image, messages, homeUrl);
+							spj.performUpgrade(phpUrl, startBuild, endBuild, returnVal, image, messages, homeUrl, folder);
 						}
 					} else {
 						/* output our error message */
@@ -162,12 +162,12 @@
 	};
 
 	// private methods
-	function endInstall(messagetext) {
-		return '<form name="sfinstalldone" method="post" action="admin.php?page=simple-press/admin/panel-forums/spa-forums.php"><br /><input type="hidden" name="install" value="1" /><input type="submit" class="button-primary" name="goforuminstall" value="' + messagetext + '" /></form>';
+	function endInstall(messagetext, folder) {
+		return '<form name="sfinstalldone" method="post" action="admin.php?page=' + folder + '/admin/panel-forums/spa-forums.php"><br /><input type="hidden" name="install" value="1" /><input type="submit" class="button-primary" name="goforuminstall" value="' + messagetext + '" /></form>';
 	}
 
-	function endUpgrade(admintext, forumtext, homeUrl) {
-		return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?page=simple-press/admin/panel-toolbox/spa-toolbox.php&tab=changelog"><input type="submit" class="button-primary" name="goforumupgrade" value="' + admintext + '" /></a>&nbsp;&nbsp;<a href="' + homeUrl + '"><input type="submit" class="button-primary" name="goforumupgrade" value="' + forumtext + '" /></a>';
+	function endUpgrade(admintext, forumtext, homeUrl, folder) {
+		return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?page=' + folder + '/admin/panel-toolbox/spa-toolbox.php&tab=changelog"><input type="submit" class="button-primary" name="goforumupgrade" value="' + admintext + '" /></a>&nbsp;&nbsp;<a href="' + homeUrl + '"><input type="submit" class="button-primary" name="goforumupgrade" value="' + forumtext + '" /></a>';
 	}
 
 }(window.spj = window.spj || {}, jQuery));

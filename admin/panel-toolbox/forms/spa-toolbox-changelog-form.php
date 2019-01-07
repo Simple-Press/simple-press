@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Toolbox Changelog Form
-$LastChangedDate: 2018-11-01 06:23:28 -0500 (Thu, 01 Nov 2018) $
-$Rev: 15782 $
+$LastChangedDate: 2018-11-13 23:01:36 -0600 (Tue, 13 Nov 2018) $
+$Rev: 15822 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -48,7 +48,7 @@ function spa_toolbox_changelog_form() {
         		spa_paint_open_panel();
     				spa_paint_open_fieldset(SP()->primitives->admin_text('Review Change Logs'), false);
     				echo '<div id="sp-changelog-list">';
-    				echo '<form name="loadchangelog" method="post" action="admin.php?page=simple-press/admin/panel-toolbox/spa-toolbox.php&amp;tab=changelog">';
+    				echo '<form name="loadchangelog" method="post" action="admin.php?page="'.SP_FOLDER_NAME.'/admin/panel-toolbox/spa-toolbox.php&amp;tab=changelog">';
     				echo '<select name="clselect" class="wp-core-ui" style="vertical-align:middle;font-weight: normal;font-size:13px;">';
     				foreach ($l->log as $x) {
     					if ($x->build == $current ? $s = " selected='selected' " : $s = '');

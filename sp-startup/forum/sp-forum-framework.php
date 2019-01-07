@@ -5,8 +5,8 @@
  * These function form the framework of the page loads setting up WP header and footer actions
  * and the main rendering of the forum via the WP the_content hook.
  *
- *  $LastChangedDate: 2018-10-19 06:34:14 -0500 (Fri, 19 Oct 2018) $
- *  $Rev: 15760 $
+ *  $LastChangedDate: 2018-11-13 22:52:58 -0600 (Tue, 13 Nov 2018) $
+ *  $Rev: 15821 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -487,7 +487,7 @@ function sp_render_forum($content) {
 		SP()->cache->clean();
 
 		#--Scratch Pad Area---Please Leave Here---------
-		
+
 		#--End Scratch Pad Area-------------------------
 
 		# let other plugins check for posted actions

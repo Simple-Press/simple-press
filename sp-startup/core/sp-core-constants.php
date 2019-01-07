@@ -3,8 +3,8 @@
  * Global Core Constants
  * This file loads at core level - all page loads for admin and front
  *
- * $LastChangedDate: 2018-11-03 11:12:02 -0500 (Sat, 03 Nov 2018) $
- * $Rev: 15799 $
+ * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $Rev: 15817 $
  */
 
 # Charset
@@ -121,7 +121,7 @@ if (!defined('SPADMINCSS')) define('SPADMINCSS', SP_PLUGIN_URL.'/admin/resources
 if (!defined('SPCOMMONCSS')) define('SPCOMMONCSS', SP_PLUGIN_URL.'/resources/css/');
 if (!defined('SPCOMMONIMAGES')) define('SPCOMMONIMAGES', SP_PLUGIN_URL.'/resources/images/');
 
-if (!defined('SPADMINUPGRADE')) define('SPADMINUPGRADE', admin_url('admin.php?page=simple-press/sp-startup/sp-load-install.php'));
+if (!defined('SPADMINUPGRADE')) define('SPADMINUPGRADE', admin_url('admin.php?page='.SP_FOLDER_NAME.'/sp-startup/sp-load-install.php'));
 
 # Combined CSS/JS cache file
 if (!defined('SP_COMBINED_CACHE_URL')) define('SP_COMBINED_CACHE_URL', SP_STORE_URL.'/'.SP()->plugin->storage['cache'].'/');
@@ -130,16 +130,16 @@ if (!defined('SP_COMBINED_CSS_BASE_NAME')) define('SP_COMBINED_CSS_BASE_NAME', '
 if (!defined('SP_COMBINED_SCRIPTS_BASE_NAME')) define('SP_COMBINED_SCRIPTS_BASE_NAME', 'sp-plugin-scripts-');
 
 # Base admin panels
-if (!defined('SPADMINFORUM')) define('SPADMINFORUM', admin_url('admin.php?page=simple-press/admin/panel-forums/spa-forums.php'));
-if (!defined('SPADMINOPTION')) define('SPADMINOPTION', admin_url('admin.php?page=simple-press/admin/panel-options/spa-options.php'));
-if (!defined('SPADMINCOMPONENTS')) define('SPADMINCOMPONENTS', admin_url('admin.php?page=simple-press/admin/panel-components/spa-components.php'));
-if (!defined('SPADMINUSERGROUP')) define('SPADMINUSERGROUP', admin_url('admin.php?page=simple-press/admin/panel-usergroups/spa-usergroups.php'));
-if (!defined('SPADMINPERMISSION')) define('SPADMINPERMISSION', admin_url('admin.php?page=simple-press/admin/panel-permissions/spa-permissions.php'));
-if (!defined('SPADMINUSER')) define('SPADMINUSER', admin_url('admin.php?page=simple-press/admin/panel-users/spa-users.php'));
-if (!defined('SPADMINPROFILE')) define('SPADMINPROFILE', admin_url('admin.php?page=simple-press/admin/panel-profiles/spa-profiles.php'));
-if (!defined('SPADMINADMIN')) define('SPADMINADMIN', admin_url('admin.php?page=simple-press/admin/panel-admins/spa-admins.php'));
-if (!defined('SPADMINTAGS')) define('SPADMINTAGS', admin_url('admin.php?page=simple-press/admin/panel-tags/spa-tags.php'));
-if (!defined('SPADMINTOOLBOX')) define('SPADMINTOOLBOX', admin_url('admin.php?page=simple-press/admin/panel-toolbox/spa-toolbox.php'));
-if (!defined('SPADMINPLUGINS')) define('SPADMINPLUGINS', admin_url('admin.php?page=simple-press/admin/panel-plugins/spa-plugins.php'));
-if (!defined('SPADMINTHEMES')) define('SPADMINTHEMES', admin_url('admin.php?page=simple-press/admin/panel-themes/spa-themes.php'));
-if (!defined('SPADMININTEGRATION')) define('SPADMININTEGRATION', admin_url('admin.php?page=simple-press/admin/panel-integration/spa-integration.php'));
+if (!defined('SPADMINFORUM')) define('SPADMINFORUM', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-forums/spa-forums.php'));
+if (!defined('SPADMINOPTION')) define('SPADMINOPTION', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-options/spa-options.php'));
+if (!defined('SPADMINCOMPONENTS')) define('SPADMINCOMPONENTS', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-components/spa-components.php'));
+if (!defined('SPADMINUSERGROUP')) define('SPADMINUSERGROUP', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-usergroups/spa-usergroups.php'));
+if (!defined('SPADMINPERMISSION')) define('SPADMINPERMISSION', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-permissions/spa-permissions.php'));
+if (!defined('SPADMINUSER')) define('SPADMINUSER', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-users/spa-users.php'));
+if (!defined('SPADMINPROFILE')) define('SPADMINPROFILE', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-profiles/spa-profiles.php'));
+if (!defined('SPADMINADMIN')) define('SPADMINADMIN', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-admins/spa-admins.php'));
+if (!defined('SPADMINTAGS')) define('SPADMINTAGS', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-tags/spa-tags.php'));
+if (!defined('SPADMINTOOLBOX')) define('SPADMINTOOLBOX', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-toolbox/spa-toolbox.php'));
+if (!defined('SPADMINPLUGINS')) define('SPADMINPLUGINS', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins.php'));
+if (!defined('SPADMINTHEMES')) define('SPADMINTHEMES', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php'));
+if (!defined('SPADMININTEGRATION')) define('SPADMININTEGRATION', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-integration/spa-integration.php'));

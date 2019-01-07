@@ -95,7 +95,7 @@ class spcError {
 
 		# only interested in SP errors
 		$errfile = str_replace('\\', '/', $errfile); # sanitize for Win32 installs
-		$posCore = strpos($errfile, '/plugins/simple-press/');
+		$posCore = strpos($errfile, '/plugins/'.SP_FOLDER_NAME.'/');
 		$posPlug = strpos($errfile, SP()->plugin->storage['plugins']);
 		if ($posCore === false && $posPlug === false) return;
 

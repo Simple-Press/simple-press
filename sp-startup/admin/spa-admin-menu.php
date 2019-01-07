@@ -3,8 +3,8 @@
  * Admin menu functions
  * Loads for all forum admin pages to generate Simple Press menus
  *
- * $LastChangedDate: 2018-08-15 07:59:04 -0500 (Wed, 15 Aug 2018) $
- * $Rev: 15704 $
+ * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $Rev: 15817 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -39,15 +39,15 @@ function spa_admin_menu() {
 
 				# we have to simulate sp plugins admin panel loaded so our plugins can use it as hookname for adding menu items
 				# kind of hacky- will allow a user to manual type in our plugin panel url, but access will be denied by our permission check
-				$_registered_pages['admin_page_simple-press/admin/panel-plugins/spa-plugins'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins'] = 1;
 			}
 		} else if (current_user_can('administrator')) {
-			$adminparent = 'simple-press/sp-startup/admin/spa-admin-notice.php';
+			$adminparent = SP_FOLDER_NAME.'/sp-startup/admin/spa-admin-notice.php';
 			add_menu_page('Simple:Press', SP()->primitives->admin_text('Forum'), 'manage_options', $adminparent, '', 'div', $_wp_last_object_menu + 1);
 			add_submenu_page($adminparent, SP()->primitives->admin_text('WP Admin Notice'), SP()->primitives->admin_text('WP Admin Notice'), 'read', $adminparent);
 
 			# hack for wp stubborness of not wanting singular submenu under a menu item
-			if (strpos($plugin_page, 'simple-press') !== false) add_submenu_page($adminparent, '', '', 'read', $adminparent);
+			if (strpos($plugin_page, SP_FOLDER_NAME) !== false) add_submenu_page($adminparent, '', '', 'read', $adminparent);
 			$submenu[$adminparent][1] = null;
 		}
 	} else {
@@ -66,25 +66,25 @@ function spa_admin_menu() {
 
 				# lets allow our admin panel hookname so we dont get wp error and our redirect will work
 				# kind of hacky- will allow a user to manual type in these plugin panels for url, but access will be denied by our permission check
-				$_registered_pages['admin_page_simple-press/admin/panel-forums/spa-forums'] = 1;
-				$_registered_pages['admin_page_simple-press/admin/panel-options/spa-options'] = 1;
-				$_registered_pages['admin_page_simple-press/admin/panel-components/spa-components'] = 1;
-				$_registered_pages['admin_page_simple-press/admin/panel-usergroups/spa-usergroups'] = 1;
-				$_registered_pages['admin_page_simple-press/admin/panel-permissions/spa-plugins'] = 1;
-				$_registered_pages['admin_page_simple-press/admin/panel-integration/spa-integration'] = 1;
-				$_registered_pages['admin_page_simple-press/admin/panel-profiles/spa-profiles'] = 1;
-				$_registered_pages['admin_page_simple-press/admin/panel-admins/spa-admins'] = 1;
-				$_registered_pages['admin_page_simple-press/admin/panel-users/spa-users'] = 1;
-				$_registered_pages['admin_page_simple-press/admin/panel-plugins/spa-plugins'] = 1;
-				$_registered_pages['admin_page_simple-press/admin/panel-themes/spa-themes'] = 1;
-				$_registered_pages['admin_page_simple-press/admin/panel-toolbox/spa-toolbox'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-forums/spa-forums'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-options/spa-options'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-components/spa-components'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-usergroups/spa-usergroups'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-permissions/spa-plugins'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-integration/spa-integration'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-profiles/spa-profiles'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-admins/spa-admins'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-users/spa-users'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-themes/spa-themes'] = 1;
+				$_registered_pages['admin_page_'.SP_FOLDER_NAME.'/admin/panel-toolbox/spa-toolbox'] = 1;
 			} else {
 				add_submenu_page($adminparent, SP()->primitives->admin_text('Needs Upgrading'), SP()->primitives->admin_text('Needs Upgrading'), 'read', '');
 			}
 		}
 
 		# hack for wp stubborness of not wanting singular submenu under a menu item
-		if (strpos($plugin_page, 'simple-press') !== false) add_submenu_page($adminparent, '', '', 'read', $adminparent);
+		if (strpos($plugin_page, SP_FOLDER_NAME) !== false) add_submenu_page($adminparent, '', '', 'read', $adminparent);
 		$submenu[$adminparent][1] = null;
 	}
 
@@ -163,7 +163,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Forums'),
 		'SPF Manage Forums',
-		'simple-press/admin/panel-forums/spa-forums.php',
+		SP_FOLDER_NAME.'/admin/panel-forums/spa-forums.php',
 		$sfatooltips['forums'],
 		'icon-Forums',
 		wp_nonce_url(SPAJAXURL.'forums-loader', 'forums-loader'),
@@ -187,7 +187,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Options'),
 		'SPF Manage Options',
-		'simple-press/admin/panel-options/spa-options.php',
+		SP_FOLDER_NAME.'/admin/panel-options/spa-options.php',
 		$sfatooltips['options'],
 		'icon-Options',
 		wp_nonce_url(SPAJAXURL.'options-loader', 'options-loader'),
@@ -209,7 +209,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Components'),
 		'SPF Manage Components',
-		'simple-press/admin/panel-components/spa-components.php',
+		SP_FOLDER_NAME.'/admin/panel-components/spa-components.php',
 		$sfatooltips['components'],
 		'icon-Components',
 		wp_nonce_url(SPAJAXURL.'components-loader', 'components-loader'),
@@ -227,7 +227,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('User Groups'),
 		'SPF Manage User Groups',
-		'simple-press/admin/panel-usergroups/spa-usergroups.php',
+		SP_FOLDER_NAME.'/admin/panel-usergroups/spa-usergroups.php',
 		$sfatooltips['usergroups'],
 		'icon-UserGroups',
 		wp_nonce_url(SPAJAXURL.'usergroups-loader', 'usergroups-loader'),
@@ -247,7 +247,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Permissions'),
 		'SPF Manage Permissions',
-		'simple-press/admin/panel-permissions/spa-permissions.php',
+		SP_FOLDER_NAME.'/admin/panel-permissions/spa-permissions.php',
 		$sfatooltips['permissions'],
 		'icon-Permissions',
 		wp_nonce_url(SPAJAXURL.'permissions-loader', 'permissions-loader'),
@@ -265,7 +265,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Integration'),
 		'SPF Manage Integration',
-		'simple-press/admin/panel-integration/spa-integration.php',
+		SP_FOLDER_NAME.'/admin/panel-integration/spa-integration.php',
 		$sfatooltips['integration'],
 		'icon-Integration',
 		wp_nonce_url(SPAJAXURL.'integration-loader', 'integration-loader'),
@@ -285,7 +285,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Profiles'),
 		'SPF Manage Profiles',
-		'simple-press/admin/panel-profiles/spa-profiles.php',
+		SP_FOLDER_NAME.'/admin/panel-profiles/spa-profiles.php',
 		$sfatooltips['profiles'],
 		'icon-Profiles',
 		wp_nonce_url(SPAJAXURL.'profiles-loader', 'profiles-loader'),
@@ -309,7 +309,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Admins'),
 		'SPF Manage Admins',
-		'simple-press/admin/panel-admins/spa-admins.php',
+		SP_FOLDER_NAME.'/admin/panel-admins/spa-admins.php',
 		$sfatooltips['admins'],
 		'icon-Admins',
 		wp_nonce_url(SPAJAXURL.'admins-loader', 'admins-loader'),
@@ -323,7 +323,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Users'),
 		'SPF Manage Users',
-		'simple-press/admin/panel-users/spa-users.php',
+		SP_FOLDER_NAME.'/admin/panel-users/spa-users.php',
 		$sfatooltips['users'],
 		'icon-Users',
 		wp_nonce_url(SPAJAXURL.'users-loader', 'users-loader'),
@@ -339,7 +339,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Plugins'),
 		'SPF Manage Plugins',
-		'simple-press/admin/panel-plugins/spa-plugins.php',
+		SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins.php',
 		$sfatooltips['plugins'],
 		'icon-Plugins',
 		wp_nonce_url(SPAJAXURL.'plugins-loader', 'plugins-loader'),
@@ -365,7 +365,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Themes'),
 		'SPF Manage Themes',
-		'simple-press/admin/panel-themes/spa-themes.php',
+		SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php',
 		$sfatooltips['themes'],
 		'icon-Themes',
 		wp_nonce_url(SPAJAXURL.'themes-loader', 'themes-loader'),
@@ -395,7 +395,7 @@ function spa_setup_admin_menu() {
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Toolbox'),
 		'SPF Manage Toolbox',
-		'simple-press/admin/panel-toolbox/spa-toolbox.php',
+		SP_FOLDER_NAME.'/admin/panel-toolbox/spa-toolbox.php',
 		$sfatooltips['toolbox'],
 		'icon-Toolbox',
 		wp_nonce_url(SPAJAXURL.'toolbox-loader', 'toolbox-loader'),

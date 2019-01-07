@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin Integration Storage Locations Form
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
+$LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+$Rev: 15817 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -221,7 +221,7 @@ function spa_check_upgrade_error() {
 			echo $image.'<h4>[';
 			SP()->primitives->admin_etext('Resources file failed to copy on upgrade');
 			echo '] - ';
-			SP()->primitives->admin_etext("You will need to manually copy the file '/simple-press/sp-startup/install/sp-resources-install-part2.zip' to the new 'wp-content/sp-resources' folder");
+			SP()->primitives->admin_etext("You will need to manually copy the file ".SP_FOLDER_NAME."/sp-startup/install/sp-resources-install-part2.zip' to the new 'wp-content/sp-resources' folder");
 			echo '</h4>';
 		}
 		if ($sUnzip == false) {

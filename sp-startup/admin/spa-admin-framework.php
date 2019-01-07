@@ -3,8 +3,8 @@
  * Admin framework functions
  * Loads for all forum admin pages.
  *
- * $LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
- * $Rev: 15797 $
+ * $LastChangedDate: 2018-11-13 22:52:58 -0600 (Tue, 13 Nov 2018) $
+ * $Rev: 15821 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -310,7 +310,7 @@ function spa_render_sidemenu() {
 						if (empty($admin)) {
 							$base = SPHOMEURL.'wp-admin/admin.php?page=';
 						} else {
-							$base = SPHOMEURL.'wp-admin/admin.php?page=simple-press/admin/panel-plugins/spa-plugins.php';
+							$base = SPHOMEURL.'wp-admin/admin.php?page='.SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins.php';
 							$panel[2] = '';
 						}
 

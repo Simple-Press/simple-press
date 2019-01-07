@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Admin themes editor
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
+$LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+$Rev: 15817 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -62,7 +62,7 @@ function spa_themes_editor_form() {
 		foreach ($templates as $template) {
 			echo '<li>';
 			if ($template == $filename) echo '<span class="highlight">';
-			echo '<a href="'.admin_url('admin.php?page=simple-press/admin/panel-themes/spa-themes.php&amp;tab=editor&amp;file='.esc_attr($template).'&amp;type=template').'">'.$template.'</a>';
+			echo '<a href="'.admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php&amp;tab=editor&amp;file='.esc_attr($template).'&amp;type=template').'">'.$template.'</a>';
 			if ($template == $filename) echo '</span>';
 			echo '</li>';
 		}
@@ -86,7 +86,7 @@ function spa_themes_editor_form() {
 		foreach ($stylesheets as $style) {
 			echo '<li>';
 			if ($style == $filename) echo '<span class="highlight">';
-			echo '<a href="'.admin_url('admin.php?page=simple-press/admin/panel-themes/spa-themes.php&amp;tab=editor&amp;file='.esc_attr($style).'&amp;type=style').'">'.$style.'</a>';
+			echo '<a href="'.admin_url('admin.php?page'.SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php&amp;tab=editor&amp;file='.esc_attr($style).'&amp;type=style').'">'.$style.'</a>';
 			if ($style == $filename) echo '</span>';
 			echo '</li>';
 		}
@@ -111,7 +111,7 @@ function spa_themes_editor_form() {
     		foreach ($overlays as $overlay) {
     			echo '<li>';
     			if ($overlay == $filename) echo '<span class="highlight">';
-    			echo '<a href="'.admin_url('admin.php?page=simple-press/admin/panel-themes/spa-themes.php&amp;tab=editor&amp;file='.esc_attr($overlay).'&amp;type=overlay').'">'.$overlay.'</a>';
+    			echo '<a href="'.admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php&amp;tab=editor&amp;file='.esc_attr($overlay).'&amp;type=overlay').'">'.$overlay.'</a>';
     			if ($overlay == $filename) echo '</span>';
     			echo '</li>';
     		}

@@ -3,8 +3,8 @@
  * Core Support Functions
  * This file loads at core level - all page loads for admin and front
  *
- *  $LastChangedDate: 2018-10-28 13:23:35 -0500 (Sun, 28 Oct 2018) $
- *  $Rev: 15779 $
+ *  $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ *  $Rev: 15817 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -40,7 +40,7 @@ function sp_get_system_status() {
 	# check if user is attempting to 'downgrade'
 	# if so flag as upgrade and catch the downgrade in the load install routine
 	if (SPBUILD < $current_build || SPVERSION < $current_version) {
-		if (!defined('SPADMINFORUM')) define('SPADMINFORUM', admin_url('admin.php?page=simple-press/admin/panel-forums/spa-forums.php'));
+		if (!defined('SPADMINFORUM')) define('SPADMINFORUM', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-forums/spa-forums.php'));
 		SP()->core->status = 'Upgrade';
 
 		return SP()->core->status;
@@ -61,7 +61,7 @@ function sp_get_system_status() {
 			require_once SP_PLUGIN_DIR.'/sp-startup/install/sp-install-support.php';
 			sp_silent_upgrade();
 		} else {
-			if (!defined('SPADMINFORUM')) define('SPADMINFORUM', admin_url('admin.php?page=simple-press/admin/panel-forums/spa-forums.php'));
+			if (!defined('SPADMINFORUM')) define('SPADMINFORUM', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-forums/spa-forums.php'));
 			SP()->core->status = 'Upgrade';
 
 			return SP()->core->status;

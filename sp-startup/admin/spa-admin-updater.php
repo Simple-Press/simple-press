@@ -3,8 +3,8 @@
  * Admin updater support functions
  * Loads when a user upgrading Simple Press plugins or themes.
  *
- * $LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
- * $Rev: 15797 $
+ * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $Rev: 15817 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -18,7 +18,7 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
  * @return void
  */
 function sp_plugins_check_sp_version($plugin) {
-	if ($plugin == 'simple-press/sp-control.php') {
+	if ($plugin == SP_FOLDER_NAME.'/sp-control.php') {
 		# get wp admin screen type
 		$screen = get_current_screen();
 
@@ -50,7 +50,7 @@ function sp_plugins_check_sp_version($plugin) {
 				echo '<tr class="plugin-update-tr'.$active_class.'" id="simple-press-update" data-slug="simple-press" data-plugin="'.$plugin.'">';
 				echo '<td colspan="3" class="plugin-update colspanchange"><div class="update-message notice inline notice-warning notice-alt"><p>';
 
-				$details_url = self_admin_url('plugin-install.php?tab=plugin-information&plugin=simple-press&section=changelog&TB_iframe=true&width=600&height=800');
+				$details_url = self_admin_url('plugin-install.php?tab=plugin-information&plugin='.SP_FOLDER_NAME.'&section=changelog&TB_iframe=true&width=600&height=800');
 
 				printf(SP()->primitives->admin_text_noesc('There is a new version of %1$s available. <a href="%2$s" %3$s>View version %4$s details</a> or <a href="%5$s" %6$s>update now</a>.'), 'Simple:Press', esc_url($details_url), sprintf('class="thickbox open-plugin-details-modal" aria-label="%s"', esc_attr(sprintf(SP()->primitives->admin_text_noesc('View %1$s version %2$s details'), 'Simple:Press', $xml->core->version))
 					), $xml->core->version, wp_nonce_url(self_admin_url('update.php?action=upgrade-plugin&plugin=').$plugin, 'upgrade-plugin_'.$plugin), sprintf('class="update-link" aria-label="%s"', esc_attr(sprintf(SP()->primitives->admin_text_noesc('Update %s now'), 'Simple:Press'))

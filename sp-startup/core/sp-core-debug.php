@@ -5,8 +5,8 @@
  *
  * @since 6.0
  *
- * $LastChangedDate: 2018-08-15 07:59:04 -0500 (Wed, 15 Aug 2018) $
- * $Rev: 15704 $
+ * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $Rev: 15817 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -234,7 +234,7 @@ function show_includes() {
 
 	$filelist = get_included_files();
 	foreach ($filelist as $f) {
-		if (strpos($f, '/plugins/simple-press') || strpos($f, '/sp-resources/')) echo strrchr($f, '/').'<br />';
+		if (strpos($f, '/plugins/'.SP_FOLDER_NAME) || strpos($f, '/sp-resources/')) echo strrchr($f, '/').'<br />';
 	}
 	echo '</div>';
 }

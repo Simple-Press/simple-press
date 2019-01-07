@@ -9,8 +9,8 @@
  * ------------------------
  * load()
  *
- * $LastChangedDate: 2018-09-15 00:45:38 -0500 (Sat, 15 Sep 2018) $
- * $Rev: 15729 $
+ * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $Rev: 15817 $
  */
 class spcAdminCoreLoader {
 	/**
@@ -152,14 +152,14 @@ class spcAdminCoreLoader {
 		}
 
 		# Plugin page updating and links
-		add_action('after_plugin_row_simple-press/sp-control.php', 'sp_plugins_check_sp_version');
+		add_action('after_plugin_row_'.SP_FOLDER_NAME.'/sp-control.php', 'sp_plugins_check_sp_version');
 		add_filter('network_admin_plugin_action_links', 'spa_add_plugin_action', 10, 2);
 		add_filter('plugin_action_links', 'spa_add_plugin_action', 10, 2);
 		add_action('admin_head', 'spa_check_removal');
 
 		# Actiating, Deactivating and Uninstall
-		add_action('activate_simple-press/sp-control.php', 'spa_activate_plugin');
-		add_action('deactivate_simple-press/sp-control.php', 'spa_deactivate_plugin');
+		add_action('activate_'.SP_FOLDER_NAME.'/sp-control.php', 'spa_activate_plugin');
+		add_action('deactivate_'.SP_FOLDER_NAME.'/sp-control.php', 'spa_deactivate_plugin');
 
 		# ------------------------------------------------------------------
 		# spa_check_wp_plugin_page()

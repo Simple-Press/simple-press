@@ -3,8 +3,8 @@
  * Admin support functions
  * Loads for all forum admin pages and provides general support functions across the admin
  *
- * $LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
- * $Rev: 15797 $
+ * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $Rev: 15817 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -133,7 +133,7 @@ function spa_check_page_change($postid, $pObj) {
  * @return string    update text and links for current plugin
  */
 function spa_add_plugin_action($links, $plugin) {
-	if ($plugin == 'simple-press/sp-control.php') {
+	if ($plugin == SP_FOLDER_NAME.'/sp-control.php') {
 		if (SP()->core->status != 'ok') {
 			# Install or Upgrade
 			$actionlink = '<a href="'.admin_url('admin.php?page='.SPINSTALLPATH).'">'.SP()->primitives->admin_text(SP()->core->status).'</a>';
@@ -362,7 +362,7 @@ function spa_deactivate_plugin() {
  */
 function spa_wp_discussion_avatar($list) {
 	echo '<h3>'.SP()->primitives->admin_text('Currently, all WP avatars are being replaced by Simple:Press avatars. You can change this at');
-	echo ': <a href="'.admin_url('admin.php?page=simple-press/admin/panel-profiles/spa-profiles.php&amp;tab=avatars').'">';
+	echo ': <a href="'.admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-profiles/spa-profiles.php&amp;tab=avatars').'">';
 	echo SP()->primitives->admin_text('Forum - Profiles - Avatars');
 	echo '</a>.';
 	echo '</h3>';
