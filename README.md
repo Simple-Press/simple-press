@@ -26,3 +26,6 @@ To contribute, just fork the DEV branch and then submit a PR with your changes.
 For bug reports or feature suggestions you can submit them to our website at https://simple-press.com or open an issue here.  
 For technical support please purchase a license on our site and then submit your question to our support forums or via a support ticket.
 
+## Development History
+Most of the development of the plugin is archived in an off-line SVN repository.  
+Issues were tracked in a MANTIS issue tracker - you can view a comprehensive issue history [here](https://simplepress.mantishub.io)
