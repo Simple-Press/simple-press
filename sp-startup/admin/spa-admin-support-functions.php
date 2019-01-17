@@ -177,10 +177,10 @@ function spa_add_plugin_action($links, $plugin) {
 				array_unshift($links, $actionlink);
 			}
 
-			$actionlink = '<a href="https://simple-press.com/membership/">'.SP()->primitives->admin_text('Premium Support').'</a>';
+			$actionlink = '<a href="https://simple-press.com/pricing/">'.SP()->primitives->admin_text('Premium Support').'</a>';
 			array_push($links, $actionlink);
 
-			$actionlink = '<a href="https://simple-press.com/documentation/">'.SP()->primitives->admin_text('Documentation').'</a>';
+			$actionlink = '<a href="https://simple-press.com/documentation-landing-page/">'.SP()->primitives->admin_text('Documentation').'</a>';
 			array_push($links, $actionlink);
 		}
 	}
