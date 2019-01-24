@@ -390,6 +390,16 @@
 			});
 		}
 	};
+        
+        prepareEditors = {
+		init: function() {
+                        
+                        $( '#sfmaincontainer' ).find('.wp-editor-wrap').each( function () {
+                                spj.prepareAjaxEditor( $(this) );
+                        });
+                        
+		}
+	};
 
 	// public properties
 
@@ -429,6 +439,7 @@
 			setForumOptions.init();
 			setForumSequence.init();
 			setForumSlug.init();
+                        prepareEditors.init();
 		});
 
 		$('#sfmaincontainer').on('troubleshootingformloaded', function() {
