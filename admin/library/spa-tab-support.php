@@ -176,7 +176,7 @@ function spa_paint_editor($label, $name, $value, $submessage='', $xrows=1) {
 	if (!empty($submessage)) echo "<br /><small><strong>".esc_html($submessage)."</strong></small>\n";
 	echo '</div>';
 	echo '<div class="clearboth"></div>';
-	wp_editor( esc_attr($value), $name, array(
+	wp_editor( html_entity_decode($value), $name, array(
 					'media_buttons' => false,
 					'quicktags'     => true,
 					'textarea_rows' => $xrows
@@ -209,7 +209,7 @@ function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1) 
 	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
 	echo '</div>';
 	echo '<div class="clearboth"></div>';
-	wp_editor( esc_attr($value), $name, array(
+	wp_editor( html_entity_decode( $value ), $name, array(
 					'media_buttons' => false,
 					'quicktags'     => true,
 					'textarea_rows' => $xrows
@@ -241,7 +241,7 @@ function spa_paint_thin_editor($label, $name, $value, $submessage='', $xrows=1) 
 	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
 	echo '</div>';
 	echo '<div class="clearboth"></div>';
-	wp_editor( esc_attr($value), $name, array(
+	wp_editor( html_entity_decode($value), $name, array(
 					'media_buttons' => false,
 					'quicktags'     => true,
 					'textarea_rows' => $xrows
