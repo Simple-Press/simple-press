@@ -36,7 +36,7 @@ function spa_permissions_add_auth_form() {
     				spa_paint_input(SP()->primitives->admin_text('Authorization description'), 'auth_desc', '');
     	            spa_paint_checkbox(SP()->primitives->admin_text('Activate authorization'), 'auth_active', true);
     	            spa_paint_checkbox(SP()->primitives->admin_text('Authorization is ignored for guests'), 'auth_guests', false);
-    	            spa_paint_checkbox(SP()->primitives->admin_text('Authorization requires enabling (recommend false'), 'auth_enabling', false);
+    	            spa_paint_checkbox(SP()->primitives->admin_text('Authorization requires enabling (recommend false)'), 'auth_enabling', false);
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_perm_add_auth_panel');
