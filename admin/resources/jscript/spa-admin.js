@@ -79,6 +79,12 @@
 		$(document).ready(function() {
 			$('#' + aForm).ajaxForm({
 				target: '#sfmsgspot',
+                                
+                                beforeSerialize : function() {
+                                        if( typeof tinymce !== 'undefined' ) {
+                                                tinymce.triggerSave();
+                                        }
+                                },
 				beforeSubmit: function() {
 					$('#sfmsgspot').show();
 					$('#sfmsgspot').html(sp_platform_vars.pWait);
@@ -283,6 +289,45 @@
 			control.text = String.fromCharCode(8211);
 		}
 	};
+        
+        
+        spj.prepareAjaxEditor = function( editor ) {
+                
+                var id = editor.find('textarea.wp-editor-area').attr('id');
+                
+                if( tinyMCE.get( id ) ) {
+                        tinyMCE.get( id ).destroy();
+                }
+                
+                
+                var init = null;
+
+                if( tinyMCEPreInit.mceInit.hasOwnProperty( id ) ) {
+                        init = tinyMCEPreInit.mceInit[ id ];
+                } else {
+
+                        var mce_init = tinyMCEPreInit.mceInit[Object.keys(tinyMCEPreInit.mceInit)[0]];
+                        init = $.extend({}, mce_init, { selector : "#" + id });
+                        tinyMCEPreInit.mceInit[ id ] = init;
+                }
+                
+                var $wrap = tinymce.$( '#wp-' + id + '-wrap' );
+                var is_mce = $wrap.hasClass( 'tmce-active' ) ? true : false;
+
+
+                new QTags( id );
+                QTags._buttonsInit();
+                switchEditors.go( id, 'html' );
+
+                if( is_mce ) {
+
+                        setTimeout( function(){
+                                switchEditors.go( id, 'tmce' );
+                        }, 200 );
+
+                }
+                
+        }
 
 	// private methods
 }(window.spj = window.spj || {}, jQuery));

@@ -2,8 +2,8 @@
 /*
 Simple:Press
 Edit Tools - Move Topic/Move Post
-$LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
-$Rev: 15797 $
+$LastChangedDate: 2018-12-20 16:57:31 -0600 (Thu, 20 Dec 2018) $
+$Rev: 15862 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -395,6 +395,7 @@ function sp_move_post_popup() {
 				  'titleClass'		=> 'spForumToolsHeaderTitle',
 				  'highlightClass'	=> 'spForumToolsHeaderTitle',
 				  'controlClass'	=> 'spSelect',
+				  'inputClass'		=> 'spControl',
 				  'buttonClass'		=> 'spSubmit'
 				 );
 
@@ -472,7 +473,7 @@ function sp_move_post_popup() {
 	$out.= sp_render_group_forum_select(false, false, true, true, SP()->primitives->front_text('Select forum'), 'forumid', $controlClass);
 	$out.= "<br /><br />";
 	$out.= "<p class='$highlightClass spCenter'>".SP()->primitives->front_text('New topic name')."</p>";
-	$out.= "<input type='text' class='$controlClass' size='80' name='newtopicname' value='' />";
+	$out.= "<input type='text' class='$inputClass' size='80' name='newtopicname' value='' />";
 
 	do_action('sph_move_post_form', $thispost, $topicid);
 

@@ -53,6 +53,8 @@ function spa_load_admin_scripts() {
 				'jquery-ui-widget',
 				'jquery-ui-sortable'), false, false);
 		}
+		
+		wp_enqueue_editor();
 
 		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin.js' : SPAJSCRIPT.'spa-admin.min.js';
 		wp_enqueue_script('sfadmin', $script, array(
