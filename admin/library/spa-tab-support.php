@@ -111,6 +111,46 @@ function spa_paint_input($label, $name, $value, $disabled=false, $large=false) {
 	$tab++;
 }
 
+function spa_paint_date($label, $name, $value, $disabled=false, $large=false) {
+	global $tab;
+
+	echo "<div class='sp-form-row'>\n";
+	if ($large) {
+		echo "<div class='wp-core-ui sflabel sp-label-40'>\n";
+	} else {
+		echo "<div class='wp-core-ui sflabel sp-label-60'>\n";
+	}
+	echo "$label:</div>";
+	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
+
+	echo "<input type='date' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	if ($disabled == true) echo "disabled='disabled' ";
+	echo "/>\n";
+	echo '<div class="clearboth"></div>';
+	echo '</div>';
+	$tab++;
+}
+
+function spa_paint_number($label, $name, $value, $disabled=false, $large=false) {
+	global $tab;
+
+	echo "<div class='sp-form-row'>\n";
+	if ($large) {
+		echo "<div class='wp-core-ui sflabel sp-label-40'>\n";
+	} else {
+		echo "<div class='wp-core-ui sflabel sp-label-60'>\n";
+	}
+	echo "$label:</div>";
+	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
+
+	echo "<input type='number' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	if ($disabled == true) echo "disabled='disabled' ";
+	echo "/>\n";
+	echo '<div class="clearboth"></div>';
+	echo '</div>';
+	$tab++;
+}
+
 function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1) {
 	global $tab;
 
