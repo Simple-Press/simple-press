@@ -1,8 +1,7 @@
 Simple:Press - forum plugin for WordPress - License
-Version 5.0.0 and above
+Version 6.0.7 and above
 
 Copyright 2006-2018 Simple:Press
-Andy Staines and Steve Klasen
 
 The Official Bit:
 
@@ -14,7 +13,9 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY
 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
 FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-This license covers the main software (Simple:Press - forum plugin for WordPress) as well as all plugins and themes we may make available for the main software. It also covers our Simple:Press Importer (WordPress plugin) and any code changes we may, from time to time, advise or offer users to make in between official releases.
+This license covers the main software (Simple:Press - forum plugin for WordPress) as well as all plugins and themes we may make available for the main software
+(unless the license files in those plugins or themes explicitly designates a different set of license terms.)
+It also covers our Simple:Press Importer (WordPress plugin) and any code changes we may, from time to time, advise or offer users to make in between official releases.
 
 A copy of the GNU General Public License is included at the end of this file.
 
@@ -36,13 +37,14 @@ to fix bugs and supply updates and/or patches where required.
 
 Anyone encountering serious security problems should, in the first instance, make
 contact by email and not post to the support forum. Problems of this nature should not
-be made public until a fix is available. For the benefit of all users, keeping such matters private even after a fix is made available is still the preferable and more responsible course of action.
+be made public until a fix is available. For the benefit of all users, keeping such matters 
+private even after a fix is made available is still the preferable and more responsible course of action.
 
 Other than that, we hope this plugin meets a need and is able to enhance your WordPress
 website in a positive way.
 
-Andy Staines / Steve Klasen
-2006-2018
+The Simple:Press Team along with Andy Staines / Steve Klasen
+2006-2019
 
 
 GNU GENERAL PUBLIC LICENSE
