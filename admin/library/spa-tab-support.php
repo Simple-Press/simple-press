@@ -91,10 +91,11 @@ function spa_paint_close_fieldset() {
 	echo "</fieldset>\n";
 }
 
-function spa_paint_input($label, $name, $value, $disabled=false, $large=false) {
+function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $css_classes = '' ) {
 	global $tab;
-
-	echo "<div class='sp-form-row'>\n";
+	
+	$field_classes = 'sp-form-row' . " {$css_classes}";
+	echo "<div class='{$field_classes}'>\n";
 	if ($large) {
 		echo "<div class='wp-core-ui sflabel sp-label-40'>\n";
 	} else {
@@ -102,7 +103,6 @@ function spa_paint_input($label, $name, $value, $disabled=false, $large=false) {
 	}
 	echo "$label:</div>";
 	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
-
 	echo "<input type='text' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
 	if ($disabled == true) echo "disabled='disabled' ";
 	echo "/>\n";
