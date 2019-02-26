@@ -400,6 +400,17 @@
                         
 		}
 	};
+        
+        prepareDatePicker = {
+                init : function() {
+                        $('.sp-analytics-chart-date').datepicker({
+                                beforeShow: function(input, inst) {
+                                        $("#ui-datepicker-div").addClass("sp-datepicker");
+                                }
+                        });
+                }
+        }
+        
 
 	// public properties
 
@@ -440,6 +451,7 @@
 			setForumSequence.init();
 			setForumSlug.init();
                         prepareEditors.init();
+                        prepareDatePicker.init();
 		});
 
 		$('#sfmaincontainer').on('troubleshootingformloaded', function() {
