@@ -403,7 +403,7 @@
         
         prepareDatePicker = {
                 init : function() {
-                        $('.sp-analytics-chart-date').datepicker({
+                        $('.sp-datepicker-field').datepicker({
                                 beforeShow: function(input, inst) {
                                         $("#ui-datepicker-div").addClass("sp-datepicker");
                                 }
