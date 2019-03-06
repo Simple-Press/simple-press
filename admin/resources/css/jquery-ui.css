@@ -1,0 +1,85 @@
+/* Interaction Cues
+----------------------------------*/
+.sp-datepicker .ui-state-disabled { cursor: default !important; }
+
+/* states and images */
+.sp-datepicker .ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
+
+/* Overlays */
+.sp-datepicker.ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+/* Component containers
+----------------------------------*/
+.sp-datepicker.ui-widget { font-family: Arial,sans-serif; font-size: 1.1em; }
+.sp-datepicker.ui-widget .ui-widget { font-size: 1em; }
+.sp-datepicker.ui-widget input, .sp-datepicker.ui-widget select, .sp-datepicker.ui-widget textarea, .sp-datepicker.ui-widget button { font-family: Arial,sans-serif; font-size: 1em; }
+.sp-datepicker.ui-widget-content { border: 1px solid #eeeeee; background: #ffffff url(images/jquery-ui/date-picker/ui-bg_flat_75_ffffff_40x100.png) 50% 50% repeat-x; color: #333333; }
+.sp-datepicker.ui-widget-content a { color: #333333; }
+
+/* Interaction states
+----------------------------------*/
+.sp-datepicker .ui-state-default, .sp-datepicker .ui-widget-content .ui-state-default, .sp-datepicker .ui-widget-header .ui-state-default { border: 1px solid #d8dcdf; background: #eeeeee url(images/jquery-ui/date-picker/ui-bg_highlight-hard_100_eeeeee_1x100.png) 50% 50% repeat-x; font-weight: bold; color: #004276; }
+.sp-datepicker .ui-state-default a, .sp-datepicker .ui-state-default a:link, .sp-datepicker .ui-state-default a:visited { color: #004276; text-decoration: none; }
+.sp-datepicker .ui-state-hover, .sp-datepicker .ui-widget-content .ui-state-hover, .sp-datepicker .ui-widget-header .ui-state-hover, .sp-datepicker .ui-state-focus, .sp-datepicker .ui-widget-content .ui-state-focus, .sp-datepicker .ui-widget-header .ui-state-focus { border: 1px solid #cdd5da; background: #f6f6f6 url(images/jquery-ui/date-picker/ui-bg_highlight-hard_100_f6f6f6_1x100.png) 50% 50% repeat-x; font-weight: bold; color: #111111; }
+.sp-datepicker .ui-state-hover a, .sp-datepicker .ui-state-hover a:hover { color: #111111; text-decoration: none; }
+.sp-datepicker .ui-state-active, .sp-datepicker .ui-widget-content .ui-state-active, .sp-datepicker .ui-widget-header .ui-state-active { border: 1px solid #eeeeee; background: #ffffff url(images/jquery-ui/date-picker/ui-bg_flat_65_ffffff_40x100.png) 50% 50% repeat-x; font-weight: bold; color: #cc0000; }
+.sp-datepicker .ui-state-active a, .sp-datepicker .ui-state-active a:link, .sp-datepicker .ui-state-active a:visited { color: #cc0000; text-decoration: none; }
+.sp-datepicker.ui-widget:active { outline: none; }
+
+/* Interaction Cues
+----------------------------------*/
+.sp-datepicker .ui-state-highlight, .sp-datepicker .ui-widget-content .ui-state-highlight, .sp-datepicker .ui-widget-header .ui-state-highlight  {border: 1px solid #fcd3a1; background: #fbf8ee url(images/jquery-ui/date-picker/ui-bg_glass_55_fbf8ee_1x400.png) 50% 50% repeat-x; color: #444444; }
+.sp-datepicker .ui-state-highlight a, .sp-datepicker .ui-widget-content .ui-state-highlight a, .sp-datepicker .ui-widget-header .ui-state-highlight a { color: #444444; }
+.sp-datepicker .ui-state-error, .sp-datepicker .ui-widget-content .ui-state-error, .sp-datepicker .ui-widget-header .ui-state-error {border: 1px solid #cc0000; background: #f3d8d8 url(images/jquery-ui/date-picker/ui-bg_diagonals-thick_75_f3d8d8_40x40.png) 50% 50% repeat; color: #2e2e2e; }
+.sp-datepicker .ui-state-error a, .sp-datepicker .ui-widget-content .ui-state-error a, .sp-datepicker .ui-widget-header .ui-state-error a { color: #2e2e2e; }
+.sp-datepicker .ui-state-error-text, .sp-datepicker .ui-widget-content .ui-state-error-text, .sp-datepicker .ui-widget-header .ui-state-error-text { color: #2e2e2e; }
+.sp-datepicker .ui-priority-primary, .sp-datepicker .ui-widget-content .ui-priority-primary, .sp-datepicker .ui-widget-header .ui-priority-primary { font-weight: bold; }
+.sp-datepicker .ui-priority-secondary, .sp-datepicker .ui-widget-content .ui-priority-secondary, .sp-datepicker .ui-widget-header .ui-priority-secondary { opacity: .7; filter:Alpha(Opacity=70); font-weight: normal; }
+.sp-datepicker .ui-state-disabled, .sp-datepicker .ui-widget-content .ui-state-disabled, .sp-datepicker .ui-widget-header .ui-state-disabled { opacity: .35; filter:Alpha(Opacity=35); background-image: none; }
+
+/* states and images */
+.sp-datepicker .ui-icon { width: 16px; height: 16px; background-image: url(images/jquery-ui/date-picker/ui-icons_cc0000_256x240.png); }
+.sp-datepicker .ui-widget-content .ui-icon {background-image: url(images/jquery-ui/date-picker/ui-icons_cc0000_256x240.png); }
+.sp-datepicker .ui-widget-header .ui-icon {background-image: url(images/jquery-ui/date-picker/ui-icons_ffffff_256x240.png); }
+.sp-datepicker .ui-state-default .ui-icon { background-image: url(images/jquery-ui/date-picker/ui-icons_cc0000_256x240.png); }
+.sp-datepicker .ui-state-hover .ui-icon, .sp-datepicker .ui-state-focus .ui-icon {background-image: url(images/jquery-ui/date-picker/ui-icons_cc0000_256x240.png); }
+.sp-datepicker .ui-state-active .ui-icon {background-image: url(images/jquery-ui/date-picker/ui-icons_cc0000_256x240.png); }
+.sp-datepicker .ui-state-highlight .ui-icon {background-image: url(images/jquery-ui/date-picker/ui-icons_004276_256x240.png); }
+.sp-datepicker .ui-state-error .ui-icon, .sp-datepicker .ui-state-error-text .ui-icon {background-image: url(images/jquery-ui/date-picker/ui-icons_cc0000_256x240.png); }
+
+/* Corner radius */
+.sp-datepicker.ui-corner-all, .sp-datepicker.ui-corner-top, .sp-datepicker.ui-corner-left, .sp-datepicker.ui-corner-tl { -webkit-border-top-left-radius: 6px; -khtml-border-top-left-radius: 6px; border-top-left-radius: 6px; }
+.sp-datepicker.ui-corner-all, .sp-datepicker.ui-corner-top, .sp-datepicker.ui-corner-right, .sp-datepicker.ui-corner-tr { -webkit-border-top-right-radius: 6px; -khtml-border-top-right-radius: 6px; border-top-right-radius: 6px; }
+.sp-datepicker.ui-corner-all, .sp-datepicker.ui-corner-bottom, .sp-datepicker.ui-corner-left, .sp-datepicker.ui-corner-bl { -webkit-border-bottom-left-radius: 6px; -khtml-border-bottom-left-radius: 6px; border-bottom-left-radius: 6px; }
+.sp-datepicker.ui-corner-all, .sp-datepicker.ui-corner-bottom, .sp-datepicker.ui-corner-right, .sp-datepicker.ui-corner-br { -webkit-border-bottom-right-radius: 6px; -khtml-border-bottom-right-radius: 6px; border-bottom-right-radius: 6px; }
+
+/* Overlays */
+.sp-datepicker.ui-widget-overlay { background: #a6a6a6 url(images/jquery-ui/date-picker/ui-bg_dots-small_65_a6a6a6_2x2.png) 50% 50% repeat; opacity: .40;filter:Alpha(Opacity=40); }
+.sp-datepicker.ui-widget-shadow { margin: -8px 0 0 -8px; padding: 8px; background: #333333 url(images/jquery-ui/date-picker/ui-bg_flat_0_333333_40x100.png) 50% 50% repeat-x; opacity: .10;filter:Alpha(Opacity=10); -khtml-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; }/*!
+
+/* positioning */
+.sp-datepicker .ui-icon-circle-triangle-e { background-position: -48px -192px; }
+.sp-datepicker .ui-icon-circle-triangle-w { background-position: -80px -192px; }
+
+/* datepicker */
+.sp-datepicker.ui-datepicker { width: 17em; padding: .2em .2em 0; display: none; }
+.sp-datepicker.ui-datepicker .ui-datepicker-header { position:relative; height: auto; padding:.2em 0; }
+.sp-datepicker.ui-datepicker .ui-datepicker-prev, .sp-datepicker.ui-datepicker .ui-datepicker-next { position:absolute; top: 2px; width: 1.4em; height: 1.4em; }
+.sp-datepicker.ui-datepicker .ui-datepicker-prev-hover, .sp-datepicker.ui-datepicker .ui-datepicker-next-hover { top: 2px; }
+.sp-datepicker.ui-datepicker .ui-datepicker-prev { left:2px; }
+.sp-datepicker.ui-datepicker .ui-datepicker-next { right:2px; }
+.sp-datepicker.ui-datepicker .ui-datepicker-prev-hover { left:2px; }
+.sp-datepicker.ui-datepicker .ui-datepicker-next-hover { right:2px; }
+.sp-datepicker.ui-datepicker .ui-datepicker-prev span, .sp-datepicker.ui-datepicker .ui-datepicker-next span { display: block; position: absolute; left: 50%; margin-left: -8px; top: 50%; margin-top: -8px;  }
+.sp-datepicker.ui-datepicker .ui-datepicker-title { margin: 0 2.3em; line-height: 1em; text-align: center; }
+.sp-datepicker.ui-datepicker .ui-datepicker-title select { font-size:0.9em; margin:0; padding: 0; height: 1.4em;}
+.sp-datepicker.ui-datepicker select.ui-datepicker-month-year {width: 100%;}
+.sp-datepicker.ui-datepicker select.ui-datepicker-month,
+.sp-datepicker.ui-datepicker select.ui-datepicker-year { width: 49%;}
+.sp-datepicker.ui-datepicker table {width: 100%; font-size: .8em; border-collapse: collapse; margin:0 0 .4em; }
+.sp-datepicker.ui-datepicker th { padding: .7em .3em; text-align: center; font-weight: bold; border: 0;  }
+.sp-datepicker.ui-datepicker td { border: 0; padding: 2px; height: 1.2em; }
+.sp-datepicker.ui-datepicker td span, .sp-datepicker.ui-datepicker td a { display: block; padding: 0; text-align: center; text-decoration: none; }
+.sp-datepicker.ui-datepicker .ui-datepicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
+.sp-datepicker.ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
+.sp-datepicker.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
