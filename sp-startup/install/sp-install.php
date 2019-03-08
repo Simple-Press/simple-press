@@ -1,10 +1,10 @@
 <?php
 /*
-  Simple:Press
-  Main Forum Installer (New Instalations)
-  $LastChangedDate: 2018-12-03 11:05:54 -0600 (Mon, 03 Dec 2018) $
-  $Rev: 15840 $
- */
+* Simple:Press
+* Main Forum Installer (New Instalations)
+* $LastChangedDate: 2019-01-30 16:40:00 -0600 (Wed, 30 Jan 2019) $
+* $Rev: 15840 $
+*/
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
@@ -823,6 +823,10 @@ function sp_perform_install($phase, $subphase = 0) {
 
 			# set up weekly news processing
 			wp_schedule_event(time(), 'sp_news_interval', 'sph_news_cron');
+			
+			# set up daily sph_check_addons_status_interval
+			wp_schedule_event(time(), 'ten_minutes', 'sph_check_addons_status_interval');
+			
 			# and initial item
 			SP()->DB->execute("INSERT INTO `spf_sfmeta` (`meta_type`, `meta_key`, `meta_value`)
 						 VALUES

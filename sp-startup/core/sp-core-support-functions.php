@@ -3,7 +3,7 @@
  * Core Support Functions
  * This file loads at core level - all page loads for admin and front
  *
- *  $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ *  $LastChangedDate: 2019-01-30 16:40:00 -0600 (Wed, 30 Jan 2019) $
  *  $Rev: 15817 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -855,4 +855,242 @@ function sp_compile_forums_mobile($forums, $parent = 0, $level = 0, $valueURL = 
 	}
 
 	return $out;
+}
+
+function sp_ten_minutes_cron_interval( $schedules ) {
+	
+    $schedules['ten_minutes'] = array(
+    
+        'interval' => 60 * 10,
+        'display'  => esc_html__( 'Every Ten Minutes' ),
+    );
+ 
+    return $schedules;
+}
+
+/**
+ * This function determines if there is an update available to the core Simple Press plugin and themes.
+ *
+ */
+
+if ( ! function_exists( 'sp_plugin_updater_object' ) ) {
+	
+	function sp_plugin_updater_object($plugin_file, $plugin_data){
+		
+		$sp_plugin_name = sanitize_title_with_dashes($plugin_data['Name']);
+		$get_key = SP()->options->get( 'plugin_'.$sp_plugin_name);
+			
+		$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['plugins']).'/'.strtok(plugin_basename($plugin_file), '/');
+		
+		$api_data = array(
+			
+	        'version'   => $plugin_data['Version'],   // current version number
+	        'license'   => $get_key,        // license key (used get_option above to retrieve from DB)
+	        'author'    => $plugin_data['Author'],  // author of this plugin
+	        'API_action' => 'get_version' // api action
+	    );
+		
+		if($plugin_data['ItemId'] == ''){
+			
+			$api_data['item_name'] = $plugin_data['Name'];  // name of this plugin
+			
+		}else{
+			
+			$api_data['item_id'] = $plugin_data['ItemId'];  // id of this plugin
+		}
+		
+		$sp_plugin_updater = new SPPluginUpdater( SP_Addon_STORE_URL, $this_path, $api_data);
+		
+		return $sp_plugin_updater;
+	}
+}
+
+if ( ! function_exists( 'sp_theme_updater_object' ) ) {
+	
+	
+	function sp_theme_updater_object($theme_file, $theme_data){
+		
+		$sp_theme_name = sanitize_title_with_dashes($theme_data['Name']);
+		$get_key = SP()->options->get( 'theme_'.$sp_theme_name);
+		
+		$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['themes']).'/'.$theme_file;
+
+		$api_data = array(
+		
+	        'version'   => $theme_data['Version'],   // current version number
+	        'license'   => $get_key,        // license key (used get_option above to retrieve from DB)
+	        'author'    => 'Simple:Press',  // author of this plugin
+	        'API_action' => 'get_version' // action api
+	    );
+		
+		if($theme_data['ItemId'] == ''){
+			
+			$api_data['item_name'] = $theme_data['Name'];  // name of this plugin
+			
+		}else{
+			
+			$api_data['item_id'] = $theme_data['ItemId'];  // id of this plugin
+		}
+		
+		$sp_theme_updater = new SPPluginUpdater( SP_Addon_STORE_URL, $this_path, $api_data);
+		
+		return $sp_theme_updater;
+	}
+}
+
+function sph_check_addons_status(){
+	
+	$plugins = SP()->plugin->get_list();
+	$sp_return_update_plugins = 0;
+	
+	if (!empty($plugins)) {
+		
+		$now = new DateTime();
+		$now->format('Y-m-d H:i:s');
+		SP()->options->update( 'spl_plugins_api_time',  $now->getTimestamp());
+		
+		foreach ($plugins as $plugin_file => $plugin_data) {
+				
+			if(isset($plugin_data['ItemId']) && $plugin_data['ItemId'] != ''){
+				
+				$sp_plugin_updater = sp_plugin_updater_object($plugin_file, $plugin_data);
+
+				$sp_plugin_name = sanitize_title_with_dashes($plugin_data['Name']);			
+				$update_status_option 	= 'spl_plugin_stats_'.$sp_plugin_name;
+				$update_info_option 	= 'spl_plugin_info_'.$sp_plugin_name;
+				$update_version_option 	= 'spl_plugin_versioninfo_'.$sp_plugin_name;
+				
+				$data = array('edd_action' => 'check_license', 'update_status_option'=>$update_status_option, 'update_info_option'=>$update_info_option, 'update_version_option'=>$update_version_option);
+				
+				$sp_return_plugin_updater = $sp_plugin_updater->check_addons_status($data);
+
+				if($sp_return_plugin_updater && isset($sp_return_plugin_updater->license) && $sp_return_plugin_updater->license === 'valid'){
+
+					$sp_return_update_plugins = 1;
+				}
+				
+			}
+		}
+	
+	}
+	
+	$themes = SP()->theme->get_list();
+	$sp_return_update_themes = 0;
+	
+	if (!empty($themes)) {
+		
+		$now = new DateTime();
+		$now->format('Y-m-d H:i:s');
+		SP()->options->update( 'spl_themes_api_time',  $now->getTimestamp());
+		
+		foreach ($themes as $theme_file => $theme_data) {
+			
+			if(isset($theme_data['ItemId']) && $theme_data['ItemId'] != ''){
+			
+				$sp_theme_updater = sp_theme_updater_object($theme_file, $theme_data);
+				
+				$sp_theme_name = sanitize_title_with_dashes($theme_data['Name']);
+				$update_status_option 	= 'spl_theme_stats_'.$sp_theme_name;
+				$update_info_option 	= 'spl_theme_info_'.$sp_theme_name;
+				$update_version_option 	= 'spl_theme_versioninfo_'.$sp_theme_name;
+				
+				$data = array('edd_action' => 'check_license', 'update_status_option'=>$update_status_option, 'update_info_option'=>$update_info_option, 'update_version_option'=>$update_version_option);
+				
+				$sp_return_theme_updater = $sp_theme_updater->check_addons_status($data);
+
+				if($sp_return_theme_updater && isset($sp_return_theme_updater->license) && $sp_return_theme_updater->license === 'valid'){
+
+					$sp_return_update_themes = 1;
+				}
+			}
+		}
+	
+	}
+
+	$return = array('sp_return_update_themes' => $sp_return_update_themes,'sp_return_update_plugins' => $sp_return_update_plugins );
+	return $return;
+}
+
+
+/**
+ * This function determines if there is an update available to the core Simple Press plugins and notify to admin.
+ *
+ */
+function sph_check_for_addons_updates() {
+	
+	$plugins = SP()->plugin->get_list();
+	
+	$update = false;
+	
+	foreach ($plugins as $plugin_file => $plugin_data) {
+		
+		if (!empty($plugins) && isset($plugin_data['ItemId']) && $plugin_data['ItemId'] != '') {
+			
+			$now = new DateTime();
+			$now->format('Y-m-d H:i:s');
+			SP()->options->update( 'spl_plugins_api_time',  $now->getTimestamp());
+			
+			$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['plugins']).'/'.strtok(plugin_basename($plugin_file), '/');
+			
+			$up = new stdClass;
+			
+			$sp_plugin_updater = sp_plugin_updater_object($plugin_file, $plugin_data);
+			
+			$check_for_addon_update = $sp_plugin_updater->check_for_addon_update();
+			
+			if ((version_compare($check_for_addon_update->new_version, $plugin_data['Version'], '>') == 1)) {
+				
+				$data = new stdClass;
+				$data->slug = $plugin_file;
+				$data->new_version = (string) $check_for_addon_update->new_version;
+				$data->url = SP_Addon_STORE_URL;
+				$data->package = $check_for_addon_update->package;
+				$up->response[$plugin_file] = $data;
+				$update = true;
+			}
+		}
+	}
+
+	if ($update) {
+		set_site_transient('sp_update_plugins', $up);
+	} else {
+		delete_site_transient('sp_update_plugins');
+	}
+	
+	$update = false;
+	$themes = SP()->theme->get_list();
+	
+	foreach ($themes as $theme_file => $theme_data) {
+		
+		if (!empty($themes) && isset($theme_data['ItemId']) && $theme_data['ItemId'] != '') {
+			
+			$now = new DateTime();
+			$now->format('Y-m-d H:i:s');
+			SP()->options->update( 'spl_themes_api_time',  $now->getTimestamp());
+			
+			$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['themes']).'/'.$theme_file;
+				
+			$sp_theme_updater = sp_theme_updater_object($theme_file, $theme_data);
+			
+			$check_for_addon_update = $sp_theme_updater->check_for_addon_update();
+			
+			if ((version_compare($check_for_addon_update->new_version, $theme_data['Version'], '>') == 1)) {
+				
+				$data = new stdClass;
+				$data->slug = $plugin_file;
+				$data->new_version = (string) $check_for_addon_update->new_version;
+				$data->url = SP_Addon_STORE_URL;
+				$data->package = $check_for_addon_update->package;
+				$up->response[$plugin_file] = $data;
+				$update = true;
+			}
+		}
+	}
+
+	if ($update) {
+		set_site_transient('sp_update_themes', $up);
+	} else {
+		delete_site_transient('sp_update_themes');
+	}
+	
 }

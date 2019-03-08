@@ -1,5 +1,5 @@
 --- Manage Toolbox ---
-$LastChangedDate: 2016-12-26 23:28:33 -0600 (Mon, 26 Dec 2016) $
+$LastChangedDate: 2019-02-27 16:40:00 -0600 (Wed, 27 Feb 2019) $
 $Rev: 14915 $
 
 [uninstall]
@@ -17,6 +17,25 @@ This option update allows admins to change the current Simple:Press build number
 are doing!  Changing the build number should only be done in rare cases when there were issues during an upgrade or installation.</b><br /><br />
 By manually changing the build number AND checking the Force Upgrade box, you can force the upgrade/install procedure to run once again.
 Normally, you should only change this when recommended by the Simple:Press team in the support forum.
+[end]
+
+[plugins-licensing]
+<strong>Check Licensing Of Simplepress Plugins</strong><br /><br />
+As a performance aid, Simple:Press database tables for forums and topics maintain an index for latest activity.  Under normal conditions, you will never need to worry about this.  Some actions, like moving to a new domain, or importing other forum data, rebuilding these indexes is needed.  You should not need to use these unless asked to by Simple:Press support (though doing so won't hurt anything).<br /><br />
+[end]
+
+[themes-licensing]
+<strong>Check Licensing Of Simplepress Themes</strong><br /><br />
+As a performance aid, Simple:Press database tables for forums and topics maintain an index for latest activity.  Under normal conditions, you will never need to worry about this.  Some actions, like moving to a new domain, or importing other forum data, rebuilding these indexes is needed.  You should not need to use these unless asked to by Simple:Press support (though doing so won't hurt anything).<br /><br />
+[end]
+
+[force-update-check]
+As a performance aid, Simple:Press database tables for forums and topics maintain an index for latest activity.  Under normal conditions, you will never need to worry about this.  Some actions, like moving to a new domain, or importing other forum data, rebuilding these indexes is needed.  You should not need to use these unless asked to by Simple:Press support (though doing so won't hurt anything).<br /><br />
+[end]
+
+[steps-activate-licensing]
+<strong>Note: If you do not activate the license then you will not get automatic update of this plugin any more.</strong><br /><br />
+Please check steps are in below the <strong>note</strong> section.<br /><br />
 [end]
 
 [rebuild-indexes]

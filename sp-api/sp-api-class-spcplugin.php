@@ -28,7 +28,7 @@
  * combine_scripts()
  * clear_scripts_cache($media)
  *
- * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $LastChangedDate: 2019-01-30 16:40:00 -0600 (Wed, 30 Jan 2019) $
  * $Rev: 15817 $
  *
  */
@@ -123,12 +123,14 @@ class spcPlugin {
 
 		$plugins = array();
 		foreach ($plugin_files as $plugin_file) {
+			
 			if (!is_readable("$plugin_root/$plugin_file")) continue;
 			$plugin_data = SP()->plugin->get_data("$plugin_root/$plugin_file", false, false); # Do not apply markup/translate as it'll be cached.
 			if (empty($plugin_data['Name'])) continue;
 			$plugins[plugin_basename($plugin_file)] = $plugin_data;
 		}
 		uasort($plugins, array($this, 'sort_plugins'));
+		
 		return $plugins;
 	}
 
@@ -228,6 +230,7 @@ class spcPlugin {
 	 */
 	public function get_data($plugin_file) {
 		$default_headers = array('Name'        => 'Simple:Press Plugin Title',
+								 'ItemId'      => 'Item Id',
 		                         'PluginURI'   => 'Plugin URI',
 		                         'Version'     => 'Version',
 		                         'Description' => 'Description',
@@ -245,11 +248,16 @@ class spcPlugin {
 		                                    'b'       => array(),
 		                                    'u'       => array(),
 		                                    'br'      => array());
-		$plugin_data['Name']        = wp_kses($plugin_data['Name'], $allowedtags);
-		$plugin_data['Version']     = wp_kses($plugin_data['Version'], $allowedtags);
-		$plugin_data['Description'] = wp_kses($plugin_data['Description'], $allowedtags);
-		$plugin_data['Author']      = wp_kses($plugin_data['Author'], $allowedtags);
-
+		$plugin_data['Name']        	= wp_kses($plugin_data['Name'], $allowedtags);
+		$plugin_data['Version']     	= wp_kses($plugin_data['Version'], $allowedtags);
+		$plugin_data['Description'] 	= wp_kses($plugin_data['Description'], $allowedtags);
+		$plugin_data['Author']      	= wp_kses($plugin_data['Author'], $allowedtags);
+		
+		if($plugin_data['ItemId'] && $plugin_data['ItemId'] != ''){
+			
+			$plugin_data['ItemId']  = wp_kses($plugin_data['ItemId'], $allowedtags);
+		}
+		
 		return $plugin_data;
 	}
 
@@ -266,12 +274,15 @@ class spcPlugin {
 	 * @returns    string    success/fail for plugin activation
 	 */
 	public function activate($plugin) {
+		
 		$plugin  = $this->basename(trim($plugin));
 		$current = SP()->options->get('sp_active_plugins', array());
 		$valid   = $this->validate($plugin);
+		
 		if (is_wp_error($valid)) return SP()->primitives->front_text('An error occurred activating the plugin');
 
 		if (!in_array($plugin, $current)) {
+			
 			require_once SPPLUGINDIR.$plugin;
 			do_action('sph_activate_sp_plugin', trim($plugin));
 			$current[] = $plugin;
@@ -303,7 +314,9 @@ class spcPlugin {
 		$do_blog = false;
 
 		foreach ((array) $plugins as $plugin) {
+			
 			$plugin = $this->basename($plugin);
+			
 			if (!SP()->plugin->is_active($plugin)) continue;
 			if (!$silent) do_action('sph_deactivate_sp_plugin', trim($plugin));
 
@@ -378,7 +391,7 @@ class spcPlugin {
 	 */
 	public function validate_active() {
 		$plugins = SP()->options->get('sp_active_plugins', array());
-
+		
 		# validate vartype: array
 		if (!is_array($plugins)) {
 			SP()->options->update('sp_active_plugins', array());

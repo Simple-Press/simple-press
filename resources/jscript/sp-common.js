@@ -225,4 +225,30 @@
 			return cookieValue;
 		}
 	};
+        
+        spj.dialogOpen = function(e, url, title, width, height, position, dClass, mobileScroll, ajaxContent){
+            
+            console.log(ajaxContent);
+            if (!dClass)
+			dClass = 'spDialogDefault';
+		if ((sp_platform_vars.device != 'mobile' && sp_platform_vars.focus == 'forum') || (sp_platform_vars.focus == 'admin') || (sp_platform_vars.mobiletheme == false) || mobileScroll) {
+			// close and remove any existing dialog. remove hdden div and recreate it */
+			if ($().dialog("isOpen")) {
+				$().dialog('close');
+			}
+			$('#dialog').remove();
+			$("#dialogcontainer").append("<div id='dialog'></div>");
+			dialogPopup(e, title, width, height, position, dClass, ajaxContent);
+		} else {
+			var panel = $('#spMobilePanel');
+			// grab new position and set up the top
+			if (panel.css('display') == 'block') {
+				panel.hide('slide', {direction: 'right'}, 'down', function() {
+					panel.css('display', 'none');
+					panel.css('right', '-1px');
+				});
+			}
+			spj.dialogPanel(e, url, dClass);
+		}
+        };
 }(window.spj = window.spj || {}, jQuery));

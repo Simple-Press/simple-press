@@ -28,6 +28,8 @@ function spa_themes_list_form() {
 	echo '</div>';
 
 	spa_paint_open_fieldset(SP()->primitives->admin_text('Theme Management'), true, 'themes');
+        
+    $ajaxURThem = wp_nonce_url(SPAJAXURL.'license-check', 'license-check');
 ?>
 	<h3><?php echo SP()->primitives->admin_text('Current Theme'); ?></h3>
 	<div class="theme-browser rendered">
@@ -71,7 +73,7 @@ function spa_themes_list_form() {
             if (!empty($overlays)) {
 ?>
                 <script>
-					spj.loadAjaxForm('sftheme-<?php echo esc_js($curTheme['theme']); ?>', 'sfreloadtlist');
+                        spj.loadAjaxForm('sftheme-<?php echo esc_js($curTheme['theme']); ?>', 'sfreloadtlist');
                 </script>
                 <br />
 <?php
@@ -105,23 +107,76 @@ function spa_themes_list_form() {
 				}
     		}
 
-         	# any upgrade for this theme? in multisite only main site can update
-    		if (is_main_site() && $xml) {
-    			foreach ($xml->themes->theme as $latest) {
-    				if ($themes[$curTheme['theme']]['Name'] == $latest->name) {
-    					if ((version_compare($latest->version, $themes[$curTheme['theme']]['Version'], '>') == 1)) {
-    						echo '<br />';
-    						echo '<p style="padding: 0;">';
-    						echo '<strong>'.SP()->primitives->admin_text('There is an update for the').' '.$themes[$curTheme['theme']]['Name'].' '.SP()->primitives->admin_text('theme').'.</strong> ';
-    						echo SP()->primitives->admin_text('Version').' '.$latest->version.' '.SP()->primitives->admin_text('is available').'. ';
-    						echo SP()->primitives->admin_text('For details and to download please visit').' '.SPPLUGHOME.' '.SP()->primitives->admin_text('or').' '.SP()->primitives->admin_text('go to the').' ';
-    						echo '<a href="'.self_admin_url('update-core.php').'" title="" target="_parent">'.SP()->primitives->admin_text('WordPress updates page').'</a>';
-    						echo '</p>';
-    					}
-    					break;
+
+			if(isset($themes[$curTheme['theme']]['ItemId']) && $themes[$curTheme['theme']]['ItemId'] != ''){
+				
+				# UPDATE LICENCING METHOD
+				
+				$sp_theme_name = sanitize_title_with_dashes($curTheme['theme']);
+		
+				$check_for_addon_update = SP()->options->get( 'spl_theme_versioninfo_'.$sp_theme_name);
+				
+				$check_for_addon_update = json_decode($check_for_addon_update);
+		
+				$check_addons_status = SP()->options->get( 'spl_theme_info_'.$sp_theme_name);
+				
+				$check_addons_status = json_decode($check_addons_status);
+                                
+				
+				$update_condition = $check_for_addon_update != '' && isset($check_for_addon_update->new_version) && $check_for_addon_update->new_version != false;
+				$status_condition = $check_addons_status != '' && isset($check_addons_status->license);
+
+				$version_compare = isset($check_for_addon_update->new_version) && (version_compare($check_for_addon_update->new_version, $themes[$curTheme['theme']]['Version'], '>') == 1);
+			
+				if (is_main_site() && $update_condition && $status_condition && $version_compare) {
+					
+					$changelog_link = add_query_arg( array( 'tab' => 'plugin-information', 'plugin' => $sp_theme_name, 'section' => 'changelog', 'TB_iframe' => true, 'width' => 722, 'height' => 949 ), admin_url( 'plugin-install.php' ) );
+                                        
+					echo '<br />';
+					
+					if($check_addons_status->license == 'valid'){
+						
+						echo '<p class="plugin-update-tr"><p class="update-message notice inline notice-warning notice-alt" style="padding: 10px 0px;">';	
+						echo SP()->primitives->admin_text('There is an update for the ').' '.esc_attr($curTheme['theme']).' '.SP()->primitives->admin_text('theme').'.<br />';
+						echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the theme is available').'.<br />';
+						echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$curTheme['theme']].'.<br />';
+						echo '<a class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details').'</a> '.SP()->primitives->admin_text('or').' ';
+						echo '<a href="'.self_admin_url('update-core.php').'" title="'.SP()->primitives->admin_text('update now').'">'.SP()->primitives->admin_text('update now').'</a>.';
+						echo '</p></p>';
+						
+    				} else{
+    					
+						echo '<p class="plugin-update-tr"><p class="update-message notice inline notice-warning notice-alt" style="padding: 10px 0px;">';
+						echo SP()->primitives->admin_text('There is an update for the ').' '.esc_attr($curTheme['theme']).' '.SP()->primitives->admin_text('theme').'.<br />';
+						echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the theme is available').'.<br />';
+						echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$curTheme['theme']].'.<br />';
+						echo '<a class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details').'</a>';
+						echo SP()->primitives->admin_text(' Automatic update is unavailable for this theme.');
+						echo '</p></p>';
     				}
-    			}
-    		}
+				}
+				
+			}else{
+				
+				# any upgrade for this theme? in multisite only main site can update
+	    		if (is_main_site() && $xml) {
+	    			foreach ($xml->themes->theme as $latest) {
+	    				if ($themes[$curTheme['theme']]['Name'] == $latest->name) {
+	    					if ((version_compare($latest->version, $themes[$curTheme['theme']]['Version'], '>') == 1)) {
+	    						echo '<br />';
+	    						echo '<p style="padding: 0;">';
+	    						echo '<strong>'.SP()->primitives->admin_text('There is an update for the').' '.$themes[$curTheme['theme']]['Name'].' '.SP()->primitives->admin_text('theme').'.</strong> ';
+	    						echo SP()->primitives->admin_text('Version').' '.$latest->version.' '.SP()->primitives->admin_text('is available').'. ';
+	    						echo SP()->primitives->admin_text('For details and to download please visit').' '.SPPLUGHOME.' '.SP()->primitives->admin_text('or').' '.SP()->primitives->admin_text('go to the').' ';
+	    						echo '<a href="'.self_admin_url('update-core.php').'" title="Simple:Press Plugin Update" target="_parent">'.SP()->primitives->admin_text('WordPress updates page').'</a>';
+	    						echo '</p>';
+	    					}
+	    					break;
+	    				}
+	    			}
+	    		}
+			}
+
         } else {
      		echo '<h4>'.SP()->primitives->admin_text('The current theme stylesheet').':<br /><br />'.SPTHEMEBASEDIR.$curTheme['theme'].'/styles/'.$curTheme['style'].'<br /><br />'.SP()->primitives->admin_text('cannot be found. Please correct or select a new theme for proper operation.').'</h4>';
         }
@@ -214,20 +269,65 @@ function spa_themes_list_form() {
 	                    </form>
 					</div>
 <?php
-		         	# any upgrade for this theme?
-					if ($xml) {
-						foreach ($xml->themes->theme as $latest) {
-							if ($theme_data['Name'] == $latest->name) {
-								if ((version_compare($latest->version, $theme_data['Version'], '>') == 1)) {
-									echo '<br />';
-									echo '<div class="plugin-update-tr"><div class="update-message" style="background-color:#fcf3ef;margin-left:10px;">';
-									echo '<strong>'.SP()->primitives->admin_text('There is an update for the').' '.$theme_data['Name'].' '.SP()->primitives->admin_text('theme').'.</strong> ';
-									echo SP()->primitives->admin_text('Version').' '.$latest->version.' '.SP()->primitives->admin_text('is available').'. ';
-									echo SP()->primitives->admin_text('For details and to download please visit').' '.SPPLUGHOME.' '.SP()->primitives->admin_text('or').' '.SP()->primitives->admin_text('go to the').' ';
-									echo '<a href="'.self_admin_url('update-core.php').'" title="" target="_parent">'.SP()->primitives->admin_text('WordPress updates page').'</a>';
-									echo '</div></div>';
+
+					if(isset($theme_data['ItemId']) && $theme_data['ItemId'] != ''){
+				
+						# UPDATE LICENCING METHOD
+						
+						$sp_theme_name = sanitize_title_with_dashes($theme_data['Name']);
+						$check_for_addon_update = SP()->options->get( 'spl_theme_versioninfo_'.$sp_theme_name);
+						$check_for_addon_update = json_decode($check_for_addon_update);
+						$check_addons_status = SP()->options->get( 'spl_theme_info_'.$sp_theme_name);
+						$check_addons_status = json_decode($check_addons_status);
+						$update_condition = $check_for_addon_update != '' && isset($check_for_addon_update->new_version) && $check_for_addon_update->new_version != false;
+						$status_condition = $check_addons_status != '' && isset($check_addons_status->license);
+						$version_compare = isset($check_for_addon_update->new_version) && (version_compare($check_for_addon_update->new_version, $theme_data['Version'], '>') == 1);
+					
+						if (is_main_site() && $update_condition && $status_condition && $version_compare) {
+							
+							$changelog_link = add_query_arg( array( 'tab' => 'plugin-information', 'plugin' => $sp_theme_name, 'section' => 'changelog', 'TB_iframe' => true, 'width' => 722, 'height' => 949 ), admin_url( 'plugin-install.php' ) );
+							
+							echo '<br />';
+							
+							if($check_addons_status->license == 'valid'){
+								
+								echo '<p class="plugin-update-tr"><p class="update-message notice inline notice-warning notice-alt" style="padding: 10px 0px;">';
+								echo SP()->primitives->admin_text('There is an update for the ').' '.$theme_data['Name'].' '.SP()->primitives->admin_text('theme').'.<br />';
+								echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the theme is available').'.<br />';
+								echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$theme_data['Name']].'.<br />';
+								echo '<a class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details').'</a> '.SP()->primitives->admin_text('or').' ';
+								echo '<a href="'.self_admin_url('update-core.php').'" title="'.SP()->primitives->admin_text('update now').'">'.SP()->primitives->admin_text('update now').'</a>.';
+								echo '</p></p>';
+								
+	        				} else{
+	        					
+								echo '<p class="plugin-update-tr"><p class="update-message notice inline notice-warning notice-alt" style="padding: 10px 0px;">';
+								echo SP()->primitives->admin_text('There is an update for the ').' '.$theme_data['Name'].' '.SP()->primitives->admin_text('theme').'.<br />';
+								echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the theme is available').'.<br />';
+								echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$theme_data['Name']].'.<br />';
+								echo '<a class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details').'</a>';
+								echo SP()->primitives->admin_text(' Automatic update is unavailable for this theme.');
+								echo '</p></p>';
+	        				}
+						}
+						
+					}else{
+						
+						# any upgrade for this theme?
+						if ($xml) {
+							foreach ($xml->themes->theme as $latest) {
+								if ($theme_data['Name'] == $latest->name) {
+									if ((version_compare($latest->version, $theme_data['Version'], '>') == 1)) {
+										echo '<br />';
+										echo '<div class="plugin-update-tr"><div class="update-message" style="background-color:#fcf3ef;margin-left:10px;">';
+										echo '<strong>'.SP()->primitives->admin_text('There is an update for the').' '.$theme_data['Name'].' '.SP()->primitives->admin_text('theme').'.</strong> ';
+										echo SP()->primitives->admin_text('Version').' '.$latest->version.' '.SP()->primitives->admin_text('is available').'. ';
+										echo SP()->primitives->admin_text('For details and to download please visit').' '.SPPLUGHOME.' '.SP()->primitives->admin_text('or').' '.SP()->primitives->admin_text('go to the').' ';
+										echo '<a href="'.self_admin_url('update-core.php').'" title="Simple:Press Plugin Update" target="_parent">'.SP()->primitives->admin_text('WordPress updates page').'</a>';
+										echo '</div></div>';
+									}
+									break;
 								}
-								break;
 							}
 						}
 					}
