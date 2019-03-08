@@ -3,7 +3,7 @@
  * Global Core Constants
  * This file loads at core level - all page loads for admin and front
  *
- * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $LastChangedDate: 2019-01-30 16:40:00 -0600 (Wed, 30 Jan 2019) $
  * $Rev: 15817 $
  */
 
@@ -143,3 +143,12 @@ if (!defined('SPADMINTOOLBOX')) define('SPADMINTOOLBOX', admin_url('admin.php?pa
 if (!defined('SPADMINPLUGINS')) define('SPADMINPLUGINS', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins.php'));
 if (!defined('SPADMINTHEMES')) define('SPADMINTHEMES', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php'));
 if (!defined('SPADMININTEGRATION')) define('SPADMININTEGRATION', admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-integration/spa-integration.php'));
+
+$sp_addon_store_url = SP()->options->get( 'sp_addon_store_url');
+
+if($sp_addon_store_url == ''){
+	
+	$sp_addon_store_url = 'https://simple-press.com/';
+}
+
+if (!defined('SP_Addon_STORE_URL')) define('SP_Addon_STORE_URL', $sp_addon_store_url);

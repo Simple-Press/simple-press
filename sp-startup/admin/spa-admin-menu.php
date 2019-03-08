@@ -3,7 +3,8 @@
  * Admin menu functions
  * Loads for all forum admin pages to generate Simple Press menus
  *
- * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
+ * $LastChangedDate: 2019-01-30 16:40:00 -0600 (Wed, 30 Jan 2019) $
+ *
  * $Rev: 15817 $
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
@@ -376,6 +377,8 @@ function spa_setup_admin_menu() {
 	$forms = array(
 		SP()->primitives->admin_text('Toolbox')			 => array(
 			'toolbox' => ''),
+		SP()->primitives->admin_text('Licensing')		 => array(
+			'licensing' => ''),
 		SP()->primitives->admin_text('Housekeeping')	 => array(
 			'housekeeping' => 'sfreloadhk'),
 		SP()->primitives->admin_text('Data Inspector')	 => array(

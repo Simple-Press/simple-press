@@ -274,6 +274,9 @@ class spcCoreLoader {
 			add_action('sph_news_cron', 'sp_cron_check_news');
 			add_action('cron_schedules', 'sp_cron_schedules');
 			add_action('wp', 'sp_cron_scheduler');
+			add_action('sph_check_addons_status_interval', 'sph_check_addons_status');
+			add_action('wp_update_plugins', 'sph_check_for_addons_updates');
+			add_action('wp_update_plugins', 'sp_check_for_updates');
 		}
 
 		# WP Avatar replacement - low priority - let everyone else settle out
@@ -305,8 +308,6 @@ class spcCoreLoader {
 		add_filter('registration_errors', array(SP()->user, 'validate_registration'), 10, 3);
 		add_action('user_profile_update_errors', array(SP()->user, 'validate_display_name'), 10, 3);
 
-		add_action('wp_update_plugins', 'sp_check_for_updates');
-
 		# debug stuff
 		add_action('admin_head', 'spdebug_admindev');
 		add_action('wp_head', 'spdebug_styles');
@@ -314,5 +315,7 @@ class spcCoreLoader {
 
 		# fire action to indicate hooks complete
 		do_action('sph_core_hooks_complete');
+		
+		add_filter( 'cron_schedules', 'sp_ten_minutes_cron_interval' );
 	}
 }
