@@ -237,8 +237,9 @@ function spa_paint_editor($label, $name, $value, $submessage='', $xrows=1) {
  * @param string $value
  * @param string $submessage
  * @param int $rows
+ * @param boolean $mediaButtons [optional]
  */
-function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1) {
+function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, $mediaButtons = false) {
 	global $tab;
 
 	add_filter( 'tiny_mce_before_init', 'spa_cache_ajax_editor_settings', 11, 2 );
@@ -250,7 +251,7 @@ function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1) 
 	echo '</div>';
 	echo '<div class="clearboth"></div>';
 	wp_editor( html_entity_decode( $value ), $name, array(
-					'media_buttons' => false,
+					'media_buttons' => (bool) $mediaButtons,
 					'quicktags'     => true,
 					'textarea_rows' => $xrows
 				));
