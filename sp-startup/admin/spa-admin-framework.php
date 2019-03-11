@@ -8,6 +8,18 @@
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
+
+function spa_enqueue_datepicker() {
+	
+	$spAdminUIStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'jquery-ui.css' : SPADMINCSS.'jquery-ui.min.css';
+	wp_register_style('spAdminUIStyle', $spAdminUIStyleUrl);
+	wp_enqueue_style('spAdminUIStyle');
+	
+	wp_enqueue_script( 'jquery-ui-datepicker', false, array('jquery') );
+}
+
+
+
 /**
  * This function registers and enqueues the admin CSS style.
  *
@@ -19,11 +31,7 @@ function spa_load_admin_css() {
 	$spAdminStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'spa-admin.css' : SPADMINCSS.'spa-admin.min.css';
 	wp_register_style('spAdminStyle', $spAdminStyleUrl);
 	
-	$spAdminUIStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'jquery-ui.css' : SPADMINCSS.'jquery-ui.min.css';
-	wp_register_style('spAdminUIStyle', $spAdminUIStyleUrl);
-	
 	wp_enqueue_style('spAdminStyle');
-	wp_enqueue_style('spAdminUIStyle');
 	wp_enqueue_style('farbtastic');
 }
 
@@ -61,8 +69,8 @@ function spa_load_admin_scripts() {
 		
 		wp_enqueue_editor();
 		
-		wp_enqueue_script( 'jquery-ui-datepicker', false, array('jquery') );
-
+		spa_enqueue_datepicker();
+		
 		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin.js' : SPAJSCRIPT.'spa-admin.min.js';
 		wp_enqueue_script('sfadmin', $script, array(
 			'jquery',
