@@ -223,6 +223,8 @@ function spa_plugins_list_form() {
 			}
 			
 			if(isset($plugin_data['ItemId']) && $plugin_data['ItemId'] != ''){
+
+				# any upgrade for this plugin using licensing method
 				
 				$sp_plugin_name = sanitize_title_with_dashes($plugin_data['Name']);
 

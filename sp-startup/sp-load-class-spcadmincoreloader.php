@@ -169,7 +169,7 @@ class spcAdminCoreLoader {
 		# fire action to indicate hooks complete
 		do_action('sph_admin_core_hooks_complete');
 		
-		# fire action for edd update and license check function
+		# action for edd update and license check function
 		
 		add_action('wp_dashboard_setup', 'spa_dashboard_addon_news_setup', 1);
 		
@@ -177,6 +177,7 @@ class spcAdminCoreLoader {
 		
 		add_action('core_upgrade_preamble', 'spa_check_theme_addon_update' );
 		
+		#filter for changelog of plugins and themes
 		add_filter( 'plugins_api', 'spa_addons_changelog', 10, 3 );
 		
 	}

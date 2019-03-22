@@ -315,7 +315,5 @@ class spcCoreLoader {
 
 		# fire action to indicate hooks complete
 		do_action('sph_core_hooks_complete');
-		
-		add_filter( 'cron_schedules', 'sp_ten_minutes_cron_interval' );
 	}
 }
