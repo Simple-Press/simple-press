@@ -5,11 +5,10 @@
 	<div class="clearboth"></div>
 
 	<p class="codex-sub">Want that extra level of support?<br /></p>
-	<p>Premium support gains you full access to our support forums where our user-praised response times will
+	<p>Get premium support by purchasing a full Gold or Platinum level bundle of plugins and themes.  These bundles provide full access to a private priority support forums where our user-praised response times will
 	help you get the best out of Simple:Press.</p>
-	<p>And for those who want to get into the code to perform some serious customisation - our developer documentation provides
-	extensive and growing details of the full Simple:Press API.</p>
-	<p>For membership plan options please visit the <a href="<?php echo SPHOMESITE; ?>/store/memberships/" >
-	Simple:Press Membership Plans</a></p>
+	<p>Select the Platinum bundle and get priority private ticket support!</p>
+	<p>For pricing and other information please visit <a href="<?php echo SPHOMESITE; ?>/store/add-ons/" >
+	Simple:Press Pricing Plans</a></p>
 
 </div>
