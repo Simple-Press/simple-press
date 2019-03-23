@@ -142,6 +142,11 @@ function sp_render_add_topic_form($args) {
 		$tout.= "<div class='$editorMessage'>".SP()->displayFilters->title($postmsg['sfpostmsgtext'])."</div>\n";
 		$tout.= sp_InsertBreak('echo=0&spacer=8px');
 	}
+	
+	if (!empty($postmsg['sfpostmsgtopic2'])) {
+		$tout.= "<div class='$editorMessage'>".SP()->displayFilters->title($postmsg['sfpostmsgtext2'])."</div>\n";
+		$tout.= sp_InsertBreak('echo=0&spacer=8px');
+	}	
 
 	# create an empty div to allow plugins to add something
 	$tout.= '<div id="spEditorCustomDiv"></div>';
