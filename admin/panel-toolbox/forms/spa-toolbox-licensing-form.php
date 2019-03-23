@@ -321,13 +321,9 @@ function spa_toolbox_licensing_form() {
 	echo '</div>';
 
 	echo '<div class="sfform-submit-bar" style="margin-bottom: 6px;">';
-	if($count_themes <1 && $count_plugins <1){
-		echo '<input type="button" class="button-primary" disabled = "disabled" name="force_update_check" value="'.SP()->primitives->admin_text('Check Update Now').'">';
-	}else{
-		echo '<input type="button" class="button-primary" id="force_update_check" name="force_update_check" value="'.SP()->primitives->admin_text('Check Update Now').'">';
-	}
-	
+	echo '<input type="button" class="button-primary" id="force_update_check" name="force_update_check" value="'.SP()->primitives->admin_text('Check Update Now').'">';
 	echo '</div>';
+	
 	spa_paint_close_fieldset();
 	spa_paint_close_panel();
 	
