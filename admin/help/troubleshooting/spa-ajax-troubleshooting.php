@@ -113,7 +113,7 @@ spa_paint_tab_right_cell();
 
 spa_paint_open_panel();
 echo '<div class="helpAndFAQ">';
-spa_paint_open_fieldset(SP()->primitives->admin_text('Customisation Service'), false);
+spa_paint_open_fieldset(SP()->primitives->admin_text('Customization Service'), false);
 require 'spa-custom-links.php';
 spa_paint_close_fieldset();
 echo '</div>';
