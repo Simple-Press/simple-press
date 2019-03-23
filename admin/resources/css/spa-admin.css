@@ -317,7 +317,7 @@ a:active {
     font-weight: 600;
     font-size: 11px;
     text-align: left;
-    padding: 5px 10px 5px 3px;
+    padding: 5px 10px 5px 10px;
     text-shadow: none;
     width: auto;
     border-style: solid;

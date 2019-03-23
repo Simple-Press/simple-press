@@ -857,17 +857,6 @@ function sp_compile_forums_mobile($forums, $parent = 0, $level = 0, $valueURL = 
 	return $out;
 }
 
-function sp_ten_minutes_cron_interval( $schedules ) {
-	
-    $schedules['ten_minutes'] = array(
-    
-        'interval' => 60 * 10,
-        'display'  => esc_html__( 'Every Ten Minutes' ),
-    );
- 
-    return $schedules;
-}
-
 /**
  * This function determines if there is an update available to the core Simple Press plugin and themes.
  *

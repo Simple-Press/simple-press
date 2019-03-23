@@ -31,7 +31,7 @@ function sp_cron_scheduler() {
 	}
 	
 	if (!wp_next_scheduled('sph_check_addons_status_interval')) {
-		wp_schedule_event(time(), 'ten_minutes', 'sph_check_addons_status_interval');
+		wp_schedule_event(time(), 'daily', 'sph_check_addons_status_interval');
 	}
 
 	$sfuser = SP()->options->get('sfuserremoval');
