@@ -30,7 +30,8 @@ $out = '<style>#spAbout p a {padding:0 !important;}</style>';
 
 $out.= '<div id="spAbout" style="padding: 0 20px;">';
 $out.= '<img src="'.SPCOMMONIMAGES.'sp-full-logo.png" alt="" title="" /><br />';
-$out.= '<p>&copy; 2006-'.date('Y').' '.SP()->primitives->front_text('by').' <a href="http://www.yellowswordfish.com"><b>Andy Staines</b></a> '.SP()->primitives->front_text('and').' <a href="http://cruisetalk.org/"><b>Steve Klasen</b></a></p>';
+$out.= '<p>&copy; 2006-'.date('Y').' '.SP()->primitives->front_text('by').' <a href="https://simple-press.com"><b>Simple:Press/SMI</b></a> ';
+$out.= '<p>'.SP()->primitives->front_text('A heartfelt and sincere THANK YOU to the original developers of Simple:Press who poured a lot of blood, sweat and tears into the plugin for more than 12 years - ').' <a href="http://www.yellowswordfish.com"><b>Andy Staines</b></a> '.SP()->primitives->front_text('and').' <a href="http://cruisetalk.org/"><b>Steve Klasen</b></a></p>';
 $out.= '<p><a href="http://twitter.com/simpleforum">'.SP()->primitives->front_text('Follow us on Twitter').'</a> : <a href="https://www.facebook.com/simplepressforum">'.SP()->primitives->front_text('Like us on Facebook').'</a></p>';
 $out.= '<hr />';
 
