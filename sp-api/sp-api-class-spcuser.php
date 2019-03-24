@@ -189,6 +189,7 @@ class spcUser {
 			$user->linkedin   = '';
 			$user->youtube    = '';
 			$user->googleplus = '';
+			$user->instagram = '';
 
 			$d = SP()->DB->table(SPUSERMETA, "user_id=$id");
 			if ($d) {
@@ -423,7 +424,7 @@ class spcUser {
 	 * @return array    list of WP users and usermeta data to be used and desired filters
 	 */
 	private function build_filter_list() {
-		$includeList = array('user_login' => 'name', 'user_email' => 'email', 'user_url' => 'url', 'user_registered' => '', 'description' => 'text', 'location' => 'title', 'first_name' => 'name', 'last_name' => 'name', 'aim' => 'title', 'yim' => 'title', 'jabber' => 'title', 'msn' => 'title', 'icq' => 'title', 'skype' => 'title', 'facebook' => 'title', 'myspace' => 'title', 'twitter' => 'title', 'linkedin' => 'title', 'youtube' => 'title', 'googleplus' => 'title', 'display_name' => 'name', 'signature' => 'signature', 'sp_change_pw' => '', 'photos' => '',);
+		$includeList = array('user_login' => 'name', 'user_email' => 'email', 'user_url' => 'url', 'user_registered' => '', 'description' => 'text', 'location' => 'title', 'first_name' => 'name', 'last_name' => 'name', 'aim' => 'title', 'yim' => 'title', 'jabber' => 'title', 'msn' => 'title', 'icq' => 'title', 'skype' => 'title', 'facebook' => 'title', 'myspace' => 'title', 'twitter' => 'title', 'linkedin' => 'title', 'youtube' => 'title', 'googleplus' => 'title', 'instagram' => 'title','display_name' => 'name', 'signature' => 'signature', 'sp_change_pw' => '', 'photos' => '',);
 
 		# allow plugins to add more usermeta class data
 		$includeList = apply_filters('sph_user_class_meta', $includeList);

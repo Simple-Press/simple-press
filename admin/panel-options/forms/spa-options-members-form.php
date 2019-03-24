@@ -83,6 +83,14 @@ function spa_options_members_form() {
 				spa_paint_wide_textarea(SP()->primitives->admin_text('Blocked guest posting names'), 'guest-name', $sfoptions['guest-name'], $submessage);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
+		
+		spa_paint_open_panel();
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Deprecated Identities'), true, 'member-deprecated-identities');
+				echo SP()->primitives->admin_text('Certain identities such as AIM are part of services that no longer exists. We have removed these from the main user profile screen so that users can no longer enter new data for these identities. <br />If you would still like your users to see these, turn this option on.');
+				spa_paint_checkbox(SP()->primitives->admin_text('Display Deprecated Identities'), 'sfdisplaydeprecatedidentities', $sfoptions['display_deprecated_identities']);
+			spa_paint_close_fieldset();
+		spa_paint_close_panel();		
+		
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Privacy Data Export'), true, 'privacy-export');

@@ -304,6 +304,7 @@ function spa_deactivate_plugin() {
 		                    'linkedin',
 		                    'youtube',
 		                    'googleplus',
+							'instagram',
 		                    'sfuse_quicktags',
 		                    'signature',
 		                    'sigimage');

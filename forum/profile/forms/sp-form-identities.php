@@ -29,6 +29,10 @@ if (empty($userid)) return;
 		}(window.spj = window.spj || {}, jQuery));
     </script>
 <?php
+
+// Set variable to control whether we should display deprecated identities...
+$display_deprecated_identities = (Null != SP()->options->get('display_deprecated_identities') ? boolval(SP()->options->get('display_deprecated_identities')) : false) ;
+
 $out = '';
 $out .= '<p>';
 $msg = SP()->primitives->front_text('On this panel, you may edit your Online Identities. Please enter only account names and not a URL.');
@@ -45,83 +49,6 @@ $out .= sp_create_nonce('forum-profile');
 
 $out = apply_filters('sph_ProfileFormTop', $out, $userid, $thisSlug);
 $out = apply_filters('sph_ProfileIdentitiesFormTop', $out, $userid);
-
-$tout = '';
-$tout .= '<div class="spColumnSection spProfileLeftCol">';
-$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('AIM').': </p>';
-$tout .= '</div>';
-$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
-$tout .= '<div class="spColumnSection spProfileRightCol">';
-$aim = (!empty(SP()->user->profileUser->aim)) ? SP()->user->profileUser->aim : '';
-$tout .= '<input type="text" class="spControl" name="aim" id="aim" value="'.esc_attr($aim).'" />';
-$tout .= '</div>';
-$out .= apply_filters('sph_ProfileUserAIM', $tout, $userid, $thisSlug);
-
-$tout = '';
-$tout .= '<div class="spColumnSection spProfileLeftCol">';
-$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('Yahoo IM').': </p>';
-$tout .= '</div>';
-$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
-$tout .= '<div class="spColumnSection spProfileRightCol">';
-$yim = (!empty(SP()->user->profileUser->yim)) ? SP()->user->profileUser->yim : '';
-$tout .= '<input type="text" class="spControl" name="yim" id="yim" value="'.esc_attr($yim).'" />';
-$tout .= '</div>';
-$out .= apply_filters('sph_ProfileUserYahoo', $tout, $userid, $thisSlug);
-
-$tout = '';
-$tout .= '<div class="spColumnSection spProfileLeftCol">';
-$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('ICQ').': </p>';
-$tout .= '</div>';
-$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
-$tout .= '<div class="spColumnSection spProfileRightCol">';
-$icq = (!empty(SP()->user->profileUser->icq)) ? SP()->user->profileUser->icq : '';
-$tout .= '<input type="text" class="spControl" name="icq" id="icq" value="'.esc_attr($icq).'" />';
-$tout .= '</div>';
-$out .= apply_filters('sph_ProfileUserICQ', $tout, $userid, $thisSlug);
-
-$tout = '';
-$tout .= '<div class="spColumnSection spProfileLeftCol">';
-$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('Google Talk').': </p>';
-$tout .= '</div>';
-$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
-$tout .= '<div class="spColumnSection spProfileRightCol">';
-$jabber = (!empty(SP()->user->profileUser->jabber)) ? SP()->user->profileUser->jabber : '';
-$tout .= '<input type="text" class="spControl" name="jabber" id="aim" value="'.esc_attr($jabber).'" />';
-$tout .= '</div>';
-$out .= apply_filters('sph_ProfileUserGoogle', $tout, $userid, $thisSlug);
-
-$tout = '';
-$tout .= '<div class="spColumnSection spProfileLeftCol">';
-$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('MSN').': </p>';
-$tout .= '</div>';
-$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
-$tout .= '<div class="spColumnSection spProfileRightCol">';
-$msn = (!empty(SP()->user->profileUser->msn)) ? SP()->user->profileUser->msn : '';
-$tout .= '<input type="text" class="spControl" name="msn" id="msn" value="'.esc_attr($msn).'" />';
-$tout .= '</div>';
-$out .= apply_filters('sph_ProfileUserMSN', $tout, $userid, $thisSlug);
-
-$tout = '';
-$tout .= '<div class="spColumnSection spProfileLeftCol">';
-$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('Skype').': </p>';
-$tout .= '</div>';
-$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
-$tout .= '<div class="spColumnSection spProfileRightCol">';
-$skype = (!empty(SP()->user->profileUser->skype)) ? SP()->user->profileUser->skype : '';
-$tout .= '<input type="text" class="spControl" name="skype" id="skype" value="'.esc_attr($skype).'" />';
-$tout .= '</div>';
-$out .= apply_filters('sph_ProfileUserSkype', $tout, $userid, $thisSlug);
-
-$tout = '';
-$tout .= '<div class="spColumnSection spProfileLeftCol">';
-$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('MySpace').': </p>';
-$tout .= '</div>';
-$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
-$tout .= '<div class="spColumnSection spProfileRightCol">';
-$myspace = (!empty(SP()->user->profileUser->myspace)) ? SP()->user->profileUser->myspace : '';
-$tout .= '<input type="text" class="spControl" name="myspace" id="myspace" value="'.esc_attr($myspace).'" />';
-$tout .= '</div>';
-$out .= apply_filters('sph_ProfileUserMySpace', $tout, $userid, $thisSlug);
 
 $tout = '';
 $tout .= '<div class="spColumnSection spProfileLeftCol">';
@@ -147,6 +74,17 @@ $out .= apply_filters('sph_ProfileUserTwitter', $tout, $userid, $thisSlug);
 
 $tout = '';
 $tout .= '<div class="spColumnSection spProfileLeftCol">';
+$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('Instagram').': </p>';
+$tout .= '</div>';
+$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
+$tout .= '<div class="spColumnSection spProfileRightCol">';
+$instagram = (!empty(SP()->user->profileUser->instagram)) ? SP()->user->profileUser->instagram : '';
+$tout .= '<input type="text" class="spControl" name="instagram" id="instagram" value="'.esc_attr($instagram).'" />';
+$tout .= '</div>';
+$out .= apply_filters('sph_ProfileUserInstagram', $tout, $userid, $thisSlug);
+
+$tout = '';
+$tout .= '<div class="spColumnSection spProfileLeftCol">';
 $tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('LinkedIn').': </p>';
 $tout .= '</div>';
 $tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
@@ -169,14 +107,112 @@ $out .= apply_filters('sph_ProfileUserYouTube', $tout, $userid, $thisSlug);
 
 $tout = '';
 $tout .= '<div class="spColumnSection spProfileLeftCol">';
-$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('Google Plus').': </p>';
+$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('Skype').': </p>';
 $tout .= '</div>';
 $tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
 $tout .= '<div class="spColumnSection spProfileRightCol">';
-$googleplus = (!empty(SP()->user->profileUser->googleplus)) ? SP()->user->profileUser->googleplus : '';
-$tout .= '<input type="text" class="spControl" name="googleplus" id="googleplus" value="'.esc_attr($googleplus).'" />';
+$skype = (!empty(SP()->user->profileUser->skype)) ? SP()->user->profileUser->skype : '';
+$tout .= '<input type="text" class="spControl" name="skype" id="skype" value="'.esc_attr($skype).'" />';
 $tout .= '</div>';
-$out .= apply_filters('sph_ProfileUserGooglePlus', $tout, $userid, $thisSlug);
+$out .= apply_filters('sph_ProfileUserSkype', $tout, $userid, $thisSlug);
+
+// Maybe display AIM identity
+if (true == $display_deprecated_identities) {
+	$tout = '';
+	$tout .= '<div class="spColumnSection spProfileLeftCol">';
+	$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('AIM').': </p>';
+	$tout .= '</div>';
+	$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
+	$tout .= '<div class="spColumnSection spProfileRightCol">';
+	$aim = (!empty(SP()->user->profileUser->aim)) ? SP()->user->profileUser->aim : '';
+	$tout .= '<input type="text" class="spControl" name="aim" id="aim" value="'.esc_attr($aim).'" />';
+	$tout .= '</div>';
+	$out .= apply_filters('sph_ProfileUserAIM', $tout, $userid, $thisSlug);
+}
+
+// Maybe display Yahoo IM identity
+if (true == $display_deprecated_identities) {
+	$tout = '';
+	$tout .= '<div class="spColumnSection spProfileLeftCol">';
+	$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('Yahoo IM').': </p>';
+	$tout .= '</div>';
+	$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
+	$tout .= '<div class="spColumnSection spProfileRightCol">';
+	$yim = (!empty(SP()->user->profileUser->yim)) ? SP()->user->profileUser->yim : '';
+	$tout .= '<input type="text" class="spControl" name="yim" id="yim" value="'.esc_attr($yim).'" />';
+	$tout .= '</div>';
+	$out .= apply_filters('sph_ProfileUserYahoo', $tout, $userid, $thisSlug);
+}
+
+// Maybe display ICQ identity
+if (true == $display_deprecated_identities) {
+	$tout = '';
+	$tout .= '<div class="spColumnSection spProfileLeftCol">';
+	$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('ICQ').': </p>';
+	$tout .= '</div>';
+	$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
+	$tout .= '<div class="spColumnSection spProfileRightCol">';
+	$icq = (!empty(SP()->user->profileUser->icq)) ? SP()->user->profileUser->icq : '';
+	$tout .= '<input type="text" class="spControl" name="icq" id="icq" value="'.esc_attr($icq).'" />';
+	$tout .= '</div>';
+	$out .= apply_filters('sph_ProfileUserICQ', $tout, $userid, $thisSlug);
+}
+
+// Maybe display Google Talk identity
+if (true == $display_deprecated_identities) {
+	$tout = '';
+	$tout .= '<div class="spColumnSection spProfileLeftCol">';
+	$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('Google Talk').': </p>';
+	$tout .= '</div>';
+	$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
+	$tout .= '<div class="spColumnSection spProfileRightCol">';
+	$jabber = (!empty(SP()->user->profileUser->jabber)) ? SP()->user->profileUser->jabber : '';
+	$tout .= '<input type="text" class="spControl" name="jabber" id="aim" value="'.esc_attr($jabber).'" />';
+	$tout .= '</div>';
+	$out .= apply_filters('sph_ProfileUserGoogle', $tout, $userid, $thisSlug);
+}
+
+// Maybe display MSN identity
+if (true == $display_deprecated_identities) {
+	$tout = '';
+	$tout .= '<div class="spColumnSection spProfileLeftCol">';
+	$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('MSN').': </p>';
+	$tout .= '</div>';
+	$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
+	$tout .= '<div class="spColumnSection spProfileRightCol">';
+	$msn = (!empty(SP()->user->profileUser->msn)) ? SP()->user->profileUser->msn : '';
+	$tout .= '<input type="text" class="spControl" name="msn" id="msn" value="'.esc_attr($msn).'" />';
+	$tout .= '</div>';
+	$out .= apply_filters('sph_ProfileUserMSN', $tout, $userid, $thisSlug);
+}
+
+// Maybe display MY SPACE identity
+if (true == $display_deprecated_identities) {
+	$tout = '';
+	$tout .= '<div class="spColumnSection spProfileLeftCol">';
+	$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('MySpace').': </p>';
+	$tout .= '</div>';
+	$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
+	$tout .= '<div class="spColumnSection spProfileRightCol">';
+	$myspace = (!empty(SP()->user->profileUser->myspace)) ? SP()->user->profileUser->myspace : '';
+	$tout .= '<input type="text" class="spControl" name="myspace" id="myspace" value="'.esc_attr($myspace).'" />';
+	$tout .= '</div>';
+	$out .= apply_filters('sph_ProfileUserMySpace', $tout, $userid, $thisSlug);
+}
+
+// Maybe display Google+ identity
+if (true == $display_deprecated_identities) {
+	$tout = '';
+	$tout .= '<div class="spColumnSection spProfileLeftCol">';
+	$tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('Google Plus').': </p>';
+	$tout .= '</div>';
+	$tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
+	$tout .= '<div class="spColumnSection spProfileRightCol">';
+	$googleplus = (!empty(SP()->user->profileUser->googleplus)) ? SP()->user->profileUser->googleplus : '';
+	$tout .= '<input type="text" class="spControl" name="googleplus" id="googleplus" value="'.esc_attr($googleplus).'" />';
+	$tout .= '</div>';
+	$out .= apply_filters('sph_ProfileUserGooglePlus', $tout, $userid, $thisSlug);
+}
 
 $out = apply_filters('sph_ProfileIdentitiesFormBottom', $out, $userid);
 $out = apply_filters('sph_ProfileFormBottom', $out, $userid, $thisSlug);
