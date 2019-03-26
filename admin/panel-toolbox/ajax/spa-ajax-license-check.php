@@ -201,13 +201,13 @@ if(isset($_POST['sp_action'])){
 		
 		echo json_encode($result);
 		
-	}elseif($sp_action == 'save_store_url'){
+	}elseif($sp_action == 'sp_licensing_server_url'){
 		
 		# Save store url for get license of plugins from
 
-		$sp_sample_store_url = sanitize_text_field($_POST['sp_sample_store_url']);
+		$sp_licensing_server_url = sanitize_text_field($_POST['sp_licensing_server_url']);
 		
-		SP()->options->update('sp_addon_store_url', $sp_sample_store_url);
+		SP()->options->update('sp_addon_store_url', $sp_licensing_server_url);
 		
 		$message = SP()->primitives->admin_text('Updated option Successfully.');
 		

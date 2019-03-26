@@ -58,8 +58,8 @@
 
         $(document).on("click", 'input[name="SP_license_activate"]', function(e) {
             e.preventDefault();
-            var s = $(this).parents("form").find('input[name="sp_sample_license_key"]').val(),
-                n = $(this).parents("form").find(".sp_item_name").val(),
+            var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
+                n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
                 a = $(this).parents("form").find('input[name="sp_itemn"]').val(),
                 i = $(this).parents("form").find('input[name="sp_item_id"]').val();
             $.ajax({
@@ -96,8 +96,8 @@
 
         $(document).on("click", 'input[name="SP_license_deactivate"]', function(e) {
             e.preventDefault();
-            var s = $(this).parents("form").find('input[name="sp_sample_license_key"]').val(),
-                n = $(this).parents("form").find(".sp_item_name").val(),
+            var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
+                n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
                 a = $(this).parents("form").find('input[name="sp_itemn"]').val(),
                 i = $(this).parents("form").find('input[name="sp_item_id"]').val();
 
@@ -135,14 +135,14 @@
 
         $(document).on("click", 'input[name="save_store_url"]', function(e) {
             e.preventDefault();
-            var s = $(this).parents("form").find('input[name="sp_sample_store_url"]').val();
+            var s = $(this).parents("form").find('input[name="sp_licensing_server_url"]').val();
             $.ajax({
                 type: "POST",
                 dataType: "json",
                 url: ajaxurl,
                 data: {
                     action: "license-check",
-                    sp_sample_store_url: s,
+                    sp_licensing_server_url: s,
                     sp_action: "save_store_url"
                 },
                 timeout: 5000,
