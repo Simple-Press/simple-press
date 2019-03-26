@@ -152,7 +152,7 @@ class spcError {
 	 *
 	 * @param string $sql      The original sql statement causing the error
 	 * @param string $sqlError The reported SQL error text
-	 *                         -----------------------------------------------------------------
+	 * -----------------------------------------------------------------
 	 */
 	public function errorSQL($sql, $sqlerror) {
 		if (!$this->record) return;
@@ -206,7 +206,7 @@ class spcError {
 	 * @param string  $errortext pre-formatted text
 	 * @param number  $errno     The error type identifier
 	 * @param string  $keyCheck  key details for new/exist checking
-	 *                           -----------------------------------------------------------------
+	 * -----------------------------------------------------------------
 	 */
 	public function errorWrite($errortype, $errortext, $errno = E_ERROR, $keyCheck = 'unset_keycheck') {
 		global $wpdb;
@@ -262,7 +262,7 @@ class spcError {
 	 *
 	 * @param string  $keyCheck key details for new/exist checking
 	 * @param number  $e        number of prior occurencies of error
-	 *                          -----------------------------------------------------------------
+	 * -----------------------------------------------------------------
 	 */
 	private function errorUpdate($keyCheck, $e) {
 		global $wpdb;
@@ -290,7 +290,7 @@ class spcError {
 	 * @since 6.0
 	 *
 	 * @param bool $status true/false sets state of error recording
-	 *                     -----------------------------------------------------------------
+	 * -----------------------------------------------------------------
 	 */
 	public function setRecording($status) {
 		$this->record = (bool)$status;
@@ -303,7 +303,7 @@ class spcError {
 	 * @since 6.0
 	 *
 	 * @param bool $status true/false sets state of notice error recording
-	 *                     -----------------------------------------------------------------
+	 * -----------------------------------------------------------------
 	 */
 	public function setNotices($status) {
 		$this->notices = (bool)$status;
