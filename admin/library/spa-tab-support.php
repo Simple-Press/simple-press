@@ -111,6 +111,16 @@ function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $
 	$tab++;
 }
 
+function spa_paint_single_input($name, $value, $disabled=false, $css_classes = '' ) {
+	global $tab;
+	
+	$field_classes = "{$css_classes}";
+	echo "<input type='text' class='wp-core-ui $field_classes' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	if ($disabled == true) echo "disabled='disabled' ";
+	echo "/>";
+	$tab++;
+}
+
 function spa_paint_date($label, $name, $value, $disabled=false, $large=false) {
 	global $tab;
 
