@@ -218,15 +218,12 @@ if(isset($_POST['sp_action'])){
 	}elseif($sp_action == 'force_update_check'){
 
 		# Force update check process
-		
 		$sph_check_addons_status = sph_check_addons_status();
 
 		if($sph_check_addons_status['sp_return_update_themes'] == 1 ||  $sph_check_addons_status['sp_return_update_plugins']){
-
-			$message =  SP()->primitives->admin_text('Plugins update checked Successfully! Go to the Dashboard > Updates Page and update the necessary plugins');
+			$message =  SP()->primitives->admin_text('Plugins and themes were checked for updates! You can now go to the Dashboard > Updates Page to apply any new updates.');
 		}else{
-
-			$message =  SP()->primitives->admin_text('No valid license found for Plugins!');
+			$message =  SP()->primitives->admin_text('No valid license found for Plugins or themes!');
 		}
 
 		$result = array('message'=>$message);
