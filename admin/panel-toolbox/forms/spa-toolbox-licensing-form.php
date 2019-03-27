@@ -92,7 +92,7 @@ function spa_toolbox_licensing_form() {
  */
 function spa_toolbox_licensing_form_paint_instructions() {
 	echo '<div class="sf-licensing-instructions-wrap">'.'<h2>'.SP()->primitives->admin_text('Instructions for using this licensing screen').'</h2>';
-		echo '<ul class="licensing_note_list">';
+		echo '<ul class="sp-licensing_note_list">';
 			echo '<li><strong>'.SP()->primitives->admin_text('Step 1: ').'</strong>'.SP()->primitives->admin_text('Look up your license key in your ACCOUNT area on our website. License keys should also be in your purchase confirmation emails.').'</li>';		
 			echo '<li><strong>'.SP()->primitives->admin_text('Step 2: ').'</strong>'.SP()->primitives->admin_text('Enter your license key into the &#39;License Key&#39; field next to your products').'</li>';
 			echo '<li><strong>'.SP()->primitives->admin_text('Step 3: ').'</strong>'.SP()->primitives->admin_text('Click the &#39;Activate License&#39; button next to your products').'</li>';			
@@ -187,21 +187,21 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 								
 								if($total_days >= 0){
 									
-									echo '<span class="green_color">';
+									echo '<span class="sp-licensing-key-active">';
 									echo SP()->primitives->admin_text('License key is active');
 									echo '</span>';
 
-									echo '<span class="red_color">';
+									echo '<span class="sp-licensing-key-error">';
 									echo SP()->primitives->admin_text('Your License is expire in '.$total_days.' days please renew your license now');
 									echo '</span>';
 
 								}elseif($total_days == 'over'){
 									
-									echo ' <span class="red_color">'. SP()->primitives->admin_text('Your License is expired please renew your license now'). '</span>';
+									echo ' <span class="sp-licensing-key-error">'. SP()->primitives->admin_text('Your License is expired please renew your license now'). '</span>';
 									
 								}else{
 									
-									echo '<span class="green_color">'. SP()->primitives->admin_text('License key is active') .'</span>';
+									echo '<span class="sp-licensing-key-active">'. SP()->primitives->admin_text('License key is active') .'</span>';
 								}
 							
 							}else {
@@ -239,7 +239,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 						</td>
 						<td>
 							<?php if( $license_status !== false && $license_status == 'valid' ) { ?>
-								<span class="green_color"><?php echo SP()->primitives->admin_text('Active'); ?></span>
+								<span class="sp-licensing-key-active"><?php echo SP()->primitives->admin_text('Active'); ?></span>
 								<input type="submit" class="button-secondary" id="<?php echo $button_id; ?>" name="SP_license_deactivate" value="<?php echo SP()->primitives->admin_text('Deactivate License'); ?>"/>
 							<?php } else {
 								?>

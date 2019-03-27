@@ -133,7 +133,7 @@ if(isset($_POST['sp_action'])){
 					// delete info from option table
 					SP()->options->delete( $update_info_option );
 					
-					$message = SP()->primitives->admin_text('Your license key is deactivated.' );
+					$message = SP()->primitives->admin_text('Your license key is deactivated. Please wait a bit for the screen to update to reflect your revised license status!  Thank you.' );
 					
 				}else{
 					
@@ -194,7 +194,7 @@ if(isset($_POST['sp_action'])){
 		
 		if(!isset($message) && $sp_action == 'activate_license'){
 			
-			$message = SP()->primitives->admin_text('License successfully Activated. Thank you.');
+			$message = SP()->primitives->admin_text('License successfully activated. Please wait a bit for the page to refresh and reflect the new license status! Thank you.');
 		}
 		
 		$result = array('message'=> isset($message) ? $message : '', 'sp_item' => $sp_item);

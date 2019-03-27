@@ -1771,43 +1771,6 @@ table td.permhead {
     margin-bottom: 5px;
 }
 
-.form-table td.sp_td_left{
-	
-	font-weight: 600;
-	font-size: 12px;
-	text-align: left;
-	padding: 5px 10px 5px 10px;
-	border-style: solid;
-	border-width: 1px 1px 1px;
-	border-color: #ccc;
-	width:20%;
-	border-bottom: 1px solid #ddd;
-	color: #000000;
-}
-
-.form-table td.sp_td_licence_info{
-	font-weight: 600; 
-	line-height: 18px; 
-	font-size: 12px;
-}
-
-.sp_addons_not_found { 
-	margin-left: 0px;
-}
-.sp_addon_title{ 
-	font-size: 17px;
-	color: #0073aa;
-	font-weight: 600;
-	margin-bottom: 10px; 
-}
-
-.licensing_note_list{
-	margin:10px;
-}
-
-.green_color{color:green;}
-
-.red_color{color:red;}
 
 @media screen and (max-width: 1300px) {
     .sffieldset .floatList li {
@@ -2070,3 +2033,44 @@ table td.permhead {
         padding: 4px !important;
     }
 }
+
+/* Style adjustments for new licensing tab introducted in 6.0.7 / 6.1.0 */
+.form-table td.sp_td_left{
+	
+	font-weight: 600;
+	font-size: 12px;
+	text-align: left;
+	padding: 5px 10px 5px 10px;
+	border-style: solid;
+	border-width: 1px 1px 1px;
+	border-color: #ccc;
+	width:20%;
+	border-bottom: 1px solid #ddd;
+	color: #000000;
+}
+
+.form-table td.sp_td_licence_info{
+	font-weight: 600; 
+	line-height: 18px; 
+	font-size: 12px;
+}
+
+.sp_addons_not_found { 
+	margin-left: 0px;
+}
+.sp_addon_title{ 
+	font-size: 17px;
+	color: #0073aa;
+	font-weight: 600;
+	margin-bottom: 10px; 
+}
+
+.sp-licensing_note_list{
+	margin:10px;
+}
+
+.sp-licensing-key-active{color:green;}
+
+.sp-licensing-key-error{color:red;}
+
+/* End style adjustments for licensing tab */
