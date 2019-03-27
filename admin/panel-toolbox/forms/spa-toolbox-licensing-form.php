@@ -201,11 +201,11 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 									
 								}else{
 									
-									echo '<span class="sp-licensing-key-active">'. SP()->primitives->admin_text('License key is active') .'</span>';
+									echo '<br /><span class="sp-licensing-key-active">'. SP()->primitives->admin_text('License key is active') .'</span>';
 								}
 							
 							}else {
-								echo '<label class="description" for="sp_addon_license_key">'. SP()->primitives->admin_text('Enter your license key').'</label>';
+								echo '<br /><label class="description" for="sp_addon_license_key">'. SP()->primitives->admin_text('Your license key seems to be inactive or invalid.  Please enter your license key above and click the Activate button below.').'</label>';
 							} ?>
 						</td>
 					</tr>
