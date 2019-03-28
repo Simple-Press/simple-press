@@ -93,15 +93,15 @@ if(isset($_POST['sp_action'])){
 			);
 		}
 		
-		$sp_itemn_id = sanitize_text_field($_POST['sp_itemn_id']);
+		$sp_item_id = sanitize_text_field($_POST['sp_item_id']);
 		
-		if($sp_itemn_id == ''){
+		if($sp_item_id == ''){
 						
 			$api_params['item_name'] = urlencode($item_name);  // the name of our product in SP_Addon_STORE
 			
 		}else{
 			
-			$api_params['item_id'] = $sp_itemn_id;  // id of this plugin in SP_Addon_STORE
+			$api_params['item_id'] = $sp_item_id;  // id of this plugin in SP_Addon_STORE
 		}
 		
 		

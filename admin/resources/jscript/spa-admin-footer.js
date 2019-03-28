@@ -61,7 +61,7 @@
             e.preventDefault();
             var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
                 n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
-                a = $(this).parents("form").find('input[name="sp_itemn"]').val(),
+                a = $(this).parents("form").find('input[name="sp_item"]').val(),
                 i = $(this).parents("form").find('input[name="sp_item_id"]').val();
             $.ajax({
                 type: "POST",
@@ -72,7 +72,7 @@
                     licence_key: s,
                     item_name: n,
                     sp_item: a,
-                    sp_itemn_id: i,
+                    sp_item_id: i,
                     sp_action: "activate_license"
                 },
                 timeout: 5000,
@@ -99,7 +99,7 @@
             e.preventDefault();
             var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
                 n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
-                a = $(this).parents("form").find('input[name="sp_itemn"]').val(),
+                a = $(this).parents("form").find('input[name="sp_item"]').val(),
                 i = $(this).parents("form").find('input[name="sp_item_id"]').val();
 
             $.ajax({
@@ -111,7 +111,7 @@
                     licence_key: s,
                     item_name: n,
                     sp_item: a,
-                    sp_itemn_id: i,
+                    sp_item_id: i,
                     sp_action: "deactivate_license"
                 },
                 timeout: 5000,
@@ -233,7 +233,7 @@
             e.preventDefault();
             var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
                 n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
-                a = $(this).parents("form").find('input[name="sp_itemn"]').val(),
+                a = $(this).parents("form").find('input[name="sp_item"]').val(),
                 i = $(this).parents("form").find('input[name="sp_item_id"]').val();
 
             $.ajax({
@@ -245,7 +245,7 @@
                     licence_key: s,
                     item_name: n,
                     sp_item: a,
-                    sp_itemn_id: i,
+                    sp_item_id: i,
                     sp_action: "license_remove"
                 },
                 timeout: 5000,

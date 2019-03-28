@@ -142,7 +142,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 		$ajaxURL = wp_nonce_url(SPAJAXURL.'toolbox-loader&amp;saveform=licensing', 'toolbox-loader');
 		$classname = 'plugins_check';
 		$form_name = 'plugins';
-		$sp_itemn = 'sp_check_plugin';
+		$sp_item = 'sp_check_plugin';
 		$sp_item_name = $addon_data['Name'];
 		$sp_item_id = $addon_data['ItemId'];
 	}else{
@@ -150,7 +150,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 		$ajaxURL = wp_nonce_url(SPAJAXURL.'license-check&amp;saveform=licence_them', 'license-check');
 		$classname = 'themes_check';
 		$form_name = 'themes';
-		$sp_itemn = 'sp_check_theme';
+		$sp_item = 'sp_check_theme';
 		$sp_item_name = $addon_data['Name'];
 		$sp_item_id = $addon_data['ItemId'];
 	}
@@ -164,7 +164,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 			
 			<?php
 			
-				spa_paint_hidden_input('sp_itemn', $sp_itemn);
+				spa_paint_hidden_input('sp_item', $sp_item);
 				spa_paint_hidden_input('sp_item_name', $sp_item_name);
 				spa_paint_hidden_input('sp_item_id', $sp_item_id);
 				
