@@ -1804,7 +1804,7 @@ table td.permhead {
     height: auto;
 }
 
-/* list tabel stuff */
+/* list table stuff */
 
 #wpbody #sfmaincontainer .tablenav span.displaying-num {
     vertical-align: middle !important;
@@ -2033,10 +2033,16 @@ table td.permhead {
         padding: 4px !important;
     }
 }
+/* End experimental responsive stuff */
 
+/*************************************************************************/
 /* Style adjustments for new licensing tab introducted in 6.0.7 / 6.1.0 */
+/*************************************************************************/
 .form-table td.sp_td_left{
-	
+	/* 
+	 * The license scren tables consists of two uneven columns;
+	 * this section helps to style the left column.
+	*/
 	font-weight: 600;
 	font-size: 12px;
 	text-align: left;
