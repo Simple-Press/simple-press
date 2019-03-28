@@ -244,7 +244,12 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 							<?php } else {
 								?>
 								<input type="submit" class="button-secondary" id="<?php echo $button_id; ?>" name="SP_license_activate" value="<?php echo SP()->primitives->admin_text('Activate License'); ?>"/>
-							<?php } ?>
+							<?php } 
+								
+								if($get_key != ''){
+									echo '<input type="submit" class="button-secondary '.$button_id.'" name="SP_license_remove" value="'.SP()->primitives->admin_text('Delete License Key').'"/>';
+								}
+							?>
 						</td>
 					</tr>
 				</tbody>

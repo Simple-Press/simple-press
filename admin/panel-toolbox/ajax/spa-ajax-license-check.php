@@ -229,6 +229,33 @@ if(isset($_POST['sp_action'])){
 		$result = array('message'=>$message);
 		
 		echo json_encode($result);
+		
+	}elseif($sp_action == 'license_remove'){
+
+		# remove license key
+		
+		$sp_item = sanitize_text_field($_POST['sp_item']);
+		$item_name = sanitize_text_field($_POST['item_name']);
+		$item_name = sanitize_title_with_dashes($item_name);
+		
+		if($sp_item == 'sp_check_pugin'){
+			$remove_key_option 	= 'plugin_'.$item_name;
+		}else{
+			$remove_key_option 	= 'theme_'.$item_name;
+		}
+		
+		// delete license key from option table
+		$Sp_removed = SP()->options->delete( $remove_key_option );
+		
+		if($Sp_removed){
+			$message =  SP()->primitives->admin_text('License key removed successfully .');
+		}else{
+			$message =  SP()->primitives->admin_text('Something Went Wrong Please Try Again!');
+		}
+
+		$result = array('message'=>$message);
+		
+		echo json_encode($result);
 	}
 
 }
