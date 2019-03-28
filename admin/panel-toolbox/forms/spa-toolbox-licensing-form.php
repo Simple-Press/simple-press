@@ -142,7 +142,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 		$ajaxURL = wp_nonce_url(SPAJAXURL.'toolbox-loader&amp;saveform=licensing', 'toolbox-loader');
 		$classname = 'plugins_check';
 		$form_name = 'plugins';
-		$sp_itemn = 'sp_check_pugin';
+		$sp_itemn = 'sp_check_plugin';
 		$sp_item_name = $addon_data['Name'];
 		$sp_item_id = $addon_data['ItemId'];
 	}else{

@@ -43,7 +43,7 @@ if(isset($_POST['sp_action'])){
 		
 		$sp_item = sanitize_text_field( $_POST['sp_item'] );
 		
-		if($sp_item == 'sp_check_pugin'){
+		if($sp_item == 'sp_check_plugin'){
 			
 			$update_key_option 		= 'plugin_'.$item_name;
 			$update_status_option 	= 'spl_plugin_stats_'.$item_name;
@@ -238,7 +238,7 @@ if(isset($_POST['sp_action'])){
 		$item_name = sanitize_text_field($_POST['item_name']);
 		$item_name = sanitize_title_with_dashes($item_name);
 		
-		if($sp_item == 'sp_check_pugin'){
+		if($sp_item == 'sp_check_plugin'){
 			$remove_key_option 	= 'plugin_'.$item_name;
 		}else{
 			$remove_key_option 	= 'theme_'.$item_name;
@@ -248,9 +248,9 @@ if(isset($_POST['sp_action'])){
 		$Sp_removed = SP()->options->delete( $remove_key_option );
 		
 		if($Sp_removed){
-			$message =  SP()->primitives->admin_text('License key removed successfully .');
+			$message =  SP()->primitives->admin_text('The license key was successfully removed - please wait for the screen to refresh.');
 		}else{
-			$message =  SP()->primitives->admin_text('Something Went Wrong Please Try Again!');
+			$message =  SP()->primitives->admin_text('We could not remove the license key - please try again or contact technical support if the problem persists.');
 		}
 
 		$result = array('message'=>$message);
