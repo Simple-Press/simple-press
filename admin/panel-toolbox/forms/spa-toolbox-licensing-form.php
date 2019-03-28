@@ -214,16 +214,16 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 						<td valign="top" class="sp_td_left"><?php echo SP()->primitives->admin_text('License Information'); ?></td>
 						<td class="sp_td_licence_info">
 						<?php 
-							echo SP()->primitives->admin_text('License Limit :'); 
+							echo SP()->primitives->admin_text('License Limit:'); 
 							echo (isset($license_info->license_limit) && $license_info->license_limit == 0) ? SP()->primitives->admin_text('Unlimited') : $license_info->license_limit.' '.SP()->primitives->admin_text('Site(s)');
 							echo '<br/>';
-							echo SP()->primitives->admin_text('Active Site(s) : ');
+							echo SP()->primitives->admin_text('Active Site(s): ');
 							echo isset($license_info->site_count) ? $license_info->site_count : 'N/A';
 							echo '<br/>';
-							echo SP()->primitives->admin_text('Activations Left Site(s) : '); 
+							echo SP()->primitives->admin_text('Activations Left Site(s): '); 
 							echo isset($license_info->activations_left) ? ucfirst($license_info->activations_left) : 'N/A'; 
 							echo '<br/>';
-							echo SP()->primitives->admin_text('Valid Upto : '); 
+							echo SP()->primitives->admin_text('Valid Until: '); 
 							echo (isset($license_info->expires) && $license_info->expires == 'lifetime') ? SP()->primitives->admin_text('Lifetime') : date('d M, Y', strtotime($license_info->expires)); 
 						?>
 						</td>
