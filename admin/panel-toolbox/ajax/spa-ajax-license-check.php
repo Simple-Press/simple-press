@@ -31,7 +31,7 @@ if(isset($_POST['sp_action'])){
 	
 	$sp_action = sanitize_text_field($_POST['sp_action']);
 
-	if($sp_action == 'activate_license' || $sp_action == 'deactivate_license'){
+	if(isset($_POST['sp_item']) && ($sp_action == 'activate_license' || $sp_action == 'deactivate_license')){
 
 		# Check Whether license key is valid or not
 
@@ -126,6 +126,9 @@ if(isset($_POST['sp_action'])){
 			if(isset($license_data->license)) {
 				
 				if( $license_data->license == 'deactivated' ) {
+					
+					// delete license key from option table
+					$Sp_removed = SP()->options->delete( $update_key_option );
 					
 					// delete status from option table
 					SP()->options->delete( $update_status_option );

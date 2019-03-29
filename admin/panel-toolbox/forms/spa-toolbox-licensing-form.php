@@ -183,25 +183,27 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 							$css_classes = "regular-text sp_addon_license_key";
 							spa_paint_single_input('sp_addon_license_key', ($get_key && $get_key != '') ? $get_key : '', false, $css_classes);
 
-							if( $license_status !== false && $license_status == 'valid' ) {
+							if( $get_key && $license_status !== false && ($license_status == 'valid' || $license_status == 'expired') ) {
 								
-								if($total_days >= 0){
-									
-									echo '<span class="sp-licensing-key-active">';
-									echo SP()->primitives->admin_text('License key is active');
-									echo '</span>';
-
-									echo '<span class="sp-licensing-key-error">';
-									echo SP()->primitives->admin_text('Your License is expire in '.$total_days.' days please renew your license now');
-									echo '</span>';
-
-								}elseif($total_days == 'over'){
+								if($license_status == 'expired'){
 									
 									echo ' <span class="sp-licensing-key-error">'. SP()->primitives->admin_text('Your License is expired please renew your license now'). '</span>';
 									
 								}else{
-									
-									echo '<br /><span class="sp-licensing-key-active">'. SP()->primitives->admin_text('License key is active') .'</span>';
+
+									if($total_days >= 0){
+										
+										echo '<span class="sp-licensing-key-active">';
+										echo SP()->primitives->admin_text('License key is active');
+										echo '</span>';
+										echo '<span class="sp-licensing-key-error">';
+										echo SP()->primitives->admin_text('Your License is expire in '.$total_days.' days please renew your license now');
+										echo '</span>';
+
+									}else{
+										
+										echo '<br /><span class="sp-licensing-key-active">'. SP()->primitives->admin_text('License key is active') .'</span>';
+									}
 								}
 							
 							}else {
@@ -246,7 +248,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 								<input type="submit" class="button-secondary" id="<?php echo $button_id; ?>" name="SP_license_activate" value="<?php echo SP()->primitives->admin_text('Activate License'); ?>"/>
 							<?php } 
 								
-								if($get_key != ''){
+								if($license_status != 'valid' && $get_key != ''){
 									echo '<input type="submit" class="button-secondary '.$button_id.'" name="SP_license_remove" value="'.SP()->primitives->admin_text('Delete License Key').'"/>';
 								}
 							?>
