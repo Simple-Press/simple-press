@@ -80,8 +80,6 @@ if(isset($_POST['sp_action'])){
 				'url'       => home_url()
 			);
 			
-			
-			
 		}elseif($sp_action == 'deactivate_license'){
 			
 			// data to send in our API request
@@ -104,7 +102,6 @@ if(isset($_POST['sp_action'])){
 			$api_params['item_id'] = $sp_item_id;  // id of this plugin in SP_Addon_STORE
 		}
 		
-		
 		$response = wp_remote_post( SP_Addon_STORE_URL, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
 		
 		// make sure the response came back okay
@@ -126,9 +123,6 @@ if(isset($_POST['sp_action'])){
 			if(isset($license_data->license)) {
 				
 				if( $license_data->license == 'deactivated' ) {
-					
-					// delete license key from option table
-					$Sp_removed = SP()->options->delete( $update_key_option );
 					
 					// delete status from option table
 					SP()->options->delete( $update_status_option );
