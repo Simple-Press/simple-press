@@ -113,7 +113,7 @@ if(isset($_POST['sp_action'])){
 				
 			} else {
 				
-				$message = SP()->primitives->admin_text('An error occurred, please try again.');
+				$message = SP()->primitives->admin_text('An error occurred while attempting to deactivate the license. Please try again or contact technical support.');
 			}
 		
 		} else {
