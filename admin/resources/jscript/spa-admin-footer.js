@@ -18,6 +18,7 @@
         highlightMenu();
         spl_license_activate();
         spl_license_deactivate();
+		spLicenseRemove();
         save_store_url();
         spPluginUpdateModel();
         spForceUpdateCheck();
@@ -58,9 +59,9 @@
 
         $(document).on("click", 'input[name="SP_license_activate"]', function(e) {
             e.preventDefault();
-            var s = $(this).parents("form").find('input[name="sp_sample_license_key"]').val(),
-                n = $(this).parents("form").find(".sp_item_name").val(),
-                a = $(this).parents("form").find('input[name="sp_itemn"]').val(),
+            var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
+                n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
+                a = $(this).parents("form").find('input[name="sp_item"]').val(),
                 i = $(this).parents("form").find('input[name="sp_item_id"]').val();
             $.ajax({
                 type: "POST",
@@ -71,7 +72,7 @@
                     licence_key: s,
                     item_name: n,
                     sp_item: a,
-                    sp_itemn_id: i,
+                    sp_item_id: i,
                     sp_action: "activate_license"
                 },
                 timeout: 5000,
@@ -96,9 +97,9 @@
 
         $(document).on("click", 'input[name="SP_license_deactivate"]', function(e) {
             e.preventDefault();
-            var s = $(this).parents("form").find('input[name="sp_sample_license_key"]').val(),
-                n = $(this).parents("form").find(".sp_item_name").val(),
-                a = $(this).parents("form").find('input[name="sp_itemn"]').val(),
+            var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
+                n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
+                a = $(this).parents("form").find('input[name="sp_item"]').val(),
                 i = $(this).parents("form").find('input[name="sp_item_id"]').val();
 
             $.ajax({
@@ -110,7 +111,7 @@
                     licence_key: s,
                     item_name: n,
                     sp_item: a,
-                    sp_itemn_id: i,
+                    sp_item_id: i,
                     sp_action: "deactivate_license"
                 },
                 timeout: 5000,
@@ -135,14 +136,14 @@
 
         $(document).on("click", 'input[name="save_store_url"]', function(e) {
             e.preventDefault();
-            var s = $(this).parents("form").find('input[name="sp_sample_store_url"]').val();
+            var s = $(this).parents("form").find('input[name="sp_licensing_server_url"]').val();
             $.ajax({
                 type: "POST",
                 dataType: "json",
                 url: ajaxurl,
                 data: {
                     action: "license-check",
-                    sp_sample_store_url: s,
+                    sp_licensing_server_url: s,
                     sp_action: "save_store_url"
                 },
                 timeout: 5000,
@@ -221,6 +222,45 @@
                     $("#sfmsgspot").show(), $("#sfmsgspot").html(sp_platform_vars.pWait)
                 },
                 complete: function () {}
+            });
+        });
+    }
+	
+	//spLicenseRemove
+	function spLicenseRemove(){
+
+        $(document).on("click", 'input[name="SP_license_remove"]', function(e) {
+            e.preventDefault();
+            var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
+                n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
+                a = $(this).parents("form").find('input[name="sp_item"]').val(),
+                i = $(this).parents("form").find('input[name="sp_item_id"]').val();
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: ajaxurl,
+                data: {
+                    action: "license-check",
+                    licence_key: s,
+                    item_name: n,
+                    sp_item: a,
+                    sp_item_id: i,
+                    sp_action: "license_remove"
+                },
+                timeout: 5000,
+                success: function(e) {
+                    e.message && "" != e.message && ($("#sfmsgspot").fadeIn(), $("#sfmsgspot").html(e.message), $("#sfmsgspot").fadeOut(3000)), setTimeout(function() {
+                        $("#acclicensing").click()
+                    }, 4000)
+                },
+                error: function(e, s, n) {
+                    "timeout" === s && ($("#sfmsgspot").html("Something Went Wrong Please Try Again!"), $("#sfmsgspot").fadeOut(2000))
+                },
+                beforeSend: function() {
+                    $("#sfmsgspot").show(), $("#sfmsgspot").html(sp_platform_vars.pWait)
+                },
+                complete: function() {}
             });
         });
     }

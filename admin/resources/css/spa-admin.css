@@ -317,7 +317,7 @@ a:active {
     font-weight: 600;
     font-size: 11px;
     text-align: left;
-    padding: 5px 10px 5px 3px;
+    padding: 5px 10px 5px 10px;
     text-shadow: none;
     width: auto;
     border-style: solid;
@@ -1771,6 +1771,7 @@ table td.permhead {
     margin-bottom: 5px;
 }
 
+
 @media screen and (max-width: 1300px) {
     .sffieldset .floatList li {
         width: 30%;
@@ -1803,7 +1804,7 @@ table td.permhead {
     height: auto;
 }
 
-/* list tabel stuff */
+/* list table stuff */
 
 #wpbody #sfmaincontainer .tablenav span.displaying-num {
     vertical-align: middle !important;
@@ -2033,6 +2034,54 @@ table td.permhead {
     }
 }
 
+/* End experimental responsive stuff */
+
+/*************************************************************************/
+/* Style adjustments for new licensing tab introducted in 6.0.7 / 6.1.0 */
+/*************************************************************************/
+.form-table td.sp_td_left{
+	/* 
+	 * The license scren tables consists of two uneven columns;
+	 * this section helps to style the left column.
+	*/
+	font-weight: 600;
+	font-size: 12px;
+	text-align: left;
+	padding: 5px 10px 5px 10px;
+	border-style: solid;
+	border-width: 1px 1px 1px;
+	border-color: #ccc;
+	width:20%;
+	border-bottom: 1px solid #ddd;
+	color: #000000;
+}
+
+.form-table td.sp_td_licence_info{
+	font-weight: 600; 
+	line-height: 18px; 
+	font-size: 12px;
+}
+
+.sp_addons_not_found { 
+	margin-left: 0px;
+}
+.sp_addon_title{ 
+	font-size: 17px;
+	color: #0073aa;
+	font-weight: 600;
+	margin-bottom: 10px; 
+}
+
+.sp-licensing_note_list{
+	margin:10px;
+}
+
+.sp-licensing-key-active{color:green;}
+
+.sp-licensing-key-error{color:red;}
+
+/* End style adjustments for licensing tab */
+
 
 /*
 Style font- icon picker
@@ -2051,4 +2100,3 @@ Style font- icon picker
 .icons-selector .selector-popup {
         right: 0;
 }
-

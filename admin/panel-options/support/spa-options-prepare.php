@@ -134,6 +134,8 @@ function spa_get_members_data() {
 	$sfoptions['sched'] = wp_get_schedule('sph_cron_user');
 
 	$sfoptions['post_count_delete'] = SP()->options->get('post_count_delete');
+	
+	$sfoptions['display_deprecated_identities'] = SP()->options->get('display_deprecated_identities');
 
 	$sfprofile = SP()->options->get('sfprofile');
 	$sfoptions['namelink'] = $sfprofile['namelink'];

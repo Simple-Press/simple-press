@@ -87,6 +87,10 @@ function spa_get_messages_data() {
 	$sfcomps['sfpostmsgtopic'] = $sfpostmsg['sfpostmsgtopic'];
 	$sfcomps['sfpostmsgpost'] = $sfpostmsg['sfpostmsgpost'];
 
+	$sfcomps['sfpostmsgtext2'] = SP()->editFilters->text($sfpostmsg['sfpostmsgtext2']);
+	$sfcomps['sfpostmsgtopic2'] = $sfpostmsg['sfpostmsgtopic2'];
+	$sfcomps['sfpostmsgpost2'] = $sfpostmsg['sfpostmsgpost2'];	
+
 	# custom editor message
 	$sfcomps['sfeditormsg'] = SP()->editFilters->text(SP()->options->get('sfeditormsg'));
 

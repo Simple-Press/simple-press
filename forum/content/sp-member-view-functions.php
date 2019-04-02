@@ -473,7 +473,7 @@ function sp_MemberListUrl($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 #
 #	sp_MemberListRank()
-#	Display user badges/ranks for memebers list
+#	Display user badges/ranks for members list
 #	Scope:	Members List Loop
 #	Version: 5.0
 #
@@ -481,7 +481,8 @@ function sp_MemberListUrl($args = '', $label = '') {
 #	5.6.0	Added argument:
 #				order	default = 'S'pecial 'N'ormal 'U'serGroup
 #				showAll	default = 0 (false)
-#
+#   6.0.7	Added argument:
+#				title	default = 1 (true) - whether or not to show the title of the badge.
 # --------------------------------------------------------------------------------------
 function sp_MemberListRank($args = '', $label = '') {
 	if (!SP()->auths->get('view_members_list')) return;
@@ -492,6 +493,7 @@ function sp_MemberListRank($args = '', $label = '') {
 	              'rank'       => 1,
 	              'rankClass'  => 'spInRowRank',
 	              'badge'      => 1,
+				  'title'      => 1,
 	              'badgeClass' => 'spImg',
 	              'stack'      => 1,
 	              'order'      => 'SNU',
@@ -510,6 +512,7 @@ function sp_MemberListRank($args = '', $label = '') {
 	$badgeClass = esc_attr($badgeClass);
 	$rank       = (int) $rank;
 	$badge      = (int) $badge;
+	$title      = (int) $title;
 	$stack      = (int) $stack;
 	$order      = esc_attr($order);
 	$showAll    = (int) $showAll;
@@ -567,7 +570,7 @@ function sp_MemberListRank($args = '', $label = '') {
 	if (!empty($label)) $out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>";
 	foreach ($ranks as $thisRank) {
 		if ($badge && !empty($thisRank['badge'])) $out .= "<img class='$badgeClass' src='".$thisRank['badge']."' alt='' />$att";
-		if ($rank) $out .= "<span class='$rankClass'>".$thisRank['name']."</span>$att";
+		if ($rank && $title) $out .= "<span class='$rankClass'>".$thisRank['name']."</span>$att";
 	}
 	$out .= "</div>\n";
 	$out = apply_filters('sph_MemberListRank', $out, $a);

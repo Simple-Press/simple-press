@@ -300,6 +300,9 @@ function spa_save_messages_data() {
 	$sfpostmsg['sfpostmsgtext'] = SP()->saveFilters->text(trim($_POST['sfpostmsgtext']));
 	$sfpostmsg['sfpostmsgtopic'] = isset($_POST['sfpostmsgtopic']);
 	$sfpostmsg['sfpostmsgpost'] = isset($_POST['sfpostmsgpost']);
+	$sfpostmsg['sfpostmsgtext2'] = SP()->saveFilters->text(trim($_POST['sfpostmsgtext2']));
+	$sfpostmsg['sfpostmsgtopic2'] = isset($_POST['sfpostmsgtopic2']);
+	$sfpostmsg['sfpostmsgpost2'] = isset($_POST['sfpostmsgpost2']);	
 	SP()->options->update('sfpostmsg', $sfpostmsg);
 
 	SP()->options->update('sfeditormsg', SP()->saveFilters->text(trim($_POST['sfeditormsg'])));

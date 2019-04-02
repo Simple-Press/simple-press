@@ -110,7 +110,7 @@ function spa_themes_list_form() {
 
 			if(isset($themes[$curTheme['theme']]['ItemId']) && $themes[$curTheme['theme']]['ItemId'] != ''){
 				
-				# UPDATE LICENCING METHOD
+				# any upgrade for this theme using licensing method
 				
 				$sp_theme_name = sanitize_title_with_dashes($curTheme['theme']);
 		
@@ -272,7 +272,7 @@ function spa_themes_list_form() {
 
 					if(isset($theme_data['ItemId']) && $theme_data['ItemId'] != ''){
 				
-						# UPDATE LICENCING METHOD
+						# any upgrade for this theme using licensing method
 						
 						$sp_theme_name = sanitize_title_with_dashes($theme_data['Name']);
 						$check_for_addon_update = SP()->options->get( 'spl_theme_versioninfo_'.$sp_theme_name);

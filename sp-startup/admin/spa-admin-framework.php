@@ -210,6 +210,9 @@ function spa_panel_header() {
 	$site = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
 	$title = SP()->primitives->admin_text('About Simple:Press');
 	echo '<a class="button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>&nbsp;&nbsp;&nbsp;';
+	
+	echo '<a class="button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>&nbsp;&nbsp;&nbsp;';	
+	
 	echo '<a class="button" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
 
 	echo '</td>';

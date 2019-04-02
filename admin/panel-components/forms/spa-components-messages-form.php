@@ -27,7 +27,7 @@ function spa_components_messages_form() {
 
 	spa_paint_open_tab(SP()->primitives->admin_text('Components').' - '.SP()->primitives->admin_text('Custom Messages'));
 		spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('Custom Message Above Editor'), true, 'editor-message');
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Custom Message Above Editor #1'), true, 'editor-message');
 				$submessage = SP()->primitives->admin_text('Text you enter here will be displayed above the editor (new topic and/or new post)');
 				spa_paint_wide_editor(SP()->primitives->admin_text('Custom message'), 'sfpostmsgtext', $sfcomps['sfpostmsgtext'], $submessage, 4);
 				spa_paint_checkbox(SP()->primitives->admin_text('Display for new topic'), 'sfpostmsgtopic', $sfcomps['sfpostmsgtopic']);
@@ -45,6 +45,15 @@ function spa_components_messages_form() {
 		do_action('sph_components_messages_left_panel');
 
 	spa_paint_tab_right_cell();
+	
+		spa_paint_open_panel();
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Custom Message Above Editor #2'), true, 'editor-message');
+				$submessage = SP()->primitives->admin_text('Text you enter here will be displayed above the editor (new topic and/or new post)');
+				spa_paint_wide_editor(SP()->primitives->admin_text('Custom message'), 'sfpostmsgtext2', $sfcomps['sfpostmsgtext2'], $submessage, 4);
+				spa_paint_checkbox(SP()->primitives->admin_text('Display for new topic'), 'sfpostmsgtopic2', $sfcomps['sfpostmsgtopic2']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Display for new post'), 'sfpostmsgpost2', $sfcomps['sfpostmsgpost2']);
+			spa_paint_close_fieldset();
+		spa_paint_close_panel();	
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Sneak Peek Statement'), true, 'sneak-peek');

@@ -218,7 +218,7 @@ function spa_activate_plugin() {
 		
 		# set up daily sp_check_addons_status clean up cron
 		wp_clear_scheduled_hook('sph_check_addons_status_interval');
-		wp_schedule_event(time(), 'ten_minutes', 'sph_check_addons_status_interval');
+		wp_schedule_event(time(), 'daily', 'sph_check_addons_status_interval');
 
 		SP()->spPermalinks->update_permalink(true);
 	}
@@ -304,6 +304,7 @@ function spa_deactivate_plugin() {
 		                    'linkedin',
 		                    'youtube',
 		                    'googleplus',
+							'instagram',
 		                    'sfuse_quicktags',
 		                    'signature',
 		                    'sigimage');
@@ -697,6 +698,8 @@ if ( ! function_exists( 'spa_theme_updater_object' ) ) {
 	}
 }
 
+# spa_addons_changelog function for plugins or themes changelog popup
+
 function spa_addons_changelog($_data, $_action = '', $_args = null ){
 	
 	
@@ -774,10 +777,7 @@ function spa_addons_changelog($_data, $_action = '', $_args = null ){
 	return $_data;	
 }
 
-/**
- * This function determines if there is an update available to the core Simple Press themes and notify to admin.
- *
- */
+# Lis of Plugins of update in dashboard notification if there any update available by licensing method or by xml 
 
 function spa_plugin_addon_dashboard_update()
 {
@@ -839,7 +839,7 @@ function spa_plugin_addon_dashboard_update()
 											<?php
 											$header = false;
 							}
-							echo "<tr class='active'><td><strong>{".$plugin_data['Name']."}</strong><br />".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $plugin_data['Version'], $latest->version, SPVERSION)."</td>
+							echo "<tr class='active'><td><strong>{".$plugin_data['Name']."}</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $plugin_data['Version'], $latest->version, SPVERSION)."</td>
 							</tr>";
 						}
 					}
@@ -856,6 +856,8 @@ function spa_plugin_addon_dashboard_update()
 	<?php
 	}
 }
+
+# Lis of Themes of update in dashboard notification if there any update available by licensing method or by xml 
 
 function spa_theme_addon_dashboard_update()
 {
@@ -917,7 +919,7 @@ function spa_theme_addon_dashboard_update()
 											<?php
 											$header = false;
 							}
-							echo "<tr class='active'><td><strong>{".$theme_data['Name']."}</strong><br />".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $theme_data['Version'], $latest->version, SPVERSION)."</td>
+							echo "<tr class='active'><td><strong>{".$theme_data['Name']."}</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $theme_data['Version'], $latest->version, SPVERSION)."</td>
 							</tr>";
 						}
 					}
@@ -935,10 +937,7 @@ function spa_theme_addon_dashboard_update()
 	}
 }
 
-/**
- * This function determines if there is an update available to the core Simple Press themes and notify to admin.
- *
- */
+# Lis of Plugins of update in admin Updates page if there any update available by licensing method or by xml 
 
 function spa_check_plugin_addon_update() {
 	
@@ -1062,7 +1061,7 @@ function spa_check_plugin_addon_update() {
 									echo "
 									<tr class='active'>
 									<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($plugin_file)."' /></th>
-									<td><strong>{$plugin_data['Name']}</strong><br />".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $plugin_data['Version'], $latest->version, $latest->requires).'</td>
+									<td><strong>{$plugin_data['Name']}</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $plugin_data['Version'], $latest->version, $latest->requires).'</td>
 									</tr>';
 									$data = new stdClass;
 									$data->slug = $plugin_file;
@@ -1115,6 +1114,9 @@ function spa_check_plugin_addon_update() {
 		}
 	}
 }
+
+
+# Lis of themes of update in admin Updates page if there any update available by licensing method or by xml
 
 function spa_check_theme_addon_update(){
 	
@@ -1238,7 +1240,7 @@ function spa_check_theme_addon_update(){
 										$screenshot = SPTHEMEBASEURL.$theme_file.'/'.$theme_data['Screenshot'];
 										echo "<tr class='active'>
 										<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($theme_file)."' /></th>
-										<td class='plugin-title'><img src='$screenshot' width='64' height='64' style='float:left; padding: 5px' /><strong>{$theme_data['Name']}</strong>".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $theme_data['Version'], $latest->version, $latest->requires)."</td></tr>";
+										<td class='plugin-title'><img src='$screenshot' width='64' height='64' style='float:left; padding: 5px' /><strong>{$theme_data['Name']}</strong>".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $theme_data['Version'], $latest->version, $latest->requires)."</td></tr>";
 										$data = new stdClass;
 										$data->slug = $theme_file;
 										$data->stylesheet = $theme_data['Stylesheet'];

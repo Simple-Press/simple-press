@@ -224,6 +224,8 @@ function spa_save_members_data() {
 	SP()->options->update('sfuserremoval', $sfuser);
 
  	SP()->options->update('post_count_delete', isset($_POST['post_count_delete']));
+	
+	SP()->options->update('display_deprecated_identities', isset($_POST['sfdisplaydeprecatedidentities']));	
 
 	$sfprofile = SP()->options->get('sfprofile');
 	$sfprofile['namelink'] = SP()->filters->integer($_POST['namelink']);

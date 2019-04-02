@@ -111,6 +111,16 @@ function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $
 	$tab++;
 }
 
+function spa_paint_single_input($name, $value, $disabled=false, $css_classes = '' ) {
+	global $tab;
+	
+	$field_classes = "{$css_classes}";
+	echo "<input type='text' class='wp-core-ui $field_classes' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	if ($disabled == true) echo "disabled='disabled' ";
+	echo "/>";
+	$tab++;
+}
+
 function spa_paint_date($label, $name, $value, $disabled=false, $large=false) {
 	global $tab;
 
@@ -237,8 +247,9 @@ function spa_paint_editor($label, $name, $value, $submessage='', $xrows=1) {
  * @param string $value
  * @param string $submessage
  * @param int $rows
+ * @param boolean $mediaButtons [optional]
  */
-function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1) {
+function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, $mediaButtons = false) {
 	global $tab;
 
 	add_filter( 'tiny_mce_before_init', 'spa_cache_ajax_editor_settings', 11, 2 );
@@ -250,7 +261,7 @@ function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1) 
 	echo '</div>';
 	echo '<div class="clearboth"></div>';
 	wp_editor( html_entity_decode( $value ), $name, array(
-					'media_buttons' => false,
+					'media_buttons' => (bool) $mediaButtons,
 					'quicktags'     => true,
 					'textarea_rows' => $xrows
 				));

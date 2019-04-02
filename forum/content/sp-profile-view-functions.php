@@ -615,6 +615,10 @@ function sp_ProfileShowBio($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 function sp_ProfileShowAIM($args = '', $label = '') {
 	if (!SP()->auths->get('view_profiles')) return;
+	
+	# Set variable to control whether we should display deprecated identities.  Check it and exit if we're not allowed to show deprecated identities
+	$display_deprecated_identities = (Null != SP()->options->get('display_deprecated_identities') ? boolval(SP()->options->get('display_deprecated_identities')) : false) ;	
+	if (false == $display_deprecated_identities) return ;
 
 	$defs = array('tagClass'    => 'spProfileShowAIM',
 	              'leftClass'   => 'spColumnSection spProfileLeftCol',
@@ -627,7 +631,7 @@ function sp_ProfileShowAIM($args = '', $label = '') {
 	$a = wp_parse_args($args, $defs);
 	$a = apply_filters('sph_ProfileShowAIM_args', $a);
 	extract($a, EXTR_SKIP);
-
+	
 	# sanitize before use
 	$tagClass    = esc_attr($tagClass);
 	$leftClass   = esc_attr($leftClass);
@@ -673,6 +677,10 @@ function sp_ProfileShowAIM($args = '', $label = '') {
 function sp_ProfileShowYIM($args = '', $label = '') {
 	if (!SP()->auths->get('view_profiles')) return;
 
+	# Set variable to control whether we should display deprecated identities.  Check it and exit if we're not allowed to show deprecated identities
+	$display_deprecated_identities = (Null != SP()->options->get('display_deprecated_identities') ? boolval(SP()->options->get('display_deprecated_identities')) : false) ;	
+	if (false == $display_deprecated_identities) return ;
+	
 	$defs = array('tagClass'    => 'spProfileShowYIM',
 	              'leftClass'   => 'spColumnSection spProfileLeftCol',
 	              'middleClass' => 'spColumnSection spProfileSpacerCol',
@@ -721,7 +729,7 @@ function sp_ProfileShowYIM($args = '', $label = '') {
 
 # --------------------------------------------------------------------------------------
 #
-#	sp_ProfileShowYIM()
+#	sp_ProfileShowICQ()
 #	Display a users location
 #	Scope:	site
 #	Version: 5.0
@@ -729,6 +737,10 @@ function sp_ProfileShowYIM($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 function sp_ProfileShowICQ($args = '', $label = '') {
 	if (!SP()->auths->get('view_profiles')) return;
+	
+	# Set variable to control whether we should display deprecated identities.  Check it and exit if we're not allowed to show deprecated identities
+	$display_deprecated_identities = (Null != SP()->options->get('display_deprecated_identities') ? boolval(SP()->options->get('display_deprecated_identities')) : false) ;	
+	if (false == $display_deprecated_identities) return ;
 
 	$defs = array('tagClass'    => 'spProfileShowICQ',
 	              'leftClass'   => 'spColumnSection spProfileLeftCol',
@@ -741,7 +753,7 @@ function sp_ProfileShowICQ($args = '', $label = '') {
 	$a = wp_parse_args($args, $defs);
 	$a = apply_filters('sph_ProfileShowICQ_args', $a);
 	extract($a, EXTR_SKIP);
-
+	
 	# sanitize before use
 	$tagClass    = esc_attr($tagClass);
 	$leftClass   = esc_attr($leftClass);
@@ -787,6 +799,10 @@ function sp_ProfileShowICQ($args = '', $label = '') {
 function sp_ProfileShowGoogleTalk($args = '', $label = '') {
 	if (!SP()->auths->get('view_profiles')) return;
 
+	# Set variable to control whether we should display deprecated identities.  Check it and exit if we're not allowed to show deprecated identities
+	$display_deprecated_identities = (Null != SP()->options->get('display_deprecated_identities') ? boolval(SP()->options->get('display_deprecated_identities')) : false) ;	
+	if (false == $display_deprecated_identities) return ;
+	
 	$defs = array('tagClass'    => 'spProfileShowGoogleTalk',
 	              'leftClass'   => 'spColumnSection spProfileLeftCol',
 	              'middleClass' => 'spColumnSection spProfileSpacerCol',
@@ -844,6 +860,10 @@ function sp_ProfileShowGoogleTalk($args = '', $label = '') {
 function sp_ProfileShowMSN($args = '', $label = '') {
 	if (!SP()->auths->get('view_profiles')) return;
 
+	# Set variable to control whether we should display deprecated identities.  Check it and exit if we're not allowed to show deprecated identities
+	$display_deprecated_identities = (Null != SP()->options->get('display_deprecated_identities') ? boolval(SP()->options->get('display_deprecated_identities')) : false) ;	
+	if (false == $display_deprecated_identities) return ;
+	
 	$defs = array('tagClass'    => 'spProfileShowMSN',
 	              'leftClass'   => 'spColumnSection spProfileLeftCol',
 	              'middleClass' => 'spColumnSection spProfileSpacerCol',
@@ -900,6 +920,10 @@ function sp_ProfileShowMSN($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 function sp_ProfileShowMySpace($args = '', $label = '') {
 	if (!SP()->auths->get('view_profiles')) return;
+	
+	# Set variable to control whether we should display deprecated identities.  Check it and exit if we're not allowed to show deprecated identities
+	$display_deprecated_identities = (Null != SP()->options->get('display_deprecated_identities') ? boolval(SP()->options->get('display_deprecated_identities')) : false) ;	
+	if (false == $display_deprecated_identities) return ;
 
 	$defs = array('tagClass'    => 'spProfileShowMySpace',
 	              'leftClass'   => 'spColumnSection spProfileLeftCol',
@@ -1223,6 +1247,63 @@ function sp_ProfileShowYouTube($args = '', $label = '') {
 		$out .= "</div>\n";
 
 		$out = apply_filters('sph_ProfileShowYouTube', $out, SP()->user->profileUser, $a);
+
+		if ($echo) {
+			echo $out;
+		} else {
+			return $out;
+		}
+	}
+}
+
+# --------------------------------------------------------------------------------------
+#
+#	sp_ProfileShowInstagram()
+#	Display a users instagram account
+#	Scope:	site
+#	Version: 5.0
+#
+# --------------------------------------------------------------------------------------
+function sp_ProfileShowInstagram($args = '', $label = '') {
+	if (!SP()->auths->get('view_profiles')) return;
+
+	$defs = array('tagClass'    => 'spProfileShowInstagram',
+	              'leftClass'   => 'spColumnSection spProfileLeftCol',
+	              'middleClass' => 'spColumnSection spProfileSpacerCol',
+	              'rightClass'  => 'spColumnSection spProfileRightCol',
+	              'showEmpty'   => 0,
+	              'echo'        => 1,
+	              'get'         => 0,);
+
+	$a = wp_parse_args($args, $defs);
+	$a = apply_filters('sph_ProfileShowInstagram_args', $a);
+	extract($a, EXTR_SKIP);
+
+	# sanitize before use
+	$tagClass    = esc_attr($tagClass);
+	$leftClass   = esc_attr($leftClass);
+	$middleClass = esc_attr($middleClass);
+	$rightClass  = esc_attr($rightClass);
+	$showEmpty   = (int) $showEmpty;
+	$label       = SP()->displayFilters->title($label);
+	$echo        = (int) $echo;
+	$get         = (int) $get;
+
+	if ($get) return SP()->user->profileUser->instagram;
+
+	# output first name
+	if (!empty(SP()->user->profileUser->instagram) || $showEmpty) {
+		$out = '';
+		$out .= "<div class='$leftClass'>";
+		$out .= "<p class='$tagClass'>$label:</p>";
+		$out .= '</div>';
+		$out .= "<div class='$middleClass'></div>";
+		$out .= "<div class='$rightClass'>";
+		$instagram = (empty(SP()->user->profileUser->instagram)) ? '&nbsp;' : SP()->user->profileUser->instagram;
+		$out .= "<p class='$tagClass'>$instagram</p>";
+		$out .= "</div>\n";
+
+		$out = apply_filters('sph_ProfileShowInstagram', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
 			echo $out;

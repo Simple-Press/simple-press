@@ -1978,6 +1978,67 @@ function sp_PostIndexUserGooglePlus($args = '', $toolTip = '') {
 
 # --------------------------------------------------------------------------------------
 #
+#	sp_PostIndexUserInstagram()
+#	Display User's Instagram icon and link
+#	Scope:	Post Loop
+#	Version: 5.0
+#
+# --------------------------------------------------------------------------------------
+function sp_PostIndexUserInstagram($args = '', $toolTip = '') {
+	if (SP()->forum->view->thisPostUser->guest) return;
+	if (empty(SP()->forum->view->thisPostUser->instagram)) return;
+
+	$defs = array('tagId'     => 'spPostIndexUserInstagram%ID%',
+	              'tagClass'  => 'spPostUserInstagram',
+	              'icon'      => 'sp_instagram.png',
+	              'iconClass' => 'spImg',
+	              'targetNew' => 1,
+	              'noFollow'  => 0,
+	              'echo'      => 1,
+	              'get'       => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_PostIndexUserInstagram_args', $a);
+	extract($a, EXTR_SKIP);
+
+	# sanitize before use
+	$tagId     = esc_attr($tagId);
+	$tagClass  = esc_attr($tagClass);
+	$icon      = sanitize_file_name($icon);
+	$iconClass = esc_attr($iconClass);
+	$toolTip   = esc_attr($toolTip);
+	$targetNew = (int) $targetNew;
+	$noFollow  = (int) $noFollow;
+	$echo      = (int) $echo;
+	$get       = (int) $get;
+
+	$tagId = str_ireplace('%ID%', SP()->forum->view->thisPost->post_id, $tagId);
+
+	if (filter_var(SP()->forum->view->thisPostUser->instagram, FILTER_VALIDATE_URL)) {
+		$url = SP()->displayFilters->url(SP()->forum->view->thisPostUser->instagram);
+	} else {
+		$url = 'https://instagram.com/'.SP()->forum->view->thisPostUser->instagram.'/';
+	}
+
+	if ($get) return $url;
+
+	$target = ($targetNew) ? ' target="_blank"' : '';
+	$follow = ($noFollow) ? ' rel="nofollow"' : '';
+	if (!empty($icon)) {
+		$out = "<a id='$tagId' class='$tagClass' href='$url' title='$toolTip'$target$follow>";
+		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+		$out .= "</a>\n";
+	}
+	$out = apply_filters('sph_PostIndexUserInstagram', $out, $a);
+
+	if ($echo) {
+		echo $out;
+	} else {
+		return $out;
+	}
+}
+
+# --------------------------------------------------------------------------------------
+#
 #	sp_PostIndexUserWebsite()
 #	Display User's website icon and link
 #	Scope:	Post Loop
