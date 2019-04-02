@@ -31,7 +31,7 @@ SP()->forum->view = new spcView();
 if (SP()->forum->view->has_groups()) : while (SP()->forum->view->loop_groups()) : SP()->forum->view->the_group();
 	# Start the 'groupHeader' section
 	$out .= '<div class="spGroupViewSection">';
-	$icon = (!empty(SP()->forum->view->thisGroup->group_icon)) ? SP()->theme->paint_custom_icon('spHeaderName spLeft', SPCUSTOMURL.SP()->forum->view->thisGroup->group_icon) : SP()->theme->paint_icon('spHeaderName spLeft', SPTHEMEICONSURL, 'sp_GroupIcon.png');
+	$icon = SP()->theme->sp_paint_iconset_icon( SP()->forum->view->thisGroup->group_icon, 'sp_GroupIcon.png');
 	$out .= $icon;
 	$out .= "<div class='spHeaderName'>".SP()->forum->view->thisGroup->group_name."</div>";
 	$out .= "<div class='spHeaderDescription'>".SP()->forum->view->thisGroup->group_desc."</div>";
@@ -77,7 +77,7 @@ function sp_ProfilePermissionsForum($thisForum, $userid) {
 
 	# Column 1 of the forum row
 	$out .= '<div class="spColumnSection spProfilePermissionIcon">';
-	$icon = (!empty($thisForum->forum_icon)) ? SP()->theme->paint_custom_icon('spRowIcon', SPCUSTOMURL.$thisForum->forum_icon) : SP()->theme->paint_icon('spRowIcon', SPTHEMEICONSURL, 'sp_ForumIcon.png');
+	$icon = SP()->theme->sp_paint_iconset_icon($thisForum->forum_icon, 'sp_ForumIcon.png');
 	$out .= $icon;
 	$out .= '</div>';
 

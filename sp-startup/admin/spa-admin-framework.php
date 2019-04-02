@@ -19,6 +19,18 @@ function spa_enqueue_datepicker() {
 }
 
 
+function spa_enqueue_font_icon_picker() {
+	
+	$script = SPAJSCRIPT.'jquery.fonticonpicker.min.js';
+	wp_enqueue_script('sffonticonpicker', $script, array(
+			'jquery',
+			), false, false);
+	
+	
+	wp_enqueue_style( 'jquery.fonticonpicker-css', SPADMINCSS . 'jquery.fonticonpicker.min.css' );
+	wp_enqueue_style( 'jquery.fonticonpicker.bootstrap-css', SPADMINCSS . 'bootstrap-theme/jquery.fonticonpicker.bootstrap.min.css' );
+	
+}
 
 /**
  * This function registers and enqueues the admin CSS style.
@@ -127,6 +139,8 @@ function spa_load_admin_scripts() {
 			'jquery-ui-widget',
 			'jquery-ui-progressbar'), false, false);
 	}
+	
+	spa_enqueue_font_icon_picker();
 }
 
 /**

@@ -328,8 +328,19 @@ sp_bump_build($build, 15852);
 sp_bump_build($build, 15857);
 
 
+$section = 15858;
+if ($build < $section) {
+	
+	SP()->plugin->add_storage( 'forum-iconsets', 'iconsets' );
+	
+	sp_install_iconsets();
+	
+	sp_response($section);
+	
+}
 
 
+sp_bump_build( $build, 15859 );
 
 # ****** IMPORTANT: THE FINAL $section values MUST be the same as the SPBUILD constant
 # ******			for the Upgrade to complete correctly

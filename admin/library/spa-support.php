@@ -8,6 +8,10 @@
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
+
+require_once 'spa-iconsets.php';
+
+
 function spa_get_forums_in_group($groupid) {
 	return SP()->DB->table(SPFORUMS, "group_id=$groupid", '', 'forum_seq');
 }
@@ -197,6 +201,59 @@ function spa_display_permission_select($cur_perm = 0, $showSelect = true) {
 		<?php
 	}
 }
+
+/**
+ * Adds font icon picker
+ * 
+ * @param string $name
+ * @param string $label
+ * @param string $selected
+ * @param string $help
+ */
+function spa_select_iconset_icon_picker( $name, $label, $selected = '', $help = '') {
+	
+	
+	$iconsets = spa_get_all_active_iconsets();
+	
+	spa_paint_select_start( $label, $name, $help);
+	
+	foreach( $iconsets as $iconset_name => $iconset ) {
+		echo '<option value=""></option>';
+		echo '<optgroup label="'.$iconset_name.'">';
+		foreach ( $iconset['icons'] as $icon ) {
+			
+			$_selected = $selected && $selected === $icon ? ' selected="selected"' : '';
+			
+			printf( '<option value="%s"%s>%s</option>', $icon, $_selected, $icon );
+			
+		}
+		
+		echo '</optgroup>';
+	}
+	
+	
+	spa_paint_select_end();
+	
+	?>
+
+	<script>
+
+	jQuery(document).ready(function($) {
+	 
+	    $('select[name="<?php echo $name; ?>"]').fontIconPicker({
+	        theme: 'fip-bootstrap',
+			iconsPerPage: 30,
+			allCategoryText : 'From All Libraries'
+	    });
+	 
+	});
+	                                        
+
+	</script>
+	<?php
+	
+}
+
 
 function spa_select_icon_dropdown($name, $label, $path, $cur, $showSelect = true, $width = 0) {
 	# Open folder and get cntents for matching

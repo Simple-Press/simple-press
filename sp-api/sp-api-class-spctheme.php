@@ -452,6 +452,21 @@ class spcTheme {
 	public function paint_icon_id($icon, $id) {
 		return str_replace('<img ', "<img id='$id' ", $icon);
 	}
+	
+	/**
+	 * Paint icon
+	 * 
+	 * @param string $icon
+	 * @param string $default_icon
+	 * 
+	 * @return string
+	 */
+	public function sp_paint_iconset_icon( $icon, $default_icon = '' ) {
+		
+		$icon = $icon ? $icon : $default_icon;
+		
+		return sprintf( '<i class="%s"></i>', $icon );
+	}
 
 	/**
 	 * This method gets the basename of a theme.

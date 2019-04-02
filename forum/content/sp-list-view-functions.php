@@ -147,26 +147,23 @@ function sp_ListTopicIcon($args = '') {
 
 	$path = SPTHEMEICONSDIR;
 	$url  = SPTHEMEICONSURL;
+	
+	$default_icon = '';
+	
 	if (isset(SP()->forum->view->thisListTopic->new_post_count) && SP()->forum->view->thisListTopic->new_post_count > 0) {
-		$tIcon = sanitize_file_name($icon);
+		$tIcon = $default_icon = sanitize_file_name($icon);
 		if (!empty(SP()->forum->view->thisListTopic->topic_icon_new)) {
 			$tIcon = sanitize_file_name(SP()->forum->view->thisListTopic->topic_icon_new);
-			$path  = SPCUSTOMDIR;
-			$url   = SPCUSTOMURL;
 		}
 	} else {
-		$tIcon = sanitize_file_name($icon);
+		$tIcon = $default_icon = sanitize_file_name($icon);
 		if (!empty(SP()->forum->view->thisListTopic->topic_icon)) {
 			$tIcon = sanitize_file_name(SP()->forum->view->thisListTopic->topic_icon);
-			$path  = SPCUSTOMDIR;
-			$url   = SPCUSTOMURL;
 		}
 	}
-	if (!file_exists($path.$tIcon)) {
-		$tIcon = SP()->theme->paint_icon($tagClass, SPTHEMEICONSURL, sanitize_file_name($icon));
-	} else {
-		$tIcon = SP()->theme->paint_custom_icon($tagClass, $url.$tIcon);
-	}
+	
+	$tIcon = SP()->theme->sp_paint_iconset_icon( $tIcon, $default_icon );
+	
 
 	if ($get) return $tIcon;
 

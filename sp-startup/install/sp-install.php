@@ -909,6 +909,7 @@ function sp_perform_install($phase, $subphase = 0) {
 			$sfconfig['custom-icons']	 = $basepath.'forum-custom-icons';
 			$sfconfig['cache']			 = $basepath.'forum-cache';
 			$sfconfig['forum-images']	 = $basepath.'forum-feature-images';
+			$sfconfig['iconsets']		 = $basepath.'forum-iconsets';
 
 			# Create sp-resources folder and themes, plugins and languages folders
 			# if not multisite, just add to sp-resource created above
@@ -1054,6 +1055,10 @@ function sp_perform_install($phase, $subphase = 0) {
 				SP()->primitives->admin_etext('Resources file failed to unzip');
 				echo ' - '.$archive->error_string.'</h5>';
 			}
+			
+			
+			# Install iconsets
+			sp_install_iconsets();
 
 			break;
 

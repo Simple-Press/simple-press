@@ -2032,3 +2032,23 @@ table td.permhead {
         padding: 4px !important;
     }
 }
+
+
+/*
+Style font- icon picker
+*/
+
+#spIconsetsList .item-controls {
+        position: initial;
+}
+
+
+.icons-selector.fip-bootstrap {
+        float: right;
+}
+
+
+.icons-selector .selector-popup {
+        right: 0;
+}
+

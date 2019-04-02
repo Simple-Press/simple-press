@@ -77,6 +77,10 @@ function spa_integration_storage_form() {
 			$path = SP_STORE_DIR.'/'.$sfoptions['custom-icons'];
 			$r = spa_paint_storage_input(SP()->primitives->admin_text('Custom Icons Folder'), 'custom-icons', $sfoptions['custom-icons'], $path);
 			if (!$r) $ok = false;
+			
+			$path = SP_STORE_DIR.'/'.$sfoptions['iconsets'];
+			$r = spa_paint_storage_input( SP()->primitives->admin_text( 'Iconsets Folder' ), 'iconsets', $sfoptions['iconsets'], $path );
+			if (!$r) $ok = false;
 
 			$path = SP_STORE_DIR.'/'.$sfoptions['language-sp'];
 			$r = spa_paint_storage_input(SP()->primitives->admin_text('Simple:Press Language Files'), 'language-sp', $sfoptions['language-sp'], $path);

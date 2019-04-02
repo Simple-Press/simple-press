@@ -131,37 +131,46 @@ function spa_forums_create_forum_form() {
                     echo SP()->primitives->front_text('Theme Default').'<br />';
 					echo '</div>';
 
-					spa_paint_select_start(SP()->primitives->admin_text('Custom forum icon'), 'forum_icon', '');
-					spa_select_icon_dropdown('forum_icon', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', '', false);
-					spa_paint_select_end();
+					
+					spa_select_iconset_icon_picker( 
+							'forum_icon', 
+							SP()->primitives->admin_text('Custom forum icon')
+							);
 
-					spa_paint_select_start(SP()->primitives->admin_text('Custom forum icon when new posts'), 'forum_icon_new', '');
-					spa_select_icon_dropdown('forum_icon_new', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', '', false);
-					spa_paint_select_end();
+					spa_select_iconset_icon_picker( 
+							'forum_icon_new', 
+							SP()->primitives->admin_text('Custom forum icon when new posts')
+							);
 
-					spa_paint_select_start(SP()->primitives->admin_text('Custom forum icon when locked'), 'forum_icon_locked', '');
-					spa_select_icon_dropdown('forum_icon_locked', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', '', false);
-					spa_paint_select_end();
+					spa_select_iconset_icon_picker( 
+							'forum_icon_locked', 
+							SP()->primitives->admin_text('Custom forum icon when locked')
+							);
+					
+					spa_select_iconset_icon_picker( 
+							'topic_icon', 
+							SP()->primitives->admin_text('Custom topic icon')
+							);
+					
+					spa_select_iconset_icon_picker( 
+							'topic_icon_new', 
+							SP()->primitives->admin_text('Custom topic icon when new posts')
+							);
 
-					spa_paint_select_start(SP()->primitives->admin_text('Custom topic icon'), 'topic_icon', '');
-					spa_select_icon_dropdown('topic_icon', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', '', false);
-					spa_paint_select_end();
+					spa_select_iconset_icon_picker( 
+							'topic_icon_locked', 
+							SP()->primitives->admin_text('Custom topic icon when locked')
+							);
+					
+					spa_select_iconset_icon_picker( 
+							'topic_icon_pinned', 
+							SP()->primitives->admin_text('Custom topic icon when pinned')
+							);
 
-					spa_paint_select_start(SP()->primitives->admin_text('Custom topic icon when new posts'), 'topic_icon_new', '');
-					spa_select_icon_dropdown('topic_icon_new', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', '', false);
-					spa_paint_select_end();
-
-					spa_paint_select_start(SP()->primitives->admin_text('Custom topic icon when locked'), 'topic_icon_locked', '');
-					spa_select_icon_dropdown('topic_icon_locked', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', '', false);
-					spa_paint_select_end();
-
-					spa_paint_select_start(SP()->primitives->admin_text('Custom topic icon when pinned'), 'topic_icon_pinned', '');
-					spa_select_icon_dropdown('topic_icon_pinned', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', '', false);
-					spa_paint_select_end();
-
-					spa_paint_select_start(SP()->primitives->admin_text('Custom topic icon when pinned and new posts'), 'topic_icon_pinned_new', '');
-					spa_select_icon_dropdown('topic_icon_pinned_new', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', '', false);
-					spa_paint_select_end();
+					spa_select_iconset_icon_picker( 
+							'topic_icon_pinned_new', 
+							SP()->primitives->admin_text('Custom topic icon when pinned and new posts')
+							);
 
 					spa_paint_input(SP()->primitives->admin_text('Custom meta keywords (SEO option must be enabled)'), 'forum_keywords', '', false, true);
 					spa_paint_wide_textarea('Special forum message to be displayed above forums', 'forum_message', '');

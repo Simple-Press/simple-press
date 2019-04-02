@@ -23,6 +23,15 @@ function spa_ajax_options_loader() {
 add_action('wp_ajax_options-loader', 'spa_ajax_options_loader');
 add_action('wp_ajax_nopriv_options-loader', 'spa_ajax_options_loader');
 
+/**
+ * load ajax file for options related action
+ */
+function spa_ajax_options() {
+	require SP_PLUGIN_DIR.'/admin/panel-options/ajax/spa-ajax-options.php';
+}
+
+add_action('wp_ajax_options', 'spa_ajax_options');
+
 function spa_ajax_components_loader() {
 	require SP_PLUGIN_DIR.'/admin/panel-components/ajax/spa-ajax-components-loader.php';
 }
@@ -174,6 +183,16 @@ function spa_ajax_uploader() {
 
 add_action('wp_ajax_uploader', 'spa_ajax_uploader');
 add_action('wp_ajax_nopriv_uploader', 'spa_ajax_uploader');
+
+
+/**
+ * load iconset uploader script
+ */
+function spa_ajax_iconset_uploader() {
+	require SP_PLUGIN_DIR.'/admin/resources/jscript/ajaxupload/sf-iconset_uploader.php';
+}
+
+add_action('wp_ajax_iconset_uploader', 'spa_ajax_iconset_uploader');
 
 function spa_ajax_help() {
 	require SP_PLUGIN_DIR.'/admin/library/ajax/spa-ajax-help.php';
