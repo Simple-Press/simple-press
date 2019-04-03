@@ -141,9 +141,9 @@ class SPPluginUpdater {
 					'last_updated'=>isset( $check_version->last_updated ) ? $check_version->last_updated : '',
 					'download_link'=> $download_link,
 					'package' => isset( $check_version->package ) ? $check_version->package : '',
-					'icons'=>isset( $check_version->icons ) ? $check_version->icons : '',
-					'banners'=>isset( $check_version->banners ) ? $check_version->banners : '',
-					'sections'=>isset( $check_version->sections ) ? $check_version->sections : ''
+					'icons'=>isset( $check_version->icons ) ? wp_json_encode($check_version->icons) : '',
+					'banners'=>isset( $check_version->banners ) ? wp_json_encode($check_version->banners) : '',
+					'sections'=>isset( $check_version->sections ) ? wp_json_encode($check_version->sections) : ''
 				);
 			
 				// save status to option table
