@@ -950,7 +950,7 @@ function sph_check_addons_status(){
 				
 				$sp_return_plugin_updater = $sp_plugin_updater->check_addons_status($data);
 
-				if($sp_return_plugin_updater && isset($sp_return_plugin_updater->license) && $sp_return_plugin_updater->license === 'valid'){
+				if($sp_return_plugin_updater){
 
 					$sp_return_update_plugins = 1;
 				}
@@ -983,7 +983,7 @@ function sph_check_addons_status(){
 				
 				$sp_return_theme_updater = $sp_theme_updater->check_addons_status($data);
 
-				if($sp_return_theme_updater && isset($sp_return_theme_updater->license) && $sp_return_theme_updater->license === 'valid'){
+				if($sp_return_theme_updater){
 
 					$sp_return_update_themes = 1;
 				}
