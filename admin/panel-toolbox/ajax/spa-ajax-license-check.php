@@ -103,7 +103,7 @@ if(isset($_POST['sp_action'])){
 		}
 		
 		$response = wp_remote_post( SP_Addon_STORE_URL, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
-		
+
 		// make sure the response came back okay
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 		
@@ -117,15 +117,12 @@ if(isset($_POST['sp_action'])){
 			}
 		
 		} else {
-		
+
 			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 		
 			if(isset($license_data->license)) {
 				
 				if( $license_data->license == 'deactivated' ) {
-					
-					// delete key from option table
-					SP()->options->delete( $update_key_option );
 					
 					// update status to option table
 					SP()->options->update( $update_status_option, 'invalid' );
@@ -143,7 +140,7 @@ if(isset($_POST['sp_action'])){
 			}
 		
 			if ( false === $license_data->success && $license_data->error ) {
-		
+				
 				switch( $license_data->error ) {
 		
 					case 'expired' :
@@ -179,7 +176,12 @@ if(isset($_POST['sp_action'])){
 		
 						$message = SP()->primitives->admin_text('Your license key has reached its activation limit.' );
 						break;
+
+					case 'disabled':
 		
+						$message = SP()->primitives->admin_text('This license has been disabled.' );
+						break;						
+						
 					default :
 		
 						$message = SP()->primitives->admin_text('An error occurred, please try again.' );
@@ -201,7 +203,6 @@ if(isset($_POST['sp_action'])){
 	}elseif($sp_action == 'sp_licensing_server_url'){
 		
 		# Save store url for get license of plugins from
-
 		$sp_licensing_server_url = sanitize_text_field($_POST['sp_licensing_server_url']);
 		
 		SP()->options->update('sp_addon_store_url', $sp_licensing_server_url);
