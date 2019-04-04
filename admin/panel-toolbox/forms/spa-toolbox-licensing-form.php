@@ -223,7 +223,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 							echo SP()->primitives->admin_text('Active Site(s): ');
 							echo isset($license_info->site_count) ? $license_info->site_count : 'N/A';
 							echo '<br/>';
-							echo SP()->primitives->admin_text('Activations Left Site(s): '); 
+							echo SP()->primitives->admin_text('Site Activations Remaining : '); 
 							echo isset($license_info->activations_left) ? ucfirst($license_info->activations_left) : 'N/A'; 
 							echo '<br/>';
 							echo SP()->primitives->admin_text('Valid Until: '); 
