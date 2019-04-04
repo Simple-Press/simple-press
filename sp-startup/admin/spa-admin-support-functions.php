@@ -637,7 +637,7 @@ if ( ! function_exists( 'spa_plugin_updater_object' ) ) {
 	function spa_plugin_updater_object($plugin_file, $plugin_data){
 
 		$sp_plugin_name = sanitize_title_with_dashes($plugin_data['Name']);
-		$get_key = SP()->options->get( 'plugin_'.$sp_plugin_name);
+		$get_key = SP()->options->get( 'spl_plugin_key_'.$plugin_data['ItemId']);
 			
 		$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['plugins']).'/'.strtok(plugin_basename($plugin_file), '/');
 		
@@ -671,7 +671,7 @@ if ( ! function_exists( 'spa_theme_updater_object' ) ) {
 		
 		$sp_theme_name = sanitize_title_with_dashes($theme_data['Name']);
 		
-		$get_key = SP()->options->get( 'theme_'.$sp_theme_name);
+		$get_key = SP()->options->get( 'spl_theme_key_'.$theme_data['ItemId']);
 		
 		$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['themes']).'/'.$theme_file;
 
@@ -717,7 +717,7 @@ function spa_addons_changelog($_data, $_action = '', $_args = null ){
 		
 		if (!empty($plugins) && isset($plugin_data['ItemId']) && $plugin_data['ItemId'] != '' && $sp_plugin_name === $_args->slug) {
 			
-			$check_for_addon_update = SP()->options->get( 'spl_plugin_versioninfo_'.$_args->slug);
+			$check_for_addon_update = SP()->options->get( 'spl_plugin_versioninfo_'.$plugin_data['ItemId']);
 
 			$_data = json_decode($check_for_addon_update);
 			
@@ -730,13 +730,13 @@ function spa_addons_changelog($_data, $_action = '', $_args = null ){
 			}
 			
 			if ( $_data && isset( $_data->sections ) ) {
-				$_data->sections = maybe_unserialize( $_data->sections );
+				$_data->sections = maybe_unserialize( json_decode($_data->sections) );
 			} else {
 				$_data = false;
 			}
 			
 			if ( $_data && isset( $_data->banners ) ) {	
-				$_data->banners = maybe_unserialize( $_data->banners );
+				$_data->banners = maybe_unserialize( json_decode($_data->banners) );
 			}
 			return $_data;			
 		}
@@ -750,7 +750,7 @@ function spa_addons_changelog($_data, $_action = '', $_args = null ){
 			
 		if (!empty($themes) && isset($theme_data['ItemId']) && $theme_data['ItemId'] != '' && $sp_theme_name === $_args->slug) {
 			
-			$check_for_addon_update = SP()->options->get( 'spl_theme_versioninfo_'.$sp_theme_name);
+			$check_for_addon_update = SP()->options->get( 'spl_theme_versioninfo_'.$theme_data['ItemId']);
 	
 			$_data = json_decode($check_for_addon_update);
 			
@@ -791,8 +791,8 @@ function spa_plugin_addon_dashboard_update()
 		if (!empty($plugins) && isset($plugin_data['ItemId']) && $plugin_data['ItemId'] != '') {
 		
 			$sp_plugin_name = sanitize_title_with_dashes($plugin_data['Name']);
-			$check_for_addon_update = SP()->options->get( 'spl_plugin_versioninfo_'.$sp_plugin_name);
-			$check_addons_status = SP()->options->get( 'spl_plugin_info_'.$sp_plugin_name);
+			$check_for_addon_update = SP()->options->get( 'spl_plugin_versioninfo_'.$plugin_data['ItemId']);
+			$check_addons_status = SP()->options->get( 'spl_plugin_info_'.$plugin_data['ItemId']);
 			
 			if($check_for_addon_update != '' && $check_addons_status != ''){
 				
@@ -867,11 +867,11 @@ function spa_theme_addon_dashboard_update()
 	
 	foreach ($themes as $theme_file => $theme_data) {
 		
-		if (!empty($themes)) {
+		if (!empty($themes) && isset($theme_data['ItemId']) && $theme_data['ItemId'] != '') {
 			
 			$sp_theme_name = sanitize_title_with_dashes($theme_data['Name']);
-			$check_for_addon_update = SP()->options->get( 'spl_theme_versioninfo_'.$sp_theme_name);
-			$check_addons_status = SP()->options->get( 'spl_theme_info_'.$sp_theme_name);
+			$check_for_addon_update = SP()->options->get( 'spl_theme_versioninfo_'.$theme_data['ItemId']);
+			$check_addons_status = SP()->options->get( 'spl_theme_info_'.$theme_data['ItemId']);
 			
 			if($check_for_addon_update != '' && $check_addons_status != ''){
 					
@@ -957,8 +957,8 @@ function spa_check_plugin_addon_update() {
 			$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['plugins']).'/'.strtok(plugin_basename($plugin_file), '/');
 			
 			$sp_plugin_name = sanitize_title_with_dashes($plugin_data['Name']);
-			$check_for_addon_update = SP()->options->get( 'spl_plugin_versioninfo_'.$sp_plugin_name);
-			$check_addons_status = SP()->options->get( 'spl_plugin_info_'.$sp_plugin_name);
+			$check_for_addon_update = SP()->options->get( 'spl_plugin_versioninfo_'.$plugin_data['ItemId']);
+			$check_addons_status = SP()->options->get( 'spl_plugin_info_'.$plugin_data['ItemId']);
 			
 			if($check_for_addon_update != '' && $check_addons_status != ''){
 				
@@ -1134,8 +1134,8 @@ function spa_check_theme_addon_update(){
 			$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['themes']).'/'.$theme_file;
 			
 			$sp_theme_name = sanitize_title_with_dashes($theme_data['Name']);
-			$check_for_addon_update = SP()->options->get( 'spl_theme_versioninfo_'.$sp_theme_name);
-			$check_addons_status = SP()->options->get( 'spl_theme_info_'.$sp_theme_name);
+			$check_for_addon_update = SP()->options->get( 'spl_theme_versioninfo_'.$theme_data['ItemId']);
+			$check_addons_status = SP()->options->get( 'spl_theme_info_'.$theme_data['ItemId']);
 			
 			if($check_for_addon_update != '' && $check_addons_status != ''){
 				

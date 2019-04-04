@@ -105,6 +105,7 @@ function spa_toolbox_licensing_form_paint_instructions() {
 		//@todo:  The string below needs to be constructed using printf so that the url can be replaced in the appropriate %s section during translation.
 		echo SP()->primitives->admin_text('A license to one of our ') . '<a href="https://simple-press.com/pricing"> '.SP()->primitives->admin_text('plugin and theme bundles').'</a> ' . SP()->primitives->admin_text('grants you up-to-date access to more than 70 premium Simple:Press plugins and themes!');	
 		echo '<br/>';
+		spa_paint_hidden_input('ajax_error_message', SP()->primitives->admin_text('Something Went Wrong Please Try Again!'));
 	echo '</div>';
 	spa_paint_spacer();
 	echo '<div class="sfoptionerror">'.SP()->primitives->admin_text('Note: If you do not activate your license(s) you will not receive security and other automatic updates for your premium plugins and themes!').'</div>';	
@@ -282,9 +283,9 @@ function spa_toolbox_licensing_form_paint_plugin_licenses() {
 			if ($sp_plugin_name && $sp_plugin_name != '') {
 				
 				$count_plugins++;
-				$get_key = SP()->options->get( 'plugin_'.$sp_plugin_name);
-				$license_status = SP()->options->get('spl_plugin_stats_'.$sp_plugin_name);
-				$license_info 	= SP()->options->get('spl_plugin_info_'.$sp_plugin_name);
+				$get_key = SP()->options->get( 'spl_plugin_key_'.$plugin_data['ItemId']);
+				$license_status = SP()->options->get('spl_plugin_stats_'.$plugin_data['ItemId']);
+				$license_info 	= SP()->options->get('spl_plugin_info_'.$plugin_data['ItemId']);
 				$license_info	= json_decode($license_info);
 				$total_days = -1;
 				if(isset($license_info) && $license_info != '' && isset($license_info->expires)){
@@ -324,9 +325,9 @@ function spa_toolbox_licensing_form_paint_theme_licenses() {
 		if ($sp_theme_name && $sp_theme_name != '' && isset($theme_data['ItemId']) && $theme_data['ItemId'] != '') {
 			
 			$count_themes++;
-			$get_key = SP()->options->get( 'theme_'.$sp_theme_name);
-			$license_status = SP()->options->get('spl_theme_stats_'.$sp_theme_name);
-			$license_info 	= SP()->options->get('spl_theme_info_'.$sp_theme_name);
+			$get_key = SP()->options->get( 'spl_theme_key_'.$theme_data['ItemId']);
+			$license_status = SP()->options->get('spl_theme_stats_'.$theme_data['ItemId']);
+			$license_info 	= SP()->options->get('spl_theme_info_'.$theme_data['ItemId']);
 			$license_info	= json_decode($license_info);
 			$total_days = -1;
 			if(isset($license_info) && $license_info != '' && isset($license_info->expires)){

@@ -866,8 +866,7 @@ if ( ! function_exists( 'sp_plugin_updater_object' ) ) {
 	
 	function sp_plugin_updater_object($plugin_file, $plugin_data){
 		
-		$sp_plugin_name = sanitize_title_with_dashes($plugin_data['Name']);
-		$get_key = SP()->options->get( 'plugin_'.$sp_plugin_name);
+		$get_key = SP()->options->get( 'spl_plugin_key_'.$plugin_data['ItemId']);
 			
 		$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['plugins']).'/'.strtok(plugin_basename($plugin_file), '/');
 		
@@ -899,9 +898,8 @@ if ( ! function_exists( 'sp_theme_updater_object' ) ) {
 	
 	function sp_theme_updater_object($theme_file, $theme_data){
 		
-		$sp_theme_name = sanitize_title_with_dashes($theme_data['Name']);
-		$get_key = SP()->options->get( 'theme_'.$sp_theme_name);
-		
+		$get_key = SP()->options->get( 'spl_theme_key_'.$theme_data['ItemId']);
+
 		$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['themes']).'/'.$theme_file;
 
 		$api_data = array(
@@ -943,11 +941,10 @@ function sph_check_addons_status(){
 			if(isset($plugin_data['ItemId']) && $plugin_data['ItemId'] != ''){
 				
 				$sp_plugin_updater = sp_plugin_updater_object($plugin_file, $plugin_data);
-
-				$sp_plugin_name = sanitize_title_with_dashes($plugin_data['Name']);			
-				$update_status_option 	= 'spl_plugin_stats_'.$sp_plugin_name;
-				$update_info_option 	= 'spl_plugin_info_'.$sp_plugin_name;
-				$update_version_option 	= 'spl_plugin_versioninfo_'.$sp_plugin_name;
+			
+				$update_status_option 	= 'spl_plugin_stats_'.$plugin_data['ItemId'];
+				$update_info_option 	= 'spl_plugin_info_'.$plugin_data['ItemId'];
+				$update_version_option 	= 'spl_plugin_versioninfo_'.$plugin_data['ItemId'];
 				
 				$data = array('edd_action' => 'check_license', 'update_status_option'=>$update_status_option, 'update_info_option'=>$update_info_option, 'update_version_option'=>$update_version_option);
 				
@@ -977,11 +974,10 @@ function sph_check_addons_status(){
 			if(isset($theme_data['ItemId']) && $theme_data['ItemId'] != ''){
 			
 				$sp_theme_updater = sp_theme_updater_object($theme_file, $theme_data);
-				
-				$sp_theme_name = sanitize_title_with_dashes($theme_data['Name']);
-				$update_status_option 	= 'spl_theme_stats_'.$sp_theme_name;
-				$update_info_option 	= 'spl_theme_info_'.$sp_theme_name;
-				$update_version_option 	= 'spl_theme_versioninfo_'.$sp_theme_name;
+
+				$update_status_option 	= 'spl_theme_stats_'.$theme_data['ItemId'];
+				$update_info_option 	= 'spl_theme_info_'.$theme_data['ItemId'];
+				$update_version_option 	= 'spl_theme_versioninfo_'.$theme_data['ItemId'];
 				
 				$data = array('edd_action' => 'check_license', 'update_status_option'=>$update_status_option, 'update_info_option'=>$update_info_option, 'update_version_option'=>$update_version_option);
 				
