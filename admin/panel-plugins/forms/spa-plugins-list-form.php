@@ -256,7 +256,6 @@ function spa_plugins_list_form() {
                                             	
 													echo SP()->primitives->admin_text('There is an update for the ').' '.$plugin_data['Name'].' '.SP()->primitives->admin_text('plugin').'.<br />';
 													echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the plugin is available').'.<br />';
-													echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$plugin_data['Name']].'.<br />';
 													echo '<span title="'.SP()->primitives->admin_text('View version full details').'" class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details.').'</span> '.SP()->primitives->admin_text('or').' ';
 													echo '<a href="'.self_admin_url('update-core.php').'" title="'.SP()->primitives->admin_text('update now').'">'.SP()->primitives->admin_text('update now').'</a>.';
 
@@ -264,7 +263,6 @@ function spa_plugins_list_form() {
                                             	
 												echo SP()->primitives->admin_text('There is an update for the ').' '.$plugin_data['Name'].' '.SP()->primitives->admin_text('plugin').'.<br />';
 													echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the plugin is available').'.<br />';
-													echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$plugin_data['Name']].'.<br />';
 													echo '<span title="'.SP()->primitives->admin_text('View version full details.').'" class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details.').'</span>';
 													echo '<br />' . SP()->primitives->admin_text(' Automatic update is unavailable for this plugin - most likely because the license key is not present and activated.');
                                              } ?>

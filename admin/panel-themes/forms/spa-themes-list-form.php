@@ -139,7 +139,6 @@ function spa_themes_list_form() {
 						echo '<p class="plugin-update-tr"><p class="update-message notice inline notice-warning notice-alt" style="padding: 10px 0px;">';	
 						echo SP()->primitives->admin_text('There is an update for the ').' '.esc_attr($curTheme['theme']).' '.SP()->primitives->admin_text('theme').'.<br />';
 						echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the theme is available').'.<br />';
-						echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$curTheme['theme']].'.<br />';
 						echo '<span title="'.SP()->primitives->admin_text('View version full details').'"  class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details').'</span> '.SP()->primitives->admin_text('or').' ';
 						echo '<a href="'.self_admin_url('update-core.php').'" title="'.SP()->primitives->admin_text('update now').'">'.SP()->primitives->admin_text('update now').'</a>.';
 						echo '</p></p>';
@@ -149,7 +148,6 @@ function spa_themes_list_form() {
 						echo '<p class="plugin-update-tr"><p class="update-message notice inline notice-warning notice-alt" style="padding: 10px 0px;">';
 						echo SP()->primitives->admin_text('There is an update for the ').' '.esc_attr($curTheme['theme']).' '.SP()->primitives->admin_text('theme').'.<br />';
 						echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the theme is available').'.<br />';
-						echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$curTheme['theme']].'.<br />';
 						echo '<span title="'.SP()->primitives->admin_text('View version full details').'" class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details').'</span>';
 						echo '<br />' . SP()->primitives->admin_text(' Automatic update is unavailable for this theme - most likely because the license key is not present.');
 						echo '</p></p>';
@@ -294,7 +292,6 @@ function spa_themes_list_form() {
 								echo '<p class="plugin-update-tr"><p class="update-message notice inline notice-warning notice-alt" style="padding: 10px 0px;">';
 								echo SP()->primitives->admin_text('There is an update for the ').' '.$theme_data['Name'].' '.SP()->primitives->admin_text('theme').'.<br />';
 								echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the theme is available').'.<br />';
-								echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$theme_data['Name']].'.<br />';
 								echo '<span title="'.SP()->primitives->admin_text('View version full details').'" class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details').'</span> '.SP()->primitives->admin_text('or').' ';
 								echo '<a href="'.self_admin_url('update-core.php').'" title="'.SP()->primitives->admin_text('update now').'">'.SP()->primitives->admin_text('update now').'</a>.';
 								echo '</p></p>';
@@ -304,7 +301,6 @@ function spa_themes_list_form() {
 								echo '<p class="plugin-update-tr"><p class="update-message notice inline notice-warning notice-alt" style="padding: 10px 0px;">';
 								echo SP()->primitives->admin_text('There is an update for the ').' '.$theme_data['Name'].' '.SP()->primitives->admin_text('theme').'.<br />';
 								echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the theme is available').'.<br />';
-								echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$theme_data['Name']].'.<br />';
 								echo '<span title="'.SP()->primitives->admin_text('View version full details').'" class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details').'</span>';
 								echo '<br />' . SP()->primitives->admin_text(' Automatic update is unavailable for this theme - most likely because the license key is not present.');
 								echo '</p></p>';
