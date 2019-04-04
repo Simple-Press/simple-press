@@ -105,6 +105,7 @@ function spa_toolbox_licensing_form_paint_instructions() {
 		//@todo:  The string below needs to be constructed using printf so that the url can be replaced in the appropriate %s section during translation.
 		echo SP()->primitives->admin_text('A license to one of our ') . '<a href="https://simple-press.com/pricing"> '.SP()->primitives->admin_text('plugin and theme bundles').'</a> ' . SP()->primitives->admin_text('grants you up-to-date access to more than 70 premium Simple:Press plugins and themes!');	
 		echo '<br/>';
+		spa_paint_hidden_input('ajax_error_message', SP()->primitives->admin_text('Something Went Wrong Please Try Again!'));
 	echo '</div>';
 	spa_paint_spacer();
 	echo '<div class="sfoptionerror">'.SP()->primitives->admin_text('Note: If you do not activate your license(s) you will not receive security and other automatic updates for your premium plugins and themes!').'</div>';	

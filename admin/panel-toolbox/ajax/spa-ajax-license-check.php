@@ -124,11 +124,11 @@ if(isset($_POST['sp_action'])){
 				
 				if( $license_data->license == 'deactivated' ) {
 					
-					// delete status from option table
-					SP()->options->delete( $update_status_option );
+					// delete key from option table
+					SP()->options->delete( $update_key_option );
 					
-					// delete info from option table
-					SP()->options->delete( $update_info_option );
+					// update status to option table
+					SP()->options->update( $update_status_option, 'invalid' );
 					
 					$message = SP()->primitives->admin_text('Your license key is deactivated. Please wait a bit for the screen to update to reflect your revised license status!  Thank you.' );
 					
