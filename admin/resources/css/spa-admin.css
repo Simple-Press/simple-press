@@ -2097,6 +2097,6 @@ Style font- icon picker
 }
 
 
-.icons-selector .selector-popup {
-        right: 0;
+.icons-selector .selector-popup, .icons-selector.selector-popup-wrap, .icons-selector .selector-popup-wrap {
+        right: 0 !important;
 }

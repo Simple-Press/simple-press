@@ -465,7 +465,11 @@ class spcTheme {
 		
 		$icon = $icon ? $icon : $default_icon;
 		
-		return sprintf( '<i class="%s"></i>', $icon );
+		if( $icon ) {
+			return sprintf( '<i class="%s"></i>', $icon );
+		}
+		
+		return '';
 	}
 
 	/**

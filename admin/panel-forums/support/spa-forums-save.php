@@ -26,7 +26,18 @@ function spa_save_forums_create_group() {
 
 	if (!empty($_POST['group_icon'])) {
 		# Check new icon exists
-		$groupdata['group_icon'] = SP()->saveFilters->title(trim($_POST['group_icon']));
+		
+		$group_icon = spa_get_selected_icon( $_POST['group_icon'] );
+		$groupdata['group_icon'] = $group_icon['icon'];
+		
+		if( 'file' === $group_icon['type'] ) {
+			$path                    = SPCUSTOMDIR.$groupdata['group_icon'];
+			if (!file_exists($path)) {
+				$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $groupdata['group_icon']);
+				return $mess;
+			}
+		}
+		
 	} else {
 		$groupdata['group_icon'] = null;
 	}
@@ -95,56 +106,134 @@ function spa_save_forums_create_forum() {
 
 	if (!empty($_POST['forum_icon'])) {
 		# Check new icon exists
-		$forumdata['forum_icon'] = SP()->saveFilters->title(trim($_POST['forum_icon']));
+		
+		$forum_icon = spa_get_selected_icon( $_POST['forum_icon'] );
+		$forumdata['forum_icon'] = $forum_icon['icon'];
+		
+		$path                    = SPCUSTOMDIR.$forumdata['forum_icon'];
+		
+		if( 'file' === $forum_icon['type'] && !file_exists($path) ) {
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['forum_icon']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['forum_icon'] = null;
 	}
 
 	if (!empty($_POST['forum_icon_new'])) {
 		# Check new icon exists
-		$forumdata['forum_icon_new'] = SP()->saveFilters->title(trim($_POST['forum_icon_new']));
+		
+		$forum_icon_new = spa_get_selected_icon( $_POST['forum_icon_new'] );
+		$forumdata['forum_icon_new'] = $forum_icon_new['icon'];
+		
+		$path                        = SPCUSTOMDIR.$forumdata['forum_icon_new'];
+		if( 'file' === $forum_icon_new['type'] && !file_exists( $path ) ) {
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['forum_icon_new']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['forum_icon_new'] = null;
 	}
 
 	if (!empty($_POST['forum_icon_locked'])) {
 		# Check new icon exists
-		$forumdata['forum_icon_locked'] = SP()->saveFilters->title(trim($_POST['forum_icon_locked']));
+		
+		$forum_icon_locked = spa_get_selected_icon( $_POST['forum_icon_locked'] );
+		$forumdata['forum_icon_locked'] = $forum_icon_locked['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['forum_icon_locked'];
+		if( 'file' === $forum_icon_locked['type'] && !file_exists( $path ) ) {
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['forum_icon_locked']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['forum_icon_locked'] = null;
 	}
 
 	if (!empty($_POST['topic_icon'])) {
 		# Check new icon exists
-		$forumdata['topic_icon'] = SP()->saveFilters->title(trim($_POST['topic_icon']));
+		
+		
+		$topic_icon = spa_get_selected_icon( $_POST['topic_icon'] );
+		$forumdata['topic_icon'] = $topic_icon['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['topic_icon'];
+		if( 'file' === $topic_icon['type'] && !file_exists( $path ) ) {
+		
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['topic_icon']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['topic_icon'] = null;
 	}
 
 	if (!empty($_POST['topic_icon_new'])) {
 		# Check new icon exists
-		$forumdata['topic_icon_new'] = SP()->saveFilters->title(trim($_POST['topic_icon_new']));
+		
+		$topic_icon_new = spa_get_selected_icon( $_POST['topic_icon_new'] );
+		$forumdata['topic_icon_new'] = $topic_icon_new['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['topic_icon_new'];
+		if( 'file' === $topic_icon_new['type'] && !file_exists( $path ) ) {
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['topic_icon_new']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['topic_icon_new'] = null;
 	}
 
 	if (!empty($_POST['topic_icon_locked'])) {
 		# Check new icon exists
-		$forumdata['topic_icon_locked'] = SP()->saveFilters->title(trim($_POST['topic_icon_locked']));
+		
+		$topic_icon_locked = spa_get_selected_icon( $_POST['topic_icon_locked'] );
+		$forumdata['topic_icon_locked'] = $topic_icon_locked['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['topic_icon_locked'];
+		if( 'file' === $topic_icon_locked['type'] && !file_exists( $path ) ) {
+		
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['topic_icon_locked']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['topic_icon_locked'] = null;
 	}
 
 	if (!empty($_POST['topic_icon_pinned'])) {
 		# Check new icon exists
-		$forumdata['topic_icon_pinned'] = SP()->saveFilters->title(trim($_POST['topic_icon_pinned']));
+		
+		$topic_icon_pinned = spa_get_selected_icon( $_POST['topic_icon_pinned'] );
+		$forumdata['topic_icon_pinned'] = $topic_icon_pinned['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['topic_icon_pinned'];
+		if( 'file' === $topic_icon_pinned['type'] && !file_exists( $path ) ) {
+			
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['topic_icon_pinned']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['topic_icon_pinned'] = null;
 	}
 
 	if (!empty($_POST['topic_icon_pinned_new'])) {
 		# Check new icon exists
-		$forumdata['topic_icon_pinned_new'] = SP()->saveFilters->title(trim($_POST['topic_icon_pinned_new']));
+		
+		$topic_icon_pinned_new = spa_get_selected_icon( $_POST['topic_icon_pinned_new'] );
+		$forumdata['topic_icon_pinned_new'] = $topic_icon_pinned_new['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['topic_icon_pinned_new'];
+		if( 'file' === $topic_icon_pinned_new['type'] && !file_exists( $path ) ) {
+		
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['topic_icon_pinned_new']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['topic_icon_pinned_new'] = null;
 	}
@@ -629,56 +718,128 @@ function spa_save_forums_edit_forum() {
 
 	if (!empty($_POST['forum_icon'])) {
 		# Check new icon exists
-		$forumdata['forum_icon'] = SP()->saveFilters->title(trim($_POST['forum_icon']));
+		
+		$forum_icon = spa_get_selected_icon( $_POST['forum_icon'] );
+		$forumdata['forum_icon'] = $forum_icon['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['forum_icon'];
+		if( 'file' === $forum_icon['type'] && !file_exists( $path ) ) {
+		
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['forum_icon']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['forum_icon'] = null;
 	}
 
 	if (!empty($_POST['forum_icon_new'])) {
 		# Check new icon exists
-		$forumdata['forum_icon_new'] = SP()->saveFilters->title(trim($_POST['forum_icon_new']));
+		
+		$forum_icon_new = spa_get_selected_icon( $_POST['forum_icon_new'] );
+		$forumdata['forum_icon_new'] = $forum_icon_new['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['forum_icon_new'];
+		if( 'file' === $forum_icon_new['type'] && !file_exists( $path ) ) {
+		
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['forum_icon_new']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['forum_icon_new'] = null;
 	}
 
 	if (!empty($_POST['forum_icon_locked'])) {
 		# Check new icon exists
-		$forumdata['forum_icon_locked'] = SP()->saveFilters->title(trim($_POST['forum_icon_locked']));
+		
+		$forum_icon_locked = spa_get_selected_icon( $_POST['forum_icon_locked'] );
+		$forumdata['forum_icon_locked'] = $forum_icon_locked['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['forum_icon_locked'];
+		if( 'file' === $forum_icon_locked['type'] && !file_exists( $path ) ) {
+			
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['forum_icon_locked']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['forum_icon_locked'] = null;
 	}
 
 	if (!empty($_POST['topic_icon'])) {
 		# Check new icon exists
-		$forumdata['topic_icon'] = SP()->saveFilters->title(trim($_POST['topic_icon']));
+		
+		$topic_icon = spa_get_selected_icon( $_POST['topic_icon'] );
+		$forumdata['topic_icon'] = $topic_icon['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['topic_icon'];
+		if( 'file' === $topic_icon['type'] && !file_exists( $path ) ) {
+		
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['topic_icon']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['topic_icon'] = null;
 	}
 
 	if (!empty($_POST['topic_icon_new'])) {
 		# Check new icon exists
-		$forumdata['topic_icon_new'] = SP()->saveFilters->title(trim($_POST['topic_icon_new']));
+		$topic_icon_new = spa_get_selected_icon( $_POST['topic_icon_new'] );
+		$forumdata['topic_icon_new'] = $topic_icon_new['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['topic_icon_new'];
+		if( 'file' === $topic_icon_new['type'] && !file_exists( $path ) ) {
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['topic_icon_new']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['topic_icon_new'] = null;
 	}
 
 	if (!empty($_POST['topic_icon_locked'])) {
 		# Check new icon exists
-		$forumdata['topic_icon_locked'] = SP()->saveFilters->title(trim($_POST['topic_icon_locked']));
+		$topic_icon_locked = spa_get_selected_icon( $_POST['topic_icon_locked'] );
+		$forumdata['topic_icon_locked'] = $topic_icon_locked['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['topic_icon_locked'];
+		if( 'file' === $topic_icon_locked['type'] && !file_exists( $path ) ) {
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['topic_icon_locked']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['topic_icon_locked'] = null;
 	}
 
 	if (!empty($_POST['topic_icon_pinned'])) {
 		# Check new icon exists
-		$forumdata['topic_icon_pinned'] = SP()->saveFilters->title(trim($_POST['topic_icon_pinned']));
+		$topic_icon_pinned = spa_get_selected_icon( $_POST['topic_icon_pinned'] );
+		$forumdata['topic_icon_pinned'] = $topic_icon_pinned['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['topic_icon_pinned'];
+		if( 'file' === $topic_icon_pinned['type'] && !file_exists( $path ) ) {
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['topic_icon_pinned']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['topic_icon_pinned'] = null;
 	}
 
 	if (!empty($_POST['topic_icon_pinned_new'])) {
 		# Check new icon exists
-		$forumdata['topic_icon_pinned_new'] = SP()->saveFilters->title(trim($_POST['topic_icon_pinned_new']));
+		$topic_icon_pinned_new = spa_get_selected_icon( $_POST['topic_icon_pinned_new'] );
+		$forumdata['topic_icon_pinned_new'] = $topic_icon_pinned_new['icon'];
+		
+		$path                           = SPCUSTOMDIR.$forumdata['topic_icon_pinned_new'];
+		if( 'file' === $topic_icon_pinned_new['type'] && !file_exists( $path ) ) {
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $forumdata['topic_icon_pinned_new']);
+
+			return $mess;
+		}
 	} else {
 		$forumdata['topic_icon_pinned_new'] = null;
 	}
@@ -778,7 +939,18 @@ function spa_save_forums_edit_group() {
 
 	if (!empty($_POST['group_icon'])) {
 		# Check new icon exists
-		$groupdata['group_icon'] = SP()->saveFilters->title(trim($_POST['group_icon']));
+		
+		$group_icon = spa_get_selected_icon( $_POST['group_icon'] );
+		$groupdata['group_icon'] = $group_icon['icon'];
+		
+		$path                           = SPCUSTOMDIR.$groupdata['group_icon'];
+		
+		if( 'file' === $group_icon['type'] && !file_exists( $path ) ) {
+		
+			$mess = sprintf(SP()->primitives->admin_text('Custom icon %s does not exist'), $groupdata['group_icon']);
+
+			return $mess;
+		}
 	} else {
 		$groupdata['group_icon'] = null;
 	}

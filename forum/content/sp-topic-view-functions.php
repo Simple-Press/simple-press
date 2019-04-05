@@ -78,7 +78,19 @@ function sp_TopicHeaderIcon($args = '') {
 
 	# Check if a custom icon
 	if (!empty(SP()->forum->view->thisTopic->topic_icon)) {
-		$icon = SP()->theme->sp_paint_iconset_icon( SP()->forum->view->thisTopic->topic_icon, $icon  );
+		
+		$topic_icon = spa_get_saved_icon( SP()->forum->view->thisTopic->topic_icon );
+
+		$icon = $topic_icon['icon'];
+
+		if( 'file' === $topic_icon['type'] ) {
+			$icon = SP()->theme->paint_custom_icon($tagClass, SPCUSTOMURL. $icon );
+		} else {
+			$icon = SP()->theme->sp_paint_iconset_icon( $icon );
+		}
+		
+	} else {
+		$icon = SP()->theme->paint_icon($tagClass, SPTHEMEICONSURL, sanitize_file_name($icon));
 	}
 
 	if ($get) return $icon;

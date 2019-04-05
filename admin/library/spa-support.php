@@ -203,28 +203,65 @@ function spa_display_permission_select($cur_perm = 0, $showSelect = true) {
 }
 
 /**
+ * Get all custom icons in a directory
+ * 
+ * @param string $path
+ * @param atring $url_base
+ * 
+ * @return array
+ */
+function spa_get_custom_icons( $path = '', $url_base = '' ) {
+	
+	
+	if( !$path ) {
+		$path = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'];
+	}
+	
+	if( !$url_base ) {
+		$url_base = SPCUSTOMURL;
+	}
+	
+	
+	$icons = array();
+	
+	$images = array_map('basename', glob("{$path}/{*.jpg,*.jpeg,*.png,*.gif,*.JPG,*.JPEG,*.PNG,*.GIF}", GLOB_BRACE) );
+
+	sort( $images );
+	
+	foreach( $images as $image ) {
+		$icons[ $image ] = $url_base . $image . "?{$image}";
+	}
+	
+	return array( 'icons' => $icons );
+}
+
+
+/**
  * Adds font icon picker
  * 
  * @param string $name
  * @param string $label
+ * @param array $extra_icon_groups
  * @param string $selected
  * @param string $help
  */
-function spa_select_iconset_icon_picker( $name, $label, $selected = '', $help = '') {
+function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = array() ,$selected = '', $help = '') {
 	
 	
-	$iconsets = spa_get_all_active_iconsets();
+	$iconsets = array_merge( $extra_icon_groups, spa_get_all_active_iconsets() );
 	
 	spa_paint_select_start( $label, $name, $help);
 	
 	foreach( $iconsets as $iconset_name => $iconset ) {
 		echo '<option value=""></option>';
 		echo '<optgroup label="'.$iconset_name.'">';
-		foreach ( $iconset['icons'] as $icon ) {
+		foreach ( $iconset['icons'] as $icon_id => $icon ) {
 			
-			$_selected = $selected && $selected === $icon ? ' selected="selected"' : '';
+			$icon_id = is_int( $icon_id ) ? $icon : $icon_id;
 			
-			printf( '<option value="%s"%s>%s</option>', $icon, $_selected, $icon );
+			$_selected = $selected && $selected === $icon_id ? ' selected="selected"' : '';
+			
+			printf( '<option value="%s"%s>%s</option>', $icon, $_selected, $icon_id );
 			
 		}
 		
@@ -243,9 +280,17 @@ function spa_select_iconset_icon_picker( $name, $label, $selected = '', $help = 
 	    $('select[name="<?php echo $name; ?>"]').fontIconPicker({
 	        theme: 'fip-bootstrap',
 			iconsPerPage: 30,
-			allCategoryText : 'From All Libraries'
+			allCategoryText : 'From All Libraries',
+			iconGenerator: function( icon) {
+				
+				if( icon.match(/\.(jpeg|jpg|gif|png)$/) != null ) {
+					return '<i><img src="'+ icon + '" /></i>';
+				} else {
+					return '<i class="'+icon+'"></i>';
+				}
+				
+			}
 	    });
-	 
 	});
 	                                        
 
@@ -254,6 +299,30 @@ function spa_select_iconset_icon_picker( $name, $label, $selected = '', $help = 
 	
 }
 
+/**
+ * Get selected icon and type
+ * 
+ * @param string $icon
+ * 
+ * @return array
+ */
+function spa_get_selected_icon( $icon ) {
+			
+	$file = parse_url( $icon, PHP_URL_QUERY );
+	$type = 'font';
+
+
+	if( $file ) {
+		$type = 'file';
+		$icon = $file;
+	}
+	
+	
+	$icon = SP()->saveFilters->title( trim( $icon ) );
+	
+	return array( 'type' => $type, 'icon' => $icon );
+}
+		
 
 function spa_select_icon_dropdown($name, $label, $path, $cur, $showSelect = true, $width = 0) {
 	# Open folder and get cntents for matching

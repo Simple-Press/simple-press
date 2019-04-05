@@ -29,7 +29,10 @@ function spa_forums_create_group_form() {
 					spa_paint_input(SP()->primitives->admin_text('Group Name'), 'group_name', '', false, true);
 					spa_paint_input(SP()->primitives->admin_text('Description'), 'group_desc', '', false, true);
 
-					spa_select_iconset_icon_picker('group_icon', SP()->primitives->admin_text('Select Custom Icon'));
+					
+					$custom_icons =  spa_get_custom_icons();
+					
+					spa_select_iconset_icon_picker('group_icon', SP()->primitives->admin_text('Select Custom Icon'), array( 'Custom Icons' => $custom_icons ) );
 
 					spa_paint_wide_textarea('Special group message to be displayed above forums', 'group_message', '');
 

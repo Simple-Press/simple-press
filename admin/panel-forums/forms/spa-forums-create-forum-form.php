@@ -132,44 +132,55 @@ function spa_forums_create_forum_form() {
 					echo '</div>';
 
 					
+					$custom_icons =  spa_get_custom_icons();
+					
+					
 					spa_select_iconset_icon_picker( 
 							'forum_icon', 
-							SP()->primitives->admin_text('Custom forum icon')
+							SP()->primitives->admin_text('Custom forum icon'),
+							array( 'Custom Icons' => $custom_icons )
 							);
 
 					spa_select_iconset_icon_picker( 
 							'forum_icon_new', 
-							SP()->primitives->admin_text('Custom forum icon when new posts')
+							SP()->primitives->admin_text('Custom forum icon when new posts'),
+							array( 'Custom Icons' => $custom_icons )
 							);
 
 					spa_select_iconset_icon_picker( 
 							'forum_icon_locked', 
-							SP()->primitives->admin_text('Custom forum icon when locked')
+							SP()->primitives->admin_text('Custom forum icon when locked'),
+							array( 'Custom Icons' => $custom_icons )
 							);
 					
 					spa_select_iconset_icon_picker( 
 							'topic_icon', 
-							SP()->primitives->admin_text('Custom topic icon')
+							SP()->primitives->admin_text('Custom topic icon'),
+							array( 'Custom Icons' => $custom_icons )
 							);
 					
 					spa_select_iconset_icon_picker( 
 							'topic_icon_new', 
-							SP()->primitives->admin_text('Custom topic icon when new posts')
+							SP()->primitives->admin_text('Custom topic icon when new posts'),
+							array( 'Custom Icons' => $custom_icons )
 							);
 
 					spa_select_iconset_icon_picker( 
 							'topic_icon_locked', 
-							SP()->primitives->admin_text('Custom topic icon when locked')
+							SP()->primitives->admin_text('Custom topic icon when locked'),
+							array( 'Custom Icons' => $custom_icons )
+							);
+										
+					spa_select_iconset_icon_picker( 
+							'topic_icon_pinned', 
+							SP()->primitives->admin_text('Custom topic icon when pinned'),
+							array( 'Custom Icons' => $custom_icons )
 							);
 					
 					spa_select_iconset_icon_picker( 
-							'topic_icon_pinned', 
-							SP()->primitives->admin_text('Custom topic icon when pinned')
-							);
-
-					spa_select_iconset_icon_picker( 
 							'topic_icon_pinned_new', 
-							SP()->primitives->admin_text('Custom topic icon when pinned and new posts')
+							SP()->primitives->admin_text('Custom topic icon when pinned and new posts'),
+							array( 'Custom Icons' => $custom_icons )
 							);
 
 					spa_paint_input(SP()->primitives->admin_text('Custom meta keywords (SEO option must be enabled)'), 'forum_keywords', '', false, true);

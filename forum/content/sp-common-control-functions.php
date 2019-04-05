@@ -704,3 +704,28 @@ function sp_OpenCloseControl($args = '', $toolTipOpen = '', $toolTipClose = '') 
 		return $out;
 	}
 }
+
+/**
+ * Get saved icon and type
+ * 
+ * @param string $icon
+ * 
+ * @return array
+ */
+function spa_get_saved_icon( $icon ) {
+	
+	$supported_image = array('gif','jpg','jpeg','png');
+
+
+	$ext = strtolower( pathinfo( $icon, PATHINFO_EXTENSION ) );
+	
+	$type = 'font';
+	
+	if ( in_array( $ext, $supported_image ) ) {
+		$type = 'file';
+		$icon = sanitize_file_name( $icon );
+	} 
+	
+	return array('type' => $type, 'icon' => $icon );
+	
+}

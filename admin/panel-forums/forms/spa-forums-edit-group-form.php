@@ -39,8 +39,13 @@ function spa_forums_edit_group_form($group_id) {
 					spa_paint_input(SP()->primitives->admin_text('Group Name'), 'group_name', SP()->displayFilters->title($group->group_name), false, true);
 					spa_paint_input(SP()->primitives->admin_text('Description'), 'group_desc', SP()->editFilters->text($group->group_desc), false, true);
 
-					spa_select_iconset_icon_picker( 'group_icon', SP()->primitives->admin_text( 'Select Custom Icon' ), $group->group_icon );
 					
+					$custom_icons =  spa_get_custom_icons();
+					
+					
+					spa_select_iconset_icon_picker( 'group_icon', SP()->primitives->admin_text( 'Select Custom Icon' ), array( 'Custom Icons' => $custom_icons ), $group->group_icon );
+					
+
 					spa_paint_input(SP()->primitives->admin_text('Replacement external RSS URL').'<br />'.SP()->primitives->admin_text('Default').': <strong>'.SP()->spPermalinks->get_query_url(SP()->spPermalinks->build_url('', '', 0, 0, 0, 1)).'group='.$group->group_id.'</strong>', 'group_rss', SP()->displayFilters->url($group->group_rss), false, true);
 
 					spa_paint_wide_textarea('Special group message to be displayed above forums', 'group_message', SP()->editFilters->text($group->group_message));
