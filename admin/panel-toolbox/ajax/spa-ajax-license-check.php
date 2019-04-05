@@ -31,29 +31,29 @@ if(isset($_POST['sp_action'])){
 	
 	$sp_action = sanitize_text_field($_POST['sp_action']);
 
-	if(isset($_POST['sp_item']) && ($sp_action == 'activate_license' || $sp_action == 'deactivate_license')){
+	if(isset($_POST['sp_item']) && isset($_POST['sp_item_id']) && ($sp_action == 'activate_license' || $sp_action == 'deactivate_license')){
 
 		# Check Whether license key is valid or not
 
 		$license_key = sanitize_text_field( $_POST['licence_key'] );
+
+		$item_id = sanitize_text_field( $_POST['sp_item_id'] );
 		
 		$item_name = sanitize_text_field( $_POST['item_name'] );
-		
-		$item_name = sanitize_title_with_dashes($item_name);
 		
 		$sp_item = sanitize_text_field( $_POST['sp_item'] );
 		
 		if($sp_item == 'sp_check_plugin'){
 			
-			$update_key_option 		= 'plugin_'.$item_name;
-			$update_status_option 	= 'spl_plugin_stats_'.$item_name;
-			$update_info_option 	= 'spl_plugin_info_'.$item_name;
+			$update_key_option 		= 'spl_plugin_key_'.$item_id;
+			$update_status_option 	= 'spl_plugin_stats_'.$item_id;
+			$update_info_option 	= 'spl_plugin_info_'.$item_id;
 			
 		}else{
 			
-			$update_key_option 		= 'theme_'.$item_name;
-			$update_status_option 	= 'spl_theme_stats_'.$item_name;
-			$update_info_option 	= 'spl_theme_info_'.$item_name;
+			$update_key_option 		= 'spl_theme_key_'.$item_id;
+			$update_status_option 	= 'spl_theme_stats_'.$item_id;
+			$update_info_option 	= 'spl_theme_info_'.$item_id;
 		}
 		
 		/* 
@@ -103,7 +103,7 @@ if(isset($_POST['sp_action'])){
 		}
 		
 		$response = wp_remote_post( SP_Addon_STORE_URL, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
-		
+
 		// make sure the response came back okay
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 		
@@ -117,18 +117,15 @@ if(isset($_POST['sp_action'])){
 			}
 		
 		} else {
-		
+
 			$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 		
 			if(isset($license_data->license)) {
 				
 				if( $license_data->license == 'deactivated' ) {
 					
-					// delete status from option table
-					SP()->options->delete( $update_status_option );
-					
-					// delete info from option table
-					SP()->options->delete( $update_info_option );
+					// update status to option table
+					SP()->options->update( $update_status_option, 'invalid' );
 					
 					$message = SP()->primitives->admin_text('Your license key is deactivated. Please wait a bit for the screen to update to reflect your revised license status!  Thank you.' );
 					
@@ -143,7 +140,7 @@ if(isset($_POST['sp_action'])){
 			}
 		
 			if ( false === $license_data->success && $license_data->error ) {
-		
+				
 				switch( $license_data->error ) {
 		
 					case 'expired' :
@@ -179,7 +176,12 @@ if(isset($_POST['sp_action'])){
 		
 						$message = SP()->primitives->admin_text('Your license key has reached its activation limit.' );
 						break;
+
+					case 'disabled':
 		
+						$message = SP()->primitives->admin_text('This license has been disabled.' );
+						break;						
+						
 					default :
 		
 						$message = SP()->primitives->admin_text('An error occurred, please try again.' );
@@ -201,7 +203,6 @@ if(isset($_POST['sp_action'])){
 	}elseif($sp_action == 'sp_licensing_server_url'){
 		
 		# Save store url for get license of plugins from
-
 		$sp_licensing_server_url = sanitize_text_field($_POST['sp_licensing_server_url']);
 		
 		SP()->options->update('sp_addon_store_url', $sp_licensing_server_url);
@@ -222,18 +223,17 @@ if(isset($_POST['sp_action'])){
 		
 		echo json_encode($result);
 		
-	}elseif($sp_action == 'license_remove'){
+	}elseif($sp_action == 'license_remove' && isset($_POST['sp_item_id'])){
 
 		# remove license key
 		
 		$sp_item = sanitize_text_field($_POST['sp_item']);
-		$item_name = sanitize_text_field($_POST['item_name']);
-		$item_name = sanitize_title_with_dashes($item_name);
+		$item_id = sanitize_text_field($_POST['sp_item_id']);
 		
 		if($sp_item == 'sp_check_plugin'){
-			$remove_key_option 	= 'plugin_'.$item_name;
+			$remove_key_option 	= 'spl_plugin_key_'.$item_id;
 		}else{
-			$remove_key_option 	= 'theme_'.$item_name;
+			$remove_key_option 	= 'spl_theme_key_'.$item_id;
 		}
 		
 		// delete license key from option table

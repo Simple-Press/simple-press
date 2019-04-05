@@ -62,6 +62,7 @@
             var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
                 n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
                 a = $(this).parents("form").find('input[name="sp_item"]').val(),
+				em = $('.sp-licensing-instructions-tab').find('input[name="ajax_error_message"]').val(),
                 i = $(this).parents("form").find('input[name="sp_item_id"]').val();
             $.ajax({
                 type: "POST",
@@ -82,7 +83,7 @@
                     }, 4000)
                 },
                 error: function(e, s, n) {
-                    "timeout" === s && ($("#sfmsgspot").html("Something Went Wrong Please Try Again!"), $("#sfmsgspot").fadeOut(2000))
+                    "timeout" === s && ($("#sfmsgspot").html(em), $("#sfmsgspot").fadeOut(2000))
                 },
                 beforeSend: function() {
                     $("#sfmsgspot").show(), $("#sfmsgspot").html(sp_platform_vars.pWait)
@@ -100,6 +101,7 @@
             var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
                 n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
                 a = $(this).parents("form").find('input[name="sp_item"]').val(),
+				em = $('.sp-licensing-instructions-tab').find('input[name="ajax_error_message"]').val(),
                 i = $(this).parents("form").find('input[name="sp_item_id"]').val();
 
             $.ajax({
@@ -121,7 +123,7 @@
                     }, 4000)
                 },
                 error: function(e, s, n) {
-                    "timeout" === s && ($("#sfmsgspot").html("Something Went Wrong Please Try Again!"), $("#sfmsgspot").fadeOut(2000))
+                    "timeout" === s && ($("#sfmsgspot").html(em), $("#sfmsgspot").fadeOut(2000))
                 },
                 beforeSend: function() {
                     $("#sfmsgspot").show(), $("#sfmsgspot").html(sp_platform_vars.pWait)
@@ -136,7 +138,8 @@
 
         $(document).on("click", 'input[name="save_store_url"]', function(e) {
             e.preventDefault();
-            var s = $(this).parents("form").find('input[name="sp_licensing_server_url"]').val();
+            var s = $(this).parents("form").find('input[name="sp_licensing_server_url"]').val(),
+				em = $('.sp-licensing-instructions-tab').find('input[name="ajax_error_message"]').val();
             $.ajax({
                 type: "POST",
                 dataType: "json",
@@ -144,7 +147,7 @@
                 data: {
                     action: "license-check",
                     sp_licensing_server_url: s,
-                    sp_action: "save_store_url"
+                    sp_action: "sp_licensing_server_url"
                 },
                 timeout: 5000,
                 success: function(e) {
@@ -153,7 +156,7 @@
                     }, 4000)
                 },
                 error: function(e, s, n) {
-                    "timeout" === s && ($("#sfmsgspot").html("Something Went Wrong Please Try Again!"), $("#sfmsgspot").fadeOut(2000))
+                    "timeout" === s && ($("#sfmsgspot").html(em), $("#sfmsgspot").fadeOut(2000))
                 },
                 beforeSend: function() {
                     $("#sfmsgspot").show(), $("#sfmsgspot").html(sp_platform_vars.pWait)
@@ -171,6 +174,7 @@
             var s = $(this).attr('data-site'),
                 ti = $(this).attr('data-href'),
                 tt = $(this).attr('data-label'),
+				em = $(.sp-licensing-instructions-tab).find('input[name="ajax_error_message"]').val(),
                 th = this;
             $.ajax({
                 type: "POST",
@@ -186,7 +190,7 @@
                    spj.dialogOpen(th, '', tt, '1000', 'auto', 'center', '', '', e.message);
                 },
                 error: function (e, s, n) {
-                    "timeout" === s && ($("#sfmsgspot").html("Something Went Wrong Please Try Again!"), $("#sfmsgspot").fadeOut(2000))
+                    "timeout" === s && ($("#sfmsgspot").html(em), $("#sfmsgspot").fadeOut(2000))
                 },
                 beforeSend: function () {
                     
@@ -201,6 +205,7 @@
 
         $(document).on("click", '#force_update_check', function (e) {
             e.preventDefault();
+			var em = $('.sp-licensing-instructions-tab').find('input[name="ajax_error_message"]').val();
             $.ajax({
                 type: "POST",
                 dataType: "json",
@@ -216,7 +221,7 @@
                     }, 4000)
                 },
                 error: function(e, s, n) {
-                    "timeout" === s && ($("#sfmsgspot").html("Something Went Wrong Please Try Again!"), $("#sfmsgspot").fadeOut(2000))
+                    "timeout" === s && ($("#sfmsgspot").html(em), $("#sfmsgspot").fadeOut(2000))
                 },
                 beforeSend: function () {
                     $("#sfmsgspot").show(), $("#sfmsgspot").html(sp_platform_vars.pWait)
@@ -234,6 +239,7 @@
             var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
                 n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
                 a = $(this).parents("form").find('input[name="sp_item"]').val(),
+				em = $('.sp-licensing-instructions-tab').find('input[name="ajax_error_message"]').val(),
                 i = $(this).parents("form").find('input[name="sp_item_id"]').val();
 
             $.ajax({
@@ -255,7 +261,7 @@
                     }, 4000)
                 },
                 error: function(e, s, n) {
-                    "timeout" === s && ($("#sfmsgspot").html("Something Went Wrong Please Try Again!"), $("#sfmsgspot").fadeOut(2000))
+                    "timeout" === s && ($("#sfmsgspot").html(em), $("#sfmsgspot").fadeOut(2000))
                 },
                 beforeSend: function() {
                     $("#sfmsgspot").show(), $("#sfmsgspot").html(sp_platform_vars.pWait)

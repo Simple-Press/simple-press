@@ -2080,6 +2080,11 @@ table td.permhead {
 
 .sp-licensing-key-error{color:red;}
 
+.thickbox.open-plugin-details-modal.spPluginUpdate {
+    color: #0073aa;
+    cursor: pointer;
+}
+
 /* End style adjustments for licensing tab */
 
 
