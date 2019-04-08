@@ -174,7 +174,7 @@
             var s = $(this).attr('data-site'),
                 ti = $(this).attr('data-href'),
                 tt = $(this).attr('data-label'),
-				em = $(.sp-licensing-instructions-tab).find('input[name="ajax_error_message"]').val(),
+				em = $('.sp-licensing-instructions-tab').find('input[name="ajax_error_message"]').val(),
                 th = this;
             $.ajax({
                 type: "POST",
