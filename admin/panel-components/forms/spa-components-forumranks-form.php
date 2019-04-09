@@ -198,7 +198,17 @@ function spa_paint_rankings_table($rankings) {
 		<?php $tab++; ?>
 
 		<td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>'>
-			<?php spa_select_icon_dropdown('rankbadge[]', SP()->primitives->admin_text('Select Badge'), SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/', $ranks['badge'][$x], true, 135); ?>
+				
+				
+			<?php
+											
+			$badges =  spa_get_custom_icons( SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'] . '/' );
+			
+			spa_select_iconset_icon_picker( 'rankbadge[]', __( 'Select Badge' ), array('Badges' => $badges ), $ranks['badge'][$x] );
+			
+			?>
+				
+			<?php //spa_select_icon_dropdown('rankbadge[]', SP()->primitives->admin_text('Select Badge'), SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/', $ranks['badge'][$x], true, 135); ?>
 		</td>
 		<?php $tab++; ?>
 

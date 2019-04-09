@@ -72,7 +72,6 @@ if ( move_uploaded_file( $_FILES['uploadfile']['tmp_name'], $uploadfile ) ) {
 			die();
 		}
 		
-		//spa_get_iconset_icons($id, $iconset);
 		$successExtract1 = true;
 	} else {
 		echo "error";

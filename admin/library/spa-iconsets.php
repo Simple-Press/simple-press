@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Register a new iconset
+ * 
+ * @param array $set
+ * 
+ * @return \WP_Error|boolean
+ */
 function spa_add_iconset( $set = array() ) {
 	
 	$iconsets = spa_get_all_iconsets();
@@ -42,18 +49,54 @@ function spa_add_iconset( $set = array() ) {
 }
 
 
+/**
+ * Remove iconset
+ * 
+ * @param string $iconset
+ * 
+ * @return boolean
+ */
+function spa_remove_iconset( $iconset = '' ) {
+	
+	if( !$iconset ) {
+		return false;
+	}
+	
+	$iconsets = spa_get_all_iconsets();
+	
+	if( isset( $iconsets[ $iconset ] ) ) {
+		unset( $iconsets[ $iconset ] );
+	}
+	
+	SP()->options->update( 'iconsets', $iconsets );
+
+	return	true;
+}
+
+
+/**
+ * Return iconset setting
+ * 
+ * @param string $id
+ * 
+ * @return boolean
+ */
 function spa_get_icoset_config( $id ) {
 	$iconsets = spa_get_all_iconsets();
 	
-	if( isset( $iconsets[ $id] ) ) {
-		return isset( $iconsets[ $id] );
+	if( isset( $iconsets[ $id ] ) ) {
+		return $iconsets[ $id ];
 	}
 	
 	return false;
 }
 
 
-
+/**
+ * Return add registered iconsets
+ * 
+ * @return array
+ */
 function spa_get_all_iconsets() {
 	
 	$iconsets = SP()->options->get( 'iconsets' );
@@ -63,7 +106,11 @@ function spa_get_all_iconsets() {
 	return $iconsets;
 }
 
-
+/**
+ * Return all active iconsets
+ * 
+ * @return array
+ */
 function spa_get_all_active_iconsets() {
 	
 	$all_iconsets = spa_get_all_iconsets();
@@ -80,7 +127,14 @@ function spa_get_all_active_iconsets() {
 }
 
 
-
+/**
+ * Parse iconset css file
+ * 
+ * @param string $css_path
+ * @param string $prefix
+ * 
+ * @return array
+ */
 function spa_iconset_parse( $css_path, $prefix = '' ) {
 	
 	$css = file_get_contents( $css_path );
@@ -111,47 +165,11 @@ function spa_iconset_parse( $css_path, $prefix = '' ) {
 }
 
 
-
-function spa_get_iconset_icons( $id, $iconset ) {
-	
-	
-	$iconset = spa_get_icoset_config( $id );
-	
-	
-	$css_path = trailingslashit( $iconset['path'] ) . '/style.css';
-	
-	
-	$css = file_get_contents( $css_path );
-	
-	
-	preg_match('/\[class\^=\"(.*)\"\]\,\s*\[class\*=\"\s*(.*)\"\]\s*\{/', $css, $output_array);
-
-	if( $output_array && $output_array[1] && $output_array[1] === $output_array[2] ) {
-		$prefix = $output_array[1];
-	}
-
-
-
-
-	preg_match_all( '/\.('.$prefix.'(.*))\:(before|after)\s*{/', $text, $matches );
-
-
-	
-	
-	$icons = array();
-
-	if( $matches && !empty( $matches ) ) {
-		$icons = $matches[1];
-	}
-	
-
-	
-	
-	return $icons;
-	
-}
-
-
+/**
+ * Return icons for active iconsets
+ * 
+ * @return array
+ */
 function spa_get_all_active_iconset_icons() {
 	
 	$active_iconsets = spa_get_all_active_iconsets();
@@ -174,7 +192,9 @@ function spa_get_all_active_iconset_icons() {
 add_action( 'wp_enqueue_scripts', 'sp_enqueue_iconsets' );
 add_action( 'admin_enqueue_scripts', 'sp_enqueue_iconsets' );
 
-
+/**
+ * Enqueue iconset's css files
+ */
 function sp_enqueue_iconsets() {
 	
 	

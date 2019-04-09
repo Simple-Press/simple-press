@@ -48,12 +48,8 @@ if ($action == 'deliconset') {
 		spa_remove_dir( $path . '/*');
 		
 		rmdir($path);
-
-		unset( $iconsets[ $iconset_id ] );
 		
-		
-		
-		SP()->options->update( 'iconsets', $iconsets );
+		spa_remove_iconset( $iconset_id );
 	}
 	
 	echo '1';

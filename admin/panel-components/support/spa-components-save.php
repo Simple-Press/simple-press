@@ -193,7 +193,15 @@ function spa_save_forumranks_data() {
 			$rankdata = array();
 			$rankdata['posts'] = SP()->filters->integer($_POST['rankpost'][$x]);
 			$rankdata['usergroup'] = (int) $_POST['rankug'][$x];
-			$rankdata['badge'] = SP()->saveFilters->filename($_POST['rankbadge'][$x]);
+			
+			$badge = spa_get_selected_icon( $_POST['rankbadge'][$x] );
+			$rankdata['badge'] = $badge['icon'];
+			if( 'file' === $badge['type'] ) {
+				$rankdata['badge'] = SP()->saveFilters->filename( $badge['icon'] );
+			}
+			
+			//$rankdata['badge'] = SP()->saveFilters->filename($_POST['rankbadge'][$x]);
+			
 			if ((int) $_POST['rankid'][$x] == -1) {
 				SP()->meta->add('forum_rank', SP()->saveFilters->title(trim($_POST['rankdesc'][$x])), $rankdata);
 			} else {

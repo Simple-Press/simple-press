@@ -284,9 +284,9 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 			iconGenerator: function( icon) {
 				
 				if( icon.match(/\.(jpeg|jpg|gif|png)$/) != null ) {
-					return '<i><img src="'+ icon + '" /></i>';
+					return '<i class="sp-iconset-icon"><img src="'+ icon + '" /></i>';
 				} else {
-					return '<i class="'+icon+'"></i>';
+					return '<i class="'+icon+' sp-iconset-icon"></i>';
 				}
 				
 			}

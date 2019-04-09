@@ -2033,7 +2033,6 @@ table td.permhead {
         padding: 4px !important;
     }
 }
-
 /* End experimental responsive stuff */
 
 /*************************************************************************/
@@ -2080,6 +2079,10 @@ table td.permhead {
 
 .sp-licensing-key-error{color:red;}
 
+.thickbox.open-plugin-details-modal.spPluginUpdate {
+    color: #0073aa;
+    cursor: pointer;
+}
 /* End style adjustments for licensing tab */
 
 
@@ -2099,4 +2102,8 @@ Style font- icon picker
 
 .icons-selector .selector-popup, .icons-selector.selector-popup-wrap, .icons-selector .selector-popup-wrap {
         right: 0 !important;
+}
+
+.sp-iconset-icon img {
+        width: 100%;
 }
