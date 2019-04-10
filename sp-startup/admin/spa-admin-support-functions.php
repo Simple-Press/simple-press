@@ -763,13 +763,13 @@ function spa_addons_changelog($_data, $_action = '', $_args = null ){
 			}
 			
 			if ( $_data && isset( $_data->sections ) ) {
-				$_data->sections = maybe_unserialize( $_data->sections );
+				$_data->sections = maybe_unserialize( json_decode($_data->sections) );
 			} else {
 				$_data = false;
 			}
 			
 			if ( $_data && isset( $_data->banners ) ) {
-				$_data->banners = maybe_unserialize( $_data->banners );
+				$_data->banners = maybe_unserialize( json_decode($_data->banners) );
 			}
 			return $_data;		
 		}
@@ -1010,7 +1010,7 @@ function spa_check_plugin_addon_update() {
 				echo "
 				<tr class='active'>
 				<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($plugin_file)."' /></th>
-				<td><strong>{$plugin_data['Name']}</strong><br />".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $plugin_data['Version'], $check_for_addon_update->new_version, SPVERSION).'</td>
+				<td><strong>{$plugin_data['Name']}</strong><br />".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s.'), $plugin_data['Version'], $check_for_addon_update->new_version).'</td>
 				</tr>';
 				$data = new stdClass;
 				$data->slug = $plugin_file;
@@ -1186,7 +1186,7 @@ function spa_check_theme_addon_update(){
 				echo "
 					<tr class='active'>
 					<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($theme_file)."' /></th>
-					<td class='plugin-title'><img src='$screenshot' width='64' height='64' style='float:left; padding: 5px' /><strong>{$theme_data['Name']}</strong>".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $theme_data['Version'], $check_for_addon_update->new_version, SPVERSION)."</td>
+					<td class='plugin-title'><img src='$screenshot' width='64' height='64' style='float:left; padding: 5px' /><strong>{$theme_data['Name']}</strong>".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s.'), $theme_data['Version'], $check_for_addon_update->new_version)."</td>
 					</tr>";
 				$data = new stdClass;
 				$data->slug = $theme_file;
