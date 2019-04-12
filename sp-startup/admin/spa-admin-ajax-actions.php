@@ -3,7 +3,7 @@
  * Ajax Action handler
  * Loads for all forum admin pages.
  *
- * $LastChangedDate: 2016-12-24 18:28:09 -0800 (Sat, 24 Dec 2016) $
+ * $LastChangedDate: 2019-01-30 16:40:00 -0600 (Wed, 30 Jan 2019) $
  * $Rev: 14895 $
  */
 
@@ -92,6 +92,14 @@ function spa_ajax_toolbox_loader() {
 
 add_action('wp_ajax_toolbox-loader', 'spa_ajax_toolbox_loader');
 add_action('wp_ajax_nopriv_toolbox-loader', 'spa_ajax_toolbox_loader');
+
+function spa_ajax_license_check() {
+	
+	require SP_PLUGIN_DIR.'/admin/panel-toolbox/ajax/spa-ajax-license-check.php';
+}
+
+add_action('wp_ajax_license-check', 'spa_ajax_license_check');
+add_action('wp_ajax_nopriv_license-check', 'spa_ajax_license_check');
 
 # Core Admin Form Processing ---------------------------------------------------------------
 

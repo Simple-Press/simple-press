@@ -91,7 +91,37 @@ function spa_paint_close_fieldset() {
 	echo "</fieldset>\n";
 }
 
-function spa_paint_input($label, $name, $value, $disabled=false, $large=false) {
+function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $css_classes = '' ) {
+	global $tab;
+	
+	$field_classes = 'sp-form-row' . " {$css_classes}";
+	echo "<div class='{$field_classes}'>\n";
+	if ($large) {
+		echo "<div class='wp-core-ui sflabel sp-label-40'>\n";
+	} else {
+		echo "<div class='wp-core-ui sflabel sp-label-60'>\n";
+	}
+	echo "$label:</div>";
+	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
+	echo "<input type='text' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	if ($disabled == true) echo "disabled='disabled' ";
+	echo "/>\n";
+	echo '<div class="clearboth"></div>';
+	echo '</div>';
+	$tab++;
+}
+
+function spa_paint_single_input($name, $value, $disabled=false, $css_classes = '' ) {
+	global $tab;
+	
+	$field_classes = "{$css_classes}";
+	echo "<input type='text' class='wp-core-ui $field_classes' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	if ($disabled == true) echo "disabled='disabled' ";
+	echo "/>";
+	$tab++;
+}
+
+function spa_paint_date($label, $name, $value, $disabled=false, $large=false) {
 	global $tab;
 
 	echo "<div class='sp-form-row'>\n";
@@ -103,7 +133,27 @@ function spa_paint_input($label, $name, $value, $disabled=false, $large=false) {
 	echo "$label:</div>";
 	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
 
-	echo "<input type='text' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	echo "<input type='date' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	if ($disabled == true) echo "disabled='disabled' ";
+	echo "/>\n";
+	echo '<div class="clearboth"></div>';
+	echo '</div>';
+	$tab++;
+}
+
+function spa_paint_number($label, $name, $value, $disabled=false, $large=false) {
+	global $tab;
+
+	echo "<div class='sp-form-row'>\n";
+	if ($large) {
+		echo "<div class='wp-core-ui sflabel sp-label-40'>\n";
+	} else {
+		echo "<div class='wp-core-ui sflabel sp-label-60'>\n";
+	}
+	echo "$label:</div>";
+	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
+
+	echo "<input type='number' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
 	if ($disabled == true) echo "disabled='disabled' ";
 	echo "/>\n";
 	echo '<div class="clearboth"></div>';
@@ -155,6 +205,163 @@ function spa_paint_thin_textarea($label, $name, $value, $submessage='', $xrows=1
 
 	$tab++;
 }
+
+/**
+ * Print wp editor
+ * 
+ * @global int $tab
+ * 
+ * @param string $label
+ * @param string $name
+ * @param string $value
+ * @param string $submessage
+ * @param int $xrows
+ */
+function spa_paint_editor($label, $name, $value, $submessage='', $xrows=1) {
+	global $tab;
+
+	echo "<div class='sp-form-row'>\n";
+	echo "<div class='wp-core-ui sflabel sp-label-50'>\n";
+	echo "$label:";
+	if (!empty($submessage)) echo "<br /><small><strong>".esc_html($submessage)."</strong></small>\n";
+	echo '</div>';
+	echo '<div class="clearboth"></div>';
+	wp_editor( html_entity_decode($value), $name, array(
+					'media_buttons' => false,
+					'quicktags'     => true,
+					'textarea_rows' => $xrows
+				));
+	echo '<div class="clearboth"></div>';
+	echo '</div>';
+
+	$tab++;
+}
+
+/**
+ * Print wide wp editor
+ * 
+ * @global int $tab
+ * 
+ * @param string $label
+ * @param string $name
+ * @param string $value
+ * @param string $submessage
+ * @param int $rows
+ * @param boolean $mediaButtons [optional]
+ */
+function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, $mediaButtons = false) {
+	global $tab;
+
+	add_filter( 'tiny_mce_before_init', 'spa_cache_ajax_editor_settings', 11, 2 );
+	
+	echo "<div class='sp-form-row'>\n";
+	echo "<div class='wp-core-ui sflabel sp-label'>\n";
+	echo "$label:";
+	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
+	echo '</div>';
+	echo '<div class="clearboth"></div>';
+	wp_editor( html_entity_decode( $value ), $name, array(
+					'media_buttons' => (bool) $mediaButtons,
+					'quicktags'     => true,
+					'textarea_rows' => $xrows
+				));
+	
+	echo '<div class="clearboth"></div>';
+	echo '</div>';
+
+	$tab++;
+}
+
+/**
+ * Print thin wp editor
+ * 
+ * @global int $tab
+ * 
+ * @param string $label
+ * @param string $name
+ * @param string $value
+ * @param string $submessage
+ * @param int $rows
+ */
+function spa_paint_thin_editor($label, $name, $value, $submessage='', $xrows=1) {
+	global $tab;
+
+	echo "<div class='sp-form-row'>\n";
+	echo "<div class='wp-core-ui sflabel sp-label-66'>\n";
+	echo "$label:";
+	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
+	echo '</div>';
+	echo '<div class="clearboth"></div>';
+	wp_editor( html_entity_decode($value), $name, array(
+					'media_buttons' => false,
+					'quicktags'     => true,
+					'textarea_rows' => $xrows
+				));
+	echo '<div class="clearboth"></div>';
+	echo '</div>';
+
+	$tab++;
+}
+
+/**
+ * Print settings for ajax wp editors
+ * 
+ * @global array $spa_cache_ajax_editor_settings
+ * 
+ * @return void
+ */
+function spa_print_ajax_editor_settings() {
+	global $spa_cache_ajax_editor_settings;
+	
+	if( !$spa_cache_ajax_editor_settings || !is_array( $spa_cache_ajax_editor_settings ) || empty( $spa_cache_ajax_editor_settings ) ) {
+		return;
+	}
+	
+	?>
+	<script type="text/javascript">
+			
+			var spa_mceInit = <?php echo json_encode( $spa_cache_ajax_editor_settings ); ?>;
+			
+			<?php foreach( $spa_cache_ajax_editor_settings as $editor_id => $editor_setting ) { ?>
+				
+				var editor_id = '<?php echo $editor_id; ?>';
+				
+				if( !tinyMCEPreInit.mceInit.hasOwnProperty( editor_id ) ) {
+					tinyMCEPreInit.mceInit[ editor_id ] = spa_mceInit[ editor_id ];
+					tinyMCEPreInit.mceInit[ editor_id ].formats = <?php echo $editor_setting['formats']; ?>;
+                } 
+				
+			<?php } ?>
+			
+			spa_mceInit = null;
+			
+	</script>
+	<?php
+}
+
+
+/**
+ * Cache wp editor settings
+ * 
+ * @global array $spa_cache_ajax_editor_settings
+ * 
+ * @param array $mceInit
+ * @param string $editor_id
+ * 
+ * @return array
+ */
+function spa_cache_ajax_editor_settings( $mceInit, $editor_id ) {
+	
+	global $spa_cache_ajax_editor_settings;
+	
+	$spa_cache_ajax_editor_settings = isset( $spa_cache_ajax_editor_settings ) && is_array( $spa_cache_ajax_editor_settings ) ? $spa_cache_ajax_editor_settings : array();
+
+	$spa_cache_ajax_editor_settings[ $editor_id ] = $mceInit;
+	
+	return $mceInit;
+}
+
+
 
 function spa_paint_checkbox($label, $name, $value, $disabled=false, $large=false, $displayhelp=true, $msg='', $indent=false) {
 	global $tab;

@@ -23,7 +23,7 @@
  * paint_file_icon($path, $file)
  * paint_icon_id($icon, $id)
  *
- * $LastChangedDate: 2018-08-15 07:59:04 -0500 (Wed, 15 Aug 2018) $
+ * $LastChangedDate: 2019-01-30 16:40:00 -0600 (Wed, 30 Jan 2019) $
  * $Rev: 15704 $
  *
  */
@@ -48,7 +48,8 @@ class spcTheme {
 	 * @returns    array   theme header info
 	 */
 	public function get_data($theme_file) {
-		$default_headers = array('Name'        => 'Simple:Press Theme Title',
+		$default_headers = array('Name'       => 'Simple:Press Theme Title',
+								 'ItemId'      => 'Item Id',
 		                         'ThemeURI'    => 'Theme URI',
 		                         'Version'     => 'Version',
 		                         'Description' => 'Description',
@@ -71,7 +72,12 @@ class spcTheme {
 		$theme_data['Version']     = wp_kses($theme_data['Version'], $allowedtags);
 		$theme_data['Description'] = wp_kses($theme_data['Description'], $allowedtags);
 		$theme_data['Author']      = wp_kses($theme_data['Author'], $allowedtags);
-
+		
+		if($theme_data['ItemId'] && $theme_data['ItemId'] != ''){
+			
+			$theme_data['ItemId']        = wp_kses($theme_data['ItemId'], $allowedtags);
+		}
+		
 		return $theme_data;
 	}
 

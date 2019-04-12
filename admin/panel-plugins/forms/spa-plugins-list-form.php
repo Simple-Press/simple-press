@@ -72,8 +72,7 @@ function spa_plugins_list_form() {
     		echo '<div id="message" class="error"><p>'.sprintf(SP()->primitives->admin_text('The plugin %1$s has been deactivated due to error: %2$s'), esc_html($plugin_file), $error->get_error_message()).'</p></div>';
         }
     }
-
-    $ajaxURL = wp_nonce_url(SPAJAXURL.'plugins-loader&amp;saveform=list', 'plugins-loader');
+        $ajaxURL = wp_nonce_url(SPAJAXURL.'plugins-loader&amp;saveform=list', 'plugins-loader');
 	$msg = esc_js(SP()->primitives->admin_text('Are you sure you want to delete the selected Simple Press plugins?'));
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sppluginsform" name="sppluginsform" onsubmit="javascript: if (ActionType.options[ActionType.selectedIndex].value == 'delete-selected' || ActionType2.options[ActionType2.selectedIndex].value == 'delete-selected') {if (confirm('<?php echo $msg; ?>')) {return true;} else {return false;}} else {return true;}">
@@ -222,23 +221,75 @@ function spa_plugins_list_form() {
 				</tr>
 <?php
 			}
+			
+			if(isset($plugin_data['ItemId']) && $plugin_data['ItemId'] != ''){
 
-        	# any upgrade for this plugin?  in multisite only main site can update
-			if (is_main_site() && $versions && $update) {
-            $active = ($is_active) ? ' active' : '';
+				# any upgrade for this plugin using licensing method
+				
+				$sp_plugin_name = sanitize_title_with_dashes($plugin_data['Name']);
+
+				$check_for_addon_update = SP()->options->get( 'spl_plugin_versioninfo_'.$plugin_data['ItemId']);
+				$check_for_addon_update = json_decode($check_for_addon_update);
+			
+				$check_addons_status = SP()->options->get( 'spl_plugin_info_'.$plugin_data['ItemId']);
+				$check_addons_status = json_decode($check_addons_status);
+				
+				$update_condition = $check_for_addon_update != '' && isset($check_for_addon_update->new_version) && $check_for_addon_update->new_version != false;
+				$status_condition = $check_addons_status != '' && isset($check_addons_status->license);
+
+				$version_compare = isset($check_for_addon_update->new_version) && (version_compare($check_for_addon_update->new_version, $plugin_data['Version'], '>') == 1);
+                                
+                                
+				
+				if (is_main_site() && $update_condition && $status_condition && $version_compare) {
+					
+                                    $changelog_link = add_query_arg( array( 'tab' => 'plugin-information', 'plugin' => $sp_plugin_name, 'section' => 'changelog', 'TB_iframe' => true, 'width' => 722, 'height' => 949 ), admin_url( 'plugin-install.php' ) );
+
+                                    $ajaxURThem = wp_nonce_url(SPAJAXURL.'license-check', 'license-check');
+					
 ?>
-				<tr class="plugin-update-tr<?php echo $active; ?>">
-					<td class="plugin-update colspanchange" colspan="4">
-						<div class="update-message notice inline notice-warning notice-alt">
-							<?php echo SP()->primitives->admin_text('There is an update for the').' '.$plugin_data['Name'].' '.SP()->primitives->admin_text('plugin').'.<br />'; ?>
-							<?php echo SP()->primitives->admin_text('Version').' '.$versions[$plugin_data['Name']].' '.SP()->primitives->admin_text('of the plugin is available').'.<br />'; ?>
-							<?php echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$plugin_data['Name']].'.<br />'; ?>
-							<?php echo SP()->primitives->admin_text('For details, please visit').' '.SPPLUGHOME.' '.SP()->primitives->admin_text('or').' ' ?>
-							<?php echo '<a href="'.self_admin_url('update-core.php').'" title="">'.SP()->primitives->admin_text('update now').'</a>.'; ?>
-						</div>
-					</td>
-				</tr>
+                                    <tr class='<?php echo $rowClass; ?>'>
+                                    <td></td>
+                                    <td class="plugin-update colspanchange" colspan="3">
+                                        <div class="update-message notice inline notice-warning notice-alt">
+                                            <?php if($check_addons_status->license == 'valid'){
+                                            	
+													echo SP()->primitives->admin_text('There is an update for the ').' '.$plugin_data['Name'].' '.SP()->primitives->admin_text('plugin').'.<br />';
+													echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the plugin is available').'.<br />';
+													echo '<span title="'.SP()->primitives->admin_text('View version full details').'" class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details.').'</span> '.SP()->primitives->admin_text('or').' ';
+													echo '<a href="'.self_admin_url('update-core.php').'" title="'.SP()->primitives->admin_text('update now').'">'.SP()->primitives->admin_text('update now').'</a>.';
+
+                                            } else{
+                                            	
+												echo SP()->primitives->admin_text('There is an update for the ').' '.$plugin_data['Name'].' '.SP()->primitives->admin_text('plugin').'.<br />';
+													echo SP()->primitives->admin_text('Version').' '.$check_for_addon_update->new_version.' '.SP()->primitives->admin_text('of the plugin is available').'.<br />';
+													echo '<span title="'.SP()->primitives->admin_text('View version full details.').'" class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="'.$ajaxURThem.'" data-label="Simple:Press Plugin Update" data-href="'.esc_url( $changelog_link ).'">'.SP()->primitives->admin_text('View version ').$check_for_addon_update->new_version.SP()->primitives->admin_text(' details.').'</span>';
+													echo '<br />' . SP()->primitives->admin_text(' Automatic update is unavailable for this plugin - most likely because the license key is not present and activated.');
+                                             } ?>
+                                        </div>
+                                    </td>
+		        	</tr>
+<?php }
+				
+			}else{
+				
+				# any upgrade for this plugin?  in multisite only main site can update
+				if (is_main_site() && $versions && $update) {
+    				$active = ($is_active) ? ' active' : '';
+?>
+					<tr class="plugin-update-tr<?php echo $active; ?>">
+						<td class="plugin-update colspanchange" colspan="4">
+							<div class="update-message notice inline notice-warning notice-alt">
+								<?php echo SP()->primitives->admin_text('There is an update for the').' '.$plugin_data['Name'].' '.SP()->primitives->admin_text('plugin').'.<br />'; ?>
+								<?php echo SP()->primitives->admin_text('Version').' '.$versions[$plugin_data['Name']].' '.SP()->primitives->admin_text('of the plugin is available').'.<br />'; ?>
+								<?php echo SP()->primitives->admin_text('This newer version requires at least Simple:Press version').' '.$required[$plugin_data['Name']].'.<br />'; ?>
+								<?php echo SP()->primitives->admin_text('For details, please visit').' '.SPPLUGHOME.' '.SP()->primitives->admin_text('or').' ' ?>
+								<?php echo '<a href="'.self_admin_url('update-core.php').'" title="Simple:Press Plugin Update">'.SP()->primitives->admin_text('update now').'</a>.'; ?>
+							</div>
+						</td>
+					</tr>
 <?php
+				}
 			}
         }
 		do_action('sph_plugins_list_panel');

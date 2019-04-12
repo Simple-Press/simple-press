@@ -138,8 +138,12 @@ function sp_render_add_post_form($args) {
 	# let plugins add stuff at top of editor header
 	$tout = apply_filters('sph_post_editor_header_top', $tout, SP()->forum->view->thisTopic, $a);
 
-	if (!empty($postmsg['sfpostmsgtopic'])) {
+	if (!empty($postmsg['sfpostmsgpost'])) {
 		$tout.= "<div class='$editorMessage'>".SP()->displayFilters->title($postmsg['sfpostmsgtext'])."</div>\n";
+		$tout.= sp_InsertBreak('echo=0&spacer=8px');
+	}
+	if (!empty($postmsg['sfpostmsgpost2'])) {
+		$tout.= "<div class='$editorMessage'>".SP()->displayFilters->title($postmsg['sfpostmsgtext2'])."</div>\n";
 		$tout.= sp_InsertBreak('echo=0&spacer=8px');
 	}
 

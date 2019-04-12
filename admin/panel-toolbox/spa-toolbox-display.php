@@ -2,7 +2,7 @@
 /*
 Simple:Press
 Admin Toolbox Panel Rendering
-$LastChangedDate: 2017-08-05 17:36:04 -0500 (Sat, 05 Aug 2017) $
+$LastChangedDate: 2019-01-30 16:40:00 -0600 (Wed, 30 Jan 2019) $
 $Rev: 15488 $
 */
 
@@ -65,6 +65,11 @@ function spa_render_toolbox_container($formid) {
 		case 'changelog':
 			require_once SP_PLUGIN_DIR.'/admin/panel-toolbox/forms/spa-toolbox-changelog-form.php';
 			spa_toolbox_changelog_form();
+			break;
+			
+		case 'licensing':
+			require_once SP_PLUGIN_DIR.'/admin/panel-toolbox/forms/spa-toolbox-licensing-form.php';
+			spa_toolbox_licensing_form();
 			break;
 
 		case 'uninstall':

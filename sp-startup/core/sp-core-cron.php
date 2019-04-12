@@ -29,6 +29,10 @@ function sp_cron_scheduler() {
 	if (!wp_next_scheduled('sph_stats_cron')) {
 		wp_schedule_event(time(), 'sp_stats_interval', 'sph_stats_cron');
 	}
+	
+	if (!wp_next_scheduled('sph_check_addons_status_interval')) {
+		wp_schedule_event(time(), 'daily', 'sph_check_addons_status_interval');
+	}
 
 	$sfuser = SP()->options->get('sfuserremoval');
 	if ($sfuser['sfuserremove'] && !wp_next_scheduled('sph_cron_user')) {
@@ -56,6 +60,11 @@ function sp_cron_schedules($schedules) {
 	$schedules['sp_news_interval'] = array(
 		'interval'	 => (60 * 60 * 24 * 7),
 		'display'	 => __('SP News Check Interval')); # weekly
+		
+	$schedules['sph_check_addons_status_interval'] = array(
+		'interval'	 => (60 * 60 * 24),
+		'display'	 => __('SP Addons Interval')); # daily
+		
 	return $schedules;
 }
 

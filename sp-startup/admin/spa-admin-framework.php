@@ -8,6 +8,18 @@
  */
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
+
+function spa_enqueue_datepicker() {
+	
+	$spAdminUIStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'jquery-ui.css' : SPADMINCSS.'jquery-ui.min.css';
+	wp_register_style('spAdminUIStyle', $spAdminUIStyleUrl);
+	wp_enqueue_style('spAdminUIStyle');
+	
+	wp_enqueue_script( 'jquery-ui-datepicker', false, array('jquery') );
+}
+
+
+
 /**
  * This function registers and enqueues the admin CSS style.
  *
@@ -18,6 +30,7 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function spa_load_admin_css() {
 	$spAdminStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'spa-admin.css' : SPADMINCSS.'spa-admin.min.css';
 	wp_register_style('spAdminStyle', $spAdminStyleUrl);
+	
 	wp_enqueue_style('spAdminStyle');
 	wp_enqueue_style('farbtastic');
 }
@@ -53,7 +66,11 @@ function spa_load_admin_scripts() {
 				'jquery-ui-widget',
 				'jquery-ui-sortable'), false, false);
 		}
-
+		
+		wp_enqueue_editor();
+		
+		spa_enqueue_datepicker();
+		
 		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin.js' : SPAJSCRIPT.'spa-admin.min.js';
 		wp_enqueue_script('sfadmin', $script, array(
 			'jquery',
@@ -179,6 +196,9 @@ function spa_panel_header() {
 	$site = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
 	$title = SP()->primitives->admin_text('About Simple:Press');
 	echo '<a class="button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>&nbsp;&nbsp;&nbsp;';
+	
+	echo '<a class="button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>&nbsp;&nbsp;&nbsp;';	
+	
 	echo '<a class="button" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
 
 	echo '</td>';

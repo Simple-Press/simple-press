@@ -314,3 +314,9 @@ The Anonymise option is much faster to execute than full erasure. For a user wit
 full erasure can be a lengthy task and a potential time-out has to be considered -a problem most unlikely to occur with
 anonymisation.
 [end]
+
+[member-deprecated-identities]
+Certain identities such as AIM are part of services that no longer exists. We have removed these from the main user profile data entry screen so that users can no longer enter new data for these identities. <br /><br />
+If you would still like your users to see these, turn this option on.<br /><br />
+The full list of deprecated identities are:  AIM, Yahoo IM, ICQ, Google Talk, MSN, Myspace.  If you turn this option on, these identities will become available again.
+[end]

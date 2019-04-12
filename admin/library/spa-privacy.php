@@ -64,6 +64,7 @@ function sp_privacy_profile_export($exportItems, $spUserData, $groupID, $groupLa
 		'linkedin'		=> SP()->primitives->admin_text('LinedIn Identity'),
 		'youtube'		=> SP()->primitives->admin_text('YouTube Identity'),
 		'googleplus'	=> SP()->primitives->admin_text('Google Plus Identity'),
+		'instagram'		=> SP()->primitives->admin_text('Instagram Identity'),
 		'photos'		=> SP()->primitives->admin_text('Photo URL')
 	);
 

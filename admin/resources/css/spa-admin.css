@@ -317,7 +317,7 @@ a:active {
     font-weight: 600;
     font-size: 11px;
     text-align: left;
-    padding: 5px 10px 5px 3px;
+    padding: 5px 10px 5px 10px;
     text-shadow: none;
     width: auto;
     border-style: solid;
@@ -788,6 +788,25 @@ p.sf-upload-status-fail {
 #sfmaincontainer [type="radio"]:checked:focus + label:before,
 #sfmaincontainer [type="radio"]:not(:checked):focus + label:before {
     border: 1px dotted blue;
+}
+
+/* radio button */
+#sfmaincontainer [type="radio"]:not(:checked) + label:before,
+#sfmaincontainer [type="radio"]:checked + label:before {
+        border-radius: 10px;
+}
+
+#sfmaincontainer [type="radio"]:not(:checked) + label:after,
+#sfmaincontainer [type="radio"]:checked + label:after {
+        content: ' ';
+        
+        width: 13px;
+        height: 13px;
+        background: #09afa6;
+        border-radius: 6px;
+        content: '';
+        top: 2px;
+        left: 3px;
 }
 
 /* hover style just for information */
@@ -1752,6 +1771,7 @@ table td.permhead {
     margin-bottom: 5px;
 }
 
+
 @media screen and (max-width: 1300px) {
     .sffieldset .floatList li {
         width: 30%;
@@ -1784,7 +1804,7 @@ table td.permhead {
     height: auto;
 }
 
-/* list tabel stuff */
+/* list table stuff */
 
 #wpbody #sfmaincontainer .tablenav span.displaying-num {
     vertical-align: middle !important;
@@ -2013,3 +2033,55 @@ table td.permhead {
         padding: 4px !important;
     }
 }
+/* End experimental responsive stuff */
+
+/*************************************************************************/
+/* Style adjustments for new licensing tab introducted in 6.0.7 / 6.1.0 */
+/*************************************************************************/
+.form-table td.sp_td_left{
+	/* 
+	 * The license scren tables consists of two uneven columns;
+	 * this section helps to style the left column.
+	*/
+	font-weight: 600;
+	font-size: 12px;
+	text-align: left;
+	padding: 5px 10px 5px 10px;
+	border-style: solid;
+	border-width: 1px 1px 1px;
+	border-color: #ccc;
+	width:20%;
+	border-bottom: 1px solid #ddd;
+	color: #000000;
+}
+
+.form-table td.sp_td_licence_info{
+	font-weight: 600; 
+	line-height: 18px; 
+	font-size: 12px;
+}
+
+.sp_addons_not_found { 
+	margin-left: 0px;
+}
+.sp_addon_title{ 
+	font-size: 17px;
+	color: #0073aa;
+	font-weight: 600;
+	margin-bottom: 10px; 
+}
+
+.sp-licensing_note_list{
+	margin:10px;
+}
+
+.sp-licensing-key-active{color:green;}
+
+.sp-licensing-key-error{color:red;}
+
+.thickbox.open-plugin-details-modal.spPluginUpdate {
+    color: #0073aa;
+    cursor: pointer;
+}
+
+/* End style adjustments for licensing tab */

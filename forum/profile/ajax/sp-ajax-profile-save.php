@@ -281,7 +281,9 @@ function sp_UpdateProfile() {
 			if ($update) update_user_meta($thisUser, 'youtube', SP()->saveFilters->title(trim($_POST['youtube'])));
 			$update = apply_filters('sph_ProfileUserGooglePlusUpdate', true);
 			if ($update) update_user_meta($thisUser, 'googleplus', SP()->saveFilters->title(trim($_POST['googleplus'])));
-
+			$update = apply_filters('sph_ProfileUserInstagramUpdate', true);		
+			if ($update) update_user_meta($thisUser, 'instagram', SP()->saveFilters->title(trim($_POST['instagram'])));
+			
 			# fire action for plugins
 			$message = apply_filters('sph_UpdateProfileIdentities', $message, $thisUser);
 

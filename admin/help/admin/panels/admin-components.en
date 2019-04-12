@@ -172,7 +172,7 @@ not any actual Posts.  This message is a customizable message that can be displa
 [admin-view]
 <strong>View Admin Posts Message</strong><br /><br />
 Only users or guests with the 'Can view admin posts' permission will be able to posts by Simple:Press Admins.  Others, without this permission, will instead be shown the View Admin Posts message.  This message
-is a customizable message that can be displayed to these guests and/or users when they try to view a Admin Post.  This can be useful for membership sites (perhaps paid support) were you want users to see what is being asked but not be able to see the Admin answers.
+is a customizable message that can be displayed to these guests and/or users when they try to view a Admin Post.  This can be useful for membership sites (perhaps paid support) where you want users to see what is being asked but not be able to see the Admin answers.
 [end]
 
 [rpx-login]
@@ -184,6 +184,6 @@ after creating an RPX account, please enter the RPX API key to begin utilizing t
 
 [user-view]
 <strong>View Only Your Posts and Posts from Admins/Mods Message</strong><br /><br />
-If you are limiting users via permissino to only see their posts and those by Admins and Mods, this message will instead be shown for posts by other users.  This message is a customizable message that can be
-displayed to these guests and/or users when they try to view a other users Post.
+If you are limiting users via permissions to only see their posts and those by Admins and Mods, this message will instead be shown for posts by other users.  This message is a customizable message that can be
+displayed to these guests and/or users when they try to view another other users Post.
 [end]

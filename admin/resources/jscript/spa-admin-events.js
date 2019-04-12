@@ -390,6 +390,27 @@
 			});
 		}
 	};
+        
+        prepareEditors = {
+		init: function() {
+                        
+                        $( '#sfmaincontainer' ).find('.wp-editor-wrap').each( function () {
+                                spj.prepareAjaxEditor( $(this) );
+                        });
+                        
+		}
+	};
+        
+        prepareDatePicker = {
+                init : function() {
+                        $('.sp-datepicker-field').datepicker({
+                                beforeShow: function(input, inst) {
+                                        $("#ui-datepicker-div").addClass("sp-datepicker");
+                                }
+                        });
+                }
+        }
+        
 
 	// public properties
 
@@ -429,6 +450,8 @@
 			setForumOptions.init();
 			setForumSequence.init();
 			setForumSlug.init();
+                        prepareEditors.init();
+                        prepareDatePicker.init();
 		});
 
 		$('#sfmaincontainer').on('troubleshootingformloaded', function() {

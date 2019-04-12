@@ -1,5 +1,5 @@
 --- Manage Toolbox ---
-$LastChangedDate: 2016-12-26 23:28:33 -0600 (Mon, 26 Dec 2016) $
+$LastChangedDate: 2019-02-27 16:40:00 -0600 (Wed, 27 Feb 2019) $
 $Rev: 14915 $
 
 [uninstall]
@@ -17,6 +17,64 @@ This option update allows admins to change the current Simple:Press build number
 are doing!  Changing the build number should only be done in rare cases when there were issues during an upgrade or installation.</b><br /><br />
 By manually changing the build number AND checking the Force Upgrade box, you can force the upgrade/install procedure to run once again.
 Normally, you should only change this when recommended by the Simple:Press team in the support forum.
+[end]
+
+[licensing-instructions]
+Please enter your license key for each plugin or theme. You can find your license keys in your ACCOUNT area on our site or on the purchase confirmation email that was sent to you after your purchase.<br /><br />
+Generally, your license key will be the same for all items if you purchased a "bundle".  This is also known as an "all access" license key and may be referred to as such on your email confirmation and your account screen. <br /><br />
+However, if you purchased a single item or an item not in a bundle, you might have a separate license key that is applicable only for that item. <br /><br />
+Regardless, enter the license key in the theme or plugin areas in the panels below and click the ACTIVATE LICENSE button.  <br /><br />
+The software will reach out to our servers to confirm your license key and, if successful, you will see a message to that effect. <br /><br />
+If your license shows as invalid you will also see a message indicating that.  You might receive such a message for a variety of reasons including<br /><br />
+<ul>
+<li>The license is expired - you will need to renew on our site.</li>
+<li>The license is already in use on another site or url.  You will need to purchase a new one or upgrade to a multi-site license.  You can also log into your acccount on our site and delete the existing website that your license is associated with and try the activation process again.</li>
+<li>Access to our server might be blocked for various reasons.</li>
+<li>The license is valid but not for the product you are associating it with.</li>
+</ul>
+You might notice that not all products have an area for a license key.  Free products and products that are not yet activated do not have an area for you to enter your license key.  Products that have not been updated to use our new licensing system will also not have an area for a license key.
+[end]
+
+[plugins-licensing]
+<strong>Licenses for plugins</strong><br /><br />
+Please enter your license key for each plugin. You can find your license keys in your ACCOUNT area on our site or on the purchase confirmation email that was sent to you after your purchase.<br /><br />
+Generally, your license key will be the same for all plugins if you purchased a "bundle".  This is also known as an "all access" license key and may be referred to as such on your email confirmation and your account screen. <br /><br />
+However, if you purchased a single item or an item not in a bundle, you might have a separate license key that is applicable only for that item. <br /><br />
+Regardless, enter the license key in the product area in this panel and click the ACTIVATE LICENSE button.  <br /><br />
+The software will reach out to our servers to confirm your license key and, if successful, you will see a message to that effect. <br /><br />
+If your license shows as invalid you will also see a message indicating that.  You migh receive such a message for a variety of reasons including<br /><br />
+<ul>
+<li>The license is expired - you will need to renew on our site.</li>
+<li>The license is already in use on another site or url.  You will need to purchase a new one or upgrade to a multi-site license.  You can also log into your acccount on our site and delete the existing website that your license is associated with and try the activation process again.</li>
+<li>Access to our server might be blocked for various reasons.</li>
+<li>The license is valid but not for the product you are associating it with.</li>
+</ul>
+You might notice that not all products have an area for a license key.  Free products and products that are not yet activated do not have an area for you to enter your license key.  Products that have not been updated to use our new licensing system will also not have an area for a license key.
+[end]
+
+[themes-licensing]
+<strong>Licenses for themes</strong><br /><br />
+Please enter your license key for each themee. You can find your license keys in your ACCOUNT area on our site or on the purchase confirmation email that was sent to you after your purchase.<br /><br />
+Generally, your license key will be the same for all themes if you purchased a "bundle".  This is also known as an "all access" license key and may be referred to as such on your email confirmation and your account screen. <br /><br />
+However, if you purchased a single item or an item not in a bundle, you might have a separate license key that is applicable only for that item. <br /><br />
+Regardless, enter the license key in the product area in this panel and click the ACTIVATE LICENSE button.  <br /><br />
+The software will reach out to our servers to confirm your license key and, if successful, you will see a message to that effect. <br /><br />
+If your license shows as invalid you will also see a message indicating that.  You migh receive such a message for a variety of reasons including<br /><br />
+<ul>
+<li>The license is expired - you will need to renew on our site.</li>
+<li>The license is already in use on another site or url.  You will need to purchase a new one or upgrade to a multi-site license.  You can also log into your acccount on our site and delete the existing website that your license is associated with and try the activation process again.</li>
+<li>Access to our server might be blocked for various reasons.</li>
+<li>The license is valid but not for the product you are associating it with.</li>
+</ul>
+You might notice that not all products have an area for a license key.  Free products and products that are not yet activated do not have an area for you to enter your license key.  Products that have not been updated to use our new licensing system will also not have an area for a license key.
+[end]
+
+[force-update-check]
+Click this button to have Simple:Press check our servers immediately for any available updates.  Note that if updates are available, only products with an active license or free products can be updated automatically.
+[end]
+
+[licensing-server]
+Unless instructed to do so, do not enter anything in this area.  If we ever have reason to suddenly change the address of our licensing server you can enter the new server address here.  Under normal circumstances the field in this area is blank.
 [end]
 
 [rebuild-indexes]
