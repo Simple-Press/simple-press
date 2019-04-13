@@ -77,6 +77,10 @@ class spcFilters {
 			return mysql_real_escape_string($string, $wpdb->dbh);
 		}
 	}
+	
+	public function url($string) {
+		return filter_var($string, FILTER_SANITIZE_URL);
+	}
 
 	public function parse_inline_bbcode($content) {
 		$content = trim($content);
