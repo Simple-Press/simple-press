@@ -1153,7 +1153,8 @@ function spa_save_forums_order() {
 	check_admin_referer('forum-adminform_forumorder', 'forum-adminform_forumorder');
 
 	# get the sorted lst
-	parse_str(SP()->filters->str($_POST['spForumsOrder']), $list);
+	// parse_str(SP()->filters->str($_POST['spForumsOrder']), $list);
+        parse_str(filter_input(INPUT_POST, 'spForumsOrder', FILTER_SANITIZE_URL), $list);
 
 	# make sure we have groups
 	if (empty($list['group'])) return SP()->primitives->admin_text('Unable to save group/forum ordering');
