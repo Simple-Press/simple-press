@@ -2098,14 +2098,26 @@ Style font- icon picker
 
 
 .icons-selector.fip-bootstrap {
-        float: right;
+        float: left;
 }
 
 
-.icons-selector .selector-popup, .icons-selector.selector-popup-wrap, .icons-selector .selector-popup-wrap {
+/*.icons-selector .selector-popup, .icons-selector.selector-popup-wrap, .icons-selector .selector-popup-wrap {
         right: 0 !important;
-}
+}*/
 
 .sp-iconset-icon img {
-        width: 100%;
+        max-width: 56px;
+        max-height: 36px;
+}
+
+
+.sp-icon-picker-row {
+        float:right;
+}
+
+.sp-icon-picker-row .wp-picker-container  .wp-color-result-text {
+        line-height: 22px;
+        padding-right: 6px;
+        padding-left: 6px;
 }

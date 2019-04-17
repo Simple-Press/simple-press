@@ -457,16 +457,17 @@ class spcTheme {
 	 * Paint icon
 	 * 
 	 * @param string $icon
-	 * @param string $default_icon
+	 * @param string $classes
 	 * 
 	 * @return string
 	 */
-	public function sp_paint_iconset_icon( $icon, $default_icon = '' ) {
+	public function sp_paint_iconset_icon( $icon, $classes = '', $color = '' ) {
 		
 		$icon = $icon ? $icon : $default_icon;
 		
 		if( $icon ) {
-			return sprintf( '<i class="%s"></i>', $icon );
+			$color_style = $color ? " style=\"color:{$color}\"" : '';
+			return sprintf( '<i class="%s %s"%s></i>', $icon, $classes, $color_style );
 		}
 		
 		return '';

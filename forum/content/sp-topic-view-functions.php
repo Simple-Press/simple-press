@@ -86,7 +86,7 @@ function sp_TopicHeaderIcon($args = '') {
 		if( 'file' === $topic_icon['type'] ) {
 			$icon = SP()->theme->paint_custom_icon($tagClass, SPCUSTOMURL. $icon );
 		} else {
-			$icon = SP()->theme->sp_paint_iconset_icon( $icon );
+			$icon = SP()->theme->sp_paint_iconset_icon( $icon, $tagClass, $topic_icon['color'] );
 		}
 		
 	} else {

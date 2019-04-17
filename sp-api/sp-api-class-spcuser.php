@@ -1371,8 +1371,15 @@ class spcUser {
 			# find ranking of current user
 			for ($x = 0; $x < count($rankdata['posts']); $x++) {
 				if ($userposts <= $rankdata['posts'][$x]) {
-					if ($rankdata['badge'][$x] && file_exists(SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$rankdata['badge'][$x])) {
-						$forumRank[0]['badge'] = esc_url(SPRANKS.$rankdata['badge'][$x]);
+					
+					if( $rankdata['badge'][$x] ) {
+						$badge_icon = spa_get_saved_icon( $rankdata['badge'][ $x ] );
+						
+						if( 'file' === $badge_icon['type'] && file_exists(SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$rankdata['badge'][$x]) ) {
+							$forumRank[0]['badge'] = esc_url(SPRANKS.$rankdata['badge'][$x]);
+						} else {
+							$forumRank[0]['badge'] = $badge_icon;
+						}
 					}
 					$forumRank[0]['name'] = $rankdata['title'][$x];
 					break;

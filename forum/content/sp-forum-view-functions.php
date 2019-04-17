@@ -76,6 +76,7 @@ function sp_SubForumIndexIcon($args = '') {
 	# Check if a custom icon
 	$path = SPTHEMEICONSDIR;
 	$url  = SPTHEMEICONSURL;
+	$color = '';
 	if (SP()->forum->view->thisSubForum->unread) {
 		$fIcon = sanitize_file_name($iconUnread);
 		if (!empty(SP()->forum->view->thisSubForum->forum_icon_new)) {
@@ -83,7 +84,7 @@ function sp_SubForumIndexIcon($args = '') {
 			$forum_icon_new = spa_get_saved_icon( SP()->forum->view->thisSubForum->forum_icon_new );
 			$fIconType = $forum_icon_new['type'];
 			$fIcon = $forum_icon_new['icon'];
-			
+			$color = $forum_icon_new['color'];
 			$path  = SPCUSTOMDIR;
 			$url   = SPCUSTOMURL;
 		}
@@ -94,7 +95,7 @@ function sp_SubForumIndexIcon($args = '') {
 			$forum_icon = spa_get_saved_icon( SP()->forum->view->thisSubForum->forum_icon );
 			$fIconType = $forum_icon['type'];
 			$fIcon = $forum_icon['icon'];
-			
+			$color = $forum_icon['color'];
 			$path  = SPCUSTOMDIR;
 			$url   = SPCUSTOMURL;
 		}
@@ -107,7 +108,7 @@ function sp_SubForumIndexIcon($args = '') {
 			$fIcon = SP()->theme->paint_custom_icon($tagClass, $url.$fIcon);
 		}
 	} else {
-		$fIcon = SP()->theme->sp_paint_iconset_icon( $fIcon );
+		$fIcon = SP()->theme->sp_paint_iconset_icon( $fIcon, $tagClass, $color );
 	}
 	
 	
@@ -976,7 +977,7 @@ function sp_ForumHeaderIcon($args = '') {
 		if( 'file' === $forum_icon['type'] ) {
 			$icon = SP()->theme->paint_custom_icon($tagClass, SPCUSTOMURL. $icon );
 		} else {
-			$icon = SP()->theme->sp_paint_iconset_icon( $icon );
+			$icon = SP()->theme->sp_paint_iconset_icon( $icon, $tagClass, $forum_icon['color'] );
 		}
 
 	} else {
@@ -1498,7 +1499,7 @@ function sp_TopicIndexIcon($args = '') {
 	
 	$tIconType = 'file';
 	
-
+	$color = '';
 	if (SP()->forum->view->thisTopic->topic_status || SP()->forum->view->thisForum->forum_status) {
 		$tIcon = sanitize_file_name($iconLocked);
 		if (!empty(SP()->forum->view->thisForum->topic_icon_locked)) {
@@ -1506,7 +1507,7 @@ function sp_TopicIndexIcon($args = '') {
 			$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_locked );
 			$tIconType = $topic_icon['type'];
 			$tIcon = $topic_icon['icon'];
-			
+			$color = $topic_icon['color'];
 			$path  = SPCUSTOMDIR;
 			$url   = SPCUSTOMURL;
 		}
@@ -1517,7 +1518,7 @@ function sp_TopicIndexIcon($args = '') {
 			$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_pinned_new );
 			$tIconType = $topic_icon['type'];
 			$tIcon = $topic_icon['icon'];
-			
+			$color = $topic_icon['color'];
 			$path  = SPCUSTOMDIR;
 			$url   = SPCUSTOMURL;
 		}
@@ -1528,7 +1529,7 @@ function sp_TopicIndexIcon($args = '') {
 			$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_pinned );
 			$tIconType = $topic_icon['type'];
 			$tIcon = $topic_icon['icon'];
-			
+			$color = $topic_icon['color'];
 			$path  = SPCUSTOMDIR;
 			$url   = SPCUSTOMURL;
 		}
@@ -1539,7 +1540,7 @@ function sp_TopicIndexIcon($args = '') {
 			$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_new );
 			$tIconType = $topic_icon['type'];
 			$tIcon = $topic_icon['icon'];
-			
+			$color = $topic_icon['color'];
 			$path  = SPCUSTOMDIR;
 			$url   = SPCUSTOMURL;
 		}
@@ -1550,7 +1551,7 @@ function sp_TopicIndexIcon($args = '') {
 			$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon );
 			$tIconType = $topic_icon['type'];
 			$tIcon = $topic_icon['icon'];
-			
+			$color = $topic_icon['color'];
 			$path  = SPCUSTOMDIR;
 			$url   = SPCUSTOMURL;
 		}
@@ -1564,7 +1565,7 @@ function sp_TopicIndexIcon($args = '') {
 			$tIcon = SP()->theme->paint_custom_icon($tagClass, $url.$tIcon);
 		}
 	} else {
-		$tIcon = SP()->theme->sp_paint_iconset_icon( $tIcon );
+		$tIcon = SP()->theme->sp_paint_iconset_icon( $tIcon, $tagClass, $color );
 	}
 	
 	if ($get) return $tIcon;

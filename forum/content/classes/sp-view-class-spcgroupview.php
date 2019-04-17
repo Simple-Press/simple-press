@@ -293,7 +293,7 @@ class spcGroupView {
 						$g[$gidx]->group_name       = SP()->displayFilters->title($r->group_name);
 						$g[$gidx]->group_desc       = SP()->displayFilters->title($r->group_desc);
 						$g[$gidx]->group_rss        = esc_url($r->group_rss);
-						$g[$gidx]->group_icon       = sanitize_file_name($r->group_icon);
+						$g[$gidx]->group_icon       = $r->group_icon;
 						$g[$gidx]->group_message    = SP()->displayFilters->title($r->group_message);
 						$g[$gidx]->group_rss_active = 0;
 
@@ -307,9 +307,9 @@ class spcGroupView {
 							$g[$gidx]->forums[$cparent]->subforums[$sidx]->forum_id          = $r->forum_id;
 							$g[$gidx]->forums[$cparent]->subforums[$sidx]->forum_name        = SP()->displayFilters->title($r->forum_name);
 							$g[$gidx]->forums[$cparent]->subforums[$sidx]->forum_slug        = $r->forum_slug;
-							$g[$gidx]->forums[$cparent]->subforums[$sidx]->forum_icon        = sanitize_file_name($r->forum_icon);
-							$g[$gidx]->forums[$cparent]->subforums[$sidx]->forum_icon_new    = sanitize_file_name($r->forum_icon_new);
-							$g[$gidx]->forums[$cparent]->subforums[$sidx]->forum_icon_locked = sanitize_file_name($r->forum_icon_locked);
+							$g[$gidx]->forums[$cparent]->subforums[$sidx]->forum_icon        = $r->forum_icon;
+							$g[$gidx]->forums[$cparent]->subforums[$sidx]->forum_icon_new    = $r->forum_icon_new;
+							$g[$gidx]->forums[$cparent]->subforums[$sidx]->forum_icon_locked = $r->forum_icon_locked;
 							$g[$gidx]->forums[$cparent]->subforums[$sidx]->forum_disabled    = $r->forum_disabled;
 							$g[$gidx]->forums[$cparent]->subforums[$sidx]->forum_permalink   = SP()->spPermalinks->build_url($r->forum_slug, '', 1, 0);
 							$g[$gidx]->forums[$cparent]->subforums[$sidx]->topic_count       = $r->topic_count;
@@ -363,9 +363,9 @@ class spcGroupView {
 							$g[$gidx]->forums[$fidx]->forum_desc        = SP()->displayFilters->title($r->forum_desc);
 							$g[$gidx]->forums[$fidx]->forum_status      = $r->forum_status;
 							$g[$gidx]->forums[$fidx]->forum_disabled    = $r->forum_disabled;
-							$g[$gidx]->forums[$fidx]->forum_icon        = sanitize_file_name($r->forum_icon);
-							$g[$gidx]->forums[$fidx]->forum_icon_new    = sanitize_file_name($r->forum_icon_new);
-							$g[$gidx]->forums[$fidx]->forum_icon_locked = sanitize_file_name($r->forum_icon_locked);
+							$g[$gidx]->forums[$fidx]->forum_icon        = $r->forum_icon;
+							$g[$gidx]->forums[$fidx]->forum_icon_new    = $r->forum_icon_new;
+							$g[$gidx]->forums[$fidx]->forum_icon_locked = $r->forum_icon_locked;
 							$g[$gidx]->forums[$fidx]->forum_rss_private = $r->forum_rss_private;
 							$g[$gidx]->forums[$fidx]->post_id           = $r->post_id;
 							$g[$gidx]->forums[$fidx]->topic_count       = $r->topic_count;

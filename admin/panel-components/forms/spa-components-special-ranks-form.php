@@ -53,6 +53,9 @@ function spa_special_rankings_form($rankings) {
     		</thead>
     		<tbody>
 <?php
+
+		$badges =  spa_get_custom_icons( SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'] . '/' );
+
 		foreach ($rankings as $rank) {
 			$ajaxURL = wp_nonce_url(SPAJAXURL.'components-loader&amp;saveform=specialranks&amp;targetaction=updaterank&amp;id='.$rank['meta_id'], 'components-loader');
 			$delsite = wp_nonce_url(SPAJAXURL.'components&amp;targetaction=del_specialrank&amp;key='.$rank['meta_id'], 'components');
@@ -79,7 +82,11 @@ function spa_special_rankings_form($rankings) {
 ?>
             					</td>
             					<td>
-            						<?php spa_select_icon_dropdown('specialrankbadge['.$rank['meta_id'].']', SP()->primitives->admin_text('Select Badge'), SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/', $rank['meta_value']['badge'], true, 105); ?>
+            						<?php 
+									
+									spa_select_iconset_icon_picker( 'specialrankbadge['.$rank['meta_id'].']', SP()->primitives->admin_text('Select Badge'), array('Badges' => $badges ), $rank['meta_value']['badge'], false );
+									
+									?>
             					</td>
             					<td>
             						<div class="sp-half-row-left">

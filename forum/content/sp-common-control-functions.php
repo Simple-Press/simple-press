@@ -714,18 +714,31 @@ function sp_OpenCloseControl($args = '', $toolTipOpen = '', $toolTipClose = '') 
  */
 function spa_get_saved_icon( $icon ) {
 	
-	$supported_image = array('gif','jpg','jpeg','png');
-
-
-	$ext = strtolower( pathinfo( $icon, PATHINFO_EXTENSION ) );
+	$icon_args = array();
 	
-	$type = 'font';
+	if( !empty( $icon ) && is_array( json_decode( $icon, true ) ) && ( json_last_error() == JSON_ERROR_NONE ) ) {
+		
+		$ar_icon = json_decode( $icon, true );
+		
+		$icon_args['icon'] = isset( $ar_icon['i'] ) ? $ar_icon['i'] : '';
+		$icon_args['color'] = isset( $ar_icon['c'] ) ? $ar_icon['c'] : '';
+	} else {
+		$icon_args['icon'] = $icon;
+		$icon_args['color'] = '';
+	}
+	
+	
+	$supported_image = array( 'gif', 'jpg', 'jpeg', 'png' );
+	
+	$ext = strtolower( pathinfo( $icon_args['icon'], PATHINFO_EXTENSION ) );
+	
+	$icon_args['type'] = 'font';
 	
 	if ( in_array( $ext, $supported_image ) ) {
-		$type = 'file';
-		$icon = sanitize_file_name( $icon );
-	} 
+		$icon_args['type'] = 'file';
+		$icon_args['icon'] = sanitize_file_name( $icon_args['icon'] );
+	}
 	
-	return array('type' => $type, 'icon' => $icon );
+	return $icon_args;
 	
 }

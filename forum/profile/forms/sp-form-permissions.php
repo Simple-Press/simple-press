@@ -31,7 +31,8 @@ SP()->forum->view = new spcView();
 if (SP()->forum->view->has_groups()) : while (SP()->forum->view->loop_groups()) : SP()->forum->view->the_group();
 	# Start the 'groupHeader' section
 	$out .= '<div class="spGroupViewSection">';
-	$icon = SP()->theme->sp_paint_iconset_icon( SP()->forum->view->thisGroup->group_icon, 'sp_GroupIcon.png');
+	
+	$icon = '';
 	
 	if( !empty( SP()->forum->view->thisGroup->group_icon ) ) {
 		
@@ -40,7 +41,7 @@ if (SP()->forum->view->has_groups()) : while (SP()->forum->view->loop_groups()) 
 		if( 'file' === $group_icon['type'] ) {
 			$icon = SP()->theme->paint_custom_icon('spHeaderName spLeft', SPCUSTOMURL . $group_icon['icon'] );
 		} else {
-			$icon = SP()->theme->sp_paint_iconset_icon( $group_icon['icon'] );
+			$icon = SP()->theme->sp_paint_iconset_icon( $group_icon['icon'], 'spHeaderName spLeft', $group_icon['color'] );
 		}
 	} else {
 		$icon = SP()->theme->paint_icon('spHeaderName spLeft', SPTHEMEICONSURL, 'sp_GroupIcon.png');
@@ -99,7 +100,7 @@ function sp_ProfilePermissionsForum($thisForum, $userid) {
 		if( 'file' === $forum_icon['type'] ) {
 			$icon = SP()->theme->paint_custom_icon('spRowIcon', SPCUSTOMURL . $forum_icon['icon'] );
 		} else {
-			$icon = SP()->theme->sp_paint_iconset_icon( $forum_icon['icon'] );
+			$icon = SP()->theme->sp_paint_iconset_icon( $forum_icon['icon'], 'spRowIcon', $forum_icon['color'] );
 		}
 	} else {
 		$icon = SP()->theme->paint_icon('spRowIcon', SPTHEMEICONSURL, 'sp_GroupIcon.png');
