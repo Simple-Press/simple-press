@@ -421,7 +421,15 @@ function sp_UserSpecialRank($args = '', $ranks) {
 	$out = '';
 	if (!empty($ranks)) {
 		foreach ($ranks as $rank) {
-			if ($rank['badge'] && $showBadge) $out .= "<img src='".$rank['badge']."' class='$badgeClass' title='".esc_attr($rank['name'])."' />";
+			
+			if ($rank['badge'] && $showBadge) {
+				if(is_array( $rank['badge'] ) ) {
+					$out .= SP()->theme->sp_paint_iconset_icon( $rank['badge']['icon'], $badgeClass, $rank['badge']['color'] );
+				} else {
+					$out .= "<img src='".$rank['badge']."' class='$badgeClass' title='".esc_attr($rank['name'])."' />";
+				}
+			}
+			
 			if ($showTitle) {
 				$out .= "<p class='$titleClass'>".$rank['name'].'</p>';
 			}

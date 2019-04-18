@@ -789,7 +789,13 @@ function sp_PostIndexUserBadges($args = '', $label = '') {
 	$out = "<div id='$tagId' class='$tagClass'>";
 	if (!empty($label)) $out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>";
 	foreach ($ranks as $thisRank) {
-		if ($badge && !empty($thisRank['badge'])) $out .= "<img class='$badgeClass' src='".$thisRank['badge']."' alt='' />$att";
+		if ($badge && !empty($thisRank['badge'])) {
+			if(is_array( $thisRank['badge'] ) ) {
+				$out .= SP()->theme->sp_paint_iconset_icon( $thisRank['badge']['icon'], $badgeClass, $thisRank['badge']['color'] );
+			} else {
+				$out .= "<img class='$badgeClass aa' src='".$thisRank['badge']."' alt='' />$att";
+			}
+		}
 		if ($rank) $out .= "<span class='$rankClass'>".$thisRank['name']."</span>$att";
 	}
 	$out .= "</div>\n";
@@ -843,7 +849,13 @@ function sp_PostIndexUserRank($args = '') {
 	$tout = "<div id='$tagId' class='$tagClass'>";
 	if ($showBadge && !empty(SP()->forum->view->thisPostUser->rank[0]['badge'])) {
 		$show = true;
-		$tout .= "<img class='$imgClass' src='".SP()->forum->view->thisPostUser->rank[0]['badge']."' alt='' />\n";
+		
+		if( is_array( SP()->forum->view->thisPostUser->rank[0]['badge'] ) ) {
+			$tout .= SP()->theme->sp_paint_iconset_icon( SP()->forum->view->thisPostUser->rank[0]['badge']['icon'], $imgClass, SP()->forum->view->thisPostUser->rank[0]['badge']['color'] );
+		} else {
+			$tout .= "<img class='$imgClass' src='".SP()->forum->view->thisPostUser->rank[0]['badge']."' alt='' />\n";
+		}
+		
 		$tout .= "<br />";
 	}
 	if ($showTitle && !empty(SP()->forum->view->thisPostUser->rank[0]['name'])) {
@@ -907,7 +919,13 @@ function sp_PostIndexUserSpecialRank($args = '') {
 		foreach (SP()->forum->view->thisPostUser->special_rank as $rank) {
 			if ($showBadge && !empty($rank['badge'])) {
 				$show = true;
-				$tout .= "<img class='$imgClass' src='".$rank['badge']."' alt='' />\n";
+				
+				if( is_array( $rank['badge'] ) ) {
+					$tout .= SP()->theme->sp_paint_iconset_icon( $rank['badge']['icon'], $imgClass, $rank['badge']['color'] );
+				} else {
+					$tout .= "<img class='$imgClass' src='".$rank['badge']."' alt='' />\n";
+				}
+				
 				$tout .= ($stacked) ? '<br />' : ' ';
 			}
 			if ($showTitle && !empty($rank['name'])) {
