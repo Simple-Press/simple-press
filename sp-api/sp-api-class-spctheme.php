@@ -461,16 +461,36 @@ class spcTheme {
 	 * 
 	 * @return string
 	 */
-	public function sp_paint_iconset_icon( $icon, $classes = '', $color = '' ) {
+	public function sp_paint_iconset_icon( $icon, $classes = '' ) {
 		
-		$icon = $icon ? $icon : $default_icon;
 		
-		if( $icon ) {
-			$color_style = $color ? " style=\"color:{$color}\"" : '';
-			return sprintf( '<i class="%s %s"%s></i>', $icon, $classes, $color_style );
+		
+		if( !$icon )  {
+			return '';
 		}
 		
-		return '';
+		
+		$color = '';
+		$font_size = '';
+		
+		if( is_array( $icon ) ) {
+			$color = isset( $icon['color'] ) ? $icon['color'] : '';
+			$font_size = isset( $icon['font_size'] ) ? $icon['font_size'] : '';
+		}
+		
+		$styles = array();
+		
+		if( $color ) {
+			$styles[] = "color:{$color}";
+		}
+		
+		if( $font_size ) {
+			$styles[] = "font-size:{$font_size}";
+		}
+		
+		$style_attr = !empty($styles) ? 'style="' . implode(';', $styles ) . '"' : '';
+		
+		return sprintf( '<i class="%s %s"%s></i>', $icon['icon'], $classes, $style_attr );
 	}
 
 	/**

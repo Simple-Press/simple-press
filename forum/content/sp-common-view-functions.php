@@ -370,7 +370,7 @@ function sp_UserForumRank($args = '', $ranks) {
 		foreach ($ranks as $rank) {
 			if ($rank['badge'] && $showBadge) {
 				if(is_array( $rank['badge'] ) ) {
-					$out .= SP()->theme->sp_paint_iconset_icon( $rank['badge']['icon'], $badgeClass, $rank['badge']['color'] );
+					$out .= SP()->theme->sp_paint_iconset_icon( $rank['badge'], $badgeClass );
 				} else {
 					$out .= "<img src='".$rank['badge']."' class='$badgeClass' title='".esc_attr($rank['name'])."' />";
 				}
@@ -424,7 +424,7 @@ function sp_UserSpecialRank($args = '', $ranks) {
 			
 			if ($rank['badge'] && $showBadge) {
 				if(is_array( $rank['badge'] ) ) {
-					$out .= SP()->theme->sp_paint_iconset_icon( $rank['badge']['icon'], $badgeClass, $rank['badge']['color'] );
+					$out .= SP()->theme->sp_paint_iconset_icon( $rank['badge'], $badgeClass );
 				} else {
 					$out .= "<img src='".$rank['badge']."' class='$badgeClass' title='".esc_attr($rank['name'])."' />";
 				}

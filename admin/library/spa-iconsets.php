@@ -232,9 +232,23 @@ function spa_get_saved_icon( $icon ) {
 		
 		$icon_args['icon'] = isset( $ar_icon['i'] ) ? $ar_icon['i'] : '';
 		$icon_args['color'] = isset( $ar_icon['c'] ) ? $ar_icon['c'] : '';
+		$size_ar = isset( $ar_icon['s'] ) ? spa_iconset_parse_size( $ar_icon['s'] ) : array();
+		
+		if( !empty( $size_ar ) ) {
+			$icon_args['size']		= isset( $size_ar['size'] )		 ? $size_ar['size']		 : '';
+			$icon_args['size_type'] = isset( $size_ar['size_type'] ) ? $size_ar['size_type'] : '';
+		}
+		
 	} else {
 		$icon_args['icon'] = $icon;
 		$icon_args['color'] = '';
+		$icon_args['size']		= '';
+		$icon_args['size_type'] = '';
+	}
+	
+	
+	if( $icon_args['size'] ) {
+		$icon_args['font_size'] = $icon_args['size'] . $icon_args['size_type'];
 	}
 	
 	
@@ -251,4 +265,62 @@ function spa_get_saved_icon( $icon ) {
 	
 	return $icon_args;
 	
+}
+
+/**
+ * Return size value and unit from string
+ * 
+ * @param string $size
+ * 
+ * @return array
+ */
+function spa_iconset_parse_size( $size ) {
+				
+	$default_size_units = spa_iconset_icon_size_units();
+	preg_match('/([\d.]+)(px|rem)/', $size, $output );
+
+	if( !empty( $output ) && $output[1] && $output[2] ) {
+		return array(
+			'size' => $output[1],
+			'size_type' => $output[2]
+		);
+	}
+
+	return array();
+}
+
+/**
+ * Return iconset font size units
+ * 
+ * @return array
+ */
+function spa_iconset_icon_size_units() {
+	return array(
+		'px',
+		'rem'
+	);
+}
+
+/**
+ * Return dropdown field for font size
+ * 
+ * @param string $current
+ * 
+ * @return string
+ */
+function spa_iconset_size_type_field( $current = '' ) {
+		
+		
+	$size_units = spa_iconset_icon_size_units();
+
+
+
+	$field = '<select class="font-style-size_type">';
+	foreach( $size_units as $unit )  {
+		$selected = $current == $unit ? ' selected="selected"' : '';
+		$field .= sprintf( '<option value="%s"%s>%s</option>', $unit, $selected, $unit );
+	}
+	$field .= '</select>';
+
+	return $field;
 }

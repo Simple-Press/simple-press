@@ -258,11 +258,21 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 		
 		$ar_icon = json_decode( $selected, true );
 		
-		$selected_icon['icon'] = isset( $ar_icon['i'] ) ? $ar_icon['i'] : '';
-		$selected_icon['color'] = isset( $ar_icon['c'] ) ? $ar_icon['c'] : '';
+		$selected_icon['icon']		= isset( $ar_icon['i'] ) ? $ar_icon['i'] : '';
+		$selected_icon['color']		= isset( $ar_icon['c'] ) ? $ar_icon['c'] : '';
+		
+		
+		$size_ar = isset( $ar_icon['s'] ) ? spa_iconset_parse_size( $ar_icon['s'] ) : array();
+		
+		if( !empty( $size_ar ) ) {
+			$selected_icon['size']		= isset( $size_ar['size'] )		 ? $size_ar['size']		 : '';
+			$selected_icon['size_type'] = isset( $size_ar['size_type'] ) ? $size_ar['size_type'] : '';
+		}
 	} else {
-		$selected_icon['icon'] = $selected;
-		$selected_icon['color'] = '';
+		$selected_icon['icon']		= $selected;
+		$selected_icon['color']		= '';
+		$selected_icon['size']		= '';
+		$selected_icon['size_type'] = '';
 	}
 	
 	
@@ -274,6 +284,7 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	$icon_picker_id = 'icon_picker_' . rand( 111111, 999999 );
 	$icon_color_id = $icon_picker_id . '_color';
 	
+	$icon_size_id = $icon_picker_id . '_size';
 	
 	echo '<div class="sp-icon-picker-row">';
 	
@@ -312,7 +323,21 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 		echo '</div>';
 	}
 	
-	$color_field = sprintf( '<input type="text" class="wp-core-ui" value="%s" id="%s" />', $selected_icon['color'], $icon_color_id );
+	$color_field = sprintf( '<input type="text" class="wp-core-ui font-style-color" value="%s" id="%s" />', $selected_icon['color'], $icon_color_id );
+	
+	$size_input_field = sprintf( '<input type="number" placeholder="Size" class="wp-core-ui font-style-size" value="%s" id="%s" />', $selected_icon['size'], $icon_size_id );
+	
+	$size_type_dropdown = spa_iconset_size_type_field( $selected_icon['size_type'] );
+	
+	
+	
+	$font_style_fields = '<div class="font-style-container">\
+								<div class="font-color-container">'.$color_field.'</div>\
+								<div class="font-size-container">'.$size_input_field.$size_type_dropdown.'</div>\
+								<div class="clear wp-clearfix"></div>\
+						 </div>';
+	
+	
 	
 	?>
 
@@ -334,36 +359,22 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 
 				}
 		    }).on( 'change', function( e ) {
-
-				var val = {
-					icon : $(this).val(),
-					color : $(this).closest('.sp-icon-picker-row').find('.sp-icon-color-field').val()
-				};
-				
-				$('#<?php echo $icon_color_id; ?>').closest('.sp-icon-picker-row').find('.icon_value').val( JSON.stringify( val ) );
+				spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>' );
 			});
 	
-		$( '<?php echo $color_field ?>' ).insertBefore( _icon_ins.closest('.sp-icon-picker-row').find('.selector-popup .fip-icons-container') );
+		$( '<?php echo $font_style_fields ?>' ).insertBefore( _icon_ins.closest('.sp-icon-picker-row').find('.selector-popup .fip-icons-container') );
+		
+		
+		$( '#<?php echo $icon_picker_id; ?>').closest('.sp-icon-picker-row').find('.font-style-size, .font-style-size_type').on( 'change', function() {
+			spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>' );
+		})
 			
 		$('#<?php echo $icon_color_id; ?>').wpColorPicker({
 			change : function(a, b) {
-				
-				var val = {
-					icon : $('#<?php echo $icon_picker_id; ?>').val(),
-					color : b.color.toString()
-				};
-				
-				$('#<?php echo $icon_color_id; ?>').closest('.sp-icon-picker-row').find('.icon_value').val( JSON.stringify( val ) );
+				spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>' );
 			},
 			clear :  function(a, b) {
-				
-				var val = {
-					icon : $('#<?php echo $icon_picker_id; ?>').val(),
-					color : ''
-				};
-				
-				$('#<?php echo $icon_color_id; ?>').closest('.sp-icon-picker-row').find('.icon_value').val( JSON.stringify( val ) );
-				
+				spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>', true );
 			}
 		});
 		
@@ -385,6 +396,10 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 function spa_get_selected_icon( $icon, $filter = 'title' ) {
 	
 	$color = '';
+	
+	$size = '';
+	$size_type = '';
+	
 	if( $icon ) {
 		
 		$icon_args = json_decode( html_entity_decode( stripslashes ( $icon ) ), true );
@@ -392,6 +407,15 @@ function spa_get_selected_icon( $icon, $filter = 'title' ) {
 		if( $icon_args ) {
 			$icon = isset( $icon_args['icon'] ) ? $icon_args['icon'] : '';
 			$color = isset( $icon_args['color'] ) ? $icon_args['color'] : '';
+			$size = isset( $icon_args['size'] ) ? $icon_args['size'] : '';
+			$size = $size && is_numeric( $size ) && $size > 0 ? $size : '';
+			
+			$default_size_units = spa_iconset_icon_size_units();
+			
+			$size_type = isset( $icon_args['size_type'] ) ? $icon_args['size_type'] : '';
+			
+			$size_type = !$size_type || !in_array( $size_type , $default_size_units ) ? 'px' : $size_type;
+			
 		}
 	}
 			
@@ -406,11 +430,16 @@ function spa_get_selected_icon( $icon, $filter = 'title' ) {
 	
 	$icon = call_user_func( array( SP()->saveFilters, $filter ), trim( $icon ) );
 	
-	//$icon = SP()->saveFilters->title( trim( $icon ) );
 	
-	$value = addslashes( json_encode( array( 'i' => $icon, 'c' => $color ) ) );
+	$value_args = array( 'i' => $icon, 'c' => $color );
 	
-	$data = array( 'type' => $type, 'icon' => $icon, 'color' => $color, 'value' => $value );
+	if( $size ) {
+		$value_args['s'] = $size . $size_type;
+	}
+	
+	$value = addslashes( json_encode( $value_args ) );
+	
+	$data = array( 'type' => $type, 'icon' => $icon, 'color' => $color, 'value' => $value, 'size' => $size, 'size_type' => $size_type );
 	
 	return $data;
 }

@@ -86,7 +86,7 @@ function sp_TopicHeaderIcon($args = '') {
 		if( 'file' === $topic_icon['type'] ) {
 			$icon = SP()->theme->paint_custom_icon($tagClass, SPCUSTOMURL. $icon );
 		} else {
-			$icon = SP()->theme->sp_paint_iconset_icon( $icon, $tagClass, $topic_icon['color'] );
+			$icon = SP()->theme->sp_paint_iconset_icon( $topic_icon, $tagClass );
 		}
 		
 	} else {
@@ -791,7 +791,7 @@ function sp_PostIndexUserBadges($args = '', $label = '') {
 	foreach ($ranks as $thisRank) {
 		if ($badge && !empty($thisRank['badge'])) {
 			if(is_array( $thisRank['badge'] ) ) {
-				$out .= SP()->theme->sp_paint_iconset_icon( $thisRank['badge']['icon'], $badgeClass, $thisRank['badge']['color'] );
+				$out .= SP()->theme->sp_paint_iconset_icon( $thisRank['badge'], $badgeClass );
 			} else {
 				$out .= "<img class='$badgeClass aa' src='".$thisRank['badge']."' alt='' />$att";
 			}
@@ -851,7 +851,7 @@ function sp_PostIndexUserRank($args = '') {
 		$show = true;
 		
 		if( is_array( SP()->forum->view->thisPostUser->rank[0]['badge'] ) ) {
-			$tout .= SP()->theme->sp_paint_iconset_icon( SP()->forum->view->thisPostUser->rank[0]['badge']['icon'], $imgClass, SP()->forum->view->thisPostUser->rank[0]['badge']['color'] );
+			$tout .= SP()->theme->sp_paint_iconset_icon( SP()->forum->view->thisPostUser->rank[0]['badge'], $imgClass );
 		} else {
 			$tout .= "<img class='$imgClass' src='".SP()->forum->view->thisPostUser->rank[0]['badge']."' alt='' />\n";
 		}
@@ -921,7 +921,7 @@ function sp_PostIndexUserSpecialRank($args = '') {
 				$show = true;
 				
 				if( is_array( $rank['badge'] ) ) {
-					$tout .= SP()->theme->sp_paint_iconset_icon( $rank['badge']['icon'], $imgClass, $rank['badge']['color'] );
+					$tout .= SP()->theme->sp_paint_iconset_icon( $rank['badge'], $imgClass );
 				} else {
 					$tout .= "<img class='$imgClass' src='".$rank['badge']."' alt='' />\n";
 				}
