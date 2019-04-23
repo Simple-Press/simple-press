@@ -193,6 +193,7 @@ function sp_upgrade_required() {
 			<img class="stayleft" src="<?php echo SPCOMMONIMAGES; ?>sp-mini-logo.png" alt="" title="" />
 			<h3><?php echo sprintf(SP()->primitives->admin_text('Upgrade Simple:Press From Version %s to %s'), SP()->options->get('sfversion'), SPVERSION); ?><br />
 				(<?php SP()->primitives->admin_etext('Build'); ?> <?php echo SP()->options->get('sfbuild'); ?> <?php SP()->primitives->admin_etext('to'); ?> <?php SP()->primitives->admin_etext('Build'); ?> <?php echo SPBUILD; ?>)</h3>
+			<p><?php echo SP()->primitives->admin_text('As with all WordPress related updates we recommend that you backup your site before proceeding with this upgrade.')?></p>				
 		</div>
 		<hr />
 		<?php
