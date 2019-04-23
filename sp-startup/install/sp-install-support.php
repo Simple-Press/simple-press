@@ -194,3 +194,61 @@ function sp_create_inspectors() {
 	SP()->options->update('spInspect', $ins);
 }
 
+
+
+
+function sp_install_iconsets() {
+	
+	
+	
+	$iconsets = array(
+		'afiado',
+		'brankic-1979',
+		'broccolidry',
+		'eighty-shades',
+		'elegant-themes',
+		'entypo',
+		'feather',
+		'fontawesome' => array(
+			'active' => true
+		),
+		'hawcons',
+		'iconic',
+		'linecons',
+		'material',
+		'meteocons',
+		'typicons',
+		'wpzoom',
+		'zondicons'
+	);
+	
+	
+	
+	
+	$sfconfig          = array();
+ 
+	$iconsets_base_dir = SP_STORE_DIR . '/' . $sfconfig['iconsets'] . '/';
+	
+	
+	foreach( $iconsets as $iconset_id => $iconset ) {
+		
+		$iconset_id = is_array( $iconset ) ? $iconset_id : $iconset;
+		
+		if( !is_array( $iconset ) ) {
+			$iconset = array();
+		}
+		
+		$default = array(
+			'id' => $iconset_id,
+			'path' => $iconsets_base_dir . $iconset_id,
+			'active' => false
+		);
+		
+		$iconset = wp_parse_args( $iconset, $default );
+		
+		spa_add_iconset( $iconset );
+	}
+	
+	
+	
+}

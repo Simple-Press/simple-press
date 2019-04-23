@@ -201,8 +201,8 @@ class spcTopicList {
 					$list[$t]->topic_id        = $r->topic_id;
 					$list[$t]->topic_name      = SP()->displayFilters->title($r->topic_name);
 					$list[$t]->topic_permalink = SP()->spPermalinks->build_url($r->forum_slug, $r->topic_slug, 1, 0);
-					$list[$t]->topic_icon      = sanitize_file_name($r->topic_icon);
-					$list[$t]->topic_icon_new  = sanitize_file_name($r->topic_icon_new);
+					$list[$t]->topic_icon      = $r->topic_icon;
+					$list[$t]->topic_icon_new  = $r->topic_icon_new;
 					$list[$t]->post_count      = $r->post_count;
 					$list[$t]->post_id         = $r->post_id;
 					$list[$t]->post_status     = $r->post_status;

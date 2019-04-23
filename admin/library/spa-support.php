@@ -8,6 +8,10 @@
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
+
+require_once 'spa-iconsets.php';
+
+
 function spa_get_forums_in_group($groupid) {
 	return SP()->DB->table(SPFORUMS, "group_id=$groupid", '', 'forum_seq');
 }
@@ -197,6 +201,249 @@ function spa_display_permission_select($cur_perm = 0, $showSelect = true) {
 		<?php
 	}
 }
+
+/**
+ * Get all custom icons in a directory
+ * 
+ * @param string $path
+ * @param atring $url_base
+ * 
+ * @return array
+ */
+function spa_get_custom_icons( $path = '', $url_base = '' ) {
+	
+	
+	if( !$path ) {
+		$path = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'];
+	}
+	
+	if( !$url_base ) {
+		$url_base = SPCUSTOMURL;
+	}
+	
+	
+	$icons = array();
+	
+	$images = array_map('basename', glob("{$path}/{*.jpg,*.jpeg,*.png,*.gif,*.JPG,*.JPEG,*.PNG,*.GIF}", GLOB_BRACE) );
+
+	sort( $images );
+	
+	foreach( $images as $image ) {
+		$icons[ $image ] = $url_base . $image . "?{$image}";
+	}
+	
+	return array( 'icons' => $icons );
+}
+
+
+/**
+ * Adds font icon picker
+ * 
+ * @param string $name
+ * @param string $label
+ * @param array $extra_icon_groups
+ * @param string $selected
+ * @param boolean $show_label
+ */
+function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = array() ,$selected = '', $show_label = true ) {
+	
+	
+	$iconsets = array_merge( $extra_icon_groups, spa_get_all_active_iconsets() );
+	
+	global $tab;
+	
+	$selected_icon = array();
+	
+	if( !empty( $selected ) && is_array( json_decode( $selected, true ) ) && ( json_last_error() == JSON_ERROR_NONE ) ) {
+		
+		$ar_icon = json_decode( $selected, true );
+		
+		$selected_icon['icon']		= isset( $ar_icon['i'] ) ? $ar_icon['i'] : '';
+		$selected_icon['color']		= isset( $ar_icon['c'] ) ? $ar_icon['c'] : '';
+		
+		
+		$size_ar = isset( $ar_icon['s'] ) ? spa_iconset_parse_size( $ar_icon['s'] ) : array();
+		
+		if( !empty( $size_ar ) ) {
+			$selected_icon['size']		= isset( $size_ar['size'] )		 ? $size_ar['size']		 : '';
+			$selected_icon['size_type'] = isset( $size_ar['size_type'] ) ? $size_ar['size_type'] : '';
+		}
+	} else {
+		$selected_icon['icon']		= $selected;
+		$selected_icon['color']		= '';
+		$selected_icon['size']		= '';
+		$selected_icon['size_type'] = '';
+	}
+	
+	
+	if( $show_label ) {
+		echo "<div class='sp-form-row'>\n";
+		echo "<div class='wp-core-ui sflabel sp-label-40'>$label:</div>\n";
+	}
+	
+	$icon_picker_id = 'icon_picker_' . rand( 111111, 999999 );
+	$icon_color_id = $icon_picker_id . '_color';
+	
+	$icon_size_id = $icon_picker_id . '_size';
+	
+	echo '<div class="sp-icon-picker-row">';
+	
+	printf( '<input type="hidden" name="%s" value="%s" class="icon_value" />', $name, esc_attr( json_encode( $selected_icon ) ) );
+	
+	printf( '<select class="wp-core-ui  sp-input-60" tabindex="%s" id="%s">', $tab, $icon_picker_id );
+	
+	$tab++;
+	
+	
+	foreach( $iconsets as $iconset_name => $iconset ) {
+		echo '<option value=""></option>';
+		echo '<optgroup label="'.$iconset_name.'">';
+		
+		printf( '<option value=""></option><optgroup label="%s">', $iconset_name );
+		
+		foreach ( $iconset['icons'] as $icon_id => $icon ) {
+			
+			$icon_id = is_int( $icon_id ) ? $icon : $icon_id;
+			
+			$_selected = $selected_icon['icon'] && $selected_icon['icon'] === $icon_id ? ' selected="selected"' : '';
+			
+			printf( '<option value="%s"%s>%s</option>', $icon, $_selected, $icon_id );
+			
+		}
+		
+		echo '</optgroup>';
+	}
+	
+	echo "</select>\n";
+	echo '<div class="clearboth"></div>';
+	echo '</div>';
+	echo '<div class="clearboth"></div>';
+	
+	if( $show_label ) {
+		echo '</div>';
+	}
+	
+	$color_field = sprintf( '<input type="text" class="wp-core-ui font-style-color" value="%s" id="%s" />', $selected_icon['color'], $icon_color_id );
+	
+	$size_input_field = sprintf( '<input type="number" placeholder="Size" class="wp-core-ui font-style-size" value="%s" id="%s" />', $selected_icon['size'], $icon_size_id );
+	
+	$size_type_dropdown = spa_iconset_size_type_field( $selected_icon['size_type'] );
+	
+	
+	
+	$font_style_fields = '<div class="font-style-container">\
+								<div class="font-color-container">'.$color_field.'</div>\
+								<div class="font-size-container">'.$size_input_field.$size_type_dropdown.'</div>\
+								<div class="clear wp-clearfix"></div>\
+						 </div>';
+	
+	
+	
+	?>
+
+	<script>
+
+	jQuery(document).ready(function($) {
+		
+		var _icon_ins = $('#<?php echo $icon_picker_id; ?>').fontIconPicker({
+		        theme: 'fip-bootstrap',
+				iconsPerPage: 30,
+				allCategoryText : 'From All Libraries',
+				iconGenerator: function( icon ) {
+
+					if( icon.match(/\.(jpeg|jpg|gif|png)$/) != null ) {
+						return '<i class="sp-iconset-icon"><img src="'+ icon + '" /></i>';
+					} else {
+						return '<i class="'+icon+' sp-iconset-icon"></i>';
+					}
+
+				}
+		    }).on( 'change', function( e ) {
+				spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>' );
+			});
+	
+		$( '<?php echo $font_style_fields ?>' ).insertBefore( _icon_ins.closest('.sp-icon-picker-row').find('.selector-popup .fip-icons-container') );
+		
+		
+		$( '#<?php echo $icon_picker_id; ?>').closest('.sp-icon-picker-row').find('.font-style-size, .font-style-size_type').on( 'change', function() {
+			spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>' );
+		})
+			
+		$('#<?php echo $icon_color_id; ?>').wpColorPicker({
+			change : function(a, b) {
+				spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>' );
+			},
+			clear :  function(a, b) {
+				spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>', true );
+			}
+		});
+		
+	});
+	                                        
+
+	</script>
+	<?php
+	
+}
+
+/**
+ * Get selected icon and type
+ * 
+ * @param string $icon
+ * 
+ * @return array
+ */
+function spa_get_selected_icon( $icon, $filter = 'title' ) {
+	
+	$color = '';
+	
+	$size = '';
+	$size_type = '';
+	
+	if( $icon ) {
+		
+		$icon_args = json_decode( html_entity_decode( stripslashes ( $icon ) ), true );
+		
+		if( $icon_args ) {
+			$icon = isset( $icon_args['icon'] ) ? $icon_args['icon'] : '';
+			$color = isset( $icon_args['color'] ) ? $icon_args['color'] : '';
+			$size = isset( $icon_args['size'] ) ? $icon_args['size'] : '';
+			$size = $size && is_numeric( $size ) && $size > 0 ? $size : '';
+			
+			$default_size_units = spa_iconset_icon_size_units();
+			
+			$size_type = isset( $icon_args['size_type'] ) ? $icon_args['size_type'] : '';
+			
+			$size_type = !$size_type || !in_array( $size_type , $default_size_units ) ? 'px' : $size_type;
+			
+		}
+	}
+			
+	$file = parse_url( $icon, PHP_URL_QUERY );
+	$type = 'font';
+
+
+	if( $file ) {
+		$type = 'file';
+		$icon = $file;
+	}
+	
+	$icon = call_user_func( array( SP()->saveFilters, $filter ), trim( $icon ) );
+	
+	
+	$value_args = array( 'i' => $icon, 'c' => $color );
+	
+	if( $size ) {
+		$value_args['s'] = $size . $size_type;
+	}
+	
+	$value = addslashes( json_encode( $value_args ) );
+	
+	$data = array( 'type' => $type, 'icon' => $icon, 'color' => $color, 'value' => $value, 'size' => $size, 'size_type' => $size_type );
+	
+	return $data;
+}
+		
 
 function spa_select_icon_dropdown($name, $label, $path, $cur, $showSelect = true, $width = 0) {
 	# Open folder and get cntents for matching

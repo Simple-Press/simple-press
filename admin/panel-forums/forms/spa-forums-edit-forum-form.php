@@ -104,38 +104,64 @@ function spa_forums_edit_forum_form($forum_id) {
                     echo SP()->primitives->front_text('Custom').'<br />';
                     echo SP()->primitives->front_text('Theme Default').'<br />';
 					echo '</div>';
+					
+					$custom_icons =  spa_get_custom_icons();
+					
+					spa_select_iconset_icon_picker(
+							'forum_icon', 
+							SP()->primitives->admin_text('Custom forum icon'), 
+							array( 'Custom Icons' => $custom_icons ),
+							$forum->forum_icon
+							);
+					
+					spa_select_iconset_icon_picker(
+							'forum_icon_new', 
+							SP()->primitives->admin_text('Custom forum icon when new posts'), 
+							array( 'Custom Icons' => $custom_icons ),
+							$forum->forum_icon_new
+							);
+					
+					spa_select_iconset_icon_picker(
+							'forum_icon_locked', 
+							SP()->primitives->admin_text('Custom forum icon when locked'), 
+							array( 'Custom Icons' => $custom_icons ),
+							$forum->forum_icon_locked
+							);
+					
+					spa_select_iconset_icon_picker(
+							'topic_icon', 
+							SP()->primitives->admin_text('Custom topic icon'), 
+							array( 'Custom Icons' => $custom_icons ),
+							$forum->topic_icon
+							);
 
-					spa_paint_select_start(SP()->primitives->admin_text('Custom forum icon'), 'forum_icon', '');
-					spa_select_icon_dropdown('forum_icon', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', $forum->forum_icon, false);
-					spa_paint_select_end();
+					spa_select_iconset_icon_picker(
+							'topic_icon_new', 
+							SP()->primitives->admin_text('Custom topic icon when new posts'), 
+							array( 'Custom Icons' => $custom_icons ),
+							$forum->topic_icon_new
+							);
 
-					spa_paint_select_start(SP()->primitives->admin_text('Custom forum icon when new posts'), 'forum_icon_new', '');
-					spa_select_icon_dropdown('forum_icon_new', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', $forum->forum_icon_new, false);
-					spa_paint_select_end();
-
-					spa_paint_select_start(SP()->primitives->admin_text('Custom forum icon when locked'), 'forum_icon_locked', '');
-					spa_select_icon_dropdown('forum_icon_locked', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', $forum->forum_icon_locked, false);
-					spa_paint_select_end();
-
-					spa_paint_select_start(SP()->primitives->admin_text('Custom topic icon'), 'topic_icon', '');
-					spa_select_icon_dropdown('topic_icon', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', $forum->topic_icon, false);
-					spa_paint_select_end();
-
-					spa_paint_select_start(SP()->primitives->admin_text('Custom topic icon when new posts'), 'topic_icon_new', '');
-					spa_select_icon_dropdown('topic_icon_new', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', $forum->topic_icon_new, false);
-					spa_paint_select_end();
-
-					spa_paint_select_start(SP()->primitives->admin_text('Custom topic icon when locked'), 'topic_icon_locked', '');
-					spa_select_icon_dropdown('topic_icon_locked', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', $forum->topic_icon_locked, false);
-					spa_paint_select_end();
-
-					spa_paint_select_start(SP()->primitives->admin_text('Custom topic icon when pinned'), 'topic_icon_pinned', '');
-					spa_select_icon_dropdown('topic_icon_pinned', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', $forum->topic_icon_pinned, false);
-					spa_paint_select_end();
-
-					spa_paint_select_start(SP()->primitives->admin_text('Custom topic icon when pinned and new posts'), 'topic_icon_pinned_new', '');
-					spa_select_icon_dropdown('topic_icon_pinned_new', SP()->primitives->admin_text('Select Custom Icon'), SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/', $forum->topic_icon_pinned_new, false);
-					spa_paint_select_end();
+					spa_select_iconset_icon_picker(
+							'topic_icon_locked', 
+							SP()->primitives->admin_text('Custom topic icon when locked'), 
+							array( 'Custom Icons' => $custom_icons ),
+							$forum->topic_icon_locked
+							);
+					
+					spa_select_iconset_icon_picker(
+							'topic_icon_pinned', 
+							SP()->primitives->admin_text('Custom topic icon when pinned'), 
+							array( 'Custom Icons' => $custom_icons ),
+							$forum->topic_icon_pinned
+							);
+					
+					spa_select_iconset_icon_picker(
+							'topic_icon_pinned_new', 
+							SP()->primitives->admin_text('Custom topic icon when pinned and new posts'), 
+							array( 'Custom Icons' => $custom_icons ),
+							$forum->topic_icon_pinned_new
+							);
 
 					spa_paint_input(SP()->primitives->admin_text('Replacement external RSS URL').'<br />'.SP()->primitives->admin_text('Default').': <strong>'.SP()->spPermalinks->build_url($forum->forum_slug, '', 0, 0, 0, 1).'</strong>', 'forum_rss', SP()->displayFilters->url($forum->forum_rss), false, true);
 

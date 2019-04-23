@@ -193,7 +193,10 @@ function spa_save_forumranks_data() {
 			$rankdata = array();
 			$rankdata['posts'] = SP()->filters->integer($_POST['rankpost'][$x]);
 			$rankdata['usergroup'] = (int) $_POST['rankug'][$x];
-			$rankdata['badge'] = SP()->saveFilters->filename($_POST['rankbadge'][$x]);
+			
+			$badge = spa_get_selected_icon( $_POST['rankbadge'][$x], 'filename' );
+			$rankdata['badge'] = $badge['value'];
+			
 			if ((int) $_POST['rankid'][$x] == -1) {
 				SP()->meta->add('forum_rank', SP()->saveFilters->title(trim($_POST['rankdesc'][$x])), $rankdata);
 			} else {
@@ -233,10 +236,13 @@ function spa_update_specialrank($id) {
 
 	# save special forum ranks
 	if (!empty($_POST['specialrankdesc'])) {
-		$desc = array_map('sanitize_text_field', $_POST['specialrankdesc']);
+		$desc =  array_map('sanitize_text_field', $_POST['specialrankdesc']);
 		$badge = array_map('sanitize_text_field', $_POST['specialrankbadge']);
+		
+		$badge = spa_get_selected_icon( $badge[$id], 'filename' );
+		
 		$rank = SP()->meta->get('special_rank', false, $id);
-		$rank[0]['meta_value']['badge'] = SP()->saveFilters->filename($badge[$id]);
+		$rank[0]['meta_value']['badge'] = $badge['value'];
 		SP()->meta->update('special_rank', SP()->saveFilters->title(trim($desc[$id])), $rank[0]['meta_value'], $id);
 		if (sanitize_text_field($_POST['currentname'][$id]) != $desc[$id]) {
 			SP()->DB->execute("UPDATE ".SPSPECIALRANKS."

@@ -2084,4 +2084,76 @@ table td.permhead {
     cursor: pointer;
 }
 
+
 /* End style adjustments for licensing tab */
+
+
+/*
+Style font- icon picker
+*/
+
+#spIconsetsList .item-controls {
+        position: initial;
+}
+
+
+.icons-selector.fip-bootstrap {
+        float: left;
+}
+
+
+/*.icons-selector .selector-popup, .icons-selector.selector-popup-wrap, .icons-selector .selector-popup-wrap {
+        right: 0 !important;
+}*/
+
+.sp-iconset-icon img {
+        max-width: 56px;
+        max-height: 36px;
+}
+
+
+.sp-icon-picker-row {
+        float:right;
+}
+
+.sp-icon-picker-row .wp-picker-container  .wp-color-result-text {
+        line-height: 22px;
+        padding-right: 6px;
+        padding-left: 6px;
+}
+
+.sp-icon-picker-row .font-style-container .font-color-container {
+        float: left;
+        width: 60%;
+}
+
+.sp-icon-picker-row .font-style-container .font-size-container {
+        float: right;
+}
+
+
+.sp-icon-picker-row .font-size-container .font-style-size {
+        margin-right: 6px;
+        width: 70px;
+        height: 20px;
+}
+
+
+.sp-icon-picker-row .font-size-container select {
+        height: 14px;
+        line-height: 18px;
+        height: 20px;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 4px;
+}
+
+
+.sp-icon-picker-row .wp-picker-container input[type=text].wp-color-picker {
+        line-height: 20px;
+}
+
+
+.sp-icon-picker-row .wp-picker-container .wp-color-result.button {
+        padding-left: 45px;
+}
