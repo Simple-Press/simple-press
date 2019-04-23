@@ -341,8 +341,8 @@ if (!class_exists('spcSimplePress')) {
 			# version and system control constants
 			define('SPPLUGNAME', 'Simple:Press');
 			define('SPVERSION', '6.1.0');
-			define('SPBUILD', 15830);
-			define('SPSILENT', 15830);
+			define('SPBUILD', 15860);
+			define('SPSILENT', 15860);
 			define('SPRELEASE', 'Release');
 
 			define('SPPLUGHOME', '<a class="spLink" href="https://simple-press.com" target="_blank">Simple:Press</a>');

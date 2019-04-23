@@ -329,20 +329,21 @@ sp_bump_build($build, 15857);
 
 # Start of Upgrade Routines - 6.1.0 ============================================================
 
-$section = 15858;
+sp_bump_build($build, 15858);
+
+# Start of Upgrade Routines - 6.1.0 ============================================================
+
+$section = 15860;
 if ($build < $section) {
 	
+	# Install iconsets
 	$extract_to = SP()->plugin->add_storage( 'forum-iconsets', 'iconsets' );
-	
 	
 	# Move and extract zip install archives
 	$successCopy1	 = false;
 	$successExtract1 = false;
 	$zipfile		 = SP_PLUGIN_DIR.'/sp-startup/install/sp-resources-install-part1.zip';
 	
-	
-	
-	//$extract_to		 = get_option('sp_storage1');
 	# Copy the zip file
 	if (copy($zipfile, $extract_to.'/sp-resources-install-part1.zip')) {
 		
@@ -356,9 +357,7 @@ if ($build < $section) {
 		$extract_to		 = preg_replace('|/+|', '/', $extract_to); # remove any duplicate slash
 		$archive		 = new PclZip($zipfile);
 		
-		
 		$archive->extract( PCLZIP_OPT_PATH, $extract_to, PCLZIP_OPT_BY_NAME, 'forum-iconsets/', PCLZIP_OPT_REMOVE_PATH, 'forum-iconsets/' );
-		
 		
 		if ($archive->error_code == 0) {
 			$successExtract1 = true;
@@ -367,15 +366,11 @@ if ($build < $section) {
 		}
 	}
 	
-	
 	sp_install_iconsets();
 	
 	sp_response($section);
 	
 }
-
-
-sp_bump_build( $build, 15859 );
 
 # ****** IMPORTANT: THE FINAL $section values MUST be the same as the SPBUILD constant
 # ******			for the Upgrade to complete correctly
