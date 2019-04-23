@@ -19,7 +19,6 @@ function spa_add_iconset( $set = array() ) {
 	$set['active']  = isset( $set['active'] ) ? $set['active'] : false;
 	$set['name']	= isset( $set['name'] ) ? $set['name']  : ucwords( str_replace( array( '-', '_' ), ' ', $id ) );
 	
-	
 	$error = '';
 	
 	if( array_key_exists( $id, $iconsets ) ) {
@@ -29,7 +28,6 @@ function spa_add_iconset( $set = array() ) {
 	if( !( file_exists( $path ) && is_dir( $path ) ) ) {
 		$error = 'Iconset path does not exist';
 	}
-	
 	
 	if( !file_exists( $css_path ) ) {
 		$error = 'Iconset style.css file does not exist';
@@ -174,14 +172,11 @@ function spa_get_all_active_iconset_icons() {
 	
 	$active_iconsets = spa_get_all_active_iconsets();
 	
-	
 	$icons = array();
 	
 	foreach( $active_iconsets as $id => $iconset ) {
 		$icons[$id] = $iconset['icons'];
 	}
-	
-	
 	
 	return $icons;
 	
@@ -197,10 +192,7 @@ add_action( 'admin_enqueue_scripts', 'sp_enqueue_iconsets' );
  */
 function sp_enqueue_iconsets() {
 	
-	
-	
 	$active_iconsets = spa_get_all_active_iconsets();
-	
 	
 	foreach( $active_iconsets as $set_id => $iconset ) {
 		
@@ -251,7 +243,6 @@ function spa_get_saved_icon( $icon ) {
 		$icon_args['font_size'] = $icon_args['size'] . $icon_args['size_type'];
 	}
 	
-	
 	$supported_image = array( 'gif', 'jpg', 'jpeg', 'png' );
 	
 	$ext = strtolower( pathinfo( $icon_args['icon'], PATHINFO_EXTENSION ) );
@@ -264,7 +255,6 @@ function spa_get_saved_icon( $icon ) {
 	}
 	
 	return $icon_args;
-	
 }
 
 /**
@@ -310,10 +300,7 @@ function spa_iconset_icon_size_units() {
  */
 function spa_iconset_size_type_field( $current = '' ) {
 		
-		
 	$size_units = spa_iconset_icon_size_units();
-
-
 
 	$field = '<select class="font-style-size_type">';
 	foreach( $size_units as $unit )  {

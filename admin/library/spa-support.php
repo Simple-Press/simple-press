@@ -8,9 +8,7 @@
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
-
 require_once 'spa-iconsets.php';
-
 
 function spa_get_forums_in_group($groupid) {
 	return SP()->DB->table(SPFORUMS, "group_id=$groupid", '', 'forum_seq');
@@ -212,7 +210,6 @@ function spa_display_permission_select($cur_perm = 0, $showSelect = true) {
  */
 function spa_get_custom_icons( $path = '', $url_base = '' ) {
 	
-	
 	if( !$path ) {
 		$path = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'];
 	}
@@ -220,7 +217,6 @@ function spa_get_custom_icons( $path = '', $url_base = '' ) {
 	if( !$url_base ) {
 		$url_base = SPCUSTOMURL;
 	}
-	
 	
 	$icons = array();
 	
@@ -246,7 +242,6 @@ function spa_get_custom_icons( $path = '', $url_base = '' ) {
  * @param boolean $show_label
  */
 function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = array() ,$selected = '', $show_label = true ) {
-	
 	
 	$iconsets = array_merge( $extra_icon_groups, spa_get_all_active_iconsets() );
 	
@@ -293,7 +288,6 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	printf( '<select class="wp-core-ui  sp-input-60" tabindex="%s" id="%s">', $tab, $icon_picker_id );
 	
 	$tab++;
-	
 	
 	foreach( $iconsets as $iconset_name => $iconset ) {
 		echo '<option value=""></option>';
@@ -379,7 +373,6 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 		});
 		
 	});
-	                                        
 
 	</script>
 	<?php
