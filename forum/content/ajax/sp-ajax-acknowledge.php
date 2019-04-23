@@ -23,6 +23,7 @@ $ack = array(
 	'<a href="http://www.isocra.com/2008/02/table-drag-and-drop-jquery-plugin/">'.SP()->primitives->front_text('Table Drag and Drop by Isocra Consulting').'</a>',
 	'<a href="http://www.brettjankord.com/2012/01/16/categorizr-a-modern-device-detection-script/">'.SP()->primitives->front_text('Mobile Device Detection based on code by Brett Jankord').'</a>',
 	'<a href="http://http://yacobi.info/">'.SP()->primitives->front_text('CSS and JS Concatenation based on code by Ronen Yacobi').'</a>',
+	'<a href="https://codeb.it/fonticonpicker/">'.SP()->primitives->front_text('Jquery FontIcon Picker by Alessandro Benoit and Swashata Ghosh').'</a>',
 );
 $ack = apply_filters('sph_acknowledgements', $ack);
 
