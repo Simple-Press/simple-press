@@ -25,6 +25,7 @@ function spa_options_iconsets_form() {
 				var data = $(this).data();
 				
 				$('#sfmsgspot').load(data.url, function() {
+					$('.ui-tooltip').hide();
 					$('#' + data.reload).click();
 				});
 				
