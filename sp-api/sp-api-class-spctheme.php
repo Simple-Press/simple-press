@@ -465,7 +465,7 @@ class spcTheme {
 		
 		
 		
-		if( !$icon )  {
+		if( !$icon || !is_array( $icon ) || !isset( $icon['icon'] ) )  {
 			return '';
 		}
 		
