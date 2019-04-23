@@ -340,7 +340,7 @@ if (!class_exists('spcSimplePress')) {
 
 			# version and system control constants
 			define('SPPLUGNAME', 'Simple:Press');
-			define('SPVERSION', '6.1.0');
+			define('SPVERSION', '6.1.1');
 			define('SPBUILD', 15860);
 			define('SPSILENT', 15860);
 			define('SPRELEASE', 'Release');
