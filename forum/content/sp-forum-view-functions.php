@@ -1545,7 +1545,7 @@ function sp_TopicIndexIcon($args = '') {
 	}
 
 	
-	if( 'file' ===  $tIcon ) {
+	if( 'file' ===  $tIconType ) {
 		if (!file_exists($path.$tIcon)) {
 			$tIcon = SP()->theme->paint_icon($tagClass, SPTHEMEICONSURL, $icon);
 		} else {
