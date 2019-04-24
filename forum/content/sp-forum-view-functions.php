@@ -78,19 +78,19 @@ function sp_SubForumIndexIcon($args = '') {
 	$url  = SPTHEMEICONSURL;
 	if (SP()->forum->view->thisSubForum->unread) {
 		$fIcon = sanitize_file_name($iconUnread);
-		if (!empty(SP()->forum->view->thisSubForum->forum_icon_new)) {
-			
-			$forum_icon_new = spa_get_saved_icon( SP()->forum->view->thisSubForum->forum_icon_new );
-			$fIconType = $forum_icon_new['type'];
-			$fIcon = 'file' === $forum_icon_new['type'] ? $forum_icon_new['icon'] : $forum_icon_new;
+		$forum_icon = spa_get_saved_icon( SP()->forum->view->thisSubForum->forum_icon_new );
+		
+		if ( !empty( $forum_icon['icon'] ) ) {
+			$fIconType = $forum_icon['type'];
+			$fIcon = 'file' === $forum_icon['type'] ? $forum_icon['icon'] : $forum_icon;
 			$path  = SPCUSTOMDIR;
 			$url   = SPCUSTOMURL;
 		}
 	} else {
 		$fIcon = sanitize_file_name($icon);
-		if (!empty(SP()->forum->view->thisSubForum->forum_icon)) {
-			
-			$forum_icon = spa_get_saved_icon( SP()->forum->view->thisSubForum->forum_icon );
+		$forum_icon = spa_get_saved_icon( SP()->forum->view->thisSubForum->forum_icon );
+		
+		if ( !empty( $forum_icon['icon'] ) ) {
 			$fIconType = $forum_icon['type'];
 			$fIcon = 'file' === $forum_icon['type'] ? $forum_icon['icon'] : $forum_icon;
 			$path  = SPCUSTOMDIR;
@@ -965,10 +965,10 @@ function sp_ForumHeaderIcon($args = '') {
 	$get      = (int) $get;
 
 	# Check if a custom icon
-	if (!empty(SP()->forum->view->thisForum->forum_icon)) {
-
-		$forum_icon = spa_get_saved_icon( SP()->forum->view->thisForum->forum_icon );
-
+	
+	$forum_icon = spa_get_saved_icon( SP()->forum->view->thisForum->forum_icon );
+	
+	if (!empty( $forum_icon['icon'] ) ) {
 		$icon = $forum_icon['icon'];
 
 		if( 'file' === $forum_icon['type'] ) {
@@ -1498,9 +1498,9 @@ function sp_TopicIndexIcon($args = '') {
 	
 	if (SP()->forum->view->thisTopic->topic_status || SP()->forum->view->thisForum->forum_status) {
 		$tIcon = sanitize_file_name($iconLocked);
-		if (!empty(SP()->forum->view->thisForum->topic_icon_locked)) {
-			
-			$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_locked );
+		$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_locked );
+		
+		if (!empty( $topic_icon['icon'] ) ) {
 			$tIconType = $topic_icon['type'];
 			$tIcon = 'file' === $topic_icon['type'] ? $topic_icon['icon'] : $topic_icon;
 			$path  = SPCUSTOMDIR;
@@ -1508,9 +1508,8 @@ function sp_TopicIndexIcon($args = '') {
 		}
 	} elseif (SP()->forum->view->thisTopic->topic_pinned && SP()->forum->view->thisTopic->unread) {
 		$tIcon = sanitize_file_name($iconPinnedNew);
-		if (!empty(SP()->forum->view->thisForum->topic_icon_pinned_new)) {
-			
-			$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_pinned_new );
+		$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_pinned_new );
+		if (!empty( $topic_icon['icon'] ) ) {
 			$tIconType = $topic_icon['type'];
 			$tIcon = 'file' === $topic_icon['type'] ? $topic_icon['icon'] : $topic_icon;
 			$path  = SPCUSTOMDIR;
@@ -1518,9 +1517,8 @@ function sp_TopicIndexIcon($args = '') {
 		}
 	} elseif (SP()->forum->view->thisTopic->topic_pinned) {
 		$tIcon = sanitize_file_name($iconPinned);
-		if (!empty(SP()->forum->view->thisForum->topic_icon_pinned)) {
-			
-			$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_pinned );
+		$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_pinned );
+		if (!empty( $topic_icon['icon'] ) ) {
 			$tIconType = $topic_icon['type'];
 			$tIcon = 'file' === $topic_icon['type'] ? $topic_icon['icon'] : $topic_icon;
 			$path  = SPCUSTOMDIR;
@@ -1528,9 +1526,8 @@ function sp_TopicIndexIcon($args = '') {
 		}
 	} elseif (SP()->forum->view->thisTopic->unread) {
 		$tIcon = sanitize_file_name($iconUnread);
-		if (!empty(SP()->forum->view->thisForum->topic_icon_new)) {
-			
-			$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_new );
+		$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon_new );
+		if (!empty( $topic_icon['icon'] ) ) {
 			$tIconType = $topic_icon['type'];
 			$tIcon = 'file' === $topic_icon['type'] ? $topic_icon['icon'] : $topic_icon;
 			$path  = SPCUSTOMDIR;
@@ -1538,9 +1535,8 @@ function sp_TopicIndexIcon($args = '') {
 		}
 	} else {
 		$tIcon = sanitize_file_name($icon);
-		if (!empty(SP()->forum->view->thisForum->topic_icon)) {
-			
-			$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon );
+		$topic_icon = spa_get_saved_icon( SP()->forum->view->thisForum->topic_icon );
+		if (!empty( $topic_icon['icon'] ) ) {
 			$tIconType = $topic_icon['type'];
 			$tIcon = 'file' === $topic_icon['type'] ? $topic_icon['icon'] : $topic_icon;
 			$path  = SPCUSTOMDIR;

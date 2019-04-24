@@ -34,9 +34,9 @@ if (SP()->forum->view->has_groups()) : while (SP()->forum->view->loop_groups()) 
 	
 	$icon = '';
 	
-	if( !empty( SP()->forum->view->thisGroup->group_icon ) ) {
-		
-		$group_icon = spa_get_saved_icon( SP()->forum->view->thisGroup->group_icon );
+	$group_icon = spa_get_saved_icon( SP()->forum->view->thisGroup->group_icon );
+	
+	if( !empty( $group_icon['icon'] ) ) {
 		
 		if( 'file' === $group_icon['type'] ) {
 			$icon = SP()->theme->paint_custom_icon('spHeaderName spLeft', SPCUSTOMURL . $group_icon['icon'] );
@@ -93,9 +93,9 @@ function sp_ProfilePermissionsForum($thisForum, $userid) {
 	# Column 1 of the forum row
 	$out .= '<div class="spColumnSection spProfilePermissionIcon">';
 	
-	if( !empty( $thisForum->forum_icon ) ) {
-		
-		$forum_icon = spa_get_saved_icon( $thisForum->forum_icon );
+	$forum_icon = spa_get_saved_icon( $thisForum->forum_icon );
+	
+	if( !empty( $forum_icon['icon'] ) ) {
 		
 		if( 'file' === $forum_icon['type'] ) {
 			$icon = SP()->theme->paint_custom_icon('spRowIcon', SPCUSTOMURL . $forum_icon['icon'] );

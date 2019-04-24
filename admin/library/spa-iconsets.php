@@ -243,15 +243,20 @@ function spa_get_saved_icon( $icon ) {
 		$icon_args['font_size'] = $icon_args['size'] . $icon_args['size_type'];
 	}
 	
-	$supported_image = array( 'gif', 'jpg', 'jpeg', 'png' );
+	$icon_args['type'] = 'file';
 	
-	$ext = strtolower( pathinfo( $icon_args['icon'], PATHINFO_EXTENSION ) );
+	if( !empty( $icon_args['icon'] ) ) {
 	
-	$icon_args['type'] = 'font';
-	
-	if ( in_array( $ext, $supported_image ) ) {
-		$icon_args['type'] = 'file';
-		$icon_args['icon'] = sanitize_file_name( $icon_args['icon'] );
+		$supported_image = array( 'gif', 'jpg', 'jpeg', 'png' );
+
+		$ext = strtolower( pathinfo( $icon_args['icon'], PATHINFO_EXTENSION ) );
+
+		$icon_args['type'] = 'font';
+
+		if ( in_array( $ext, $supported_image ) ) {
+			$icon_args['icon'] = sanitize_file_name( $icon_args['icon'] );
+			$icon_args['type'] = 'file';
+		}
 	}
 	
 	return $icon_args;

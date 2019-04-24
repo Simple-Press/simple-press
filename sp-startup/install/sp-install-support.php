@@ -225,7 +225,7 @@ function sp_install_iconsets() {
 	
 	
 	
-	$sfconfig          = array();
+	$sfconfig          = SP()->options->get('sfconfig');
  
 	$iconsets_base_dir = SP_STORE_DIR . '/' . $sfconfig['iconsets'] . '/';
 	

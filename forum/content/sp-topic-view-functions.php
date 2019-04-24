@@ -76,11 +76,11 @@ function sp_TopicHeaderIcon($args = '') {
 	$echo     = (int) $echo;
 	$get      = (int) $get;
 
+	$topic_icon = spa_get_saved_icon( SP()->forum->view->thisTopic->topic_icon );
+	
 	# Check if a custom icon
-	if (!empty(SP()->forum->view->thisTopic->topic_icon)) {
+	if ( !empty( $topic_icon['icon'] ) ) {
 		
-		$topic_icon = spa_get_saved_icon( SP()->forum->view->thisTopic->topic_icon );
-
 		$icon = $topic_icon['icon'];
 
 		if( 'file' === $topic_icon['type'] ) {
