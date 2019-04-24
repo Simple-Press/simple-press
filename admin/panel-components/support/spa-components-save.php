@@ -19,7 +19,7 @@ function spa_save_smileys_data() {
 	$sfsmileys = array();
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/';
 
-	$allSmileys = array_map('SP()->filters->str', $_POST['smname']);
+	$allSmileys = array_map(array(SP()->filters, 'str'), $_POST['smname']);
 	$numSmileys = SP()->filters->integer($_POST['smiley-count']);
 
 	if ($numSmileys) {
