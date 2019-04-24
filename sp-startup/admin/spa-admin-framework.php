@@ -29,8 +29,10 @@ function spa_enqueue_font_icon_picker() {
 			), false, false);
 	
 	
+	$theme_css = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS . 'bootstrap-theme/jquery.fonticonpicker.bootstrap.css' : SPADMINCSS . 'bootstrap-theme/jquery.fonticonpicker.bootstrap.min.css';
+	
 	wp_enqueue_style( 'jquery.fonticonpicker-css', SPADMINCSS . 'jquery.fonticonpicker.min.css' );
-	wp_enqueue_style( 'jquery.fonticonpicker.bootstrap-css', SPADMINCSS . 'bootstrap-theme/jquery.fonticonpicker.bootstrap.min.css' );
+	wp_enqueue_style( 'jquery.fonticonpicker.bootstrap-css', $theme_css );
 	
 }
 
