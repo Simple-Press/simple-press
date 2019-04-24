@@ -21,7 +21,9 @@ function spa_enqueue_datepicker() {
 
 function spa_enqueue_font_icon_picker() {
 	
-	$script = SPAJSCRIPT.'jquery.fonticonpicker.min.js';
+	$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'jquery.fonticonpicker.js' : SPAJSCRIPT.'jquery.fonticonpicker.min.js';
+	
+	
 	wp_enqueue_script('sffonticonpicker', $script, array(
 			'jquery',
 			), false, false);
