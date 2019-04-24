@@ -86,7 +86,7 @@ function spa_themes_editor_form() {
 		foreach ($stylesheets as $style) {
 			echo '<li>';
 			if ($style == $filename) echo '<span class="highlight">';
-			echo '<a href="'.admin_url('admin.php?page'.SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php&amp;tab=editor&amp;file='.esc_attr($style).'&amp;type=style').'">'.$style.'</a>';
+			echo '<a href="'.admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php&amp;tab=editor&amp;file='.esc_attr($style).'&amp;type=style').'">'.$style.'</a>';
 			if ($style == $filename) echo '</span>';
 			echo '</li>';
 		}
