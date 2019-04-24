@@ -488,7 +488,7 @@ class spcTheme {
 			$styles[] = "font-size:{$font_size}";
 		}
 		
-		$style_attr = !empty($styles) ? 'style="' . implode(';', $styles ) . '"' : '';
+		$style_attr = !empty($styles) ? ' style="' . implode(';', $styles ) . '"' : '';
 		
 		return sprintf( '<i class="%s %s"%s></i>', $icon['icon'], $classes, $style_attr );
 	}
