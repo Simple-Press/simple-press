@@ -35,7 +35,7 @@ function spa_themes_css_form() {
 	spa_paint_open_fieldset(SP()->primitives->admin_text('CSS Editor'), true, 'css-editor');
 
 	echo '<div>';
-	echo '<textarea rows="25" name="spnewcontent" id="spnewcontent" tabindex="1">'.$css.'</textarea>';
+        spa_paint_css_editor("", "spnewcontent", $css, "", 25);
 	echo '<input type="hidden" name="metaId" value="'.$id.'" />';
 	echo '</div>';
 

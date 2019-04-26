@@ -8,6 +8,17 @@ $Rev: 15187 $
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
+
+// Load style and scripts for WP Code Editor 
+if(floatval(get_bloginfo('version')) >= 4.9) {
+    wp_enqueue_style( 'code-editor' );
+    wp_enqueue_script( 'code-editor' );
+    wp_enqueue_script( 'htmlhint' );
+    wp_enqueue_script( 'csslint' );
+    wp_enqueue_script( 'jshint' );
+}
+
+
 # == PAINT ROUTINES
 
 # ------------------------------------------------------------------
@@ -361,6 +372,83 @@ function spa_cache_ajax_editor_settings( $mceInit, $editor_id ) {
 	return $mceInit;
 }
 
+/**
+ * Print thin code css editor
+ * 
+ * @param string $label
+ * @param string $name
+ * @param string $value
+ * @param string $submessage [optional]
+ * @param int $rows [optional]
+ */
+function spa_paint_css_editor($label, $name, $value, $submessage='', $rows=10) {
+    spa_paint_code_editor('text/css', $label, $name, $value, $submessage, $rows);
+}
+
+/**
+ * Print thin code javascript editor
+ * 
+ * @param string $label
+ * @param string $name
+ * @param string $value
+ * @param string $submessage [optional]
+ * @param int $rows [optional]
+ */
+function spa_paint_js_editor($label, $name, $value, $submessage='', $rows=10) {
+    spa_paint_code_editor('text/javascript', $label, $name, $value, $submessage, $rows);
+}
+
+/**
+ * Print thin code html editor
+ * 
+ * @param string $label
+ * @param string $name
+ * @param string $value
+ * @param string $submessage [optional]
+ * @param int $rows [optional]
+ */
+function spa_paint_html_editor($label, $name, $value, $submessage='', $rows=10) {
+    spa_paint_code_editor('text/html', $label, $name, $value, $submessage, $rows);
+}
+
+/**
+ * Print thin WP Code Editor
+ * 
+ * @global int $tab
+ * 
+ * @param string $type CodeMirror type: "text/html", "text/css", "text/javascript"
+ * @param string $label
+ * @param string $name
+ * @param string $value
+ * @param string $submessage [optional]
+ * @param int $rows [optional]
+ */
+function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $rows=10) {
+    global $tab;
+    echo "<div class='sp-form-row'>\n";
+    echo "<div class='wp-core-ui sflabel sp-label'>\n";
+    if(mb_strlen($label)) {
+        echo "$label:";
+    }
+    if (mb_strlen($submessage)) {
+        echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
+    }
+    $id = sprintf("sp-%s-editor-%d", str_replace('/', '-', $type), $tab);
+    echo '</div>';
+    echo '<div class="clearboth"></div>';
+    echo "<textarea id=\"$id\" class=\"wp-core-ui sp-textarea\" rows=\"{$rows}\" name=\"{$name}\" tabindex=\"{$tab}\">{$value}</textarea>";
+    if(floatval(get_bloginfo('version')) >= 4.9) {
+        echo "<script>";
+        echo sprintf( "jQuery( function() { 
+                        var instance = wp.codeEditor.initialize( '{$id}', %s );
+                        instance.codemirror.on('blur', function() {instance.codemirror.save();});                         
+                    });", wp_json_encode(wp_enqueue_code_editor(array('type' => $type))) ) ;
+        echo "</script>";
+    }
+    echo '<div class="clearboth"></div>';
+    echo '</div>';
+    $tab++;
+}
 
 
 function spa_paint_checkbox($label, $name, $value, $disabled=false, $large=false, $displayhelp=true, $msg='', $indent=false) {
