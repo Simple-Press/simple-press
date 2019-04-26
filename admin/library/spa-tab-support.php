@@ -9,16 +9,6 @@ $Rev: 15187 $
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 
-// Load style and scripts for WP Code Editor 
-if(floatval(get_bloginfo('version')) >= 4.9) {
-    wp_enqueue_style( 'code-editor' );
-    wp_enqueue_script( 'code-editor' );
-    wp_enqueue_script( 'htmlhint' );
-    wp_enqueue_script( 'csslint' );
-    wp_enqueue_script( 'jshint' );
-}
-
-
 # == PAINT ROUTINES
 
 # ------------------------------------------------------------------
@@ -382,7 +372,12 @@ function spa_cache_ajax_editor_settings( $mceInit, $editor_id ) {
  * @param int $rows [optional]
  */
 function spa_paint_css_editor($label, $name, $value, $submessage='', $rows=10) {
-    spa_paint_code_editor('text/css', $label, $name, $value, $submessage, $rows);
+	if(floatval(get_bloginfo('version')) >= 4.9) {
+error_log( 'blog version passed ok');		
+		spa_paint_code_editor('text/css', $label, $name, $value, $submessage, $rows);
+	} else {
+		spa_paint_wide_textarea($label, $name, $value, $submessage, $rows);
+	}
 }
 
 /**
@@ -395,7 +390,11 @@ function spa_paint_css_editor($label, $name, $value, $submessage='', $rows=10) {
  * @param int $rows [optional]
  */
 function spa_paint_js_editor($label, $name, $value, $submessage='', $rows=10) {
-    spa_paint_code_editor('text/javascript', $label, $name, $value, $submessage, $rows);
+	if(floatval(get_bloginfo('version')) >= 4.9) {
+		spa_paint_code_editor('text/javascript', $label, $name, $value, $submessage, $rows);
+	} else {
+		spa_paint_wide_textarea($label, $name, $value, $submessage, $rows);
+	}
 }
 
 /**
@@ -408,7 +407,11 @@ function spa_paint_js_editor($label, $name, $value, $submessage='', $rows=10) {
  * @param int $rows [optional]
  */
 function spa_paint_html_editor($label, $name, $value, $submessage='', $rows=10) {
-    spa_paint_code_editor('text/html', $label, $name, $value, $submessage, $rows);
+	if(floatval(get_bloginfo('version')) >= 4.9) {
+		spa_paint_code_editor('text/html', $label, $name, $value, $submessage, $rows);
+	} else {
+		spa_paint_wide_textarea($label, $name, $value, $submessage, $rows);
+	}	
 }
 
 /**
@@ -424,7 +427,15 @@ function spa_paint_html_editor($label, $name, $value, $submessage='', $rows=10) 
  * @param int $rows [optional]
  */
 function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $rows=10) {
-    global $tab;
+    
+	global $tab;
+	
+	// Make sure that the codeditor scripts are enqueued.
+	// @TODO: However, because this is being called via ajax, this functiona actually does nothing.  
+	//        Leaving it here though to note that something like this is needed.
+	//		  Right now the scripts are loaded globally at the bottom of this file. ugg!
+	spa_enqueue_codemirror();
+	
     echo "<div class='sp-form-row'>\n";
     echo "<div class='wp-core-ui sflabel sp-label'>\n";
     if(mb_strlen($label)) {
@@ -562,3 +573,19 @@ function spa_paint_help($name, $helpfile, $show=true) {
 	$out.= '</div>';
 	return $out;
 }
+
+/**
+ * Load style and scripts for WP Code Mirror
+ * 
+ * @return void
+ */
+function spa_enqueue_codemirror() {
+	if(floatval(get_bloginfo('version')) >= 4.9) {
+		wp_enqueue_style( 'code-editor' );
+		wp_enqueue_script( 'code-editor' );
+		wp_enqueue_script( 'htmlhint' );
+		wp_enqueue_script( 'csslint' );
+		wp_enqueue_script( 'jshint' );
+	}
+}
+spa_enqueue_codemirror();  // @TODO: This loads the script globally which is not really what we want - ideally this would load only when its needed.
