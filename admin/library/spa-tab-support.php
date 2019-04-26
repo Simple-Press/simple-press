@@ -8,12 +8,15 @@ $Rev: 15187 $
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
+
 // Load style and scripts for WP Code Editor 
-wp_enqueue_style( 'code-editor' );
-wp_enqueue_script( 'code-editor' );
-wp_enqueue_script( 'htmlhint' );
-wp_enqueue_script( 'csslint' );
-wp_enqueue_script( 'jshint' );
+if(floatval(get_bloginfo('version')) >= 4.9) {
+    wp_enqueue_style( 'code-editor' );
+    wp_enqueue_script( 'code-editor' );
+    wp_enqueue_script( 'htmlhint' );
+    wp_enqueue_script( 'csslint' );
+    wp_enqueue_script( 'jshint' );
+}
 
 
 # == PAINT ROUTINES
