@@ -461,7 +461,7 @@ class spcTheme {
 	 * 
 	 * @return string
 	 */
-	public function sp_paint_iconset_icon( $icon, $classes = '' ) {
+	public function sp_paint_iconset_icon( $icon, $classes = '', $title = '' ) {
 		
 		
 		
@@ -488,9 +488,12 @@ class spcTheme {
 			$styles[] = "font-size:{$font_size}";
 		}
 		
-		$style_attr = !empty($styles) ? ' style="' . implode(';', $styles ) . '"' : '';
+		$attributes = array();
 		
-		return sprintf( '<i class="%s %s"%s></i>', $icon['icon'], $classes, $style_attr );
+		$attributes[] = !empty($styles) ? ' style="' . implode(';', $styles ) . '"' : '';
+		$attributes[] = !empty( $title ) ? sprintf( ' title="%s"', esc_attr( $title ) ) : '';
+		
+		return sprintf( '<i class="%s %s"%s></i>', $icon['icon'], $classes, implode( '', $attributes ) );
 	}
 
 	/**
