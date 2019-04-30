@@ -542,6 +542,12 @@ function spa_dashboard_forum() {
  * @return void
  */
 function spa_dashboard_news() {
+	
+	/* Only show news if more than 10 posts exists - no point in showing news to new installs since that can be a turn-off for trial users! */
+	if (SP()->DB->COUNT(SPPOSTS) < 10) {
+		return ;
+	}	
+	
 	global $spNews;
 	$sp_update_plugins = get_site_transient('sp_update_plugins');
 	$sp_update_themes = get_site_transient('sp_update_themes');
