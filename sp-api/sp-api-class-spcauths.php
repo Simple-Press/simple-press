@@ -138,7 +138,10 @@ class spcAuths {
 		# if its not id, lets get the id for easy removal of auth from roles
 		if (!is_numeric($id_or_name)) $id_or_name = SP()->DB->table(SPAUTHS, 'auth_name="'.$id_or_name.'"', 'auth_id');
 
-		# now lets delete the auth
+		# if we have an empty id or name just return success.
+		if (empty($id_or_name)) return true ;
+		
+		# otherwise, proceed - lets delete the auth
 		$query        = new stdClass();
 		$query->table = SPAUTHS;
 		$query->where = "auth_id=$id_or_name";
@@ -618,7 +621,7 @@ class spcAuths {
 			$query->table  = SPAUTHS;
 			$query->fields = array('auth_cat');
 			$query->data   = array(0);
-			$query->where  = "authcat_id=$id_or_name";
+			$query->where  = "auth_cat=$id_or_name";			
 			SP()->DB->update($query);
 		}
 
