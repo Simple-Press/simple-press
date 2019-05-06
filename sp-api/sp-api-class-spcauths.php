@@ -71,6 +71,8 @@ class spcAuths {
 		$query->where  = "auth_name='$name'";
 		$auth          = SP()->DB->select($query);
 		if (empty($auth)) {
+			
+			/* -- 05-05-2019: Removing this section because it doesn't seem to be required.  Why check for a slug when we've already checked for the keyname?
 			# ensure we get the right auth cat id in case users are ordered in a non-standard sequence
 			$query         = new stdClass();
 			$query->type   = 'var';
@@ -79,7 +81,9 @@ class spcAuths {
 			$query->where  = "authcat_slug='".$this->auth_cats[$auth_cat]."'";
 			$thisCat       = SP()->DB->select($query);
 			if (empty($thisCat)) $thisCat = 1;
-
+			*/
+			$thisCat = $auth_cat ;
+			
 			$desc = SP()->saveFilters->title($desc);
 
 			# insert the new auth into the database
