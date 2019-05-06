@@ -6,30 +6,6 @@ $Rev:2099 $
 
 /* Some overrides of WP Admin to fit our panels */
 
-@import url(//fonts.googleapis.com/css?family=Open+Sans);
-
-@font-face {
-    font-family: 'Open Sans Semibold';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Open Sans Semibold'), local('OpenSansSemibold-Regular'),
-        url(./fonts/open-sans-semibold.woff) format('woff'),
-        url(./fonts/open-sans-semibold.ttf) format('truetype');
-}
-
-#wpwrap {
-    overflow: hidden;
-}
-
-#sfsidepanel *, #sfmaincontainer * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-
-    /*font-family: "Open Sans Regular", "Open Sans Semibold";*/
-    font-style: normal;
-}
-
 hr {
     border-bottom: 1px solid #433F3F;
 }
@@ -220,7 +196,6 @@ a:active {
 }
 
 #sfmaincontainer {
-    margin:0 0 10px 300px;
     padding: 0;
 }
 
@@ -818,20 +793,20 @@ p.sf-upload-status-fail {
 /* radio button */
 #sfmaincontainer [type="radio"]:not(:checked) + label:before,
 #sfmaincontainer [type="radio"]:checked + label:before {
-    border-radius: 10px;
+        border-radius: 10px;
 }
 
 #sfmaincontainer [type="radio"]:not(:checked) + label:after,
 #sfmaincontainer [type="radio"]:checked + label:after {
-    content: ' ';
-
-    width: 13px;
-    height: 13px;
-    background: #09afa6;
-    border-radius: 6px;
-    content: '';
-    top: 2px;
-    left: 3px;
+        content: ' ';
+        
+        width: 13px;
+        height: 13px;
+        background: #09afa6;
+        border-radius: 6px;
+        content: '';
+        top: 2px;
+        left: 3px;
 }
 
 /* hover style just for information */
@@ -1415,16 +1390,25 @@ img.spOnlineStatus {
 
 #sfsidepanel {
     float: left;
-    width: 260px;
+    width: 175px;
     margin: 0;
     padding: 0;
     outline: none;
 }
 
 .sfsidebutton, .sfsidebutton a {
+    height: 30px;
     text-align: left;
-    line-height: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    padding: 0 5px 0 34px;
+    -khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    line-height: 2.5em;
     outline: none;
+    background-color: #FFFFFF;
 }
 
 .sfsidebutton img {
@@ -1442,34 +1426,15 @@ img.spOnlineStatus {
     overflow: visible !important;
 }
 
-#sf-tooggle-admin-menu {
-    display: none;
+.sfsideitem a {
+    margin: 0;
+    padding: 4px 0;
 }
 
 /* UI Accordion
 ----------------------------------*/
-.ui-accordion .ui-accordion-header {
-    position: relative; 
-}
-.ui-accordion .ui-accordion-header:after {
-    content: '\2335';
-    position: absolute;
-    top: -2px;
-    right: 20px;
-    color: #DADADC;
-    font-weight: bold;
-}
-.ui-accordion .ui-accordion-header.ui-state-active:after {
-    transform: rotate(180deg);
-    top: 3px;
-    color: #006992;
-}
-
 .ui-accordion .ui-accordion-header a {
-    display: inline-block;
-    font-family: "Open Sans Semibold";
-    font-size: 14px;
-    color: #006992;
+    display: block;
 }
 
 .ui-accordion .ui-accordion-li-fix {
@@ -1484,8 +1449,14 @@ img.spOnlineStatus {
 }
 
 .ui-accordion .ui-accordion-content {
-    background: #FFF;
-    padding: 10px 0;
+    padding: 3px 5px 0;
+    background: #Fff;
+    border: 1px solid #919191;
+    border-radius: 3px;
+    position: relative;
+    top: -1px;
+    margin-bottom: 2px;
+    overflow: auto;
 }
 
 .ui-accordion .ui-accordion-content-active {
@@ -1494,46 +1465,32 @@ img.spOnlineStatus {
 
 .ui-accordion .ui-accordion-content a {
     text-align: left;
-    color: #27476E;
-    font-size: 13px;
-    font-family: "Open Sans Regular";
+    font-size: 12px;
+    font-weight: 400;
 }
-.ui-accordion .sfsideitem {
-    position: relative;
+
+.ui-accordion .ui-accordion-content .sfsideitem,
+.ui-accordion .ui-accordion-content-active .sfsideitem {
+    padding-left: 0;
+    margin: 3px 0 3px 3px;
+    width: 98%;
 }
-.ui-accordion .ui-accordion-content .sfsideitem a,
-.ui-accordion .ui-accordion-content-active .sfsideitem a {
-    display: block;
-    padding: 7px 20px;
-    margin: 0;
+
+.ui-accordion .ui-accordion-content .sfsideitem:hover {
+    background: #eee;
 }
-.ui-accordion .ui-accordion-content .sfsideitem a:focus {
-    color: #27476E;
-}
-.ui-accordion .ui-accordion-content .sfsideitem.active a {
-    font-family: "Open Sans Semibold";
-}
+
 .ui-accordion .ui-accordion-content .sfsideitem a:hover {
-    background-color: #F9F9F9;
-}
-.ui-accordion .ui-accordion-content .sfsideitem.active a:before,
-.ui-accordion .ui-accordion-content .sfsideitem a:hover:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 3px;
-    height: 20px;
-    background-color: #00B9D0;
+    color: #000000;
 }
 
 .ui-accordion .ui-accordion-header {
-    height: 50px;
-    border-bottom: 1px solid #F1F1F1;
-    background-color: #F9F9F9;
-}
-
-.ui-accordion .ui-accordion-header-active {
-    background-color: #FFF;
+    cursor: pointer;
+    position: relative;
+    margin: 1px 0 0 0;
+    padding: 0;
+    zoom: 1;
+    border: 1px solid #919191;
 }
 
 table td.permentry {
@@ -2082,40 +2039,40 @@ table td.permhead {
 /* Style adjustments for new licensing tab introducted in 6.0.7 / 6.1.0 */
 /*************************************************************************/
 .form-table td.sp_td_left{
-    /* 
-     * The license scren tables consists of two uneven columns;
-     * this section helps to style the left column.
-    */
-    font-weight: 600;
-    font-size: 12px;
-    text-align: left;
-    padding: 5px 10px 5px 10px;
-    border-style: solid;
-    border-width: 1px 1px 1px;
-    border-color: #ccc;
-    width:20%;
-    border-bottom: 1px solid #ddd;
-    color: #000000;
+	/* 
+	 * The license scren tables consists of two uneven columns;
+	 * this section helps to style the left column.
+	*/
+	font-weight: 600;
+	font-size: 12px;
+	text-align: left;
+	padding: 5px 10px 5px 10px;
+	border-style: solid;
+	border-width: 1px 1px 1px;
+	border-color: #ccc;
+	width:20%;
+	border-bottom: 1px solid #ddd;
+	color: #000000;
 }
 
 .form-table td.sp_td_licence_info{
-    font-weight: 600; 
-    line-height: 18px; 
-    font-size: 12px;
+	font-weight: 600; 
+	line-height: 18px; 
+	font-size: 12px;
 }
 
 .sp_addons_not_found { 
-    margin-left: 0px;
+	margin-left: 0px;
 }
 .sp_addon_title{ 
-    font-size: 17px;
-    color: #0073aa;
-    font-weight: 600;
-    margin-bottom: 10px; 
+	font-size: 17px;
+	color: #0073aa;
+	font-weight: 600;
+	margin-bottom: 10px; 
 }
 
 .sp-licensing_note_list{
-    margin:10px;
+	margin:10px;
 }
 
 .sp-licensing-key-active{color:green;}
@@ -2136,12 +2093,12 @@ Style font- icon picker
 */
 
 #spIconsetsList .item-controls {
-    position: initial;
+        position: initial;
 }
 
 
 .icons-selector.fip-bootstrap {
-    float: left;
+        float: left;
 }
 
 
@@ -2150,108 +2107,53 @@ Style font- icon picker
 }*/
 
 .sp-iconset-icon img {
-    max-width: 56px;
-    max-height: 36px;
+        max-width: 56px;
+        max-height: 36px;
 }
 
 
 .sp-icon-picker-row {
-    float:right;
+        float:right;
 }
 
 .sp-icon-picker-row .wp-picker-container  .wp-color-result-text {
-    line-height: 22px;
-    padding-right: 6px;
-    padding-left: 6px;
+        line-height: 22px;
+        padding-right: 6px;
+        padding-left: 6px;
 }
 
 .sp-icon-picker-row .font-style-container .font-color-container {
-    float: left;
-    width: 60%;
+        float: left;
+        width: 60%;
 }
 
 .sp-icon-picker-row .font-style-container .font-size-container {
-    float: right;
+        float: right;
 }
 
 
 .sp-icon-picker-row .font-size-container .font-style-size {
-    margin-right: 6px;
-    width: 70px;
-    height: 20px;
+        margin-right: 6px;
+        width: 70px;
+        height: 20px;
 }
 
 
 .sp-icon-picker-row .font-size-container select {
-    height: 14px;
-    line-height: 18px;
-    height: 20px;
-    margin: 0;
-    padding: 0;
-    margin-bottom: 4px;
+        height: 14px;
+        line-height: 18px;
+        height: 20px;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 4px;
 }
 
 
 .sp-icon-picker-row .wp-picker-container input[type=text].wp-color-picker {
-    line-height: 20px;
+        line-height: 20px;
 }
 
 
 .sp-icon-picker-row .wp-picker-container .wp-color-result.button {
-    padding-left: 45px;
+        padding-left: 45px;
 }
-
-
-@media screen and ( max-width: 320px ) {
-    #wpcontent {
-        padding: 0 10px;
-    }
-    #sfsidepanel {
-        width: 100%;
-    }
-    #sfmaincontainer {
-        margin: 0;
-    }
-    .wrap.sfatag {
-        padding: 0;
-    }
-    #sf-tooggle-admin-menu {
-        display: block;
-    }
-    #sf-tooggle-admin-menu .hide,
-    #sf-tooggle-admin-menu .show {
-        height: 50px;
-        text-align: center;
-        line-height: 50px;
-        font-family: "Open Sans Semibold";
-        font-size: 12px;
-        text-transform: uppercase;
-    }
-    #sf-tooggle-admin-menu .hide {
-        display: block;
-        background-color: #85A2BC;
-        color: #FFF;
-        border-radius: 3px 3px 0 0;
-    }
-    #sf-tooggle-admin-menu .show {
-        display: none;
-        background-color: #F9F9F9;
-        color: #006992;
-        border-radius: 3px;
-        margin-bottom: 20px;
-    }
-    #sfsidepanel.sf-admin-menu-hide #sf-tooggle-admin-menu .show {
-        display: block;
-    }
-    #sfsidepanel.sf-admin-menu-hide #sfadminmenu,
-    #sfsidepanel.sf-admin-menu-hide #sf-tooggle-admin-menu .hide {
-        display: none;
-    }
-    #sfadminmenu {
-        border-radius: 0 0 3px 3px;
-        overflow: hidden;
-        margin-bottom: 10px;
-    }
-
-}
-

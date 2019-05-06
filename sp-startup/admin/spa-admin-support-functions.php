@@ -17,7 +17,8 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
  */
 function spa_load_dashboard_css() {
 	$spDashStyleUrl = SPADMINCSS.'spa-dashboard.css';
-	wp_register_style('spDashStyle', $spDashStyleUrl);
+	// @TODO admin design
+	wp_register_style('spDashStyle', $spDashStyleUrl, array(), time());
 	wp_enqueue_style('spDashStyle');
 }
 

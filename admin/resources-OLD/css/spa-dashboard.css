@@ -1,0 +1,174 @@
+/*
+Simple:Press Admin Dashboard CSS
+$LastChangedDate:2009-10-30 21:19:52 +0000 (Fri, 30 Oct 2009) $
+$Rev:2882 $
+*/
+
+@font-face {
+    font-family: 'sp-admin';
+    src: url('fonts/sp-admin.eot?-1norbm');
+    src: url('fonts/sp-admin.eot?#iefix-1norbm') format('embedded-opentype'),
+    url('fonts/sp-admin.woff?-1norbm') format('woff'),
+    url('fonts/sp-admin.ttf?-1norbm') format('truetype'),
+    url('fonts/sp-admin.svg?-1norbm#sp-admin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="spaicon-"], [class*=" spaicon-"] {
+    font-family: 'sp-admin';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    font-size: 20px;
+    text-transform: none;
+    margin: 0 0 0 8px;
+    float: left;
+    color: #999999;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.post-install {
+    font-size: 30px;
+    margin: 12px 12px 12px 0;
+}
+
+a:focus,
+a:hover,
+a:link,
+a:active {
+    outline-style: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+#toplevel_page_simplepress-admin-panel-forums-spa-forums .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-options-spa-options .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-components-spa-components .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-usergroups-spa-usergroups .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-permissions-spa-permissions .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-integration-spa-integration .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-profiles-spa-profiles .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-admins-spa-admins .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-users-spa-users .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-plugins-spa-plugins .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-themes-spa-themes .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-toolbox-spa-toolbox .wp-menu-image:before,
+#toplevel_page_simplepress-sp-startup-sp-load-install .wp-menu-image:before,
+#toplevel_page_simplepress-sp-startup-admin-spa-admin-notice .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-forums-spa-forums .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-options-spa-options .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-components-spa-components .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-usergroups-spa-usergroups .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-permissions-spa-permissions .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-integration-spa-integration .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-profiles-spa-profiles .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-admins-spa-admins .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-users-spa-users .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-plugins-spa-plugins .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-themes-spa-themes .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-toolbox-spa-toolbox .wp-menu-image:before,
+#toplevel_page_simple-press-sp-startup-sp-load-install .wp-menu-image:before,
+#toplevel_page_simple-press-sp-startup-admin-spa-admin-notice .wp-menu-image:before {
+    font-family: sp-admin !important;
+    content: "\e100";
+}
+
+#sf-dashboard {
+    width: 100%;
+}
+
+#sf-dashboard .sfdashtable {
+    border-spacing: 1px;
+    width: 99%;
+    font-size: 9px;
+    font-family: "Lucida Grande", Verdana, Arial;
+    border-top: 1px solid #dddddd;
+}
+
+#sf-dashboard .sfdashtable td {
+    padding: 3px;
+    background-color: #F9F9F9;
+    color: #777777;
+    border-bottom: 1px solid #dddddd;
+    vertical-align: top;
+    font-size: 10px;
+}
+
+#sf-dashboard .sfdashtable td img {
+    vertical-align: middle;
+}
+
+#sf-dashboard .sfdashtable td p {
+    padding: 0;
+    margin: 0;
+}
+
+#sf-dashboard p {
+    font-family: Georgia, "Times New Roman";
+    color: #777777;
+    font-size: 12px;
+    font-style: italic;
+    padding: 0;
+    margin: 0;
+}
+
+.spaicon-Forums:before {
+    content: "\e101";
+}
+
+.spaicon-Options:before {
+    content: "\e102";
+}
+
+.spaicon-Components:before {
+    content: "\e103";
+}
+
+.spaicon-UserGroups:before {
+    content: "\e104";
+}
+
+.spaicon-Permissions:before {
+    content: "\e105";
+}
+
+.spaicon-Integration:before {
+    content: "\e106";
+}
+
+.spaicon-Profiles:before {
+    content: "\e107";
+}
+
+.spaicon-Admins:before {
+    content: "\e10c";
+}
+
+.spaicon-Users:before {
+    content: "\e10d";
+}
+
+.spaicon-Plugins:before {
+    content: "\e10e";
+}
+
+.spaicon-Themes:before {
+    content: "\e10f";
+}
+
+.spaicon-Toolbox:before {
+    content: "\e110";
+}
+
+.spaicon-Log:before {
+    content: "\e112";
+}
+
+.spaicon-Question:before {
+    content: "\e114";
+}

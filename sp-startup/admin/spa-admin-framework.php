@@ -44,8 +44,11 @@ function spa_enqueue_font_icon_picker() {
  * @return void
  */
 function spa_load_admin_css() {
-	$spAdminStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'spa-admin.css' : SPADMINCSS.'spa-admin.min.css';
-	wp_register_style('spAdminStyle', $spAdminStyleUrl);
+	//$spAdminStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'spa-admin.css' : SPADMINCSS.'spa-admin.min.css';
+	//wp_register_style('spAdminStyle', $spAdminStyleUrl);
+        // @TODO admin design
+        $spAdminStyleUrl = SPADMINCSS.'spa-admin.css';
+	wp_register_style('spAdminStyle', $spAdminStyleUrl, array(), time());
 	
 	wp_enqueue_style('spAdminStyle');
 	wp_enqueue_style('farbtastic');
@@ -87,14 +90,23 @@ function spa_load_admin_scripts() {
 		
 		spa_enqueue_datepicker();
 		
-		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin.js' : SPAJSCRIPT.'spa-admin.min.js';
-		wp_enqueue_script('sfadmin', $script, array(
+		//$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin.js' : SPAJSCRIPT.'spa-admin.min.js';
+		//wp_enqueue_script('sfadmin', $script, array(
+		//	'jquery',
+		//	'jquery-form',
+		//	'jquery-ui-accordion',
+		//	'jquery-ui-sortable',
+		//	'jquery-ui-tooltip'), false, false);
+
+                // @TODO admin design
+                $script = SPAJSCRIPT.'spa-admin.js';
+                wp_enqueue_script('sfadmin', $script, array(
 			'jquery',
 			'jquery-form',
 			'jquery-ui-accordion',
 			'jquery-ui-sortable',
-			'jquery-ui-tooltip'), false, false);
-
+			'jquery-ui-tooltip'), time(), false);
+                
 		$platform = array(
 			'focus'			 => 'admin',
 			'mobile'		 => SP()->core->mobile,
@@ -165,13 +177,7 @@ function spa_admin_header() {
 			<link rel="stylesheet" href="<?php echo SPADMINCSS; ?>spa-admin-rtl.css" />
 		<?php } ?>
 		<style>
-		<?php if (SP()->core->device == 'mobile') { ?>
-				#sfmaincontainer {margin:0 -10px 10px -15px;}
-		<?php } else { ?>
-				#sfmaincontainer {margin:0 0 10px 195px;}
-			<?php
-		}
-
+		<?php
 		do_action('sph_add_style');
 		?>
 		</style>
@@ -317,7 +323,7 @@ function spa_render_sidemenu() {
 
 	if (isset($_GET['tab']) ? $formid = SP()->filters->str($_GET['tab']) : $formid = '') ;
 
-	if (SP()->core->device == 'mobile') {
+	if (SP()->core->device == '_mobile') { // @TODO admin design (no used)
 		echo '<div id="spaMobileAdmin">'."\n";
 		echo '<select class="wp-core-ui" onchange="location = this.options[this.selectedIndex].value;">'."\n";
 		foreach ($sfadminpanels as $index => $panel) {
@@ -364,6 +370,16 @@ function spa_render_sidemenu() {
 		echo '</div>'."\n";
 	} else {
 		echo '<div id="sfsidepanel">'."\n";
+                
+                echo '<span id="sf-tooggle-admin-menu">'."\n";
+                echo '<span class="hide">'."\n";
+                echo __('Hide Admin Menu', 'sp');
+                echo '</span>'."\n";
+                echo '<span class="show">'."\n";
+                echo __('Show Admin Menu', 'sp');
+                echo '</span>'."\n";
+                echo '</span>'."\n";
+                
 		echo '<div id="sfadminmenu">'."\n";
 		foreach ($sfadminpanels as $index => $panel) {
 			if (SP()->auths->current_user_can($panel[1]) || ($panel[0] == 'Admins' && (SP()->user->thisUser->admin || SP()->user->thisUser->moderator))) {
