@@ -197,7 +197,7 @@ class spcTopicView {
 				$t[$tidx]->forum_rss_private = $r->forum_rss_private;
 				$t[$tidx]->topic_permalink   = SP()->spPermalinks->build_url($r->forum_slug, $r->topic_slug, 1, 0);
 				$t[$tidx]->topic_status      = $r->topic_status;
-				$t[$tidx]->topic_icon        = sanitize_file_name($r->topic_icon);
+				$t[$tidx]->topic_icon        = $r->topic_icon;
 				$t[$tidx]->rss               = '';
 				$t[$tidx]->editmode          = 0;
 				$t[$tidx]->tools_flag        = 1;

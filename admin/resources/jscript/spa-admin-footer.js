@@ -200,7 +200,7 @@
         });
     }
 
-    //Force to chek Update
+    //Force to check Update
     function spForceUpdateCheck(){
 
         $(document).on("click", '#force_update_check', function (e) {
@@ -214,7 +214,7 @@
                     action: "license-check",
                     sp_action: "force_update_check"
                 },
-                timeout: 5000,
+                timeout: 50000,
                 success: function (e) { 
                    e.message && "" != e.message && ($("#sfmsgspot").fadeIn(), $("#sfmsgspot").html(e.message), $("#sfmsgspot").fadeOut(3000)), setTimeout(function() {
                         $("#acclicensing").click()

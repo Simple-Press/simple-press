@@ -320,3 +320,17 @@ Certain identities such as AIM are part of services that no longer exists. We ha
 If you would still like your users to see these, turn this option on.<br /><br />
 The full list of deprecated identities are:  AIM, Yahoo IM, ICQ, Google Talk, MSN, Myspace.  If you turn this option on, these identities will become available again.
 [end]
+
+[iconset-upload]
+You can upload your own custom iconsets.  However, these must be in a specific format.  The easiest way to create the correct format is to use the icomoon app.<br /><br />
+Check our help documents for more information: <a href="https://simple-press.com/documentation/administration/simplepress-management/administration-options-section/administration-options-icon-sets/">Creating An Icon File</a>
+[end]
+
+[custom-iconsets]
+This panel contains a list of icon sets that have already been uploaded to Simple:Press.  By default, most sets are turned off.  This is because each set that is active incurs a performance penalty.<br /><br />
+<ul>
+<li>You can turn ON a set by clicking on the red "X" icon.</li>
+<li>Turn off a set by clicking on the green check-mark icon.</li>
+<li>You can remove a set completely by clicking on the trashcan icon.  Using this option will remove all the icon files from the Simple:Press folders.</li>
+</ul>
+[end]

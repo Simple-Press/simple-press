@@ -184,7 +184,12 @@ function spa_setup_admin_menu() {
 		SP()->primitives->admin_text('Email Settings')			 => array(
 			'email' => ''),
 		SP()->primitives->admin_text('New Post Handling')		 => array(
-			'newposts' => ''));
+			'newposts' => ''),
+		SP()->primitives->admin_text('Icon Sets')		 => array(
+			'iconsets' => '')
+			
+			);
+	
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Options'),
 		'SPF Manage Options',

@@ -328,6 +328,30 @@
                 }
                 
         }
+        
+        
+        spj.UpdateFontIcon = function( id, clear_color ) {
+                
+                var color = '';
+                
+                if( !clear_color ) {
+                        $.each( $('#'+id).closest('.sp-icon-picker-row').find('.font-color-container .font-style-color').data(), function() {
+                                if( this.hasOwnProperty('_color') ) {
+                                        color = this._color.toString();
+                                }
+                        });
+                }
+                        
+                var val = {
+                        icon : $('#'+id).val(),
+                        color : color,
+                        size : $('#'+id).closest('.sp-icon-picker-row').find('.font-style-size').val(),
+                        size_type : $('#'+id).closest('.sp-icon-picker-row').find('.font-style-size_type').val()
+		};
+                
+                $('#'+id).closest('.sp-icon-picker-row').find('.icon_value').val( JSON.stringify( val ) );
+        }
+        
 
 	// private methods
 }(window.spj = window.spj || {}, jQuery));

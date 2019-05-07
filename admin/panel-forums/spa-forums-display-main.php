@@ -54,6 +54,26 @@ function spa_forums_forums_main() {
 				$icon = esc_url(SPCUSTOMURL.$group->group_icon);
 				if (!file_exists(SPCUSTOMDIR.$group->group_icon)) $icon = SPTHEMEICONSURL.'sp_GroupIcon.png';
 			}
+			
+			$group_icon_type = 'file';
+
+			if ( empty( $group->group_icon ) ) {
+				$icon = SPTHEMEICONSURL.'sp_GroupIcon.png';
+			} else {
+
+				$group_icon = spa_get_saved_icon( $group->group_icon );
+
+				if( 'file' === $group_icon['type'] ) {
+					$icon = esc_url( SPCUSTOMURL.$group_icon['icon'] );
+					if (!file_exists( SPCUSTOMDIR.$group_icon['icon'] ) ) {
+						$icon = SPTHEMEICONSURL.'sp_GroupIcon.png';
+					}
+				} else {
+					$group_icon_type = 'font';
+					$icon = $group_icon['icon'];
+				}
+			}
+			
 			# Group
 ?>
 			<table class="wp-list-table widefat">
@@ -66,7 +86,15 @@ function spa_forums_forums_main() {
 			<table class="wp-list-table widefat">
 				<tr id="grouprow-<?php echo $group->group_id; ?>">
 					<td style="text-align:center;width:2%"><?php echo $group->group_id; ?></td>
-					<td style="text-align:center;padding:8px 0;width:5%"><?php echo '<img src="'.$icon.'" alt="" title="'.SP()->primitives->admin_text('Current group icon').'" />' ?>
+					<td style="text-align:center;padding:8px 0;width:5%">
+						
+						<?php 
+						if( 'file' === $group_icon_type ) {
+							echo '<img src="'.$icon.'" alt="" title="'.SP()->primitives->admin_text('Current group icon').'" />';
+						} else {
+							echo '<i class="'.$icon.'"></i>';
+						}
+						?>
 					<br />
 					<a style="font-size: 30px;font-weight:bold;" title="<?php SP()->primitives->admin_etext('Collapse/expand forum listing'); ?>" class="spExpandCollapseGroup" data-target="forum-group-<?php echo $group->group_id; ?>">&ndash;</a>
 
@@ -148,13 +176,24 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
 				$childlist = array(unserialize($forum->children));
 				if (count($childlist) > 0) $haschild = $childlist;
 			}
+			
+			$forum_icon_type = 'file';
 
 			if (empty($forum->forum_icon)) {
 				$icon = SPTHEMEICONSURL.'sp_ForumIcon.png';
 			} else {
-				$icon = esc_url(SPCUSTOMURL.$forum->forum_icon);
-				if (!file_exists(SPCUSTOMDIR.$forum->forum_icon)) {
-					$icon = SPTHEMEICONSURL.'sp_ForumIcon.png';
+				
+				
+				$forum_icon = spa_get_saved_icon( $forum->forum_icon );
+				
+				if( 'file' === $forum_icon['type'] ) {
+					$icon = esc_url(SPCUSTOMURL.$forum_icon['icon']);
+					if (!file_exists(SPCUSTOMDIR.$forum_icon['icon'])) {
+						$icon = SPTHEMEICONSURL.'sp_ForumIcon.png';
+					}
+				} else {
+					$forum_icon_type = 'font';
+					$icon = $forum_icon['icon'];
 				}
 			}
 			$rowClass = (in_array($forum->forum_id, $noMembers)) ? ' class="spWarningBG"' : '';
@@ -162,7 +201,16 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
 			<tr id="forumrow-<?php echo $forum->forum_id; ?>" <?php echo $rowClass; ?>> <!-- display forum information for each forum -->
 			<td style="text-align:center;width:2%"><?php echo $forum->forum_id; ?></td>
 
-			<td style="text-align:center;padding:8px 0;width:5%"><?php echo '<img src="'.$icon.'" alt="" title="'.SP()->primitives->admin_text('Current forum icon').'" />'; ?>
+			<td style="text-align:center;padding:8px 0;width:5%"><?php 
+			
+			
+			if( 'file' === $forum_icon_type ) {
+				echo '<img src="'.$icon.'" alt="" title="'.SP()->primitives->admin_text('Current forum icon').'" />'; 
+			} else {
+				echo '<i class="'.$icon.'"></i>';
+			}
+			
+			?>
 
 <?php			if ($haschild) { ?>
 					<br /><img class="parentArrow" src="<?php echo SPADMINIMAGES.'sp_HasChild.png'; ?>" alt="" title="<?php SP()->primitives->admin_etext('Parent Forum'); ?>" />

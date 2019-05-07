@@ -452,6 +452,49 @@ class spcTheme {
 	public function paint_icon_id($icon, $id) {
 		return str_replace('<img ', "<img id='$id' ", $icon);
 	}
+	
+	/**
+	 * Paint icon
+	 * 
+	 * @param string $icon
+	 * @param string $classes
+	 * 
+	 * @return string
+	 */
+	public function sp_paint_iconset_icon( $icon, $classes = '', $title = '' ) {
+		
+		
+		
+		if( !$icon || !is_array( $icon ) || !isset( $icon['icon'] ) )  {
+			return '';
+		}
+		
+		
+		$color = '';
+		$font_size = '';
+		
+		if( is_array( $icon ) ) {
+			$color = isset( $icon['color'] ) ? $icon['color'] : '';
+			$font_size = isset( $icon['font_size'] ) ? $icon['font_size'] : '';
+		}
+		
+		$styles = array();
+		
+		if( $color ) {
+			$styles[] = "color:{$color}";
+		}
+		
+		if( $font_size ) {
+			$styles[] = "font-size:{$font_size}";
+		}
+		
+		$attributes = array();
+		
+		$attributes[] = !empty($styles) ? ' style="' . implode(';', $styles ) . '"' : '';
+		$attributes[] = !empty( $title ) ? sprintf( ' title="%s"', esc_attr( $title ) ) : '';
+		
+		return sprintf( '<i class="%s %s"%s></i>', $icon['icon'], $classes, implode( '', $attributes ) );
+	}
 
 	/**
 	 * This method gets the basename of a theme.

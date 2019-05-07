@@ -394,7 +394,7 @@ function sp_action_nag() {
 		} else if (SP()->core->status == 'Upgrade') {
 			echo sprintf(SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database %s'), strtolower(SP()->core->status));
 		}
-		echo '<br /><a style="text-decoration: underline;" href="'.SPADMINUPGRADE.'">'.SP()->primitives->admin_text('Perform').' '.SP()->core->status.'</a>';
+		echo '<br />' .SP()->primitives->admin_text('Please backup your site and then ') . '<a style="text-decoration: underline;" href="'.SPADMINUPGRADE.'">'.SP()->primitives->admin_text('Perform').' '.SP()->core->status.'</a>';
 		echo '</b></p></div>';
     }
 
@@ -478,7 +478,7 @@ function spa_dashboard_forum() {
 		$out .= '<p><img style="vertical-align:bottom;border:none;margin:0 8px 30px 0;float:left" src="'.SP()->theme->paint_file_icon(SPADMINIMAGES, 'sp_Information.png').'" alt="" />'."\n";
 		$out .= sprintf(SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database %s'), strtolower(SP()->core->status));
 
-		if (SP()->user->thisUser->admin) $out .= '<br /><a style="text-decoration: underline;" href="'.SPADMINUPGRADE.'">'.SP()->primitives->admin_text('Perform Upgrade').'</a>';
+		if (SP()->user->thisUser->admin) $out .= '<br />' .SP()->primitives->admin_text('Please backup your site and then ') . '<a style="text-decoration: underline;" href="'.SPADMINUPGRADE.'">'.SP()->primitives->admin_text('Perform Upgrade').'</a>';
 		$out .= '</p></div>';
 		echo $out;
 
@@ -542,6 +542,12 @@ function spa_dashboard_forum() {
  * @return void
  */
 function spa_dashboard_news() {
+	
+	/* Only show news if more than 10 posts exists - no point in showing news to new installs since that can be a turn-off for trial users! */
+	if (SP()->DB->COUNT(SPPOSTS) < 10) {
+		return ;
+	}	
+	
 	global $spNews;
 	$sp_update_plugins = get_site_transient('sp_update_plugins');
 	$sp_update_themes = get_site_transient('sp_update_themes');

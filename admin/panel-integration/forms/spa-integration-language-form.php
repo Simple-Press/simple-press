@@ -88,7 +88,7 @@ function spa_integration_language_form() {
 	if (empty($userLang['spLang'])) return;
 
 	# load up the XML file
-	$c = wp_remote_get('https://simple-press.com/downloads/simple-press/simple-press.xml');
+	$c = wp_remote_get('https://simple-press.com/downloads/simple-press/simple-press_6.0.xml');
 	if (is_wp_error($c) || wp_remote_retrieve_response_code($c) != 200) {
 		echo '<p>'.SP()->primitives->admin_text('Unable to communicate with Simple Press server').'</p>';
 		return;

@@ -184,3 +184,55 @@ function spa_get_newposts_data() {
 
 	return $sfoptions;
 }
+
+/**
+ * Iconsets listing table
+ */
+function spa_paint_iconsets_table() {
+	
+
+	$iconsets = spa_get_all_iconsets();
+	
+	
+	# start the table display
+	echo '<div>';
+	echo '<table id="spIconsetsList" class="widefat fixed striped spMobileTable1280">';
+
+	foreach ($iconsets as $id => $iconset_options ) {
+			
+		$active = $iconset_options['active'];
+			
+		?>
+
+		<tr>
+			<td><?php echo $iconset_options['name']; ?></td>
+			<td>
+				<span class="item-controls"><?php
+				
+				$toggle_img = SPADMINIMAGES. 'sp_' . ( $active ? 'Yes' : 'No' ) . '.png';
+				$toggle_action = $active ? 'Disable' : 'Enable';
+				$toggle_link = esc_url( wp_nonce_url( SPAJAXURL . "options&amp;targetaction=" . strtolower( $toggle_action ) . "iconset&amp;iconset={$id}", 'options' ) );
+
+				printf( '<img src="%s" title="%s" alt="" style="vertical-align: middle;cursor:pointer;" class="spToggleRowReload" data-url="%s" data-reload="acciconsets" />&nbsp;&nbsp;', $toggle_img, SP()->primitives->admin_text( $toggle_action ), $toggle_link );
+
+
+				$site = esc_url( wp_nonce_url( SPAJAXURL . "options&amp;targetaction=deliconset&amp;iconset={$id}", 'options' ) );
+				printf( '<img src="%s" title="%s" alt="" style="vertical-align: middle;cursor:pointer;" class="spDeleteRowReload" data-url="%s" data-reload="acciconsets" />&nbsp;&nbsp;', SPCOMMONIMAGES.'delete.png', SP()->primitives->admin_text( 'Delete Iconset' ), $site );
+						
+						
+						
+				echo '</span>';
+				?>
+			</td>
+		</tr>
+			
+		<?php
+			
+		}
+	
+	
+	echo '</table>';
+	echo '</div>';
+
+	
+}

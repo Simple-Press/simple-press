@@ -79,6 +79,7 @@ function spa_save_integration_storage_data() {
 	if (!empty($_POST['language-sp-themes'])) $sfstorage['language-sp-themes'] = trim(SP()->saveFilters->title(trim($_POST['language-sp-themes'])), '/');
 	if (!empty($_POST['cache'])) $sfstorage['cache'] = trim(SP()->saveFilters->title(trim($_POST['cache'])), '/');
 	if (!empty($_POST['forum-images'])) $sfstorage['forum-images'] = trim(SP()->saveFilters->title(trim($_POST['forum-images'])), '/');
+	if (!empty($_POST['iconsets'])) $sfstorage['iconsets'] = trim( SP()->saveFilters->title( trim( $_POST['iconsets'] ) ), '/' );
 
 	SP()->options->update('sfconfig', $sfstorage);
 

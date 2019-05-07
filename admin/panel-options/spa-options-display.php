@@ -56,6 +56,13 @@ function spa_render_options_container($formid) {
 			require_once SP_PLUGIN_DIR.'/admin/panel-options/forms/spa-options-new-posts-form.php';
 			spa_options_newposts_form();
 			break;
+		
+		case 'iconsets':
+			require_once SP_PLUGIN_DIR.'/admin/panel-options/forms/spa-options-icon-sets-form.php';
+			spa_options_iconsets_form();
+			break;
+		
+		
 
         # leave this for plugins to add to this panel
 		case 'plugin':

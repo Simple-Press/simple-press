@@ -76,9 +76,19 @@ function sp_TopicHeaderIcon($args = '') {
 	$echo     = (int) $echo;
 	$get      = (int) $get;
 
+	$topic_icon = spa_get_saved_icon( SP()->forum->view->thisTopic->topic_icon );
+	
 	# Check if a custom icon
-	if (!empty(SP()->forum->view->thisTopic->topic_icon)) {
-		$icon = SP()->theme->paint_custom_icon($tagClass, SPCUSTOMURL.SP()->forum->view->thisTopic->topic_icon);
+	if ( !empty( $topic_icon['icon'] ) ) {
+		
+		$icon = $topic_icon['icon'];
+
+		if( 'file' === $topic_icon['type'] ) {
+			$icon = SP()->theme->paint_custom_icon($tagClass, SPCUSTOMURL. $icon );
+		} else {
+			$icon = SP()->theme->sp_paint_iconset_icon( $topic_icon, $tagClass );
+		}
+		
 	} else {
 		$icon = SP()->theme->paint_icon($tagClass, SPTHEMEICONSURL, sanitize_file_name($icon));
 	}
@@ -779,7 +789,13 @@ function sp_PostIndexUserBadges($args = '', $label = '') {
 	$out = "<div id='$tagId' class='$tagClass'>";
 	if (!empty($label)) $out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>";
 	foreach ($ranks as $thisRank) {
-		if ($badge && !empty($thisRank['badge'])) $out .= "<img class='$badgeClass' src='".$thisRank['badge']."' alt='' />$att";
+		if ($badge && !empty($thisRank['badge'])) {
+			if(is_array( $thisRank['badge'] ) ) {
+				$out .= SP()->theme->sp_paint_iconset_icon( $thisRank['badge'], $badgeClass );
+			} else {
+				$out .= "<img class='$badgeClass aa' src='".$thisRank['badge']."' alt='' />$att";
+			}
+		}
 		if ($rank) $out .= "<span class='$rankClass'>".$thisRank['name']."</span>$att";
 	}
 	$out .= "</div>\n";
@@ -833,7 +849,13 @@ function sp_PostIndexUserRank($args = '') {
 	$tout = "<div id='$tagId' class='$tagClass'>";
 	if ($showBadge && !empty(SP()->forum->view->thisPostUser->rank[0]['badge'])) {
 		$show = true;
-		$tout .= "<img class='$imgClass' src='".SP()->forum->view->thisPostUser->rank[0]['badge']."' alt='' />\n";
+		
+		if( is_array( SP()->forum->view->thisPostUser->rank[0]['badge'] ) ) {
+			$tout .= SP()->theme->sp_paint_iconset_icon( SP()->forum->view->thisPostUser->rank[0]['badge'], $imgClass );
+		} else {
+			$tout .= "<img class='$imgClass' src='".SP()->forum->view->thisPostUser->rank[0]['badge']."' alt='' />\n";
+		}
+		
 		$tout .= "<br />";
 	}
 	if ($showTitle && !empty(SP()->forum->view->thisPostUser->rank[0]['name'])) {
@@ -897,7 +919,13 @@ function sp_PostIndexUserSpecialRank($args = '') {
 		foreach (SP()->forum->view->thisPostUser->special_rank as $rank) {
 			if ($showBadge && !empty($rank['badge'])) {
 				$show = true;
-				$tout .= "<img class='$imgClass' src='".$rank['badge']."' alt='' />\n";
+				
+				if( is_array( $rank['badge'] ) ) {
+					$tout .= SP()->theme->sp_paint_iconset_icon( $rank['badge'], $imgClass );
+				} else {
+					$tout .= "<img class='$imgClass' src='".$rank['badge']."' alt='' />\n";
+				}
+				
 				$tout .= ($stacked) ? '<br />' : ' ';
 			}
 			if ($showTitle && !empty($rank['name'])) {

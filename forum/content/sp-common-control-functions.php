@@ -19,6 +19,9 @@
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
+
+include_once SP_PLUGIN_DIR.'/admin/library/spa-iconsets.php';
+
 /**
  * Starts a new main section within a template
  *

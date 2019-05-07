@@ -71,6 +71,8 @@ class spcAuths {
 		$query->where  = "auth_name='$name'";
 		$auth          = SP()->DB->select($query);
 		if (empty($auth)) {
+			
+			/* -- 05-05-2019: Removing this section because it doesn't seem to be required.  Why check for a slug when we've already checked for the keyname?
 			# ensure we get the right auth cat id in case users are ordered in a non-standard sequence
 			$query         = new stdClass();
 			$query->type   = 'var';
@@ -79,7 +81,9 @@ class spcAuths {
 			$query->where  = "authcat_slug='".$this->auth_cats[$auth_cat]."'";
 			$thisCat       = SP()->DB->select($query);
 			if (empty($thisCat)) $thisCat = 1;
-
+			*/
+			$thisCat = $auth_cat ;
+			
 			$desc = SP()->saveFilters->title($desc);
 
 			# insert the new auth into the database
@@ -134,7 +138,10 @@ class spcAuths {
 		# if its not id, lets get the id for easy removal of auth from roles
 		if (!is_numeric($id_or_name)) $id_or_name = SP()->DB->table(SPAUTHS, 'auth_name="'.$id_or_name.'"', 'auth_id');
 
-		# now lets delete the auth
+		# if we have an empty id or name just return success.
+		if (empty($id_or_name)) return true ;
+		
+		# otherwise, proceed - lets delete the auth
 		$query        = new stdClass();
 		$query->table = SPAUTHS;
 		$query->where = "auth_id=$id_or_name";
@@ -614,7 +621,7 @@ class spcAuths {
 			$query->table  = SPAUTHS;
 			$query->fields = array('auth_cat');
 			$query->data   = array(0);
-			$query->where  = "authcat_id=$id_or_name";
+			$query->where  = "auth_cat=$id_or_name";			
 			SP()->DB->update($query);
 		}
 

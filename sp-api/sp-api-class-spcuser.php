@@ -41,6 +41,9 @@
  * $LastChangedDate: 2018-12-06 10:47:04 -0600 (Thu, 06 Dec 2018) $
  * $Rev: 15841 $
  */
+
+include_once SP_PLUGIN_DIR.'/admin/library/spa-iconsets.php';
+
 class spcUser {
 	/**
 	 *
@@ -1319,8 +1322,15 @@ class spcUser {
 		foreach ($ranks_data as $key => $rank) {
 			if (is_array($memberRanks) && in_array($key, $memberRanks)) {
 				$userRanks[$count]['badge'] = '';
-				if ($rank['badge'] && file_exists(SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$rank['badge'])) {
-					$userRanks[$count]['badge'] = esc_url(SPRANKS.$rank['badge']);
+				
+				if( $rank['badge'] ) {
+						$badge_icon = spa_get_saved_icon( $rank['badge'] );
+						
+						if( 'file' === $badge_icon['type'] && file_exists(SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$rank['badge']) ) {
+							$userRanks[$count]['badge'] = esc_url(SPRANKS.$rank['badge']);
+						} elseif( 'font' === $badge_icon['type'] ) {
+							$userRanks[$count]['badge'] = $badge_icon;
+						}
 				}
 				$userRanks[$count]['name'] = $key;
 				$count++;
@@ -1371,8 +1381,15 @@ class spcUser {
 			# find ranking of current user
 			for ($x = 0; $x < count($rankdata['posts']); $x++) {
 				if ($userposts <= $rankdata['posts'][$x]) {
-					if ($rankdata['badge'][$x] && file_exists(SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$rankdata['badge'][$x])) {
-						$forumRank[0]['badge'] = esc_url(SPRANKS.$rankdata['badge'][$x]);
+					
+					if( $rankdata['badge'][$x] ) {
+						$badge_icon = spa_get_saved_icon( $rankdata['badge'][ $x ] );
+						
+						if( 'file' === $badge_icon['type'] && file_exists(SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$rankdata['badge'][$x]) ) {
+							$forumRank[0]['badge'] = esc_url(SPRANKS.$rankdata['badge'][$x]);
+						} elseif( 'font' === $badge_icon['type'] ) {
+							$forumRank[0]['badge'] = $badge_icon;
+						}
 					}
 					$forumRank[0]['name'] = $rankdata['title'][$x];
 					break;
