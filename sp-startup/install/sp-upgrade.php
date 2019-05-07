@@ -331,9 +331,9 @@ sp_bump_build($build, 15857);
 
 sp_bump_build($build, 15858);
 
-# Start of Upgrade Routines - 6.1.0 ============================================================
+# Start of Upgrade Routines - 6.2.0 ============================================================
 
-$section = 15860;
+$section = 15861;
 if ($build < $section) {
 	
 	# Install iconsets
