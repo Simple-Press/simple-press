@@ -6,17 +6,6 @@
  ------------------------------------ */
 
 (function(spj, $, undefined) {
-
-        $(document).on('click', '#sf-tooggle-admin-menu', function() {
-            $('#sfsidepanel').toggleClass('sf-admin-menu-hide');
-        });
-    
-        $(document).on('click', '.ui-accordion .ui-accordion-content .sfsideitem', function() {
-            $('.ui-accordion .ui-accordion-content .sfsideitem').removeClass('active');
-            $(this).addClass('active');
-        });
-    
-    
 	// private properties
 
 	// public properties

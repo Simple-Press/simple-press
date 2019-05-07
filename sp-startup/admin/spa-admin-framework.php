@@ -272,26 +272,34 @@ function spa_admin_footer_scripts() {
 
 	if (SP()->core->status == 'ok') {
 		if (SP()->admin->adminPage != 'notice') {
-			if (isset($activePanel)) {
+			/*if (isset($activePanel)) {
 				$panel = (!empty($sfactivepanels[$activePanel])) ? $sfactivepanels[$activePanel] : 0;
 			} else {
 				$panel = (!empty($sfactivepanels[SP()->admin->adminPage])) ? $sfactivepanels[SP()->admin->adminPage] : 0;
-			}
+			}*/
 
-			$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin-footer.js' : SPAJSCRIPT.'spa-admin-footer.min.js';
+			//$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin-footer.js' : SPAJSCRIPT.'spa-admin-footer.min.js';
+			//wp_enqueue_script('sfadminfooter', $script, array(
+			//	'jquery',
+			//	'jquery-ui-core',
+			//	'jquery-ui-widget',
+			//	'jquery-ui-accordion',
+			//	'jquery-ui-tooltip'), false, true);
+                        // @TODO admin design
+                        $script = SPAJSCRIPT.'spa-admin-footer.js';
 			wp_enqueue_script('sfadminfooter', $script, array(
 				'jquery',
 				'jquery-ui-core',
 				'jquery-ui-widget',
 				'jquery-ui-accordion',
-				'jquery-ui-tooltip'), false, true);
+				'jquery-ui-tooltip'), time(), true);
 
-			$admin = array(
+			/*$admin = array(
 				'panel'		 => $panel,
 				'panel_name' => $sfadminpanels[$panel][0]
 			);
 			$admin = apply_filters('sp_admin_footer_vars', $admin);
-			wp_localize_script('sfadminfooter', 'sp_admin_footer_vars', $admin);
+			wp_localize_script('sfadminfooter', 'sp_admin_footer_vars', $admin);*/
 		}
 	}
 }
@@ -371,7 +379,7 @@ function spa_render_sidemenu() {
 	} else {
 		echo '<div id="sfsidepanel">'."\n";
                 
-                echo '<span id="sf-tooggle-admin-menu">'."\n";
+                echo '<span class="sf-tooggle-admin-menu">'."\n";
                 echo '<span class="hide">'."\n";
                 echo __('Hide Admin Menu', 'sp');
                 echo '</span>'."\n";

@@ -1411,8 +1411,9 @@ img.spOnlineStatus {
     width: 47%;
 }
 
-/* ACCORDION =======================================================================================*/
-
+/**
+* #sfsidepanel
+*/
 #sfsidepanel {
     float: left;
     width: 260px;
@@ -1420,38 +1421,37 @@ img.spOnlineStatus {
     padding: 0;
     outline: none;
 }
-
-.sfsidebutton, .sfsidebutton a {
+#sfsidepanel .sf-tooggle-admin-menu {
+    display: none;
+}
+/**
+* #sfadminmenu >
+*/
+#sfadminmenu .sfsidebutton,
+#sfadminmenu .sfsidebutton a {
+    position: relative; 
     text-align: left;
     line-height: 50px;
     outline: none;
+    cursor: pointer;
 }
-
-.sfsidebutton img {
+#sfadminmenu .sfsidebutton {
+    height: 50px;
+    border-bottom: 1px solid #F1F1F1;
+    background-color: #F9F9F9;
+}
+#sfadminmenu .sfsidebutton.ui-accordion-header-active {
+    background-color: #FFF;
+}
+#sfadminmenu .sfsidebutton img {
     float: left;
     vertical-align: middle;
     padding: 2px;
 }
-
-.sfsidebutton.ui-state-default a:hover {
+#sfadminmenu .sfsidebutton.ui-state-default a:hover {
     color: #d54e21 !important;
 }
-
-.sfmenublock {
-    padding: 4px 0 4px 4px;
-    overflow: visible !important;
-}
-
-#sf-tooggle-admin-menu {
-    display: none;
-}
-
-/* UI Accordion
-----------------------------------*/
-.ui-accordion .ui-accordion-header {
-    position: relative; 
-}
-.ui-accordion .ui-accordion-header:after {
+#sfadminmenu .sfsidebutton:after {
     content: '\2335';
     position: absolute;
     top: -2px;
@@ -1459,65 +1459,57 @@ img.spOnlineStatus {
     color: #DADADC;
     font-weight: bold;
 }
-.ui-accordion .ui-accordion-header.ui-state-active:after {
+#sfadminmenu .sfsidebutton.ui-state-active:after {
     transform: rotate(180deg);
     top: 3px;
     color: #006992;
 }
-
-.ui-accordion .ui-accordion-header a {
+#sfadminmenu .sfsidebutton a {
     display: inline-block;
     font-family: "Open Sans Semibold";
     font-size: 14px;
     color: #006992;
 }
-
-.ui-accordion .ui-accordion-li-fix {
-    display: inline;
-}
-
-.ui-accordion .ui-accordion-header .ui-icon {
+#sfadminmenu .sfsidebutton .ui-icon {
     position: absolute;
     left: .5em;
     top: 50%;
     margin-top: -8px;
 }
-
-.ui-accordion .ui-accordion-content {
+#sfadminmenu .sfmenublock {
+    display: none;
     background: #FFF;
     padding: 10px 0;
 }
-
-.ui-accordion .ui-accordion-content-active {
+#sfadminmenu .sfmenublock.ui-accordion-content-active {
     display: block;
 }
-
-.ui-accordion .ui-accordion-content a {
+#sfadminmenu .sfmenublock a {
     text-align: left;
     color: #27476E;
     font-size: 13px;
     font-family: "Open Sans Regular";
 }
-.ui-accordion .sfsideitem {
+#sfadminmenu .sfmenublock .sfsideitem {
     position: relative;
 }
-.ui-accordion .ui-accordion-content .sfsideitem a,
-.ui-accordion .ui-accordion-content-active .sfsideitem a {
+#sfadminmenu .sfmenublock .sfsideitem a,
+#sfadminmenu .sfmenublock.ui-accordion-content-active .sfsideitem a {
     display: block;
     padding: 7px 20px;
     margin: 0;
 }
-.ui-accordion .ui-accordion-content .sfsideitem a:focus {
-    color: #27476E;
-}
-.ui-accordion .ui-accordion-content .sfsideitem.active a {
+#sfadminmenu .sfmenublock .sfsideitem.active a {
     font-family: "Open Sans Semibold";
 }
-.ui-accordion .ui-accordion-content .sfsideitem a:hover {
+#sfadminmenu .sfmenublock .sfsideitem a:focus {
+    color: #27476E;
+}
+#sfadminmenu .sfmenublock .sfsideitem a:hover {
     background-color: #F9F9F9;
 }
-.ui-accordion .ui-accordion-content .sfsideitem.active a:before,
-.ui-accordion .ui-accordion-content .sfsideitem a:hover:before {
+#sfadminmenu .sfmenublock .sfsideitem.active a:before,
+#sfadminmenu .sfmenublock .sfsideitem a:hover:before {
     content: "";
     position: absolute;
     left: 0;
@@ -1525,17 +1517,9 @@ img.spOnlineStatus {
     height: 20px;
     background-color: #00B9D0;
 }
-
-.ui-accordion .ui-accordion-header {
-    height: 50px;
-    border-bottom: 1px solid #F1F1F1;
-    background-color: #F9F9F9;
-}
-
-.ui-accordion .ui-accordion-header-active {
-    background-color: #FFF;
-}
-
+/**
+* < #sfadminmenu
+*/
 table td.permentry {
     vertical-align: top !important;
     padding: 5px !important;
@@ -2206,20 +2190,17 @@ Style font- icon picker
     #wpcontent {
         padding: 0 10px;
     }
-    #sfsidepanel {
-        width: 100%;
-    }
-    #sfmaincontainer {
-        margin: 0;
-    }
     .wrap.sfatag {
         padding: 0;
     }
-    #sf-tooggle-admin-menu {
+    #sfsidepanel {
+        width: 100%;
+    }
+    #sfsidepanel .sf-tooggle-admin-menu {
         display: block;
     }
-    #sf-tooggle-admin-menu .hide,
-    #sf-tooggle-admin-menu .show {
+    #sfsidepanel .sf-tooggle-admin-menu .hide,
+    #sfsidepanel .sf-tooggle-admin-menu .show {
         height: 50px;
         text-align: center;
         line-height: 50px;
@@ -2227,30 +2208,33 @@ Style font- icon picker
         font-size: 12px;
         text-transform: uppercase;
     }
-    #sf-tooggle-admin-menu .hide {
+    #sfsidepanel .sf-tooggle-admin-menu .hide {
         display: block;
         background-color: #85A2BC;
         color: #FFF;
         border-radius: 3px 3px 0 0;
     }
-    #sf-tooggle-admin-menu .show {
+    #sfsidepanel .sf-tooggle-admin-menu .show {
         display: none;
         background-color: #F9F9F9;
         color: #006992;
         border-radius: 3px;
         margin-bottom: 20px;
     }
-    #sfsidepanel.sf-admin-menu-hide #sf-tooggle-admin-menu .show {
+    #sfsidepanel.sf-admin-menu-hide .sf-tooggle-admin-menu .show {
         display: block;
     }
     #sfsidepanel.sf-admin-menu-hide #sfadminmenu,
-    #sfsidepanel.sf-admin-menu-hide #sf-tooggle-admin-menu .hide {
+    #sfsidepanel.sf-admin-menu-hide .sf-tooggle-admin-menu .hide {
         display: none;
     }
     #sfadminmenu {
         border-radius: 0 0 3px 3px;
         overflow: hidden;
         margin-bottom: 10px;
+    }
+    #sfmaincontainer {
+        margin: 0;
     }
 
 }
