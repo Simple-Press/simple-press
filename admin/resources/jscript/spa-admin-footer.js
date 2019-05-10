@@ -44,7 +44,7 @@
         });
         
         $(document).on('click', '#sfsidepanel .sf-tooggle-admin-menu', function() {
-            $('#sfsidepanel').toggleClass('sf-admin-menu-hide');
+            $('#sfsidepanel').toggleClass('sf-admin-menu-mobile-show');
         });
     
         $(document).on('click', '.ui-accordion .ui-accordion-content .sfsideitem', function() {

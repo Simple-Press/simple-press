@@ -25,9 +25,13 @@ $Rev:2099 $
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-
-    /*font-family: "Open Sans Regular", "Open Sans Semibold";*/
+}
+#sfsidepanel, #sfmaincontainer {
+    font-family: "Open Sans Regular";
     font-style: normal;
+}
+#sfmaincontainer .sfform-panel {
+    float: left;
 }
 
 hr {
@@ -38,18 +42,6 @@ input,
 select,
 textarea {
     border: 1px solid #aaa !important;
-}
-
-table.widefat {
-    clear: none;
-    margin: 0 5px;
-}
-
-table.widefat td.smallLabel {
-    text-align: center;
-    vertical-align: middle;
-    padding: 0 3px;
-    font-size: 10px;
 }
 
 .wp-core-ui .button-secondary {
@@ -220,24 +212,121 @@ a:active {
 }
 
 #sfmaincontainer {
-    margin:0 0 10px 300px;
+    margin:0 0 0 300px;
     padding: 0;
 }
 
 #sfmaincontainer h3 {
     padding-left: 0;
 }
-
-#sfmaincontainer div,
-#sfmaincontainer span,
-#sfmaincontainer fieldset,
-#sfmaincontainer form,
 #sfmaincontainer legend {
-    vertical-align: top !important;
+    position: absolute;
+    top: -90px; 
+}
+#sfmaincontainer legend strong {
+    height: 50px;
+    line-height: 50px;
+    font-size: 24px;
+    font-weight: normal;
+}
+#sfmaincontainer fieldset {
+    position: relative;
+    background-color: #F9F9F9;
+    border-radius: 4px;
+    margin-top: 90px;
+}
+#sfmaincontainer fieldset .subsubsub {
+    height: 80px;
+    line-height: 80px;
+    margin: 0 0 0 30px;
+    font-size: 14px;
+}
+#sfmaincontainer fieldset .subsubsub a {
+    color: #9D9EA0;
+}
+#sfmaincontainer fieldset .subsubsub a.current {
+    color: #257EA1;
+}
+#sfmaincontainer fieldset .subsubsub a .count,
+#sfmaincontainer fieldset .subsubsub a.current .count {
+    font-weight: inherit;
+    color: inherit;
 }
 
-#sfmaincontainer fieldset {
-    background: #fff;
+#sfmaincontainer fieldset .tablenav {
+    display: none;
+}
+#sfmaincontainer fieldset .search-box #search_id-search-input {
+    height: 40px;
+    width: 200px;
+    margin: 20px;
+    padding: 12px 20px 11px 20px;
+    border: 1px solid #F0F0F0 !important;
+    border-radius: 20px !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+#sfmaincontainer fieldset .search-box #search-submit {
+    display: none;
+}
+#sfmaincontainer table.widefat:before {
+    content: "";
+    height: 1px;
+    position: absolute;
+    box-shadow: 0 1px 0 #F0F0F0;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+#sfmaincontainer table.widefat {
+    position: relative;
+    padding: 30px;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    clear: none;
+}
+#sfmaincontainer table.widefat thead tr {
+    background-color: #EAF0F4;
+}
+#sfmaincontainer table.widefat thead tr td,
+#sfmaincontainer table.widefat thead tr th {
+    border: none;
+    padding-top: 22px;
+    padding-bottom: 21px;
+}
+#sfmaincontainer table.widefat thead tr td a,
+#sfmaincontainer table.widefat thead tr th a {
+    padding: 0;
+}
+#sfmaincontainer table.widefat thead tr td,
+#sfmaincontainer table.widefat thead tr th,
+#sfmaincontainer table.widefat thead tr td a,
+#sfmaincontainer table.widefat thead tr th a {
+    font-family: "Open Sans Semibold";
+    font-size: 12px;
+    line-height: 18px;
+    color: #27476E;
+    text-transform: uppercase;
+}
+#sfmaincontainer table.widefat thead tr td:first-child,
+#sfmaincontainer table.widefat thead tr th:first-child {
+    border-radius: 4px 0 0 0;
+}
+#sfmaincontainer table.widefat thead tr td:last-child,
+#sfmaincontainer table.widefat thead tr th:last-child {
+    border-radius: 0 4px 0 0;
+}
+
+#sfmaincontainer table.widefat tbody tr td,
+#sfmaincontainer table.widefat tbody tr th {
+    background-color: #FFF;
+    border-bottom: 1px solid #F0F0F0;
+    padding-top: 31px;
+    padding-bottom: 30px;
+}
+#sfmaincontainer table.widefat tfoot {
+    display: none;
 }
 
 #sfmaincontainer table,
@@ -248,10 +337,6 @@ a:active {
 #sfmaincontainer th,
 #sfmaincontainer td {
     vertical-align: top
-}
-
-#sfmaincontainer fieldset {
-    padding-top: 10px;
 }
 
 .message {
@@ -266,49 +351,12 @@ a:active {
 
 /* MAIN SPF FORM PANEL =============================================================================*/
 
-.sfform-panel,
-.sfform-panel-nohead {
-    margin: 0;
-    padding: 0;
-    height: auto;
-    overflow: visible;
-    vertical-align: top;
-    border: 1px solid #919191;
-    -khtml-border-radius: 11px 11px 0 0;
-    -webkit-border-top-left-radius: 11px;
-    -webkit-border-top-right-radius: 11px;
-    -webkit-border-bottom-left-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
-    border-radius: 11px 11px 0 0;
-    background-color: #FAFAFA;
-    display: inline-block;
-    width: 99%;
-}
-
-.sfform-panel-head {
-    height: 23px;
-    margin: 0;
-    width: 100%;
-    text-align: center;
-    border-bottom: 1px solid #ccc;
-    border-radius: 9px 9px 0 0;
-    background-color: #fbfbfb;
-    background: -moz-linear-gradient(100% 100% 90deg, #fbfbfb, #c3c3c3);
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#c3c3c3), to(#fbfbfb));
-}
-
 .sfform-panel-head .sftitlebar {
-    font-size: 12px !important;
-    font-weight: 600;
-    text-align: center;
-    vertical-align: middle;
-    padding: 0;
-    margin: 3px auto 0;
-    line-height: 1.6em;
+    display: none;
 }
 
 .sfform-submit-bar {
-    clear: both;
+    /*clear: both;*/
     margin: 10px -1px -1px 0;
     height: auto;
     background-color: #fbfbfb;
@@ -571,68 +619,6 @@ p.sf-upload-status-fail {
 
 .sfacontrol:hover {
     color: #D54E21;
-}
-
-.sffieldset {
-    font-size: 13px;
-    font-weight: 400;
-    border: 1px solid #3b446e;
-    width: auto;
-    margin: 10px 8px 0 8px !important;
-    padding: 10px 10px 5px 10px !important;
-    -khtml-border-radius: 5px 5px 0 0;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -webkit-border-bottom-left-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
-    border-radius: 5px 5px 0 0;
-}
-
-.sffieldset legend {
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: 2px;
-    padding: 1px 10px;
-    border: 1px solid #3b446e;
-    -khtml-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    background-color: #FFFFFF;
-}
-
-.sfsubfieldset {
-    font-size: 13px;
-    font-weight: 400;
-    border: 1px solid #3b446e;
-    width: auto;
-    margin: 8px 8px 0 8px;
-    padding: 0 10px 5px 10px;
-    -khtml-border-radius: 5px 5px 0 0;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -webkit-border-bottom-left-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
-    border-radius: 5px 5px 0 0;
-}
-
-.sfsubfieldset legend {
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: 2px;
-    padding: 1px 10px 0 10px;
-    border-top: 1px solid #3b446e;
-}
-
-.sffieldset p {
-    margin: 0;
-    padding: 0 0 3px 0;
-    background: transparent;
-    font-size: 13px;
-}
-
-.sffieldset ul li {
-    margin: 0 0 0 12px;
-    padding: 0 0 0 0;
 }
 
 .subhead, .sublabel {
@@ -1443,11 +1429,11 @@ img.spOnlineStatus {
 #sfadminmenu .sfsidebutton.ui-accordion-header-active {
     background-color: #FFF;
 }
-#sfadminmenu .sfsidebutton img {
+/*#sfadminmenu .sfsidebutton img {
     float: left;
     vertical-align: middle;
     padding: 2px;
-}
+}*/
 #sfadminmenu .sfsidebutton.ui-state-default a:hover {
     color: #d54e21 !important;
 }
@@ -1687,21 +1673,28 @@ table td.permhead {
     }
 }
 
-.sfhelplink {
-    font-size: 12px;
+div.sfhelplink {
     float: right;
-    margin: -32px -8px 5px 0;
-    padding: 0;
-    height: 22px !important;
-    line-height: 1em !important;
-    border-color: #3B446E !important;
+    margin: 15px 20px 15px 0 !important;
+
 }
 
 .sfhelplink a {
-    background: url("images/help.png") no-repeat 2px 2px !important;
-    background-color: #ffffff !important;
-    padding: 3px 5px 0 20px !important;
+    box-shadow: none !important;
+    border: none !important;
+    color: transparent !important;
+    height: 50px !important;
+    width: 50px !important;
     margin: 0 !important;
+    padding: 0 !important;
+    background: #F9F9F9 !important;
+}
+.sfhelplink a:before {
+    content: "";
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    background: url("../icon/help.png") no-repeat center;
 }
 
 .spLinkHighlight {
@@ -1965,7 +1958,7 @@ table td.permhead {
     }
 
     #wpbody table.spMobileTable1280 tr {
-        border: 1px solid #ccc;
+
     }
 
     #wpbody table.spMobileTable1280 tr.spInlineSection {
@@ -2209,26 +2202,28 @@ Style font- icon picker
         text-transform: uppercase;
     }
     #sfsidepanel .sf-tooggle-admin-menu .hide {
-        display: block;
+        display: none;
         background-color: #85A2BC;
         color: #FFF;
         border-radius: 3px 3px 0 0;
     }
     #sfsidepanel .sf-tooggle-admin-menu .show {
-        display: none;
+        display: block;
         background-color: #F9F9F9;
         color: #006992;
         border-radius: 3px;
         margin-bottom: 20px;
+        box-shadow: 0 3px 6px rgba(157, 158, 160, .05);
     }
-    #sfsidepanel.sf-admin-menu-hide .sf-tooggle-admin-menu .show {
-        display: block;
-    }
-    #sfsidepanel.sf-admin-menu-hide #sfadminmenu,
-    #sfsidepanel.sf-admin-menu-hide .sf-tooggle-admin-menu .hide {
+    #sfsidepanel.sf-admin-menu-mobile-show .sf-tooggle-admin-menu .show {
         display: none;
     }
+    #sfsidepanel.sf-admin-menu-mobile-show #sfadminmenu,
+    #sfsidepanel.sf-admin-menu-mobile-show .sf-tooggle-admin-menu .hide {
+        display: block;
+    }
     #sfadminmenu {
+        display: none;
         border-radius: 0 0 3px 3px;
         overflow: hidden;
         margin-bottom: 10px;
