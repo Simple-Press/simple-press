@@ -25,8 +25,8 @@ function spa_paint_options_init() {
 # Creates the containing block around a form or main section
 # ------------------------------------------------------------------
 function spa_paint_open_tab($tabname, $full=false) {
-	echo "<div class='sfform-panel'>";
 	echo "<div class='sfform-panel-head'><span class='sftitlebar'>$tabname</span></div>\n";
+	echo "<div class='sfform-panel'>";
 
 	if ($full) {
 		echo '<div class="sp-full-form">';
@@ -97,16 +97,16 @@ function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $
 	
 	$field_classes = 'sp-form-row' . " {$css_classes}";
 	echo "<div class='{$field_classes}'>\n";
+	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
+	echo "<input type='text' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	if ($disabled == true) echo "disabled='disabled' ";
+	echo "/>\n";
 	if ($large) {
 		echo "<div class='wp-core-ui sflabel sp-label-40'>\n";
 	} else {
 		echo "<div class='wp-core-ui sflabel sp-label-60'>\n";
 	}
-	echo "$label:</div>";
-	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
-	echo "<input type='text' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
-	if ($disabled == true) echo "disabled='disabled' ";
-	echo "/>\n";
+	echo "$label</div>";
 	echo '<div class="clearboth"></div>';
 	echo '</div>';
 	$tab++;

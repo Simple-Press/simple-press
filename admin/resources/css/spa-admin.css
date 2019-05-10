@@ -32,18 +32,38 @@ $Rev:2099 $
 }
 #sfmaincontainer .sfform-panel {
     float: left;
+    width: 100%;
+    background-color: #F9F9F9;
+    border-radius: 4px;
+    overflow: hidden;
 }
 
 hr {
     border-bottom: 1px solid #433F3F;
 }
-
-input,
-select,
-textarea {
-    border: 1px solid #aaa !important;
+#sfmaincontainer input:not([type=button]):not([type=submit]),
+#sfmaincontainer select {
+    height: 50px;
 }
-
+#sfmaincontainer input:not([type=button]):not([type=submit]),
+#sfmaincontainer select,
+#sfmaincontainer textarea {
+    margin: 0;
+    padding: 16px 16px 15px;
+    width: 100%;
+    border: 1px solid #F0F0F0 !important;
+    border-radius: 2px;
+    box-shadow: none !important;
+    color: #47484A;
+}
+#sfmaincontainer label {
+    color: #27476E;
+}
+#sfmaincontainer .sflabel {
+    margin: 10px 0 2px;
+    font-size: 12px;
+    color: #85A2BC;
+}
 .wp-core-ui .button-secondary {
     margin-bottom: 3px;
     height: auto;
@@ -219,22 +239,126 @@ a:active {
 #sfmaincontainer h3 {
     padding-left: 0;
 }
-#sfmaincontainer legend {
-    position: absolute;
-    top: -90px; 
-}
-#sfmaincontainer legend strong {
+#sfmaincontainer .sfform-panel-head {
     height: 50px;
+    margin-bottom: 30px;
+}
+#sfmaincontainer .sfform-panel-head .sftitlebar {
     line-height: 50px;
     font-size: 24px;
     font-weight: normal;
 }
+
 #sfmaincontainer fieldset {
     position: relative;
-    background-color: #F9F9F9;
+    /*background-color: #F9F9F9;
     border-radius: 4px;
-    margin-top: 90px;
+    /*margin-top: 90px;*/
 }
+
+#sfmaincontainer fieldset div.sfhelplink a {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    box-shadow: none !important;
+    border: none !important;
+    color: transparent !important;
+    background: transparent !important;
+}
+#sfmaincontainer fieldset div.sfhelplink a:before {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    background: url("../icon/help.png") no-repeat center;
+}
+#sfmaincontainer .sfform-submit-bar {
+    /*background-color: #F9F9F9; */
+    padding: 0 30px 30px;
+    width: 100%;
+    float: left;
+}
+#sfmaincontainer .sfform-submit-bar:before {
+    content: "";
+    clear: both;
+}
+
+#sfmaincontainer .sp-full-form {
+    width: 100%;
+}
+#sfmaincontainer .sp-full-form fieldset div.sfhelplink {
+    float: right;
+    margin: 15px 20px 15px 0 !important;
+}
+#sfmaincontainer .sp-full-form fieldset div.sfhelplink a {
+    height: 50px;
+    width: 50px;
+}
+#sfmaincontainer .sp-full-form fieldset div.sfhelplink a:before {
+    height: 50px;
+    width: 50px;
+}
+
+#sfmaincontainer .sp-half-form {
+    float: left;
+    width: 50%;
+    padding: 30px 30px 0 30px;
+    background-color: #F9F9F9;
+}
+#sfmaincontainer .sp-half-form:nth-child(even) {
+    padding-left: 0;
+}
+
+@media screen and (max-width: 640px) {
+    #sfmaincontainer .sp-half-form {
+        width: 100%;
+    }
+}
+#sfmaincontainer .sp-half-form fieldset {
+    margin-bottom: 30px;
+    background-color: #FFF;
+    border-radius: 4px;
+    overflow: hidden;
+}
+#sfmaincontainer .sp-half-form fieldset div.sfhelplink {
+    top: 0;
+    right: 0;
+    position: absolute;
+}
+#sfmaincontainer .sp-half-form fieldset div.sfhelplink a {
+    margin: 20px;
+}
+#sfmaincontainer .sp-half-form fieldset div.sfhelplink a:before {
+
+}
+#sfmaincontainer .sp-half-form fieldset .sp-form-row {
+    padding: 20px;
+}
+
+#sfmaincontainer fieldset legend {
+    margin: 0;
+    padding: 20px;
+    background-color: #EAF0F4;
+    width: 100%;
+    line-height: 20px;
+    /*height: 60px;*/
+    border-radius: 4px 4px 0px 0px;
+    font-family: "Open Sans Semibold";
+    font-size: 14px;
+    color: #27476E;
+}
+#sfmaincontainer fieldset legend strong {
+    display: inline-block;
+    width: calc(100% - 60px);
+}
+#sfmaincontainer .sp-full-form  fieldset legend {
+    display: none;
+}
+#sfmaincontainer .sfform-panel-head .sftitlebar {
+    /*display: none;*/
+}
+
 #sfmaincontainer fieldset .subsubsub {
     height: 80px;
     line-height: 80px;
@@ -262,9 +386,9 @@ a:active {
     margin: 20px;
     padding: 12px 20px 11px 20px;
     border: 1px solid #F0F0F0 !important;
-    border-radius: 20px !important;
-    outline: none !important;
-    box-shadow: none !important;
+    border-radius: 20px;
+    outline: none;
+    box-shadow: none;
 }
 #sfmaincontainer fieldset .search-box #search-submit {
     display: none;
@@ -351,26 +475,8 @@ a:active {
 
 /* MAIN SPF FORM PANEL =============================================================================*/
 
-.sfform-panel-head .sftitlebar {
-    display: none;
-}
-
-.sfform-submit-bar {
-    /*clear: both;*/
-    margin: 10px -1px -1px 0;
-    height: auto;
-    background-color: #fbfbfb;
-    background: -moz-linear-gradient(100% 100% 90deg, #c3c3c3, #fbfbfb);
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fbfbfb), to(#c3c3c3));
-    border-right: 1px solid #919191;
-    border-bottom: 1px solid #919191;
-    border-top: none;
-    border-top: 1px solid #919191;
-    padding: 5px 10px;
-}
-
 .sfform-panel-spacer {
-    min-height: 15px;
+    /*min-height: 15px;*/
 }
 
 .spWarningBG {
@@ -726,7 +832,7 @@ p.sf-upload-status-fail {
 #sfmaincontainer [type="radio"]:checked + label {
     position: relative;
     cursor: pointer;
-    padding: 0 0 0 25px;
+    padding: 0 0 0 36px;
     line-height: 22px;
     font-size: 100%;
 }
@@ -739,11 +845,12 @@ p.sf-upload-status-fail {
     content: '';
     position: absolute;
     left: 0;
-    top: -1px;
-    width: 17px;
-    height: 17px;
-    border: 1px solid #777;
-    background: #fff;
+    /* top: -1px; */
+    width: 20px;
+    height: 20px;
+    border: 1px solid #DADADC;
+    border-radius: 2px;
+    background: #FFF;
 }
 
 /* checked mark aspect */
@@ -753,10 +860,12 @@ p.sf-upload-status-fail {
 #sfmaincontainer [type="radio"]:checked + label:after {
     content: '✔';
     position: absolute;
-    top: -5px;
-    left: 3px;
-    font-size: 24px;
-    color: #09ad7e;
+    /* top: -5px; */
+    left: 7px;
+    font-size: 10px;
+    line-height: 22px;
+    /* font-weight: bold; */
+    color: #00B9D0;
     transition: all .2s;
 }
 
@@ -809,15 +918,14 @@ p.sf-upload-status-fail {
 
 #sfmaincontainer [type="radio"]:not(:checked) + label:after,
 #sfmaincontainer [type="radio"]:checked + label:after {
-    content: ' ';
-
-    width: 13px;
-    height: 13px;
-    background: #09afa6;
-    border-radius: 6px;
     content: '';
-    top: 2px;
-    left: 3px;
+    width: 10px;
+    height: 10px;
+    background: #09afa6;
+    border-radius: 5px;
+    content: '';
+    top: 4px;
+    left: 6px;
 }
 
 /* hover style just for information */
@@ -1620,22 +1728,6 @@ table td.permhead {
     border-radius: 0 0 0 0;
 }
 
-.sp-full-form {
-    width: 100%;
-}
-
-.sp-half-form {
-    width: 50%;
-    display: inline-block;
-}
-
-@media screen and (max-width: 640px) {
-    .sp-half-form {
-        width: 100%;
-        float: left;
-    }
-}
-
 .sp-full-row {
     width: 100%;
 }
@@ -1673,30 +1765,6 @@ table td.permhead {
     }
 }
 
-div.sfhelplink {
-    float: right;
-    margin: 15px 20px 15px 0 !important;
-
-}
-
-.sfhelplink a {
-    box-shadow: none !important;
-    border: none !important;
-    color: transparent !important;
-    height: 50px !important;
-    width: 50px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: #F9F9F9 !important;
-}
-.sfhelplink a:before {
-    content: "";
-    position: absolute;
-    height: 50px;
-    width: 50px;
-    background: url("../icon/help.png") no-repeat center;
-}
-
 .spLinkHighlight {
     border: 1px solid #555;
     border-radius: 5px;
@@ -1705,14 +1773,7 @@ div.sfhelplink {
     background-color: #FFFFCC;
 }
 
-.sp-form-row {
-    margin: 4px 0 0 0;
-    padding: 0;
-    border-bottom: 1px solid #ddd;
-    width: 100%;
-}
-
-.sp-label,
+/*.sp-label,
 .sp-label-40,
 .sp-label-50,
 .sp-label-60,
@@ -1772,7 +1833,7 @@ div.sfhelplink {
     margin: 0;
     padding: 0;
     float: right;
-}
+}*/
 
 .subArrow {
     padding: 0;
@@ -2179,9 +2240,9 @@ Style font- icon picker
 }
 
 
-@media screen and ( max-width: 320px ) {
-    #wpcontent {
-        padding: 0 10px;
+@media screen and ( max-width: 360px ) {
+    .auto-fold #wpcontent {
+        padding: 0 30px;
     }
     .wrap.sfatag {
         padding: 0;
@@ -2230,6 +2291,28 @@ Style font- icon picker
     }
     #sfmaincontainer {
         margin: 0;
+    }
+    #sfmaincontainer fieldset {
+        margin-top: 70px;
+    }
+    #sfmaincontainer legend {
+        top: -60px;
+        padding: 0;
+    }
+    #sfmaincontainer legend strong {
+        height: 30px;
+        line-height: 30px;
+        color: #27476E;
+    }
+    div.sfhelplink {
+        margin: 15px 5px 15px 0 !important;
+    }
+    #sfmaincontainer fieldset .search-box {
+        top: 0;
+    }
+    #sfmaincontainer fieldset .search-box #search_id-search-input {
+        width: calc(100% - 74px);
+        border-radius: 3px;
     }
 
 }
