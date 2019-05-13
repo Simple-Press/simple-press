@@ -34,11 +34,20 @@ $Rev:2099 $
     float: left;
     width: 100%;
     background-color: #F9F9F9;
+    -khtml-border-radius: 4px;
+    -webkit-border-radius: 4px;
     border-radius: 4px;
     overflow: hidden;
 }
-
-hr {
+#sfmaincontainer p.description {
+    font-family: "Open Sans Semibold";
+    font-style: normal;
+    font-size: 10px;
+    text-transform: uppercase;
+    line-height: 24px;
+    color: #27476E;
+}
+#sfmaincontainer hr {
     border-bottom: 1px solid #433F3F;
 }
 #sfmaincontainer input:not([type=button]):not([type=submit]),
@@ -52,11 +61,16 @@ hr {
     padding: 16px 16px 15px;
     width: 100%;
     border: 1px solid #F0F0F0 !important;
+    -khtml-border-radius: 2px;
+    -webkit-border-radius: 2px;
     border-radius: 2px;
     box-shadow: none !important;
     color: #47484A;
 }
 #sfmaincontainer label {
+    font-family: "Open Sans Regular";
+    font-size: 12px;
+    text-transform: none;
     color: #27476E;
 }
 #sfmaincontainer .sflabel {
@@ -64,11 +78,102 @@ hr {
     font-size: 12px;
     color: #85A2BC;
 }
+
+.wp-core-ui .button,
+.wp-core-ui .button-primary,
 .wp-core-ui .button-secondary {
-    margin-bottom: 3px;
-    height: auto;
-    white-space: pre;
+    height: 40px;
+    padding: 12px 21px 11px 20px;
+    line-height: 17px;
+    background: #006992;
+    box-shadow: 0 3px 6px rgba(0, 105, 146, .1);
+    border: none;
+    -khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font-family: "Open Sans Semibold";
+    font-size: 12px;
+    color: #FFF;
+    text-shadow: none;
+    outline: none;
+}
+.wp-core-ui .button.focus
+.wp-core-ui .button.hover,
+.wp-core-ui .button:focus,
+.wp-core-ui .button:hover {
+    background: rgba(0, 105, 146, .9);
+    box-shadow: 0 3px 6px rgba(0, 105, 146, .1);
+    border-color: inherit;
+    color: #FFF;
+}
+.wp-core-ui .button.active,
+.wp-core-ui .button.active:focus,
+.wp-core-ui .button.active:hover,
+.wp-core-ui .button:active {
+    background: rgba(0, 105, 146, .8);
+    box-shadow: 0 3px 6px rgba(0, 105, 146, .1);
+    border-color: inherit;
+    color: #FFF;
+    -webkit-transform: translateY(1px);
+    transform: translateY(1px);
+}
+.wp-core-ui .button-primary {
+    height: 50px;
+    padding: 16px 34px 15px 35px;
     line-height: 19px;
+    font-size: 14px;
+    background: #00B9D0;
+    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
+    color: #FFF;
+}
+.wp-core-ui .button-primary.focus,
+.wp-core-ui .button-primary.hover,
+.wp-core-ui .button-primary:focus,
+.wp-core-ui .button-primary:hover {
+    background: rgba(0, 185, 208, .9);
+    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
+    border-color: inherit;
+    color: #FFF;
+}
+.wp-core-ui .button-primary.active,
+.wp-core-ui .button-primary.active:focus,
+.wp-core-ui .button-primary.active:hover,
+.wp-core-ui .button-primary:active {
+    background: rgba(0, 185, 208, .8);
+    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
+    border-color: inherit;
+    color: #FFF;
+    -webkit-transform: translateY(1px);
+    transform: translateY(1px);
+}
+.wp-core-ui .button-secondary {
+    height: 50px;
+    padding: 16px 34px 15px 35px;
+    line-height: 19px;
+    font-size: 14px;
+    background: #00B9D0;
+    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
+    color: #FFF;
+}
+.wp-core-ui .button-secondary.focus,
+.wp-core-ui .button-secondary.hover,
+.wp-core-ui .button-secondary:focus,
+.wp-core-ui .button-secondary:hover {
+    background: rgba(0, 185, 208, .9);
+    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
+    border-color: inherit;
+    color: #FFF;
+}
+.wp-core-ui .button-secondary.active,
+.wp-core-ui .button-secondary.active:focus,
+.wp-core-ui .button-secondary.active:hover,
+.wp-core-ui .button-secondary:active {
+    background: rgba(0, 185, 208, .8);
+    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
+    border-color: inherit;
+    color: #FFF;
+    -webkit-transform: translateY(1px);
+    transform: translateY(1px);
 }
 
 .spStackBtn, .spStackBtnLong {
@@ -256,7 +361,9 @@ a:active {
     /*margin-top: 90px;*/
 }
 
-#sfmaincontainer fieldset div.sfhelplink a {
+#sfmaincontainer fieldset div.sfhelplink a,
+#sfmaincontainer .item-edit {
+    display: inline-block;
     width: 20px;
     height: 20px;
     margin: 0;
@@ -318,6 +425,8 @@ a:active {
 #sfmaincontainer .sp-half-form fieldset {
     margin-bottom: 30px;
     background-color: #FFF;
+    -khtml-border-radius: 4px;
+    -webkit-border-radius: 4px;
     border-radius: 4px;
     overflow: hidden;
 }
@@ -343,6 +452,8 @@ a:active {
     width: 100%;
     line-height: 20px;
     /*height: 60px;*/
+    -khtml-border-radius: 4px 4px 0px 0px;
+    -webkit-border-radius: 4px 4px 0px 0px;
     border-radius: 4px 4px 0px 0px;
     font-family: "Open Sans Semibold";
     font-size: 14px;
@@ -386,6 +497,8 @@ a:active {
     margin: 20px;
     padding: 12px 20px 11px 20px;
     border: 1px solid #F0F0F0 !important;
+    -khtml-border-radius: 20px;
+    -webkit-border-radius: 20px;
     border-radius: 20px;
     outline: none;
     box-shadow: none;
@@ -435,10 +548,14 @@ a:active {
 }
 #sfmaincontainer table.widefat thead tr td:first-child,
 #sfmaincontainer table.widefat thead tr th:first-child {
+    -khtml-border-radius: 4px 0 0 0;
+    -webkit-border-radius: 4px 0 0 0;
     border-radius: 4px 0 0 0;
 }
 #sfmaincontainer table.widefat thead tr td:last-child,
 #sfmaincontainer table.widefat thead tr th:last-child {
+    -khtml-border-radius: 0 4px 0 0;
+    -webkit-border-radius: 0 4px 0 0;
     border-radius: 0 4px 0 0;
 }
 
@@ -708,10 +825,7 @@ p.sf-upload-status-fail {
     padding: 20px;
     width: auto;
     -khtml-border-radius: 0 0 8px 8px;
-    -webkit-border-top-left-radius: 0;
-    -webkit-border-top-right-radius: 0;
-    -webkit-border-bottom-left-radius: 8px;
-    -webkit-border-bottom-right-radius: 8px;
+    -webkit-border-radius: 0 0 8px 8px;
     border-radius: 0 0 8px 8px;
 }
 
@@ -751,6 +865,8 @@ p.sf-upload-status-fail {
     background-position: 5px 6px;
     background-color: #ffebe8 !important;
     border: 2px solid #cc0000;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
     border-radius: 5px;
     margin: 2px 8px 1px;
     color: #333333;
@@ -834,7 +950,6 @@ p.sf-upload-status-fail {
     cursor: pointer;
     padding: 0 0 0 36px;
     line-height: 22px;
-    font-size: 100%;
 }
 
 /* checkbox/radio aspect */
@@ -849,6 +964,8 @@ p.sf-upload-status-fail {
     width: 20px;
     height: 20px;
     border: 1px solid #DADADC;
+    -khtml-border-radius: 2px;
+    -webkit-border-radius: 2px;
     border-radius: 2px;
     background: #FFF;
 }
@@ -913,6 +1030,8 @@ p.sf-upload-status-fail {
 /* radio button */
 #sfmaincontainer [type="radio"]:not(:checked) + label:before,
 #sfmaincontainer [type="radio"]:checked + label:before {
+    -khtml-border-radius: 10px;
+    -webkit-border-radius: 10px;
     border-radius: 10px;
 }
 
@@ -922,6 +1041,8 @@ p.sf-upload-status-fail {
     width: 10px;
     height: 10px;
     background: #09afa6;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
     border-radius: 5px;
     content: '';
     top: 4px;
@@ -1073,29 +1194,28 @@ ul.memberlist li {
     padding-top: 20px;
 }
 
-.menu-item {
-    clear: both;
-    line-height: 1.5em;
-    margin-top: 0;
-    position: relative;
-}
+#sfmaincontainer .menu-item {
+    width: 340px;
+    height: 50px;
+    margin: 0;
+    padding: /*17px*/0 16px;
+    line-height: 50px;
 
-.menu-item {
-    cursor: move;
-    border: 1px solid #b1b1b1;
-    -khtml-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border-radius: 6px;
-    font-weight: 600;
-    height: auto;
-    line-height: 30px;
-    overflow: visible;
-    padding-left: 10px;
     position: relative;
-    width: 250px;
+    cursor: move;
+    border: 1px solid #EAF0F4;
+    -khtml-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    font-weight: 600;
+    overflow: visible;
+
+    position: relative;
+
     word-wrap: break-word;
-    background: #f1f1f1;
+    background: #FFF;
     color: #174F69;
+    clear: both;
 }
 
 #groupList .menu-item {
@@ -1157,7 +1277,7 @@ ul.memberlist li {
     left: 20px;
 }
 
-.sffieldset ul li.menu-item-depth-0,
+/*.sffieldset ul li.menu-item-depth-0,
 .sffieldset ul li.menu-item-depth-1,
 .sffieldset ul li.menu-item-depth-2,
 .sffieldset ul li.menu-item-depth-3,
@@ -1169,23 +1289,32 @@ ul.memberlist li {
 .sffieldset ul li.menu-item-depth-9 {
     margin-left: 30px;
     margin-right: 30px;
+}*/
+
+#sfmaincontainer .item-controls img {
+    margin-right: 7px;
 }
 
-.item-controls {
-    font-size: 10px;
-    position: absolute;
-    right: 20px;
-    top: 0;
-}
-
-.item-type {
-    color: #999999;
+#sfmaincontainer .item-type {
+    /*color: #999999;
     font-size: 10px;
     padding: 8px !important;
-    text-transform: uppercase;
+    text-transform: uppercase;*/
 }
-
-.item-edit {
+#sfmaincontainer .item-edit {
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+}
+#sfmaincontainer .item-edit:before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    margin-top: 5px;
+    background: url(../icon/expand.png) no-repeat center;
+}
+/*.item-edit {
     background: url("images/updown.gif") no-repeat scroll 4px 8px transparent;
     border-bottom: 1px solid #EEEEEE;
     -webkit-border-bottom-left-radius: 3px;
@@ -1199,29 +1328,25 @@ ul.memberlist li {
     top: 0;
     width: 23px;
     cursor: pointer;
-}
+}*/
 
 .menu .sortable-placeholder {
-    height: 35px;
+    /*height: 35px;
     margin-top: 13px;
     margin-left: 30px;
-    width: 500px !important;
+    width: 500px !important;*/
 }
 
-.menu-item-settings {
-    -moz-border-bottom-colors: none;
-    -moz-border-image: none;
-    -moz-border-left-colors: none;
-    -moz-border-right-colors: none;
-    -moz-border-top-colors: none;
-    background: none repeat scroll 0 0 #f5f5f5;
-    border-color: #b1b1b1;
-    border-radius: 0 0 6px 6px;
-    border-style: solid;
-    border-width: 0 1px 1px;
-    padding: 10px 5px 0;
+#sfmaincontainer .menu-item-settings {
+    background-color: #FFF;
+    border: 1px solid #EAF0F4;
+    border-top: none;
+    -khtml-border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+    padding: 18px 20px 22px;
     margin: 0 0 15px;
-    width: 250px;
+    width: 340px;
 }
 
 /* POPUP HELP================================================================================*/
@@ -1383,8 +1508,9 @@ ul.memberlist li {
 
 body .ttip {
     border: 1px solid #a6c9e2;
-    border-radius: 5px;
+    -khtml-border-radius: 5px;
     -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 /* user panel profile popup =========================================================================================*/
@@ -1720,12 +1846,9 @@ table td.permhead {
 /* ============================= */
 
 .sfform-panel-nohead {
-    -khtml-border-radius: 0 0 0 0;
-    -webkit-border-top-left-radius: 0;
-    -webkit-border-top-right-radius: 0;
-    -webkit-border-bottom-left-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
-    border-radius: 0 0 0 0;
+    -khtml-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
 }
 
 .sp-full-row {
@@ -1767,6 +1890,8 @@ table td.permhead {
 
 .spLinkHighlight {
     border: 1px solid #555;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
     border-radius: 5px;
     padding: 0 6px;
     margin-left: -7px;
@@ -2266,12 +2391,16 @@ Style font- icon picker
         display: none;
         background-color: #85A2BC;
         color: #FFF;
+        -khtml-border-radius: 3px 3px 0 0;
+        -webkit-border-radius: 3px 3px 0 0;
         border-radius: 3px 3px 0 0;
     }
     #sfsidepanel .sf-tooggle-admin-menu .show {
         display: block;
         background-color: #F9F9F9;
         color: #006992;
+        -khtml-border-radius: 3px;
+        -webkit-border-radius: 3px;
         border-radius: 3px;
         margin-bottom: 20px;
         box-shadow: 0 3px 6px rgba(157, 158, 160, .05);
@@ -2285,6 +2414,8 @@ Style font- icon picker
     }
     #sfadminmenu {
         display: none;
+        -khtml-border-radius: 0 0 3px 3px;
+        -webkit-border-radius: 0 0 3px 3px;
         border-radius: 0 0 3px 3px;
         overflow: hidden;
         margin-bottom: 10px;
@@ -2312,6 +2443,8 @@ Style font- icon picker
     }
     #sfmaincontainer fieldset .search-box #search_id-search-input {
         width: calc(100% - 74px);
+        -khtml-border-radius: 3px;
+        -webkit-border-radius: 3px;
         border-radius: 3px;
     }
 
