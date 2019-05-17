@@ -19,6 +19,8 @@
 	spj.performInstall = function(phpUrl, phaseCount, currentPhase, subPhaseCount, currentSubPhase, image, messages, folder) {
 		try {
 			var phaseTotal = (parseInt(phaseCount) + parseInt(subPhaseCount));
+                        
+                        currentPhase = parseInt(currentPhase);
 
 			/* If first time in - load up message strings and initialize progress */
 			if (currentPhase == 0) {
@@ -26,8 +28,8 @@
 				messageStrings = installtext.split("@");
 
 				/* display installing message and set up progress bar */
-				$('#imagezone').html('<p><br /><img src="' + image + '" /><br />' + messageStrings[1] + '<br /></p>');
-				$('#imagezone').fadeIn('slow');
+				//$('#imagezone').html('<p><br /><img src="' + image + '" /><br />' + messageStrings[1] + '<br /></p>');
+				//$('#imagezone').fadeIn('slow');
 				$("#progressbar").progressbar({value: 0});
 				installProgress = 0;
 			} else {
@@ -40,21 +42,27 @@
 
 			/* do next phase/build section */
 			var thisUrl = phpUrl + '&phase=' + currentPhase;
-			var target = "#zone" + currentPhase;
+			//var target = "#zone" + currentPhase;
 			if (currentPhase == 8 && currentSubPhase < (subPhaseCount + 1)) {
 				thisUrl = thisUrl + '&subphase=' + currentSubPhase;
 			}
 
-			$(target).load(thisUrl, function(a, b) {
+                        $("#zone" + currentPhase).addClass('processing')
+                                .find('.sp-icon').removeClass('waiting').addClass('working');
+
+			$("#zone0").load(thisUrl, function(a, b) {
 				/* check for errors first */
 				var retVal = a.substr(0, 13);
 
-				$(target).fadeIn('slow');
+				//$(target).fadeIn('slow');
 
 				if (retVal == 'Install Error') {
-					$('#imagezone').html('<p>' + messageStrings[3] + '</p>');
+					$('#errorzone').html('<p>' + messageStrings[3] + '</p>');
 					return;
 				}
+
+                                $("#zone" + currentPhase).removeClass('processing').addClass('ready')
+                                        .find('.sp-icon').removeClass('working').addClass('check');
 
 				if (currentPhase == 8) {
 					currentSubPhase++;
@@ -68,21 +76,22 @@
 				/* are we finished yet */
 				if (currentPhase > phaseCount) {
 					$("#progressbar").progressbar('option', 'value', 100);
-					$('#finishzone').html('<p>' + endInstall(messageStrings[0], folder) + '</p>');
-					$('#imagezone').html('<p>' + messageStrings[2] + '</p>');
+                                        $("#sfmaincontainer [type=submit]").removeAttr('disabled');
+					//$('#finishzone').html('<p>' + endInstall(messageStrings[0], folder) + '</p>');
+					//$('#imagezone').html('<p>' + messageStrings[2] + '</p>');
 					return;
 				} else {
 					spj.performInstall(phpUrl, phaseCount, currentPhase, subPhaseCount, currentSubPhase, image, messages, folder);
 				}
 			});
 		} catch (e) {
-			var iZone = document.getElementById('imagezone');
+			//var iZone = document.getElementById('imagezone');
 			var eZone = document.getElementById('errorzone');
-			iZone.innerHTML = '<p>PROBLEM - The Install can not be completed</p>';
+			//iZone.innerHTML = '<p>PROBLEM - The Install can not be completed</p>';
 			var abortMsg = "<p>There is a problem with the JavaScript being loaded on this page which is stopping the upgrade from being completed.<br />";
 			abortMsg += "The error being reported is: " + e.message + '</p>';
 			eZone.innerHTML = abortMsg;
-			iZone.style.display = "block";
+			//iZone.style.display = "block";
 			eZone.style.display = "block";
 		}
 	};

@@ -7,10 +7,6 @@ $Rev:2099 $
 /* Some overrides of WP Admin to fit our panels */
 
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
-/*@import url(//use.fontawesome.com/releases/v5.8.2/css/all.css);*/
-
-@import url(./icon.css?v=100);
-@import url(./radio-cb.css?v=1);
 
 @font-face {
     font-family: 'Open Sans Semibold';
@@ -21,19 +17,41 @@ $Rev:2099 $
         url(./fonts/open-sans-semibold.ttf) format('truetype');
 }
 
-#wpwrap {
-    overflow: hidden;
+/**
+* Installation >
+*/
+-installation #sfmaincontainer {
+    margin: 0;
 }
-#sfsidepanel *, #sfmaincontainer * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-#sfsidepanel, #sfmaincontainer {
-    font-family: "Open Sans";
+-installation {
+    float: left;
+    widows: 100%;
+    font-family: "Open Sans Regular";
     font-style: normal;
 }
-#sfmaincontainer .sf-panel-body {
+-installation .sf-panel-head {
+    float: left;
+    width: 100%;
+    padding: 0;
+    margin: 0 0 30px 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+-installation .sf-panel-head h3 {
+    float: left;
+    margin: 9px 0;
+    font-size: 24px;
+    line-height: 33px;
+    font-weight: normal;
+    color: #27476E;
+}
+-installation .sf-panel-head .button {
+    float: right;
+    margin: 5px 0;
+    font-family: "Open Sans Regular";
+}
+-installation .sf-panel-body {
     float: left;
     width: 100%;
     padding: 30px;
@@ -42,8 +60,31 @@ $Rev:2099 $
     -webkit-border-radius: 4px;
     border-radius: 4px;
 }
-#sfmaincontainer .sf-panel-row {
-    margin-bottom: 35px;
+/**
+* < Installation
+*/
+
+#wpwrap {
+    overflow: hidden;
+}
+
+#sfsidepanel *, #sfmaincontainer * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#sfsidepanel, #sfmaincontainer {
+    font-family: "Open Sans Regular";
+    font-style: normal;
+}
+#sfmaincontainer .sfform-panel {
+    float: left;
+    width: 100%;
+    background-color: #F9F9F9;
+    -khtml-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    overflow: hidden;
 }
 #sfmaincontainer p.description {
     font-family: "Open Sans Semibold";
@@ -56,68 +97,30 @@ $Rev:2099 $
 #sfmaincontainer hr {
     border-bottom: 1px solid #433F3F;
 }
-
-/* FORM CONTROLS ===================================================================================*/
-#sfmaincontainer input,
+#sfmaincontainer input:not([type=button]):not([type=submit]):not([type=radio]):not([type=checkbox]),
+#sfmaincontainer select {
+    height: 50px;
+}
+#sfmaincontainer input:not([type=button]):not([type=submit]):not([type=radio]):not([type=checkbox]),
 #sfmaincontainer select,
 #sfmaincontainer textarea {
     margin: 0;
     padding: 16px 16px 15px;
     width: 100%;
+    border: 1px solid #F0F0F0 !important;
+    -khtml-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    box-shadow: none !important;
     color: #47484A;
-    -khtml-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    box-shadow: none;
-    border: 1px solid #F0F0F0;
-}
-
-#sfmaincontainer input,
-#sfmaincontainer select {
-    height: 50px;
 }
 #sfmaincontainer label {
-    display: block;
-    margin-bottom: 13px;
-    font-family: "Open Sans Semibold";
+    font-family: "Open Sans Regular";
     font-size: 12px;
     line-height: 17px;
-    text-transform: uppercase;
-    white-space: normal;
+    text-transform: none;
     color: #27476E;
 }
-/*#sfmaincontainer label + input {
-    margin-top: 13px !important;
-}*/
-#sfmaincontainer input[type=radio] + label,
-#sfmaincontainer input[type=checkbox] + label {
-    margin-left: 40px;
-    font-family: "Open Sans";
-    font-size: 14px;
-    line-height: 19px;
-    text-transform: none;
-}
-
-.sfacontrol:hover {
-    color: #D54E21;
-}
-
-.subhead, .sublabel {
-    margin: 10px 0 0 0;
-    font-size: 12px;
-    line-height: 17px;
-    color: #85A2BC;
-}
-
-.subhead {
-
-}
-
-.sublabel {
-    display: block;
-}
-
-
 #sfmaincontainer .sflabel {
     margin: 10px 0 2px;
     font-size: 12px;
@@ -125,10 +128,9 @@ $Rev:2099 $
     color: #85A2BC;
 }
 
-#sfmaincontainer .button,
-#sfmaincontainer .button-primary,
-#sfmaincontainer .button-secondary {
-    width: auto;
+.wp-core-ui .button,
+.wp-core-ui .button-primary,
+.wp-core-ui .button-secondary {
     height: 40px;
     padding: 12px 21px 11px 20px;
     line-height: 17px;
@@ -142,30 +144,21 @@ $Rev:2099 $
     font-size: 12px;
     color: #FFF;
     text-shadow: none;
-    text-align: center;
     outline: none;
 }
-#sfmaincontainer .button[disabled],
-#sfmaincontainer .button-primary[disabled],
-#sfmaincontainer .button-secondary[disabled] {
-    background-color: #00B9D0 !important;
-    box-shadow: 0 5px 10px rgba(0, 185, 208, .1) !important;
-    color: #FFF !important;
-    opacity: .5;
-}
-#sfmaincontainer .button.focus
-#sfmaincontainer .button.hover,
-#sfmaincontainer .button:focus,
-#sfmaincontainer .button:hover {
+.wp-core-ui .button.focus
+.wp-core-ui .button.hover,
+.wp-core-ui .button:focus,
+.wp-core-ui .button:hover {
     background: rgba(0, 105, 146, .9);
     box-shadow: 0 3px 6px rgba(0, 105, 146, .1);
     border-color: inherit;
     color: #FFF;
 }
-#sfmaincontainer .button.active,
-#sfmaincontainer .button.active:focus,
-#sfmaincontainer .button.active:hover,
-#sfmaincontainer .button:active {
+.wp-core-ui .button.active,
+.wp-core-ui .button.active:focus,
+.wp-core-ui .button.active:hover,
+.wp-core-ui .button:active {
     background: rgba(0, 105, 146, .8);
     box-shadow: 0 3px 6px rgba(0, 105, 146, .1);
     border-color: inherit;
@@ -173,7 +166,7 @@ $Rev:2099 $
     -webkit-transform: translateY(1px);
     transform: translateY(1px);
 }
-#sfmaincontainer .button-primary {
+.wp-core-ui .button-primary {
     height: 50px;
     padding: 16px 34px 15px 35px;
     line-height: 19px;
@@ -182,19 +175,19 @@ $Rev:2099 $
     box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
     color: #FFF;
 }
-#sfmaincontainer .button-primary.focus,
-#sfmaincontainer .button-primary.hover,
-#sfmaincontainer .button-primary:focus,
-#sfmaincontainer .button-primary:hover {
+.wp-core-ui .button-primary.focus,
+.wp-core-ui .button-primary.hover,
+.wp-core-ui .button-primary:focus,
+.wp-core-ui .button-primary:hover {
     background: rgba(0, 185, 208, .9);
     box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
     border-color: inherit;
     color: #FFF;
 }
-#sfmaincontainer .button-primary.active,
-#sfmaincontainer .button-primary.active:focus,
-#sfmaincontainer .button-primary.active:hover,
-#sfmaincontainer .button-primary:active {
+.wp-core-ui .button-primary.active,
+.wp-core-ui .button-primary.active:focus,
+.wp-core-ui .button-primary.active:hover,
+.wp-core-ui .button-primary:active {
     background: rgba(0, 185, 208, .8);
     box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
     border-color: inherit;
@@ -202,7 +195,7 @@ $Rev:2099 $
     -webkit-transform: translateY(1px);
     transform: translateY(1px);
 }
-#sfmaincontainer .button-secondary {
+.wp-core-ui .button-secondary {
     height: 50px;
     padding: 16px 34px 15px 35px;
     line-height: 19px;
@@ -211,19 +204,19 @@ $Rev:2099 $
     box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
     color: #FFF;
 }
-#sfmaincontainer .button-secondary.focus,
-#sfmaincontainer .button-secondary.hover,
-#sfmaincontainer .button-secondary:focus,
-#sfmaincontainer .button-secondary:hover {
+.wp-core-ui .button-secondary.focus,
+.wp-core-ui .button-secondary.hover,
+.wp-core-ui .button-secondary:focus,
+.wp-core-ui .button-secondary:hover {
     background: rgba(0, 185, 208, .9);
     box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
     border-color: inherit;
     color: #FFF;
 }
-#sfmaincontainer .button-secondary.active,
-#sfmaincontainer .button-secondary.active:focus,
-#sfmaincontainer .button-secondary.active:hover,
-#sfmaincontainer .button-secondary:active {
+.wp-core-ui .button-secondary.active,
+.wp-core-ui .button-secondary.active:focus,
+.wp-core-ui .button-secondary.active:hover,
+.wp-core-ui .button-secondary:active {
     background: rgba(0, 185, 208, .8);
     box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
     border-color: inherit;
@@ -401,24 +394,23 @@ a:active {
     padding-left: 0;
 }
 #sfmaincontainer .sf-panel-head {
-    float: left;
-    width: 100%;
-    position: relative;
-    padding: 0;
-    margin: 0 0 30px 0;
-    border: none;
-    background: transparent;
-    box-shadow: none;
+    height: 50px;
+    margin-bottom: 30px;
 }
-#sfmaincontainer .sf-panel-head h3 {
-    float: left;
-    margin: 9px 0;
+#sfmaincontainer .sf-panel-head .sftitlebar {
+    line-height: 50px;
     font-size: 24px;
-    line-height: 36px;
     font-weight: normal;
-    color: #27476E;
 }
 
+#sfmaincontainer fieldset {
+    position: relative;
+    /*background-color: #F9F9F9;
+    border-radius: 4px;
+    /*margin-top: 90px;*/
+}
+
+#sfmaincontainer fieldset div.sfhelplink a,
 #sfmaincontainer .item-edit {
     display: inline-block;
     width: 20px;
@@ -430,10 +422,15 @@ a:active {
     color: transparent !important;
     background: transparent !important;
 }
-#sfmaincontainer .sf-panel-body .sp-icon.help {
-    background-color: #0E7198;
+#sfmaincontainer fieldset div.sfhelplink a:before {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    background: url("../icon/help.png") no-repeat center;
 }
 #sfmaincontainer .sfform-submit-bar {
+    /*background-color: #F9F9F9; */
     padding: 0 30px 30px;
     width: 100%;
     float: left;
@@ -446,10 +443,19 @@ a:active {
 #sfmaincontainer .sp-full-form {
     width: 100%;
 }
-#sfmaincontainer .sp-full-form div.sfhelplink {
+#sfmaincontainer .sp-full-form fieldset div.sfhelplink {
     float: right;
-    margin: 30px 20px 15px 0 !important;
+    margin: 15px 20px 15px 0 !important;
 }
+#sfmaincontainer .sp-full-form fieldset div.sfhelplink a {
+    height: 50px;
+    width: 50px;
+}
+#sfmaincontainer .sp-full-form fieldset div.sfhelplink a:before {
+    height: 50px;
+    width: 50px;
+}
+
 #sfmaincontainer .sp-half-form {
     float: left;
     width: 50%;
@@ -480,6 +486,9 @@ a:active {
 #sfmaincontainer .sp-half-form fieldset div.sfhelplink a {
     margin: 20px;
 }
+#sfmaincontainer .sp-half-form fieldset div.sfhelplink a:before {
+
+}
 #sfmaincontainer .sp-half-form fieldset .sp-form-row {
     padding: 20px;
 }
@@ -504,6 +513,9 @@ a:active {
 }
 #sfmaincontainer .sp-full-form  fieldset legend {
     display: none;
+}
+#sfmaincontainer .sf-panel-head .sftitlebar {
+    /*display: none;*/
 }
 
 #sfmaincontainer fieldset .subsubsub {
@@ -840,6 +852,11 @@ p.sf-upload-status-fail {
     height: auto !important;
 }
 
+#sfsidepanel input#spHelp {
+    white-space: normal;
+    height: 100%;
+}
+
 /* SUCCESS MESSAGE SPOT ============================================================================*/
 
 #sfmsgspot {
@@ -866,6 +883,25 @@ p.sf-upload-status-fail {
     cursor: default;
 }
 
+/* FORM CONTROLS ===================================================================================*/
+
+.sfacontrol:hover {
+    color: #D54E21;
+}
+
+.subhead, .sublabel {
+    font-size: 13px !important;
+    vertical-align: baseline !important;
+    margin: 6px 0 0 0 !important;
+}
+
+.subhead {
+    font-weight: 600 !important;
+}
+
+.sublabel {
+    font-weight: 400 !important;
+}
 
 .radio {
     padding: 4px 0;
@@ -943,6 +979,123 @@ p.sf-upload-status-fail {
 
 #spAbout {
     text-align: center;
+}
+
+/* Base label styling */
+#sfmaincontainer [type="checkbox"],
+#sfmaincontainer [type="radio"] {
+    position: relative;
+    width: 0;
+    height: 0;
+}
+
+#sfmaincontainer [type="checkbox"] + label,
+#sfmaincontainer [type="radio"] + label {
+    float: left;
+    position: relative;
+    cursor: pointer;
+    padding: 0 0 0 36px;
+    line-height: 22px;
+}
+
+/* checkbox/radio aspect */
+#sfmaincontainer [type="checkbox"] + label:before,
+#sfmaincontainer [type="radio"] + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    /* top: -1px; */
+    width: 20px;
+    height: 20px;
+    border: 1px solid #DADADC;
+    -khtml-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    background: #FFF;
+}
+
+/* checked mark aspect */
+#sfmaincontainer [type="checkbox"]:not(:checked) + label:after,
+#sfmaincontainer [type="checkbox"]:checked + label:after,
+#sfmaincontainer [type="radio"]:not(:checked) + label:after,
+#sfmaincontainer [type="radio"]:checked + label:after {
+    content: '✔';
+    position: absolute;
+    top: 0;
+    left: 7px;
+    font-size: 10px;
+    line-height: 22px;
+    /* font-weight: bold; */
+    color: #00B9D0;
+    transition: all .2s;
+}
+
+/* checked mark aspect changes */
+#sfmaincontainer [type="checkbox"]:not(:checked) + label:after,
+#sfmaincontainer [type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    transform: scale(0);
+}
+
+#sfmaincontainer [type="checkbox"]:checked + label:after,
+#sfmaincontainer [type="radio"]:checked + label:after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* disabled checkbox/radio */
+#sfmaincontainer [type="checkbox"]:disabled:not(:checked) + label:before,
+#sfmaincontainer [type="checkbox"]:disabled:checked + label:before,
+#sfmaincontainer [type="radio"]:disabled:not(:checked) + label:before,
+#sfmaincontainer [type="radio"]:disabled:checked + label:before {
+    box-shadow: none;
+    border-color: #bbb;
+    background-color: #ddd;
+}
+
+#sfmaincontainer [type="checkbox"]:disabled:checked + label:after,
+#sfmaincontainer [type="radio"]:disabled:checked + label:after {
+    color: #999;
+}
+
+#sfmaincontainer [type="checkbox"]:disabled + label,
+#sfmaincontainer [type="radio"]:disabled + label {
+    color: #aaa;
+}
+
+/* accessibility */
+#sfmaincontainer [type="checkbox"]:checked:focus + label:before,
+#sfmaincontainer [type="checkbox"]:not(:checked):focus + label:before,
+#sfmaincontainer [type="radio"]:checked:focus + label:before,
+#sfmaincontainer [type="radio"]:not(:checked):focus + label:before {
+    border: 1px dotted blue;
+}
+
+/* radio button */
+#sfmaincontainer [type="radio"]:not(:checked) + label:before,
+#sfmaincontainer [type="radio"]:checked + label:before {
+    -khtml-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+#sfmaincontainer [type="radio"]:not(:checked) + label:after,
+#sfmaincontainer [type="radio"]:checked + label:after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #09afa6;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    content: '';
+    top: 4px;
+    left: 6px;
+}
+
+/* hover style just for information */
+#sfmaincontainer label:hover:before {
+    border: 1px solid #4778d9 !important;
 }
 
 /* UI Dialog
@@ -1168,6 +1321,20 @@ ul.memberlist li {
     left: 20px;
 }
 
+/*.sffieldset ul li.menu-item-depth-0,
+.sffieldset ul li.menu-item-depth-1,
+.sffieldset ul li.menu-item-depth-2,
+.sffieldset ul li.menu-item-depth-3,
+.sffieldset ul li.menu-item-depth-4,
+.sffieldset ul li.menu-item-depth-5,
+.sffieldset ul li.menu-item-depth-6,
+.sffieldset ul li.menu-item-depth-7,
+.sffieldset ul li.menu-item-depth-8,
+.sffieldset ul li.menu-item-depth-9 {
+    margin-left: 30px;
+    margin-right: 30px;
+}*/
+
 #sfmaincontainer .item-controls img {
     margin-right: 7px;
 }
@@ -1189,7 +1356,7 @@ ul.memberlist li {
     height: 16px;
     width: 16px;
     margin-top: 5px;
-    background: url(../icons/Expand.svg) no-repeat center;
+    background: url(../icon/expand.png) no-repeat center;
 }
 /*.item-edit {
     background: url("images/updown.gif") no-repeat scroll 4px 8px transparent;
@@ -1351,49 +1518,24 @@ ul.memberlist li {
 }
 
 /* INSTALL & UPGRADE ===============================================================================*/
-/**
-* Installation >
-*/
-#sfmaincontainer.sf-installation {
-    margin: 30px 0 0 0;
+
+#SPLOADINSTALLtable td h5 {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
 }
-#sfmaincontainer.sf-installation .sf-panel-head .help.button {
-    float: right;
-    margin: 5px 0;
-    font-family: "Open Sans";
+
+.ui-progressbar {
+    height: 22px;
+    width: 50%;
+    border: 1px solid silver;
 }
-#sfmaincontainer.sf-installation .ui-progressbar {
-    margin-bottom: 22px;
+
+.ui-progressbar .ui-progressbar-value {
+    background-image: url(images/pbar-ani.gif);
+    height: 22px;
 }
-#sfmaincontainer.sf-installation .ui-progressbar,
-#sfmaincontainer.sf-installation .ui-progressbar .ui-progressbar-value {
-    height: 8px;
-    -khtml-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    background-color: #F0F0F0;
-}
-#sfmaincontainer.sf-installation .ui-progressbar .ui-progressbar-value {
-    background-color: #85A2BC;
-}
-#sfmaincontainer.sf-installation .zmessage {
-    padding: 10px 0;
-    font-size: 14px;
-    color: #9D9EA0;
-}
-#sfmaincontainer.sf-installation .zmessage.processing {
-    font-family: "Open Sans Semibold";
-    color: #006992;
-}
-#sfmaincontainer.sf-installation .zmessage.ready {
-    color: #27476E;
-}
-#sfmaincontainer.sf-installation .zmessage .sp-icon {
-    margin-right: 10px;
-}
-/**
-* < Installation
-*/
 
 /* TOOLTIPS =========================================================================================*/
 
@@ -1549,11 +1691,6 @@ img.spOnlineStatus {
 /**
 * #sfadminmenu >
 */
-#sfadminmenu [class^="spaicon-"],
-#sfadminmenu [class*=" spaicon-"] {
-    margin: 15px 14px 0 20px;
-    background-color: #006992;
-}
 #sfadminmenu .sfsidebutton,
 #sfadminmenu .sfsidebutton a {
     position: relative; 
@@ -1570,6 +1707,11 @@ img.spOnlineStatus {
 #sfadminmenu .sfsidebutton.ui-accordion-header-active {
     background-color: #FFF;
 }
+/*#sfadminmenu .sfsidebutton img {
+    float: left;
+    vertical-align: middle;
+    padding: 2px;
+}*/
 #sfadminmenu .sfsidebutton.ui-state-default a:hover {
     color: #d54e21 !important;
 }
@@ -1610,7 +1752,7 @@ img.spOnlineStatus {
     text-align: left;
     color: #27476E;
     font-size: 13px;
-    font-family: "Open Sans";
+    font-family: "Open Sans Regular";
 }
 #sfadminmenu .sfmenublock .sfsideitem {
     position: relative;
@@ -2268,42 +2410,6 @@ Style font- icon picker
 
 
 @media screen and ( max-width: 360px ) {
-    .wrap {
-        margin: 0;
-    }
-    /**
-    * Installation >
-    */
-    #sfmaincontainer.sf-installation .sf-panel-head .help.button {
-        position: absolute;
-        left: 0;
-    }
-    #sfmaincontainer.sf-installation .sf-panel-head h3 {
-        margin: 80px 0 0 0;
-    }
-    /**
-    * < Installation
-    */
-    #sfmaincontainer .sf-panel-body {
-        padding: 20px;
-    }
-    #sfmaincontainer .button,
-    #sfmaincontainer .button-primary,
-    #sfmaincontainer .button-secondary {
-        height: 50px;
-        font-size: 14px;
-        line-height: 19px;
-        padding-top: 16px;
-        padding-bottom: 15px;
-        width: 100%;
-    }
-    #sfmaincontainer .sf-panel-head [class*=button] .sp-icon {
-        display: none;
-    }
-    #sfmaincontainer .sf-panel-row {
-        margin-bottom: 22px;
-    }
-
     .auto-fold #wpcontent {
         padding: 0 30px;
     }
@@ -2361,6 +2467,9 @@ Style font- icon picker
     #sfmaincontainer {
         margin: 0;
     }
+    #sfmaincontainer fieldset {
+        margin-top: 70px;
+    }
     #sfmaincontainer legend {
         top: -60px;
         padding: 0;
@@ -2370,7 +2479,7 @@ Style font- icon picker
         line-height: 30px;
         color: #27476E;
     }
-    #sfmaincontainer div.sfhelplink {
+    div.sfhelplink {
         margin: 15px 5px 15px 0 !important;
     }
     #sfmaincontainer fieldset .search-box {

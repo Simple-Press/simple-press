@@ -36,11 +36,11 @@ $Rev:2099 $
 #sfmaincontainer .sf-panel-body {
     float: left;
     width: 100%;
-    padding: 30px;
     background-color: #F9F9F9;
     -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
+    overflow: hidden;
 }
 #sfmaincontainer .sf-panel-row {
     margin-bottom: 35px;
@@ -1354,41 +1354,44 @@ ul.memberlist li {
 /**
 * Installation >
 */
-#sfmaincontainer.sf-installation {
-    margin: 30px 0 0 0;
+.sf-installation {
+    margin-top: 30px;
 }
-#sfmaincontainer.sf-installation .sf-panel-head .help.button {
+.sf-installation #sfmaincontainer {
+    margin: 0;
+}
+.sf-installation .sf-panel-head .help.button {
     float: right;
     margin: 5px 0;
     font-family: "Open Sans";
 }
-#sfmaincontainer.sf-installation .ui-progressbar {
+.sf-installation .ui-progressbar {
     margin-bottom: 22px;
 }
-#sfmaincontainer.sf-installation .ui-progressbar,
-#sfmaincontainer.sf-installation .ui-progressbar .ui-progressbar-value {
+.sf-installation .ui-progressbar,
+.sf-installation .ui-progressbar .ui-progressbar-value {
     height: 8px;
     -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
     background-color: #F0F0F0;
 }
-#sfmaincontainer.sf-installation .ui-progressbar .ui-progressbar-value {
+.sf-installation .ui-progressbar .ui-progressbar-value {
     background-color: #85A2BC;
 }
-#sfmaincontainer.sf-installation .zmessage {
+.sf-installation .zmessage {
     padding: 10px 0;
     font-size: 14px;
     color: #9D9EA0;
 }
-#sfmaincontainer.sf-installation .zmessage.processing {
+.sf-installation .zmessage.processing {
     font-family: "Open Sans Semibold";
     color: #006992;
 }
-#sfmaincontainer.sf-installation .zmessage.ready {
+.sf-installation .zmessage.ready {
     color: #27476E;
 }
-#sfmaincontainer.sf-installation .zmessage .sp-icon {
+.sf-installation .zmessage .sp-icon {
     margin-right: 10px;
 }
 /**
@@ -2268,25 +2271,29 @@ Style font- icon picker
 
 
 @media screen and ( max-width: 360px ) {
-    .wrap {
-        margin: 0;
-    }
     /**
     * Installation >
     */
-    #sfmaincontainer.sf-installation .sf-panel-head .help.button {
+    .sf-installation {
+        margin: 0;
+        padding: 0;
+    }
+    .sf-installation .sf-panel-head {
+        margin-top: 30px;
+    }
+    .sf-installation .sf-panel-head .help.button {
         position: absolute;
         left: 0;
     }
-    #sfmaincontainer.sf-installation .sf-panel-head h3 {
+    .sf-installation .sf-panel-head h3 {
         margin: 80px 0 0 0;
+    }
+    .sf-installation .sf-panel-body {
+        padding: 20px;
     }
     /**
     * < Installation
     */
-    #sfmaincontainer .sf-panel-body {
-        padding: 20px;
-    }
     #sfmaincontainer .button,
     #sfmaincontainer .button-primary,
     #sfmaincontainer .button-secondary {

@@ -148,12 +148,20 @@ function spa_load_admin_scripts() {
 			'callback'	 => 'spa_add_slider_help'));
 	} else {
 		# Install and Upgrade
-		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.js' : SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.min.js';
+		// @TODO admin design
+		//$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.js' : SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.min.js';
+		//wp_enqueue_script('sfjs', $script, array(
+		//	'jquery',
+		//	'jquery-ui-core',
+		//	'jquery-ui-widget',
+		//	'jquery-ui-progressbar'), false, false);
+			
+		$script = SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.js';
 		wp_enqueue_script('sfjs', $script, array(
 			'jquery',
 			'jquery-ui-core',
 			'jquery-ui-widget',
-			'jquery-ui-progressbar'), false, false);
+			'jquery-ui-progressbar'), time(), false);
 	}
 	
 	spa_enqueue_font_icon_picker();

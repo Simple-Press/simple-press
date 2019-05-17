@@ -25,8 +25,8 @@ function spa_paint_options_init() {
 # Creates the containing block around a form or main section
 # ------------------------------------------------------------------
 function spa_paint_open_tab($tabname, $full=false) {
-	echo "<div class='sfform-panel-head'><span class='sftitlebar'>$tabname</span></div>\n";
-	echo "<div class='sfform-panel'>";
+	echo "<div class='sf-panel-head'><h3>$tabname</h3></div>\n";
+	echo "<div class='sf-panel-body'>";
 
 	if ($full) {
 		echo '<div class="sp-full-form">';
@@ -567,8 +567,8 @@ function spa_paint_help($name, $helpfile, $show=true) {
 
 	$out.= '<div class="sfhelplink">';
 	if ($show) {
-		$out.= '<a id="'.$name.'" class="button-secondary sfhelplink spHelpLink" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">';
-		$out.= SP()->primitives->admin_text('Help').'</a>';
+		$out.= '<a id="'.$name.'" class="sp-icon help spHelpLink" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">';
+		$out.= /*SP()->primitives->admin_text('Help').*/'</a>';
 	}
 	$out.= '</div>';
 	return $out;
