@@ -27,14 +27,14 @@ function spa_integration_language_form() {
 	}
 
 	if ($siteLang=='en_US' || $siteLang=='en-US') {
-		echo '<br /><div class="sfoptionerror">';
+		echo '<div class="alert-block info">';
 		SP()->primitives->admin_etext('Your site language setting is English/USA and therefore no translation files are required for Simple:Press');
 		echo '</div>';
 		return;
 	}
 	# check we can download
 	if (ini_get('allow_url_fopen') == false) {
-		echo '<br /><div class="sfoptionerror">';
+		echo '<br /><div class="alert-block info">';
 		SP()->primitives->admin_etext('Your server will not allow us to download the language files from Simple:Press');
 		echo '</div>';
 		return;
@@ -64,12 +64,12 @@ function spa_integration_language_form() {
 				}
 				if (empty($formLang)) {
 					$link = '<a href="https://simple-press.com/documentation/installation/installation-information/localization/" target="blank">'.SP()->primitives->admin_text('This Page').'</a>';
-					echo '<br /><div class="sfoptionerror">';
+					echo '<div class="alert-block info">';
 					SP()->primitives->admin_etext('Your WordPress site language setting has not been recognised by Simple:Press');
 					echo '<br /><br />'.sprintf(SP()->primitives->admin_text('Please see %s for manual install instructions'), $link);
 					echo '</div>';
 				} else {
-					echo '<br /><div class="sfoptionerror">';
+					echo '<div class="alert-block info">';
 					echo SP()->primitives->admin_text('Your site language is set to').' <b>'.$formLang.' - '.$displayLang.'</b>';
 					echo '</div>';
 				}

@@ -42,9 +42,25 @@ $Rev:2099 $
     -webkit-border-radius: 4px;
     border-radius: 4px;
 }
-#sfmaincontainer .sf-panel-row {
-    margin-bottom: 35px;
+#sfmaincontainer .sf-panel-body .alert-block {
+    font-size: 14px;
+    line-height: 19px;
+    padding: 16px;
+    margin: 0 0 30px 0;
+    -khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
+#sfmaincontainer .sf-panel-body .alert-block.info {
+    background-color: rgba(0, 185, 208, .1);
+    border: 1px solid rgba(0, 185, 208, .5);
+    color: #006992;
+    opacity: .5;
+}
+#sfmaincontainer .sffieldset .alert-block {
+    margin: 20px;
+}
+
 #sfmaincontainer p.description {
     font-family: "Open Sans Semibold";
     font-style: normal;
@@ -58,9 +74,18 @@ $Rev:2099 $
 }
 
 /* FORM CONTROLS ===================================================================================*/
+#sfmaincontainer ::-webkit-input-placeholder, /* Chrome/Opera/Safari */
+#sfmaincontainer ::-moz-placeholder, /* Firefox 19+ */
+#sfmaincontainer :-moz-placeholder, /* Firefox 18- */
+#sfmaincontainer :-ms-input-placeholder { /* IE 10+ */
+    font-size: 12px;
+    line-height: 17px;
+    color: #9D9EA0;
+}
 #sfmaincontainer input,
 #sfmaincontainer select,
-#sfmaincontainer textarea {
+#sfmaincontainer textarea,
+#sfmaincontainer .select-wrap {
     margin: 0;
     padding: 16px 16px 15px;
     width: 100%;
@@ -71,11 +96,46 @@ $Rev:2099 $
     box-shadow: none;
     border: 1px solid #F0F0F0;
 }
-
 #sfmaincontainer input,
-#sfmaincontainer select {
+#sfmaincontainer select,
+#sfmaincontainer .select-wrap {
     height: 50px;
 }
+
+#sfmaincontainer select {
+    font-family: "Open Sans Semibold";
+    font-size: 12px;
+    line-height: 17px;
+    color: #006992;
+}
+#sfmaincontainer .select-wrap {
+    position: relative;
+    cursor: pointer;
+}
+#sfmaincontainer .select-wrap select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+    padding: 16px 40px 15px 16px;
+    font-family: "Open Sans Semibold";
+    font-size: 12px;
+    line-height: 17px;
+    color: #006992;
+    appearance: button;
+    -moz-appearance: button;
+    -webkit-appearance: button;
+    background: transparent;
+}
+#sfmaincontainer .select-wrap:before {
+    content: '\2335';
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    color: rgba(0, 105, 146, .75);
+    font-weight: bold;
+}
+
 #sfmaincontainer label {
     display: block;
     margin-bottom: 13px;
@@ -115,14 +175,6 @@ $Rev:2099 $
 
 .sublabel {
     display: block;
-}
-
-
-#sfmaincontainer .sflabel {
-    margin: 10px 0 2px;
-    font-size: 12px;
-    line-height: 17px;
-    color: #85A2BC;
 }
 
 #sfmaincontainer .button,
@@ -434,7 +486,8 @@ a:active {
     background-color: #0E7198;
 }
 #sfmaincontainer .sfform-submit-bar {
-    padding: 0 30px 30px;
+    padding: 0;
+    /*padding: 0 30px 30px;*/
     width: 100%;
     float: left;
 }
@@ -453,19 +506,24 @@ a:active {
 #sfmaincontainer .sp-half-form {
     float: left;
     width: 50%;
-    padding: 30px 30px 0 30px;
+    padding: 0;
+    /*padding: 30px 30px 0 30px;*/
     background-color: #F9F9F9;
 }
-#sfmaincontainer .sp-half-form:nth-child(even) {
-    padding-left: 0;
+#sfmaincontainer .sf-panel-body .sp-half-form+.sp-half-form {
+    padding-left: 30px;
 }
 
 @media screen and (max-width: 640px) {
     #sfmaincontainer .sp-half-form {
         width: 100%;
     }
+    #sfmaincontainer .sf-panel-body .sp-half-form+.sp-half-form {
+        padding-left: 0;
+    }
 }
 #sfmaincontainer .sp-half-form fieldset {
+    position: relative;
     margin-bottom: 30px;
     background-color: #FFF;
     -khtml-border-radius: 4px;
@@ -481,7 +539,10 @@ a:active {
     margin: 20px;
 }
 #sfmaincontainer .sp-half-form fieldset .sp-form-row {
-    padding: 20px;
+    /*float: left;
+    width: 100%;*/
+    padding: 0 20px;
+    margin: 20px 0 30px 0;
 }
 
 #sfmaincontainer fieldset legend {
@@ -553,7 +614,7 @@ a:active {
 }
 #sfmaincontainer table.widefat {
     position: relative;
-    padding: 30px;
+    /*padding: 30px;*/
     border: none;
     background: transparent;
     box-shadow: none;
@@ -866,30 +927,9 @@ p.sf-upload-status-fail {
     cursor: default;
 }
 
-
-.radio {
+/*.radio {
     padding: 4px 0;
-}
-
-.sfoptionerror {
-    background-image: url("../images/sp_Information.png");
-    background-repeat: no-repeat;
-    background-position: 5px 6px;
-    background-color: #ffebe8 !important;
-    border: 2px solid #cc0000;
-    -khtml-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    margin: 2px 8px 1px;
-    color: #333333;
-    font-size: 12px;
-    font-weight: 400;
-    padding: 7px 10px 7px 34px;
-}
-
-.spaceabove {
-    margin-top: 12px;
-}
+}*/
 
 .sfempty {
     border: 1px solid #DDDDDD;
@@ -1086,7 +1126,7 @@ ul.memberlist li {
 }
 
 #sfmaincontainer .menu-item {
-    width: 340px;
+    max-width: 340px;
     height: 50px;
     margin: 0;
     padding: /*17px*/0 16px;
@@ -1364,6 +1404,10 @@ ul.memberlist li {
 }
 #sfmaincontainer.sf-installation .ui-progressbar {
     margin-bottom: 22px;
+}
+#sfmaincontainer.sf-installation .sf-panel-row {
+    padding: 0;
+    margin: 0 0 35px 0;
 }
 #sfmaincontainer.sf-installation .ui-progressbar,
 #sfmaincontainer.sf-installation .ui-progressbar .ui-progressbar-value {
@@ -2300,8 +2344,9 @@ Style font- icon picker
     #sfmaincontainer .sf-panel-head [class*=button] .sp-icon {
         display: none;
     }
-    #sfmaincontainer .sf-panel-row {
-        margin-bottom: 22px;
+    #sfmaincontainer.sf-installation .sf-panel-row {
+        padding: 0;
+        margin: 0 0 22px 0;
     }
 
     .auto-fold #wpcontent {

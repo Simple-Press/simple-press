@@ -25,7 +25,7 @@ function spa_permissions_add_auth_form() {
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Add New Authorization'), 'true', 'create-new-authorization');
 ?>
-                    <br /><div class="sfoptionerror">
+                    <div class="alert-block info">
                     <?php SP()->primitives->admin_etext('Please note, this will create a new singular authorization.'); ?>
                     <?php SP()->primitives->admin_etext('However, by default, it will not be used by anything in core.'); ?>
                     <?php SP()->primitives->admin_etext('This authorization could be used for a profile authorization or by a theme or plugin.'); ?>

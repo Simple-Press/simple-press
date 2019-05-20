@@ -108,7 +108,7 @@ function spa_toolbox_licensing_form_paint_instructions() {
 		spa_paint_hidden_input('ajax_error_message', SP()->primitives->admin_text('Something Went Wrong Please Try Again!'));
 	echo '</div>';
 	spa_paint_spacer();
-	echo '<div class="sfoptionerror">'.SP()->primitives->admin_text('Note: If you do not activate your license(s) you will not receive security and other automatic updates for your premium plugins and themes!').'</div>';	
+	echo '<div class="alert-block info">'.SP()->primitives->admin_text('Note: If you do not activate your license(s) you will not receive security and other automatic updates for your premium plugins and themes!').'</div>';	
 }
 
 /*
@@ -301,7 +301,7 @@ function spa_toolbox_licensing_form_paint_plugin_licenses() {
 	if($count_plugins < 1){
 		echo '<table class="form-table">';
 			echo '<tr valign="top">';
-				echo '<div class="sfoptionerror sp_addons_not_found">';
+				echo '<div class="alert-block info sp_addons_not_found">';
 					echo SP()->primitives->admin_text('There are no items activated that require a license key at this time');
 				echo '</div>';
 			echo '</tr>';
@@ -341,7 +341,7 @@ function spa_toolbox_licensing_form_paint_theme_licenses() {
 	if($count_themes < 1){
 		echo '<table class="form-table">';
 			echo '<tr valign="top">';
-				echo '<div class="sfoptionerror sp_addons_not_found">';
+				echo '<div class="alert-block info sp_addons_not_found">';
 					echo SP()->primitives->admin_text('There are no items activated that require a license key at this time');
 				echo '</div>';	
 			echo '</tr>';

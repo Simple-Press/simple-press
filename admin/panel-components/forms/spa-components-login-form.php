@@ -29,7 +29,7 @@ function spa_components_login_form() {
 			if (false == get_option('users_can_register')) {
 				spa_paint_open_panel();
 					spa_paint_open_fieldset(SP()->primitives->admin_text('Member Registrations'), true, 'no-login');
-						echo '<div class="sfoptionerror">';
+						echo '<div class="alert-block info">';
 						SP()->primitives->admin_etext('Your site is currently not set to allow users to register. Click on the help icon for details of how to turn this on');
 						echo '</div>';
 					spa_paint_close_fieldset();

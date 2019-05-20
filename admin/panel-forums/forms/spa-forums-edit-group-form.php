@@ -54,7 +54,7 @@ function spa_forums_edit_group_form($group_id) {
 
 				spa_paint_close_fieldset();
 
-			echo '<div class="sfoptionerror spaceabove">';
+			echo '<div class="alert-block info">';
 			echo sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the %s Order Groups and Forums %s option from the Forums Menu'), '<b>', '</b>');
 			echo '</div>';
 

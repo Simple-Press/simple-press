@@ -181,7 +181,7 @@ function spa_paint_custom_smileys() {
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/';
 	$dlist = @opendir($path);
 
-	echo '<div class="sfoptionerror">';
+	echo '<div class="alert-block info">';
 	if (!$dlist) {
 	   echo '<table><tr><td class="sflabel"><strong>'.SP()->primitives->admin_text('The forum-smileys folder does not exist').'</strong></td></tr></table>';
 	   return;

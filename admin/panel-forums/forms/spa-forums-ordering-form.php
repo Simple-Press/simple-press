@@ -71,7 +71,7 @@ function spa_forums_ordering_form($groupId=0) {
 				?>
 				<input type="hidden" id="cgroup" name="cgroup" value="<?php echo $groupId; ?>" />
 				<?php
-				echo '<div class="sfoptionerror">'.SP()->primitives->admin_text('Here you can set the order of Groups, Forums and SubForums by dragging and dropping below. After ordering, push the save button.').'</div>';
+				echo '<div class="alert-block info">'.SP()->primitives->admin_text('Here you can set the order of Groups, Forums and SubForums by dragging and dropping below. After ordering, push the save button.').'</div>';
 
 				if (!empty($groups)) {
 					echo '<ul id="groupList" class="groupList menu">';

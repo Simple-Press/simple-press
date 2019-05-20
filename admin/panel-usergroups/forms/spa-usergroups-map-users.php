@@ -42,7 +42,7 @@ function spa_usergroups_map_users() {
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('User Memberships'), true, 'user-memberships');
-    			echo '<br /><div class="sfoptionerror">';
+    			echo '<div class="alert-block info">';
     			SP()->primitives->admin_etext('Warning: Use caution when setting the single usergroup membership option below. It should primarily be used in conjunction with a membership plugin (such as Wishlist) where strict usergroup membership is required.  Please note that auto usergroup membership by WP role or by forum rank may conflict or overwrite any manual usergroup memberships (such as moderator) you may set if you have single usergroup membership set');
     			echo '</div><br />';
 				spa_paint_checkbox(SP()->primitives->admin_text('Users are limited to single usergroup membership'), 'sfsinglemembership', $sfoptions['sfsinglemembership']);
@@ -101,9 +101,9 @@ function spa_usergroups_map_users() {
 	spa_paint_open_tab(SP()->primitives->admin_text('User Groups').' - '.SP()->primitives->admin_text('Map Users'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Map Users'), true, 'map-users');
-    			echo '<br /><div class="sfoptionerror">';
+    			echo '<div class="alert-block info">';
     			SP()->primitives->admin_etext("Warning: Use caution when mapping users. This will adjust your user's memberships in User Groups. Choose the criteria and options carefully. The mapping cannot be undone except by remapping or manual process. Also, make sure you have saved your mapping settings above before mapping as they are two distinct actions.");
-    			echo '</div><br />';
+    			echo '</div>';
 				$values = array(SP()->primitives->admin_text('Add user membership based on WP role to existing memberships'),
                                 SP()->primitives->admin_text('Replace all user memberships with a single membership based on WP role'));
 				spa_paint_radiogroup(SP()->primitives->admin_text('Select mapping criteria'), 'mapoption', $values, 2, false, true);

@@ -29,10 +29,10 @@ function spa_forums_create_forum_form() {
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Create New Forum'), 'true', 'create-new-forum');
 					# check there are groups before proceeding
 					if (SP()->DB->count(SPGROUPS) == 0) {
-						echo '<br /><div class="sfoptionerror">';
+						echo '<div class="alert-block info">';
 						SP()->primitives->admin_etext('There are no groups defined');
-						echo '<br />'.SP()->primitives->admin_text('Create new group');
-						echo '</div><br />';
+						echo ''.SP()->primitives->admin_text('Create new group');
+						echo '</div>';
 						spa_paint_close_fieldset();
 						spa_paint_close_panel();
 						spa_paint_close_container();
@@ -120,7 +120,7 @@ function spa_forums_create_forum_form() {
 					spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', '', false);
 					spa_paint_select_end();
 
-					echo '<div class="sfoptionerror spaceabove">';
+					echo '<div class="alert-block info">';
 					echo '<p><b>'.SP()->primitives->front_text('Custom Icon Ordering').'</b></br>';
 					echo SP()->primitives->front_text('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
                     echo SP()->primitives->front_text('Locked').'<br />';
@@ -187,7 +187,7 @@ function spa_forums_create_forum_form() {
 					spa_paint_wide_textarea('Special forum message to be displayed above forums', 'forum_message', '');
 				spa_paint_close_fieldset();
 
-			echo '<div class="sfoptionerror spaceabove">';
+			echo '<div class="alert-block info">';
 			echo sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the %s Order Groups and Forums %s option from the Forums Menu'), '<b>', '</b>');
 			echo '</div>';
 

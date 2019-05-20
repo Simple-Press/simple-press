@@ -33,9 +33,9 @@ function spa_profiles_options_form() {
 				spa_paint_select_start(SP()->primitives->admin_text('Display name format if member cannot choose').'<br />'.SP()->primitives->admin_text('(ignored if member allowed to choose)'), 'fixeddisplayformat', 'fixeddisplayformat');
 				echo spa_display_name_format_options($sfoptions['fixeddisplayformat']);
 				spa_paint_select_end();
-    			echo '<br /><div class="sfoptionerror">';
+    			echo '<div class="alert-block info">';
     			SP()->primitives->admin_etext('Warning: If you change the display name format, it may take some time on a large number of users to update them to the new format. Please be patient.');
-    			echo '</div><br />';
+    			echo '</div>';
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
@@ -68,7 +68,7 @@ function spa_profiles_options_form() {
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Display Profile Mode'), true, 'display-profile-mode');
 
-    			echo '<div class="sfoptionerror">';
+    			echo '<div class="alert-block info">';
     			SP()->primitives->admin_etext('Note - if Popup Window is selected the option will be automatically switched to Forum Profile Page when viewed on a mobile phone device');
     			echo '</div><br />';
 

@@ -28,11 +28,11 @@ function spa_admins_your_options_form() {
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Your Admin/Moderator Options'), 'true', 'your-admin-options');
 
 				if (SP()->user->thisUser->admin) {
-					echo '<br /><div class="sfoptionerror"><strong>';
+					echo '<div class="alert-block info"><strong>';
 					SP()->primitives->admin_etext('The following options are personal - each admin and moderator needs to visit this panel to set their own options');
 					echo '</strong><br />';
 					SP()->primitives->admin_etext('Alternatively you can check the option below to apply to all moderators and when you update this panel they will inherit the same option settings');
-					echo '</div><br />';
+					echo '</div>';
 				}
 
 				spa_paint_checkbox(SP()->primitives->admin_text('Receive email notification on new topic/post'), 'sfnotify', $sfadminsettings['sfnotify']);
@@ -47,11 +47,11 @@ function spa_admins_your_options_form() {
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Set Your Moderator Options'), 'true', 'set-moderator-options');
 					spa_paint_checkbox(SP()->primitives->admin_text('Grant all moderators the same option settings as above'), 'setmods', $sfadminsettings['setmods']);
 
-					echo '<br /><div class="sfoptionerror"><strong>';
+					echo '<div class="alert-block info"><strong>';
 					SP()->primitives->admin_etext('If you check this option so that all your moderators inherit the settings above - note that after you update this panel this checkbox will return to an unchecked state');
 					echo '</strong><br />';
 					SP()->primitives->admin_etext('Inheritance ONLY takes place when this box is checked and the panel updated. Any updated changes you make with the box iunchecked ONLY apply to you');
-					echo '</div><br />';
+					echo '</div>';
 
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();

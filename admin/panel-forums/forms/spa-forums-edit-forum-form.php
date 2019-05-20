@@ -44,7 +44,7 @@ function spa_forums_edit_forum_form($forum_id) {
 						$mess = SP()->primitives->front_text('This is a sub-forum and also a parent to other sub-forums and on this panel you can change the forum parent it belongs to. If changed it will be moved, along with the sub-forums, to the target Forum.');
 					}
 
-					echo '<div class="sfoptionerror spaceabove">';
+					echo '<div class="alert-block info">';
 					echo "<p><b>$mess</b></br>";
 					echo SP()->primitives->front_text('For more flexible Group/Forum ordering and sub-forum promotion and demotion, please use the drag and drop interface on the Order Groups and Forums admin panel from the Forums Menu - or the Order Forums panel at Group level.').'</p>';
 					echo '</div>';
@@ -94,7 +94,7 @@ function spa_forums_edit_forum_form($forum_id) {
 					spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', $forum->feature_image, false);
 					spa_paint_select_end();
 
-					echo '<div class="sfoptionerror spaceabove">';
+					echo '<div class="alert-block info">';
 					echo '<p><b>'.SP()->primitives->front_text('Custom Icon Ordering').'</b></br>';
 					echo SP()->primitives->front_text('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
                     echo SP()->primitives->front_text('Locked').'<br />';

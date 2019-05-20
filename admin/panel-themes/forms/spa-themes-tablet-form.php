@@ -29,7 +29,7 @@ function spa_themes_tablet_form() {
 	spa_paint_open_panel();
 
 	spa_paint_spacer();
-	echo '<div class="sfoptionerror">';
+	echo '<div class="alert-block info">';
 	echo SP()->primitives->admin_text('Themes Folder').': <b>'.realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['themes']).'</b>';
 	echo '</div>';
 
