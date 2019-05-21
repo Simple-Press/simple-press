@@ -42,7 +42,7 @@ $Rev:2099 $
     -webkit-border-radius: 4px;
     border-radius: 4px;
 }
-#sfmaincontainer .sf-panel-body .alert-block {
+#sfmaincontainer .alert-block {
     font-size: 14px;
     line-height: 19px;
     padding: 16px;
@@ -50,10 +50,11 @@ $Rev:2099 $
     -khtml-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
+    border: 1px solid #00b9d0;
 }
-#sfmaincontainer .sf-panel-body .alert-block.info {
+#sfmaincontainer .alert-block.info {
     background-color: rgba(0, 185, 208, .1);
-    border: 1px solid rgba(0, 185, 208, .5);
+    border-color: rgba(0, 185, 208, .5);
     color: #006992;
     opacity: .5;
 }
@@ -482,7 +483,10 @@ a:active {
     color: transparent !important;
     background: transparent !important;
 }
-#sfmaincontainer .sf-panel-body .sp-icon.help {
+#sfmaincontainer div.sfhelplink a {
+    z-index: 999;
+}
+#sfmaincontainer div.sfhelplink .sp-icon.help {
     background-color: #0E7198;
 }
 #sfmaincontainer .sfform-submit-bar {
