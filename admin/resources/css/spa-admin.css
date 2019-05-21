@@ -9,7 +9,7 @@ $Rev:2099 $
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
 /*@import url(//use.fontawesome.com/releases/v5.8.2/css/all.css);*/
 
-@import url(./icon.css?v=100);
+@import url(./icon.css?v=104);
 @import url(./radio-cb.css?v=1);
 
 @font-face {
@@ -36,11 +36,15 @@ $Rev:2099 $
 #sfmaincontainer .sf-panel-body {
     float: left;
     width: 100%;
+    position: relative;
     padding: 30px;
     background-color: #F9F9F9;
     -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
+}
+#sfmaincontainer .sffieldset {
+    position: relative;
 }
 #sfmaincontainer .alert-block {
     font-size: 14px;
@@ -163,7 +167,8 @@ $Rev:2099 $
     color: #D54E21;
 }
 
-.subhead, .sublabel {
+.subhead, 
+#sfmaincontainer .sublabel {
     margin: 10px 0 0 0;
     font-size: 12px;
     line-height: 17px;
@@ -174,7 +179,7 @@ $Rev:2099 $
 
 }
 
-.sublabel {
+#sfmaincontainer .sublabel {
     display: block;
 }
 
@@ -463,9 +468,17 @@ a:active {
     background: transparent;
     box-shadow: none;
 }
+#sfmaincontainer .sf-panel-head .buttons {
+    float: right;
+    padding: 5px 0;
+}
+#sfmaincontainer .sf-panel-head .buttons .spTroubleshoot {
+    float: left;
+    margin-right: 10px;
+}
 #sfmaincontainer .sf-panel-head h3 {
     float: left;
-    margin: 9px 0;
+    margin: 7px 0;
     font-size: 24px;
     line-height: 36px;
     font-weight: normal;
@@ -2319,6 +2332,10 @@ Style font- icon picker
     .wrap {
         margin: 0;
     }
+    .wrap.sfatag {
+        margin: 20px 0 0 0;
+        padding: 0;
+    }
     /**
     * Installation >
     */
@@ -2332,6 +2349,19 @@ Style font- icon picker
     /**
     * < Installation
     */
+    #sfmaincontainer .sf-panel-head h3 {
+        margin: 0;
+    }
+    #sfmaincontainer .sf-panel-head [class*=button] .sp-icon {
+        display: none;
+    }
+    #sfmaincontainer .sf-panel-head .buttons {
+        padding: 0;
+        margin: 0 0 30px 0;
+    }
+    #sfmaincontainer .sf-panel-head .buttons .spTroubleshoot  {
+        margin: 10px 0 0 0;
+    }
     #sfmaincontainer .sf-panel-body {
         padding: 20px;
     }
@@ -2343,10 +2373,8 @@ Style font- icon picker
         line-height: 19px;
         padding-top: 16px;
         padding-bottom: 15px;
+        margin: 0;
         width: 100%;
-    }
-    #sfmaincontainer .sf-panel-head [class*=button] .sp-icon {
-        display: none;
     }
     #sfmaincontainer.sf-installation .sf-panel-row {
         padding: 0;
@@ -2355,9 +2383,6 @@ Style font- icon picker
 
     .auto-fold #wpcontent {
         padding: 0 30px;
-    }
-    .wrap.sfatag {
-        padding: 0;
     }
     #sfsidepanel {
         width: 100%;
@@ -2420,7 +2445,8 @@ Style font- icon picker
         color: #27476E;
     }
     #sfmaincontainer div.sfhelplink {
-        margin: 15px 5px 15px 0 !important;
+        /*margin: 15px 5px 15px 0 !important;*/
+        margin: 5px 5px 0px 0 !important;
     }
     #sfmaincontainer fieldset .search-box {
         top: 0;

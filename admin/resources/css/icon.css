@@ -1,5 +1,4 @@
-#sfmaincontainer fieldset div.sfhelplink a:before,
-[class*=spaicon-],
+#sfadminmenu [class*=spaicon-],
 #sfmaincontainer .sp-icon {
     display: inline-block;
     position: relative;
@@ -28,10 +27,13 @@
     -webkit-mask-image: url("../icons/Install.svg");
     mask-image: url("../icons/Install.svg");
 }
-#sfmaincontainer fieldset div.sfhelplink a:before,
 #sfmaincontainer .sp-icon.help {
     -webkit-mask-image: url("../icons/Help.svg");
     mask-image: url("../icons/Help.svg");
+}
+#sfmaincontainer .sp-icon.go {
+    -webkit-mask-image: url("../icons/Go.svg");
+    mask-image: url("../icons/Go.svg");
 }
 #sfmaincontainer .sp-icon.waiting {
     background-color: #AAABAD;

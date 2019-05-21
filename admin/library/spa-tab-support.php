@@ -25,7 +25,17 @@ function spa_paint_options_init() {
 # Creates the containing block around a form or main section
 # ------------------------------------------------------------------
 function spa_paint_open_tab($tabname, $full=false, $info = "") {
-	echo "<div class='sf-panel-head'><h3>$tabname</h3></div>\n";
+	
+	$site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
+	$target = 'sfmaincontainer';
+	
+	echo "<div class='sf-panel-head'>";
+	echo "<div class='buttons'>";
+	echo '<a class="button" href="'.SP()->spPermalinks->get_url().'"><span class="sp-icon go"></span>'.SP()->primitives->admin_text('Go To Forum').'</a>';
+	echo '<span class="button spTroubleshoot" data-url="'.$site.'" data-target="'.$target.'"><span class="sp-icon help"></span>'.SP()->primitives->admin_text('Help & Troubleshooting').'</span>';
+	echo "</div>";
+	echo "<h3>$tabname</h3>";
+	echo "</div>\n";
 	echo "<div class='sf-panel-body'>";
 	echo $info;
 	if ($full) {
