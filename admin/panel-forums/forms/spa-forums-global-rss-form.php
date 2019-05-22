@@ -38,8 +38,8 @@ function spa_forums_global_rss_form() {
 				$rss_count = SP()->DB->count(SPFORUMS, 'forum_rss_private=1');
 				echo SP()->primitives->admin_text('Disabled Forum RSS feeds').': '.$rss_count.'<hr />';
 ?>
-				<input type="button" class="button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Disable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="1" data-open="open" />
-				<input type="button" class="button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Enable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="0" data-open="open" />
+				<input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Disable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="1" data-open="open" />
+				<input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Enable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="0" data-open="open" />
 
 				<div class="sfinline-form">  <!-- This row will hold ajax forms for the all rss -->
 				    <div id="sfallrss"></div>
@@ -51,7 +51,7 @@ function spa_forums_global_rss_form() {
 		spa_paint_close_container();
 ?>
 		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Global RSS Settings'); ?>" />
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Global RSS Settings'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>

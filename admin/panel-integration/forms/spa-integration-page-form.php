@@ -26,7 +26,7 @@ function spa_integration_page_form() {
 	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('Page and Permalink'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('WP Forum Page Details'), true, 'forum-page-details');
-				if ($sfoptions['sfpage'] == 0) echo '<tr><td colspan="2"><div class="alert-block info">'.SP()->primitives->admin_text('ERROR: The page slug is either missing or incorrect. The forum will not display until this is corrected').'</div></td></tr>';
+				if ($sfoptions['sfpage'] == 0) echo '<tr><td colspan="2"><div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('ERROR: The page slug is either missing or incorrect. The forum will not display until this is corrected').'</div></td></tr>';
 				spa_paint_select_start(SP()->primitives->admin_text('Select the WP Page to be used to display your forum'), 'slug', 'slug');
 				echo spa_create_page_select($sfoptions['sfpage']);
 				spa_paint_select_end();
@@ -49,7 +49,7 @@ function spa_integration_page_form() {
 				spa_paint_close_fieldset();
 
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Update Forum Permalink'), true, 'forum-permalink');
-					echo '<p class="sublabel">'.SP()->primitives->admin_text('Current permalink').':<br /></p><div class="subhead" id="adminupresult"><p>'.$sfoptions['sfpermalink'].'</p></div><br />';
+					echo '<p class="sf-sublabel">'.SP()->primitives->admin_text('Current permalink').':<br /></p><div class="sf-subhead" id="adminupresult"><p>'.$sfoptions['sfpermalink'].'</p></div><br />';
 					spa_paint_update_permalink();
 				spa_paint_close_fieldset();
 			}
@@ -82,7 +82,7 @@ function spa_integration_page_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update WP Integration'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update WP Integration'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();
@@ -134,5 +134,5 @@ function spa_paint_update_permalink() {
 	$target = 'adminupresult';
 	$gif = SPCOMMONIMAGES.'working.gif';
 
-	echo '<input type="button" class="button button-highlighted spAdminTool" value="'.SP()->primitives->admin_text('Update Forum Permalink').'" data-url="'.$site.'" data-target="'.$target.'" data-img="'.$gif.'" />';
+	echo '<input type="button" class="sf-button sf-button-highlighted spAdminTool" value="'.SP()->primitives->admin_text('Update Forum Permalink').'" data-url="'.$site.'" data-target="'.$target.'" data-img="'.$gif.'" />';
 }

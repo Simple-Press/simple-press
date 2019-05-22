@@ -42,11 +42,11 @@ function spa_usergroups_map_users() {
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('User Memberships'), true, 'user-memberships');
-    			echo '<div class="alert-block info">';
+    			echo '<div class="sf-alert-block sf-info">';
     			SP()->primitives->admin_etext('Warning: Use caution when setting the single usergroup membership option below. It should primarily be used in conjunction with a membership plugin (such as Wishlist) where strict usergroup membership is required.  Please note that auto usergroup membership by WP role or by forum rank may conflict or overwrite any manual usergroup memberships (such as moderator) you may set if you have single usergroup membership set');
     			echo '</div><br />';
 				spa_paint_checkbox(SP()->primitives->admin_text('Users are limited to single usergroup membership'), 'sfsinglemembership', $sfoptions['sfsinglemembership']);
-				echo '<p class="subhead">'.SP()->primitives->admin_text('Default usergroup membership').':</p>';
+				echo '<p class="sf-subhead">'.SP()->primitives->admin_text('Default usergroup membership').':</p>';
 				spa_paint_select_start(SP()->primitives->admin_text('Default usergroup for guests'), 'sfguestsgroup', 'sfguestsgroup');
 				echo spa_create_usergroup_select($sfoptions['sfguestsgroup']);
 				spa_paint_select_end();
@@ -57,7 +57,7 @@ function spa_usergroups_map_users() {
 
 				$roles = array_keys($wp_roles->role_names);
 				if ($roles) {
-					echo '<p class="subhead">'.SP()->primitives->admin_text('Usergroup memberships based on WP role').':</p>';
+					echo '<p class="sf-subhead">'.SP()->primitives->admin_text('Usergroup memberships based on WP role').':</p>';
 					$sfoptions['role'] = array();
 					foreach ($roles as $index => $role) {
 						$value = SP()->meta->get('default usergroup', $role);
@@ -80,7 +80,7 @@ function spa_usergroups_map_users() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Mapping Settings'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Mapping Settings'); ?>" />
 	</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
@@ -101,7 +101,7 @@ function spa_usergroups_map_users() {
 	spa_paint_open_tab(SP()->primitives->admin_text('User Groups').' - '.SP()->primitives->admin_text('Map Users'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Map Users'), true, 'map-users');
-    			echo '<div class="alert-block info">';
+    			echo '<div class="sf-alert-block sf-info">';
     			SP()->primitives->admin_etext("Warning: Use caution when mapping users. This will adjust your user's memberships in User Groups. Choose the criteria and options carefully. The mapping cannot be undone except by remapping or manual process. Also, make sure you have saved your mapping settings above before mapping as they are two distinct actions.");
     			echo '</div>';
 				$values = array(SP()->primitives->admin_text('Add user membership based on WP role to existing memberships'),
@@ -116,7 +116,7 @@ function spa_usergroups_map_users() {
 		spa_paint_close_container();
 ?>
     	<div class="sfform-submit-bar">
-        	<span><input type="submit" class="button-primary" id="saveit2" name="saveit2" value="<?php SP()->primitives->admin_etext('Map Users'); ?>" /> <span class="button sfhidden" id='onFinish'></span></span>
+        	<span><input type="submit" class="sf-button-primary" id="saveit2" name="saveit2" value="<?php SP()->primitives->admin_etext('Map Users'); ?>" /> <span class="sf-button sfhidden" id='onFinish'></span></span>
         	<br />
         	<div class="pbar" id="progressbar"></div>
     	</div>

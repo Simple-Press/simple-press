@@ -134,7 +134,7 @@ function spa_themes_editor_form() {
 	if (is_writeable($file)) {
 ?>
     	<div class="sfform-submit-bar">
-    	   <input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update File'); ?>" />
+    	   <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update File'); ?>" />
     	</div>
 <?php
 	} else {

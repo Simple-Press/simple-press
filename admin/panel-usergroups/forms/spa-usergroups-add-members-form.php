@@ -56,8 +56,8 @@ function spa_usergroups_add_members_form($usergroup_id) {
 <?php
         do_action('sph_usergroup_add_member_panel');
 ?>
-		<span><input type="submit" class="button-primary" id="sfmembernew<?php echo $usergroup_id; ?>" name="sfmembernew<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" /> <span class="button sfhidden" id='onFinish'></span>
-		<input type="button" class="button-primary spCancelForm" data-target="#members-<?php echo $usergroup_id; ?>" id="sfmembernew<?php echo $usergroup_id; ?>" name="addmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" /></span>
+		<span><input type="submit" class="sf-button-primary" id="sfmembernew<?php echo $usergroup_id; ?>" name="sfmembernew<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" /> <span class="sf-button sfhidden" id='onFinish'></span>
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $usergroup_id; ?>" id="sfmembernew<?php echo $usergroup_id; ?>" name="addmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" /></span>
 		<br />
 		<div class="pbar" id="progressbar"></div>
 	</form>

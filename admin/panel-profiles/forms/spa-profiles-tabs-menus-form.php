@@ -77,11 +77,11 @@ function spa_profiles_tabs_menus_form() {
 						echo '</span>';
 						echo '</div>';
 						echo '<div id="item-edit-'.$tindex.'" class="menu-item-settings inline_edit">';
-						echo '<p class="description">'.SP()->primitives->admin_text('Tab Name').'<br /><input type="text" class="sfpostcontrol" id="tab-name-'.$tindex.'" name="tab-name-'.$tindex.'" value="'.SP()->displayFilters->title($tab['name']).'" /></p>';
+						echo '<p class="sf-description">'.SP()->primitives->admin_text('Tab Name').'<br /><input type="text" class="sfpostcontrol" id="tab-name-'.$tindex.'" name="tab-name-'.$tindex.'" value="'.SP()->displayFilters->title($tab['name']).'" /></p>';
                         echo '<input type="hidden" id="tab-slug-'.$tindex.'" name="tab-slug-'.$tindex.'" value="'.esc_attr($tab['slug']).'" />';
-						echo '<p class="description">'.SP()->primitives->admin_text('Tab Auth').'<br /><input type="text" class="sfpostcontrol" id="tab-auth-'.$tindex.'" name="tab-auth-'.$tindex.'" value="'.SP()->displayFilters->title($tab['auth']).'" /></p>';
+						echo '<p class="sf-description">'.SP()->primitives->admin_text('Tab Auth').'<br /><input type="text" class="sfpostcontrol" id="tab-auth-'.$tindex.'" name="tab-auth-'.$tindex.'" value="'.SP()->displayFilters->title($tab['auth']).'" /></p>';
 						$checked = ($tab['display']) ? $checked = 'checked="checked" ' : '';
-						echo '<p class="description"><input type="checkbox" '.$checked.'name="tab-display-'.$tindex.'" id="sf-tab-display-'.$tindex.'" /><label for="sf-tab-display-'.$tindex.'">'.SP()->primitives->admin_text('Display Tab').'</label></p>';
+						echo '<p class="sf-description"><input type="checkbox" '.$checked.'name="tab-display-'.$tindex.'" id="sf-tab-display-'.$tindex.'" /><label for="sf-tab-display-'.$tindex.'">'.SP()->primitives->admin_text('Display Tab').'</label></p>';
 						echo '<p><a class="spLayerToggle" data-target="item-edit-'.$tindex.'" >'.SP()->primitives->admin_text('Close').'</a></p>';
 						echo '</div>';
 
@@ -99,12 +99,12 @@ function spa_profiles_tabs_menus_form() {
 								echo '</span>';
 								echo '</div>';
 								echo '<div id="item-edit-'.$tindex.'-'.$mindex.'" class="menu-item-settings inline_edit">';
-								echo '<p class="description">'.SP()->primitives->admin_text('Menu Name').'<br /><input type="text" class="sfpostcontrol" id="menu-name-'.$tindex.'-'.$mindex.'" name="menu-name-'.$tindex.'-'.$mindex.'" value="'.SP()->displayFilters->title($menu['name']).'" /></p>';
+								echo '<p class="sf-description">'.SP()->primitives->admin_text('Menu Name').'<br /><input type="text" class="sfpostcontrol" id="menu-name-'.$tindex.'-'.$mindex.'" name="menu-name-'.$tindex.'-'.$mindex.'" value="'.SP()->displayFilters->title($menu['name']).'" /></p>';
                                 echo '<input type="hidden" id="menu-slug-'.$tindex.'-'.$mindex.'" name="menu-slug-'.$tindex.'-'.$mindex.'" value="'.esc_attr($menu['slug']).'" />';
-								echo '<p class="description">'.SP()->primitives->admin_text('Menu Auth').'<br /><input type="text" class="sfpostcontrol" id="menu-auth-'.$tindex.'-'.$mindex.'" name="menu-auth-'.$tindex.'-'.$mindex.'" value="'.SP()->displayFilters->title($menu['auth']).'" /></p>';
-								echo '<p class="description">'.SP()->primitives->admin_text('Menu Form').'<br /><input type="text" class="sfpostcontrol" id="menu-form-'.$tindex.'-'.$mindex.'" name="menu-form-'.$tindex.'-'.$mindex.'" value="'.esc_attr($menu['form']).'" /></p>';
+								echo '<p class="sf-description">'.SP()->primitives->admin_text('Menu Auth').'<br /><input type="text" class="sfpostcontrol" id="menu-auth-'.$tindex.'-'.$mindex.'" name="menu-auth-'.$tindex.'-'.$mindex.'" value="'.SP()->displayFilters->title($menu['auth']).'" /></p>';
+								echo '<p class="sf-description">'.SP()->primitives->admin_text('Menu Form').'<br /><input type="text" class="sfpostcontrol" id="menu-form-'.$tindex.'-'.$mindex.'" name="menu-form-'.$tindex.'-'.$mindex.'" value="'.esc_attr($menu['form']).'" /></p>';
 								$checked = ($menu['display']) ? $checked = 'checked="checked" ' : '';
-								echo '<p class="description"><input type="checkbox" '.$checked.'name="menu-display-'.$tindex.'-'.$mindex.'" id="sf-menu-display-'.$tindex.'-'.$mindex.'" /><label for="sf-menu-display-'.$tindex.'-'.$mindex.'">'.SP()->primitives->admin_text('Display Menu').'</label></p>';
+								echo '<p class="sf-description"><input type="checkbox" '.$checked.'name="menu-display-'.$tindex.'-'.$mindex.'" id="sf-menu-display-'.$tindex.'-'.$mindex.'" /><label for="sf-menu-display-'.$tindex.'-'.$mindex.'">'.SP()->primitives->admin_text('Display Menu').'</label></p>';
 								echo '<p><a class="spLayerToggle" data-target="item-edit-'.$tindex.'-'.$mindex.'" >'.SP()->primitives->admin_text('Close').'</a></p>';
 								echo '</div>';
 								echo '</li>';
@@ -123,7 +123,7 @@ function spa_profiles_tabs_menus_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Profile Tabs and Menus'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Profile Tabs and Menus'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

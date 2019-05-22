@@ -30,9 +30,9 @@ function spa_paint_open_tab($tabname, $full=false, $info = "") {
 	$target = 'sfmaincontainer';
 	
 	echo "<div class='sf-panel-head'>";
-	echo "<div class='buttons'>";
-	echo '<a class="button" href="'.SP()->spPermalinks->get_url().'"><span class="sp-icon go"></span>'.SP()->primitives->admin_text('Go To Forum').'</a>';
-	echo '<span class="button spTroubleshoot" data-url="'.$site.'" data-target="'.$target.'"><span class="sp-icon help"></span>'.SP()->primitives->admin_text('Help & Troubleshooting').'</span>';
+	echo "<div class='sf-buttons'>";
+	echo '<a class="sf-button" href="'.SP()->spPermalinks->get_url().'"><span class="sf-icon sf-go"></span>'.SP()->primitives->admin_text('Go To Forum').'</a>';
+	echo '<span class="sf-button spTroubleshoot" data-url="'.$site.'" data-target="'.$target.'"><span class="sf-icon sf-help"></span>'.SP()->primitives->admin_text('Help & Troubleshooting').'</span>';
 	echo "</div>";
 	echo "<h3>$tabname</h3>";
 	echo "</div>\n";
@@ -91,7 +91,7 @@ function spa_paint_close_panel() {
 function spa_paint_open_fieldset($legend, $displayhelp=false, $helpname='', $displaylegend=true) {
 	global $adminhelpfile;
 
-	echo "<fieldset class='sffieldset'>\n";
+	echo "<fieldset class='sf-fieldset'>\n";
 	if($displaylegend) {
 		echo "<legend><strong>$legend</strong></legend>\n";
 	}
@@ -493,7 +493,7 @@ function spa_paint_select_start($label, $name, $helpname) {
 
 	echo "<div class='sp-form-row'>\n";
 	echo "<label class='wp-core-ui sflabel sp-label-40'>$label</label>\n";
-	echo "<div class='select-wrap'>\n";
+	echo "<div class='sf-select-wrap'>\n";
 	echo "<select class='wp-core-ui  sp-input-60' tabindex='$tab' name='$name'>";
 	$tab++;
 }
@@ -518,10 +518,10 @@ function spa_paint_file($label, $name, $disabled, $large, $path) {
 	echo "$label</label>";
 
 	if (is_writable($path)) {
-		echo '<div id="sf-upload-button" class="button-primary">'.SP()->primitives->admin_text('Browse').'</div>';
+		echo '<div id="sf-upload-button" class="sf-button-primary">'.SP()->primitives->admin_text('Browse').'</div>';
 		echo '<div id="sf-upload-status"></div>';
 	} else {
-		echo '<div id="sf-upload-button" class="button-primary sfhidden"></div>';
+		echo '<div id="sf-upload-button" class="sf-button-primary sfhidden"></div>';
 		echo '<div id="sf-upload-status">';
 		echo '<p class="sf-upload-status-fail">'.SP()->primitives->admin_text('Sorry, uploads disabled! Storage location does not exist or is not writable. Please see forum - integration - storage locations to correct').'</p>';
 		echo '</div>';
@@ -580,7 +580,7 @@ function spa_paint_help($name, $helpfile, $show=true) {
 
 	$out.= '<div class="sfhelplink">';
 	if ($show) {
-		$out.= '<a id="'.$name.'" class="sp-icon help spHelpLink" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">';
+		$out.= '<a id="'.$name.'" class="sf-icon sf-help spHelpLink" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">';
 		$out.= /*SP()->primitives->admin_text('Help').*/'</a>';
 	}
 	$out.= '</div>';

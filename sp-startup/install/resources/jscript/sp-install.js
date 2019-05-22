@@ -47,8 +47,8 @@
 				thisUrl = thisUrl + '&subphase=' + currentSubPhase;
 			}
 
-                        $("#zone" + currentPhase).addClass('processing')
-                                .find('.sp-icon').removeClass('waiting').addClass('working');
+                        $("#zone" + currentPhase).addClass('sf-processing')
+                                .find('.sf-icon').removeClass('sf-waiting').addClass('sf-working');
 
 			$("#zone0").load(thisUrl, function(a, b) {
 				/* check for errors first */
@@ -61,8 +61,8 @@
 					return;
 				}
 
-                                $("#zone" + currentPhase).removeClass('processing').addClass('ready')
-                                        .find('.sp-icon').removeClass('working').addClass('check');
+                                $("#zone" + currentPhase).removeClass('sf-processing').addClass('sf-ready')
+                                        .find('.sf-icon').removeClass('sf-working').addClass('sf-check');
 
 				if (currentPhase == 8) {
 					currentSubPhase++;
@@ -172,11 +172,11 @@
 
 	// private methods
 	function endInstall(messagetext, folder) {
-		return '<form name="sfinstalldone" method="post" action="admin.php?page=' + folder + '/admin/panel-forums/spa-forums.php"><br /><input type="hidden" name="install" value="1" /><input type="submit" class="button-primary" name="goforuminstall" value="' + messagetext + '" /></form>';
+		return '<form name="sfinstalldone" method="post" action="admin.php?page=' + folder + '/admin/panel-forums/spa-forums.php"><br /><input type="hidden" name="install" value="1" /><input type="submit" class="sf-button-primary" name="goforuminstall" value="' + messagetext + '" /></form>';
 	}
 
 	function endUpgrade(admintext, forumtext, homeUrl, folder) {
-		return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?page=' + folder + '/admin/panel-toolbox/spa-toolbox.php&tab=changelog"><input type="submit" class="button-primary" name="goforumupgrade" value="' + admintext + '" /></a>&nbsp;&nbsp;<a href="' + homeUrl + '"><input type="submit" class="button-primary" name="goforumupgrade" value="' + forumtext + '" /></a>';
+		return '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?page=' + folder + '/admin/panel-toolbox/spa-toolbox.php&tab=changelog"><input type="submit" class="sf-button-primary" name="goforumupgrade" value="' + admintext + '" /></a>&nbsp;&nbsp;<a href="' + homeUrl + '"><input type="submit" class="sf-button-primary" name="goforumupgrade" value="' + forumtext + '" /></a>';
 	}
 
 }(window.spj = window.spj || {}, jQuery));

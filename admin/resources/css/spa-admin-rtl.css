@@ -9,7 +9,7 @@ body {
     unicode-bidi: embed;
 }
 
-.wrap.sfatag {
+#sf-root-wrap {
     padding: 15px 5px 0 15px !important;
 }
 
@@ -64,11 +64,11 @@ ul.memberlist li {
     margin: 0 180px 0 20px !important;
 }
 
-.sffieldset ul li {
+.sf-fieldset ul li {
     margin: 0 20px 0 0 !important;
 }
 
-.sffieldset p {
+.sf-fieldset p {
     padding: 8px 15px 6px 0 !important;
 }
 

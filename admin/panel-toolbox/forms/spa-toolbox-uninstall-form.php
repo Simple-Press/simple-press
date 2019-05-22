@@ -28,7 +28,7 @@ function spa_toolbox_uninstall_form() {
 
 	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Uninstall'), true);
 		spa_paint_open_panel();
-			echo '<br /><div class="alert-block info">';
+			echo '<br /><div class="sf-alert-block sf-info">';
 			SP()->primitives->admin_etext('Should you, at any time, decide to remove Simple:Press, check the uninstall option below and then deactivate the Simple Press plugin in the standard WP fashion');
             echo '.<br />';
 			SP()->primitives->admin_etext('If you have initiated uninstall, but changed your mind prior to Simple Press plugin deactivation, you can uncheck the uninstall option and it will be reversed');
@@ -57,7 +57,7 @@ function spa_toolbox_uninstall_form() {
 
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Uninstall'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Uninstall'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

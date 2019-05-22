@@ -55,7 +55,7 @@ function spa_toolbox_changelog_form() {
     					echo "<option class='wp-core-ui' value='".$x->build."' $s>".$x->build.' ('.$x->version.') - '.$x->date.'</option>';
     				}
     				echo '</select>';
-    				echo '<input type="submit" class="button-primary" id="gochangelog" name="gochangelog" value="'.SP()->primitives->admin_text('Display Change Log').'" />';
+    				echo '<input type="submit" class="sf-button-primary" id="gochangelog" name="gochangelog" value="'.SP()->primitives->admin_text('Display Change Log').'" />';
     				echo '</form>';
     				echo '</div>';
     				spa_paint_close_fieldset();

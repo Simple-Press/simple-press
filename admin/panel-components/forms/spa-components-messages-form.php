@@ -84,7 +84,7 @@ function spa_components_messages_form() {
 
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Custom Messages Component'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Custom Messages Component'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

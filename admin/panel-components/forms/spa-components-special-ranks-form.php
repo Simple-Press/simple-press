@@ -26,7 +26,7 @@ function spa_special_rankings_form($rankings) {
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Special Forum Ranks'), true, 'special-ranks');
 
 				spa_paint_input(SP()->primitives->admin_text('New Special Rank Name'), 'specialrank', '', false, true);
-				echo '<input type="submit" class="button-primary" id="addspecialrank" name="addspecialrank" value="'.SP()->primitives->admin_text('Add Special Rank').'" />';
+				echo '<input type="submit" class="sf-button-primary" id="addspecialrank" name="addspecialrank" value="'.SP()->primitives->admin_text('Add Special Rank').'" />';
 
 			spa_paint_close_fieldset();
 
@@ -93,7 +93,7 @@ function spa_special_rankings_form($rankings) {
                 						<img class="spDeleteRow" data-url="<?php echo $delsite; ?>" data-target="srank<?php echo $rank['meta_id']; ?>" src="<?php echo SPCOMMONIMAGES; ?>delete.png" title="<?php SP()->primitives->admin_etext('Delete Special Rank'); ?>" alt="" />
             						</div>
             						<div class="sp-half-row-right">
-                                        <input type="submit" class="button-primary" id="updatespecialrank<?php echo $rank['meta_id']; ?>" name="updatespecialrank<?php echo $rank['meta_id']; ?>" value="<?php SP()->primitives->admin_etext('Update Rank'); ?>" />
+                                        <input type="submit" class="sf-button-primary" id="updatespecialrank<?php echo $rank['meta_id']; ?>" name="updatespecialrank<?php echo $rank['meta_id']; ?>" value="<?php SP()->primitives->admin_etext('Update Rank'); ?>" />
             						</div>
             					</td>
                             </tr>
@@ -105,10 +105,10 @@ function spa_special_rankings_form($rankings) {
             						$gif = SPCOMMONIMAGES.'working.gif';
             						$text = esc_js(SP()->primitives->admin_text('Show/Hide Members'));
 ?>
-            						<input type="button" id="show<?php echo $rank['meta_id']; ?>" class="button-secondary spSpecialRankShow" value="<?php echo $text; ?>" data-loc="<?php echo $loc; ?>" data-site="<?php echo $site; ?>" data-img="<?php echo $gif; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
+            						<input type="button" id="show<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankShow" value="<?php echo $text; ?>" data-loc="<?php echo $loc; ?>" data-site="<?php echo $site; ?>" data-img="<?php echo $gif; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
 
-            						<input type="button" id="remove<?php echo $rank['meta_id']; ?>" class="button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Remove Members'); ?>" data-loc="<?php echo $loc; ?>" data-form="delmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
-            						<input type="button" id="add<?php echo $rank['meta_id']; ?>" class="button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" data-loc="<?php echo $loc; ?>" data-form="addmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
+            						<input type="button" id="remove<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Remove Members'); ?>" data-loc="<?php echo $loc; ?>" data-form="delmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
+            						<input type="button" id="add<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" data-loc="<?php echo $loc; ?>" data-form="addmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
             					</td>
             				</tr>
 

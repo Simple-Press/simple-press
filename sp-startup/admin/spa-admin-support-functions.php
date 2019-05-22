@@ -166,7 +166,7 @@ function spa_add_plugin_action($links, $plugin) {
 				$actionlink .= '<p style="font-weight:bold">'.SP()->primitives->admin_text('Press CONFIRM to prepare for Simple:Press removal.	Press the X at top to cancel without proceeding.').'</p>';
 				$actionlink .= '<p style="font-weight:bold">'.SP()->primitives->admin_text('If after enabling, you wish to cancel the uninstall, visit the forum admin - toolbox - uninstall panel.').'</p>';
 				$actionlink .= '<label for="sp-storage"><input type="checkbox" id="sp-storage" />Remove SP Storage Locations on uninstall.</label><br /><br />';
-				$actionlink .= '<div style="text-align:center;"><input type="button" class="button-primary" onclick="javascript:loc=jQuery(\'#sp-url\').val();window.location = loc;" value="'.SP()->primitives->admin_text('Confirm').'" /></div>';
+				$actionlink .= '<div style="text-align:center;"><input type="button" class="sf-button-primary" onclick="javascript:loc=jQuery(\'#sp-url\').val();window.location = loc;" value="'.SP()->primitives->admin_text('Confirm').'" /></div>';
 				$actionlink .= '<br /><hr /><p><u>'.SP()->primitives->admin_text('HELP US TO IMPROVE Simple:Press').'</u></p>';
 				$actionlink .= '<p style="font-weight:bold"><i>'.SP()->primitives->admin_text('We continually strive to improve and enhance Simple:Press to meet our users requirements and we are sorry to see you go.  We would very much welcome your feedback').'</i></p>';
 				$actionlink .= '<p style="font-weight:bold">'.SP()->primitives->admin_text('Please do send us an').' <a href="mailto:support@simple-press.com?subject=Why%20we%20are%20unintsalling%20Simple:Press">'.SP()->primitives->admin_text('email').'</a> '.SP()->primitives->admin_text('with your comments.').'</p>';
@@ -599,9 +599,9 @@ function spa_dashboard_news() {
 	echo '<div style="border-top:1px solid #666;margin-top:18px;padding:10px 0;">';
 	$site = wp_nonce_url(SPAJAXURL.'remove-news&amp;targetaction=news', 'remove-news');
 	if(!empty($sp_update_plugins) || !empty($sp_update_themes)){
-		echo '<a href="'.self_admin_url('update-core.php').'"><input type="button" value="'.SP()->primitives->admin_text('Go to Update page').'" class="button-primary" /></a> &nbsp; &nbsp;';	
+		echo '<a href="'.self_admin_url('update-core.php').'"><input type="button" value="'.SP()->primitives->admin_text('Go to Update page').'" class="sf-button-primary" /></a> &nbsp; &nbsp;';	
 	}
-	echo '<input type="button" value="'.SP()->primitives->admin_text('Remove News Item').'" class="button-primary" onclick="spj.removeNews(\''.$site.'\')"/>';
+	echo '<input type="button" value="'.SP()->primitives->admin_text('Remove News Item').'" class="sf-button-primary" onclick="spj.removeNews(\''.$site.'\')"/>';
 	echo '</div>';
 	echo '</div>';
 }
@@ -993,7 +993,7 @@ function spa_check_plugin_addon_update() {
 					<p><?php SP()->primitives->admin_etext('Please Note: Any customizations you have made to plugin files will be lost'); ?></p>
 					<form method="post" action="<?php echo $form_action; ?>" name="upgrade-sp-plugins" class="upgrade">
 						<?php wp_nonce_field('upgrade-core'); ?>
-						<p><input id="upgrade-themes" class="button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Plugins'); ?>" name="upgrade" /></p>
+						<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Plugins'); ?>" name="upgrade" /></p>
 						<table class="widefat" id="update-plugins-table">
 							<thead>
 								<tr>
@@ -1044,7 +1044,7 @@ function spa_check_plugin_addon_update() {
 							<p><?php SP()->primitives->admin_etext('Please Note: Any customizations you have made to plugin files will be lost'); ?></p>
 							<form method="post" action="<?php echo $form_action; ?>" name="upgrade-sp-plugins" class="upgrade">
 								<?php wp_nonce_field('upgrade-core'); ?>
-								<p><input id="upgrade-themes" class="button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Plugins'); ?>" name="upgrade" /></p>
+								<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Plugins'); ?>" name="upgrade" /></p>
 								<table class="widefat" id="update-themes-table">
 									<thead>
 										<tr>
@@ -1094,7 +1094,7 @@ function spa_check_plugin_addon_update() {
 			?>
 		</tbody>
 	</table>
-	<p><input id="upgrade-themes-2" class="button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Plugins'); ?>" name="upgrade" /></p>
+	<p><input id="upgrade-themes-2" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Plugins'); ?>" name="upgrade" /></p>
 	</form>
 	<?php
 	} else {
@@ -1168,7 +1168,7 @@ function spa_check_theme_addon_update(){
 					<p><?php echo '<b>'.SP()->primitives->admin_text('Please Note:').'</b> '.SP()->primitives->admin_text('Any customizations you have made to theme files will be lost.'); ?></p>
 					<form method="post" action="<?php echo $form_action; ?>" name="upgrade-themes" class="upgrade">
 						<?php wp_nonce_field('upgrade-core'); ?>
-						<p><input id="upgrade-themes" class="button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Themes'); ?>" name="upgrade" /></p>
+						<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Themes'); ?>" name="upgrade" /></p>
 						<table class="widefat" id="update-themes-table">
 							<thead>
 								<tr>
@@ -1223,7 +1223,7 @@ function spa_check_theme_addon_update(){
 								<p><?php echo '<b>'.SP()->primitives->admin_text('Please Note:').'</b> '.SP()->primitives->admin_text('Any customizations you have made to theme files will be lost.'); ?></p>
 								<form method="post" action="<?php echo $form_action; ?>" name="upgrade-themes" class="upgrade">
 									<?php wp_nonce_field('upgrade-core'); ?>
-									<p><input id="upgrade-themes" class="button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Themes'); ?>" name="upgrade" /></p>
+									<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Themes'); ?>" name="upgrade" /></p>
 									<table class="widefat" id="update-themes-table">
 										<thead>
 											<tr>
@@ -1273,7 +1273,7 @@ function spa_check_theme_addon_update(){
 		
 			</tbody>
 		</table>
-		<p><input id="upgrade-themes-2" class="button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Themes'); ?>" name="upgrade" /></p>
+		<p><input id="upgrade-themes-2" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Themes'); ?>" name="upgrade" /></p>
 	</form>
 	<?php
 		

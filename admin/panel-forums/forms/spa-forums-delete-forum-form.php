@@ -58,8 +58,8 @@ function spa_forums_delete_forum_form($forum_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="sfforumdelete<?php echo $forum->forum_id; ?>" name="sfforumdelete<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Delete Forum'); ?>" />
-		<input type="button" class="button-primary spCancelForm" data-target="#forum-<?php echo $forum->forum_id; ?>" id="sfforumdelete<?php echo $forum->forum_id; ?>" name="delforumcancel<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+		<input type="submit" class="sf-button-primary" id="sfforumdelete<?php echo $forum->forum_id; ?>" name="sfforumdelete<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Delete Forum'); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#forum-<?php echo $forum->forum_id; ?>" id="sfforumdelete<?php echo $forum->forum_id; ?>" name="delforumcancel<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>

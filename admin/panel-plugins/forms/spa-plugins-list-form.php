@@ -83,7 +83,7 @@ function spa_plugins_list_form() {
 	spa_paint_open_panel();
 
 	spa_paint_spacer();
-	echo '<div class="alert-block info">';
+	echo '<div class="sf-alert-block sf-info">';
 	echo SP()->primitives->admin_text('Plugins Folder').': <b>'.realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['plugins']).'</b>';
 	echo '</div>';
 
@@ -97,7 +97,7 @@ function spa_plugins_list_form() {
 				<option value="deactivate-selected"><?php echo SP()->primitives->admin_text('Deactivate'); ?></option>
 				<?php if (!is_multisite() || is_super_admin()) { ?><option value="delete-selected"><?php echo SP()->primitives->admin_text('Delete'); ?></option><?php }?>
 			</select>
-			<input id="doaction1" class="button-secondary action" type="submit" value="<?php echo SP()->primitives->admin_text('Apply'); ?>" />
+			<input id="doaction1" class="sf-button-secondary action" type="submit" value="<?php echo SP()->primitives->admin_text('Apply'); ?>" />
 		</div>
 		<div class="tablenav-pages one-page">
 			<span class="displaying-num"><?php echo count($plugins).' '.SP()->primitives->admin_text('plugins');?></span>
@@ -214,7 +214,7 @@ function spa_plugins_list_form() {
 ?>
 				<tr class='<?php echo $rowClass; ?>'>
 					<td colspan="4">
-						<div class="alert-block info">
+						<div class="sf-alert-block sf-info">
 							<?php echo sprintf(SP()->primitives->admin_text('The folder name of this plugin has become corrupted - probably due to multiple downloads. Please remove the %s at the end of the folder name.  The proper folder name should be %s'), "<strong>$fix[0]</strong>", "<strong>$suggest</strong>"); ?>
 						</div>
 					</td>
@@ -321,7 +321,7 @@ function spa_plugins_list_form() {
 				<option value="deactivate-selected"><?php echo SP()->primitives->admin_text('Deactivate'); ?></option>
 				<?php if (!is_multisite() || is_super_admin()) { ?><option value="delete-selected"><?php echo SP()->primitives->admin_text('Delete'); ?></option><?php }?>
 			</select>
-			<input id="doaction2" class="button-secondary action" type="submit" value="<?php echo SP()->primitives->admin_text('Apply'); ?>" name="" />
+			<input id="doaction2" class="sf-button-secondary action" type="submit" value="<?php echo SP()->primitives->admin_text('Apply'); ?>" name="" />
 		</div>
 		<div class="tablenav-pages one-page">
 			<span class="displaying-num"><?php echo count($plugins).' '.SP()->primitives->admin_text('plugins');?></span>

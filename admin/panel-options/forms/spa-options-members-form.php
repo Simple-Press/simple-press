@@ -49,7 +49,7 @@ function spa_options_members_form() {
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Inactive Members Account Auto Removal'), true, 'user-removal');
-				echo '<div class="alert-block info">';
+				echo '<div class="sf-alert-block sf-info">';
 				SP()->primitives->admin_etext('Remember - users are members of your WordPress site NOT members of Simple:Press. WordPress performs the actual user deletion which will include any components (like blog posts for example) that the user may have contributed. Use with care!');
 				echo '</div>';
 				spa_paint_checkbox(SP()->primitives->admin_text('Enable auto removal of member accounts'), 'sfuserremove', $sfoptions['sfuserremove']);
@@ -113,7 +113,7 @@ function spa_options_members_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Members Options'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Members Options'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

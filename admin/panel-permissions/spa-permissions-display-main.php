@@ -37,8 +37,8 @@ function spa_permissions_permission_main() {
 					$target = 'perm-'.$role->role_id;
 					$image = SPADMINIMAGES;
 ?>
-					<input type="button" class="button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit Permission'); ?>" data-form="editperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $role->role_id; ?>" data-open="" />
-					<input type="button" class="button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete Permission'); ?>" data-form="delperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $role->role_id; ?>" data-open="" />
+					<input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit Permission'); ?>" data-form="editperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $role->role_id; ?>" data-open="" />
+					<input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete Permission'); ?>" data-form="delperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $role->role_id; ?>" data-open="" />
 
 					<?php sp_paint_permission_tip($role->role_id, SP()->displayFilters->title($role->role_name)); ?>
 
@@ -62,5 +62,5 @@ function spa_permissions_permission_main() {
 function sp_paint_permission_tip($roleid, $rolename) {
 	$site = wp_nonce_url(SPAJAXURL."permission-tip&amp;role=$roleid", 'permission-tip');
 	$title = esc_js($rolename);
-	echo "<input type='button' class='button-secondary spOpenDialog' value='".SP()->primitives->admin_text('Permission Usage')."' data-site='$site' data-label='$title' data-width='600' data-height='0' data-align='center' />";
+	echo "<input type='button' class='sf-button-secondary spOpenDialog' value='".SP()->primitives->admin_text('Permission Usage')."' data-site='$site' data-label='$title' data-width='600' data-height='0' data-align='center' />";
 }

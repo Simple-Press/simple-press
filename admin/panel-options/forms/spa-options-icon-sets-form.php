@@ -118,7 +118,7 @@ function spa_options_iconsets_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="updateiconsets" name="saveit" value="<?php SP()->primitives->admin_etext('Update Iconsets Options'); ?>" />
+	<input type="submit" class="sf-button-primary" id="updateiconsets" name="saveit" value="<?php SP()->primitives->admin_etext('Update Iconsets Options'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

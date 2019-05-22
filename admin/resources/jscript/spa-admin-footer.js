@@ -35,7 +35,7 @@
         
         var num = $('li#toplevel_page_simple-press-admin-panel-forums-spa-forums ul.wp-submenu li.current').index() - 1;
         
-        $('#sfadminmenu .sfsidebutton:eq('+num+')+.sfmenublock .sfsideitem:eq(0)').addClass('active');
+        $('#sfadminmenu .sfsidebutton:eq('+num+')+.sfmenublock .sfsideitem:eq(0)').addClass('sf-active');
         
         $("#sfadminmenu").accordion({
             heightStyle: 'content',
@@ -48,8 +48,8 @@
         });
     
         $(document).on('click', '.ui-accordion .ui-accordion-content .sfsideitem', function() {
-            $('.ui-accordion .ui-accordion-content .sfsideitem').removeClass('active');
-            $(this).addClass('active');
+            $('.ui-accordion .ui-accordion-content .sfsideitem').removeClass('sf-active');
+            $(this).addClass('sf-active');
         });
     }
 

@@ -28,7 +28,7 @@ function spa_admins_your_options_form() {
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Your Admin/Moderator Options'), 'true', 'your-admin-options');
 
 				if (SP()->user->thisUser->admin) {
-					echo '<div class="alert-block info"><strong>';
+					echo '<div class="sf-alert-block sf-info"><strong>';
 					SP()->primitives->admin_etext('The following options are personal - each admin and moderator needs to visit this panel to set their own options');
 					echo '</strong><br />';
 					SP()->primitives->admin_etext('Alternatively you can check the option below to apply to all moderators and when you update this panel they will inherit the same option settings');
@@ -47,7 +47,7 @@ function spa_admins_your_options_form() {
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Set Your Moderator Options'), 'true', 'set-moderator-options');
 					spa_paint_checkbox(SP()->primitives->admin_text('Grant all moderators the same option settings as above'), 'setmods', $sfadminsettings['setmods']);
 
-					echo '<div class="alert-block info"><strong>';
+					echo '<div class="sf-alert-block sf-info"><strong>';
 					SP()->primitives->admin_etext('If you check this option so that all your moderators inherit the settings above - note that after you update this panel this checkbox will return to an unchecked state');
 					echo '</strong><br />';
 					SP()->primitives->admin_etext('Inheritance ONLY takes place when this box is checked and the panel updated. Any updated changes you make with the box iunchecked ONLY apply to you');
@@ -60,7 +60,7 @@ function spa_admins_your_options_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Your Admin Options'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Your Admin Options'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

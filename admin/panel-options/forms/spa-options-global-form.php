@@ -40,7 +40,7 @@ function spa_options_global_form() {
                 if ($sfoptions['blockadmin']) {
     				$roles = array_keys($wp_roles->role_names);
     				if ($roles) {
-    				    echo '<p class="subhead">'.SP()->primitives->admin_text('Allow these WP roles access to the WP admin').':</p>';
+    				    echo '<p class="sf-subhead">'.SP()->primitives->admin_text('Allow these WP roles access to the WP admin').':</p>';
          			    echo '<p><strong><small>('.SP()->primitives->admin_text('Administrators will always have access').')</small></strong></p>';
     					foreach ($roles as $index => $role) {
                             if ($role != 'administrator') {
@@ -136,7 +136,7 @@ function spa_options_global_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Global Options'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Global Options'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

@@ -82,8 +82,8 @@ function sp_no_downgrade() {
 
 function sp_install_required() {
     ?>
-    <div class="wrap">
-        <div  id="sfmaincontainer" class="sf-installation">
+    <div id="sf-root-wrap" class="wrap">
+        <div id="sfmaincontainer" class="sf-installation">
             <?php
             # for multisite, make sure the uploads directory exists
             if (is_multisite())
@@ -104,14 +104,16 @@ function sp_install_required() {
             # OK - we can contiunue to offer full install
             ?>
             <div class="sf-panel-head">
+                <div class='sf-buttons'>
+                    <span class="sf-button"><span class="sf-icon sf-help"></span><?php echo SP()->primitives->admin_etext('Installation Help') ?></span>
+                </div>
                 <h3><?php SP()->primitives->admin_etext('Simple:Press'); ?> <?php echo SPVERSION; ?> <?php SP()->primitives->admin_etext('Installation'); ?></h3>
-                <span class="help button"><span class="sp-icon help"></span><?php echo SP()->primitives->admin_etext('Installation Help') ?></span>
             </div>
             <form class="sf-panel-body" name="sfinstall" method="post" action="<?php echo admin_url('admin.php?page=' . SPINSTALLPATH); ?>">
                 <div class="sf-panel-row">
                     <label for="pagename"><?php echo SP()->primitives->admin_etext('Forum Name') ?></label>
                     <input type="text" id="pagename" name="pagename" tabindex="3" placeholder="<?php SP()->primitives->admin_etext('WordPress page name you want the forum to appear on'); ?>" />
-                    <span class="sublabel">
+                    <span class="sf-sublabel">
                         <?php SP()->primitives->admin_etext('Simple:Press creates a new WordPress page for the forum display - the default name is Forum'); ?>
                     </span>
                 </div>
@@ -119,7 +121,7 @@ function sp_install_required() {
                     <input type="checkbox" checked="checked" id="sample" name="sample" tabindex="1" />
                     <label class="wp-core-ui" for="sample">
                         <?php SP()->primitives->admin_etext('Include some basic Sample Data when performing the forum installation'); ?>
-                        <span class="sublabel">
+                        <span class="sf-sublabel">
                             <?php SP()->primitives->admin_etext('If you opt to include the sample data it can be later removed with a simple click of a supplied button'); ?>
                         </span>
                     </label>
@@ -128,13 +130,13 @@ function sp_install_required() {
                     <input type="checkbox" checked="checked" id="installadmins" name="installadmins" tabindex="2"/>
                     <label class="wp-core-ui" for="installadmins">
                         <?php SP()->primitives->admin_etext('Make all WordPress Administrators be Simple:Press Admins'); ?>
-                        <span class="sublabel">
+                        <span class="sf-sublabel">
                             <?php SP()->primitives->admin_etext('Any user can be a Simple:Press Admin, but at installation, only the WordPress Administrator performing the install is made one'); ?>
                         </span>
                     </label>
                 </div>
-                <button type="submit" class="button-primary" id="sbutton" name="goinstall">
-                    <span class="sp-icon install"></span><?php SP()->primitives->admin_etext('Perform Installation'); ?>
+                <button type="submit" class="sf-button-primary" id="sbutton" name="goinstall">
+                    <span class="sf-icon sf-install"></span><?php SP()->primitives->admin_etext('Perform Installation'); ?>
                 </button>
             </form>
         </div>
@@ -175,9 +177,9 @@ function sp_upgrade_required() {
                     </b></p>
             <?php } ?>
 
-            <input type="submit" class="button-primary" id="sbutton" name="goupgrade" value="<?php SP()->primitives->admin_etext('Perform Upgrade'); ?>" />
+            <input type="submit" class="sf-button-primary" id="sbutton" name="goupgrade" value="<?php SP()->primitives->admin_etext('Perform Upgrade'); ?>" />
             <?php if (is_multisite() && is_super_admin()) { ?>
-                <input type="submit" class="button-primary" id="sbutton" name="gonetworkupgrade" value="<?php SP()->primitives->admin_etext('Perform Network Upgrade'); ?>" />
+                <input type="submit" class="sf-button-primary" id="sbutton" name="gonetworkupgrade" value="<?php SP()->primitives->admin_etext('Perform Network Upgrade'); ?>" />
             <?php } ?>
         </form>
     </div>
@@ -200,7 +202,7 @@ function sp_go_install() {
     $subphases = ceil($users / 200);
     $nextsubphase = 1;
     ?>
-    <div class="wrap">
+    <div id="sf-root-wrap" class="wrap">
         <div id="sfmaincontainer" class="sf-installation">
             <div class="sf-panel-head">
                 <h3><?php SP()->primitives->admin_etext('Simple:Press is being installed'); ?></h3>
@@ -208,22 +210,22 @@ function sp_go_install() {
             <div class="sf-panel-body">
                 <div class="pbar" id="progressbar"></div>
                 <table id="SPLOADINSTALLtable">
-                    <tr style="display:none"><td><div class="zmessage" id="zone0"></div></td></tr>
-                    <tr><td><div class="zmessage" id="zone1"><span class="sp-icon waiting"></span><?php echo SP()->primitives->admin_etext('Tables created') ?></div></td></tr>
-                    <tr><td><div class="zmessage" id="zone2"><span class="sp-icon waiting"></span><?php echo SP()->primitives->admin_etext('Permission data built') ?></div></td></tr>
-                    <tr><td><div class="zmessage" id="zone3"><span class="sp-icon waiting"></span><?php echo SP()->primitives->admin_etext('Usergroup data built') ?></div></td></tr>
-                    <tr><td><div class="zmessage" id="zone4"><span class="sp-icon waiting"></span><?php echo SP()->primitives->admin_etext('Creating forum pages') ?></div></td></tr>
-                    <tr><td><div class="zmessage" id="zone5"><span class="sp-icon waiting"></span><?php echo SP()->primitives->admin_etext('Create default forum options') ?></div></td></tr>
-                    <tr><td><div class="zmessage" id="zone6"><span class="sp-icon waiting"></span><?php echo SP()->primitives->admin_etext('Create storage location') ?></div></td></tr>
-                    <tr><td><div class="zmessage" id="zone7"><span class="sp-icon waiting"></span><?php echo SP()->primitives->admin_etext('Create resources') ?></div></td></tr>
-                    <tr><td><div class="zmessage" id="zone8"><span class="sp-icon waiting"></span><?php echo SP()->primitives->admin_etext('Create members data') ?></div></td></tr>
-                    <tr><td><div class="zmessage" id="zone9"><span class="sp-icon waiting"></span><?php echo SP()->primitives->admin_etext('Create admin permissions') ?></div></td></tr>
-                    <tr><td><div class="zmessage" id="zone10"><span class="sp-icon waiting"></span><?php echo SP()->primitives->admin_etext('Complete Installation') ?></div></td></tr>
+                    <tr style="display:none"><td><div class="sf-zmessage" id="zone0"></div></td></tr>
+                    <tr><td><div class="sf-zmessage" id="zone1"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Tables created') ?></div></td></tr>
+                    <tr><td><div class="sf-zmessage" id="zone2"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Permission data built') ?></div></td></tr>
+                    <tr><td><div class="sf-zmessage" id="zone3"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Usergroup data built') ?></div></td></tr>
+                    <tr><td><div class="sf-zmessage" id="zone4"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Creating forum pages') ?></div></td></tr>
+                    <tr><td><div class="sf-zmessage" id="zone5"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create default forum options') ?></div></td></tr>
+                    <tr><td><div class="sf-zmessage" id="zone6"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create storage location') ?></div></td></tr>
+                    <tr><td><div class="sf-zmessage" id="zone7"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create resources') ?></div></td></tr>
+                    <tr><td><div class="sf-zmessage" id="zone8"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create members data') ?></div></td></tr>
+                    <tr><td><div class="sf-zmessage" id="zone9"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create admin permissions') ?></div></td></tr>
+                    <tr><td><div class="sf-zmessage" id="zone10"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Complete Installation') ?></div></td></tr>
                 </table>
-                <div class="zmessage" id="errorzone"></div>
+                <div class="sf-zmessage" id="errorzone"></div>
                 <form name="sfinstalldone" method="post" action="admin.php?page=<?php echo SP_FOLDER_NAME ?>/admin/panel-forums/spa-forums.php">
                     <input type="hidden" name="install" value="1" />
-                    <button type="submit" class="button-primary" disabled name="goforuminstall"><span class="sp-icon admins"></span><?php echo SP()->primitives->admin_text('Go to Forum Admin') ?></button>
+                    <button type="submit" class="sf-button-primary" disabled name="goforuminstall"><span class="sf-icon sf-admins"></span><?php echo SP()->primitives->admin_text('Go to Forum Admin') ?></button>
                 </form>
             </div>
             <?php
@@ -271,12 +273,12 @@ function sp_go_upgrade($current_version, $current_build) {
             <img class="stayleft" src="<?php echo SPCOMMONIMAGES; ?>sp-mini-logo.png" alt="" title="" />
             <h3><?php SP()->primitives->admin_etext('Simple:Press is being upgraded'); ?></h3>
         </div>
-        <div class="wrap sfatag">
+        <div id="sf-root-wrap" class="wrap">
             <div class="imessage" id="imagezone"></div>
         </div>
         <div class="pbar" id="progressbar"></div>
-        <div class="wrap sfatag">
-            <div class="zmessage" id="errorzone"></div>
+        <div id="sf-root-wrap" class="wrap">
+            <div class="sf-zmessage" id="errorzone"></div>
             <div id="finishzone"></div>
         </div>
         <div id="debug">
@@ -313,12 +315,12 @@ function sp_go_network_upgrade($current_version, $current_build) {
             <img class="stayleft" src="<?php echo SPCOMMONIMAGES; ?>sp-mini-logo.png" alt="" title="" />
             <h3><?php SP()->primitives->admin_etext('Simple:Press is upgrading the Network.'); ?></h3>
         </div>
-        <div class="wrap sfatag">
+        <div id="sf-root-wrap" class="wrap">
             <div class="imessage" id="imagezone"></div>
         </div>
         <div class="pbar" id="progressbar"></div>
-        <div class="wrap sfatag">
-            <div class="zmessage" id="errorzone"></div>
+        <div id="sf-root-wrap" class="wrap">
+            <div class="sf-zmessage" id="errorzone"></div>
             <div id="finishzone"></div>
         </div>
         <div id="debug">

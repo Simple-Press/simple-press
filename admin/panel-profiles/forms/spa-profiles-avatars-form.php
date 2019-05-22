@@ -148,7 +148,7 @@ function spa_profiles_avatars_form() {
 					<div class="clearboth"></div></div>
 					<?php
 
-					echo '<div class="alert-block info">';
+					echo '<div class="sf-alert-block sf-info">';
 					SP()->primitives->admin_etext('Warning: If you want to replace WP avatars with SP avatars, make sure you dont have WP avatars in your avatar priorities (have it below SP Default Avatars) or you will have a circular reference');
 					echo '</div>';
 				spa_paint_close_fieldset();
@@ -180,7 +180,7 @@ function spa_profiles_avatars_form() {
 					echo '<input type="text" class="inline_edit" size="70" id="sfavataropts" name="sfavataropts" value="'.rtrim($a, '&').'" />';
 					echo '</div>';
 
-					echo '<div class="alert-block info">';
+					echo '<div class="sf-alert-block sf-info">';
 					SP()->primitives->admin_etext('Recommendation: If you make use of Gravatars we strongly recommend using our Gravatar Cache plugin which will boost overall performance of any view containing gravatars');
 					echo '</div>';
 
@@ -213,7 +213,7 @@ function spa_profiles_avatars_form() {
 		do_action('sph_profiles_avatar_right_panel');
 ?>
 		<div class="sfform-submit-bar">
-		   <input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Avatar Options'); ?>" />
+		   <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Avatar Options'); ?>" />
 		</div>
 <?php
 		spa_paint_close_container();

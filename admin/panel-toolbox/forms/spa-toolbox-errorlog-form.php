@@ -60,8 +60,8 @@ function spa_toolbox_errorlog_form() {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfclearlog" name="sfclearlog">
 	<?php echo sp_create_nonce('forum-adminform_clearlog'); ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Empty Error Log'); ?>" />
-	<input type="button" class="button-primary spReloadForm" id="reloadit" name="reloadit" value="<?php SP()->primitives->admin_etext('Reload Error Log'); ?>" data-target="#sfreloadel" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Empty Error Log'); ?>" />
+	<input type="button" class="sf-button-primary spReloadForm" id="reloadit" name="reloadit" value="<?php SP()->primitives->admin_etext('Reload Error Log'); ?>" data-target="#sfreloadel" />
 	</div>
 	</form>
 <?php

@@ -46,8 +46,8 @@ function spa_forums_add_permission_form($forum_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="permnew<?php echo $forum->forum_id; ?>" name="permnew<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Add Permission Set'); ?>" />
-		<input type="button" class="button-primary spCancelForm" data-target="#newperm-<?php echo $forum->forum_id; ?>" name="addpermcancel<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'	); ?>" />
+		<input type="submit" class="sf-button-primary" id="permnew<?php echo $forum->forum_id; ?>" name="permnew<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Add Permission Set'); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#newperm-<?php echo $forum->forum_id; ?>" name="addpermcancel<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'	); ?>" />
 		</div>
 <?php spa_paint_close_tab(); ?>
 	</form>

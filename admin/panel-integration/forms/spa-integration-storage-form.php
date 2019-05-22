@@ -32,7 +32,7 @@ function spa_integration_storage_form() {
 	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('Storage Locations'), true);
 		spa_paint_open_panel();
 
-			echo '<div class="alert-block info">';
+			echo '<div class="sf-alert-block sf-info">';
 			SP()->primitives->admin_etext('BEWARE: Please read the help before making any changes to these locations. Incorrect changes may cause Simple:Press to stop functioning');
 			echo '</div>';
 
@@ -105,7 +105,7 @@ function spa_integration_storage_form() {
 			do_action('sph_integration_storage_panel_location');
 
 			if (!$ok) {
-				echo '<tr><td colspan="3"><br /><div class="alert-block info"><h4>';
+				echo '<tr><td colspan="3"><br /><div class="sf-alert-block sf-info"><h4>';
 				SP()->primitives->admin_etext('For Simple:Press to function correctly it is imperative that the above location errors are resolved');
 				echo '</h4></div></td></tr>';
 			}
@@ -119,7 +119,7 @@ function spa_integration_storage_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Storage Locations'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Storage Locations'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

@@ -42,7 +42,7 @@ function spa_forums_forums_main() {
         if (SP()->options->get('spSample')) {
         	echo '<form action="'.SPADMINFORUM.'" method="post" id="spSampleDel" name="spSampleDel">';
         	echo sp_create_nonce('forum-adminform_groupdelete');
-        	echo '<input type="submit" class="button-primary" name="spSampleDelDo" id="spSampleDelDo" value="Delete Sample Data" />';
+        	echo '<input type="submit" class="sf-button-primary" name="spSampleDelDo" id="spSampleDelDo" value="Delete Sample Data" />';
         	echo '</form><br />';
         }
 
@@ -112,10 +112,10 @@ function spa_forums_forums_main() {
 							$target = "group-$group->group_id";
 							$image = SPADMINIMAGES;
 ?>
-							<input type="button" class="button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Add Permission'); ?>" data-form="groupperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" />
-							<input type="button" class="button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit This Group'); ?>" data-form="editgroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" />
-							<input type="button" class="button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete Group'); ?>" data-form="deletegroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" />
-							<input type="button" class="button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Order Forums'); ?>" data-form="ordering" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php $group->group_id; ?>" data-open="" />
+							<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Add Permission'); ?>" data-form="groupperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" />
+							<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit This Group'); ?>" data-form="editgroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" />
+							<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete Group'); ?>" data-form="deletegroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" />
+							<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Order Forums'); ?>" data-form="ordering" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php $group->group_id; ?>" data-open="" />
 
 						</div>
 					</td>
@@ -247,13 +247,13 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
 					$target = "forum-$forum->forum_id";
 					$image = SPADMINIMAGES;
 ?>
-					<input id="sfreloadpb<?php echo $forum->forum_id; ?>" type="button" class="button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Forum Permissions'); ?>" data-form="forumperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
-					<input type="button" class="button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit This Forum'); ?>" data-form="editforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
-					<input type="button" class="button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete Forum'); ?>" data-form="deleteforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
+					<input id="sfreloadpb<?php echo $forum->forum_id; ?>" type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Forum Permissions'); ?>" data-form="forumperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
+					<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit This Forum'); ?>" data-form="editforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
+					<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete Forum'); ?>" data-form="deleteforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
         	    	<?php if ($forum->forum_disabled) { ?>
-						<input type="button" class="button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Enable Forum'); ?>" data-form="enableforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
+						<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Enable Forum'); ?>" data-form="enableforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
 		            <?php } else { ?>
-        		        <input type="button" class="button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Disable Forum'); ?>" data-form="disableforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
+        		        <input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Disable Forum'); ?>" data-form="disableforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
 		            <?php } ?>
 	        	</div>
 			</td>

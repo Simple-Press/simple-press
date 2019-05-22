@@ -22,7 +22,7 @@ function spa_themes_upload_form() {
         	<form method="post" enctype="multipart/form-data" action="<?php echo self_admin_url('update.php?action=upload-sp-theme'); ?>" id="sfthemeuploadform" name="sfthemeuploadform">
                 <?php echo sp_create_nonce('forum-theme_upload'); ?>
         		<p><input type="file" id="themezip" name="themezip" /></p>
-        		<p><input type="button" class="button-primary spThemeUpload" id="saveupload" name="saveupload" value="<?php SP()->primitives->admin_etext('Upload Now'); ?>" data-target="#saveupload" /></p>
+        		<p><input type="button" class="sf-button-primary spThemeUpload" id="saveupload" name="saveupload" value="<?php SP()->primitives->admin_etext('Upload Now'); ?>" data-target="#saveupload" /></p>
         	</form>
 <?php
 		spa_paint_close_fieldset();

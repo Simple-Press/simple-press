@@ -41,7 +41,7 @@ function spa_permissions_reset_perms_form() {
 		spa_paint_close_container();
 ?>
 		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Reset Permissions'); ?>" />
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Reset Permissions'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>

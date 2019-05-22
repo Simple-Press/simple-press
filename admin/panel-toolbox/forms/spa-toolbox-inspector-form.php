@@ -27,7 +27,7 @@ function spa_toolbox_inspector_form() {
 	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Data Inspector'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Data Inspector'), true, 'inspect-data');
-				echo '<div class="alert-block info">';
+				echo '<div class="sf-alert-block sf-info">';
 				SP()->primitives->admin_etext('Turning any of these options on will cause the data object being used to populate the relevant view or section to be displayed. You are the only user who will be shown these displays');
 				echo '.';
 				echo '</div>';
@@ -129,7 +129,7 @@ function spa_toolbox_inspector_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Inspector Settings'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Inspector Settings'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

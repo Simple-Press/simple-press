@@ -43,7 +43,7 @@ function spa_forums_global_perm_form()
 		spa_paint_close_container();
 ?>
 		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Add Global Permission'); ?>" />
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Add Global Permission'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>

@@ -153,7 +153,7 @@ function spa_populate_msbox_list($msbox, $uid, $name, $from, $to, $num) {
 	$out.= '</div>';
 	$out.= '<div style="margin-top:29px;text-align:center">';
 	$out.= '<p>'.SP()->primitives->admin_text('Max Selection - 400 Users').'</p>';
-	$out.= '<input type="button" id="add'.$uid.'" class="button-secondary spStackBtnLong spTransferList" value="'.SP()->primitives->admin_text('Remove From Selected List').'" data-from="'.$name.$uid.'" data-to="temp-'.$name.$uid.'" data-msg="'.SP()->primitives->admin_text('List is Empty').'" data-exceed="'.SP()->primitives->admin_text('Maximum of 400 Users would be exceeded - please reduce the selections').'" data-recip="'.$name.$uid.'" />';
+	$out.= '<input type="button" id="add'.$uid.'" class="sf-button-secondary spStackBtnLong spTransferList" value="'.SP()->primitives->admin_text('Remove From Selected List').'" data-from="'.$name.$uid.'" data-to="temp-'.$name.$uid.'" data-msg="'.SP()->primitives->admin_text('List is Empty').'" data-exceed="'.SP()->primitives->admin_text('Maximum of 400 Users would be exceeded - please reduce the selections').'" data-recip="'.$name.$uid.'" />';
 	$out.= '</div>';
 	$out.= '</td>';
 	$out.= '</tr>';
@@ -217,10 +217,10 @@ function spa_render_msbox_list($msbox, $uid, $name, $from, $num, $records, $offs
 	if ($offset == 0) $disabled = ' disabled="disabled"';
 
 	$site = wp_nonce_url(SPAJAXURL."multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=".urlencode($from)."&amp;num=$num&amp;offset=0&amp;max=$max&amp;filter=$filter", 'multiselect');
-	$out.= '<input type="button"'.$disabled.' id="firstpage'.$uid.'" class="button-secondary spUpdateList" value="<<" data-url="'.$site.'" data-uid="'.$name.$uid.'" />';
+	$out.= '<input type="button"'.$disabled.' id="firstpage'.$uid.'" class="sf-button-secondary spUpdateList" value="<<" data-url="'.$site.'" data-uid="'.$name.$uid.'" />';
 
 	$site = wp_nonce_url(SPAJAXURL."multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=".urlencode($from)."&amp;num=$num&amp;offset=".($offset - $num)."&amp;max=$max&amp;filter=$filter", 'multiselect');
-	$out.= '<input type="button"'.$disabled.' id="prevpage'.$uid.'" class="button-secondary spUpdateList" value="<" data-url="'.$site.'" data-uid="'.$name.$uid.'" />';
+	$out.= '<input type="button"'.$disabled.' id="prevpage'.$uid.'" class="sf-button-secondary spUpdateList" value="<" data-url="'.$site.'" data-uid="'.$name.$uid.'" />';
 
 	$out.= '&nbsp;&nbsp;';
 
@@ -228,19 +228,19 @@ function spa_render_msbox_list($msbox, $uid, $name, $from, $num, $records, $offs
 	if (($offset + $num) >= $max) $disabled = ' disabled="disabled"';
 
 	$site = wp_nonce_url(SPAJAXURL."multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=".urlencode($from)."&amp;num=$num&amp;offset=".($offset + $num)."&amp;max=$max&amp;filter=$filter", 'multiselect');
-	$out.= '<input type="button"'.$disabled.' id="nextpage'.$uid.'" class="button-secondary spUpdateList" value=">" data-url="'.$site.'" data-uid="'.$name.$uid.'" />';
+	$out.= '<input type="button"'.$disabled.' id="nextpage'.$uid.'" class="sf-button-secondary spUpdateList" value=">" data-url="'.$site.'" data-uid="'.$name.$uid.'" />';
 
 	$site = wp_nonce_url(SPAJAXURL."multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=".urlencode($from)."&amp;num=$num&amp;offset=$last&amp;max=$max&amp;filter=$filter", 'multiselect');
-	$out.= '<input type="button"'.$disabled.' id="lastpage'.$uid.'" class="button-secondary spUpdateList" value=">>" data-url="'.$site.'" data-uid="'.$name.$uid.'" />';
+	$out.= '<input type="button"'.$disabled.' id="lastpage'.$uid.'" class="sf-button-secondary spUpdateList" value=">>" data-url="'.$site.'" data-uid="'.$name.$uid.'" />';
 
 	$out.= '<div style="clear:both;padding: 5px 0;">';
-	$out.= '<input type="button" id="add'.$uid.'" class="button-secondary spStackBtnLong spTransferList" value="'.SP()->primitives->admin_text('Move to Selected List').'" data-from="temp-'.$name.$uid.'" data-to="'.$name.$uid.'" data-msg="'.SP()->primitives->admin_text('List is Empty').'" data-exceed="'.SP()->primitives->admin_text('Maximum of 400 Users would be exceeded - please reduce the selections').'" data-recip="'.$name.$uid.'" />';
+	$out.= '<input type="button" id="add'.$uid.'" class="sf-button-secondary spStackBtnLong spTransferList" value="'.SP()->primitives->admin_text('Move to Selected List').'" data-from="temp-'.$name.$uid.'" data-to="'.$name.$uid.'" data-msg="'.SP()->primitives->admin_text('List is Empty').'" data-exceed="'.SP()->primitives->admin_text('Maximum of 400 Users would be exceeded - please reduce the selections').'" data-recip="'.$name.$uid.'" />';
 	$out.='<br />';
 
 	$out.= '<input type=text id="list-filter'.$name.$uid.'" name="list-filter'.$name.$uid.'" value="'.$filter.'" class="sfacontrol" size="10" />';
 	$gif = SPCOMMONIMAGES."working.gif";
 	$site = wp_nonce_url(SPAJAXURL."multiselect&amp;page_msbox=filter&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=".urlencode($from)."&amp;num=$num&amp;offset=0&amp;max=$max", 'multiselect');
-	$out.= '<input type="button" id="filter'.$uid.'" class="button-secondary spFilterList" value="'.SP()->primitives->admin_text('Filter').'" style="margin-top:1px" data-url="'.$site.'" data-uid="'.$name.$uid.'" data-image="'.$gif.'" />';
+	$out.= '<input type="button" id="filter'.$uid.'" class="sf-button-secondary spFilterList" value="'.SP()->primitives->admin_text('Filter').'" style="margin-top:1px" data-url="'.$site.'" data-uid="'.$name.$uid.'" data-image="'.$gif.'" />';
 
 	$out.= '</div>';
 

@@ -44,7 +44,7 @@ function spa_forums_edit_forum_form($forum_id) {
 						$mess = SP()->primitives->front_text('This is a sub-forum and also a parent to other sub-forums and on this panel you can change the forum parent it belongs to. If changed it will be moved, along with the sub-forums, to the target Forum.');
 					}
 
-					echo '<div class="alert-block info">';
+					echo '<div class="sf-alert-block sf-info">';
 					echo "<p><b>$mess</b></br>";
 					echo SP()->primitives->front_text('For more flexible Group/Forum ordering and sub-forum promotion and demotion, please use the drag and drop interface on the Order Groups and Forums admin panel from the Forums Menu - or the Order Forums panel at Group level.').'</p>';
 					echo '</div>';
@@ -94,7 +94,7 @@ function spa_forums_edit_forum_form($forum_id) {
 					spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', $forum->feature_image, false);
 					spa_paint_select_end();
 
-					echo '<div class="alert-block info">';
+					echo '<div class="sf-alert-block sf-info">';
 					echo '<p><b>'.SP()->primitives->front_text('Custom Icon Ordering').'</b></br>';
 					echo SP()->primitives->front_text('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
                     echo SP()->primitives->front_text('Locked').'<br />';
@@ -180,8 +180,8 @@ function spa_forums_edit_forum_form($forum_id) {
 			spa_paint_close_container();
 ?>
 		<div class="sfform-submit-bar">
-    		<input type="submit" class="button-primary" id="sfforumedit<?php echo $forum->forum_id; ?>" name="sfforumedit<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Update Forum'); ?>" />
-    		<input type="button" class="button-primary spCancelForm" data-target="#forum-<?php echo $forum->forum_id; ?>" id="sfforumedit<?php echo $forum->forum_id; ?>" name="editforumcancel<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+    		<input type="submit" class="sf-button-primary" id="sfforumedit<?php echo $forum->forum_id; ?>" name="sfforumedit<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Update Forum'); ?>" />
+    		<input type="button" class="sf-button-primary spCancelForm" data-target="#forum-<?php echo $forum->forum_id; ?>" id="sfforumedit<?php echo $forum->forum_id; ?>" name="editforumcancel<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>

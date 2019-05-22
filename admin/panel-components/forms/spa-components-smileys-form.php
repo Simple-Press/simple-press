@@ -106,7 +106,7 @@ function spa_components_smileys_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="updatesmileys" name="saveit" value="<?php SP()->primitives->admin_etext('Update Smileys Component'); ?>" />
+	<input type="submit" class="sf-button-primary" id="updatesmileys" name="saveit" value="<?php SP()->primitives->admin_etext('Update Smileys Component'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

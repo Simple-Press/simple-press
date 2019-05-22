@@ -50,8 +50,8 @@ function spa_forums_delete_group_form($group_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sfform-submit-bar">
-    		<input type="submit" class="button-primary" id="groupdel<?php echo $group->group_id; ?>" name="groupdel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Delete Group'); ?>" />
-    		<input type="button" class="button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="sfgroupdel<?php echo $group->group_id; ?>" name="groupdelcancel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+    		<input type="submit" class="sf-button-primary" id="groupdel<?php echo $group->group_id; ?>" name="groupdel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Delete Group'); ?>" />
+    		<input type="button" class="sf-button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="sfgroupdel<?php echo $group->group_id; ?>" name="groupdelcancel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>

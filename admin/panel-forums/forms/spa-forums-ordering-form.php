@@ -71,7 +71,7 @@ function spa_forums_ordering_form($groupId=0) {
 				?>
 				<input type="hidden" id="cgroup" name="cgroup" value="<?php echo $groupId; ?>" />
 				<?php
-				echo '<div class="alert-block info">'.SP()->primitives->admin_text('Here you can set the order of Groups, Forums and SubForums by dragging and dropping below. After ordering, push the save button.').'</div>';
+				echo '<div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('Here you can set the order of Groups, Forums and SubForums by dragging and dropping below. After ordering, push the save button.').'</div>';
 
 				if (!empty($groups)) {
 					echo '<ul id="groupList" class="groupList menu">';
@@ -98,15 +98,15 @@ function spa_forums_ordering_form($groupId=0) {
 					}
 					echo '</ul>';
 				}
-				echo '<input type="text" class="inline_edit" size="70" id="spForumsOrder" name="spForumsOrder" />';
+				echo '<input type="hidden" id="spForumsOrder" name="spForumsOrder" />';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 		spa_paint_close_container();
 ?>
 		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Save Ordering'); ?>" />
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Save Ordering'); ?>" />
         <?php if ($groupId) { ?>
-		<input type="button" class="button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="sforder<?php echo $group->group_id; ?>" name="groupordercancel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="sforder<?php echo $group->group_id; ?>" name="groupordercancel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
         <?php } ?>
 
 		</div>

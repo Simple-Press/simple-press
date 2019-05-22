@@ -181,7 +181,7 @@ function spa_paint_custom_smileys() {
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/';
 	$dlist = @opendir($path);
 
-	echo '<div class="alert-block info">';
+	echo '<div class="sf-alert-block sf-info">';
 	if (!$dlist) {
 	   echo '<table><tr><td class="sflabel"><strong>'.SP()->primitives->admin_text('The forum-smileys folder does not exist').'</strong></td></tr></table>';
 	   return;
@@ -290,18 +290,18 @@ function spa_paint_custom_smileys() {
 
 				echo '<div id="item-edit-'.$scount.'" class="menu-item-settings inline_edit">';
 
-					echo '<p class="description">'.SP()->primitives->admin_text('Smiley Name').'<br />';
+					echo '<p class="sf-description">'.SP()->primitives->admin_text('Smiley Name').'<br />';
 					echo '<input type="text" class="sfpostcontrol" id="smname-'.$scount.'" name="smname[]" value="'.SP()->displayFilters->title($sname).'" /></p>';
 
-					echo '<p class="description">'.SP()->primitives->admin_text('Smiley Code').'<br />';
+					echo '<p class="sf-description">'.SP()->primitives->admin_text('Smiley Code').'<br />';
 					echo '<input type="text" class="sfpostcontrol" id="smcode-'.$scount.'" name="smcode[]" value="'.SP()->displayFilters->title($code).'" /></p>';
 
-					echo '<p class="description">';
+					echo '<p class="sf-description">';
 					$checked = ($break) ? ' checked="checked" ' : '';
 					echo '<input type="checkbox" class="sfpostcontrol" id="break-'.$scount.'" name="smbreak-'.$sname.'" '.$checked.'/>';
 					echo '<label for="break-'.$scount.'">'.SP()->primitives->admin_text('Break Smileys Row in Editor Display').'</label></p>';
 
-					echo '<p class="description">';
+					echo '<p class="sf-description">';
 					$checked = ($in_use) ? ' checked="checked" ' : '';
 					echo '<input type="checkbox" class="sfpostcontrol" id="in_use-'.$scount.'" name="sminuse-'.$sname.'" '.$checked.'/>';
 					echo '<label for="in_use-'.$scount.'">'.SP()->primitives->admin_text('Allow Use of this Smiley').'</label></p>';

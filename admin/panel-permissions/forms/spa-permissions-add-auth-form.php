@@ -25,7 +25,7 @@ function spa_permissions_add_auth_form() {
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Add New Authorization'), 'true', 'create-new-authorization');
 ?>
-                    <div class="alert-block info">
+                    <div class="sf-alert-block sf-info">
                     <?php SP()->primitives->admin_etext('Please note, this will create a new singular authorization.'); ?>
                     <?php SP()->primitives->admin_etext('However, by default, it will not be used by anything in core.'); ?>
                     <?php SP()->primitives->admin_etext('This authorization could be used for a profile authorization or by a theme or plugin.'); ?>
@@ -43,7 +43,7 @@ function spa_permissions_add_auth_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Authorization'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Authorization'); ?>" />
 	</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>

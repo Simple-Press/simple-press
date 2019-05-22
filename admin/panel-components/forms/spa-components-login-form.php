@@ -29,7 +29,7 @@ function spa_components_login_form() {
 			if (false == get_option('users_can_register')) {
 				spa_paint_open_panel();
 					spa_paint_open_fieldset(SP()->primitives->admin_text('Member Registrations'), true, 'no-login');
-						echo '<div class="alert-block info">';
+						echo '<div class="sf-alert-block sf-info">';
 						SP()->primitives->admin_etext('Your site is currently not set to allow users to register. Click on the help icon for details of how to turn this on');
 						echo '</div>';
 					spa_paint_close_fieldset();
@@ -95,7 +95,7 @@ function spa_components_login_form() {
 		spa_paint_close_container();
 ?>
     	<div class="sfform-submit-bar">
-    	   <input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Login and Registration Component'); ?>" />
+    	   <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Login and Registration Component'); ?>" />
     	</div>
 <?php
 	spa_paint_close_tab();

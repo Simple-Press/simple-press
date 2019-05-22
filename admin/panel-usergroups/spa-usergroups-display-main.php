@@ -62,8 +62,8 @@ if ($usergroup->usergroup_id == $defaults['sfdefgroup']) {
 						$target = "usergroup-$usergroup->usergroup_id";
 						$image = SPADMINIMAGES;
 ?>
-						<input type="button" class="button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit User Group'); ?>" data-form="editusergroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $usergroup->usergroup_id; ?>" data-open="" />
-						<input type="button" class="button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete User Group'); ?>" data-form="delusergroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $usergroup->usergroup_id; ?>" data-open="" />
+						<input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit User Group'); ?>" data-form="editusergroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $usergroup->usergroup_id; ?>" data-open="" />
+						<input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete User Group'); ?>" data-form="delusergroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $usergroup->usergroup_id; ?>" data-open="" />
 
 						<?php sp_paint_usergroup_tip($usergroup->usergroup_id, SP()->displayFilters->title($usergroup->usergroup_name)); ?>
 
@@ -84,14 +84,14 @@ if ($usergroup->usergroup_id == $defaults['sfdefgroup']) {
 						$gif= SPCOMMONIMAGES.'working.gif';
 						$text = esc_js(SP()->primitives->admin_text('Show/Hide'));
 ?>
-						<input type="button" id="show<?php echo $usergroup->usergroup_id; ?>" class="button-secondary spUsergroupShowMembers" value="<?php echo $text; ?>" data-url="<?php echo $site; ?>" data-img="<?php echo $gif; ?>" data-id="<?php echo $usergroup->usergroup_id; ?>" />
+						<input type="button" id="show<?php echo $usergroup->usergroup_id; ?>" class="sf-button-secondary spUsergroupShowMembers" value="<?php echo $text; ?>" data-url="<?php echo $site; ?>" data-img="<?php echo $gif; ?>" data-id="<?php echo $usergroup->usergroup_id; ?>" />
 <?php
                         $base = wp_nonce_url(SPAJAXURL.'usergroups-loader', 'usergroups-loader');
 						$target = "members-$usergroup->usergroup_id";
 						$image = SPADMINIMAGES;
 ?>
-						<input type="button" id="add<?php echo $usergroup->usergroup_id; ?>" class="button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Add New'); ?>" data-form="addmembers" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $usergroup->usergroup_id; ?>" data-open="" />
-						<input type="button" id="remove<?php echo $usergroup->usergroup_id; ?>" class="button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Move/Delete'); ?>" data-form="delmembers" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $usergroup->usergroup_id; ?>" data-open="" />
+						<input type="button" id="add<?php echo $usergroup->usergroup_id; ?>" class="sf-button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Add New'); ?>" data-form="addmembers" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $usergroup->usergroup_id; ?>" data-open="" />
+						<input type="button" id="remove<?php echo $usergroup->usergroup_id; ?>" class="sf-button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Move/Delete'); ?>" data-form="delmembers" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $usergroup->usergroup_id; ?>" data-open="" />
 					</td>
 				</tr>
 				<tr class="sfinline-form"> <!-- This row will hold hidden forms for the current user group membership-->
@@ -118,7 +118,7 @@ if ($usergroup->usergroup_id == $defaults['sfdefgroup']) {
 				$gif= SPCOMMONIMAGES.'working.gif';
 				$text = esc_js(SP()->primitives->admin_text('Show/Hide Members with No Memberships'));
 				?>
-				<input type="button" id="show-0" class="button-secondary spUsergroupShowMembers" value="<?php echo $text; ?>" data-url="<?php echo $site; ?>" data-img="<?php echo $gif; ?>" data-id="0" />
+				<input type="button" id="show-0" class="sf-button-secondary spUsergroupShowMembers" value="<?php echo $text; ?>" data-url="<?php echo $site; ?>" data-img="<?php echo $gif; ?>" data-id="0" />
 			</td>
 		</tr>
 		<tr class="sfinline-form"> <!-- This row will hold hidden forms for the current user group membership-->
@@ -133,5 +133,5 @@ if ($usergroup->usergroup_id == $defaults['sfdefgroup']) {
 function sp_paint_usergroup_tip($ugid, $ugname) {
 	$site = wp_nonce_url(SPAJAXURL."usergroup-tip&amp;group=$ugid", 'usergroup-tip');
 	$title = esc_js($ugname);
-	echo "<input type='button' class='button-secondary spOpenDialog' value='".SP()->primitives->admin_text('User Group Usage')."' data-site='$site' data-label='$title' data-width='600' data-height='0' data-align='center' />";
+	echo "<input type='button' class='sf-button-secondary spOpenDialog' value='".SP()->primitives->admin_text('User Group Usage')."' data-site='$site' data-label='$title' data-width='600' data-height='0' data-align='center' />";
 }

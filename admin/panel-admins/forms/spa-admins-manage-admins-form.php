@@ -145,7 +145,7 @@ function spa_admins_manage_admins_form() {
 	}
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="savecaps" name="savecaps" value="<?php SP()->primitives->admin_etext('Update Admin Capabilities'); ?>" />
+	<input type="submit" class="sf-button-primary" id="savecaps" name="savecaps" value="<?php SP()->primitives->admin_etext('Update Admin Capabilities'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();
@@ -256,7 +256,7 @@ function spa_admins_manage_admins_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="savenew" name="savenew" value="<?php SP()->primitives->admin_etext('Add New Admins'); ?>" />
+	<input type="submit" class="sf-button-primary" id="savenew" name="savenew" value="<?php SP()->primitives->admin_etext('Add New Admins'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

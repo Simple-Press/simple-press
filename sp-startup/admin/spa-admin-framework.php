@@ -215,23 +215,23 @@ function spa_panel_header() {
 
 	$site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
 	$target = 'sfmaincontainer';
-	echo '<input style="width: 175px; font-weight:bold;" type="button" id="spHelp" class="button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help & Troubleshooting').'" data-url="'.$site.'" data-target="'.$target.'" />&nbsp;&nbsp;&nbsp;';
+	echo '<input style="width: 175px; font-weight:bold;" type="button" id="spHelp" class="sf-button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help & Troubleshooting').'" data-url="'.$site.'" data-target="'.$target.'" />&nbsp;&nbsp;&nbsp;';
 
 	$site = wp_nonce_url(SPAJAXURL.'adminsearch', 'adminsearch');
 	$target = 'sfmaincontainer';
 
 	echo '<img style="margin: -1px 0 0 20px;float:left;" src="'.SPADMINIMAGES.'sp_Help32.png" alt="" />';
-	echo '<input style="margin-left: 5px;font-weight:bold;" type="button" id="spSearch" class="button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('What do you need to do?').'" data-url="'.$site.'" data-target="'.$target.'" />&nbsp;&nbsp;&nbsp;';
+	echo '<input style="margin-left: 5px;font-weight:bold;" type="button" id="spSearch" class="sf-button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('What do you need to do?').'" data-url="'.$site.'" data-target="'.$target.'" />&nbsp;&nbsp;&nbsp;';
 
-	echo '<a class="button" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Simple:Press Online Documentation').'</a>&nbsp;&nbsp;&nbsp;';
+	echo '<a class="sf-button" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Simple:Press Online Documentation').'</a>&nbsp;&nbsp;&nbsp;';
 
 	$site = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
 	$title = SP()->primitives->admin_text('About Simple:Press');
-	echo '<a class="button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>&nbsp;&nbsp;&nbsp;';
+	echo '<a class="sf-button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>&nbsp;&nbsp;&nbsp;';
 	
-	echo '<a class="button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>&nbsp;&nbsp;&nbsp;';	
+	echo '<a class="sf-button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>&nbsp;&nbsp;&nbsp;';	
 	
-	echo '<a class="button" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
+	echo '<a class="sf-button" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
 
 	echo '</td>';
 	echo '</tr></table></div><div class="clearboth"></div>';
@@ -382,16 +382,16 @@ function spa_render_sidemenu() {
 			}
 		}
 		echo '</select>'."\n";
-		echo '<a class="button button-secondary" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
+		echo '<a class="sf-button-secondary" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
 		echo '</div>'."\n";
 	} else {
 		echo '<div id="sfsidepanel">'."\n";
                 
                 echo '<span class="sf-tooggle-admin-menu">'."\n";
-                echo '<span class="hide">'."\n";
+                echo '<span class="sf-button sf-hide">'."\n";
                 echo __('Hide Admin Menu', 'sp');
                 echo '</span>'."\n";
-                echo '<span class="show">'."\n";
+                echo '<span class="sf-button sf-show">'."\n";
                 echo __('Show Admin Menu', 'sp');
                 echo '</span>'."\n";
                 echo '</span>'."\n";

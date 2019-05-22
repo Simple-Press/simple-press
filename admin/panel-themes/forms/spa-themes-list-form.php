@@ -23,7 +23,7 @@ function spa_themes_list_form() {
 	spa_paint_open_panel();
 
 	spa_paint_spacer();
-	echo '<div class="alert-block info">';
+	echo '<div class="sf-alert-block sf-info">';
 	echo SP()->primitives->admin_text('Themes Folder').': <b>'.realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['themes']).'</b>';
 	echo '</div>';
 
@@ -57,7 +57,7 @@ function spa_themes_list_form() {
                 }
             }
 ?>
-    		<p class="description" style="padding: 0;">
+    		<p class="sf-description" style="padding: 0;">
     			<?php echo $themes[$curTheme['theme']]['Description']; ?>
     		</p>
 <?php
@@ -98,7 +98,7 @@ function spa_themes_list_form() {
         		}
     			echo '</select> ';
 
-                echo ' <input type="submit" class="button-secondary action" id="update" name="update" value="'.SP()->primitives->admin_text('Update Overlay').'" />';
+                echo ' <input type="submit" class="sf-button-secondary action" id="update" name="update" value="'.SP()->primitives->admin_text('Update Overlay').'" />';
                 echo '</form>';
 				echo '</div>';
 
@@ -229,7 +229,7 @@ function spa_themes_list_form() {
                         }
                     }
 ?>
-					<p class="description" style="padding: 0;">
+					<p class="sf-description" style="padding: 0;">
 						<?php echo $theme_desc; ?>
 					</p>
 					<br />
@@ -262,8 +262,8 @@ function spa_themes_list_form() {
 							}
 						}
 ?>
-	                    <input type="submit" class="button-secondary action" id="activate-<?php echo esc_attr($theme_file); ?>" name="activate" value="<?php echo SP()->primitives->admin_etext('Activate Theme'); ?>" />
-	                    <?php if (!is_multisite() || is_super_admin()) { ?><input type="submit" class="button-secondary action spThemeDeleteConfirm" id="delete-<?php echo esc_attr($theme_file); ?>" name="delete" value="<?php echo SP()->primitives->admin_etext('Delete Theme'); ?>" data-msg="<?php echo $msg; ?>" /><?php }?>
+	                    <input type="submit" class="sf-button-secondary action" id="activate-<?php echo esc_attr($theme_file); ?>" name="activate" value="<?php echo SP()->primitives->admin_etext('Activate Theme'); ?>" />
+	                    <?php if (!is_multisite() || is_super_admin()) { ?><input type="submit" class="sf-button-secondary action spThemeDeleteConfirm" id="delete-<?php echo esc_attr($theme_file); ?>" name="delete" value="<?php echo SP()->primitives->admin_etext('Delete Theme'); ?>" data-msg="<?php echo $msg; ?>" /><?php }?>
 	                    </form>
 					</div>
 <?php
