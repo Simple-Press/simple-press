@@ -121,9 +121,9 @@
 		}
 	};
 
-	spj.toggleRow = function(whichRow) {
+	/*spj.toggleRow = function(whichRow) {
 		$(whichRow).show();
-	};
+	};*/
 
 	spj.delRowReload = function(url, reload) {
 		$('#sfmsgspot').load(url, function() {

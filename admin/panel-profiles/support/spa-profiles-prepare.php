@@ -61,7 +61,7 @@ function spa_paint_avatar_pool() {
 			$out.= '</td>';
 			$out.= '<td style="text-align:center" class="spWFBorder">';
 			$site = esc_url(wp_nonce_url(SPAJAXURL."profiles&amp;targetaction=delavatar&amp;file=$file", 'profiles'));
-			$out.= '<img src="'.SPCOMMONIMAGES.'delete.png" title="'.SP()->primitives->admin_text('Delete Avatar').'" alt="" class="spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadpool" />';
+			$out.= '<span title="'.SP()->primitives->admin_text('Delete Avatar').'" class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadpool"></span>';
 			$out.= '</td>';
 			$out.= '</tr>';
 			$out.= '</table>';
@@ -100,7 +100,7 @@ function spa_paint_avatar_defaults() {
 				$out.= '<img src="'.esc_url(SPAVATARURL.'defaults/'.$file).'" alt="" />';
 
 				$site = esc_url(wp_nonce_url(SPAJAXURL."profiles&amp;targetaction=deldefault&amp;file=$file", 'profiles'));
-				$out.= '<img src="'.SPCOMMONIMAGES.'delete.png" alt="" class="spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadav" style="cursor:pointer;" />';
+				$out.= '<span class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadav"></span>';
 				$out.= '<div class="clearboth"></div>';
 
 				$fileid = str_replace('.', 'z1z2z3', $file);

@@ -143,7 +143,7 @@ function spa_plugins_list_form() {
 				$actionlink.= sp_paint_plugin_tip($plugin_data['Name'], $plugin_file);
 				$rowClass = 'active';
                 if ($update) $rowClass.= ' update';
-                $icon = '<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Plugin activated').'" alt="" style="vertical-align:middle;" />';
+                $icon = '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Plugin activated').'"></span>';
             } else {
 				if ($bad) {
 					$rowClass = 'inactive spWarningBG';
@@ -161,7 +161,7 @@ function spa_plugins_list_form() {
 					$actionlink = apply_filters('sph_plugins_inactive_buttons', $actionlink, $plugin_file);
 					$rowClass = 'inactive';
                     if ($update) $rowClass.= ' update';
-					$icon = '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Plugin not activated').'" alt="" style="vertical-align: middle;" />';
+					$icon = '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Plugin not activated').'"></span>';
 					$disabled = '';
 				}
             }

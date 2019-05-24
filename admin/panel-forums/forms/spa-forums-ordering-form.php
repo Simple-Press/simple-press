@@ -74,11 +74,11 @@ function spa_forums_ordering_form($groupId=0) {
 				echo '<div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('Here you can set the order of Groups, Forums and SubForums by dragging and dropping below. After ordering, push the save button.').'</div>';
 
 				if (!empty($groups)) {
-					echo '<ul id="groupList" class="groupList menu">';
+					echo '<ul id="groupList" class="groupList sf-list">';
 					foreach ($groups as $group) {
-						echo "<li id='group-G$group->group_id' class='menu-item-depth-0'>";
-						echo "<div class='alt group-list menu-item'>";
-						echo "<span class='item-name'>$group->group_name</span>";
+						echo "<li id='group-G$group->group_id' class='sf-list-item-depth-0'>";
+						echo "<div class='sf-group-list sf-list-item'>";
+						echo "<span class='sf-item-name'>$group->group_name</span>";
 						echo '</div>';
 
 						# now output any forums in the group
@@ -86,7 +86,7 @@ function spa_forums_ordering_form($groupId=0) {
 						$depth = 1;
 
 						if (!empty($allForums)) {
-							echo "<ul id='forumList-$group->group_id' class='forumList menu'>";
+							echo "<ul id='forumList-$group->group_id' class='forumList sf-list'>";
 							foreach ($allForums as $thisForum) {
 								if ($thisForum->parent == 0) {
 									sp_paint_order_forum($thisForum, $allForums, $depth);
@@ -120,15 +120,15 @@ function spa_forums_ordering_form($groupId=0) {
 
 function sp_paint_order_forum($thisForum, $allForums, $depth) {
 	# display this forum
-	echo "<li id='forum-F$thisForum->forum_id' class='menu-item-depth-$depth'>";
-	echo "<div class='forum-list menu-item'>";
-	echo "<span class='item-name'>$thisForum->forum_name</span>";
+	echo "<li id='forum-F$thisForum->forum_id' class='sf-list-item-depth-$depth'>";
+	echo "<div class='sf-forum-list sf-list-item'>";
+	echo "<span class='sf-item-name'>$thisForum->forum_name</span>";
 	echo '</div>';
 	if ($thisForum->children) {
 		$depth++;
 		$subForums = unserialize($thisForum->children);
 		$subForums = sp_sort_by_seq($subForums, $allForums);
-		echo "<ul id='subForumList-$thisForum->forum_id' class='subforumList menu'>";
+		echo "<ul id='subForumList-$thisForum->forum_id' class='subforumList sf-list'>";
 		foreach ($subForums as $subForum) {
 			foreach ($allForums as $whichForum) {
 				if ($whichForum->forum_id == $subForum) {

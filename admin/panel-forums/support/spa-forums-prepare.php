@@ -49,7 +49,7 @@ function spa_paint_custom_icons() {
 			$out.= '</td>';
 			$out.= '<td style="text-align:center"  class="spWFBorder">';
 			$site = esc_url(wp_nonce_url(SPAJAXURL."forums&amp;targetaction=delicon&amp;file=$file", 'forums'));
-			$out.= '<img src="'.SPCOMMONIMAGES.'delete.png" title="'.SP()->primitives->admin_text('Delete custom icon').'" alt="" class="spDeleteRow" data-url="'.$site.'" data-target="icon'.$row.'" />';
+			$out.= '<span title="'.SP()->primitives->admin_text('Delete custom icon').'" class="sf-icon sf-delete spDeleteRow" data-url="'.$site.'" data-target="icon'.$row.'"></span>';
 			$out.= '</td>';
 			$out.= '</tr>';
 			$out.= '</table>';
@@ -102,7 +102,7 @@ function spa_paint_featured_images() {
 			$out.= '</td>';
 			$out.= '<td style="text-align:center"  class="spWFBorder">';
 			$site = esc_url(wp_nonce_url(SPAJAXURL."forums&amp;targetaction=delimage&amp;file=$file", 'forums'));
-			$out.= '<img src="'.SPCOMMONIMAGES.'delete.png" title="'.SP()->primitives->admin_text('Delete featured image').'" alt="" class="spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadfi" />';
+			$out.= '<span title="'.SP()->primitives->admin_text('Delete featured image').'" class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadfi"></span>';
 			$out.= '</td>';
 			$out.= '</tr>';
 			$out.= '</table>';

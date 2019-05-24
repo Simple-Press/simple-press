@@ -47,7 +47,8 @@
             $('#sfsidepanel').toggleClass('sf-admin-menu-mobile-show');
         });
     
-        $(document).on('click', '.ui-accordion .ui-accordion-content .sfsideitem', function() {
+        $(document).on('click', '.ui-accordion .ui-accordion-content .sfsideitem', function(e) {
+			e.preventDefault();
             $('.ui-accordion .ui-accordion-content .sfsideitem').removeClass('sf-active');
             $(this).addClass('sf-active');
         });

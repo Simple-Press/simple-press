@@ -106,9 +106,10 @@ function spa_integration_language_form() {
 
 	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('Language Translations'), true);
 		spa_paint_open_panel();
-			echo '<br />';
-			echo '&nbsp;&nbsp;<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Translation file installed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Translation file installed');
-			echo '&nbsp;&nbsp;<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('No Translation file installed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('No Translation file installed');
+			echo '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Translation file installed').'"></span>'
+				.SP()->primitives->admin_text('Translation file installed');
+			echo '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Translation install failed').'"></span>'
+				.SP()->primitives->admin_text('Install failed - or there is no available translation');
 
 # Core - front and admin --------------------------------------
 
@@ -336,13 +337,12 @@ function sp_check_for_mo($folder, $tDom, $thisItem, $target) {
 	$moFile = SP_STORE_DIR.'/'.SP()->plugin->storage[$folder].'/'.$tDom.'-'.$siteLang.'.mo';
 	if (file_exists($moFile)) {
 		$gif = SPCOMMONIMAGES.'working.gif';
-		echo '<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Translation file found').'" alt="" style="vertical-align: middle;" />';
-		echo '&nbsp;&nbsp;';
+		echo '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Translation file found').'"></span>';
 		$thisItem.= '&amp;remove=1';
 		echo '<input type="button" class="logDetail button spLoadAjax" value="'.SP()->primitives->admin_text('Remove').'" data-url="'.$thisItem.'" data-target="'.$target.'" data-img="'.$gif.'" />';
 		return true;
 	} else {
-		echo '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('No translation file found').'" alt="" style="vertical-align: middle;" />';
+		echo '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('No translation file found').'"></span>';
 		return false;
 	}
 }

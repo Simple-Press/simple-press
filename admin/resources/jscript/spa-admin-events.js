@@ -13,16 +13,27 @@
 	 *****************************/
 
 	toggleLayer = {
-		init: function() {
-			$('.spLayerToggle').off();
-			$('.spLayerToggle').click(function() {
-				var mydata = $(this).data();
-				spj.toggleLayer(mydata.target);
-			});
-		}
+            init: function () {
+                $('.spLayerToggle').off();
+                $('.spLayerToggle').click(function () {
+                    var $el = $(this), $li = $el.closest('li');
+                    if ($li.length) {
+                        var $elInlineEdit = $li.find('.sf-inline-edit:first');
+                        if ($elInlineEdit.length) {
+                            if ($elInlineEdit.is(':visible')) {
+                                $li.removeClass('sf-open');
+                            } else {
+                                $li.addClass('sf-open');
+                            }
+                        }
+                    }
+                    //var mydata = $el.data();
+                    //spj.toggleLayer(mydata.target);
+                });
+            }
 	};
 
-	toggleRow = {
+	/*toggleRow = {
 		init: function() {
 			$('.spToggleRow').off();
 			$('.spToggleRow').click(function() {
@@ -30,7 +41,7 @@
 				$(mydata.target).show();
 			});
 		}
-	};
+	};*/
 
 	deleteRow = {
 		init: function() {
@@ -418,7 +429,7 @@
 	$(document).ready(function() {
 		$('#sfmaincontainer').on('adminformloaded', function() {
 			toggleLayer.init();
-			toggleRow.init();
+			//toggleRow.init();
 			deleteRow.init();
 			deleteRowReload.init();
 			loadForm.init();

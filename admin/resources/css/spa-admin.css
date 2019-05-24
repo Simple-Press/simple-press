@@ -319,13 +319,14 @@ $Rev:2099 $
 /**
 * .sf-icon >
 */
+#sfmaincontainer ul.sf-list .sf-list-item .sf-item-controls .sf-item-edit,
 #sfadminmenu [class*=spaicon-],
 #sf-root-wrap .sf-icon {
     display: inline-block;
     position: relative;
     height: 20px;
     width: 20px;
-    vertical-align: top;
+    vertical-align: middle;
     background-color: white;
     background-position: center;
     background-size: 100%;
@@ -337,6 +338,8 @@ $Rev:2099 $
     mask-position: center;
     mask-repeat: no-repeat;
 }
+#sfmaincontainer ul.sf-list .sf-list-item .sf-item-controls .sf-icon,
+#sfmaincontainer ul.sf-list .sf-list-item .sf-item-controls .sf-item-edit,
 #sf-root-wrap .sf-panel-head [class*=sf-button] .sf-icon {
     height: 16px;
     width: 16px;
@@ -361,10 +364,33 @@ $Rev:2099 $
     -webkit-mask-image: url("../icons/Waiting.svg");
     mask-image: url("../icons/Waiting.svg");
 }
+#sf-root-wrap .sf-icon.sf-delete {
+    background-color: #408EAD;
+    -webkit-mask-image: url("../icons/Delete.svg");
+    mask-image: url("../icons/Delete.svg");
+}
 #sf-root-wrap .sf-icon.sf-check {
     background-color: #32AA63;
     -webkit-mask-image: url("../icons/Check.svg");
     mask-image: url("../icons/Check.svg");
+}
+#sf-root-wrap .sf-icon.sf-no-check {
+    background-color: #C3282C;
+    -webkit-mask-image: url("../icons/Expand.svg");
+    mask-image: url("../icons/Expand.svg");
+    transform: rotate(45deg);
+}
+#sfmaincontainer ul.sf-list li .sf-list-item .sf-item-controls .sf-item-edit,
+#sf-root-wrap .sf-icon.sf-expand {
+    background-color: #4390AE;
+    -webkit-mask-image: url("../icons/Expand.svg");
+    mask-image: url("../icons/Expand.svg");
+}
+#sfmaincontainer ul.sf-list li.sf-open>.sf-list-item .sf-item-controls .sf-item-edit,
+#sf-root-wrap .sf-icon.sf-collapse {
+    background-color: #4390AE;
+    -webkit-mask-image: url("../icons/Collapse.svg");
+    mask-image: url("../icons/Collapse.svg");
 }
 #sfadminmenu .spaicon-Forums,
 #sf-root-wrap .sf-icon.sf-forums {
@@ -459,7 +485,7 @@ $Rev:2099 $
 */
 #sfadminmenu [class^="spaicon-"],
 #sfadminmenu [class*=" spaicon-"] {
-    margin: 15px 14px 0 20px;
+    margin: 0 14px 0 20px;
     background-color: #006992;
 }
 #sfadminmenu .sfsidebutton,
@@ -619,17 +645,6 @@ $Rev:2099 $
     color: #27476E;
 }
 
-#sfmaincontainer .item-edit {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin: 0;
-    padding: 0;
-    box-shadow: none !important;
-    border: none !important;
-    color: transparent !important;
-    background: transparent !important;
-}
 #sfmaincontainer div.sfhelplink a {
     z-index: 999;
 }
@@ -745,6 +760,66 @@ $Rev:2099 $
 #sfmaincontainer fieldset .search-box #search-submit {
     display: none;
 }
+
+/*#sfmaincontainer ul.sf-list .sf-list-item,
+#sfmaincontainer ul.sf-list .sf-inline-edit {
+    width: 340px;
+}*/
+#sfmaincontainer ul.sf-list li {
+    width: 340px;
+}
+#sfmaincontainer ul.sf-list ul > li {
+    margin-left: 20px;
+}
+#sfmaincontainer ul.sf-list .sf-list-item {
+    /*height: 50px;*/
+    margin: 0;
+    padding: 15px 16px;
+    /*line-height: 50px;*/
+    position: relative;
+    cursor: move;
+    border: 1px solid #EAF0F4;
+    -khtml-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    font-weight: 600;
+    overflow: visible;
+    position: relative;
+    word-wrap: break-word;
+    background: #FFF;
+    color: #27476E;
+    font-size: 14px;
+    clear: both;
+}
+#sfmaincontainer ul.sf-list .sf-list-item img.spSmiley {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+#sfmaincontainer ul.sf-list .sf-list-item .sf-item-name {
+    padding: 0 14px;
+    vertical-align: middle;
+}
+#sfmaincontainer ul.sf-list .sf-list-item .sf-item-controls {
+    float: right;
+}
+#sfmaincontainer ul.sf-list .sf-list-item .sf-item-controls .sf-item-type {
+    margin-right: 10px;
+    color: #999999;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+#sfmaincontainer ul.sf-list .sf-list-item .sf-item-controls .sf-icon {
+    margin-right: 10px;
+}
+#sfmaincontainer ul.sf-list .sf-inline-edit {
+    display: none;
+    padding: 35px;
+}
+#sfmaincontainer ul.sf-list li.sf-open>.sf-inline-edit {
+    display: block;
+}
+
 
 #sfmaincontainer table,
 #sfmaincontainer tbody,

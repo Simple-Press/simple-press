@@ -90,7 +90,7 @@ function spa_special_rankings_form($rankings) {
             					</td>
             					<td>
             						<div class="sp-half-row-left">
-                						<img class="spDeleteRow" data-url="<?php echo $delsite; ?>" data-target="srank<?php echo $rank['meta_id']; ?>" src="<?php echo SPCOMMONIMAGES; ?>delete.png" title="<?php SP()->primitives->admin_etext('Delete Special Rank'); ?>" alt="" />
+                						<span class="sf-icon sf-delete spDeleteRow" data-url="<?php echo $delsite; ?>" data-target="srank<?php echo $rank['meta_id']; ?>" title="<?php SP()->primitives->admin_etext('Delete Special Rank'); ?>"></span>
             						</div>
             						<div class="sp-half-row-right">
                                         <input type="submit" class="sf-button-primary" id="updatespecialrank<?php echo $rank['meta_id']; ?>" name="updatespecialrank<?php echo $rank['meta_id']; ?>" value="<?php SP()->primitives->admin_etext('Update Rank'); ?>" />

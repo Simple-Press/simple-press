@@ -57,7 +57,7 @@ function spa_components_forumranks_form() {
 						var site = "<?php echo SPAJAXURL; ?>components&amp;_wpnonce=<?php echo wp_create_nonce('components'); ?>&amp;targetaction=delbadge&amp;file=" + file;
 						var count = document.getElementById('rank-count');
 						var rcount = parseInt(count.value) + 1;
-						$('#sf-rank-badges').append('<tr id="rankbadge' + rcount + '" class="spMobileTableData"><td data-label="<?php SP()->primitives->admin_etext('Badge'); ?>"><img class="sfrankbadge" src="<?php echo SPRANKS; ?>/' + file + '" alt="" /></td><td  data-label="<?php SP()->primitives->admin_etext('Filename'); ?>">' + file + '</td><td data-label="<?php SP()->primitives->admin_etext('Remove'); ?>"><img class="spDeleteRow" src="<?php echo SPCOMMONIMAGES; ?>' + 'delete.png' + '" title="<?php echo esc_js(SP()->primitives->admin_text('Delete Rank Badge')); ?>" alt="" data-url="' + site + '" data-target="rankbadge' + rcount + '" /></td></tr>');
+						$('#sf-rank-badges').append('<tr id="rankbadge' + rcount + '" class="spMobileTableData"><td data-label="<?php SP()->primitives->admin_etext('Badge'); ?>"><img class="sfrankbadge" src="<?php echo SPRANKS; ?>/' + file + '" alt="" /></td><td  data-label="<?php SP()->primitives->admin_etext('Filename'); ?>">' + file + '</td><td data-label="<?php SP()->primitives->admin_etext('Remove'); ?>"><span class="sf-icon sf-delete spDeleteRow" title="<?php echo esc_js(SP()->primitives->admin_text('Delete Rank Badge')); ?>" data-url="' + site + '" data-target="rankbadge' + rcount + '"></span></td></tr>');
 						$('#sf-upload-status').html('<p class="sf-upload-status-success"><?php echo esc_js(SP()->primitives->admin_text('Forum badge uploaded!')); ?></p>');
 						$('.ui-tooltip').hide();
 					} else if (response==="invalid"){
@@ -210,7 +210,7 @@ function spa_paint_rankings_table($rankings) {
 <?php
 			$site = wp_nonce_url(SPAJAXURL.'components&amp;targetaction=del_rank&amp;key='.$ranks['id'][$x], 'components');
 ?>
-			<img class="spDeleteRow" data-url="<?php echo $site; ?>" data-target="rank<?php echo $x; ?>" src="<?php echo SPCOMMONIMAGES; ?>delete.png" title="<?php SP()->primitives->admin_etext('Delete Rank'); ?>" alt="" />
+			<span class="sf-icon sf-delete spDeleteRow" data-url="<?php echo $site; ?>" data-target="rank<?php echo $x; ?>" title="<?php SP()->primitives->admin_etext('Delete Rank'); ?>"></span>
 		</td>
 		<?php $tab++; ?>
 

@@ -1,9 +1,6 @@
 
 
-.inline_edit {
-    display: none;
-    padding: 35px;
-}
+
 
 .sfinline-form {
     background-color: #E9EDF6;
@@ -477,15 +474,15 @@ ul.memberlist li {
 
 #groupList,
 #tabsList,
-#menuList,
+#sf-list-sortable,
 #sfavataroptions {
     padding: 1em 0;
     width: auto;
 }
 
-#tabsList .menu li,
-#menuList .menu li,
-#sfavataroptions.menu li {
+#tabsList .sf-list li,
+#sf-list-sortable .sf-list li,
+#sfavataroptions.sf-list li {
     margin-bottom: 10px;
     position: relative;
 }
@@ -498,67 +495,12 @@ ul.memberlist li {
     position: relative;
 }
 
-#groupList li ul.menu {
-    padding-top: 0;
-}
 
-#groupList li.menu-item-depth-0 {
-    margin-top: 20px;
-}
-
-.menu ul.menu {
-    padding-top: 20px;
-}
-
-#groupList .menu-item {
-    width: 400px;
-    white-space: nowrap;
-}
-
-@media screen and (max-width: 650px) {
-    #groupList .menu-item {
-        width: 350px;
-    }
-}
-
-@media screen and (max-width: 570px) {
-    #groupList .menu-item {
-        width: 300px;
-    }
-}
-
-@media screen and (max-width: 500px) {
-    #groupList .menu-item {
-        width: 250px;
-    }
-}
-
-@media screen and (max-width: 460px) {
-    #groupList .menu-item {
-        width: 200px;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    #groupList .menu-item {
-        width: 160px;
-    }
-}
-
-.group-list.menu-item {
-    background: #333333;
-    color: #dddddd;
-}
-
-.forum-list.menu-item {
-    background: #ffffff;
-}
-
-.menu-item-disabled {
+.sf-list-item-disabled {
     background: #e9cfdf;
 }
 
-.menu-item.menu-item-depth-0 {
+.sf-list-item.sf-list-item-depth-0 {
     width: auto;
     margin: auto;
     padding-left: 10px;
@@ -569,76 +511,14 @@ ul.memberlist li {
     left: 20px;
 }
 
-#sf-root-wrap .menu-item {
-    max-width: 340px;
-    height: 50px;
-    margin: 0;
-    padding: /*17px*/0 16px;
-    line-height: 50px;
-
-    position: relative;
-    cursor: move;
-    border: 1px solid #EAF0F4;
-    -khtml-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    font-weight: 600;
-    overflow: visible;
-
-    position: relative;
-
-    word-wrap: break-word;
-    background: #FFF;
-    color: #174F69;
-    clear: both;
-}
-#sf-root-wrap .item-controls img {
-    margin-right: 7px;
-}
-
-#sf-root-wrap .item-type {
-    /*color: #999999;
-    font-size: 10px;
-    padding: 8px !important;
-    text-transform: uppercase;*/
-}
-#sf-root-wrap .item-edit {
-    width: 16px;
-    height: 16px;
-    overflow: hidden;
-}
-#sf-root-wrap .item-edit:before {
-    content: "";
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    margin-top: 5px;
-    background: url(../icons/Expand.svg) no-repeat center;
-}
-/*.item-edit {
-    background: url("images/updown.gif") no-repeat scroll 4px 8px transparent;
-    border-bottom: 1px solid #EEEEEE;
-    -webkit-border-bottom-left-radius: 3px;
-    border-bottom-left-radius: 3px;
-    display: block;
-    height: 36px;
-    overflow: hidden;
-    position: absolute;
-    right: -20px;
-    text-indent: -999em;
-    top: 0;
-    width: 23px;
-    cursor: pointer;
-}*/
-
-.menu .sortable-placeholder {
+.sf-list .sortable-placeholder {
     /*height: 35px;
     margin-top: 13px;
     margin-left: 30px;
     width: 500px !important;*/
 }
 
-#sf-root-wrap .menu-item-settings {
+#sf-root-wrap .sf-list-item-settings {
     background-color: #FFF;
     border: 1px solid #EAF0F4;
     border-top: none;
@@ -647,7 +527,6 @@ ul.memberlist li {
     border-radius: 0 0 4px 4px;
     padding: 18px 20px 22px;
     margin: 0 0 15px;
-    width: 340px;
 }
 
 /* POPUP HELP================================================================================*/
@@ -1471,7 +1350,7 @@ table td.permhead {
 Style font- icon picker
 */
 
-#spIconsetsList .item-controls {
+#spIconsetsList .sf-item-controls {
     position: initial;
 }
 

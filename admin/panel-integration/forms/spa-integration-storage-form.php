@@ -38,8 +38,8 @@ function spa_integration_storage_form() {
 
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Set Storage Locations'), true, 'storage-locations');
 			echo '<table><tr>';
-			echo '<td><img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Location found').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Location found').'</td>';
-			echo '<td><img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Location not found').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Location not found').'</td></tr><tr>';
+			echo '<td><span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Location found').'"></span>'.SP()->primitives->admin_text('Location found').'</td>';
+			echo '<td><span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Location not found').'"></span>'.SP()->primitives->admin_text('Location not found').'</td></tr><tr>';
 			echo '<td><img src="'.SPADMINIMAGES.'sp_YesWrite.png" title="'.SP()->primitives->admin_text('Write - OK').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Write - OK').'</td>';
 			echo '<td><img src="'.SPADMINIMAGES.'sp_NoWrite.png" title="'.SP()->primitives->admin_text('Write - denied').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Write - denied').'</td>';
 			echo '</tr></table>';
@@ -140,9 +140,9 @@ function spa_paint_storage_input($label, $name, $value, $path, $na=false) {
 	}
 
 	if ($found) {
-		$icon1 = '<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Location found').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;';
+		$icon1 = '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Location found').'"></span>';
 	} else {
-		$icon1 = '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Location not found').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;';
+		$icon1 = '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Location not found').'"></span>';
 		$icon2 = '<img src="'.SPADMINIMAGES.'sp_NoWrite.png" title="'.SP()->primitives->admin_text('Write - denied').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;';
 	}
 

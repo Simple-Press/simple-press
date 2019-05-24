@@ -55,7 +55,7 @@ function spa_forums_custom_icons_form() {
 						site = "<?php echo SPAJAXURL.'forums' ?>&amp;_wpnonce=<?php echo wp_create_nonce('forums'); ?>&amp;targetaction=delicon&amp;file=" + file;
 						var count = document.getElementById('icon-count');
 						var icount = parseInt(count.value) + 1;
-						$('<table id="icon' + icount + '" style="width:100%"></table>').appendTo('#sf-custom-icons').html('<tr><td class="spWFBorder" style="text-align:center;width:30%"><img class="sfcustomicon" src="<?php echo SPCUSTOMURL; ?>/' + file + '" alt="" /></td><td class="spWFBorder sflabel" style="text-align:center;width:50%">' + file + '</td><td class="spWFBorder" style="text-align:center"><img src="<?php echo SPCOMMONIMAGES; ?>' + 'delete.png' + '" title="<?php echo esc_js(SP()->primitives->admin_text('Delete custom icon')); ?>" alt="" class="spDeleteRow" data-url="' + site + '" data-target="icon' + icount + '" /></td></tr>');
+						$('<table id="icon' + icount + '" style="width:100%"></table>').appendTo('#sf-custom-icons').html('<tr><td class="spWFBorder" style="text-align:center;width:30%"><img class="sfcustomicon" src="<?php echo SPCUSTOMURL; ?>/' + file + '" alt="" /></td><td class="spWFBorder sflabel" style="text-align:center;width:50%">' + file + '</td><td class="spWFBorder" style="text-align:center"><span title="<?php echo esc_js(SP()->primitives->admin_text('Delete custom icon')); ?>" class="sf-icon sf-delete spDeleteRow" data-url="' + site + '" data-target="icon' + icount + '"></span></td></tr>');
 						$('#sf-upload-status').html('<p class="sf-upload-status-success"><?php echo esc_js(SP()->primitives->admin_text('Custom icon uploaded!')); ?></p>');
 						$('.ui-tooltip').hide();
 					} else if (response==="invalid"){

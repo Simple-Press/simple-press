@@ -165,19 +165,19 @@ function spa_profiles_avatars_form() {
 					$a = '';
 
 					echo '<div>';
-					echo '<ul id="sfavataroptions" class="menu">';
+					echo '<ul id="sfavataroptions" class="sf-list">';
 
 					if ($sfoptions['sfavatarpriority']) {
 
 						foreach ($sfoptions['sfavatarpriority'] as $priority) {
-							echo '<li id="aitem_'.$priority.'" class="menu-item menu-item-depth-0"><span class="item-name">'.$list[$priority].'</span></li>';
+							echo '<li id="aitem_'.$priority.'" class="sf-list-item sf-list-item-depth-0"><span class="sf-item-name">'.$list[$priority].'</span></li>';
 							$a.='aitem[]='.$priority.'&';
 						}
 
 					}
 					echo '</ul>';
 
-					echo '<input type="text" class="inline_edit" size="70" id="sfavataropts" name="sfavataropts" value="'.rtrim($a, '&').'" />';
+					echo '<input type="hidden" size="70" id="sfavataropts" name="sfavataropts" value="'.rtrim($a, '&').'" />';
 					echo '</div>';
 
 					echo '<div class="sf-alert-block sf-info">';

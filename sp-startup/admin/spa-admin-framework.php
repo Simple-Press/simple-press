@@ -132,11 +132,18 @@ function spa_load_admin_scripts() {
 			'jquery-ui-mouse'), false, false);
 
 		# load up admin event handlers
-		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin-events.js' : SPAJSCRIPT.'spa-admin-events.min.js';
+		// @TODO admin design
+		//$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin-events.js' : SPAJSCRIPT.'spa-admin-events.min.js';
+		//wp_enqueue_script('spadminevents', $script, array(
+		//	'jquery',
+		//	'sfadmin',
+		//	'spcommon'), false, false);
+		$script = SPAJSCRIPT.'spa-admin-events.js';
 		wp_enqueue_script('spadminevents', $script, array(
 			'jquery',
 			'sfadmin',
-			'spcommon'), false, false);
+			'spcommon'), time(), false);
+			
 		wp_enqueue_script('farbtastic');
 
 		do_action('sph_scripts_admin_end');
@@ -420,7 +427,7 @@ function spa_render_sidemenu() {
 						$save = (!empty($data['save']) ? $data['save'] : '');
 						$form = (!empty($data['form']) ? $data['form'] : '');
 						?>
-						<a<?php echo $id; ?> href="#" class="spAccordionLoadForm" data-form="<?php echo $formid; ?>" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="" data-open="open" data-upgrade="<?php echo $upgrade; ?>" data-admin="<?php echo $admin; ?>" data-save="<?php echo $save; ?>" data-sform="<?php echo $form; ?>" data-reload="<?php echo $reload; ?>"><?php echo $label; ?></a><?php echo "\n"; ?>
+						<a<?php echo $id; ?> href="javascript:void(0);" class="spAccordionLoadForm" data-form="<?php echo $formid; ?>" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="" data-open="open" data-upgrade="<?php echo $upgrade; ?>" data-admin="<?php echo $admin; ?>" data-save="<?php echo $save; ?>" data-sform="<?php echo $form; ?>" data-reload="<?php echo $reload; ?>"><?php echo $label; ?></a><?php echo "\n"; ?>
 						<?php
 					}
 					echo '</div>'."\n";
