@@ -372,6 +372,10 @@ if ($build < $section) {
 	
 }
 
+# Start of Upgrade Routines - 6.2.1 ============================================================
+
+sp_bump_build($build, 15862);
+
 # ****** IMPORTANT: THE FINAL $section values MUST be the same as the SPBUILD constant
 # ******			for the Upgrade to complete correctly
 
