@@ -21,11 +21,14 @@ function spa_enqueue_datepicker() {
 
 function spa_enqueue_font_icon_picker() {
 	
+	// Make sure we enqueue color picker...
+	 wp_enqueue_style( 'wp-color-picker' );
+
+	// now everything else...
 	$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'jquery.fonticonpicker.js' : SPAJSCRIPT.'jquery.fonticonpicker.min.js';
 	
-	
 	wp_enqueue_script('sffonticonpicker', $script, array(
-			'jquery',
+			'jquery', 'wp-color-picker'
 			), false, false);
 	
 	
