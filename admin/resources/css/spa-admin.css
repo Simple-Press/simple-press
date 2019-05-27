@@ -151,7 +151,6 @@ $Rev:2099 $
     height: 20px;
     border: 1px solid #DADADC;
     background: #FFF;
-    color: #006992;
     clear: none;
     cursor: pointer;
     line-height: 0;
@@ -184,11 +183,12 @@ $Rev:2099 $
     width: 8px;
     height: 8px;
     margin: 5px;
+    background-color: #00B9D0;
 }
 #sf-root-wrap input[type=checkbox]:checked:before {
     content: "\f147";
     margin: 0 0 0 -2px;
-    color: #006992;
+    color: #00B9D0;
 }
 
 #sf-root-wrap .sf-subhead, 
@@ -593,7 +593,6 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-panel-head .sf-buttons {
     float: right;
-    /*padding: 5px 0;*/
 }
 #sfmaincontainer .sf-panel-head .sf-buttons [class*=sf-button] {
     float: right;
@@ -899,9 +898,13 @@ $Rev:2099 $
 #sfmaincontainer.sf-installation {
     margin: 0;
 }
-#sfmaincontainer.sf-installation .sf-panel-head .help.button {
-    float: right;
-    margin: 5px 0;
+#sfmaincontainer.sf-installation input[type=radio]:checked:before {
+    background-color: #006992;
+}
+#sfmaincontainer.sf-installation input[type=checkbox]:checked:before {
+    color: #006992;
+}
+#sfmaincontainer.sf-installation .sf-panel-head .sf-button {
     font-family: "Open Sans";
 }
 #sfmaincontainer.sf-installation .ui-progressbar {

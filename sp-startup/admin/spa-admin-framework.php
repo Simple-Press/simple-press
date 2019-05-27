@@ -12,7 +12,7 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function spa_enqueue_datepicker() {
 	
 	$spAdminUIStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'jquery-ui.css' : SPADMINCSS.'jquery-ui.min.css';
-	wp_register_style('spAdminUIStyle', $spAdminUIStyleUrl);
+	wp_register_style('spAdminUIStyle', $spAdminUIStyleUrl, array(), SP_SCRIPTS_VERSION);
 	wp_enqueue_style('spAdminUIStyle');
 	
 	wp_enqueue_script( 'jquery-ui-datepicker', false, array('jquery') );
@@ -26,13 +26,13 @@ function spa_enqueue_font_icon_picker() {
 	
 	wp_enqueue_script('sffonticonpicker', $script, array(
 			'jquery',
-			), false, false);
+			), SP_SCRIPTS_VERSION, false);
 	
 	
 	$theme_css = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS . 'bootstrap-theme/jquery.fonticonpicker.bootstrap.css' : SPADMINCSS . 'bootstrap-theme/jquery.fonticonpicker.bootstrap.min.css';
 	
-	wp_enqueue_style( 'jquery.fonticonpicker-css', SPADMINCSS . 'jquery.fonticonpicker.min.css' );
-	wp_enqueue_style( 'jquery.fonticonpicker.bootstrap-css', $theme_css );
+	wp_enqueue_style( 'jquery.fonticonpicker-css', SPADMINCSS . 'jquery.fonticonpicker.min.css', array(), SP_SCRIPTS_VERSION );
+	wp_enqueue_style( 'jquery.fonticonpicker.bootstrap-css', $theme_css, array(), SP_SCRIPTS_VERSION );
 	
 }
 
@@ -44,11 +44,8 @@ function spa_enqueue_font_icon_picker() {
  * @return void
  */
 function spa_load_admin_css() {
-	//$spAdminStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'spa-admin.css' : SPADMINCSS.'spa-admin.min.css';
-	//wp_register_style('spAdminStyle', $spAdminStyleUrl);
-        // @TODO admin design
-        $spAdminStyleUrl = SPADMINCSS.'spa-admin.css';
-	wp_register_style('spAdminStyle', $spAdminStyleUrl, array(), time());
+	$spAdminStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'spa-admin.css' : SPADMINCSS.'spa-admin.min.css';
+	wp_register_style('spAdminStyle', $spAdminStyleUrl, array(), SP_SCRIPTS_VERSION);
 	
 	wp_enqueue_style('spAdminStyle');
 	wp_enqueue_style('farbtastic');
@@ -76,36 +73,27 @@ function spa_load_admin_scripts() {
 
 			$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'ajaxupload/ajaxupload.js' : SPAJSCRIPT.'ajaxupload/ajaxupload.min.js';
 			wp_enqueue_script('sfajaxupload', $script, array(
-				'jquery'), false, false);
+				'jquery'), SP_SCRIPTS_VERSION, false);
 
 			$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'nested-sortable/jquery.ui.nested.js' : SPAJSCRIPT.'nested-sortable/jquery.ui.nested.min.js';
 			wp_enqueue_script('sfanestedsortable', $script, array(
 				'jquery',
 				'jquery-ui-core',
 				'jquery-ui-widget',
-				'jquery-ui-sortable'), false, false);
+				'jquery-ui-sortable'), SP_SCRIPTS_VERSION, false);
 		}
 		
 		wp_enqueue_editor();
 		
 		spa_enqueue_datepicker();
 		
-		//$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin.js' : SPAJSCRIPT.'spa-admin.min.js';
-		//wp_enqueue_script('sfadmin', $script, array(
-		//	'jquery',
-		//	'jquery-form',
-		//	'jquery-ui-accordion',
-		//	'jquery-ui-sortable',
-		//	'jquery-ui-tooltip'), false, false);
-
-                // @TODO admin design
-                $script = SPAJSCRIPT.'spa-admin.js';
-                wp_enqueue_script('sfadmin', $script, array(
+		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin.js' : SPAJSCRIPT.'spa-admin.min.js';
+		wp_enqueue_script('sfadmin', $script, array(
 			'jquery',
 			'jquery-form',
 			'jquery-ui-accordion',
 			'jquery-ui-sortable',
-			'jquery-ui-tooltip'), time(), false);
+			'jquery-ui-tooltip'), SP_SCRIPTS_VERSION, false);
                 
 		$platform = array(
 			'focus'			 => 'admin',
@@ -124,7 +112,7 @@ function spa_load_admin_scripts() {
 			'jquery-ui-core',
 			'jquery-ui-widget',
 			'jquery-ui-dialog',
-			'jquery-ui-progressbar'), false, false);
+			'jquery-ui-progressbar'), SP_SCRIPTS_VERSION, false);
 		wp_enqueue_script('jquery-touch-punch', false, array(
 			'jquery',
 			'jquery-ui-core',
@@ -132,17 +120,11 @@ function spa_load_admin_scripts() {
 			'jquery-ui-mouse'), false, false);
 
 		# load up admin event handlers
-		// @TODO admin design
-		//$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin-events.js' : SPAJSCRIPT.'spa-admin-events.min.js';
-		//wp_enqueue_script('spadminevents', $script, array(
-		//	'jquery',
-		//	'sfadmin',
-		//	'spcommon'), false, false);
-		$script = SPAJSCRIPT.'spa-admin-events.js';
+		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin-events.js' : SPAJSCRIPT.'spa-admin-events.min.js';
 		wp_enqueue_script('spadminevents', $script, array(
 			'jquery',
 			'sfadmin',
-			'spcommon'), time(), false);
+			'spcommon'), SP_SCRIPTS_VERSION, false);
 			
 		wp_enqueue_script('farbtastic');
 
@@ -155,20 +137,12 @@ function spa_load_admin_scripts() {
 			'callback'	 => 'spa_add_slider_help'));
 	} else {
 		# Install and Upgrade
-		// @TODO admin design
-		//$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.js' : SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.min.js';
-		//wp_enqueue_script('sfjs', $script, array(
-		//	'jquery',
-		//	'jquery-ui-core',
-		//	'jquery-ui-widget',
-		//	'jquery-ui-progressbar'), false, false);
-			
-		$script = SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.js';
+		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.js' : SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.min.js';
 		wp_enqueue_script('sfjs', $script, array(
 			'jquery',
 			'jquery-ui-core',
 			'jquery-ui-widget',
-			'jquery-ui-progressbar'), time(), false);
+			'jquery-ui-progressbar'), SP_SCRIPTS_VERSION, false);
 	}
 	
 	spa_enqueue_font_icon_picker();
@@ -293,21 +267,13 @@ function spa_admin_footer_scripts() {
 				$panel = (!empty($sfactivepanels[SP()->admin->adminPage])) ? $sfactivepanels[SP()->admin->adminPage] : 0;
 			}*/
 
-			//$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin-footer.js' : SPAJSCRIPT.'spa-admin-footer.min.js';
-			//wp_enqueue_script('sfadminfooter', $script, array(
-			//	'jquery',
-			//	'jquery-ui-core',
-			//	'jquery-ui-widget',
-			//	'jquery-ui-accordion',
-			//	'jquery-ui-tooltip'), false, true);
-                        // @TODO admin design
-                        $script = SPAJSCRIPT.'spa-admin-footer.js';
+			$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin-footer.js' : SPAJSCRIPT.'spa-admin-footer.min.js';
 			wp_enqueue_script('sfadminfooter', $script, array(
 				'jquery',
 				'jquery-ui-core',
 				'jquery-ui-widget',
 				'jquery-ui-accordion',
-				'jquery-ui-tooltip'), time(), true);
+				'jquery-ui-tooltip'), SP_SCRIPTS_VERSION, true);
 
 			/*$admin = array(
 				'panel'		 => $panel,

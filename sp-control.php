@@ -341,6 +341,12 @@ if (!class_exists('spcSimplePress')) {
 			# version and system control constants
 			define('SPPLUGNAME', 'Simple:Press');
 			define('SPVERSION', '6.2.0');
+                        
+                        define('SP_SCRIPTS_DEBUG', true);
+                        
+                        define('SP_SCRIPTS_VERSION'
+                                , (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPVERSION . '.' . time() : SPVERSION);
+                        
 			define('SPBUILD', 15861);
 			define('SPSILENT', 15861);
 			define('SPRELEASE', 'Release');
