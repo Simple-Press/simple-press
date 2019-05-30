@@ -272,7 +272,7 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	
 	
 	if( $show_label ) {
-		echo "<div class='sp-form-row'>\n";
+		echo "<div class='sf-form-row'>\n";
 		echo "<div class='wp-core-ui sflabel sp-label-40'>$label:</div>\n";
 	}
 	

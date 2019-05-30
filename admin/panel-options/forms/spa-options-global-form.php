@@ -91,34 +91,36 @@ function spa_options_global_form() {
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Post Editing'), true, 'post-editing');
 				?>
-				<?php SP()->primitives->admin_etext('Select Default Editor'); ?>:<br />
+				<div class="sf-form-row">
+					<label><?php SP()->primitives->admin_etext('Select Default Editor'); ?></label>
 
 <?php
                 if (defined('RICHTEXT')) {
 					$checked = ($sfoptions['defeditor'] == 1) ? 'checked="checked"' : '';
 ?>
 					<input type="radio" name="editor" id="sfradio-editor1"  tabindex="<?php echo $tab; $tab++; ?>" value="1" <?php echo $checked; ?> />
-					<label for="sfradio-editor1"><?php echo SP()->primitives->admin_text('Rich text').' ('.RICHTEXTNAME.')'; ?></label><br>
+					<label for="sfradio-editor1"><?php echo SP()->primitives->admin_text('Rich text').' ('.RICHTEXTNAME.')'; ?></label>
 <?php
                 }
                 if (defined('HTML')) {
 					$checked = ($sfoptions['defeditor'] == 2) ? 'checked="checked"' : '';
 ?>
 					<input type="radio" name="editor" id="sfradio-editor2"  tabindex="<?php echo $tab; $tab++; ?>" value="2" <?php echo $checked; ?> />
-					<label for="sfradio-editor2"><?php echo SP()->primitives->admin_text('HTML').' ('.HTMLNAME.')'; ?></label><br>
+					<label for="sfradio-editor2"><?php echo SP()->primitives->admin_text('HTML').' ('.HTMLNAME.')'; ?></label>
 <?php
                 }
                 if (defined('BBCODE')) {
 					$checked = ($sfoptions['defeditor'] == 3) ? 'checked="checked"' : '';
 ?>
 					<input type="radio" name="editor" id="sfradio-editor3"  tabindex="<?php echo $tab; $tab++; ?>" value="3" <?php echo $checked; ?> />
-					<label for="sfradio-editor3"><?php echo SP()->primitives->admin_text('bbCode').' ('.BBCODENAME.')'; ?></label><br>
+					<label for="sfradio-editor3"><?php echo SP()->primitives->admin_text('bbCode').' ('.BBCODENAME.')'; ?></label>
 <?php
                 }
                 $checked = ($sfoptions['defeditor'] == 4) ? 'checked="checked"' : '';
 ?>
 				<input type="radio" name="editor" id="sfradio-editor4"  tabindex="<?php echo $tab; $tab++; ?>" value="4" <?php echo $checked; ?> />
-				<label for="sfradio-editor4"><?php echo SP()->primitives->admin_text('Plain text').' ('.PLAINTEXTNAME.')'; ?></label><br /><br />
+				<label for="sfradio-editor4"><?php echo SP()->primitives->admin_text('Plain text').' ('.PLAINTEXTNAME.')'; ?></label>
+				</div>
 <?php
 				spa_paint_input(SP()->primitives->admin_text('# of days a post can be edited (if user has permission)'), 'editpostdays', $sfoptions['editpostdays']);
 			spa_paint_close_fieldset();

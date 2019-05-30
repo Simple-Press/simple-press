@@ -70,7 +70,7 @@ function spa_forums_edit_forum_form($forum_id) {
 					echo '<input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.$tab.'" name="forum_name" id="forum_name" value="'.esc_attr($forum->forum_name).'" data-url="'.$ajaxURL.'" data-target="'.$target.'" data-type="edit" />';
 					echo '<input type="hidden" name="forum_id" value="'.$forum->forum_id.'" />';
 
-					echo "<div class='sp-form-row'>\n";
+					echo "<div class='sf-form-row'>\n";
 					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Forum slug').':</div>';
 					echo '<input type="text" class="wp-core-ui sp-input-60" tabindex="'.$tab.'" name="cforum_slug" id="cforum_slug" value="'.esc_attr($forum->forum_slug).'" />';
 					echo '<div class="clearboth"></div>';

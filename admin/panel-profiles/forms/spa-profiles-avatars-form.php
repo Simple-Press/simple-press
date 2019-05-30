@@ -111,7 +111,7 @@ function spa_profiles_avatars_form() {
 
 					$checked = ($sfoptions['sfavataruploads']) ? ' checked="checked"' : '';
 					?>
-					<div class="sp-form-row">
+					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavataruploads" name="sfavataruploads" tabindex="102" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_2" />
 					<label class="wp-core-ui" for="sf-sfavataruploads"><?php echo(SP()->primitives->admin_text('Enable avatar uploading')); ?></label>
 					<div class="clearboth"></div></div>
@@ -123,7 +123,7 @@ function spa_profiles_avatars_form() {
 
 					$checked = ($sfoptions['sfavatarpool']) ? ' checked="checked"' : '';
 					?>
-					<div class="sp-form-row">
+					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavatarpool" name="sfavatarpool" tabindex="106" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_4" />
 					<label class="wp-core-ui" for="sf-sfavatarpool"><?php echo(SP()->primitives->admin_text('Enable avatar pool selection')); ?></label>
 					<div class="clearboth"></div></div>
@@ -131,7 +131,7 @@ function spa_profiles_avatars_form() {
 
 					$checked = ($sfoptions['sfavatarremote']) ? ' checked="checked"' : '';
 					?>
-					<div class="sp-form-row">
+					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavatarremote" name="sfavatarremote" tabindex="105" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_5" />
 					<label class="wp-core-ui" for="sf-sfavatarremote"><?php echo(SP()->primitives->front_text('Enable remote avatars')); ?></label>
 					<div class="clearboth"></div></div>
@@ -142,7 +142,7 @@ function spa_profiles_avatars_form() {
 
 					$checked = ($sfoptions['sfavatarreplace']) ? ' checked="checked"' : '';
 					?>
-					<div class="sp-form-row">
+					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavatarreplace" name="sfavatarreplace" tabindex="111" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_1" />
 					<label class="wp-core-ui" for="sf-sfavatarreplace"><?php echo(SP()->primitives->front_text('Replace WP avatar with SP avatar')); ?></label>
 					<div class="clearboth"></div></div>

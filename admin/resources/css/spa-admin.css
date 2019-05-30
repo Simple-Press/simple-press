@@ -9,7 +9,7 @@ $Rev:2099 $
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
 /*@import url(//use.fontawesome.com/releases/v5.8.2/css/all.css);*/
 
-@import url(./scrapyard.css);
+/*@import url(./scrapyard.css);*/
 
 @font-face {
     font-family: 'Open Sans Semibold';
@@ -18,6 +18,25 @@ $Rev:2099 $
     src: local('Open Sans Semibold'), local('OpenSansSemibold-Regular'),
         url(./fonts/open-sans-semibold.woff) format('woff'),
         url(./fonts/open-sans-semibold.ttf) format('truetype');
+}
+
+/* TOOLTIPS =========================================================================================*/
+
+.ttip {
+    font-family: "Open Sans";
+    font-style: normal;
+    border: 1px solid #a6c9e2;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    color: #000000;
+    font-size: 13px;
+    line-height: 1.2em;
+    background: #FFFFDF;
+    padding: 8px;
+    position: absolute;
+    max-width: 300px;
+    z-index: 999999
 }
 
 #sf-root-wrap {
@@ -46,6 +65,13 @@ $Rev:2099 $
     box-shadow: none;
     cursor: pointer;
 }
+#sf-root-wrap h4 {
+    margin: 0 0 10px 0;
+    font-family: "Open Sans Semibold";
+    font-size: 16px;
+    line-height: 22px;
+}
+
 
 #sf-root-wrap ::placeholder {
     font-size: 12px;
@@ -76,7 +102,7 @@ $Rev:2099 $
 #sf-root-wrap select,
 #sf-root-wrap textarea,
 #sf-root-wrap .sf-select-wrap {
-    margin: 0;
+    margin: 0 0 20px;
     padding: 16px 16px 15px;
     width: 100%;
     color: #47484A;
@@ -326,8 +352,15 @@ $Rev:2099 $
     position: relative;
     height: 20px;
     width: 20px;
+    padding: 0;
+    -khtml-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
     vertical-align: middle;
     background-color: white;
+    color: transparent;
+    box-shadow: none;
+    border: none;
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -380,6 +413,12 @@ $Rev:2099 $
     mask-image: url("../icons/Expand.svg");
     transform: rotate(45deg);
 }
+#sf-root-wrap .sf-icon.sf-upload {
+    background-color: #0E7198;
+    -webkit-mask-image: url("../icons/Upload.svg");
+    mask-image: url("../icons/Upload.svg");
+}
+
 #sfmaincontainer ul.sf-list li .sf-list-item .sf-item-controls .sf-item-edit,
 #sf-root-wrap .sf-icon.sf-expand {
     background-color: #4390AE;
@@ -606,6 +645,7 @@ $Rev:2099 $
     font-weight: normal;
     color: #27476E;
 }
+
 #sfmaincontainer .sf-panel-body {
     float: left;
     width: 100%;
@@ -615,11 +655,45 @@ $Rev:2099 $
     -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
+    overflow: hidden;
 }
+#sfmaincontainer .sf-panel-body .sf-panel-body-top {
+    float: left;
+    width: 100%;
+    position: relative;
+    padding: 20px 0;
+    margin: -30px 0 30px;
+}
+#sfmaincontainer .sf-panel-body .sf-panel-body-top:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    width: 500%;
+    margin-left: -200%;
+    background: transparent;
+    box-shadow: 0 1px 0 #F0F0F0;
+}
+#sfmaincontainer .sf-panel-body .sf-panel-body-top-left {
+    float: left;
+    color: #006992;
+}
+#sfmaincontainer .sf-panel-body .sf-panel-body-top-left span {
+    font-size: 12px;
+}
+#sfmaincontainer .sf-panel-body .sf-panel-body-top-right {
+    float: right;
+}
+
 #sfmaincontainer .sf-fieldset {
     position: relative;
 }
+#sfmaincontainer li {
+    margin: 0;
+}
 #sfmaincontainer .sf-alert-block {
+    float: left;
+    width: 100%;
     font-size: 14px;
     line-height: 19px;
     padding: 16px;
@@ -629,6 +703,13 @@ $Rev:2099 $
     border-radius: 3px;
     border: 1px solid #00b9d0;
 }
+#sfmaincontainer .sf-alert-block .sf-icon {
+    margin-right: 10px;
+}
+#sfmaincontainer .sf-alert-block+.sf-alert-block {
+    margin-top: -20px;
+}
+
 #sfmaincontainer .sf-alert-block.sf-info {
     background-color: rgba(0, 185, 208, .1);
     border-color: rgba(0, 185, 208, .5);
@@ -643,11 +724,17 @@ $Rev:2099 $
     line-height: 24px;
     color: #27476E;
 }
-
-#sfmaincontainer div.sfhelplink a {
-    z-index: 999;
+#sfmaincontainer .sf-fieldset legend {
+    float: left;
+    width: 100%;
+    margin: 0 0 30px 0;
+    padding: 0;
+    background-color: transparent;
+    font-family: "Open Sans Semibold";
+    font-size: 14px;
+    color: #27476E;
 }
-#sfmaincontainer div.sfhelplink .sf-icon.sf-help {
+#sfmaincontainer span.sfhelplink .sf-icon.sf-help {
     background-color: #0E7198;
 }
 #sfmaincontainer .sfform-submit-bar {
@@ -658,27 +745,61 @@ $Rev:2099 $
 }
 
 #sfmaincontainer .sp-full-form {
+    float: left;
     width: 100%;
 }
-#sfmaincontainer .sp-full-form div.sfhelplink {
-    float: right;
-    margin: 30px 20px 15px 0 !important;
+#sfmaincontainer .sp-full-form span.sfhelplink {
+    /*float: right;*/
+    display: inline-block;
+    margin: 10px 0px 0px 20px;
 }
+#sfmaincontainer .sp-full-form legend span.sfhelplink {
+    margin: 0;
+}
+
 #sfmaincontainer .sp-half-form {
     float: left;
     width: 50%;
-    padding: 0;
-    /*padding: 30px 30px 0 30px;*/
+    padding: 0 15px 0 0;
     background-color: #F9F9F9;
 }
 #sfmaincontainer .sp-half-form .sf-fieldset .sf-alert-block {
     margin: 20px;
 }
 #sfmaincontainer .sf-panel-body .sp-half-form+.sp-half-form {
-    padding-left: 30px;
+    padding: 0 0 0 15px;
 }
 
-#sfmaincontainer .sp-half-form fieldset {
+#sfmaincontainer .sf-form-row.sf-upload {
+    display: inline-block;
+    position: relative;
+}
+#sfmaincontainer .sf-form-row.sf-upload label {
+    display: none;
+}
+#sfmaincontainer .sf-form-row.sf-upload #sf-upload-button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin-left: 30px;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+}
+#sfmaincontainer .sf-form-row.sf-upload #sf-upload-status {
+    position: absolute;
+    background: rgba(0, 185, 208, .7);
+    padding: 0 10px;
+    right: 0;
+    color: white;
+    top: 30px;
+    -khtml-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    z-index: 999;
+}
+
+#sfmaincontainer .sp-half-form .___sf-fieldset {
     position: relative;
     margin-bottom: 30px;
     background-color: #FFF;
@@ -686,28 +807,21 @@ $Rev:2099 $
     -webkit-border-radius: 4px;
     border-radius: 4px;
 }
-#sfmaincontainer .sp-half-form fieldset div.sfhelplink {
-    top: 0;
-    right: 0;
-    position: absolute;
+#sfmaincontainer .sp-half-form .sf-fieldset {
+    position: relative;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #FFF;
+    -khtml-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
 }
-#sfmaincontainer .sp-half-form fieldset div.sfhelplink a {
-    margin: 20px;
-}
-#sfmaincontainer .sp-half-form fieldset .sp-form-row {
-    /*float: left;
-    width: 100%;*/
-    padding: 0 20px;
-    margin: 20px 0 30px 0;
-}
-
-#sfmaincontainer fieldset legend {
+#sfmaincontainer .sp-half-form .sf-fieldset ___legend {
     margin: 0;
     padding: 20px;
     background-color: #EAF0F4;
     width: 100%;
     line-height: 20px;
-    /*height: 60px;*/
     -khtml-border-radius: 4px 4px 0px 0px;
     -webkit-border-radius: 4px 4px 0px 0px;
     border-radius: 4px 4px 0px 0px;
@@ -715,39 +829,72 @@ $Rev:2099 $
     font-size: 14px;
     color: #27476E;
 }
-#sfmaincontainer fieldset legend strong {
-    display: inline-block;
-    width: calc(100% - 60px);
+#sfmaincontainer .sp-half-form .sf-fieldset legend {
+    margin: -20px 0px 20px -20px;
+    padding: 20px;
+    background-color: #EAF0F4;
+    width: calc(100% + 40px);
+    line-height: 20px;
+    -khtml-border-radius: 4px 4px 0px 0px;
+    -webkit-border-radius: 4px 4px 0px 0px;
+    border-radius: 4px 4px 0px 0px;
+    font-family: "Open Sans Semibold";
+    font-size: 14px;
+    color: #27476E;
 }
-#sfmaincontainer .sp-full-form  fieldset legend {
-    display: none;
+#sfmaincontainer .sp-half-form .sf-fieldset span.sfhelplink {
+    float: right;
 }
-
-#sfmaincontainer fieldset .subsubsub {
-    height: 80px;
-    line-height: 80px;
-    margin: 0 0 0 30px;
+#sfmaincontainer .sp-half-form .sf-fieldset .___sf-form-row {
+    float: left;
+    width: 100%;
+    padding: 0 20px;
+    margin: 20px 0 30px 0;
+}
+#sfmaincontainer .sp-half-form .sf-fieldset .sf-form-row {
+    float: left;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+#sfmaincontainer .sp-half-form .sf-fieldset .sf-form-row+.sf-form-row {
+    margin-top: 10px;
+}
+#sfmaincontainer .sf-fieldset .subsubsub {
+    margin: 10px 0 0 0;
     font-size: 14px;
 }
-#sfmaincontainer fieldset .subsubsub a {
+#sfmaincontainer .sf-fieldset .subsubsub li {
+    float: left;
+    margin-right: 20px;
+}
+#sfmaincontainer .sf-fieldset .subsubsub a {
+    line-height: 19px;
+    margin: 0;
+    padding: 0;
     color: #9D9EA0;
 }
-#sfmaincontainer fieldset .subsubsub a.current {
+#sfmaincontainer .sf-fieldset .subsubsub a.current {
     color: #257EA1;
 }
-#sfmaincontainer fieldset .subsubsub a .count,
-#sfmaincontainer fieldset .subsubsub a.current .count {
+#sfmaincontainer .sf-fieldset .subsubsub a .count,
+#sfmaincontainer .sf-fieldset .subsubsub a.current .count {
     font-weight: inherit;
     color: inherit;
 }
 
-#sfmaincontainer fieldset .tablenav {
+#sfmaincontainer .sf-fieldset .tablenav {
     display: none;
 }
-#sfmaincontainer fieldset .search-box #search_id-search-input {
-    height: 40px;
+#sfmaincontainer .sf-fieldset .search-box {
+    float: left;
     width: 200px;
-    margin: 20px;
+    margin: 0;
+}
+#sfmaincontainer .sf-fieldset .search-box #search_id-search-input {
+    height: 40px;
+    width: 100%;
+    margin: 0;
     padding: 12px 20px 11px 20px;
     border: 1px solid #F0F0F0 !important;
     -khtml-border-radius: 20px;
@@ -756,14 +903,10 @@ $Rev:2099 $
     outline: none;
     box-shadow: none;
 }
-#sfmaincontainer fieldset .search-box #search-submit {
+#sfmaincontainer .sf-fieldset .search-box #search-submit {
     display: none;
 }
 
-/*#sfmaincontainer ul.sf-list .sf-list-item,
-#sfmaincontainer ul.sf-list .sf-inline-edit {
-    width: 340px;
-}*/
 #sfmaincontainer ul.sf-list li {
     width: 340px;
 }
@@ -771,10 +914,10 @@ $Rev:2099 $
     margin-left: 20px;
 }
 #sfmaincontainer ul.sf-list .sf-list-item {
-    /*height: 50px;*/
-    margin: 0;
+    float: left;
+    width: 100%;
+    margin: 0 0 8px;
     padding: 15px 16px;
-    /*line-height: 50px;*/
     position: relative;
     cursor: move;
     border: 1px solid #EAF0F4;
@@ -811,14 +954,30 @@ $Rev:2099 $
 #sfmaincontainer ul.sf-list .sf-list-item .sf-item-controls .sf-icon {
     margin-right: 10px;
 }
+#sfmaincontainer ul.sf-list .sf-list-item.sf-group-list {
+    background-color: #EAF0F4;
+}
 #sfmaincontainer ul.sf-list .sf-inline-edit {
     display: none;
-    padding: 35px;
+}
+#sfmaincontainer ul.sf-list li.sf-open>.sf-list-item {
+    -khtml-border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+    background-color: #EAF0F4;
+    margin-bottom: 0;
 }
 #sfmaincontainer ul.sf-list li.sf-open>.sf-inline-edit {
     display: block;
+    padding: 20px;
+    background: #FFF;
+    margin: 0 0 5px;
+    border: 1px solid #EAF0F4;
+    -khtml-border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+    border-top: none;
 }
-
 
 #sfmaincontainer table,
 #sfmaincontainer tbody,
@@ -830,15 +989,6 @@ $Rev:2099 $
     vertical-align: top
 }
 
-#sfmaincontainer table.widefat:before {
-    content: "";
-    height: 1px;
-    position: absolute;
-    box-shadow: 0 1px 0 #F0F0F0;
-    left: 0;
-    top: 0;
-    width: 100%;
-}
 #sfmaincontainer table.widefat {
     position: relative;
     /*padding: 30px;*/
@@ -910,7 +1060,7 @@ $Rev:2099 $
 #sfmaincontainer.sf-installation .ui-progressbar {
     margin-bottom: 22px;
 }
-#sfmaincontainer.sf-installation .sf-panel-row {
+#sfmaincontainer.sf-installation .sf-form-row {
     padding: 0;
     margin: 0 0 35px 0;
 }
@@ -963,12 +1113,10 @@ $Rev:2099 $
         margin: 0;
         width: 100%;
     }
-
-    #sfmaincontainer.sf-installation .sf-panel-row {
+    #sfmaincontainer.sf-installation .sf-form-row {
         padding: 0;
         margin: 0 0 22px 0;
     }
-
     #sfsidepanel {
         width: 100%;
     }
@@ -1004,7 +1152,6 @@ $Rev:2099 $
     #sfsidepanel.sf-admin-menu-mobile-show .sf-tooggle-admin-menu .sf-button.sf-hide {
         display: block;
     }
-
     #sfadminmenu {
         display: none;
         -khtml-border-radius: 0 0 3px 3px;
@@ -1013,7 +1160,6 @@ $Rev:2099 $
         overflow: hidden;
         margin-bottom: 10px;
     }
-
     #sfmaincontainer {
         margin: 0;
     }
@@ -1034,16 +1180,19 @@ $Rev:2099 $
     #sfmaincontainer .sf-panel-body {
         padding: 20px;
     }
-    #sfmaincontainer div.sfhelplink {
-        /*margin: 15px 5px 15px 0 !important;*/
-        margin: 5px 5px 0px 0 !important;
+    #sfmaincontainer span.sfhelplink {
+        margin: 5px 5px 0px 0;
     }
-
-    #sfmaincontainer fieldset .search-box {
-        top: 0;
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right {
+        width: 100%;
     }
-    #sfmaincontainer fieldset .search-box #search_id-search-input {
-        width: calc(100% - 74px);
+    #sfmaincontainer .sf-fieldset .search-box {
+        position: relative;
+        width: calc(100% - 40px);
+        height: auto;
+        margin: 0;
+    }
+    #sfmaincontainer .sf-fieldset .search-box #search_id-search-input {
         -khtml-border-radius: 3px;
         -webkit-border-radius: 3px;
         border-radius: 3px;
@@ -1057,7 +1206,38 @@ $Rev:2099 $
         line-height: 30px;
         color: #27476E;
     }
-
-
+    #sfmaincontainer .sp-half-form {
+        width: 100%;      
+        margin: 0;
+        padding: 0 !important;
+    }
+    #sfmaincontainer ul.sf-list li {
+        float: left;
+        width: 100%;
+    }
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top {
+        margin-bottom: 20px;
+    }
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-left span {
+        opacity: .75;
+    }
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-modile-btns .sf-form-row.sf-upload {
+        float: right;
+    }
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-modile-btns .sfhelplink,
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-modile-btns .sf-form-row.sf-upload #sf-upload-button {
+        float: left;
+        width: auto;
+        height: auto;
+        margin: 8px 0 0 0;
+        padding: 15px 52px;
+        background-color: #F0F0F0;
+        -khtml-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+    }
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-modile-btns .sf-form-row.sf-upload #sf-upload-button .sf-icon {
+        margin: 0;
+    }
 }
 

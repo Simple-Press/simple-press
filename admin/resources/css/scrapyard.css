@@ -655,26 +655,6 @@ ul.memberlist li {
 
 
 
-/* TOOLTIPS =========================================================================================*/
-
-.ttip {
-    color: #000000;
-    font-size: 13px;
-    line-height: 1.2em;
-    background: #FFFFDF;
-    padding: 8px;
-    position: absolute;
-    max-width: 300px;
-    z-index: 999999
-}
-
-body .ttip {
-    border: 1px solid #a6c9e2;
-    -khtml-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-}
-
 /* user panel profile popup =========================================================================================*/
 
 .spClear {

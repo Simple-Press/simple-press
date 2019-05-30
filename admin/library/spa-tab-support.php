@@ -93,9 +93,12 @@ function spa_paint_open_fieldset($legend, $displayhelp=false, $helpname='', $dis
 
 	echo "<fieldset class='sf-fieldset'>\n";
 	if($displaylegend) {
-		echo "<legend><strong>$legend</strong></legend>\n";
+		echo "<legend><strong>$legend</strong>";
+		if ($displayhelp) echo spa_paint_help($helpname, $adminhelpfile);
+		echo "</legend>\n";
+	} else {
+		if ($displayhelp) echo spa_paint_help($helpname, $adminhelpfile);
 	}
-	if ($displayhelp) echo spa_paint_help($helpname, $adminhelpfile);
 }
 
 function spa_paint_close_fieldset() {
@@ -105,7 +108,7 @@ function spa_paint_close_fieldset() {
 function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $css_classes = '' ) {
 	global $tab;
 	
-	$field_classes = 'sp-form-row' . " {$css_classes}";
+	$field_classes = 'sf-form-row' . " {$css_classes}";
 	echo "<div class='{$field_classes}'>\n";
 	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
 	if ($large) {
@@ -135,7 +138,7 @@ function spa_paint_single_input($name, $value, $disabled=false, $css_classes = '
 function spa_paint_date($label, $name, $value, $disabled=false, $large=false) {
 	global $tab;
 
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row'>\n";
 	if ($large) {
 		echo "<label class='wp-core-ui sflabel sp-label-40'>\n";
 	} else {
@@ -155,7 +158,7 @@ function spa_paint_date($label, $name, $value, $disabled=false, $large=false) {
 function spa_paint_number($label, $name, $value, $disabled=false, $large=false) {
 	global $tab;
 
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row'>\n";
 	if ($large) {
 		echo "<label class='wp-core-ui sflabel sp-label-40'>\n";
 	} else {
@@ -175,7 +178,7 @@ function spa_paint_number($label, $name, $value, $disabled=false, $large=false) 
 function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1) {
 	global $tab;
 
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row'>\n";
 	echo "<label class='wp-core-ui sflabel sp-label-50'>\n";
 	echo "$label";
 	if (!empty($submessage)) echo "<br /><small><strong>".esc_html($submessage)."</strong></small>\n";
@@ -190,10 +193,10 @@ function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1) {
 function spa_paint_wide_textarea($label, $name, $value, $submessage='', $xrows=1) {
 	global $tab;
 
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row'>\n";
 	echo "<label class='wp-core-ui sflabel sp-label'>\n";
 	echo "$label";
-	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
+	if (!empty($submessage)) echo "<small><strong>$submessage</strong></small>\n";
 	echo '</label>';
 	echo "<textarea rows='$xrows' cols='80' class='wp-core-ui sp-textarea' tabindex='$tab' name='$name'>".esc_attr($value)."</textarea>\n";
 	//echo '<div class="clearboth"></div>';
@@ -205,7 +208,7 @@ function spa_paint_wide_textarea($label, $name, $value, $submessage='', $xrows=1
 function spa_paint_thin_textarea($label, $name, $value, $submessage='', $xrows=1) {
 	global $tab;
 
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row'>\n";
 	echo "<label class='wp-core-ui sflabel sp-label-66'>\n";
 	echo "$label";
 	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
@@ -231,7 +234,7 @@ function spa_paint_thin_textarea($label, $name, $value, $submessage='', $xrows=1
 function spa_paint_editor($label, $name, $value, $submessage='', $xrows=1) {
 	global $tab;
 
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row'>\n";
 	echo "<label class='wp-core-ui sflabel sp-label-50'>\n";
 	echo "$label";
 	if (!empty($submessage)) echo "<br /><small><strong>".esc_html($submessage)."</strong></small>\n";
@@ -265,7 +268,7 @@ function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, 
 
 	add_filter( 'tiny_mce_before_init', 'spa_cache_ajax_editor_settings', 11, 2 );
 	
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row'>\n";
 	echo "<label class='wp-core-ui sflabel sp-label'>\n";
 	echo "$label";
 	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
@@ -297,7 +300,7 @@ function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, 
 function spa_paint_thin_editor($label, $name, $value, $submessage='', $xrows=1) {
 	global $tab;
 
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row'>\n";
 	echo "<label class='wp-core-ui sflabel sp-label-66'>\n";
 	echo "$label";
 	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
@@ -446,7 +449,7 @@ function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $ro
 	//		  Right now the scripts are loaded globally at the bottom of this file. ugg!
 	spa_enqueue_codemirror();
 	
-    echo "<div class='sp-form-row'>\n";
+    echo "<div class='sf-form-row'>\n";
     echo "<label class='wp-core-ui sflabel sp-label'>\n";
     if(mb_strlen($label)) {
         echo "$label";
@@ -475,7 +478,7 @@ function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $ro
 function spa_paint_checkbox($label, $name, $value, $disabled=false, $large=false, $displayhelp=true, $msg='', $indent=false) {
 	global $tab;
 
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row'>\n";
 	if ($indent) echo str_repeat('&nbsp;', 7);
 	echo "<input type='checkbox' tabindex='$tab' name='$name' id='sf-$name' ";
 	if ($value == true) echo "checked='checked' ";
@@ -491,7 +494,7 @@ function spa_paint_checkbox($label, $name, $value, $disabled=false, $large=false
 function spa_paint_select_start($label, $name, $helpname) {
 	global $tab;
 
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row'>\n";
 	echo "<label class='wp-core-ui sflabel sp-label-40'>$label</label>\n";
 	echo "<div class='sf-select-wrap'>\n";
 	echo "<select class='wp-core-ui  sp-input-60' tabindex='$tab' name='$name'>";
@@ -509,7 +512,7 @@ function spa_paint_select_end($msg='') {
 function spa_paint_file($label, $name, $disabled, $large, $path) {
 	global $tab;
 
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row sf-upload'>\n";
 	if ($large) {
 		echo "<label class='wp-core-ui sflabel sp-label-40'>\n";
 	} else {
@@ -518,7 +521,7 @@ function spa_paint_file($label, $name, $disabled, $large, $path) {
 	echo "$label</label>";
 
 	if (is_writable($path)) {
-		echo '<div id="sf-upload-button" class="sf-button-primary">'.SP()->primitives->admin_text('Browse').'</div>';
+		echo '<div id="sf-upload-button" class="sf-button-primary"><span class="sf-icon sf-upload"></span></div>';
 		echo '<div id="sf-upload-status"></div>';
 	} else {
 		echo '<div id="sf-upload-button" class="sf-button-primary sfhidden"></div>';
@@ -550,7 +553,7 @@ function spa_paint_radiogroup($label, $name, $values, $current, $large=false, $d
 
 	if ($class != '') $class=' class="'.$class.'" ';
 
-	echo "<div class='sp-form-row'>\n";
+	echo "<div class='sf-form-row'>\n";
 	echo "<div class='wp-core-ui'><b>$label</b>:</div>\n";
 	echo "<div class='wp-core-ui sp-radio'>";
 
@@ -573,17 +576,21 @@ function spa_paint_spacer() { // @TODO admin design
 	//echo '<br /><div class="clearboth"></div>';
 }
 
-function spa_paint_help($name, $helpfile, $show=true) {
+function spa_paint_help($name, $helpfile = null, $show=true) {
+        if(is_null($helpfile)) {
+            global $adminhelpfile;
+            $helpfile = $adminhelpfile;
+        }
 	$site = wp_nonce_url(SPAJAXURL."help&amp;file=$helpfile&amp;item=$name", 'help');
 	$title = SP()->primitives->admin_text('Simple:Press Help');
 	$out = '';
 
-	$out.= '<div class="sfhelplink">';
+	$out.= '<span class="sfhelplink">';
 	if ($show) {
-		$out.= '<a id="'.$name.'" class="sf-icon sf-help spHelpLink" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">';
-		$out.= /*SP()->primitives->admin_text('Help').*/'</a>';
+		$out.= '<a id="'.$name.'" class="spHelpLink" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">';
+		$out.= /*SP()->primitives->admin_text('Help').*/'<span class="sf-icon sf-help"></span></a>';
 	}
-	$out.= '</div>';
+	$out.= '</span>';
 	return $out;
 }
 

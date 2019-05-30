@@ -181,21 +181,24 @@ function spa_paint_custom_smileys() {
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/';
 	$dlist = @opendir($path);
 
-	echo '<div class="sf-alert-block sf-info">';
+	
 	if (!$dlist) {
+           echo '<div class="sf-alert-block sf-info">';
 	   echo '<table><tr><td class="sflabel"><strong>'.SP()->primitives->admin_text('The forum-smileys folder does not exist').'</strong></td></tr></table>';
-	   return;
+	   echo '</div>';
+           return;
 	} else {
-    	echo '<p><b>'.SP()->primitives->admin_text('Re-order your Smileys by dragging and dropping the buttons below. To edit - click on the open control to the right').'</b></p>';
+    	//echo '<p><b>'.SP()->primitives->admin_text('Re-order your Smileys by dragging and dropping the buttons below. To edit - click on the open control to the right').'</b></p>';
 	}
 
 	$yes = '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('In use').'"></span>';
 	$no =  '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Not in use').'"></span>';
 
-	echo '<table><tr>';
-	echo '<td>'.$yes.SP()->primitives->admin_text('Smiley is in use').'</td>';
-	echo '<td>'.$no.SP()->primitives->admin_text('Smiley is not in use').'</td>';
-	echo '</tr></table>';
+        echo '<div class="sf-alert-block sf-info">';
+	echo $yes.SP()->primitives->admin_text('Smiley is in use');
+	echo '</div>';
+        echo '<div class="sf-alert-block sf-info">';
+	echo $no.SP()->primitives->admin_text('Smiley is not in use');
 	echo '</div>';
 
 	# start the table display
@@ -277,7 +280,7 @@ function spa_paint_custom_smileys() {
 					echo '<span class="sf-item-controls">';
 
 						$site = esc_url(wp_nonce_url(SPAJAXURL."components&amp;targetaction=delsmiley&amp;file=$file", 'components'));
-						echo '<span title="'.SP()->primitives->admin_text('Delete Smiley').'"class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadsm"></span>';
+						echo '<span title="'.SP()->primitives->admin_text('Delete Smiley').'" class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadsm"></span>';
 						if($in_use) {
 							echo $yes;
 						} else {
@@ -310,8 +313,9 @@ function spa_paint_custom_smileys() {
 			echo '</li>';
 			}
 		}
-		echo '<input type="hidden" id="smiley-count" name="smiley-count" value="'.$scount.'" />';
+		
 	echo '</ul>';
+        echo '<input type="hidden" id="smiley-count" name="smiley-count" value="'.$scount.'" />';
 	echo '</div>';
 
 	closedir($dlist);

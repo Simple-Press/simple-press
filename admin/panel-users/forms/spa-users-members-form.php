@@ -9,17 +9,18 @@ $Rev: 15817 $
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_users_members_form() {
-
+        global $adminhelpfile;
+    
 	add_screen_option('layout_columns', array('default' => 2));
 
 	spa_paint_options_init();
 
 	spa_paint_open_tab(SP()->primitives->admin_text('Users').' - '.SP()->primitives->admin_text('Member Information'), true);
 		spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('Member Information'), 'true', 'users-info');
-                if (!class_exists('WP_List_Table')) require_once ABSPATH.'wp-admin/includes/class-wp-list-table.php';
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Member Information'), false, '', false);
+                if (!class_exists('SP_List_Table')) require_once SP_PLUGIN_DIR.'/admin/library/sp-list-table.php';
 
-                class SP_Members_Table extends WP_List_Table {
+                class SP_Members_Table extends SP_List_Table {
                     function __construct() {
                         parent::__construct( array(
                             'singular'=> SP()->primitives->admin_text('member'),
@@ -143,14 +144,14 @@ function spa_users_members_form() {
                 			$class = ($ug->usergroup_id == $usergroup) ? ' class="current"' : '';
                             $count = SP()->DB->count(SPMEMBERSHIPS, "usergroup_id = $ug->usergroup_id");
                 			$name = $ug->usergroup_name.' <span class="count">('.$count.')</span>';
-                			$ug_links[$ug->usergroup_name] = "<a style='margin-left:-12px' href='".esc_url(add_query_arg('usergroup', $ug->usergroup_id, SPADMINUSER))."'$class>$name</a>";
+                			$ug_links[$ug->usergroup_name] = "<a href='".esc_url(add_query_arg('usergroup', $ug->usergroup_id, SPADMINUSER))."'$class>$name</a>";
                 		}
 
                     	$nomembership = SP()->DB->select('SELECT count(*) as count
                             FROM '.SPMEMBERS.'
                     		WHERE user_id NOT IN (SELECT user_id FROM '.SPMEMBERSHIPS.') AND admin=0', 'var');
                			$class = ($usergroup === -1) ? ' class="current"' : '';
-                		$ug_links['No Membership'] = "<a style='margin-left:-12px' href='".esc_url(add_query_arg('usergroup', -1, SPADMINUSER))."'$class>".SP()->primitives->admin_text('No Membership')." <span class='count'>($nomembership)</span></a>";
+                		$ug_links['No Membership'] = "<a href='".esc_url(add_query_arg('usergroup', -1, SPADMINUSER))."'$class>".SP()->primitives->admin_text('No Membership')." <span class='count'>($nomembership)</span></a>";
 
                 		return $ug_links;
                 	}
@@ -293,19 +294,26 @@ function spa_users_members_form() {
 
                 # going to display, lets prep items
                 $membersTable->prepare_items();
-
-                # display view links
-                $membersTable->views();
 ?>
                 <form id="members-filter" method="get" action="<?php echo SPADMINUSER; ?>">
                     <input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME.'/admin/panel-users/spa-users.php'; ?>" />
-<?php
-                    # dispaly the search box
-                    $membersTable->search_box(SP()->primitives->admin_text('Search Members'), 'search_id');
-
+                    <div class="sf-panel-body-top">
+                        <?php
+                        # display view links
+                        $membersTable->views();
+                        ?>
+                        <div class="sf-panel-body-top-right">
+                            <?php
+                            # dispaly the search box
+                            $membersTable->search_box(SP()->primitives->admin_text('Search Members'), 'search_id');
+                            echo spa_paint_help('users-info', $adminhelpfile);
+                            ?>
+                        </div>
+                    </div>
+                    <?php
                     # display the members list table
                     $membersTable->display();
-?>
+                    ?>
                 </form>
 <?php
 			spa_paint_close_fieldset();

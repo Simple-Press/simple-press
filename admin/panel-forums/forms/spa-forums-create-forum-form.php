@@ -42,7 +42,7 @@ function spa_forums_create_forum_form() {
 					}
 
 					# Select the forum type first
-					echo "<div class='sp-form-row'>\n";
+					echo "<div class='sf-form-row'>\n";
 					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('What type of forum are you creating').":</div>\n";
 					echo "<div class='wp-core-ui sp-radio'>";
 					echo '<input type="radio" name="forumtype" id="sfradio1" tabindex="'.$tab.'" value="1" checked="checked" class="spForumSetOptions" data-target="forum" />'."\n";
@@ -61,7 +61,7 @@ function spa_forums_create_forum_form() {
 					$target = 'fseq';
 
 					echo '<div id="groupselect" style="display:block;">';
-					echo "<div class='sp-form-row'>\n";
+					echo "<div class='sf-form-row'>\n";
 					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Select group new forum will belong to').":</div>\n";
 					echo '<select class="wp-core-ui sp-input-60 spForumSetSequence" tabindex="'.$tab.'" name="group_id">';
 					echo spa_create_group_select(0, 1);
@@ -72,7 +72,7 @@ function spa_forums_create_forum_form() {
 					echo '</div>';
 
 					echo '<div id="forumselect" style="display:none;">';
-					echo "<div class='sp-form-row'>\n";
+					echo "<div class='sf-form-row'>\n";
 					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Select forum new subforum will belong to').":</div>\n";
 					echo '<select class="wp-core-ui sp-input-60 spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';
 					echo sp_render_group_forum_select(false, false, false, true);
@@ -97,14 +97,14 @@ function spa_forums_create_forum_form() {
 					$ajaxURL = wp_nonce_url(SPAJAXURL.'forums', 'forums');
 
 					# forum name and slug
-					echo "<div class='sp-form-row'>";
+					echo "<div class='sf-form-row'>";
 					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Forum Name').':</div>';
 					echo '<input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.$tab.'" name="forum_name" value="" data-url="'.$ajaxURL.'" data-target="'.$target.'" data-type="new" />';
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
 					$tab++;
 
-					echo "<div class='sp-form-row'>\n";
+					echo "<div class='sf-form-row'>\n";
 					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Forum slug').":</div>";
 					echo '<input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.$tab.'" name="thisforumslug" id="thisforumslug" value="" disabled="disabled" data-url="'.$ajaxURL.'" data-target="'.$target.'" data-type="new" />';
 					echo '<div class="clearboth"></div>';
