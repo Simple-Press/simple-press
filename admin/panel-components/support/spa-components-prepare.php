@@ -271,45 +271,45 @@ function spa_paint_custom_smileys() {
 			# image and file name and input fields
 
 			echo '<li id="smfile_'.$scount.'" class="sf-list-item-depth-0">';
-				echo "<div class='sf-list-item'>";
-					echo '<img class="spSmiley" src="'.SPSMILEYS.$file.'" alt=""/>';
-					echo '<span class="sf-item-name">';
-						echo $sname;
-					echo '</span>';
-					echo '<input type="hidden" name="smfile[]" value="'.$file.'" />';
-					echo '<span class="sf-item-controls">';
-
-						$site = esc_url(wp_nonce_url(SPAJAXURL."components&amp;targetaction=delsmiley&amp;file=$file", 'components'));
-						echo '<span title="'.SP()->primitives->admin_text('Delete Smiley').'" class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadsm"></span>';
-						if($in_use) {
-							echo $yes;
-						} else {
-							echo $no;
-						}
-						echo '<a class="sf-item-edit spLayerToggle" data-target="item-edit-'.$scount.'">Edit Menu</a>';
-						//echo '<div size="70" id="spMenusOrder'.$scount.'" name="spMenusOrder'.$scount.'"></div>';
-					echo '</span>';
-				echo '</div>';
-
-				echo '<div id="item-edit-'.$scount.'" class="sf-list-item-settings sf-inline-edit">';
-
-					echo '<p class="sf-description">'.SP()->primitives->admin_text('Smiley Name').'<br />';
-					echo '<input type="text" class="sfpostcontrol" id="smname-'.$scount.'" name="smname[]" value="'.SP()->displayFilters->title($sname).'" /></p>';
-
-					echo '<p class="sf-description">'.SP()->primitives->admin_text('Smiley Code').'<br />';
-					echo '<input type="text" class="sfpostcontrol" id="smcode-'.$scount.'" name="smcode[]" value="'.SP()->displayFilters->title($code).'" /></p>';
-
-					echo '<p class="sf-description">';
-					$checked = ($break) ? ' checked="checked" ' : '';
-					echo '<input type="checkbox" class="sfpostcontrol" id="break-'.$scount.'" name="smbreak-'.$sname.'" '.$checked.'/>';
-					echo '<label for="break-'.$scount.'">'.SP()->primitives->admin_text('Break Smileys Row in Editor Display').'</label></p>';
-
-					echo '<p class="sf-description">';
-					$checked = ($in_use) ? ' checked="checked" ' : '';
-					echo '<input type="checkbox" class="sfpostcontrol" id="in_use-'.$scount.'" name="sminuse-'.$sname.'" '.$checked.'/>';
-					echo '<label for="in_use-'.$scount.'">'.SP()->primitives->admin_text('Allow Use of this Smiley').'</label></p>';
-
-				echo '</div>';
+                            echo "<div class='sf-list-item'>";
+				echo '<img class="spSmiley" src="'.SPSMILEYS.$file.'" alt=""/>';
+                                echo '<span class="sf-item-name">';
+                                    echo $sname;
+                                echo '</span>';
+                                echo '<input type="hidden" name="smfile[]" value="'.$file.'" />';
+                                echo '<span class="sf-item-controls">';
+                                    echo $in_use ? $yes : $no;
+                                    echo '<a class="sf-item-edit spLayerToggle" data-target="item-edit-'.$scount.'">Edit Menu</a>';
+                                echo '</span>';
+                            echo '</div>';
+                            echo '<div id="item-edit-'.$scount.'" class="sf-list-item-settings sf-inline-edit">';
+                                echo '<div class="sf-form-row">';
+                                    echo '<label>'.SP()->primitives->admin_text('Smiley Name');
+                                    echo '<input type="text" class="sfpostcontrol" id="smname-'.$scount.'" name="smname[]" value="'.SP()->displayFilters->title($sname).'" /></label>';
+                                echo '</div>';
+                                echo '<div class="sf-form-row">';
+                                    echo '<label>'.SP()->primitives->admin_text('Smiley Code');
+                                    echo '<input type="text" class="sfpostcontrol" id="smcode-'.$scount.'" name="smcode[]" value="'.SP()->displayFilters->title($code).'" /></label>';
+                                echo '</div>';
+                                $checked = ($break) ? ' checked="checked" ' : '';
+                                echo '<div class="sf-form-row">';
+                                    echo '<input type="checkbox" class="sfpostcontrol" id="break-'.$scount.'" name="smbreak-'.$sname.'" '.$checked.'/>';
+                                    echo '<label for="break-'.$scount.'">'.SP()->primitives->admin_text('Break Smileys Row in Editor Display').'</label>';
+                                echo '</div>';
+                                $checked = ($in_use) ? ' checked="checked" ' : '';
+                                echo '<div class="sf-form-row">';
+                                    echo '<input type="checkbox" class="sfpostcontrol" id="in_use-'.$scount.'" name="sminuse-'.$sname.'" '.$checked.'/>';
+                                    echo '<label for="in_use-'.$scount.'">'.SP()->primitives->admin_text('Allow Use of this Smiley').'</label>';
+                                echo '</div>';
+                                $site = esc_url(wp_nonce_url(SPAJAXURL."components&amp;targetaction=delsmiley&amp;file=$file", 'components'));
+                                echo '<div class="sfform-submit-bar">';
+                                    echo '<span title="'.SP()->primitives->admin_text('Delete Smiley').'" class="sf-link spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadsm"><span class="sf-icon sf-delete"></span>'.SP()->primitives->admin_text('Delete ').'</span>';	
+                                    echo '<div class="sf-pull-rigth">';
+                                        echo '<a class="sf-button-secondary sf-btn-small spLayerToggle">Cancel</a>';
+                                        echo '<input type="submit" class="sf-button-primary sf-btn-small" name="saveit" value="'.SP()->primitives->admin_text('Save').'" />';
+                                    echo '</div>';
+                                echo '</div>';
+                            echo '</div>';
 			echo '</li>';
 			}
 		}

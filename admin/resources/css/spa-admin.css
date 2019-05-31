@@ -71,7 +71,9 @@ $Rev:2099 $
     font-size: 16px;
     line-height: 22px;
 }
-
+#sf-root-wrap .sf-pull-rigth {
+    float: right;
+}
 
 #sf-root-wrap ::placeholder {
     font-size: 12px;
@@ -98,11 +100,11 @@ $Rev:2099 $
     line-height: 17px;
     color: #9D9EA0;
 }
-#sf-root-wrap input,
+#sf-root-wrap input:not([type=submit]),
 #sf-root-wrap select,
 #sf-root-wrap textarea,
 #sf-root-wrap .sf-select-wrap {
-    margin: 0 0 20px;
+    margin: 0;
     padding: 16px 16px 15px;
     width: 100%;
     color: #47484A;
@@ -152,13 +154,24 @@ $Rev:2099 $
 }
 #sf-root-wrap label {
     display: block;
-    margin-bottom: 13px;
     font-family: "Open Sans Semibold";
     font-size: 12px;
     line-height: 17px;
     text-transform: uppercase;
     white-space: normal;
     color: #27476E;
+}
+#sf-root-wrap label input:not([type=submit]),
+#sf-root-wrap label select,
+#sf-root-wrap label textarea,
+#sf-root-wrap label .sf-select-wrap {
+    margin-top: 13px;
+}
+#sf-root-wrap label+input:not([type=submit]),
+#sf-root-wrap label+select,
+#sf-root-wrap label+textarea,
+#sf-root-wrap label+.sf-select-wrap {
+    margin-top: 13px;
 }
 #sf-root-wrap input[type=radio] + label,
 #sf-root-wrap input[type=checkbox] + label {
@@ -318,18 +331,15 @@ $Rev:2099 $
     padding: 16px 34px 15px 35px;
     line-height: 19px;
     font-size: 14px;
-    background: #00B9D0;
-    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
-    color: #FFF;
+    background: rgba(0, 105, 146, .1);
+    box-shadow: none;
+    color: #006992;
 }
 #sf-root-wrap .sf-button-secondary.sf-focus,
 #sf-root-wrap .sf-button-secondary.sf-hover,
 #sf-root-wrap .sf-button-secondary:focus,
 #sf-root-wrap .sf-button-secondary:hover {
-    background: rgba(0, 185, 208, .9);
-    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
-    border-color: inherit;
-    color: #FFF;
+    background: rgba(0, 105, 146, .2);
 }
 #sf-root-wrap .sf-button-secondary.sf-active,
 #sf-root-wrap .sf-button-secondary.sf-active:focus,
@@ -341,6 +351,14 @@ $Rev:2099 $
     color: #FFF;
     -webkit-transform: translateY(1px);
     transform: translateY(1px);
+}
+#sf-root-wrap [class*=sf-button].sf-btn-small {
+    height: 40px;
+    padding: 12px 21px 11px;
+    font-size: 12px;
+}
+#sf-root-wrap [class*=sf-button]+[class*=sf-button] {
+    margin-left: 10px;
 }
 /**
 * .sf-icon >
@@ -683,6 +701,7 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-panel-body .sf-panel-body-top-right {
     float: right;
+    padding: 10px 0 0 0;
 }
 
 #sfmaincontainer .sf-fieldset {
@@ -744,16 +763,19 @@ $Rev:2099 $
     float: left;
 }
 
+#sfmaincontainer .sf-form-row:not(:last-of-type) {
+    margin-bottom: 30px;
+}
+
 #sfmaincontainer .sp-full-form {
     float: left;
     width: 100%;
 }
-#sfmaincontainer .sp-full-form span.sfhelplink {
-    /*float: right;*/
-    display: inline-block;
-    margin: 10px 0px 0px 20px;
+#sfmaincontainer .sp-full-form .sf-panel-body-top .sf-panel-body-top-right .sf-icon {
+    float: left;
 }
 #sfmaincontainer .sp-full-form legend span.sfhelplink {
+    float: right;
     margin: 0;
 }
 
@@ -773,6 +795,7 @@ $Rev:2099 $
 #sfmaincontainer .sf-form-row.sf-upload {
     display: inline-block;
     position: relative;
+    margin: 0;
 }
 #sfmaincontainer .sf-form-row.sf-upload label {
     display: none;
@@ -799,14 +822,6 @@ $Rev:2099 $
     z-index: 999;
 }
 
-#sfmaincontainer .sp-half-form .___sf-fieldset {
-    position: relative;
-    margin-bottom: 30px;
-    background-color: #FFF;
-    -khtml-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-}
 #sfmaincontainer .sp-half-form .sf-fieldset {
     position: relative;
     margin-bottom: 30px;
@@ -815,19 +830,6 @@ $Rev:2099 $
     -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
-}
-#sfmaincontainer .sp-half-form .sf-fieldset ___legend {
-    margin: 0;
-    padding: 20px;
-    background-color: #EAF0F4;
-    width: 100%;
-    line-height: 20px;
-    -khtml-border-radius: 4px 4px 0px 0px;
-    -webkit-border-radius: 4px 4px 0px 0px;
-    border-radius: 4px 4px 0px 0px;
-    font-family: "Open Sans Semibold";
-    font-size: 14px;
-    color: #27476E;
 }
 #sfmaincontainer .sp-half-form .sf-fieldset legend {
     margin: -20px 0px 20px -20px;
@@ -845,21 +847,15 @@ $Rev:2099 $
 #sfmaincontainer .sp-half-form .sf-fieldset span.sfhelplink {
     float: right;
 }
-#sfmaincontainer .sp-half-form .sf-fieldset .___sf-form-row {
-    float: left;
-    width: 100%;
-    padding: 0 20px;
-    margin: 20px 0 30px 0;
-}
 #sfmaincontainer .sp-half-form .sf-fieldset .sf-form-row {
     float: left;
     width: 100%;
     padding: 0;
-    margin: 0;
+    /*margin: 0 0 20px;*/
 }
-#sfmaincontainer .sp-half-form .sf-fieldset .sf-form-row+.sf-form-row {
+/*#sfmaincontainer .sp-half-form .sf-fieldset .sf-form-row+.sf-form-row {
     margin-top: 10px;
-}
+}*/
 #sfmaincontainer .sf-fieldset .subsubsub {
     margin: 10px 0 0 0;
     font-size: 14px;
@@ -886,10 +882,10 @@ $Rev:2099 $
 #sfmaincontainer .sf-fieldset .tablenav {
     display: none;
 }
-#sfmaincontainer .sf-fieldset .search-box {
+#sfmaincontainer .sf-fieldset .sf-panel-body-top-right p.search-box {
     float: left;
     width: 200px;
-    margin: 0;
+    margin: -10px 20px 0 0;
 }
 #sfmaincontainer .sf-fieldset .search-box #search_id-search-input {
     height: 40px;
@@ -907,6 +903,42 @@ $Rev:2099 $
     display: none;
 }
 
+#sfmaincontainer .sf-link {
+    display: inline-block;
+    font-family: "Open Sans Semibold";
+    font-size: 12px;
+    color: #006992;
+    cursor: pointer;
+}
+#sfmaincontainer .sf-link .sf-icon {
+    margin: -3px 8px 0 0;
+}
+
+/**
+ sf-list >
+*/
+#sfmaincontainer ul.sf-list label input:not([type=submit]),
+#sfmaincontainer ul.sf-list label select,
+#sfmaincontainer ul.sf-list label textarea,
+#sfmaincontainer ul.sf-list label .sf-select-wrap {
+    margin-top: 10px;
+}
+#sfmaincontainer ul.sf-list label+input:not([type=submit]),
+#sfmaincontainer ul.sf-list label+select,
+#sfmaincontainer ul.sf-list label+textarea,
+#sfmaincontainer ul.sf-list label+.sf-select-wrap {
+    margin-top: 10px;
+}
+#sfmaincontainer ul.sf-list .sf-form-row:not(:last-of-type) {
+    margin-bottom: 16px;
+}
+#sfmaincontainer ul.sf-list .sfform-submit-bar {
+    margin-top: 8px;
+}
+#sfmaincontainer ul.sf-list .sfform-submit-bar .sf-link {
+    margin-top: 12px;
+}
+
 #sfmaincontainer ul.sf-list li {
     width: 340px;
 }
@@ -914,8 +946,8 @@ $Rev:2099 $
     margin-left: 20px;
 }
 #sfmaincontainer ul.sf-list .sf-list-item {
-    float: left;
-    width: 100%;
+    /*float: left;
+    width: 100%;*/
     margin: 0 0 8px;
     padding: 15px 16px;
     position: relative;
@@ -969,6 +1001,8 @@ $Rev:2099 $
 }
 #sfmaincontainer ul.sf-list li.sf-open>.sf-inline-edit {
     display: block;
+    float: left;
+    width: 100%;
     padding: 20px;
     background: #FFF;
     margin: 0 0 5px;
@@ -978,6 +1012,9 @@ $Rev:2099 $
     border-radius: 0 0 4px 4px;
     border-top: none;
 }
+/**
+ < sf-list
+*/
 
 #sfmaincontainer table,
 #sfmaincontainer tbody,
@@ -1113,6 +1150,9 @@ $Rev:2099 $
         margin: 0;
         width: 100%;
     }
+    #sf-root-wrap .sf-pull-rigth {
+        width: 100%;
+    }
     #sfmaincontainer.sf-installation .sf-form-row {
         padding: 0;
         margin: 0 0 22px 0;
@@ -1180,17 +1220,13 @@ $Rev:2099 $
     #sfmaincontainer .sf-panel-body {
         padding: 20px;
     }
-    #sfmaincontainer span.sfhelplink {
-        margin: 5px 5px 0px 0;
-    }
     #sfmaincontainer .sf-panel-body .sf-panel-body-top-right {
         width: 100%;
     }
-    #sfmaincontainer .sf-fieldset .search-box {
+    #sfmaincontainer .sf-fieldset .sf-panel-body-top-right p.search-box {
         position: relative;
         width: calc(100% - 40px);
         height: auto;
-        margin: 0;
     }
     #sfmaincontainer .sf-fieldset .search-box #search_id-search-input {
         -khtml-border-radius: 3px;
@@ -1202,8 +1238,6 @@ $Rev:2099 $
         padding: 0;
     }
     #sfmaincontainer legend strong {
-        height: 30px;
-        line-height: 30px;
         color: #27476E;
     }
     #sfmaincontainer .sp-half-form {
@@ -1221,23 +1255,43 @@ $Rev:2099 $
     #sfmaincontainer .sf-panel-body .sf-panel-body-top-left span {
         opacity: .75;
     }
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-modile-btns .sf-form-row.sf-upload {
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload {
         float: right;
     }
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-modile-btns .sfhelplink,
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-modile-btns .sf-form-row.sf-upload #sf-upload-button {
-        float: left;
+    #sfmaincontainer .sp-full-form .sf-panel-body-top .sf-panel-body-top-right .sf-icon {
+        float: none;
+    }
+    #sfmaincontainer .sf-form-row.sf-upload #sf-upload-button {
         width: auto;
+    }
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sfhelplink,
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload {
+        width: calc(50% - 5px);
+    }
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sfhelplink,
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload #sf-upload-button {
+        float: left;
         height: auto;
+        text-align: center;
         margin: 8px 0 0 0;
-        padding: 15px 52px;
+        padding: 15px;
         background-color: #F0F0F0;
         -khtml-border-radius: 4px;
         -webkit-border-radius: 4px;
         border-radius: 4px;
     }
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-modile-btns .sf-form-row.sf-upload #sf-upload-button .sf-icon {
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload #sf-upload-button {
+        width: 100%;
+    }
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload #sf-upload-button .sf-icon {
         margin: 0;
+    }
+    #sfmaincontainer .sf-form-row.sf-upload #sf-upload-status {
+        top: 65px;
+    }
+    #sfmaincontainer ul.sf-list .sfform-submit-bar [class*=sf-button] {
+        margin-top: 23px;
+        width: calc(50% - 5px);
     }
 }
 
