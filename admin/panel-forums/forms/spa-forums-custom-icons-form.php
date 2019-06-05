@@ -30,23 +30,23 @@ function spa_forums_custom_icons_form() {
 						return false;
 					}
 					/* change button text, when user selects file */
-					utext = '<?php echo esc_js(SP()->primitives->admin_text('Uploading')); ?>';
-					button.text(utext);
+					//utext = '<?php echo esc_js(SP()->primitives->admin_text('Uploading')); ?>';
+					//button.text(utext);
 					/* If you want to allow uploading only 1 file at time, you can disable upload button */
 					this.disable();
 					/* Uploding -> Uploading. -> Uploading... */
-					interval = window.setInterval(function(){
-						var text = button.text();
-						if (text.length < 13){
-							button.text(text + '.');
-						} else {
-							button.text(utext);
-						}
-					}, 200);
+					//interval = window.setInterval(function(){
+					//	var text = button.text();
+					//	if (text.length < 13){
+							//button.text(text + '.');
+					//	} else {
+							//button.text(utext);
+					//	}
+					//}, 200);
 				},
 				onComplete: function(file, response){
 					$('#sf-upload-status').html('');
-					button.text('<?php echo esc_js(SP()->primitives->admin_text('Browse')); ?>');
+					//button.text('<?php echo esc_js(SP()->primitives->admin_text('Browse')); ?>');
 					window.clearInterval(interval);
 					/* re-enable upload button */
 					this.enable();
@@ -55,8 +55,8 @@ function spa_forums_custom_icons_form() {
 						site = "<?php echo SPAJAXURL.'forums' ?>&amp;_wpnonce=<?php echo wp_create_nonce('forums'); ?>&amp;targetaction=delicon&amp;file=" + file;
 						var count = document.getElementById('icon-count');
 						var icount = parseInt(count.value) + 1;
-						$('<table id="icon' + icount + '" style="width:100%"></table>').appendTo('#sf-custom-icons').html('<tr><td class="spWFBorder" style="text-align:center;width:30%"><img class="sfcustomicon" src="<?php echo SPCUSTOMURL; ?>/' + file + '" alt="" /></td><td class="spWFBorder sflabel" style="text-align:center;width:50%">' + file + '</td><td class="spWFBorder" style="text-align:center"><span title="<?php echo esc_js(SP()->primitives->admin_text('Delete custom icon')); ?>" class="sf-icon sf-delete spDeleteRow" data-url="' + site + '" data-target="icon' + icount + '"></span></td></tr>');
-						$('#sf-upload-status').html('<p class="sf-upload-status-success"><?php echo esc_js(SP()->primitives->admin_text('Custom icon uploaded!')); ?></p>');
+						$('#sf-custom-icons').append('<tr><td class="spWFBorder"><img class="sfcustomicon" src="<?php echo SPCUSTOMURL; ?>/' + file + '" alt="" /></td><td class="spWFBorder sflabel">' + file + '</td><td class="spWFBorder"><span title="<?php echo esc_js(SP()->primitives->admin_text('Delete custom icon')); ?>" class="sf-icon sf-delete spDeleteRow" data-url="' + site + '" data-target="icon' + icount + '"></span></td></tr>');
+						//$('#sf-upload-status').html('<p class="sf-upload-status-success"><?php echo esc_js(SP()->primitives->admin_text('Custom icon uploaded!')); ?></p>');
 						$('.ui-tooltip').hide();
 					} else if (response==="invalid"){
 						$('#sf-upload-status').html('<p class="sf-upload-status-fail"><?php echo esc_js(SP()->primitives->admin_text('Sorry, the file has an invalid format!')); ?></p>');
@@ -74,18 +74,34 @@ function spa_forums_custom_icons_form() {
 	spa_paint_options_init();
 
 	spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Custom Icons'), true);
-		spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('Group/Forum Custom Icons Upload'), true, 'custom-icon-upload');
-				$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/';
-				spa_paint_file(SP()->primitives->admin_text('Select custom icon file to upload'), 'newiconfile', false, true, $loc);
-			spa_paint_close_fieldset();
-		spa_paint_close_panel();
+		?>
+            <div class="sf-panel-body-top">
+                <div class="sf-panel-body-top-left">
+                    <h4><?php echo SP()->primitives->admin_text('Group/Forum Custom Icons Upload') ?></h4>
+                    <span></span>
+                </div>
+                <div class="sf-panel-body-top-right sf-mobile-btns">
+                    <?php echo spa_paint_help('custom-icon-upload') ?>
+                    <?php
+                    $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/';
+					spa_paint_file(SP()->primitives->admin_text('Select custom icon file to upload'), 'newiconfile', false, true, $loc);
+                    ?>
+                </div>
+            </div>
+                <?php
+	
+		//spa_paint_open_panel();
+		//	spa_paint_open_fieldset(SP()->primitives->admin_text('Group/Forum Custom Icons Upload'), true, 'custom-icon-upload');
+		//		$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/';
+		//		spa_paint_file(SP()->primitives->admin_text('Select custom icon file to upload'), 'newiconfile', false, true, $loc);
+		//	spa_paint_close_fieldset();
+		//spa_paint_close_panel();
 
-		spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('Group/Forum Custom Icons'), true, 'custom-icons');
+		//spa_paint_open_panel();
+		//	spa_paint_open_fieldset(SP()->primitives->admin_text('Group/Forum Custom Icons'), true, 'custom-icons');
 			spa_paint_custom_icons();
-			spa_paint_close_fieldset();
-		spa_paint_close_panel();
+		//	spa_paint_close_fieldset();
+		//spa_paint_close_panel();
 
 		do_action('sph_forum_icons_right_panel');
 

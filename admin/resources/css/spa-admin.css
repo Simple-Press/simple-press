@@ -38,10 +38,13 @@ $Rev:2099 $
     max-width: 300px;
     z-index: 999999
 }
+.fip-bootstrap.icons-selector .selector-popup {
+    z-index: 999;
+}
 
 #sf-root-wrap {
     margin-top: 30px;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 #sf-root-wrap * {
     -webkit-box-sizing: border-box;
@@ -70,6 +73,9 @@ $Rev:2099 $
     font-family: "Open Sans Semibold";
     font-size: 16px;
     line-height: 22px;
+}
+#sf-root-wrap .sf-pull-left {
+    float: left;
 }
 #sf-root-wrap .sf-pull-rigth {
     float: right;
@@ -100,7 +106,7 @@ $Rev:2099 $
     line-height: 17px;
     color: #9D9EA0;
 }
-#sf-root-wrap input:not([type=submit]),
+#sf-root-wrap input,
 #sf-root-wrap select,
 #sf-root-wrap textarea,
 #sf-root-wrap .sf-select-wrap {
@@ -127,6 +133,7 @@ $Rev:2099 $
 }
 #sf-root-wrap .sf-select-wrap {
     position: relative;
+    background-color: #FFF;
     cursor: pointer;
 }
 #sf-root-wrap .sf-select-wrap select {
@@ -161,13 +168,13 @@ $Rev:2099 $
     white-space: normal;
     color: #27476E;
 }
-#sf-root-wrap label input:not([type=submit]),
+#sf-root-wrap label input,
 #sf-root-wrap label select,
 #sf-root-wrap label textarea,
 #sf-root-wrap label .sf-select-wrap {
     margin-top: 13px;
 }
-#sf-root-wrap label+input:not([type=submit]),
+#sf-root-wrap label+input,
 #sf-root-wrap label+select,
 #sf-root-wrap label+textarea,
 #sf-root-wrap label+.sf-select-wrap {
@@ -232,6 +239,8 @@ $Rev:2099 $
 
 #sf-root-wrap .sf-subhead, 
 #sf-root-wrap .sf-sublabel {
+    float: left;
+    width: 100%;
     margin: 10px 0 0 0;
     font-size: 12px;
     line-height: 17px;
@@ -339,7 +348,7 @@ $Rev:2099 $
 #sf-root-wrap .sf-button-secondary.sf-hover,
 #sf-root-wrap .sf-button-secondary:focus,
 #sf-root-wrap .sf-button-secondary:hover {
-    background: rgba(0, 105, 146, .2);
+    background-color: rgba(0, 105, 146, .2);
 }
 #sf-root-wrap .sf-button-secondary.sf-active,
 #sf-root-wrap .sf-button-secondary.sf-active:focus,
@@ -360,6 +369,11 @@ $Rev:2099 $
 #sf-root-wrap [class*=sf-button]+[class*=sf-button] {
     margin-left: 10px;
 }
+#sf-root-wrap .sf-text-right {
+    text-align: right;
+}
+
+
 /**
 * .sf-icon >
 */
@@ -436,6 +450,17 @@ $Rev:2099 $
     -webkit-mask-image: url("../icons/Upload.svg");
     mask-image: url("../icons/Upload.svg");
 }
+#sf-root-wrap .sf-icon.sf-add {
+    background-color: #0E7198;
+    -webkit-mask-image: url("../icons/Add.svg");
+    mask-image: url("../icons/Add.svg");
+}
+#sf-root-wrap .sf-icon.sf-edit {
+    background-color: #0E7198;
+    -webkit-mask-image: url("../icons/Edit.svg");
+    mask-image: url("../icons/Edit.svg");
+}
+
 
 #sfmaincontainer ul.sf-list li .sf-list-item .sf-item-controls .sf-item-edit,
 #sf-root-wrap .sf-icon.sf-expand {
@@ -673,7 +698,7 @@ $Rev:2099 $
     -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 #sfmaincontainer .sf-panel-body .sf-panel-body-top {
     float: left;
@@ -687,13 +712,17 @@ $Rev:2099 $
     position: absolute;
     bottom: 0;
     height: 1px;
-    width: 500%;
-    margin-left: -200%;
+    left: -30px;
+    right: -30px;
+    clear: both;
+    /* width: 100%; */
+    /* margin-left: -553px; */
     background: transparent;
     box-shadow: 0 1px 0 #F0F0F0;
 }
 #sfmaincontainer .sf-panel-body .sf-panel-body-top-left {
     float: left;
+    margin-top: 10px;
     color: #006992;
 }
 #sfmaincontainer .sf-panel-body .sf-panel-body-top-left span {
@@ -701,8 +730,17 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-panel-body .sf-panel-body-top-right {
     float: right;
-    padding: 10px 0 0 0;
+    padding: 0;
 }
+/*#sfmaincontainer .sf-panel-body+.sf-panel-body {
+    padding-top: 0px;
+    margin-top: -30px;
+}*/
+#sfmaincontainer .sf-panel-body.sfform-panel-nohead {
+    margin-top: 40px;
+}
+
+
 
 #sfmaincontainer .sf-fieldset {
     position: relative;
@@ -757,12 +795,16 @@ $Rev:2099 $
     background-color: #0E7198;
 }
 #sfmaincontainer .sfform-submit-bar {
+    float: left;
+    width: 100%;
     padding: 0;
     /*padding: 0 30px 30px;*/
-    width: 100%;
-    float: left;
 }
 
+#sfmaincontainer .sf-form-row {
+    float: left;
+    width: 100%;
+}
 #sfmaincontainer .sf-form-row:not(:last-of-type) {
     margin-bottom: 30px;
 }
@@ -773,6 +815,7 @@ $Rev:2099 $
 }
 #sfmaincontainer .sp-full-form .sf-panel-body-top .sf-panel-body-top-right .sf-icon {
     float: left;
+    margin-top: 10px;
 }
 #sfmaincontainer .sp-full-form legend span.sfhelplink {
     float: right;
@@ -783,10 +826,10 @@ $Rev:2099 $
     float: left;
     width: 50%;
     padding: 0 15px 0 0;
-    background-color: #F9F9F9;
+    /*background-color: #F9F9F9;*/
 }
 #sfmaincontainer .sp-half-form .sf-fieldset .sf-alert-block {
-    margin: 20px;
+    margin: 0 0 20px 0;
 }
 #sfmaincontainer .sf-panel-body .sp-half-form+.sp-half-form {
     padding: 0 0 0 15px;
@@ -794,6 +837,7 @@ $Rev:2099 $
 
 #sfmaincontainer .sf-form-row.sf-upload {
     display: inline-block;
+    width: auto;
     position: relative;
     margin: 0;
 }
@@ -802,7 +846,7 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-form-row.sf-upload #sf-upload-button {
     width: 20px;
-    height: 20px;
+    height: auto;
     padding: 0;
     margin-left: 30px;
     background-color: transparent;
@@ -885,7 +929,7 @@ $Rev:2099 $
 #sfmaincontainer .sf-fieldset .sf-panel-body-top-right p.search-box {
     float: left;
     width: 200px;
-    margin: -10px 20px 0 0;
+    margin: 0 20px 0 0;
 }
 #sfmaincontainer .sf-fieldset .search-box #search_id-search-input {
     height: 40px;
@@ -914,16 +958,29 @@ $Rev:2099 $
     margin: -3px 8px 0 0;
 }
 
+#sfmaincontainer .sf-item-controls {
+    float: right;
+}
+#sfmaincontainer .sf-item-controls .sf-item-type {
+    margin-right: 10px;
+    color: #999999;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+#sfmaincontainer .sf-item-controls .sf-icon {
+    margin-right: 10px;
+}
+
 /**
  sf-list >
 */
-#sfmaincontainer ul.sf-list label input:not([type=submit]),
+#sfmaincontainer ul.sf-list label input,
 #sfmaincontainer ul.sf-list label select,
 #sfmaincontainer ul.sf-list label textarea,
 #sfmaincontainer ul.sf-list label .sf-select-wrap {
     margin-top: 10px;
 }
-#sfmaincontainer ul.sf-list label+input:not([type=submit]),
+#sfmaincontainer ul.sf-list label+input,
 #sfmaincontainer ul.sf-list label+select,
 #sfmaincontainer ul.sf-list label+textarea,
 #sfmaincontainer ul.sf-list label+.sf-select-wrap {
@@ -973,18 +1030,6 @@ $Rev:2099 $
 #sfmaincontainer ul.sf-list .sf-list-item .sf-item-name {
     padding: 0 14px;
     vertical-align: middle;
-}
-#sfmaincontainer ul.sf-list .sf-list-item .sf-item-controls {
-    float: right;
-}
-#sfmaincontainer ul.sf-list .sf-list-item .sf-item-controls .sf-item-type {
-    margin-right: 10px;
-    color: #999999;
-    font-size: 10px;
-    text-transform: uppercase;
-}
-#sfmaincontainer ul.sf-list .sf-list-item .sf-item-controls .sf-icon {
-    margin-right: 10px;
 }
 #sfmaincontainer ul.sf-list .sf-list-item.sf-group-list {
     background-color: #EAF0F4;
@@ -1075,10 +1120,25 @@ $Rev:2099 $
     border-bottom: 1px solid #F0F0F0;
     padding-top: 31px;
     padding-bottom: 30px;
+    font-size: 14px;
+    line-height: 19px;
+    color: #27476E;
+    vertical-align: middle;
 }
 #sfmaincontainer table.widefat tfoot {
     display: none;
 }
+
+#sfmaincontainer table.widefat .sfcustomicon,
+#sfmaincontainer table.widefat .sffeaturedimage {
+    width: 50px;
+    max-height: 50px;
+}
+#sfmaincontainer table.widefat .sfrankbadge {
+    width: 20px;
+    max-height: 20px;
+}
+
 /**
 * Installation >
 */
@@ -1166,6 +1226,7 @@ $Rev:2099 $
     #sfsidepanel .sf-tooggle-admin-menu .sf-button {
         font-size: 12px;
         text-transform: uppercase;
+        margin-left: 0;
     }
     #sfsidepanel .sf-tooggle-admin-menu .sf-button.sf-hide {
         display: none;
@@ -1220,14 +1281,6 @@ $Rev:2099 $
     #sfmaincontainer .sf-panel-body {
         padding: 20px;
     }
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right {
-        width: 100%;
-    }
-    #sfmaincontainer .sf-fieldset .sf-panel-body-top-right p.search-box {
-        position: relative;
-        width: calc(100% - 40px);
-        height: auto;
-    }
     #sfmaincontainer .sf-fieldset .search-box #search_id-search-input {
         -khtml-border-radius: 3px;
         -webkit-border-radius: 3px;
@@ -1250,19 +1303,16 @@ $Rev:2099 $
         width: 100%;
     }
     #sfmaincontainer .sf-panel-body .sf-panel-body-top {
-        margin-bottom: 20px;
+        margin: -20px 0 20px 0;
     }
     #sfmaincontainer .sf-panel-body .sf-panel-body-top-left span {
         opacity: .75;
     }
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns {
+        width: 100%;
+    }
     #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload {
         float: right;
-    }
-    #sfmaincontainer .sp-full-form .sf-panel-body-top .sf-panel-body-top-right .sf-icon {
-        float: none;
-    }
-    #sfmaincontainer .sf-form-row.sf-upload #sf-upload-button {
-        width: auto;
     }
     #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sfhelplink,
     #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload {
@@ -1285,6 +1335,18 @@ $Rev:2099 $
     }
     #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload #sf-upload-button .sf-icon {
         margin: 0;
+    }
+    #sfmaincontainer .sp-full-form .sf-panel-body-top .sf-panel-body-top-right.sf-mobile-btns .sf-icon {
+        float: none;
+        margin-top: 0;
+    }
+    #sfmaincontainer .sf-fieldset .sf-panel-body-top-right p.search-box {
+        position: relative;
+        width: calc(100% - 40px);
+        height: auto;
+    }
+    #sfmaincontainer .sf-form-row.sf-upload #sf-upload-button {
+        width: auto;
     }
     #sfmaincontainer .sf-form-row.sf-upload #sf-upload-status {
         top: 65px;

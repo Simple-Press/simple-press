@@ -10,6 +10,9 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 
 require_once 'spa-iconsets.php';
 
+wp_enqueue_script( 'wp-color-picker' );
+wp_enqueue_style( 'wp-color-picker' );
+
 function spa_get_forums_in_group($groupid) {
 	return SP()->DB->table(SPFORUMS, "group_id=$groupid", '', 'forum_seq');
 }
@@ -273,7 +276,7 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	
 	if( $show_label ) {
 		echo "<div class='sf-form-row'>\n";
-		echo "<div class='wp-core-ui sflabel sp-label-40'>$label:</div>\n";
+		echo "<label class='sp-label-40'>$label</label>\n";
 	}
 	
 	$icon_picker_id = 'icon_picker_' . rand( 111111, 999999 );

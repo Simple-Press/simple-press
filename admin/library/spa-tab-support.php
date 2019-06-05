@@ -66,7 +66,7 @@ function spa_paint_close_tab() {
 # Creates the containing block around a form or main section/no heading
 # ------------------------------------------------------------------
 function spa_paint_open_nohead_tab($full=false) {
-	echo "<div class='sfform-panel-nohead'>";
+	echo "<div class='sfform-panel-nohead sf-panel-body'>";
 
 	if ($full) {
 		echo '<div class="sp-full-form">';
@@ -112,9 +112,9 @@ function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $
 	echo "<div class='{$field_classes}'>\n";
 	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
 	if ($large) {
-		echo "<label class='wp-core-ui sflabel sp-label-40'>\n";
+		echo "<label class='sp-label-40'>\n";
 	} else {
-		echo "<label class='wp-core-ui sflabel sp-label-60'>\n";
+		echo "<label class='sp-label-60'>\n";
 	}
 	echo "$label</label>";
 	echo "<input type='text' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
@@ -140,9 +140,9 @@ function spa_paint_date($label, $name, $value, $disabled=false, $large=false) {
 
 	echo "<div class='sf-form-row'>\n";
 	if ($large) {
-		echo "<label class='wp-core-ui sflabel sp-label-40'>\n";
+		echo "<label class='sp-label-40'>\n";
 	} else {
-		echo "<label class='wp-core-ui sflabel sp-label-60'>\n";
+		echo "<label class='sp-label-60'>\n";
 	}
 	echo "$label</label>";
 	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
@@ -160,9 +160,9 @@ function spa_paint_number($label, $name, $value, $disabled=false, $large=false) 
 
 	echo "<div class='sf-form-row'>\n";
 	if ($large) {
-		echo "<label class='wp-core-ui sflabel sp-label-40'>\n";
+		echo "<label class='sp-label-40'>\n";
 	} else {
-		echo "<label class='wp-core-ui sflabel sp-label-60'>\n";
+		echo "<label class='sp-label-60'>\n";
 	}
 	echo "$label</label>";
 	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
@@ -179,7 +179,7 @@ function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1) {
 	global $tab;
 
 	echo "<div class='sf-form-row'>\n";
-	echo "<label class='wp-core-ui sflabel sp-label-50'>\n";
+	echo "<label class='sp-label-50'>\n";
 	echo "$label";
 	if (!empty($submessage)) echo "<br /><small><strong>".esc_html($submessage)."</strong></small>\n";
 	echo '</label>';
@@ -194,7 +194,7 @@ function spa_paint_wide_textarea($label, $name, $value, $submessage='', $xrows=1
 	global $tab;
 
 	echo "<div class='sf-form-row'>\n";
-	echo "<label class='wp-core-ui sflabel sp-label'>\n";
+	echo "<label class='sp-label'>\n";
 	echo "$label";
 	if (!empty($submessage)) echo "<small><strong>$submessage</strong></small>\n";
 	echo '</label>';
@@ -209,7 +209,7 @@ function spa_paint_thin_textarea($label, $name, $value, $submessage='', $xrows=1
 	global $tab;
 
 	echo "<div class='sf-form-row'>\n";
-	echo "<label class='wp-core-ui sflabel sp-label-66'>\n";
+	echo "<label class='sp-label-66'>\n";
 	echo "$label";
 	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
 	echo '</label>';
@@ -235,7 +235,7 @@ function spa_paint_editor($label, $name, $value, $submessage='', $xrows=1) {
 	global $tab;
 
 	echo "<div class='sf-form-row'>\n";
-	echo "<label class='wp-core-ui sflabel sp-label-50'>\n";
+	echo "<label class='sp-label-50'>\n";
 	echo "$label";
 	if (!empty($submessage)) echo "<br /><small><strong>".esc_html($submessage)."</strong></small>\n";
 	echo '</label>';
@@ -269,7 +269,7 @@ function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, 
 	add_filter( 'tiny_mce_before_init', 'spa_cache_ajax_editor_settings', 11, 2 );
 	
 	echo "<div class='sf-form-row'>\n";
-	echo "<label class='wp-core-ui sflabel sp-label'>\n";
+	echo "<label>\n";
 	echo "$label";
 	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
 	echo '</label>';
@@ -301,7 +301,7 @@ function spa_paint_thin_editor($label, $name, $value, $submessage='', $xrows=1) 
 	global $tab;
 
 	echo "<div class='sf-form-row'>\n";
-	echo "<label class='wp-core-ui sflabel sp-label-66'>\n";
+	echo "<label class='sp-label-66'>\n";
 	echo "$label";
 	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
 	echo '</label>';
@@ -450,7 +450,7 @@ function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $ro
 	spa_enqueue_codemirror();
 	
     echo "<div class='sf-form-row'>\n";
-    echo "<label class='wp-core-ui sflabel sp-label'>\n";
+    echo "<label>\n";
     if(mb_strlen($label)) {
         echo "$label";
     }
@@ -495,7 +495,7 @@ function spa_paint_select_start($label, $name, $helpname) {
 	global $tab;
 
 	echo "<div class='sf-form-row'>\n";
-	echo "<label class='wp-core-ui sflabel sp-label-40'>$label</label>\n";
+	echo "<label class='sp-label-40'>$label</label>\n";
 	echo "<div class='sf-select-wrap'>\n";
 	echo "<select class='wp-core-ui  sp-input-60' tabindex='$tab' name='$name'>";
 	$tab++;
@@ -514,9 +514,9 @@ function spa_paint_file($label, $name, $disabled, $large, $path) {
 
 	echo "<div class='sf-form-row sf-upload'>\n";
 	if ($large) {
-		echo "<label class='wp-core-ui sflabel sp-label-40'>\n";
+		echo "<label class='sp-label-40'>\n";
 	} else {
-		echo "<label class='wp-core-ui sflabel sp-label-60'>\n";
+		echo "<label class='sp-label-60'>\n";
 	}
 	echo "$label</label>";
 

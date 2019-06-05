@@ -30,31 +30,31 @@ function spa_forums_featured_image_form() {
 						return false;
 					}
 					/* change button text, when user selects file */
-					utext = '<?php echo esc_js(SP()->primitives->admin_text('Uploading')); ?>';
-					button.text(utext);
+					//utext = '<?php echo esc_js(SP()->primitives->admin_text('Uploading')); ?>';
+					//button.text(utext);
 					/* If you want to allow uploading only 1 file at time, you can disable upload button */
 					this.disable();
 					/* Uploding -> Uploading. -> Uploading... */
-					interval = window.setInterval(function(){
-						var text = button.text();
-						if (text.length < 13){
-							button.text(text + '.');
-						} else {
-							button.text(utext);
-						}
-					}, 200);
+					//interval = window.setInterval(function(){
+					//	var text = button.text();
+					//	if (text.length < 13){
+					//		button.text(text + '.');
+					//	} else {
+					//		button.text(utext);
+					//	}
+					//}, 200);
 				},
 				onComplete: function(file, response){
 					$('#sf-upload-status').html('');
-					button.text('<?php echo esc_js(SP()->primitives->admin_text('Browse')); ?>');
+					//button.text('<?php echo esc_js(SP()->primitives->admin_text('Browse')); ?>');
 					window.clearInterval(interval);
 					/* re-enable upload button */
 					this.enable();
 					/* add file to the list */
 					if (response==="success"){
 						site = "<?php echo SPAJAXURL.'forums' ?>&amp;sfnonce=<?php echo wp_create_nonce('forums'); ?>&amp;targetaction=delimage&amp;file=" + file;
-						$('<table style="width:100%"></table>').appendTo('#sf-featured-images').html('<tr><td class="spWFBorder" style="width:30%;text-align:center"><img class="sffeaturedimage" src="<?php echo SPOGIMAGEURL; ?>/' + file + '" alt="" /></td><td class="spWFBorder" style="text-align:center;width:50%">' + file + '</td><td class="spWFBorder" style="text-align:center;"><span title="<?php echo esc_js(SP()->primitives->admin_text('Delete Feature Image')); ?>" class="sf-icon sf-delete spDeleteRowReload" data-url="' + site + '" data-reload="sfreloadfi"></span></td></tr>');
-						$('#sf-upload-status').html('<p class="sf-upload-status-success"><?php echo esc_js(SP()->primitives->admin_text('Featured Image uploaded!')); ?></p>');
+						$('#sf-featured-images').append('<tr><td class="spWFBorder"><img class="sffeaturedimage" src="<?php echo SPOGIMAGEURL; ?>/' + file + '" alt="" /></td><td class="spWFBorder">' + file + '</td><td class="spWFBorder"><span title="<?php echo esc_js(SP()->primitives->admin_text('Delete Feature Image')); ?>" class="sf-icon sf-delete spDeleteRowReload" data-url="' + site + '" data-reload="sfreloadfi"></span></td></tr>');
+						//$('#sf-upload-status').html('<p class="sf-upload-status-success"><?php echo esc_js(SP()->primitives->admin_text('Featured Image uploaded!')); ?></p>');
 					} else if (response==="invalid"){
 						$('#sf-upload-status').html('<p class="sf-upload-status-fail"><?php echo esc_js(SP()->primitives->admin_text('Sorry, the file has an invalid format!')); ?></p>');
 					} else if (response==="exists") {
@@ -71,18 +71,33 @@ function spa_forums_featured_image_form() {
 	spa_paint_options_init();
 
 	spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Featured Images'), true);
-		spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Featured Image Upload'), true, 'featured-image-upload');
-				$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/';
-				spa_paint_file(SP()->primitives->admin_text('Select image file to upload'), 'newimagefile', false, true, $loc);
-			spa_paint_close_fieldset();
-		spa_paint_close_panel();
+	?>
+            <div class="sf-panel-body-top">
+                <div class="sf-panel-body-top-left">
+                    <h4><?php echo SP()->primitives->admin_text('Forum Featured Image Upload')?></h4>
+                    <span><?php echo SP()->primitives->admin_text('')?></span>
+                </div>
+                <div class="sf-panel-body-top-right sf-mobile-btns">
+                    <?php echo spa_paint_help('featured-image-upload') ?>
+                    <?php
+                    $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/';
+					spa_paint_file(SP()->primitives->admin_text('Select image file to upload'), 'newimagefile', false, true, $loc);
+                    ?>
+                </div>
+            </div>
+                <?php
+		//spa_paint_open_panel();
+		//	spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Featured Image Upload'), true, 'featured-image-upload');
+		//		$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/';
+		//		spa_paint_file(SP()->primitives->admin_text('Select image file to upload'), 'newimagefile', false, true, $loc);
+		//	spa_paint_close_fieldset();
+		//spa_paint_close_panel();
 
-		spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Featured Images'), true, 'featured-images');
+		//spa_paint_open_panel();
+		//	spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Featured Images'), true, 'featured-images');
 			spa_paint_featured_images();
-			spa_paint_close_fieldset();
-		spa_paint_close_panel();
+		//	spa_paint_close_fieldset();
+		//spa_paint_close_panel();
 
 		do_action('sph_forum_images_right_panel');
 

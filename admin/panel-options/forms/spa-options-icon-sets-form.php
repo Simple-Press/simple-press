@@ -48,23 +48,23 @@ function spa_options_iconsets_form() {
 						return false;
 					}
 					/* change button text, when user selects file */
-					utext = '<?php echo esc_js(SP()->primitives->admin_text('Uploading')); ?>';
-					button.text(utext);
+					//utext = '<?php echo esc_js(SP()->primitives->admin_text('Uploading')); ?>';
+					//button.text(utext);
 					/* If you want to allow uploading only 1 file at time, you can disable upload button */
 					this.disable();
 					/* Uploding -> Uploading. -> Uploading... */
-					interval = window.setInterval(function(){
-						var text = button.text();
-						if (text.length < 13){
-							button.text(text + '.');
-						} else {
-							button.text(utext);
-						}
-					}, 200);
+					//interval = window.setInterval(function(){
+					//	var text = button.text();
+					//	if (text.length < 13){
+					//		button.text(text + '.');
+					//	} else {
+					//		button.text(utext);
+					//	}
+					//}, 200);
 				},
 				onComplete: function(file, response){
 					$('#sf-upload-status').html('');
-					button.text('<?php echo esc_js(SP()->primitives->admin_text('Browse')); ?>');
+					//button.text('<?php echo esc_js(SP()->primitives->admin_text('Browse')); ?>');
 					window.clearInterval(interval);
 					/* re-enable upload button */
 					this.enable();
@@ -97,12 +97,28 @@ function spa_options_iconsets_form() {
 	#== Iconsets Tab ============================================================
 
 	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('Iconsets'), true);
-		spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('Custom Iconset Upload'), true, 'iconset-upload');
-				$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['iconsets'].'/';
-				spa_paint_file(SP()->primitives->admin_text('Select iconset zip file to upload'), 'iconset', false, true, $loc);
-			spa_paint_close_fieldset();
-		spa_paint_close_panel();
+	?>
+            <div class="sf-panel-body-top">
+                <div class="sf-panel-body-top-left">
+                    <h4><?php echo SP()->primitives->admin_text('Custom Iconset Upload') ?></h4>
+                    <span></span>
+                </div>
+                <div class="sf-panel-body-top-right sf-mobile-btns">
+                    <?php echo spa_paint_help('iconset-upload') ?>
+                    <?php
+                    $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['iconsets'].'/';
+					spa_paint_file(SP()->primitives->admin_text('Select iconset zip file to upload'), 'iconset', false, true, $loc);
+                    ?>
+                </div>
+            </div>
+                <?php
+	
+		//spa_paint_open_panel();
+		//	spa_paint_open_fieldset(SP()->primitives->admin_text('Custom Iconset Upload'), true, 'iconset-upload');
+		//		$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['iconsets'].'/';
+		//		spa_paint_file(SP()->primitives->admin_text('Select iconset zip file to upload'), 'iconset', false, true, $loc);
+		//	spa_paint_close_fieldset();
+		//spa_paint_close_panel();
 
 		spa_paint_close_container();
 		echo '<div class="sfform-panel-spacer"></div>';
@@ -117,9 +133,9 @@ function spa_options_iconsets_form() {
 
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
+	<!--<div class="sfform-submit-bar">
 	<input type="submit" class="sf-button-primary" id="updateiconsets" name="saveit" value="<?php SP()->primitives->admin_etext('Update Iconsets Options'); ?>" />
-	</div>
+	</div>-->
 <?php
 	spa_paint_close_tab();
 ?>
