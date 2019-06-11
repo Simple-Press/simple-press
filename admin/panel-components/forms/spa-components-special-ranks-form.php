@@ -31,7 +31,7 @@ function spa_special_rankings_form($rankings) {
                 </div>
                 <div class="sf-panel-body-top-right sf-mobile-btns">
                     <?php echo spa_paint_help('special-ranks') ?>
-					<span class="sf-icon sf-add"></span>
+					<span class="sf-icon-button"><span class="sf-icon sf-add"></span></span>
                 </div>
             </div>
                 <?php
@@ -109,9 +109,11 @@ function spa_special_rankings_form($rankings) {
 										
 									<input type="button" id="add<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Add'); ?>" data-loc="<?php echo $loc; ?>" data-form="addmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
             					</td>
-								<td width="5%">
-									<span class="sf-icon sf-delete spDeleteRow" data-url="<?php echo $delsite; ?>" data-target="srank<?php echo $rank['meta_id']; ?>" title="<?php SP()->primitives->admin_etext('Delete Special Rank'); ?>"></span>
-                                    <input type="submit" class="sf-button-primary" id="updatespecialrank<?php echo $rank['meta_id']; ?>" name="updatespecialrank<?php echo $rank['meta_id']; ?>" value="<?php SP()->primitives->admin_etext('Update Rank'); ?>" />
+								<td width="10%">
+									<span class="sf-item-controls">
+										<input type="submit" class="sf-icon sf-edit" id="updatespecialrank<?php echo $rank['meta_id']; ?>" name="updatespecialrank<?php echo $rank['meta_id']; ?>" value="<?php //SP()->primitives->admin_etext('Update Rank'); ?>" />
+										<span class="sf-icon sf-delete spDeleteRow" data-url="<?php echo $delsite; ?>" data-target="srank<?php echo $rank['meta_id']; ?>" title="<?php SP()->primitives->admin_etext('Delete Special Rank'); ?>"></span>
+									</span>
             					</td>
                             </tr>
             				

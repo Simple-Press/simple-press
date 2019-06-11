@@ -512,7 +512,7 @@ function spa_paint_select_end($msg='') {
 function spa_paint_file($label, $name, $disabled, $large, $path) {
 	global $tab;
 
-	echo "<div class='sf-form-row sf-upload'>\n";
+	echo "<div class='sf-upload sf-icon-button'>\n";
 	if ($large) {
 		echo "<label class='sp-label-40'>\n";
 	} else {
@@ -520,15 +520,12 @@ function spa_paint_file($label, $name, $disabled, $large, $path) {
 	}
 	echo "$label</label>";
 
-	if (is_writable($path)) {
-		echo '<div id="sf-upload-button" class="sf-button-primary"><span class="sf-icon sf-upload"></span></div>';
-		echo '<div id="sf-upload-status"></div>';
-	} else {
-		echo '<div id="sf-upload-button" class="sf-button-primary sfhidden"></div>';
-		echo '<div id="sf-upload-status">';
+	echo '<div id="sf-upload-button"><span class="sf-icon sf-upload"></span></div>';
+	echo '<div id="sf-upload-status">';
+	if (!is_writable($path)) {
 		echo '<p class="sf-upload-status-fail">'.SP()->primitives->admin_text('Sorry, uploads disabled! Storage location does not exist or is not writable. Please see forum - integration - storage locations to correct').'</p>';
-		echo '</div>';
 	}
+	echo '</div>';
 	//echo '<div class="clearboth"></div>';
 	echo '</div>';
 	$tab++;
@@ -585,12 +582,11 @@ function spa_paint_help($name, $helpfile = null, $show=true) {
 	$title = SP()->primitives->admin_text('Simple:Press Help');
 	$out = '';
 
-	$out.= '<span class="sfhelplink">';
+	
 	if ($show) {
-		$out.= '<a id="'.$name.'" class="spHelpLink" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">';
+		$out.= '<a id="'.$name.'" class="sf-icon-button sfhelplink spHelpLink" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">';
 		$out.= /*SP()->primitives->admin_text('Help').*/'<span class="sf-icon sf-help"></span></a>';
 	}
-	$out.= '</span>';
 	return $out;
 }
 

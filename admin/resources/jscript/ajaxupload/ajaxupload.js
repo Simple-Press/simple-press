@@ -360,7 +360,9 @@
                 'right' : 0,
                 'margin' : 0,
                 'padding' : 0,
-                'fontSize' : '480px',
+                'fontSize' : '0px',
+				'width' : '100%',
+				'height' : '100%',
                 'cursor' : 'pointer'
             });
 

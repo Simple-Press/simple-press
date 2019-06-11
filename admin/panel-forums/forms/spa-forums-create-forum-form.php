@@ -43,7 +43,7 @@ function spa_forums_create_forum_form() {
 
 					# Select the forum type first
 					echo "<div class='sf-form-row'>\n";
-					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('What type of forum are you creating').":</div>\n";
+					echo "<div class='sf-alert-block sf-info'>".SP()->primitives->admin_text('What type of forum are you creating')."</div>\n";
 					echo "<div class='wp-core-ui sp-radio'>";
 					echo '<input type="radio" name="forumtype" id="sfradio1" tabindex="'.$tab.'" value="1" checked="checked" class="spForumSetOptions" data-target="forum" />'."\n";
 					echo '<label for="sfradio1" class="wp-core-ui">'.SP()->primitives->admin_text('Standard Forum').'</label><br>'."\n";
@@ -62,7 +62,7 @@ function spa_forums_create_forum_form() {
 
 					echo '<div id="groupselect" style="display:block;">';
 					echo "<div class='sf-form-row'>\n";
-					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Select group new forum will belong to').":</div>\n";
+					echo "<label>".SP()->primitives->admin_text('Select group new forum will belong to')."</label>\n";
 					echo '<select class="wp-core-ui sp-input-60 spForumSetSequence" tabindex="'.$tab.'" name="group_id">';
 					echo spa_create_group_select(0, 1);
 					echo "</select>\n";
@@ -73,7 +73,7 @@ function spa_forums_create_forum_form() {
 
 					echo '<div id="forumselect" style="display:none;">';
 					echo "<div class='sf-form-row'>\n";
-					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Select forum new subforum will belong to').":</div>\n";
+					echo "<label>".SP()->primitives->admin_text('Select forum new subforum will belong to').":</label>\n";
 					echo '<select class="wp-core-ui sp-input-60 spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';
 					echo sp_render_group_forum_select(false, false, false, true);
 					echo "</select>\n";

@@ -166,7 +166,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Forums',
 		SP_FOLDER_NAME.'/admin/panel-forums/spa-forums.php',
 		$sfatooltips['forums'],
-		'icon-Forums',
+		'forums',
 		wp_nonce_url(SPAJAXURL.'forums-loader', 'forums-loader'),
 		$forms,
 		true);
@@ -195,7 +195,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Options',
 		SP_FOLDER_NAME.'/admin/panel-options/spa-options.php',
 		$sfatooltips['options'],
-		'icon-Options',
+		'options',
 		wp_nonce_url(SPAJAXURL.'options-loader', 'options-loader'),
 		$forms,
 		true);
@@ -217,7 +217,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Components',
 		SP_FOLDER_NAME.'/admin/panel-components/spa-components.php',
 		$sfatooltips['components'],
-		'icon-Components',
+		'components',
 		wp_nonce_url(SPAJAXURL.'components-loader', 'components-loader'),
 		$forms,
 		true);
@@ -235,7 +235,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage User Groups',
 		SP_FOLDER_NAME.'/admin/panel-usergroups/spa-usergroups.php',
 		$sfatooltips['usergroups'],
-		'icon-UserGroups',
+		'user-groups',
 		wp_nonce_url(SPAJAXURL.'usergroups-loader', 'usergroups-loader'),
 		$forms,
 		true);
@@ -255,7 +255,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Permissions',
 		SP_FOLDER_NAME.'/admin/panel-permissions/spa-permissions.php',
 		$sfatooltips['permissions'],
-		'icon-Permissions',
+		'permissions',
 		wp_nonce_url(SPAJAXURL.'permissions-loader', 'permissions-loader'),
 		$forms,
 		true);
@@ -273,7 +273,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Integration',
 		SP_FOLDER_NAME.'/admin/panel-integration/spa-integration.php',
 		$sfatooltips['integration'],
-		'icon-Integration',
+		'integration',
 		wp_nonce_url(SPAJAXURL.'integration-loader', 'integration-loader'),
 		$forms,
 		true);
@@ -293,7 +293,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Profiles',
 		SP_FOLDER_NAME.'/admin/panel-profiles/spa-profiles.php',
 		$sfatooltips['profiles'],
-		'icon-Profiles',
+		'profiles',
 		wp_nonce_url(SPAJAXURL.'profiles-loader', 'profiles-loader'),
 		$forms,
 		true);
@@ -317,7 +317,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Admins',
 		SP_FOLDER_NAME.'/admin/panel-admins/spa-admins.php',
 		$sfatooltips['admins'],
-		'icon-Admins',
+		'admins',
 		wp_nonce_url(SPAJAXURL.'admins-loader', 'admins-loader'),
 		$forms,
 		true);
@@ -331,7 +331,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Users',
 		SP_FOLDER_NAME.'/admin/panel-users/spa-users.php',
 		$sfatooltips['users'],
-		'icon-Users',
+		'users',
 		wp_nonce_url(SPAJAXURL.'users-loader', 'users-loader'),
 		$forms,
 		true);
@@ -347,7 +347,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Plugins',
 		SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins.php',
 		$sfatooltips['plugins'],
-		'icon-Plugins',
+		'plugins',
 		wp_nonce_url(SPAJAXURL.'plugins-loader', 'plugins-loader'),
 		$forms,
 		true);
@@ -373,7 +373,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Themes',
 		SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php',
 		$sfatooltips['themes'],
-		'icon-Themes',
+		'themes',
 		wp_nonce_url(SPAJAXURL.'themes-loader', 'themes-loader'),
 		$forms,
 		true);
@@ -405,7 +405,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Toolbox',
 		SP_FOLDER_NAME.'/admin/panel-toolbox/spa-toolbox.php',
 		$sfatooltips['toolbox'],
-		'icon-Toolbox',
+		'toolbox',
 		wp_nonce_url(SPAJAXURL.'toolbox-loader', 'toolbox-loader'),
 		$forms,
 		true);

@@ -20,8 +20,246 @@ $Rev:2099 $
         url(./fonts/open-sans-semibold.ttf) format('truetype');
 }
 
-/* TOOLTIPS =========================================================================================*/
+@font-face {
+    font-family: 'sp-admin';
+    src: url('fonts/sp-admin.eot?-1norbm');
+    src: url('fonts/sp-admin.eot?#iefix-1norbm') format('embedded-opentype'),
+        url('fonts/sp-admin.woff?-1norbm') format('woff'),
+        url('fonts/sp-admin.ttf?-1norbm') format('truetype'),
+        url('fonts/sp-admin.svg?-1norbm#sp-admin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
+#toplevel_page_simplepress-admin-panel-forums-spa-forums .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-options-spa-options .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-components-spa-components .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-usergroups-spa-usergroups .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-permissions-spa-permissions .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-integration-spa-integration .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-profiles-spa-profiles .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-admins-spa-admins .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-users-spa-users .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-plugins-spa-plugins .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-themes-spa-themes .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-toolbox-spa-toolbox .wp-menu-image:before,
+#toplevel_page_simplepress-sp-startup-sp-load-install .wp-menu-image:before,
+#toplevel_page_simplepress-sp-startup-admin-spa-admin-notice .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-forums-spa-forums .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-options-spa-options .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-components-spa-components .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-usergroups-spa-usergroups .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-permissions-spa-permissions .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-integration-spa-integration .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-profiles-spa-profiles .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-admins-spa-admins .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-users-spa-users .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-plugins-spa-plugins .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-themes-spa-themes .wp-menu-image:before,
+#toplevel_page_simple-press-admin-panel-toolbox-spa-toolbox .wp-menu-image:before,
+#toplevel_page_simple-press-sp-startup-sp-load-install .wp-menu-image:before,
+#toplevel_page_simple-press-sp-startup-admin-spa-admin-notice .wp-menu-image:before {
+    font-family: sp-admin !important;
+    content: "\e100";
+}
+
+[class^="spaicon-"], [class*=" spaicon-"] {
+    font-family: 'sp-admin';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    font-size: 20px;
+    text-transform: none;
+    margin: 0 0 0 8px;
+    float: left;
+    color: #999999;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* UI Dialog
+----------------------------------*/
+.ui-dialog {
+    z-index: 999999;
+    position: absolute;
+    padding: .2em;
+    width: 300px;
+    background-color: #ffffff;
+    border: 1px solid #888888;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding: .2em 1em .2em;
+    position: relative;
+    height: 22px;
+}
+.ui-dialog .ui-dialog-title {
+    float: left;
+    margin: .1em 16px .2em 0;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: 22px;
+    margin: -10px 0 0 0;
+    padding: 0;
+    height: 22px;
+    background-image: url(images/close.gif);
+}
+.ui-dialog .ui-dialog-titlebar-close span {
+    display: block;
+    margin: 1px;
+}
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus {
+    padding: 0;
+}
+.ui-dialog .ui-dialog-content, .ui-dialog .ui-dialog-content p {
+    border: 0;
+    padding: .5em .5em;
+    background: none;
+    overflow: auto;
+    zoom: 1;
+}
+.ui-dialog .ui-dialog-buttonpane {
+    text-align: left;
+    border-width: 1px 0 0 0;
+    background-image: none;
+    margin: .5em 0 0 0;
+    padding: .3em 1em .5em .4em;
+}
+.ui-dialog .ui-dialog-buttonpane button {
+    float: right;
+    margin: .5em .4em .5em 0;
+    cursor: pointer;
+    padding: .2em .6em .3em .6em;
+    line-height: 1.4em;
+    width: auto;
+    overflow: visible;
+}
+.ui-dialog .ui-resizable-se {
+    width: 11px;
+    height: 11px;
+    right: 3px !important;
+    bottom: 3px;
+    float: right;
+    background-image: url(images/resize.gif);
+}
+.ui-draggable .ui-dialog-titlebar {
+    cursor: move;
+}
+.ui-widget-header {
+    background-color: #DDDDDD;
+    color: #1C6280;
+}
+
+/* POPUP HELP================================================================================*/
+
+.sfhelptext {
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+.sfhelptext fieldset {
+    margin: 0 8px;
+    padding: 0 15px 10px 15px;
+    border: 1px solid #dddddd;
+    -khtml-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+.sfhelptext p {
+    font-size: 13px;
+    line-height: 1.1em;
+    padding: 0 0 6px 0;
+}
+.sfhelptext ul, .sfhelptext ol {
+    font-size: 13px;
+    padding: 0;
+    margin: 3px 0 0 25px;
+}
+.sfhelptext ul {
+    list-style-type: disc;
+}
+.sfhelptext ol {
+    list-style-type: decimal;
+}
+.sfhelptext ul li, .sfhelptext ol li {
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+}
+.sfhelptext table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.sfhelptext table tr {
+    font-size: 9px;
+}
+.sfhelptext table td {
+    border: 1px solid #999999;
+    margin: 0;
+    background: #FFFFEA;
+}
+.sfhelptext td {
+    font-size: 12px;
+    padding: 5px;
+}
+.sfhelptext .sfhelptextlogo {
+    margin: 10px auto 0 auto;
+    text-align: center;
+}
+.sfhelptext .sfhelptag {
+    margin: 0 8px 4px 8px;
+    padding: 5px 15px 5px 15px;
+    border: 1px solid #dddddd;
+    -khtml-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+}
+.sfhelptext .sfhelptag p {
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+.spItemStat {
+    font-size: 12px;
+    color: #777777;
+}
+
+/* plugin help/tips */
+.tipSection {
+    margin: 7px;
+    padding: 0 12px;
+    border: 1px solid #cccccc;
+    -khtml-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    background-color: #f7fcfe;
+}
+.tipSection p {
+    padding: 0 !important;
+    margin: 0 0 6px 10px !important;
+    line-height: 1.2em !important;
+}
+.tipSection h3 {
+    margin: 8px 0;
+}
+.tipSection ul {
+    list-style-position: inside;
+    list-style-type: square;
+    margin: 0 0 6px 20px;
+}
+.tipSection ul li {
+    margin-bottom: 3px;
+}
+.tipTable {
+    background-color: #f7fcfe;
+}
+
+/* TOOLTIPS =========================================================================================*/
 .ttip {
     font-family: "Open Sans";
     font-style: normal;
@@ -40,6 +278,25 @@ $Rev:2099 $
 }
 .fip-bootstrap.icons-selector .selector-popup {
     z-index: 999;
+}
+
+/* SUCCESS MESSAGE SPOT ============================================================================*/
+#sfmsgspot {
+    display: none;
+    position: fixed;
+    top: 0;
+    z-index: 1000000;
+    font-size: 90%;
+    font-weight: 600;
+    color: #000000;
+    border: 2px solid gray;
+    background-color: #f9fad3;
+    margin: 0 20px 0 180px !important;
+    padding: 20px;
+    width: auto;
+    -khtml-border-radius: 0 0 8px 8px;
+    -webkit-border-radius: 0 0 8px 8px;
+    border-radius: 0 0 8px 8px;
 }
 
 #sf-root-wrap {
@@ -249,6 +506,8 @@ $Rev:2099 $
 #sf-root-wrap .sf-sublabel {
     display: block;
 }
+
+#sf-root-wrap [class*=button-],
 #sf-root-wrap .sf-button,
 #sf-root-wrap .sf-button-primary,
 #sf-root-wrap .sf-button-secondary {
@@ -369,17 +628,16 @@ $Rev:2099 $
 #sf-root-wrap [class*=sf-button]+[class*=sf-button] {
     margin-left: 10px;
 }
-#sf-root-wrap .sf-text-right {
-    text-align: right;
-}
 
+#sf-root-wrap .sf-icon-button {
+    float: left;
+}
 
 /**
 * .sf-icon >
 */
 #sfmaincontainer ul.sf-list .sf-list-item .sf-item-controls .sf-item-edit,
-#sfadminmenu [class*=spaicon-],
-#sf-root-wrap .sf-icon {
+#sf-root-wrap .sf-icon:not([class*=spaicon-]) {
     display: inline-block;
     position: relative;
     height: 20px;
@@ -460,8 +718,54 @@ $Rev:2099 $
     -webkit-mask-image: url("../icons/Edit.svg");
     mask-image: url("../icons/Edit.svg");
 }
-
-
+#sf-root-wrap .sf-icon.sf-forums {
+    -webkit-mask-image: url("../icons/Forums.svg");
+    mask-image: url("../icons/Forums.svg");
+}
+#sf-root-wrap .sf-icon.sf-options {
+    -webkit-mask-image: url("../icons/Options.svg");
+    mask-image: url("../icons/Options.svg");
+}
+#sf-root-wrap .sf-icon.sf-components {
+    -webkit-mask-image: url("../icons/Components.svg");
+    mask-image: url("../icons/Components.svg");
+}
+#sf-root-wrap .sf-icon.sf-user-groups {
+    -webkit-mask-image: url("../icons/User Groups.svg");
+    mask-image: url("../icons/User Groups.svg");
+}
+#sf-root-wrap .sf-icon.sf-permissions {
+    -webkit-mask-image: url("../icons/Permissions.svg");
+    mask-image: url("../icons/Permissions.svg");
+}
+#sf-root-wrap .sf-icon.sf-integration {
+    -webkit-mask-image: url("../icons/Integration.svg");
+    mask-image: url("../icons/Integration.svg");
+}
+#sf-root-wrap .sf-icon.sf-profiles {
+    -webkit-mask-image: url("../icons/Profiles.svg");
+    mask-image: url("../icons/Profiles.svg");
+}
+#sf-root-wrap .sf-icon.sf-admins {
+    -webkit-mask-image: url("../icons/Admins.svg");
+    mask-image: url("../icons/Admins.svg");
+}
+#sf-root-wrap .sf-icon.sf-users {
+    -webkit-mask-image: url("../icons/Users.svg");
+    mask-image: url("../icons/Users.svg");
+}
+#sf-root-wrap .sf-icon.sf-plugins {
+    -webkit-mask-image: url("../icons/Plugin.svg");
+    mask-image: url("../icons/Plugin.svg");
+}
+#sf-root-wrap .sf-icon.sf-themes {
+    -webkit-mask-image: url("../icons/Theme.svg");
+    mask-image: url("../icons/Theme.svg");
+}
+#sf-root-wrap .sf-icon.sf-toolbox {
+    -webkit-mask-image: url("../icons/Toolbox.svg");
+    mask-image: url("../icons/Toolbox.svg");
+}
 #sfmaincontainer ul.sf-list li .sf-list-item .sf-item-controls .sf-item-edit,
 #sf-root-wrap .sf-icon.sf-expand {
     background-color: #4390AE;
@@ -473,66 +777,6 @@ $Rev:2099 $
     background-color: #4390AE;
     -webkit-mask-image: url("../icons/Collapse.svg");
     mask-image: url("../icons/Collapse.svg");
-}
-#sfadminmenu .spaicon-Forums,
-#sf-root-wrap .sf-icon.sf-forums {
-    -webkit-mask-image: url("../icons/Forums.svg");
-    mask-image: url("../icons/Forums.svg");
-}
-#sfadminmenu .spaicon-Options,
-#sf-root-wrap .sf-icon.sf-options {
-    -webkit-mask-image: url("../icons/Options.svg");
-    mask-image: url("../icons/Options.svg");
-}
-#sfadminmenu .spaicon-Components,
-#sf-root-wrap .sf-icon.sf-components {
-    -webkit-mask-image: url("../icons/Components.svg");
-    mask-image: url("../icons/Components.svg");
-}
-#sfadminmenu .spaicon-UserGroups,
-#sf-root-wrap .sf-icon.sf-user-groups {
-    -webkit-mask-image: url("../icons/User Groups.svg");
-    mask-image: url("../icons/User Groups.svg");
-}
-#sfadminmenu .spaicon-Permissions,
-#sf-root-wrap .sf-icon.sf-permissions {
-    -webkit-mask-image: url("../icons/Permissions.svg");
-    mask-image: url("../icons/Permissions.svg");
-}
-#sfadminmenu .spaicon-Integration,
-#sf-root-wrap .sf-icon.sf-integration {
-    -webkit-mask-image: url("../icons/Integration.svg");
-    mask-image: url("../icons/Integration.svg");
-}
-#sfadminmenu .spaicon-Profiles,
-#sf-root-wrap .sf-icon.sf-profiles {
-    -webkit-mask-image: url("../icons/Profiles.svg");
-    mask-image: url("../icons/Profiles.svg");
-}
-#sfadminmenu .spaicon-Admins,
-#sf-root-wrap .sf-icon.sf-admins {
-    -webkit-mask-image: url("../icons/Admins.svg");
-    mask-image: url("../icons/Admins.svg");
-}
-#sfadminmenu .spaicon-Users,
-#sf-root-wrap .sf-icon.sf-users {
-    -webkit-mask-image: url("../icons/Users.svg");
-    mask-image: url("../icons/Users.svg");
-}
-#sfadminmenu .spaicon-Plugins,
-#sf-root-wrap .sf-icon.sf-plugins {
-    -webkit-mask-image: url("../icons/Plugin.svg");
-    mask-image: url("../icons/Plugin.svg");
-}
-#sfadminmenu .spaicon-Themes,
-#sf-root-wrap .sf-icon.sf-themes {
-    -webkit-mask-image: url("../icons/Theme.svg");
-    mask-image: url("../icons/Theme.svg");
-}
-#sfadminmenu .spaicon-Toolbox,
-#sf-root-wrap .sf-icon.sf-toolbox {
-    -webkit-mask-image: url("../icons/Toolbox.svg");
-    mask-image: url("../icons/Toolbox.svg");
 }
 
 #sf-root-wrap .sf-icon.sf-working {
@@ -565,11 +809,16 @@ $Rev:2099 $
 /**
 * #sfadminmenu >
 */
-#sfadminmenu [class^="spaicon-"],
-#sfadminmenu [class*=" spaicon-"] {
+#sfadminmenu .sf-icon {
     margin: 0 14px 0 20px;
+}
+#sfadminmenu .sf-icon:not([class*=spaicon-]) {
     background-color: #006992;
 }
+#sfadminmenu [class*=spaicon-] {
+    color: #006992;
+}
+
 #sfadminmenu .sfsidebutton,
 #sfadminmenu .sfsidebutton a {
     position: relative; 
@@ -704,7 +953,7 @@ $Rev:2099 $
     float: left;
     width: 100%;
     position: relative;
-    padding: 20px 0;
+    padding: 15px 0;
     margin: -30px 0 30px;
 }
 #sfmaincontainer .sf-panel-body .sf-panel-body-top:after {
@@ -722,7 +971,7 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-panel-body .sf-panel-body-top-left {
     float: left;
-    margin-top: 10px;
+    margin: 15px 0;
     color: #006992;
 }
 #sfmaincontainer .sf-panel-body .sf-panel-body-top-left span {
@@ -730,17 +979,13 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-panel-body .sf-panel-body-top-right {
     float: right;
+    margin-right: -10px;
     padding: 0;
 }
-/*#sfmaincontainer .sf-panel-body+.sf-panel-body {
-    padding-top: 0px;
-    margin-top: -30px;
-}*/
+
 #sfmaincontainer .sf-panel-body.sfform-panel-nohead {
     margin-top: 40px;
 }
-
-
 
 #sfmaincontainer .sf-fieldset {
     position: relative;
@@ -791,7 +1036,7 @@ $Rev:2099 $
     font-size: 14px;
     color: #27476E;
 }
-#sfmaincontainer span.sfhelplink .sf-icon.sf-help {
+#sfmaincontainer .sfhelplink .sf-icon.sf-help {
     background-color: #0E7198;
 }
 #sfmaincontainer .sfform-submit-bar {
@@ -813,11 +1058,11 @@ $Rev:2099 $
     float: left;
     width: 100%;
 }
-#sfmaincontainer .sp-full-form .sf-panel-body-top .sf-panel-body-top-right .sf-icon {
+#sfmaincontainer .sp-full-form .sf-panel-body-top .sf-panel-body-top-right .sf-icon-button {
     float: left;
-    margin-top: 10px;
+    padding: 15px;
 }
-#sfmaincontainer .sp-full-form legend span.sfhelplink {
+#sfmaincontainer .sp-full-form legend .sfhelplink {
     float: right;
     margin: 0;
 }
@@ -828,6 +1073,7 @@ $Rev:2099 $
     padding: 0 15px 0 0;
     /*background-color: #F9F9F9;*/
 }
+
 #sfmaincontainer .sp-half-form .sf-fieldset .sf-alert-block {
     margin: 0 0 20px 0;
 }
@@ -835,25 +1081,17 @@ $Rev:2099 $
     padding: 0 0 0 15px;
 }
 
-#sfmaincontainer .sf-form-row.sf-upload {
+#sfmaincontainer .sf-upload {
     display: inline-block;
-    width: auto;
     position: relative;
     margin: 0;
 }
-#sfmaincontainer .sf-form-row.sf-upload label {
+#sfmaincontainer .sf-upload label {
     display: none;
 }
-#sfmaincontainer .sf-form-row.sf-upload #sf-upload-button {
-    width: 20px;
-    height: auto;
-    padding: 0;
-    margin-left: 30px;
-    background-color: transparent;
-    box-shadow: none;
-    border: none;
+#sfmaincontainer .sf-upload #sf-upload-button {
 }
-#sfmaincontainer .sf-form-row.sf-upload #sf-upload-status {
+#sfmaincontainer .sf-upload #sf-upload-status {
     position: absolute;
     background: rgba(0, 185, 208, .7);
     padding: 0 10px;
@@ -888,7 +1126,7 @@ $Rev:2099 $
     font-size: 14px;
     color: #27476E;
 }
-#sfmaincontainer .sp-half-form .sf-fieldset span.sfhelplink {
+#sfmaincontainer .sp-half-form .sf-fieldset .sfhelplink {
     float: right;
 }
 #sfmaincontainer .sp-half-form .sf-fieldset .sf-form-row {
@@ -901,7 +1139,7 @@ $Rev:2099 $
     margin-top: 10px;
 }*/
 #sfmaincontainer .sf-fieldset .subsubsub {
-    margin: 10px 0 0 0;
+    margin: 17px 0 0 0;
     font-size: 14px;
 }
 #sfmaincontainer .sf-fieldset .subsubsub li {
@@ -929,7 +1167,7 @@ $Rev:2099 $
 #sfmaincontainer .sf-fieldset .sf-panel-body-top-right p.search-box {
     float: left;
     width: 200px;
-    margin: 0 20px 0 0;
+    margin: 5px 20px 0 0;
 }
 #sfmaincontainer .sf-fieldset .search-box #search_id-search-input {
     height: 40px;
@@ -1308,18 +1546,15 @@ $Rev:2099 $
     #sfmaincontainer .sf-panel-body .sf-panel-body-top-left span {
         opacity: .75;
     }
+    #sfmaincontainer .sp-full-form .sf-panel-body-top .sf-panel-body-top-right .sf-icon-button {
+        margin: 14px 0 0 0;
+        padding: 0;
+    }
     #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns {
         width: 100%;
     }
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload {
-        float: right;
-    }
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sfhelplink,
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload {
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-icon-button {
         width: calc(50% - 5px);
-    }
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sfhelplink,
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload #sf-upload-button {
         float: left;
         height: auto;
         text-align: center;
@@ -1330,30 +1565,31 @@ $Rev:2099 $
         -webkit-border-radius: 4px;
         border-radius: 4px;
     }
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload #sf-upload-button {
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-icon-button+.sf-icon-button {
+        margin-left: 10px;
+    }
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-upload #sf-upload-button {
         width: 100%;
     }
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-form-row.sf-upload #sf-upload-button .sf-icon {
+    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-upload #sf-upload-button .sf-icon {
         margin: 0;
-    }
-    #sfmaincontainer .sp-full-form .sf-panel-body-top .sf-panel-body-top-right.sf-mobile-btns .sf-icon {
-        float: none;
-        margin-top: 0;
     }
     #sfmaincontainer .sf-fieldset .sf-panel-body-top-right p.search-box {
         position: relative;
         width: calc(100% - 40px);
         height: auto;
     }
-    #sfmaincontainer .sf-form-row.sf-upload #sf-upload-button {
+    #sfmaincontainer .sf-upload #sf-upload-button {
         width: auto;
     }
-    #sfmaincontainer .sf-form-row.sf-upload #sf-upload-status {
+    #sfmaincontainer .sf-upload #sf-upload-status {
         top: 65px;
     }
     #sfmaincontainer ul.sf-list .sfform-submit-bar [class*=sf-button] {
         margin-top: 23px;
         width: calc(50% - 5px);
     }
+
+
 }
 

@@ -154,10 +154,10 @@ function spa_paint_rank_images() {
 				<td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>'>
 					<img class="sfrankbadge" src="<?php echo(esc_url(SPRANKS.$file)); ?>" alt="" />
 				</td>
-				<td class="sf-text-right" data-label='<?php SP()->primitives->admin_etext('Remove'); ?>'>
+				<td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>'>
 <?php
 					$site = esc_url(wp_nonce_url(SPAJAXURL."components&amp;targetaction=delbadge&amp;file=$file", 'components'));
-					echo '<span class="sf-icon sf-delete spDeleteRow" title="'.SP()->primitives->admin_text('Delete Rank Badge').'" data-url="'.$site.'" data-target="rankbadge'.$row.'"></span>';
+					echo '<span class="sf-item-controls"><span class="sf-icon sf-delete spDeleteRow" title="'.SP()->primitives->admin_text('Delete Rank Badge').'" data-url="'.$site.'" data-target="rankbadge'.$row.'"></span></span>';
 ?>
 				</td>
 			</tr>

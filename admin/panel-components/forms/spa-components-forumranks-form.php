@@ -57,7 +57,7 @@ function spa_components_forumranks_form() {
 						var site = "<?php echo SPAJAXURL; ?>components&amp;_wpnonce=<?php echo wp_create_nonce('components'); ?>&amp;targetaction=delbadge&amp;file=" + file;
 						var count = document.getElementById('rank-count');
 						var rcount = parseInt(count.value) + 1;
-						$('#sf-rank-badges').append('<tr id="rankbadge' + rcount + '" class="spMobileTableData"><td data-label="<?php SP()->primitives->admin_etext('Filename'); ?>">' + file + '</td><td data-label="<?php SP()->primitives->admin_etext('Badge'); ?>"><img class="sfrankbadge" src="<?php echo SPRANKS; ?>/' + file + '" alt="" /></td><td class="sf-text-right" data-label="<?php SP()->primitives->admin_etext('Remove'); ?>"><span class="sf-icon sf-delete spDeleteRow" title="<?php echo esc_js(SP()->primitives->admin_text('Delete Rank Badge')); ?>" data-url="' + site + '" data-target="rankbadge' + rcount + '"></span></td></tr>');
+						$('#sf-rank-badges').append('<tr id="rankbadge' + rcount + '" class="spMobileTableData"><td data-label="<?php SP()->primitives->admin_etext('Filename'); ?>">' + file + '</td><td data-label="<?php SP()->primitives->admin_etext('Badge'); ?>"><img class="sfrankbadge" src="<?php echo SPRANKS; ?>/' + file + '" alt="" /></td><td data-label="<?php SP()->primitives->admin_etext('Remove'); ?>"><span class="sf-item-controls"><span class="sf-icon sf-delete spDeleteRow" title="<?php echo esc_js(SP()->primitives->admin_text('Delete Rank Badge')); ?>" data-url="' + site + '" data-target="rankbadge' + rcount + '"></span></span></td></tr>');
 						//$('#sf-upload-status').html('<p class="sf-upload-status-success"><?php echo esc_js(SP()->primitives->admin_text('Forum badge uploaded!')); ?></p>');
 						$('.ui-tooltip').hide();
 					} else if (response==="invalid"){
@@ -93,7 +93,7 @@ function spa_components_forumranks_form() {
                 </div>
                 <div class="sf-panel-body-top-right sf-mobile-btns">
                     <?php echo spa_paint_help('forum-ranks') ?>
-					<span class="sf-icon sf-add"></span>
+					<span class="sf-icon-button"><span class="sf-icon sf-add"></span></span>
                 </div>
             </div>
                 <?php
@@ -235,10 +235,12 @@ function spa_paint_rankings_table($rankings) {
 		</td>
 		<?php $tab++; ?>
 
-		<td class="sf-text-right" data-label='<?php SP()->primitives->admin_etext('Remove'); ?>'>
-			<span class="sf-icon sf-edit"></span>
-			<?php $site = wp_nonce_url(SPAJAXURL.'components&amp;targetaction=del_rank&amp;key='.$ranks['id'][$x], 'components'); ?>
-			<span class="sf-icon sf-delete spDeleteRow" data-url="<?php echo $site; ?>" data-target="rank<?php echo $x; ?>" title="<?php SP()->primitives->admin_etext('Delete Rank'); ?>"></span>
+		<td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>'>
+			<span class="sf-item-controls">
+				<span class="sf-icon sf-edit"></span>
+				<?php $site = wp_nonce_url(SPAJAXURL.'components&amp;targetaction=del_rank&amp;key='.$ranks['id'][$x], 'components'); ?>
+				<span class="sf-icon sf-delete spDeleteRow" data-url="<?php echo $site; ?>" data-target="rank<?php echo $x; ?>" title="<?php SP()->primitives->admin_etext('Delete Rank'); ?>"></span>
+			</span>
 		</td>
 		<?php $tab++; ?>
 

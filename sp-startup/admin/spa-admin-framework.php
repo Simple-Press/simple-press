@@ -374,7 +374,7 @@ function spa_render_sidemenu() {
 			if (SP()->auths->current_user_can($panel[1]) || ($panel[0] == 'Admins' && (SP()->user->thisUser->admin || SP()->user->thisUser->moderator))) {
 				$pName = str_replace(' ', '', $panel[0]);
 				echo '<div class="sfsidebutton" id="sfacc'.$pName.'">'."\n";
-				echo '<div class="" title="'.esc_attr($panel[3]).'"><span class="spa'.$panel[4].'"></span><a href="#">'.$panel[0].'</a></div>'."\n";
+				echo '<div class="" title="'.esc_attr($panel[3]).'"><span class="sf-icon sf-'.$panel[4].' spa'.$panel[4].'"></span><a href="#">'.$panel[0].'</a></div>'."\n";
 				echo '</div>'."\n";
 				echo '<div class="sfmenublock">'."\n";
 
