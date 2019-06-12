@@ -95,8 +95,10 @@ function spa_paint_featured_images() {
 			$out.= $file;
 			$out.= '</td>';
 			$out.= '<td class="spWFBorder">';
+			$out .= '<div class="sf-item-controls">';
 			$site = esc_url(wp_nonce_url(SPAJAXURL."forums&amp;targetaction=delimage&amp;file=$file", 'forums'));
 			$out.= '<span title="'.SP()->primitives->admin_text('Delete featured image').'" class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadfi"></span>';
+			$out .= '</div>';
 			$out.= '</td>';
 			$out.= '</tr>';
 		}

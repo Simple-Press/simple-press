@@ -1213,10 +1213,10 @@ Style font- icon picker
 }
 
 @media screen and (max-width: 640px) {
-    #sf-root-wrap .sp-half-form {
+    #sf-root-wrap .sf-half-form {
         width: 100%;
     }
-    #sf-root-wrap .sf-panel-body .sp-half-form+.sp-half-form {
+    #sf-root-wrap .sf-panel-body .sf-half-form+.sf-half-form {
         padding-left: 0;
     }
 }

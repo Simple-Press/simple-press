@@ -39,9 +39,9 @@ function spa_paint_open_tab($tabname, $full=false, $info = "") {
 	echo "<div class='sf-panel-body'>";
 	echo $info;
 	if ($full) {
-		echo '<div class="sp-full-form">';
+		echo '<div class="sf-full-form">';
 	} else {
-		echo '<div class="sp-half-form">';
+		echo '<div class="sf-half-form">';
 	}
 }
 
@@ -69,15 +69,15 @@ function spa_paint_open_nohead_tab($full=false) {
 	echo "<div class='sfform-panel-nohead sf-panel-body'>";
 
 	if ($full) {
-		echo '<div class="sp-full-form">';
+		echo '<div class="sf-full-form">';
 	} else {
-		echo '<div class="sp-half-form">';
+		echo '<div class="sf-half-form">';
 	}
 }
 
 function spa_paint_tab_right_cell() {
 	echo '</div>';
-	echo '<div class="sp-half-form">';
+	echo '<div class="sf-half-form">';
 }
 
 function spa_paint_open_panel() {
@@ -88,13 +88,17 @@ function spa_paint_close_panel() {
 	echo '</div>';
 }
 
-function spa_paint_open_fieldset($legend, $displayhelp=false, $helpname='', $displaylegend=true) {
+function spa_paint_open_fieldset($legend, $displayhelp=false, $helpname='', $displaylegend=true, $subTitle = '') {
 	global $adminhelpfile;
 
 	echo "<fieldset class='sf-fieldset'>\n";
 	if($displaylegend) {
-		echo "<legend><strong>$legend</strong>";
-		if ($displayhelp) echo spa_paint_help($helpname, $adminhelpfile);
+		echo "<legend class='sf-panel-body-top'><div class='sf-panel-body-top-left'><h4>$legend</h4>";
+		if($subTitle) {
+			echo "<span>$subTitle</span>";
+		}
+		echo "</div>";
+		if ($displayhelp) echo "<div class='sf-panel-body-top-right'>".spa_paint_help($helpname, $adminhelpfile)."</div>";
 		echo "</legend>\n";
 	} else {
 		if ($displayhelp) echo spa_paint_help($helpname, $adminhelpfile);
@@ -551,7 +555,7 @@ function spa_paint_radiogroup($label, $name, $values, $current, $large=false, $d
 	if ($class != '') $class=' class="'.$class.'" ';
 
 	echo "<div class='sf-form-row'>\n";
-	echo "<div class='wp-core-ui'><b>$label</b>:</div>\n";
+	echo "<h4><b>$label</b>:</h4>\n";
 	echo "<div class='wp-core-ui sp-radio'>";
 
 	foreach ($values as $key => $value) {
