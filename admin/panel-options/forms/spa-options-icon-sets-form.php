@@ -101,7 +101,6 @@ function spa_options_iconsets_form() {
             <div class="sf-panel-body-top">
                 <div class="sf-panel-body-top-left">
                     <h4><?php echo SP()->primitives->admin_text('Custom Iconset Upload') ?></h4>
-                    <span></span>
                 </div>
                 <div class="sf-panel-body-top-right sf-mobile-btns">
                     <?php echo spa_paint_help('iconset-upload') ?>
@@ -133,7 +132,7 @@ function spa_options_iconsets_form() {
 
 		spa_paint_close_container();
 ?>
-	<!--<div class="sfform-submit-bar">
+	<!--<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="updateiconsets" name="saveit" value="<?php SP()->primitives->admin_etext('Update Iconsets Options'); ?>" />
 	</div>-->
 <?php

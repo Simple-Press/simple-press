@@ -47,7 +47,7 @@ function spa_usergroups_delete_usergroup_form($usergroup_id) {
 			do_action('sph_usergroup_delete_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
 		<input type="submit" class="sf-button-primary" id="sfusergroupdel<?php echo $usergroup->usergroup_id; ?>" name="sfusergroupdel<?php echo $usergroup->usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Delete User Group'); ?>" />
 		<input type="button" class="sf-button-primary spCancelForm" data-target="#usergroup-<?php echo $usergroup->usergroup_id; ?>" id="sfusergroupdel<?php echo $usergroup->usergroup_id; ?>" name="delusergroupcancel<?php echo $usergroup->usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>

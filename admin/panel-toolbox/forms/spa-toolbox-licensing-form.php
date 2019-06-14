@@ -49,7 +49,7 @@ function spa_toolbox_licensing_form() {
 			echo '<br />';
 			echo SP()->primitives->admin_text('However, you can click the button below to check for updates to premium plugins and themes now.');
 
-			echo '<div class="sfform-submit-bar">';
+			echo '<div class="sf-form-submit-bar">';
 			echo '<input type="button" class="sf-button-primary" id="force_update_check" name="force_update_check" value="'.SP()->primitives->admin_text('Check For Updates Now').'">';
 			echo '</div>';
 		
@@ -76,7 +76,7 @@ function spa_toolbox_licensing_form() {
 				echo '</td>';
 				echo '</tr>';
 				echo '</table>';
-				echo '<div class="sfform-submit-bar">';
+				echo '<div class="sf-form-submit-bar">';
 				echo '<input type="submit" class="sf-button-primary" id="saveit" name="save_store_url" value="'.SP()->primitives->admin_text('Update Licensing Server').'">';
 				echo '</div>';
 				echo '</form>';

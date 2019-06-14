@@ -41,7 +41,7 @@ function spa_forums_enable_forum_form($forum_id) {
 			do_action('sph_forums_enable_forum_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
     		<input type="submit" class="sf-button-primary" id="sfforumenable<?php echo $forum_id; ?>" name="sfforumenable<?php echo $forum_id; ?>" value="<?php SP()->primitives->admin_etext('Enable Forum'); ?>" />
     		<input type="button" class="sf-button-primary spCancelForm" data-target="#forum-<?php echo $forum_id; ?>" id="sfforumenable<?php echo $forum_id; ?>" name="enableforumcancel<?php echo $forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
     	</div>

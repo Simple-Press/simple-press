@@ -28,7 +28,6 @@ function spa_forums_global_perm_form()
             <div class="sf-panel-body-top">
                 <div class="sf-panel-body-top-left">
                     <h4><?php echo SP()->primitives->admin_text('Add a User Group Permission Set to All Forums') ?></h4>
-                    <span></span>
                 </div>
                 <div class="sf-panel-body-top-right">
                     <?php echo spa_paint_help('add-a-user-group-permission-set-to-all-forums') ?>
@@ -53,7 +52,7 @@ function spa_forums_global_perm_form()
 			do_action('sph_forums_global_perm_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
 		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Add Global Permission'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>

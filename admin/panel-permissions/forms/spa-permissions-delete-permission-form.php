@@ -47,7 +47,7 @@ function spa_permissions_delete_permission_form($role_id) {
 			do_action('sph_perm_delete_perm_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
 		<input type="submit" class="sf-button-primary" id="sfpermedit<?php echo $role->role_id; ?>" name="sfpermdel<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Delete Permission'); ?>" />
 		<input type="button" class="sf-button-primary spCancelForm" data-target="#perm-<?php echo $role->role_id; ?>" id="sfpermdel<?php echo $role->role_id; ?>" name="delpermcancel<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>

@@ -70,7 +70,6 @@ function spa_forums_ordering_form($groupId=0) {
             <div class="sf-panel-body-top">
                 <div class="sf-panel-body-top-left">
                     <h4><?php echo SP()->primitives->admin_text('Order Groups and Forums') ?></h4>
-                    <span></span>
                 </div>
                 <div class="sf-panel-body-top-right">
                     <?php echo spa_paint_help('order-forums') ?>
@@ -114,7 +113,7 @@ function spa_forums_ordering_form($groupId=0) {
 			//spa_paint_close_panel();
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
 		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Save Ordering'); ?>" />
         <?php if ($groupId) { ?>
 		<input type="button" class="sf-button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="sforder<?php echo $group->group_id; ?>" name="groupordercancel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />

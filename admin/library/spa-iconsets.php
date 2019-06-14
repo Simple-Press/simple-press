@@ -307,12 +307,12 @@ function spa_iconset_size_type_field( $current = '' ) {
 		
 	$size_units = spa_iconset_icon_size_units();
 
-	$field = '<select class="font-style-size_type">';
+	$field = '<div class="sf-select-wrap"><select class="font-style-size_type">';
 	foreach( $size_units as $unit )  {
 		$selected = $current == $unit ? ' selected="selected"' : '';
 		$field .= sprintf( '<option value="%s"%s>%s</option>', $unit, $selected, $unit );
 	}
-	$field .= '</select>';
+	$field .= '</select></div>';
 
 	return $field;
 }

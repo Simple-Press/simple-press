@@ -98,14 +98,14 @@ function spa_forums_create_forum_form() {
 
 					# forum name and slug
 					echo "<div class='sf-form-row'>";
-					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Forum Name').':</div>';
+					echo "<label>".SP()->primitives->admin_text('Forum Name').'</label>';
 					echo '<input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.$tab.'" name="forum_name" value="" data-url="'.$ajaxURL.'" data-target="'.$target.'" data-type="new" />';
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
 					$tab++;
 
 					echo "<div class='sf-form-row'>\n";
-					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Forum slug').":</div>";
+					echo "<label>".SP()->primitives->admin_text('Forum slug')."</label>";
 					echo '<input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.$tab.'" name="thisforumslug" id="thisforumslug" value="" disabled="disabled" data-url="'.$ajaxURL.'" data-target="'.$target.'" data-type="new" />';
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
@@ -205,7 +205,7 @@ function spa_forums_create_forum_form() {
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Add User Group Permissions'), false);
 					echo '<div id="block2" class="sfhidden">';
-					echo '<strong>'.SP()->primitives->admin_text('You can selectively set the permission sets for the forum below. If you want to use the default permissions for the selected group, then do not select anything').'</strong>';
+					echo '<div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('You can selectively set the permission sets for the forum below. If you want to use the default permissions for the selected group, then do not select anything').'</div>';
 
 					# Permissions
 					$usergroups = spa_get_usergroups_all();
@@ -225,7 +225,7 @@ function spa_forums_create_forum_form() {
 			spa_paint_close_panel();
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
             <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Forum'); ?>" />
 		</div>
     	<?php spa_paint_close_tab(); ?>

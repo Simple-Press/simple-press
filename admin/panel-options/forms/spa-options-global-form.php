@@ -137,7 +137,7 @@ function spa_options_global_form() {
 
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
+	<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Global Options'); ?>" />
 	</div>
 <?php

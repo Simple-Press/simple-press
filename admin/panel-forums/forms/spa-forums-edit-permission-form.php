@@ -43,7 +43,7 @@ function spa_forums_edit_permission_form($perm_id) {
 			do_action('sph_forums_edit_perm_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
     		<input type="submit" class="sf-button-primary" id="editperm<?php echo $perm->permission_id; ?>" name="editperm<?php echo $perm->permission_id; ?>" value="<?php SP()->primitives->admin_etext('Update Permission Set'); ?>" />
     		<input type="button" class="sf-button-primary spCancelForm" data-target="#curperm-<?php echo $perm->permission_id; ?>" id="sfpermissionnedit<?php echo $perm->permission_id; ?>" name="editpermcancel<?php echo $perm->permission_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>

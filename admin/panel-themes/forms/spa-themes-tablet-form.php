@@ -57,7 +57,7 @@ function spa_themes_tablet_form() {
 	do_action('sph_themes_tablet_option_panel');
 	spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
+	<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Tablet Component'); ?>" />
 	</div>
 	<?php spa_paint_close_tab(); ?>

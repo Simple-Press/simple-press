@@ -302,7 +302,7 @@ function spa_paint_custom_smileys() {
                                     echo '<label for="in_use-'.$scount.'">'.SP()->primitives->admin_text('Allow Use of this Smiley').'</label>';
                                 echo '</div>';
                                 $site = esc_url(wp_nonce_url(SPAJAXURL."components&amp;targetaction=delsmiley&amp;file=$file", 'components'));
-                                echo '<div class="sfform-submit-bar">';
+                                echo '<div class="sf-form-submit-bar">';
                                     echo '<span title="'.SP()->primitives->admin_text('Delete Smiley').'" class="sf-link spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadsm"><span class="sf-icon sf-delete"></span>'.SP()->primitives->admin_text('Delete ').'</span>';	
                                     echo '<div class="sf-pull-rigth">';
                                         echo '<a class="sf-button-secondary sf-btn-small spLayerToggle">Cancel</a>';

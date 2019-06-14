@@ -146,7 +146,7 @@ function spa_toolbox_cron_form() {
 		do_action('sph_toolbox_right_cron_panel');
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
+	<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update CRON'); ?>" />
 	</div>
 <?php

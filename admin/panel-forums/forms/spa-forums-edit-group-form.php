@@ -93,7 +93,7 @@ function spa_forums_edit_group_form($group_id) {
 			spa_paint_close_panel();
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
     		<input type="submit" class="sf-button-primary" id="groupedit<?php echo $group->group_id; ?>" name="groupedit<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Update Group'); ?>" />
     		<input type="button" class="sf-button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="sfgroupedit<?php echo $group->group_id; ?>" name="groupeditcancel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>

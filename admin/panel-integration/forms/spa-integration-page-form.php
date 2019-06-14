@@ -36,16 +36,17 @@ function spa_integration_page_form() {
 				$title = SP()->DB->table(SPWPPOSTS, 'ID='.$sfoptions['sfpage'], 'post_title');
 				$template = SP()->DB->table(SPWPPOSTMETA, "meta_key='_wp_page_template' AND post_id=".$sfoptions['sfpage'], 'meta_value');
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Current WP Forum Page'), false);
-					echo '<table class="form-table"><tr>';
+					echo '<table class="table widefat">';
+					echo '<thead><tr>';
 					echo '<th>'.SP()->primitives->admin_text('Forum page ID').'</th>';
 					echo '<th>'.SP()->primitives->admin_text('Page title').'</th>';
 					echo '<th>'.SP()->primitives->admin_text('Page template').'</th>';
-					echo '</tr>';
-					echo '<tr>';
+					echo '</tr></thead>';
+					echo '<tbody><tr>';
 					echo '<td class="sflabel">'.$sfoptions['sfpage'].'</td>';
 					echo '<td class="sflabel">'.$title.'</td>';
 					echo '<td class="sflabel">'.$template.'</td>';
-					echo '</tr></table>';
+					echo '</tr></tbody></table>';
 				spa_paint_close_fieldset();
 
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Update Forum Permalink'), true, 'forum-permalink');
@@ -56,9 +57,11 @@ function spa_integration_page_form() {
 
 		spa_paint_close_panel();
 	spa_paint_close_tab();
+        spa_paint_close_tab();
 	spa_paint_spacer();
-	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('WordPress and WordPress Theme'), false);
-		spa_paint_open_panel();
+	//spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('WordPress and WordPress Theme'), false);
+        spa_paint_open_nohead_tab(false);
+                    spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Integration Options'), true, 'integration-options');
 				spa_paint_checkbox(SP()->primitives->admin_text('Filter WP list pages'), 'sfwplistpages', $sfoptions['sfwplistpages']);
 				spa_paint_checkbox(SP()->primitives->admin_text('Load javascript in footer'), 'sfscriptfoot', $sfoptions['sfscriptfoot']);
@@ -81,7 +84,7 @@ function spa_integration_page_form() {
 		do_action('sph_integration_panel');
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
+	<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update WP Integration'); ?>" />
 	</div>
 <?php

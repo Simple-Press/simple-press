@@ -36,7 +36,7 @@ function spa_plugins_user_form($admin, $save, $form, $reload) {
 
     if ($form) {
 ?>
-    	<div class="sfform-submit-bar">
+    	<div class="sf-form-submit-bar">
 <?php
 			echo apply_filters('sph_UpdateBar', '<input type="submit" class="sf-button-primary" value="'.SP()->primitives->admin_text("Update").'" />', $reload);
 ?>

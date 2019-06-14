@@ -79,7 +79,7 @@ function spa_forums_view_forums_permission_form($forum_id)
 		spa_paint_close_container();
 ?>
 	<form>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
             <input type="button" class="sf-button-primary spCancelForm" data-target="#forum-<?php echo $forum->forum_id; ?>" name="forumcancel<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 	</form>

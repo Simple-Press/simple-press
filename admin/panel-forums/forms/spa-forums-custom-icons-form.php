@@ -78,7 +78,6 @@ function spa_forums_custom_icons_form() {
             <div class="sf-panel-body-top">
                 <div class="sf-panel-body-top-left">
                     <h4><?php echo SP()->primitives->admin_text('Group/Forum Custom Icons Upload') ?></h4>
-                    <span></span>
                 </div>
                 <div class="sf-panel-body-top-right sf-mobile-btns">
                     <?php echo spa_paint_help('custom-icon-upload') ?>

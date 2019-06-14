@@ -38,7 +38,7 @@ function spa_usergroups_create_usergroup_form() {
 			do_action('sph_usergroup_create_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
 		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New User Group'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>

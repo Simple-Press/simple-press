@@ -284,7 +284,7 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	
 	$icon_size_id = $icon_picker_id . '_size';
 	
-	echo '<div class="sf-icon-picker-row">';
+	echo '<div class="sf-icon-picker-row sf-select-wrap">';
 	
 	printf( '<input type="hidden" name="%s" value="%s" class="icon_value" />', $name, esc_attr( json_encode( $selected_icon ) ) );
 	

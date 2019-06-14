@@ -48,7 +48,7 @@ function spa_usergroups_edit_usergroup_form($usergroup_id) {
 			do_action('sph_usergroup_edit_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
 		<input type="submit" class="sf-button-primary" id="sfusergroupedit<?php echo $usergroup->usergroup_id; ?>" name="sfusergroupedit<?php echo $usergroup->usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Update User Group'); ?>" />
 		<input type="button" class="sf-button-primary spCancelForm" data-target="#usergroup-<?php echo $usergroup->usergroup_id; ?>" id="sfusergroupedit<?php echo $usergroup->usergroup_id; ?>" name="editusergroupcancel<?php echo $usergroup->usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>

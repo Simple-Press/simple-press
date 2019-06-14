@@ -71,7 +71,7 @@ function spa_forums_edit_forum_form($forum_id) {
 					echo '<input type="hidden" name="forum_id" value="'.$forum->forum_id.'" />';
 
 					echo "<div class='sf-form-row'>\n";
-					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Forum slug').':</div>';
+					echo "<label>".SP()->primitives->admin_text('Forum slug').'</label>';
 					echo '<input type="text" class="wp-core-ui sp-input-60" tabindex="'.$tab.'" name="cforum_slug" id="cforum_slug" value="'.esc_attr($forum->forum_slug).'" />';
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
@@ -179,7 +179,7 @@ function spa_forums_edit_forum_form($forum_id) {
 			spa_paint_close_panel();
 			spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
+		<div class="sf-form-submit-bar">
     		<input type="submit" class="sf-button-primary" id="sfforumedit<?php echo $forum->forum_id; ?>" name="sfforumedit<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Update Forum'); ?>" />
     		<input type="button" class="sf-button-primary spCancelForm" data-target="#forum-<?php echo $forum->forum_id; ?>" id="sfforumedit<?php echo $forum->forum_id; ?>" name="editforumcancel<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>

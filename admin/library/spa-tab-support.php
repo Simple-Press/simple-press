@@ -93,13 +93,13 @@ function spa_paint_open_fieldset($legend, $displayhelp=false, $helpname='', $dis
 
 	echo "<fieldset class='sf-fieldset'>\n";
 	if($displaylegend) {
-		echo "<legend class='sf-panel-body-top'><div class='sf-panel-body-top-left'><h4>$legend</h4>";
+		echo "<div class='sf-panel-body-top'><div class='sf-panel-body-top-left'><h4>$legend</h4>";
 		if($subTitle) {
 			echo "<span>$subTitle</span>";
 		}
 		echo "</div>";
 		if ($displayhelp) echo "<div class='sf-panel-body-top-right'>".spa_paint_help($helpname, $adminhelpfile)."</div>";
-		echo "</legend>\n";
+		echo "</div>\n";
 	} else {
 		if ($displayhelp) echo spa_paint_help($helpname, $adminhelpfile);
 	}

@@ -46,7 +46,9 @@ function spa_paint_custom_icons() {
 			$out.= '</td>';
 			$out.= '<td class="spWFBorder">';
 			$site = esc_url(wp_nonce_url(SPAJAXURL."forums&amp;targetaction=delicon&amp;file=$file", 'forums'));
+			$out .= '<div class="sf-item-controls">';
 			$out.= '<span title="'.SP()->primitives->admin_text('Delete custom icon').'" class="sf-icon sf-delete spDeleteRow" data-url="'.$site.'" data-target="icon'.$row.'"></span>';
+			$out .= '</div>';
 			$out.= '</td>';
 			$out.= '</tr>';
             $row++;
