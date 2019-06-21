@@ -187,7 +187,7 @@ function spa_permissions_add_permission_form() {
         body.hide();
         img1.hide();
         img2.show();
-        $(this).css('background-color', '#e9e9e9');
+        $(this).css('background-color', '#F9F9F9');
       }
     });
   });
