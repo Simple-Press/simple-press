@@ -9,6 +9,7 @@ $Rev: 15601 $
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_forums_forums_main() {
+  spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups And Forums'), true);
 	# has SP just been installed?
 	if (isset($_POST['install'])) {
 		$site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting&install=1', 'troubleshooting'));
