@@ -188,17 +188,17 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 								
 								if($license_status == 'expired'){
 									
-									echo ' <span class="sp-licensing-key-error">'. SP()->primitives->admin_text('Your License is expired please renew your license now'). '</span>';
+									echo ' <span class="sp-licensing-key-error">'. SP()->primitives->admin_text('Your License is expired please renew your license now.'). '</span>';
 									
 								}else{
 
 									if($total_days >= 0){
 										
 										echo '<span class="sp-licensing-key-active">';
-										echo SP()->primitives->admin_text('License key is active');
+										echo SP()->primitives->admin_text('License key is active.');
 										echo '</span>';
 										echo '<span class="sp-licensing-key-error">';
-										echo SP()->primitives->admin_text('Your License is expire in '.$total_days.' days please renew your license now');
+										echo SP()->primitives->admin_text('Your License will expire in '.$total_days.' days. Please renew your license now.');
 										echo '</span>';
 
 									}else{
@@ -288,7 +288,7 @@ function spa_toolbox_licensing_form_paint_plugin_licenses() {
 				$license_info 	= SP()->options->get('spl_plugin_info_'.$plugin_data['ItemId']);
 				$license_info	= json_decode($license_info);
 				$total_days = -1;
-				if(isset($license_info) && $license_info != '' && isset($license_info->expires)){
+				if(isset($license_info) && $license_info != '' && isset($license_info->expires) && ('lifetime' <> $license_info->expires) ){
 					$total_days = spa_toolbox_calculating_expiration_date($license_info);
 				}
 				
