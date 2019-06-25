@@ -1190,6 +1190,12 @@ $Rev:2099 $
     padding: 0;
     /*margin: 0 0 20px;*/
 }
+#sfmaincontainer .sf-panel-body .sf-half-form .sf-fieldset .sf-form-row.row-half {
+  width: 48%;
+}
+#sfmaincontainer .sf-panel-body .sf-half-form .sf-fieldset .sf-form-row.row-half:nth-child(2n) {
+  margin-right: 4%;
+}
 #sfmaincontainer .sf-panel-body .sf-half-form+.sf-half-form {
     padding: 0 0 0 15px;
 }
@@ -1603,7 +1609,36 @@ $Rev:2099 $
 * < Installation
 */
 
+#sfgroupnew .sf-panel-body .sf-half-form:nth-child(2n){
+    width: 60%;
+}
+#sfgroupnew .sf-panel-body .sf-half-form:nth-child(2n-1){
+    width: 40%;
+}
+#forumRanksTable {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    float: left;
+    width: 100%;
+}
+#forumRanksTable > div {
+    height: 60px;
+    vertical-align: middle;
+    line-height: 60px;
+}
+@media screen and ( max-width: 1350px ) {
+    #sfgroupnew .sf-panel-body .sf-half-form {
+        width: 100%!important;
+        padding: 0!important;
+    }
+}
 @media screen and ( max-width: 768px ) {
+    #sfmaincontainer .sf-panel-body .sf-half-form .sf-fieldset .sf-form-row.row-half {
+        width: 100%;
+    }
+    #sfmaincontainer .sf-panel-body .sf-half-form .sf-fieldset .sf-form-row.row-half:nth-child(2n) {
+        margin-right: 0%;
+    }
     .wrap {
         margin: 0;
     }

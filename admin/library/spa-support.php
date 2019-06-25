@@ -244,7 +244,7 @@ function spa_get_custom_icons( $path = '', $url_base = '' ) {
  * @param string $selected
  * @param boolean $show_label
  */
-function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = array() ,$selected = '', $show_label = true ) {
+function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = array() ,$selected = '', $show_label = true, $css_classes = '' ) {
 	
 	$iconsets = array_merge( $extra_icon_groups, spa_get_all_active_iconsets() );
 	
@@ -275,7 +275,7 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	
 	
 	if( $show_label ) {
-		echo "<div class='sf-form-row'>\n";
+		echo "<div class='sf-form-row ". $css_classes ."'>\n";
 		echo "<label class='sp-label-40'>$label</label>\n";
 	}
 	
