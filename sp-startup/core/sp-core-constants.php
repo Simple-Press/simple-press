@@ -120,6 +120,7 @@ if (!defined('SPADMINIMAGES')) define('SPADMINIMAGES', SP_PLUGIN_URL.'/admin/res
 if (!defined('SPADMINCSS')) define('SPADMINCSS', SP_PLUGIN_URL.'/admin/resources/css/');
 if (!defined('SPCOMMONCSS')) define('SPCOMMONCSS', SP_PLUGIN_URL.'/resources/css/');
 if (!defined('SPCOMMONIMAGES')) define('SPCOMMONIMAGES', SP_PLUGIN_URL.'/resources/images/');
+if (!defined('SP_PLUGIN_ICONS')) define('SP_PLUGIN_ICONS', SPADMINIMAGES.'../icons/');
 
 if (!defined('SPADMINUPGRADE')) define('SPADMINUPGRADE', admin_url('admin.php?page='.SP_FOLDER_NAME.'/sp-startup/sp-load-install.php'));
 
