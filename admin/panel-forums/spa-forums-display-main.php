@@ -77,7 +77,6 @@ function spa_forums_forums_main() {
 			
 			# Group
 ?>
-				<div class="sp-group-container-in-title">
         <div class="sp-group-container-in-row">
           <div class="sp-group-container-in-1">
             <table class="sp-table-title">
@@ -108,22 +107,15 @@ function spa_forums_forums_main() {
 							$base = wp_nonce_url(SPAJAXURL.'forums-loader&amp;id='.$group->group_id, 'forums-loader');
 							$target = "group-$group->group_id";
 							$image = SPADMINIMAGES;
-?>
-							  <!--<img style="cursor: pointer;float: right; border: 0 none ; padding-right:5px;width: 21px;" class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Delete Group'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Delete.svg" alt="" data-form="deletegroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" />
-							  <img style="cursor: pointer;float: right; border: 0 none ; padding-right:5px;width: 21px;" class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Edit This Group'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Edit.svg" alt="" data-form="editgroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" />
-                <img style="cursor: pointer;float: right; border: 0 none ; padding-right:5px;width: 21px;" class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Order Forums'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Order.svg" alt="" data-form="ordering" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php $group->group_id; ?>" data-open="" />
-                <img style="cursor: pointer;float: right; border: 0 none ; padding-right:5px;width: 21px;" class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Add Permission'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Permissions.svg" alt="" data-form="groupperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""/>-->
-                
-                <span><img  class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Add Permission'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Permissions.svg" alt="" data-form="groupperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""/></span>
-                <span><img  class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Order Forums'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Order.svg" alt="" data-form="ordering" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php $group->group_id; ?>" data-open="" /></span>
-							  <span><img  class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Edit This Group'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Edit.svg" alt="" data-form="editgroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" /></span>
-                <span><img  class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Delete Group'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Delete.svg" alt="" data-form="deletegroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" /></span>
-
+?>               
+                <img  class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Add Permission'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Permissions.svg" alt="" data-form="groupperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""/>
+                <img  class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Order Forums'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Order.svg" alt="" data-form="ordering" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php $group->group_id; ?>" data-open="" />
+							  <img  class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Edit This Group'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Edit.svg" alt="" data-form="editgroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" />
+                <img  class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Delete Group'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Delete.svg" alt="" data-form="deletegroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open="" />
 						</div>
 					
           </div>
         </div>
-      </div>
 				
 						<div id="group-<?php echo $group->group_id; ?>">
 						</div>
@@ -151,7 +143,6 @@ function spa_forums_forums_main() {
 		echo '<div class="sfempty">&nbsp;&nbsp;&nbsp;&nbsp;'.SP()->primitives->admin_text('There are no groups defined').'<br />';
 		echo '&nbsp;&nbsp;&nbsp;&nbsp;'.SP()->primitives->admin_text('Select').' <b>'.SP()->primitives->admin_text('Create New Group').'</b> '.SP()->primitives->admin_text('from the menu on the left to get started').'</div>';
 	}
-  ?><div style="clear: both;"></div><?php
 }
 
 function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
@@ -246,14 +237,6 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
 					$target = "forum-$forum->forum_id";
 					$image = SPADMINIMAGES;
 ?>
-					<!--<input id="sfreloadpb<?php echo $forum->forum_id; ?>" type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Forum Permissions'); ?>" data-form="forumperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
-					<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit This Forum'); ?>" data-form="editforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
-					<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete Forum'); ?>" data-form="deleteforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
-        	    	<?php if ($forum->forum_disabled) { ?>
-						<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Enable Forum'); ?>" data-form="enableforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
-		            <?php } else { ?>
-        		<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Disable Forum'); ?>" data-form="disableforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
-		            <?php } ?>-->
                 <img  class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Forum Permissions'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Permissions.svg" alt="" data-form="forumperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
         	    	<?php if ($forum->forum_disabled) { ?>
 						    <img  class="spLoadForm sf-permition-panel-collapse" title="<?php echo SP()->primitives->admin_text('Enable Forum'); ?>" src="<?php echo SP_PLUGIN_ICONS; ?>Forums.svg" alt="" data-form="enableforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="" />
@@ -307,19 +290,19 @@ function spa_forums_check_memberships($forums) {
 ?>
 
 <style>
-.sp-group-container{
-  /*width: 100%;
-  background-color: #F9F9F9;
-  -khtml-border-radius: 4px 4px 4px 4px;
-  -webkit-border-radius: 4px 4px 4px 4px;
-  border-radius: 4px 4px 4px 4px;*/
+.sp-group-container .row-title{
+  width: 100%;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 .sp-group-container-in-title{
   display: table-row;
+  width: 100%;
 }
 .sp-group-container-in-row{
   display:table;
   min-width: 800px;
+  width: 100%;
 }
 .sp-group-container-in-1, .sp-group-container-in-2{
   position: relative;
@@ -352,7 +335,6 @@ function spa_forums_check_memberships($forums) {
 }
 @media screen and ( max-width: 768px ) {
   .sp-group-container-in-2 .sp-half-row-right img{
-    float: none!important;
     width: 41px;
     height: 41px;
     margin-left: 10px;
