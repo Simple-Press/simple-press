@@ -299,6 +299,29 @@ $Rev:2099 $
     border-radius: 0 0 8px 8px;
 }
 
+#sf-root-wrap .sf-farbtastic {
+    position: relative;
+    z-index: 999;
+    min-width: 235px;
+    display: none;
+}
+#sf-root-wrap .sf-farbtastic>div {
+    position: absolute;
+    width: 100%;
+    -khtml-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    background-color: #FFF;
+    border: 1px solid #F9F9F9;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .05);
+    margin-top: 10px;
+    padding: 20px;
+}
+#sf-root-wrap .farbtastic,
+#sf-root-wrap .farbtastic .wheel {
+    margin: auto;
+}
+
 #sf-root-wrap {
     margin-top: 30px;
     /*overflow: hidden;*/
@@ -745,6 +768,7 @@ $Rev:2099 $
     width: 16px;
 }
 #sf-root-wrap [class*=sf-button] .sf-icon {
+    float: left;
     margin-right: 10px;
 }
 #sf-root-wrap .sf-icon.sf-install {
@@ -869,6 +893,21 @@ $Rev:2099 $
 /**
 * < .sf-icon
 */
+
+#sf-root-wrap .sf-form-group.sf-input-icon {
+    position: relative;
+}
+#sf-root-wrap .sf-form-group.sf-input-icon input {
+    padding-right: 40px;
+}
+#sf-root-wrap .sf-form-group.sf-input-icon .sf-icon {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: 16px;
+    bottom: 16px;
+    background-color: #0E7198;
+}
 
 /**
 * #sfsidepanel
@@ -1147,7 +1186,6 @@ $Rev:2099 $
     float: left;
     width: 50%;
     padding: 0 15px 0 0;
-    /*background-color: #F9F9F9;*/
 }
 #sfmaincontainer .sf-panel-body .sf-half-form .sf-panel-body-top {
     float: left;
@@ -1201,6 +1239,16 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-panel-body .sf-half-form+.sf-form-submit-bar {
     margin: 0;
+}
+
+#sfmaincontainer .sf-panel-body .sf-half {
+    position: relative;
+    float: left;
+    width: 50%;
+    padding: 0 5px 0 0;
+}
+#sfmaincontainer .sf-panel-body .sf-half+.sf-half {
+    padding: 0 0 0 5px;
 }
 
 #sfmaincontainer .sf-upload {
@@ -1711,7 +1759,7 @@ div[class^="collapsible-"] {
 #sf-root-wrap .spThemeContainer [class*=sf-button]+[class*=sf-button] {
     margin-left: 0;
 }
-#sf-root-wrap .sf-button-secondary {
+#sf-root-wrap .spThemeContainer .sf-button-secondary {
     padding: 0;
 }
 .spThemeContainer .spTheme .theme-name{
@@ -1725,6 +1773,10 @@ div[class^="collapsible-"] {
     opacity: 0;
 }
 @media screen and ( max-width: 1350px ) {
+    #sfmaincontainer .sf-panel-body .sf-half {
+        width: 100%!important;
+        padding: 0!important;
+    }
     #sfgroupnew .sf-panel-body .sf-half-form {
         width: 100%!important;
         padding: 0!important;
@@ -1985,4 +2037,9 @@ div[class^="collapsible-"] {
   vertical-align: middle!important;
   padding: 10px 2px 10px 2px;
   background-color: #F9F9F9;
+}
+
+#sfmaincontainer .sf-wrap-farbtastic input {
+    background: inherit !important;
+    color: inherit !important;
 }
