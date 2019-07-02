@@ -721,20 +721,21 @@ $Rev:2099 $
 #sf-root-wrap [class*=sf-button]+[class*=sf-button] {
     margin-left: 10px;
 }
-#sf-root-wrap .sf-icon-button {
+
+#sf-root-wrap .sf-full-form .sf-icon-button {
     float: left;
     padding: 15px;
     border: none;
     background-color: transparent;
 }
-#sf-root-wrap .sf-icon-button:focus {
+#sf-root-wrap .sf-full-form .sf-icon-button:focus {
     background-color: #FFF;
     outline: none;
 }
-#sf-root-wrap .sf-icon-button.sf-small {
+#sf-root-wrap .sf-full-form .sf-icon-button.sf-small {
     padding: 17px;
 }
-#sf-root-wrap .sf-icon-button.sf-small .sf-icon {
+#sf-root-wrap .sf-full-form .sf-icon-button.sf-small .sf-icon {
     width: 16px;
     height: 16px;
 }
@@ -2093,11 +2094,6 @@ div[class^="collapsible-"] {
     padding: 10px 2px 10px 2px;
     background-color: #F9F9F9;
 }
-
-#sfmaincontainer .sfinline-form {
-    //display: none;
-}
-
 
 #sfmaincontainer .sf-farbtastic {
     position: relative;

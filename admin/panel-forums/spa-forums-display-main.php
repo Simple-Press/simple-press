@@ -102,7 +102,7 @@ function spa_forums_forums_main() {
                             </div>
                         </td>
                         <td>
-                            <div class="sf-panel-body-top-right sf-mobile-btns sf-m-b-20">
+                            <div class="sf-panel-body-top-right sf-mobile-btns">
                                 <?php
                                 $base = wp_nonce_url(SPAJAXURL . 'forums-loader&amp;id=' . $group->group_id, 'forums-loader');
                                 $target = "group-$group->group_id";
