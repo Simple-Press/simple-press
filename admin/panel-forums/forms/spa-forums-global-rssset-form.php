@@ -37,7 +37,7 @@ function spa_forums_global_rssset_form($id) {
 			spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_forums_rss_panel');
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
 			<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Confirm RSS Feed Status'); ?>" />

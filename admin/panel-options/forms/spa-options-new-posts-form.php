@@ -16,17 +16,6 @@ function spa_options_newposts_form() {
 			spj.loadAjaxForm('sfnewpostsform', '');
 			$('#color-background').farbtastic('#flag-background');
 			$('#color-text').farbtastic('#flag-color');
-                        
-                        $('.sf-wrap-farbtastic input').focus(function() {
-                            $(this).closest('.sf-wrap-farbtastic').find('.sf-farbtastic').show();
-                        });
-                        $(document).click(function() {
-                            $('.sf-farbtastic').hide();
-                        });
-                        $('.sf-wrap-farbtastic').click(function(e) {
-                            e.stopPropagation();
-                            $('.sf-wrap-farbtastic').not(this).find('.sf-farbtastic').hide();
-                        });
 		});
 	}(window.spj = window.spj || {}, jQuery));
 </script>
@@ -70,31 +59,27 @@ function spa_options_newposts_form() {
     	spa_paint_open_panel();
     		spa_paint_open_fieldset(__('New Posts Flag Display', 'sp-polls'), true, 'flag-display');
 ?>
-            <div class="sf-half sf-wrap-farbtastic">
-                <div class="sf-form-group sf-input-icon">
-                    <label for="flag-color"><?php echo SP()->primitives->admin_text('text color') ?></label>
-                    <input id="flag-color" type="text" value="#<?php echo $sfoptions['flagscolor']; ?>" name="flagscolor" />
-                    <span class="sf-icon sf-themes"></span>
-                </div>
-                <div class="sf-farbtastic"><div id="color-text"></div></div>
-                <span class="sf-sublabel"><?php echo SP()->primitives->admin_text('New Post Flag text color') ?></span>
-            </div>
-            <div class="sf-half sf-wrap-farbtastic">
-                <div class="sf-form-group sf-input-icon">
-                    <label for="flag-background"><?php echo SP()->primitives->admin_text('background color') ?></label>
-                    <input id="flag-background" type="text" value="#<?php echo $sfoptions['flagsbground']; ?>" name="flagsbground" />
-                    <span class="sf-icon sf-themes"></span>
-                </div>
-                <div class="sf-farbtastic"><div id="color-background"></div></div>
-                <span class="sf-sublabel"><?php echo SP()->primitives->admin_text('New Post Flag background color') ?></span>
-            </div>
+				<div>
+					<span class="sfalignleft"><?php echo SP()->primitives->admin_text('New Post Flag background color'); ?>:</span>
+				</div>
+				<div>
+					<input id="flag-background" type="text" value="#<?php echo $sfoptions['flagsbground']; ?>" name="flagsbground" style="width:100%;font-weight:bold;" />
+					<div id="color-background" style="margin: 0 auto; width: 195px;"></div>
+				</div>
+				<div>
+					<span class="sfalignleft"><?php echo SP()->primitives->admin_text('New Post Flag text color'); ?>:</span>
+				</div>
+				<div>
+					<input id="flag-color" type="text" value="#<?php echo $sfoptions['flagscolor']; ?>" name="flagscolor" style="width:100%;font-weight:bold;" />
+					<div id="color-text" style="margin: 0 auto; width: 195px;"></div>
+				</div>
 <?php
     		spa_paint_close_fieldset();
     	spa_paint_close_panel();
 
 		do_action('sph_options_newposts_right_panel');
 
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
 	<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update New Post Handling'); ?>" />

@@ -263,18 +263,30 @@ $Rev:2099 $
 .ttip {
     font-family: "Open Sans";
     font-style: normal;
-    border: 1px solid #a6c9e2;
-    -khtml-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    color: #000000;
-    font-size: 13px;
-    line-height: 1.2em;
-    background: #FFFFDF;
+    border: none;
+    -khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    color: #FFF;
+    font-size: 10px;
+    line-height: 14px;
+    background: #27476E;
     padding: 8px;
     position: absolute;
     max-width: 300px;
     z-index: 999999
+}
+.ttip:after {
+    content: '';
+    position: absolute;
+    left: calc(50% - 6px);
+    top: 100%;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #27476E;
+    clear: both;
 }
 .fip-bootstrap.icons-selector .selector-popup {
     z-index: 999;
@@ -328,6 +340,13 @@ $Rev:2099 $
     box-shadow: none;
     cursor: pointer;
 }
+#sf-root-wrap .sf-number {
+    margin: 0 0 7px 0;
+    font-family: "Open Sans";
+    font-size: 16px;
+    line-height: 22px;
+    color: #27476E;
+}
 #sf-root-wrap h4 {
     margin: 0 0 10px 0;
     font-family: "Open Sans Semibold";
@@ -337,6 +356,9 @@ $Rev:2099 $
 #sf-root-wrap ul {
     float: left;
     width: 100%;
+}
+#sf-root-wrap .sf-uppercase {
+    text-transform: uppercase;
 }
 #sf-root-wrap .sf-full-width {
     width: 100%;
@@ -1190,6 +1212,10 @@ $Rev:2099 $
     background: transparent;
     box-shadow: 0 1px 0 #F0F0F0;
 }
+#sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top table .sf-panel-body-top-right {
+    margin-bottom: 20px;
+}
+
 #sfmaincontainer .sf-panel-body .sf-full-form .sf-fieldset:not(:first-of-type) .sf-panel-body-top {
     margin-top: 20px;
 }
@@ -1330,6 +1356,7 @@ $Rev:2099 $
 }
 
 #sfmaincontainer .sf-fieldset .subsubsub {
+    width: auto;
     margin: 17px 0 0 0;
     font-size: 14px;
 }
@@ -1390,10 +1417,11 @@ $Rev:2099 $
 #sfmaincontainer .sf-item-controls {
     float: right;
 }
-#sfmaincontainer .sf-item-controls .sf-item-type {
+#sfmaincontainer .sf-item-type {
     margin-right: 10px;
-    color: #999999;
+    color: #85A2BC;
     font-size: 10px;
+    line-height: 14px;
     text-transform: uppercase;
 }
 #sfmaincontainer .sf-item-controls .sf-icon {
@@ -1634,6 +1662,9 @@ $Rev:2099 $
     -khtml-border-radius: 0 4px 0 0;
     -webkit-border-radius: 0 4px 0 0;
     border-radius: 0 4px 0 0;
+}
+#sfmaincontainer table.widefat tbody tr {
+    background-color: #FFF;
 }
 #sfmaincontainer table.widefat tbody tr td,
 #sfmaincontainer table.widefat tbody tr th {
@@ -1972,9 +2003,6 @@ div[class^="collapsible-"] {
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-left {
         margin: 0;
     }
-    #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right {
-        margin: 0;
-    }
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-icon-button {
         margin: 0;
         padding: 0;
@@ -1984,7 +2012,7 @@ div[class^="collapsible-"] {
         margin: 0;
         padding: 0 !important;
     }
-    #sfmaincontainer .sf-panel-body .sf-mobile-btns {
+    #sfmaincontainer .sf-panel-body .sf-full-form .sf-mobile-btns {
         width: 100%;
         margin: 20px 0 5px;
     }
@@ -2001,19 +2029,29 @@ div[class^="collapsible-"] {
         -webkit-border-radius: 4px;
         border-radius: 4px;
     }
+    #sfmaincontainer .sf-panel-body .sf-mobile-btns .sf-icon-button.spStackBtn {
+        width: auto;
+    }
     #sfmaincontainer .sf-panel-body .sf-mobile-btns .sf-icon-button+.sf-icon-button {
         margin-left: 10px;
     }
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-upload #sf-upload-button {
+    #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right.sf-mobile-btns .sf-upload #sf-upload-button {
         width: 100%;
     }
-    #sfmaincontainer .sf-panel-body .sf-panel-body-top-right.sf-mobile-btns .sf-upload #sf-upload-button .sf-icon {
+    #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right.sf-mobile-btns .sf-upload #sf-upload-button .sf-icon {
         margin: 0;
     }
     #sfmaincontainer .sf-fieldset .sf-panel-body-top-right p.search-box {
         position: relative;
         width: calc(100% - 40px);
         height: auto;
+    }
+    #sfmaincontainer .sf-panel-body .sf-full-form table .sf-panel-body-top-right {
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 0;
+        width: fit-content;
     }
     #sfmaincontainer .sf-upload #sf-upload-button {
         width: auto;
@@ -2038,7 +2076,11 @@ div[class^="collapsible-"] {
     #sfhousekeepingformblock .sf-button-primary {
         margin-top: 10px;
     }
-
+    #sfmaincontainer table.sf-table-mobile tr td,
+    #sfmaincontainer table.sf-table-mobile tr th {
+        float: left;
+        width: 100%;
+    }
 }
 .sf-half-panel {
     min-width: 50%;

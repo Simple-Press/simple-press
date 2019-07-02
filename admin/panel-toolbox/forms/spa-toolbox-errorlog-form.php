@@ -53,7 +53,7 @@ function spa_toolbox_errorlog_form() {
 			}
 		spa_paint_close_fieldset();
 		do_action('sph_toolbox_error_panel');
-		//spa_paint_close_container();
+		spa_paint_close_container();
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'toolbox-loader&amp;saveform=sfclearlog', 'toolbox-loader');
 ?>

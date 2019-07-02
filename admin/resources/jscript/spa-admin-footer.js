@@ -59,8 +59,8 @@
             $(document).tooltip({
                 tooltipClass: "ttip",
                 position: {
-                    my: "left+20 top",
-                    at: "left bottom+10"
+                    my: "center",
+                    at: "center top-30"
                 },
                 track: false
             });

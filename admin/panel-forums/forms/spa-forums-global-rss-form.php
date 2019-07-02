@@ -50,7 +50,7 @@ function spa_forums_global_rss_form() {
 			spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_forums_global_rss_panel');
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
 		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Global RSS Settings'); ?>" />

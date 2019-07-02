@@ -80,7 +80,7 @@ function spa_components_messages_form() {
 
 		do_action('sph_components_messages_right_panel');
 
-		//spa_paint_close_container();
+		spa_paint_close_container();
 
 ?>
 	<div class="sf-form-submit-bar">

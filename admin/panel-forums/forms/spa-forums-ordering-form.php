@@ -65,11 +65,7 @@ function spa_forums_ordering_form($groupId=0) {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumorder" name="sfforumorder">
 <?php
 		echo sp_create_nonce('forum-adminform_forumorder');
-                if(!$groupId) {
-                    spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Group and Forum Ordering'), true);
-                } else {
-                    spa_paint_open_nohead_tab(true);
-                }
+		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Group and Forum Ordering'), true);
 		?>
             <div class="sf-panel-body-top">
                 <div class="sf-panel-body-top-left">
@@ -115,7 +111,7 @@ function spa_forums_ordering_form($groupId=0) {
 				echo '<input type="hidden" id="spForumsOrder" name="spForumsOrder" />';
 			//	spa_paint_close_fieldset();
 			//spa_paint_close_panel();
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
 		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Save Ordering'); ?>" />

@@ -77,7 +77,7 @@ function spa_usergroups_map_users() {
 
 		do_action('sph_usergroups_mapping_settings_panel');
 
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
 	<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Mapping Settings'); ?>" />
@@ -113,7 +113,7 @@ function spa_usergroups_map_users() {
 
 		do_action('sph_usergroups_map_users_panel');
 
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
     	<div class="sf-form-submit-bar">
         	<span><input type="submit" class="sf-button-primary" id="saveit2" name="saveit2" value="<?php SP()->primitives->admin_etext('Map Users'); ?>" /> <span class="sf-button sfhidden" id='onFinish'></span></span>

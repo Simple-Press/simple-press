@@ -42,7 +42,7 @@ function spa_forums_disable_forum_form($forum_id) {
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_forums_disable_forum_panel');
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
     		<input type="submit" class="sf-button-primary" id="sfforumdisable<?php echo $forum_id; ?>" name="sfforumdisable<?php echo $forum_id; ?>" value="<?php SP()->primitives->admin_etext('Disable Forum'); ?>" />

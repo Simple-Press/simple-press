@@ -101,7 +101,7 @@ function spa_components_smileys_form() {
 		do_action('sph_components_smileys_right_panel');
 
                 spa_paint_custom_smileys();
-		//spa_paint_close_container();
+		spa_paint_close_container();
                 
 	spa_paint_close_tab();
 ?>

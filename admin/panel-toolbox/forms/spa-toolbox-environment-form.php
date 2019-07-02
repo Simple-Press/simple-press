@@ -77,8 +77,8 @@ function spa_toolbox_environment_form() {
 		spa_paint_close_panel();
 		do_action('sph_toolbox_environment_panel');
 
-		//spa_paint_close_container();
-		//echo '<div class="sfform-panel-spacer"></div>';
+		spa_paint_close_container();
+		echo '<div class="sfform-panel-spacer"></div>';
 	spa_paint_close_tab();
 }
 

@@ -119,8 +119,8 @@ function spa_options_iconsets_form() {
 		//	spa_paint_close_fieldset();
 		//spa_paint_close_panel();
 
-		//spa_paint_close_container();
-		//echo '<div class="sfform-panel-spacer"></div>';
+		spa_paint_close_container();
+		echo '<div class="sfform-panel-spacer"></div>';
 	spa_paint_close_tab();
 
 	spa_paint_open_nohead_tab(true);
@@ -130,7 +130,7 @@ function spa_options_iconsets_form() {
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
 	<!--<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="updateiconsets" name="saveit" value="<?php SP()->primitives->admin_etext('Update Iconsets Options'); ?>" />

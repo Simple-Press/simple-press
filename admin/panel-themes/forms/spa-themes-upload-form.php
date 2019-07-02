@@ -29,6 +29,6 @@ function spa_themes_upload_form() {
 
         do_action('sph_themes_upload_panel');
 	spa_paint_close_panel();
-	//spa_paint_close_container();
+	spa_paint_close_container();
 	spa_paint_close_tab();
 }

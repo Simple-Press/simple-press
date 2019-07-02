@@ -111,8 +111,8 @@ function spa_toolbox_cron_form() {
 		spa_paint_close_panel();
 
 		do_action('sph_toolbox_top_cron_panel');
-		//spa_paint_close_container();
-		//echo '<div class="sfform-panel-spacer"></div>';
+		spa_paint_close_container();
+		echo '<div class="sfform-panel-spacer"></div>';
 	spa_paint_close_tab();
 
 	echo '<div class="sfform-panel-spacer"></div>';
@@ -144,7 +144,7 @@ function spa_toolbox_cron_form() {
 		spa_paint_close_panel();
 
 		do_action('sph_toolbox_right_cron_panel');
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
 	<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update CRON'); ?>" />

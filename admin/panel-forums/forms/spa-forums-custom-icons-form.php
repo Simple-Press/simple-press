@@ -104,8 +104,8 @@ function spa_forums_custom_icons_form() {
 
 		do_action('sph_forum_icons_right_panel');
 
-		//spa_paint_close_container();
+		spa_paint_close_container();
 
-		//echo '<div class="sfform-panel-spacer"></div>';
+		echo '<div class="sfform-panel-spacer"></div>';
 	spa_paint_close_tab();
 }

@@ -76,7 +76,7 @@ function spa_forums_view_forums_permission_form($forum_id)
 <?php
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
 	<form>
 		<div class="sf-form-submit-bar">

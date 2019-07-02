@@ -77,8 +77,8 @@ function spa_integration_language_form() {
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
-		//spa_paint_close_container();
-		//echo '<div class="sfform-panel-spacer"></div>';
+		spa_paint_close_container();
+		echo '<div class="sfform-panel-spacer"></div>';
 
 	spa_paint_close_tab();
 
@@ -296,9 +296,9 @@ function spa_integration_language_form() {
 			}
 
 		spa_paint_close_panel();
-		//echo '<div class="sfform-panel-spacer"></div>';
+		echo '<div class="sfform-panel-spacer"></div>';
 
-		//spa_paint_close_container();
+		spa_paint_close_container();
 	spa_paint_close_tab();
 }
 

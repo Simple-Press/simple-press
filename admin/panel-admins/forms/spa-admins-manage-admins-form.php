@@ -141,7 +141,7 @@ function spa_admins_manage_admins_form() {
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
-		//spa_paint_close_container();
+		spa_paint_close_container();
 	}
 ?>
 	<div class="sf-form-submit-bar">
@@ -253,7 +253,7 @@ function spa_admins_manage_admins_form() {
 
 		do_action('sph_admins_manage_panel');
 
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
 	<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="savenew" name="savenew" value="<?php SP()->primitives->admin_etext('Add New Admins'); ?>" />

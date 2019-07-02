@@ -91,7 +91,7 @@ function spa_forums_edit_group_form($group_id) {
 
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
     		<input type="submit" class="sf-button-primary" id="groupedit<?php echo $group->group_id; ?>" name="groupedit<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Update Group'); ?>" />

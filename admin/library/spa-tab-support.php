@@ -72,7 +72,7 @@ function spa_paint_close_container() {
 # Closes the whole containing block
 # ------------------------------------------------------------------
 function spa_paint_close_tab() {
-	echo '</div></div>';
+	echo '</div>';
 }
 
 # ------------------------------------------------------------------

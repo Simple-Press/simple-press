@@ -52,7 +52,7 @@ function spa_toolbox_log_form() {
 		spa_paint_close_panel();
 
 		do_action('sph_toolbox_install_panel');
-		//spa_paint_close_container();
-		//echo '<div class="sfform-panel-spacer"></div>';
+		spa_paint_close_container();
+		echo '<div class="sfform-panel-spacer"></div>';
 	spa_paint_close_tab();
 }

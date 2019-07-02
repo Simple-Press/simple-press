@@ -137,7 +137,7 @@ function spa_special_rankings_form($rankings) {
         </table>
 <?php
 		spa_paint_close_panel();
-		//spa_paint_close_container();
+		spa_paint_close_container();
 		//echo '<div class="sfform-panel-spacer"></div>';
 	spa_paint_close_tab();
 	}

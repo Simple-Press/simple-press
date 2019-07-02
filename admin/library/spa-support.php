@@ -629,7 +629,12 @@ function sp_add_caps() {
 
 function sp_display_item_stats($table, $key, $value, $label) {
 	$c = SP()->DB->count($table, "$key = $value");
-	echo '<span class = "spItemStat">'.$label.' <b>'.$c.'</b></span>';
+        ?>
+        <div>
+            <div class="sf-item-type"><?php echo $label ?></div>
+            <span class="sf-number"><?php echo $c ?></span>
+        </div>
+        <?php
 }
 
 function spa_build_forum_permalink_slugs() {

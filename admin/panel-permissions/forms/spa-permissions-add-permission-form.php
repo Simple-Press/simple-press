@@ -7,7 +7,7 @@ $Rev: 15601 $
 */
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
-define('SP_PLUGIN_ICONS', SPADMINIMAGES.'../icons/');
+
 function spa_permissions_add_permission_form() {
 ?>
 <script>
@@ -28,43 +28,27 @@ function spa_permissions_add_permission_form() {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfrolenew" name="sfrolenew">
 <?php
 		echo sp_create_nonce('forum-adminform_rolenew');
-		spa_paint_open_tab(SP()->primitives->admin_text('Add New Permission Set'), true);
+		spa_paint_open_tab(SP()->primitives->admin_text('Permissions')." - ".SP()->primitives->admin_text('Add New Permission'), true);
 			spa_paint_open_panel();
-      ?><div class="sf-half-panel">
-      <div class="sf-half-panel-title"><?php
-      spa_paint_open_fieldset(SP()->primitives->admin_text('Permission Set Details'), 'true', 'create-new-permission-set');
-      ?></div><div class="sf-half-panel-in"><?php
-      spa_paint_input(SP()->primitives->admin_text('Permission Set Name'), "role_name", '', false, true);
-      spa_paint_input(SP()->primitives->admin_text('Permission Set Description'), "role_desc", '', false, true);
-      spa_paint_select_start(SP()->primitives->admin_text('Clone Existing Permission Set'), 'role', 'role');
-      spa_display_permission_select('', false);
-      spa_paint_select_end('<small>'.SP()->primitives->admin_text('Select an existing Permission Set to Clone').'</small>');
-      ?></div><div class="sf-form-submit-bar">
-	        <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" />
-	      </div>
-        
-      </div>
-      <div class="sf-half-panel">
-        <div class="sf-half-panel-title"><?php
-          spa_paint_open_fieldset(SP()->primitives->admin_text('Permission Set Actions'), 'true', 'create-new-permission-set');
-      ?>
-         </div><div class="sf-half-panel-in">
-         <br/>
-        <div class="sf-panel-warning">
-          <img src="<?=SPADMINIMAGES?>sp_GuestPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />
-          <small>&nbsp;<?=SP()->primitives->admin_text('Action settings displaying this icon will be ignored for Guest Users')?></small>
-        </div>
-        <div class="sf-panel-warning">
-          <img src="<?=SPADMINIMAGES?>sp_GlobalPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />
-          <small>&nbsp;<?=SP()->primitives->admin_text('Action settings displaying this icon require enabling to use')?></small>
-        </div>
-        <div class="sf-panel-warning">
-          <img src="<?=SPADMINIMAGES?>sp_Warning.png" alt="" style="width:16px;height:16px;vertical-align:top" />
-          <small>&nbsp;<?=SP()->primitives->admin_text('Action settings displaying this icon should be used with great care')?></small>
-        </div>
-        
+				spa_paint_open_fieldset(SP()->primitives->admin_text('Add New Permission'), 'true', 'create-new-permission-set');
+
+					spa_paint_input(SP()->primitives->admin_text('Permission Set Name'), "role_name", '', false, true);
+					spa_paint_input(SP()->primitives->admin_text('Permission Set Description'), "role_desc", '', false, true);
+
+					spa_paint_select_start(SP()->primitives->admin_text('Clone Existing Permission Set'), 'role', 'role');
+					spa_display_permission_select('', false);
+					spa_paint_select_end('<small>('.SP()->primitives->admin_text('Select an existing Permission Set to Clone.  Any settings below will be ignored.').')</small>');
+
+?>
+					<br /><p><strong><?php SP()->primitives->admin_etext('Permission Set Actions') ?>:</strong></p>
 <?php
-					
+					echo '<p><img src="'.SPADMINIMAGES.'sp_GuestPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />';
+					echo '<small>&nbsp;'.SP()->primitives->admin_text('Note: Action settings displaying this icon will be ignored for Guest Users').'</small>';
+					echo '&nbsp;&nbsp;&nbsp;<img src="'.SPADMINIMAGES.'sp_GlobalPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />';
+					echo '<small>&nbsp;'.SP()->primitives->admin_text('Note: Action settings displaying this icon require enabling to use').'</small>';
+					echo '&nbsp;&nbsp;&nbsp;<img src="'.SPADMINIMAGES.'sp_Warning.png" alt="" style="width:16px;height:16px;vertical-align:top" />';
+					echo '<small>&nbsp;'.SP()->primitives->admin_text('Note: Action settings displaying this icon should be used with great care').'</small></p>';
+
 					sp_build_site_auths_cache();
 
 					$sql = 'SELECT auth_id, auth_name, auth_cat, authcat_name, warning FROM '.SPAUTHS.'
@@ -77,7 +61,7 @@ function spa_permissions_add_permission_form() {
 					$category = '';
 ?>
 					<!-- OPEN OUTER CONTAINER DIV -->
-					<div class="outershell" style="width: 100%;margin-top: 20px;border: 1px solid #ddd;">
+					<div class="outershell" style="width: 100%;">
 <?php
 					foreach ($authlist as $a) {
 						if ($category != $a->authcat_name) {
@@ -85,21 +69,15 @@ function spa_permissions_add_permission_form() {
 							if (!$firstitem) {
 ?>
 								<!-- CLOSE DOWN THE ENDS -->
-								</div></div>
+								</table></div>
 <?php
                     		}
 ?>
 							<!-- OPEN NEW INNER DIV -->
 							<div class="innershell">
 							<!-- NEW INNER DETAIL TABLE -->
-              <div class="sp-permition-cat-title">
-                <span style="text-align: left;padding-left:5px; "><?php SP()->primitives->admin_etext($category); ?></span>
-                <span>
-                  <img style="float: right; border: 0 none ; padding-right:5px;width: 21px;" class="sf-permition-panel-collapse" title="" src="<?php echo SP_PLUGIN_ICONS; ?>Collapse.svg" alt="" />
-                  <img style="float: right; border: 0 none ; padding-right:5px;width: 21px;" class="sf-permition-panel-expand" title="" src="<?php echo SP_PLUGIN_ICONS; ?>Expand.svg" alt="" />
-                </span>
-              </div>
-              <div class="sp-permition-body">
+							<table style="width:100%;border:0">
+							<tr><td colspan="2" class="permhead"><?php SP()->primitives->admin_etext($category); ?></td></tr>
 <?php
 							$firstitem = false;
 						}
@@ -118,80 +96,48 @@ function spa_permissions_add_permission_form() {
 						}
 
 ?>
-							<div<?php //echo $tip; ?> class="sp-permition-item">
-								<span class="permentry<?php echo $warn; ?>" >
+							<tr<?php echo $tip; ?>>
+								<td class="permentry<?php echo $warn; ?>">
 
 								<input type="checkbox" name="<?php echo $button; ?>" id="sf<?php echo $button; ?>"  />
 								<label for="sf<?php echo $button; ?>" class="sflabel">
-								
+								<img style="text-align:top;float: right; border: 0 none ; margin: -4px 5px 0 3px; padding: 0;" class="" title="<?php echo $tooltips[$auth_name]; ?>" src="<?php echo SPADMINIMAGES; ?>sp_Information.png" alt="" />
 								<?php SP()->primitives->admin_etext(SP()->core->forumData['auths'][$auth_id]->auth_desc); ?></label>
-                </span>
 								<?php if ($span == '') { ?>
-									<span style="text-align:center;width:32px" class="permentry"></span>
-                  <img style="width:16px;height:16px; border: 0 none ;float:right; margin: 3px 3px 0 3px; padding: 0;" class="" title="<?php echo $tooltips[$auth_name]; ?>" src="<?php echo SPADMINIMAGES; ?>sp_Information.png" alt="" />
+									<td style="text-align:center;width:32px" class="permentry">
 <?php
                                 }
 								if ($span == '') {
 									if (SP()->core->forumData['auths'][$auth_id]->enabling) {
-										echo '<img src="'.SPADMINIMAGES.'sp_GlobalPerm.png" alt="" style="float:right;margin: 3px 3px 0 3px;width:16px;height:16px" title="'.SP()->primitives->admin_text('Requires Enabling').'" />';
+										echo '<img src="'.SPADMINIMAGES.'sp_GlobalPerm.png" alt="" style="width:16px;height:16px" title="'.SP()->primitives->admin_text('Requires Enabling').'" />';
 									}
 									if (SP()->core->forumData['auths'][$auth_id]->ignored) {
-										echo '<img src="'.SPADMINIMAGES.'sp_GuestPerm.png" alt="" style="float:right;margin: 3px 3px 0 3px;width:16px;height:16px" title="'.SP()->primitives->admin_text('Ignored for Guests').'" />';
+										echo '<img src="'.SPADMINIMAGES.'sp_GuestPerm.png" alt="" style="width:16px;height:16px" title="'.SP()->primitives->admin_text('Ignored for Guests').'" />';
 									}
 									if ($authWarn) {
-										echo '<img src="'.SPADMINIMAGES.'sp_Warning.png" alt="" style="float:right;margin: 3px 3px 0 3px;width:16px;height:16px" title="'.SP()->primitives->admin_text('Use with Caution').'" />';
+										echo '<img src="'.SPADMINIMAGES.'sp_Warning.png" alt="" style="width:16px;height:16px" title="'.SP()->primitives->admin_text('Use with Caution').'" />';
 									}
-									echo '</span>';
+									echo '</td>';
 								} else {
 ?>
-								    </span><span class="permentry" style="width:32px"></span>
+								    </td><td class="permentry" style="width:32px"></td>
                                 <?php } ?>
-							</div>
+							</tr>
                         <?php } ?>
-              
 					<!-- END CONTAINER DIV -->
-					</div></div><div class="clearboth"></div>
+					</table></div><div class="clearboth"></div>
 					</div>
-          </div>
 <?php
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_perm_add_perm_panel');
-		//spa_paint_close_container();
+		spa_paint_close_container();
 ?>
-	<!--<div class="sf-form-submit-bar">
+	<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" />
-	</div>-->
+	</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
 	<div class="sfform-panel-spacer"></div>
-  <script type="text/javascript">
-<!--
-	
-//-->
-(function(spj, $, undefined) {
-  $(document).ready(function() {
-    $('.sf-half-panel .sp-permition-body').hide();
-    $('.sf-half-panel .sp-permition-cat-title img.sf-permition-panel-collapse').hide();
-    $('.sf-half-panel .sp-permition-cat-title img.sf-permition-panel-expand').show();
-    $('.sf-half-panel .sp-permition-cat-title').on('click', function(e){
-      body = $(this).parent().find('.sp-permition-body');
-      img1 = $(this).find('img.sf-permition-panel-collapse');
-      img2 = $(this).find('img.sf-permition-panel-expand');
-      if(body.css('display') === 'none'){
-        body.show();
-        img2.hide();
-        img1.show();
-        $(this).css('background-color', '#FFFFFF');
-      }else{
-        body.hide();
-        img1.hide();
-        img2.show();
-        $(this).css('background-color', '#F9F9F9');
-      }
-    });
-  });
-}(window.spj = window.spj || {}, jQuery));
-</script>
 <?php
 }
