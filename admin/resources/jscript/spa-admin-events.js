@@ -160,7 +160,8 @@
 	adminHelp = {
 		init: function() {
 			$('.spHelpLink').off();
-			$('.spHelpLink').click(function() {
+			$('.spHelpLink').click(function(eventObject) {
+				eventObject.preventDefault();
 				var mydata = $(this).data();
 				spj.dialogAjax(this, mydata.site, mydata.label, mydata.width, mydata.height, mydata.align);
 			});
