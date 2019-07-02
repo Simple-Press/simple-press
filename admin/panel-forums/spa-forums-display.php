@@ -34,7 +34,7 @@ function spa_render_forums_container($formid) {
 		case 'ordering':
 			$g = (isset($_GET['id'])) ? SP()->filters->integer($_GET['id']) : 0;
 			require_once SP_PLUGIN_DIR.'/admin/panel-forums/forms/spa-forums-ordering-form.php';
-			spa_forums_ordering_form($g);
+			spa_forums_ordering_form($g, false);
 			break;
 		case 'creategroup':
 			require_once SP_PLUGIN_DIR.'/admin/panel-forums/forms/spa-forums-create-group-form.php';

@@ -20,13 +20,8 @@ function spa_paint_options_init() {
 	$tab = 100;
 }
 
-# ------------------------------------------------------------------
-# spa_paint_open_tab()
-# Creates the containing block around a form or main section
-# ------------------------------------------------------------------
-function spa_paint_open_tab($tabname, $full=false, $info = "") {
-	
-	$site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
+function spa_paint_tab_head($tabname) {
+        $site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
 	$target = 'sfmaincontainer';
 	
 	echo "<div class='sf-panel-head'>";
@@ -36,12 +31,31 @@ function spa_paint_open_tab($tabname, $full=false, $info = "") {
 	echo "</div>";
 	echo "<h3>$tabname</h3>";
 	echo "</div>\n";
-	echo "<div class='sf-panel-body'>";
+}
+
+function spa_paint_open_full_form() {
+    echo '<div class="sf-full-form">';
+}
+function spa_paint_open_half_form() {
+    echo '<div class="sf-half-form">';
+}
+function spa_paint_open_panel_body($class = '') {
+    echo "<div class='sf-panel-body $class'>";
+}
+
+
+# ------------------------------------------------------------------
+# spa_paint_open_tab()
+# Creates the containing block around a form or main section
+# ------------------------------------------------------------------
+function spa_paint_open_tab($tabname, $full=false, $info = "") {
+	spa_paint_tab_head($tabname);
+	spa_paint_open_panel_body();
 	echo $info;
 	if ($full) {
-		echo '<div class="sf-full-form">';
+            spa_paint_open_full_form();
 	} else {
-		echo '<div class="sf-half-form">';
+            spa_paint_open_half_form();
 	}
 }
 
@@ -58,26 +72,25 @@ function spa_paint_close_container() {
 # Closes the whole containing block
 # ------------------------------------------------------------------
 function spa_paint_close_tab() {
-	echo '</div>';
+	echo '</div></div>';
 }
 
 # ------------------------------------------------------------------
 # spa_paint_open_nohead_tab()
 # Creates the containing block around a form or main section/no heading
 # ------------------------------------------------------------------
-function spa_paint_open_nohead_tab($full=false) {
-	echo "<div class='sfform-panel-nohead sf-panel-body'>";
-
-	if ($full) {
-		echo '<div class="sf-full-form">';
+function spa_paint_open_nohead_tab($full=false, $class="sfform-panel-nohead") {
+        spa_paint_open_panel_body($class);
+        if ($full) {
+            spa_paint_open_full_form();
 	} else {
-		echo '<div class="sf-half-form">';
+            spa_paint_open_half_form();
 	}
 }
 
 function spa_paint_tab_right_cell() {
 	echo '</div>';
-	echo '<div class="sf-half-form">';
+	spa_paint_open_half_form();
 }
 
 function spa_paint_open_panel() {
