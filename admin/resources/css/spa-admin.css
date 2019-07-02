@@ -769,7 +769,8 @@ $Rev:2099 $
     border: none;
     background-color: transparent;
 }
-#sf-root-wrap .sf-full-form .sf-icon-button:focus {
+#sf-root-wrap .sf-full-form .sf-icon-button:focus,
+#sf-root-wrap .sf-full-form .sf-icon-button:hover {
     background-color: #FFF;
     outline: none;
 }
@@ -779,6 +780,11 @@ $Rev:2099 $
 #sf-root-wrap .sf-full-form .sf-icon-button.sf-small .sf-icon {
     width: 16px;
     height: 16px;
+    opacity: .75;
+}
+#sf-root-wrap .sf-full-form .sf-icon-button.sf-small:focus .sf-icon,
+#sf-root-wrap .sf-full-form .sf-icon-button.sf-small:hover .sf-icon {
+    opacity: 1;
 }
 
 /**
@@ -2145,6 +2151,17 @@ div[class^="collapsible-"] {
     #sfmaincontainer table.sf-table-mobile tr th {
         float: left;
         width: 100%;
+    }
+    #sfmaincontainer table.widefat.sf-table-small tbody tr td:first-of-type,
+    #sfmaincontainer table.widefat.sf-table-small tbody tr th:first-of-type {
+        padding-left: 10px;
+    }
+    #sfmaincontainer table.widefat.sf-table-small tbody tr td:last-of-type,
+    #sfmaincontainer table.widefat.sf-table-small tbody tr th:last-of-type {
+        padding-right: 10px;
+    }
+    #sfmaincontainer .sf-full-form .sf-icon-button.sf-small {
+        background-color: #F9F9F9;
     }
     .spThemeContainer .spTheme {
         width: 100%;

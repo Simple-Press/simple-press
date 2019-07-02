@@ -50,7 +50,7 @@ function spa_integration_page_form() {
 				spa_paint_close_fieldset();
 
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Update Forum Permalink'), true, 'forum-permalink');
-					echo '<p class="sf-sublabel">'.SP()->primitives->admin_text('Current permalink').':<br /></p><div class="sf-subhead" id="adminupresult"><p>'.$sfoptions['sfpermalink'].'</p></div><br />';
+					echo '<p class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Current permalink').':<br /></p><div class="sf-subhead" id="adminupresult"><p>'.$sfoptions['sfpermalink'].'</p></div><br />';
 					spa_paint_update_permalink();
 				spa_paint_close_fieldset();
 			}
