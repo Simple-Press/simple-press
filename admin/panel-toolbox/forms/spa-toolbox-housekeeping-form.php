@@ -38,15 +38,17 @@ function spa_toolbox_housekeeping_form() {
 <?php
 				echo '<p class="sf-sublabel">'.SP()->primitives->admin_text("You shouldn't need to rebuild your indexes unless asked to by Simple:Press Support.").'</p>';
 ?>
+				<br/>
 				<form action="<?php echo $ajaxURL; ?>" method="post" id="sfindexes" name="sfindexes">
 				<?php echo sp_create_nonce('forum-adminform_housekeeping'); ?>
-				<p class="sf-sublabel"><?php SP()->primitives->admin_etext('Select forum to have its indexes rebuilt') ?>:<br /><br /></p>
-				<select class="wp-core-ui" name="forum_id" >
-					<?php echo sp_render_group_forum_select(false, false, false, true, '', '', 'wp-core-ui', 20); ?>
-				</select>
+				<span class="sf-sublabel">
+					<select class="wp-core-ui" name="forum_id" >
+						<?php echo sp_render_group_forum_select(false, false, false, true, '', '', 'wp-core-ui', 20); ?>
+					</select>
+				</span>
 				<br />
 <?php
-				echo '<p class="sf-sublabel">'.SP()->primitives->admin_text('Note: Rebuilding the forum indexes may take some time if you have a large number of topics or posts.').'</p>';
+				echo '<p class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Rebuilding the forum indexes may take some time if you have a large number of topics or posts.').'</p>';
 			?>
 				<br /><br />
 				<input type="submit" class="sf-button-primary spShowElement" id="saveit1" name="rebuild-fidx" value="<?php SP()->primitives->admin_etext('Rebuild Forum Indexes'); ?>" data-target="#riimg" />
@@ -67,14 +69,14 @@ function spa_toolbox_housekeeping_form() {
 				<form action="<?php echo $ajaxURL; ?>" method="post" id="sfnewpostcleanup" name="sfnewpostcleanup">
 				<?php echo sp_create_nonce('forum-adminform_housekeeping'); ?>
 
-				<span class="sf-sublabel">Number of Days Since User's Last Visit:
+				<span class="sf-sublabel">
 				<input class="wp-core-ui" type="text" value="30" name="sfdays" /></span>
 				<br /><br/>
 				<input type="submit" class="sf-button-primary spShowElement" id="saveit2" name="clean-newposts" value="<?php SP()->primitives->admin_etext('Clean New Posts List'); ?>" data-target="#npcimg" />
 				<img class="sfhidden" id="npcimg" src="<?php echo SPCOMMONIMAGES.'working.gif'; ?>" alt=""/>
 				</form>
 <?php
-				echo '<p class="sf-sublabel">'.SP()->primitives->admin_text('Note: Cleaning up the New Post Lists may take some time if you have a large number of users that meet the criteria.').'</p>';
+				echo '<p class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Cleaning up the New Post Lists may take some time if you have a large number of users that meet the criteria.').'</p>';
 ?>
 			</div>
 <?php
@@ -94,7 +96,7 @@ function spa_toolbox_housekeeping_form() {
 				<img class="sfhidden" id="pcimg" src="<?php echo SPCOMMONIMAGES.'working.gif'; ?>" alt=""/>
 				</form>
 <?php
-				echo '<p class="sf-sublabel">'.SP()->primitives->admin_text('Note: Recalculating user post counts may take some time if you have a large number of users and cannot be reversed.').'</p>';
+				echo '<p class="sf-sublabel .sf-sublabel-small">'.SP()->primitives->admin_text('Recalculating user post counts may take some time if you have a large number of users and cannot be reversed.').'</p>';
 ?>
 			</div>
 <?php
@@ -240,12 +242,12 @@ function spa_toolbox_housekeeping_form() {
 		var questBtn = jQuery('#sfhousekeepingformblock fieldset .sf-panel-body-top-right').html();
 		jQuery('#sfhousekeepingformblock fieldset .sf-panel-body-top-right').append(collapsiblebtn);
 		jQuery('#sfhousekeepingformblock fieldset .sf-panel-body-top-right').children('.sfhelplink').toggleClass('hide');
-		jQuery('#sfhousekeepingformblock .sf-panel-body-top').on('click', function(){
-			jQuery(this).find('.sfToggleBtn').children().toggleClass("sf-collapsed").toggleClass("sf-expanded");
-			jQuery(this).parent().children('div[class^=\"collapsible-\"]').toggleClass('collapsible-closed').toggleClass('collapsible-open');
-			jQuery(this).parent().children('div:nth-child(1)').toggleClass('bg-gray');
-			jQuery(this).find('.sfhelplink').toggleClass('hide');
-		})
+		jQuery('#sfhousekeepingformblock .sf-panel-body-top .sf-panel-body-top-left').on('click', function(){
+			jQuery(this).parent().find('.sfToggleBtn').children().toggleClass("sf-collapsed").toggleClass("sf-expanded");
+			jQuery(this).parent().parent().children('div[class^=\"collapsible-\"]').toggleClass('collapsible-closed').toggleClass('collapsible-open');
+			jQuery(this).parent().parent().children('div:nth-child(1)').toggleClass('bg-gray');
+			jQuery(this).parent().find('.sfhelplink').toggleClass('hide');
+		});
 	</script>
 	<?php
 }

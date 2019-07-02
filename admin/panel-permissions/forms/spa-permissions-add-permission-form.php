@@ -34,11 +34,11 @@ function spa_permissions_add_permission_form() {
       <div class="sf-half-panel-title"><?php
       spa_paint_open_fieldset(SP()->primitives->admin_text('Permission Set Details'), 'true', 'create-new-permission-set');
       ?></div><div class="sf-half-panel-in"><?php
-      spa_paint_input(SP()->primitives->admin_text('Permission Set Name'), "role_name", '', false, true);
-      spa_paint_input(SP()->primitives->admin_text('Permission Set Description'), "role_desc", '', false, true);
-      spa_paint_select_start(SP()->primitives->admin_text('Clone Existing Permission Set'), 'role', 'role');
+      spa_paint_input(SP()->primitives->admin_text('Set Name'), "role_name", '', false, true);
+      spa_paint_input(SP()->primitives->admin_text('Set Description'), "role_desc", '', false, true);
+      spa_paint_select_start(SP()->primitives->admin_text('Clone Existing'), 'role', 'role');
       spa_display_permission_select('', false);
-      spa_paint_select_end('<small>'.SP()->primitives->admin_text('Select an existing Permission Set to Clone').'</small>');
+      spa_paint_select_end('<div class="text-small"><small>'.SP()->primitives->admin_text('Select an existing Set to Clone').'</small></div>');
       ?></div><div class="sf-form-submit-bar">
 	        <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" />
 	      </div>
@@ -77,7 +77,7 @@ function spa_permissions_add_permission_form() {
 					$category = '';
 ?>
 					<!-- OPEN OUTER CONTAINER DIV -->
-					<div class="outershell" style="width: 100%;margin-top: 20px;border: 1px solid #ddd;">
+					<div class="outershell" style="width: 100%;margin-top: 20px;border: 1px solid #ddd;border-radius: 5px;">
 <?php
 					foreach ($authlist as $a) {
 						if ($category != $a->authcat_name) {
@@ -95,8 +95,8 @@ function spa_permissions_add_permission_form() {
               <div class="sp-permition-cat-title">
                 <span style="text-align: left;padding-left:5px; "><?php SP()->primitives->admin_etext($category); ?></span>
                 <span>
-                  <img style="float: right; border: 0 none ; padding-right:5px;width: 21px;" class="sf-permition-panel-collapse" title="" src="<?php echo SP_PLUGIN_ICONS; ?>Collapse.svg" alt="" />
-                  <img style="float: right; border: 0 none ; padding-right:5px;width: 21px;" class="sf-permition-panel-expand" title="" src="<?php echo SP_PLUGIN_ICONS; ?>Expand.svg" alt="" />
+									<span class="sf-icon sf-collapse sf-permition-panel-collapse"></span>
+									<span class="sf-icon sf-expand sf-permition-panel-expand"></span>
                 </span>
               </div>
               <div class="sp-permition-body">
@@ -172,12 +172,12 @@ function spa_permissions_add_permission_form() {
 (function(spj, $, undefined) {
   $(document).ready(function() {
     $('.sf-half-panel .sp-permition-body').hide();
-    $('.sf-half-panel .sp-permition-cat-title img.sf-permition-panel-collapse').hide();
-    $('.sf-half-panel .sp-permition-cat-title img.sf-permition-panel-expand').show();
+    $('.sf-half-panel .sp-permition-cat-title .sf-permition-panel-collapse').hide();
+    $('.sf-half-panel .sp-permition-cat-title .sf-permition-panel-expand').show();
     $('.sf-half-panel .sp-permition-cat-title').on('click', function(e){
       body = $(this).parent().find('.sp-permition-body');
-      img1 = $(this).find('img.sf-permition-panel-collapse');
-      img2 = $(this).find('img.sf-permition-panel-expand');
+      img1 = $(this).find('.sf-permition-panel-collapse');
+      img2 = $(this).find('.sf-permition-panel-expand');
       if(body.css('display') === 'none'){
         body.show();
         img2.hide();

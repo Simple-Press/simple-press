@@ -19,7 +19,7 @@ function spa_themes_list_form() {
 	$xml = sp_load_version_xml();
 
 	spa_paint_options_init();
-	spa_paint_open_tab(SP()->primitives->admin_text('Available Themes').' - '.SP()->primitives->admin_text('Select Simple:Press Theme'), true);
+	spa_paint_open_tab(SP()->primitives->admin_text('Available Themes'), true);
 	spa_paint_open_panel();
 
 	spa_paint_spacer();
@@ -31,7 +31,7 @@ function spa_themes_list_form() {
         
     $ajaxURThem = wp_nonce_url(SPAJAXURL.'license-check', 'license-check');
 ?>
-	<h3><?php echo SP()->primitives->admin_text('Current Theme'); ?></h3>
+	<!-- <h3><?php echo SP()->primitives->admin_text('Current Theme'); ?></h3>
 	<div class="theme-browser rendered">
 	<div class="spThemeContainer">
 	<div id="current-theme" class="spTheme">
@@ -181,7 +181,7 @@ function spa_themes_list_form() {
 ?>
 	</div></div></div>
 
-	<br class="clear" />
+	<br class="clear" /> -->
 
 	<h3><?php echo SP()->primitives->admin_text('Available Themes'); ?></h3>
 <?php
@@ -194,11 +194,11 @@ function spa_themes_list_form() {
 <?php
         if (file_exists(SPTHEMEBASEDIR.$curTheme['theme'].'/styles/'.$curTheme['style'])) {
 ?>
-			<h3 class="theme-name"><?php echo $themes[$curTheme['theme']]['Name']; ?></h3>
+			<h3 class="theme-name"><?php echo $themes[$curTheme['theme']]['Name'].' '.$themes[$curTheme['theme']]['Version']; ?></h3>
 
     		<img src="<?php echo SPTHEMEBASEURL.$curTheme['theme'].'/'.$themes[$curTheme['theme']]['Screenshot']; ?>" alt="" />
     		<h4>
-    			<?php echo $themes[$curTheme['theme']]['Name'].' '.$themes[$curTheme['theme']]['Version'].'<br />'.SP()->primitives->admin_text('by').' <a href="'.$themes[$curTheme['theme']]['AuthorURI'].'" title="'.SP()->primitives->admin_text('Visit author homepage').'">'.$themes[$curTheme['theme']]['Author'].'</a>'; ?>
+    			<?php echo SP()->primitives->admin_text('By').' <a href="'.$themes[$curTheme['theme']]['AuthorURI'].'" title="'.SP()->primitives->admin_text('Visit author homepage').'">'.$themes[$curTheme['theme']]['Author'].'</a>'; ?>
     		</h4>
 <?php
             if (!empty($curTheme['parent'])) {
@@ -233,7 +233,6 @@ function spa_themes_list_form() {
                 <script>
                         spj.loadAjaxForm('sftheme-<?php echo esc_js($curTheme['theme']); ?>', 'sfreloadtlist');
                 </script>
-                <br />
 <?php
                 $ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=theme', 'themes-loader');
             	echo '<form action="'.$ajaxURL.'" method="post" id="sftheme-'.esc_attr($curTheme['theme']).'" name="sftheme-'.esc_attr($curTheme['theme']).'">';
@@ -246,7 +245,7 @@ function spa_themes_list_form() {
 ?>
 
 								<div class="currentTheme">
-									<span>ok</span>
+									<span class="sf-icon sf-check"></span>
 									<span>Current Theme</span>
 								</div>
 <?php
@@ -366,10 +365,10 @@ function spa_themes_list_form() {
                 }
 ?>
 				<div class="spTheme">
-					<h3 class="theme-name"><?php echo $theme_name; ?></h3>
+					<h3 class="theme-name"><?php echo $theme_name . ' '.$theme_version; ?></h3>
 					<img alt="" src="<?php echo $theme_image; ?>" />
 					<h4>
-						<?php echo $theme_name.' '.$theme_version.'<br />'.SP()->primitives->admin_text('by').' <a href="'.$theme_uri.'" title="'.SP()->primitives->admin_text('Visit author homepage').'">'.$theme_author.'</a>'; ?>
+						<?php echo SP()->primitives->admin_text('By').' <a href="'.$theme_uri.'" title="'.SP()->primitives->admin_text('Visit author homepage').'">'.$theme_author.'</a>'; ?>
 					</h4>
 <?php
                     if (!empty($theme_data['Parent'])) {
@@ -417,8 +416,8 @@ function spa_themes_list_form() {
 							}
 						}
 ?>
-	                    <input type="submit" class="sf-button-secondary action" id="activate-<?php echo esc_attr($theme_file); ?>" name="activate" value="<?php echo SP()->primitives->admin_etext('Activate Theme'); ?>" />
-	                    <?php if (!is_multisite() || is_super_admin()) { ?><input type="submit" class="sf-button-secondary action spThemeDeleteConfirm" id="delete-<?php echo esc_attr($theme_file); ?>" name="delete" value="<?php echo SP()->primitives->admin_etext('Delete Theme'); ?>" data-msg="<?php echo $msg; ?>" /><?php }?>
+	                    <?php if (!is_multisite() || is_super_admin()) { ?><input type="submit" class="sf-button-secondary action spThemeDeleteConfirm" id="delete-<?php echo esc_attr($theme_file); ?>" name="delete" value="<?php echo SP()->primitives->admin_etext('Delete'); ?>" data-msg="<?php echo $msg; ?>" /><?php }?>
+	                    <input type="submit" class="sf-button-secondary action" id="activate-<?php echo esc_attr($theme_file); ?>" name="activate" value="<?php echo SP()->primitives->admin_etext('Activate'); ?>" />
 	                    </form>
 					</div>
 <?php
