@@ -52,7 +52,7 @@ function spa_toolbox_uninstall_form() {
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 		do_action('sph_toolbox_uninstall_panel');
-		spa_paint_close_container();
+		//spa_paint_close_container();
 
 ?>
 	<div class="sf-form-submit-bar">

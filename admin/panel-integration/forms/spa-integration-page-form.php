@@ -57,7 +57,7 @@ function spa_integration_page_form() {
 
 		spa_paint_close_panel();
 	spa_paint_close_tab();
-        spa_paint_close_tab();
+    //    spa_paint_close_tab();
 	spa_paint_spacer();
 	//spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('WordPress and WordPress Theme'), false);
         spa_paint_open_nohead_tab(false);
@@ -82,7 +82,7 @@ function spa_integration_page_form() {
 		spa_paint_close_panel();
 
 		do_action('sph_integration_panel');
-		spa_paint_close_container();
+		//spa_paint_close_container();
 ?>
 	<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update WP Integration'); ?>" />

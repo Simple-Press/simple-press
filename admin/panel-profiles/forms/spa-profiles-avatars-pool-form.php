@@ -98,7 +98,7 @@ function spa_profiles_avatars_pool_form() {
 		spa_paint_close_panel();
 
 		do_action('sph_profiles_avatar_right_panel');
-		spa_paint_close_container();
+		//spa_paint_close_container();
 
 	spa_paint_close_tab();
 ?>

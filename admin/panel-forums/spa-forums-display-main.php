@@ -188,7 +188,7 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
             $rowClass = (in_array($forum->forum_id, $noMembers)) ? ' class="spWarningBG"' : '';
             ?>
             <tr id="forumrow-<?php echo $forum->forum_id; ?>" <?php echo $rowClass; ?>> <!-- display forum information for each forum -->
-                <td><?php
+                <td class="sf-border-none"><?php
                     if ('file' === $forum_icon_type) {
                         echo '<img src="' . $icon . '" alt="" title="' . SP()->primitives->admin_text('Current forum icon') . '" />';
                     } else {
@@ -200,7 +200,7 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                         <img class="parentArrow" src="<?php echo SPADMINIMAGES . 'sp_HasChild.png'; ?>" alt="" title="<?php SP()->primitives->admin_etext('Parent Forum'); ?>" />
                     <?php } ?>
                 </td>
-                <td>
+                <td class="sf-border-none">
                     <?php if ($forum->forum_status) echo '<img class="sfalignright" src="' . SPADMINIMAGES . 'sp_LockedBig.png" alt="" />'; ?>
                     <?php if ($subforum) { ?>
                         <?php if ($forum->forum_disabled) echo '<img class="sfalignright" src="' . SPADMINIMAGES . 'sp_NoWrite.png" alt="" title="' . SP()->primitives->admin_text('Subforum is disabled') . '" /> '; ?>
@@ -225,13 +225,13 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                     }
                     ?>
                 </td>
-                <td>    
+                <td class="sf-border-none">    
                     <?php sp_display_item_stats(SPTOPICS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Topics')) ?>
                 </td>
-                <td> 
+                <td class="sf-border-none"> 
                     <?php sp_display_item_stats(SPPOSTS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Posts')) ?>
                 </td>
-                <td>
+                <td class="sf-border-none">
                     <div class="sf-panel-body-top-right sf-mobile-btns">
                         <?php
                         $base = wp_nonce_url(SPAJAXURL . 'forums-loader', 'forums-loader');
@@ -251,7 +251,7 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
             </tr>
 
             <tr class="sfinline-form">  <!-- This row will hold ajax forms for the current forum -->
-                <td colspan="5">
+                <td colspan="5" class="sf-padding-none">
                     <div id="forum-<?php echo $forum->forum_id; ?>"></div>
                 </td>
             </tr>

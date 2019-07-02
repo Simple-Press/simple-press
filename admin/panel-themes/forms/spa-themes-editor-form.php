@@ -130,7 +130,7 @@ function spa_themes_editor_form() {
 
 	spa_paint_close_fieldset();
 	spa_paint_close_panel();
-	spa_paint_close_container();
+	//spa_paint_close_container();
 	if (is_writeable($file)) {
 ?>
     	<div class="sf-form-submit-bar">

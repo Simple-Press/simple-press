@@ -41,7 +41,7 @@ function spa_plugins_user_form($admin, $save, $form, $reload) {
 			echo apply_filters('sph_UpdateBar', '<input type="submit" class="sf-button-primary" value="'.SP()->primitives->admin_text("Update").'" />', $reload);
 ?>
     	</div>
-        <?php spa_paint_close_tab(); ?>
+        </div>
         </form>
 
     	<div class="sfform-panel-spacer"></div>

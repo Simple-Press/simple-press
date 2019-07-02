@@ -216,7 +216,7 @@ function spa_profiles_avatars_form() {
 		   <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Avatar Options'); ?>" />
 		</div>
 <?php
-		spa_paint_close_container();
+		//spa_paint_close_container();
 	spa_paint_close_tab();
 ?>
 	</form>

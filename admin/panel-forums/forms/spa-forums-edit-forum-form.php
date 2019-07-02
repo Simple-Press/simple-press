@@ -177,7 +177,7 @@ function spa_forums_edit_forum_form($forum_id) {
 					do_action('sph_forum_edit_forum_options', $forum);
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
-			spa_paint_close_container();
+			//spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
     		<input type="submit" class="sf-button-primary" id="sfforumedit<?php echo $forum->forum_id; ?>" name="sfforumedit<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Update Forum'); ?>" />

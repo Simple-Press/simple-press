@@ -46,7 +46,7 @@ function spa_usergroups_edit_usergroup_form($usergroup_id) {
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_usergroup_edit_panel');
-		spa_paint_close_container();
+		//spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
 		<input type="submit" class="sf-button-primary" id="sfusergroupedit<?php echo $usergroup->usergroup_id; ?>" name="sfusergroupedit<?php echo $usergroup->usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Update User Group'); ?>" />

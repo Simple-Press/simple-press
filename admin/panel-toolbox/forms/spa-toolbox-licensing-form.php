@@ -81,7 +81,7 @@ function spa_toolbox_licensing_form() {
 				echo '</div>';
 				echo '</form>';
 			spa_paint_close_fieldset();
-		spa_paint_close_panel();
+		//spa_paint_close_panel();
 		/* End paint field for alternate license server url */		
 	
 	spa_paint_close_tab();

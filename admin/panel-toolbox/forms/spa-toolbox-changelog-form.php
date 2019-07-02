@@ -68,7 +68,7 @@ function spa_toolbox_changelog_form() {
 		}
 
 		do_action('sph_toolbox_changelog_panel');
-		spa_paint_close_container();
+		//spa_paint_close_container();
 		//echo '<div class="sfform-panel-spacer"></div>';
 	spa_paint_close_tab();
 }

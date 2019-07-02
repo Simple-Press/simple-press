@@ -321,6 +321,6 @@ function spa_users_members_form() {
 		spa_paint_close_panel();
 
 		do_action('sph_users_members_panel');
-		spa_paint_close_container();
+		//spa_paint_close_container();
 	spa_paint_close_tab();
 }

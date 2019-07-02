@@ -54,7 +54,7 @@ function spa_themes_mobile_form() {
 	}
 	spa_paint_close_panel();
 	do_action('sph_themes_mobile_option_panel');
-	spa_paint_close_container();
+	//spa_paint_close_container();
 
 ?>
 	<div class="sf-form-submit-bar">
@@ -291,7 +291,7 @@ function spa_themes_mobile_form() {
 
 		spa_paint_close_fieldset();
 		spa_paint_close_panel();
-		spa_paint_close_container();
+		//spa_paint_close_container();
 		spa_paint_close_tab();
 	}
 }

@@ -230,8 +230,8 @@ function spa_toolbox_housekeeping_form() {
 
 		// do_action('sph_toolbox_housekeeping_right_panel');
 
-		spa_paint_close_container();
-		echo '<div class="sfform-panel-spacer"></div>';
+		//spa_paint_close_container();
+		//echo '<div class="sfform-panel-spacer"></div>';
 	spa_paint_close_tab();
 	?>
 	</div>

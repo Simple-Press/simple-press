@@ -49,7 +49,7 @@ function spa_forums_add_group_permission_form($group_id) {
 			spa_paint_close_panel();
 
 			do_action('sph_forums_group_perm_panel');
-		spa_paint_close_container();
+		//spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
     		<input type="submit" class="sf-button-primary" id="groupperm<?php echo $group->group_id; ?>" name="groupperm<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Add Group Permission'); ?>" />

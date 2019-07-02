@@ -46,7 +46,7 @@ function spa_toolbox_toolbox_form() {
 		spa_paint_close_panel();
 
 		do_action('sph_toolbox_toolbox_right_panel');
-		spa_paint_close_container();
+		//spa_paint_close_container();
 
 ?>
 	<div class="sf-form-submit-bar">
