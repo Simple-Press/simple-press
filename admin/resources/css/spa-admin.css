@@ -2160,6 +2160,9 @@ div[class^="collapsible-"] {
         margin-left: 10px;
     }
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right {
+        margin: 0;
+    }
+    #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right.sf-mobile-btns {
         margin: 20px auto 0;
     }
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right.sf-mobile-btns .sf-upload #sf-upload-button {
