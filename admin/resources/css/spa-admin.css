@@ -2152,7 +2152,6 @@ div[class^="collapsible-"] {
     #sfmaincontainer .sf-panel-body .sf-mobile-btns.sf-mobile-stack-btns {
         float: none;
         width: fit-content;
-        margin: 20px auto 0;
     }
     #sfmaincontainer .sf-panel-body .sf-mobile-btns.sf-mobile-stack-btns .sf-icon-button {
         width: auto;
@@ -2161,7 +2160,7 @@ div[class^="collapsible-"] {
         margin-left: 10px;
     }
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right {
-        margin: 0 auto;
+        margin: 20px auto 0;
     }
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right.sf-mobile-btns .sf-upload #sf-upload-button {
         width: 100%;
