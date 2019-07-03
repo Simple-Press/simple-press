@@ -14,7 +14,13 @@ function spa_themes_list_form() {
 
     # get themes
 	$themes = SP()->theme->get_list();
-
+  $numThemes = count($themes);
+  $numThemesChild = 0;
+  foreach ((array) $themes as $theme_file => $theme_data){
+    if (!empty($theme_data['Parent'])) {
+      $numThemesChild++;
+    }
+  }
 	# get update version info
 	$xml = sp_load_version_xml();
 
@@ -26,8 +32,48 @@ function spa_themes_list_form() {
 	echo '<div class="sf-alert-block sf-info">';
 	echo SP()->primitives->admin_text('Themes Folder').': <b>'.realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['themes']).'</b>';
 	echo '</div>';
+  $strspace = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+  $stroutname = SP()->primitives->admin_text('All') . '(' . $numThemes . ')';
+  $strout = "<a href='".esc_url(add_query_arg('themegroup', 'all', SPADMINTHEMES))."'>$stroutname</a>" . $strspace;
+  $stroutname = SP()->primitives->admin_text('Core') . '(' . ($numThemes - $numThemesChild) . ')';
+  $strout .= "<a href='".esc_url(add_query_arg('themegroup', 'core', SPADMINTHEMES))."'>$stroutname</a>" . $strspace;
+  $stroutname = SP()->primitives->admin_text('Child') . '(' . $numThemesChild . ')';
+  $strout .= "<a href='".esc_url(add_query_arg('themegroup', 'child', SPADMINTHEMES))."'>$stroutname</a>" . $strspace;
+  spa_paint_open_panel();
+  ?>
+  <style>
+    
+  </style>
+  <fieldset class="sf-fieldset">
+  <form id="theme-filter" method="get" action="<?php echo SPADMINTHEMES; ?>">
+                    <input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php'; ?>" />
+                    <div class="sf-panel-body-top">
+                      <div class="sf-panel-body-top-left">
+                        <?php
+                        # display view links
+                        echo $strout;
+                        ?>
+                      </div>
+                        <div class="sf-panel-body-top-right">
+                          <p class="search-box">
+                            <label class="screen-reader-text" for="<?php echo esc_attr('search_id-search-input'); ?>">Search Themes:</label>
+                            <input type="search" id="<?php echo esc_attr('search_id-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" />
+                            <?php submit_button('Search Themes', '', '', false, array('id' => 'search-submit')); ?>
+                          </p>
 
-	spa_paint_open_fieldset(SP()->primitives->admin_text('Theme Management'), true, 'themes');
+                            <?php
+                            echo spa_paint_help('themes', $adminhelpfile);
+                            ?>
+                        </div>
+                    </div>
+                   
+  </form>
+  </fieldset>
+  <?php
+  spa_paint_close_panel();
+  
+  
+	//spa_paint_open_fieldset($strout, true, 'themes');
         
     $ajaxURThem = wp_nonce_url(SPAJAXURL.'license-check', 'license-check');
 ?>
@@ -355,13 +401,17 @@ function spa_themes_list_form() {
 	    		$theme_author = $theme_data['Author'];
 	    		$theme_uri = $theme_data['AuthorURI'];
 	    		$theme_style = $theme_data['Stylesheet'];
+          if( isset($_REQUEST['s']) && strlen(trim($_REQUEST['s'])) && strripos($theme_name, $_REQUEST['s']) === false ) continue;
 	            $theme_image = SPTHEMEBASEURL.$theme_file.'/'.$theme_data['Screenshot'];
                 $theme_overlays = SP()->theme->get_overlays(SPTHEMEBASEDIR.$theme_file.'/styles/overlays');
 
                 # pull in parent overlays if child theme
                 if (!empty($theme_data['Parent'])) {
+                  if( isset($_REQUEST['themegroup']) && trim($_REQUEST['themegroup']) === 'core' ) continue;
                     $parent_overlays = SP()->theme->get_overlays(SPTHEMEBASEDIR.$theme_data['Parent'].'/styles/overlays');
                     $theme_overlays = array_merge($theme_overlays, $parent_overlays);
+                }else{
+                  if( isset($_REQUEST['themegroup']) && trim($_REQUEST['themegroup']) === 'child' ) continue;
                 }
 ?>
 				<div class="spTheme">
