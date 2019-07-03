@@ -23,7 +23,7 @@ function spa_toolbox_environment_form() {
 		spa_paint_open_fieldset(SP()->primitives->admin_text('Environment'), false);
 
 			echo '<div id="sp-environment-data">';
-			echo '<table class="widefat">';
+			echo '<table class="widefat sf-table-small">';
 
 			spa_env_open(SP()->primitives->admin_text('Simple:Press'));
 			spa_env_info(SP()->primitives->admin_text('Version'), SPVERSION);

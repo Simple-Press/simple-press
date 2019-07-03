@@ -356,6 +356,7 @@ $Rev:2099 $
 #sf-root-wrap ul {
     float: left;
     width: 100%;
+    margin: 0;
 }
 #sf-root-wrap .sf-uppercase {
     text-transform: uppercase;
@@ -662,8 +663,10 @@ $Rev:2099 $
 #sf-root-wrap .sf-button-primary,
 #sf-root-wrap .sf-button-secondary {
     display: inline-block;
+    float: left;
     width: auto;
     height: 40px;
+    margin: 0 5px 5px;
     padding: 12px 21px 11px 20px;
     line-height: 17px;
     background: #006992;
@@ -775,9 +778,9 @@ $Rev:2099 $
     padding: 12px 21px 11px;
     font-size: 12px;
 }
-#sf-root-wrap [class*=sf-button]+[class*=sf-button] {
+/*#sf-root-wrap [class*=sf-button]+[class*=sf-button] {
     margin-left: 10px;
-}
+}*/
 
 #sf-root-wrap .sf-full-form .sf-icon-button {
     float: left;
@@ -1973,6 +1976,9 @@ div[class^="collapsible-"] {
     }
 }
 @media screen and ( max-width: 768px ) {
+    /*#sf-root-wrap [class*=sf-button]+[class*=sf-button] {
+        margin-left: 0;
+    }*/
     #sfmaincontainer .sf-form-row.row-half {
         width: 100%;
     }
@@ -1994,7 +2000,7 @@ div[class^="collapsible-"] {
         line-height: 19px;
         padding-top: 16px;
         padding-bottom: 15px;
-        margin: 0;
+        margin: 0 0 10px 0;
         width: 100%;
     }
     #sf-root-wrap .sf-pull-rigth {
@@ -2017,7 +2023,7 @@ div[class^="collapsible-"] {
         margin-bottom: 0 !important;
     }
     #sf-root-wrap .sf-mobile-width-by-content {
-        width: max-content !important;
+        width: fit-content !important;
     }
     #sfmaincontainer.sf-installation .sf-form-row {
         padding: 0;
@@ -2105,7 +2111,7 @@ div[class^="collapsible-"] {
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top {
         top: 0;
         margin: -20px 0 20px 0;
-        padding: 15px;
+        padding: 20px 0;
     }
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-left {
         margin: 0;
@@ -2121,7 +2127,7 @@ div[class^="collapsible-"] {
     }
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-mobile-btns {
         width: 100%;
-        margin: 20px 0 5px;
+        margin: 20px 0 0;
     }
     #sfmaincontainer .sf-panel-body .sf-mobile-btns .sf-icon-button {
         width: calc(50% - 5px);
@@ -2136,7 +2142,12 @@ div[class^="collapsible-"] {
         -webkit-border-radius: 4px;
         border-radius: 4px;
     }
-    #sfmaincontainer .sf-panel-body .sf-mobile-btns .sf-icon-button.spStackBtn {
+    #sfmaincontainer .sf-panel-body .sf-mobile-btns.sf-mobile-stack-btns {
+        float: none;
+        width: fit-content;
+        margin: 20px auto 0;
+    }
+    #sfmaincontainer .sf-panel-body .sf-mobile-btns.sf-mobile-stack-btns .sf-icon-button {
         width: auto;
     }
     #sfmaincontainer .sf-panel-body .sf-mobile-btns .sf-icon-button+.sf-icon-button {
@@ -2153,13 +2164,13 @@ div[class^="collapsible-"] {
         width: calc(100% - 40px);
         height: auto;
     }
-    #sfmaincontainer .sf-panel-body .sf-full-form table .sf-panel-body-top-right {
+    /*#sfmaincontainer .sf-panel-body .sf-full-form table .sf-panel-body-top-right {
         float: none;
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 0;
-        width: max-content;
-    }
+        width: fit-content;
+    }*/
     #sfmaincontainer .sf-upload #sf-upload-button {
         width: auto;
     }
