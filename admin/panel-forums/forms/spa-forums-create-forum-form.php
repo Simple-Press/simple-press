@@ -85,7 +85,6 @@ function spa_forums_create_forum_form() {
 			spa_paint_close_panel();
 			spa_paint_close_container();
 			echo '<div class="sfform-panel-spacer"></div>';
-		spa_paint_close_tab();
 
         echo '<div class="sfform-panel-spacer"></div>';
 		echo '<div class="sfhidden" id="block1">';
@@ -230,6 +229,7 @@ function spa_forums_create_forum_form() {
 		</div>
     	<?php spa_paint_close_tab(); ?>
         </div>
+		<?php spa_paint_close_tab(); ?>
 	</form>
 	<div class="sfform-panel-spacer"></div>
 <?php

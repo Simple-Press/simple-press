@@ -358,6 +358,9 @@ $Rev:2099 $
     width: 100%;
     margin: 0;
 }
+#sf-root-wrap .sfhidden {
+    display: none;
+}
 #sf-root-wrap .sf-uppercase {
     text-transform: uppercase;
 }
@@ -1159,6 +1162,9 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-panel-body+.sf-panel-body {
     margin-top: 40px;
+}
+#sfmaincontainer .sf-panel-body .sf-panel-body {
+    padding: 0;
 }
 
 #sfmaincontainer .sf-fieldset {
@@ -2152,6 +2158,9 @@ div[class^="collapsible-"] {
     }
     #sfmaincontainer .sf-panel-body .sf-mobile-btns .sf-icon-button+.sf-icon-button {
         margin-left: 10px;
+    }
+    #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right {
+        margin: 0;
     }
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right.sf-mobile-btns .sf-upload #sf-upload-button {
         width: 100%;
