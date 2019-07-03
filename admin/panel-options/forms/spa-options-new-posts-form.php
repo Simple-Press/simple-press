@@ -17,6 +17,7 @@ function spa_options_newposts_form() {
 			$('#color-background').farbtastic('#flag-background');
 			$('#color-text').farbtastic('#flag-color');
                         
+                        // farbtastic >
                         $('.sf-wrap-farbtastic input').focus(function() {
                             $(this).closest('.sf-wrap-farbtastic').find('.sf-farbtastic').show();
                         });
@@ -27,6 +28,19 @@ function spa_options_newposts_form() {
                             e.stopPropagation();
                             $('.sf-wrap-farbtastic').not(this).find('.sf-farbtastic').hide();
                         });
+                        // < farbtastic
+                        // flag >
+                        flagInit();
+                        $('[name="flagstext"], .sf-wrap-farbtastic').on('propertychange input click', flagInit);
+                        function flagInit() {
+                            $('#sf-flag-target')
+                                    .text($('[name="flagstext"]').val())
+                                    .css({
+                                        color: $('#flag-color').val(),
+                                        backgroundColor: $('#flag-background').val()
+                                    });
+                        }
+                        // < flag
 		});
 	}(window.spj = window.spj || {}, jQuery));
 </script>
@@ -45,32 +59,29 @@ function spa_options_newposts_form() {
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('New Posts/Topics Cache'), true, 'topic-cache');
-				spa_paint_input(SP()->primitives->admin_text('How many new posts to keep in cache list'), 'topiccache', $sfoptions['topiccache']);
-			spa_paint_close_fieldset();
+				spa_paint_input(SP()->primitives->admin_text('How many new posts to keep in cache list'), 'topiccache', $sfoptions['topiccache'], false, false, '', SP()->primitives->admin_text('Number of new posts to keep in cache list'));
+                                spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Users List of Unread Posts'), true, 'unread-posts');
-				spa_paint_input(SP()->primitives->admin_text('Default number of unread posts for users'), 'sfdefunreadposts', $sfoptions['sfdefunreadposts']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Allow users to set number of unread posts in profile'), 'sfusersunread', $sfoptions['sfusersunread']);
-				spa_paint_input(SP()->primitives->admin_text('Max number of unread posts allowed to be set by users'), 'sfmaxunreadposts', $sfoptions['sfmaxunreadposts']);
+				spa_paint_input(SP()->primitives->admin_text('Default number of unread posts for users'), 'sfdefunreadposts', $sfoptions['sfdefunreadposts'], false, false, '', SP()->primitives->admin_text('Default number of unread posts for users'));
+				spa_paint_input(SP()->primitives->admin_text('Max number of unread posts allowed to be set by users'), 'sfmaxunreadposts', $sfoptions['sfmaxunreadposts'], false, false, '', SP()->primitives->admin_text('Maximum number of unread posts allowed to be set by users'));
+                                spa_paint_checkbox(SP()->primitives->admin_text('Allow users to set number of unread posts in profile'), 'sfusersunread', $sfoptions['sfusersunread']);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
-
-		spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('New/Unread Posts Flag Display'), true, 'new-post-flags');
-				spa_paint_checkbox(SP()->primitives->admin_text('Display new post flags'), 'flagsuse', $sfoptions['flagsuse']);
-				spa_paint_input(SP()->primitives->admin_text('Text to use in flags'), 'flagstext', $sfoptions['flagstext']);
-			spa_paint_close_fieldset();
-		spa_paint_close_panel();
-
 		do_action('sph_options_newposts_left_panel');
 	spa_paint_tab_right_cell();
 
     	spa_paint_open_panel();
-    		spa_paint_open_fieldset(__('New Posts Flag Display', 'sp-polls'), true, 'flag-display');
+    		spa_paint_open_fieldset(__('New Posts Flag Display', 'sp-polls'), true, 'flag-display');         	
 ?>
-            <div class="sf-half sf-wrap-farbtastic">
+            <div class="sf-form-row">
+                <label><?php echo SP()->primitives->admin_text('Flag Preview') ?></label>
+                <span id="sf-flag-target" class="sf-after-label sf-badge"><?php echo $sfoptions['flagstext'] ?></span>
+            </div>
+            <?php spa_paint_input(SP()->primitives->admin_text('Text to use in flags'), 'flagstext', $sfoptions['flagstext'], false, false, '', SP()->primitives->admin_text('Text to use in flags')) ?>
+            <div class="sf-form-row sf-half sf-wrap-farbtastic">
                 <div class="sf-form-group sf-input-icon">
                     <label for="flag-color"><?php echo SP()->primitives->admin_text('text color') ?></label>
                     <input id="flag-color" type="text" value="#<?php echo $sfoptions['flagscolor']; ?>" name="flagscolor" />
@@ -79,7 +90,7 @@ function spa_options_newposts_form() {
                 <div class="sf-farbtastic"><div id="color-text"></div></div>
                 <span class="sf-sublabel sf-sublabel-small"><?php echo SP()->primitives->admin_text('New Post Flag text color') ?></span>
             </div>
-            <div class="sf-half sf-wrap-farbtastic">
+            <div class="sf-form-row sf-half sf-wrap-farbtastic">
                 <div class="sf-form-group sf-input-icon">
                     <label for="flag-background"><?php echo SP()->primitives->admin_text('background color') ?></label>
                     <input id="flag-background" type="text" value="#<?php echo $sfoptions['flagsbground']; ?>" name="flagsbground" />
@@ -87,8 +98,9 @@ function spa_options_newposts_form() {
                 </div>
                 <div class="sf-farbtastic"><div id="color-background"></div></div>
                 <span class="sf-sublabel sf-sublabel-small"><?php echo SP()->primitives->admin_text('New Post Flag background color') ?></span>
-            </div>
+            </div>  
 <?php
+                spa_paint_checkbox(SP()->primitives->admin_text('Display new post flags'), 'flagsuse', $sfoptions['flagsuse']);
     		spa_paint_close_fieldset();
     	spa_paint_close_panel();
 

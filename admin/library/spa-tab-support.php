@@ -122,7 +122,7 @@ function spa_paint_close_fieldset() {
 	echo "</fieldset>\n";
 }
 
-function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $css_classes = '' ) {
+function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $css_classes='', $sublabe =null,  $sublabel_class='sf-sublabel sf-sublabel-small') {
 	global $tab;
 	
 	$field_classes = 'sf-form-row' . " {$css_classes}";
@@ -137,6 +137,9 @@ function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $
 	echo "<input type='text' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
 	if ($disabled == true) echo "disabled='disabled' ";
 	echo "/>\n";
+        if(!is_null($sublabe)) {
+            echo "<span class='{$sublabel_class}'>{$sublabe}</span>";
+        }
 	//echo '<div class="clearboth"></div>';
 	echo '</div>';
 	$tab++;
