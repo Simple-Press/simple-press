@@ -55,18 +55,18 @@ function spa_options_newposts_form() {
 
     #== GLOBAL Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('User New Posts Handling'));
+	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('New Posts Handling'));
 
 		spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('New Posts/Topics Cache'), true, 'topic-cache');
-				spa_paint_input(SP()->primitives->admin_text('How many new posts to keep in cache list'), 'topiccache', $sfoptions['topiccache'], false, false, '', SP()->primitives->admin_text('Number of new posts to keep in cache list'));
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Post Caching'), true, 'topic-cache');
+				spa_paint_input(SP()->primitives->admin_text('cache limit'), 'topiccache', $sfoptions['topiccache'], false, false, '', SP()->primitives->admin_text('Number of new posts to keep in cache list'));
                                 spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
 		spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('Users List of Unread Posts'), true, 'unread-posts');
-				spa_paint_input(SP()->primitives->admin_text('Default number of unread posts for users'), 'sfdefunreadposts', $sfoptions['sfdefunreadposts'], false, false, '', SP()->primitives->admin_text('Default number of unread posts for users'));
-				spa_paint_input(SP()->primitives->admin_text('Max number of unread posts allowed to be set by users'), 'sfmaxunreadposts', $sfoptions['sfmaxunreadposts'], false, false, '', SP()->primitives->admin_text('Maximum number of unread posts allowed to be set by users'));
+			spa_paint_open_fieldset(SP()->primitives->admin_text('Unread Posts'), true, 'unread-posts');
+				spa_paint_input(SP()->primitives->admin_text('Default'), 'sfdefunreadposts', $sfoptions['sfdefunreadposts'], false, false, '', SP()->primitives->admin_text('Default number of unread posts for users'));
+				spa_paint_input(SP()->primitives->admin_text('Maximum'), 'sfmaxunreadposts', $sfoptions['sfmaxunreadposts'], false, false, '', SP()->primitives->admin_text('Maximum number of unread posts allowed to be set by users'));
                                 spa_paint_checkbox(SP()->primitives->admin_text('Allow users to set number of unread posts in profile'), 'sfusersunread', $sfoptions['sfusersunread']);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
@@ -74,13 +74,13 @@ function spa_options_newposts_form() {
 	spa_paint_tab_right_cell();
 
     	spa_paint_open_panel();
-    		spa_paint_open_fieldset(__('New Posts Flag Display', 'sp-polls'), true, 'flag-display');         	
+    		spa_paint_open_fieldset(__('Post Flagging', 'sp-polls'), true, 'flag-display');         	
 ?>
             <div class="sf-form-row">
                 <label><?php echo SP()->primitives->admin_text('Flag Preview') ?></label>
                 <span id="sf-flag-target" class="sf-after-label sf-badge"><?php echo $sfoptions['flagstext'] ?></span>
             </div>
-            <?php spa_paint_input(SP()->primitives->admin_text('Text to use in flags'), 'flagstext', $sfoptions['flagstext'], false, false, '', SP()->primitives->admin_text('Text to use in flags')) ?>
+            <?php spa_paint_input(SP()->primitives->admin_text('Flag Text'), 'flagstext', $sfoptions['flagstext'], false, false, '', SP()->primitives->admin_text('Text to use in flags')) ?>
             <div class="sf-form-row sf-half sf-wrap-farbtastic">
                 <div class="sf-form-group sf-input-icon">
                     <label for="flag-color"><?php echo SP()->primitives->admin_text('text color') ?></label>
@@ -109,7 +109,7 @@ function spa_options_newposts_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sf-form-submit-bar">
-	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update New Post Handling'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Save Changes'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

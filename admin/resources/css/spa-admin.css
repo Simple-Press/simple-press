@@ -1194,10 +1194,10 @@ $Rev:2099 $
 }
 
 #sfmaincontainer .sf-alert-block.sf-info {
-    background-color: rgba(0, 185, 208, .1);
+    background-color: rgba(148, 217, 226, 0.1);
     border-color: rgba(0, 185, 208, .5);
     color: #006992;
-    opacity: .5;
+    font-family: "Open Sans Regular";
 }
 #sfmaincontainer p.sf-description {
     font-family: "Open Sans Regular";
