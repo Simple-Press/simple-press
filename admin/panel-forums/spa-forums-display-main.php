@@ -11,7 +11,7 @@ if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
 
 function spa_forums_forums_main() {
     ?><div id="sf-tab-forums-main"><?php
-    spa_paint_tab_head(SP()->primitives->admin_text('Forums') . ' - ' . SP()->primitives->admin_text('Manage Groups And Forums'));
+    spa_paint_tab_head(SP()->primitives->admin_text('Manage Groups And Forums'));
     # has SP just been installed?
     if (isset($_POST['install'])) {
         $site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL . 'troubleshooting&install=1', 'troubleshooting'));
@@ -188,10 +188,13 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                     $icon = $forum_icon['icon'];
                 }
             }
-            $rowClass = (in_array($forum->forum_id, $noMembers)) ? ' class="spWarningBG"' : '';
+            $rowClasses = array('sf-border-none');
+            if (in_array($forum->forum_id, $noMembers)) {
+                array_push($rowClasses, 'spWarningBG');
+            }
             ?>
-            <tr id="forumrow-<?php echo $forum->forum_id; ?>" <?php echo $rowClass; ?>> <!-- display forum information for each forum -->
-                <td class="sf-border-none"><?php
+            <tr id="forumrow-<?php echo $forum->forum_id; ?>" class="<?php echo implode(' ', $rowClasses) ?>"> <!-- display forum information for each forum -->
+                <td><?php
                     if ('file' === $forum_icon_type) {
                         echo '<img src="' . $icon . '" alt="" title="' . SP()->primitives->admin_text('Current forum icon') . '" />';
                     } else {
@@ -203,7 +206,7 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                         <img class="parentArrow" src="<?php echo SPADMINIMAGES . 'sp_HasChild.png'; ?>" alt="" title="<?php SP()->primitives->admin_etext('Parent Forum'); ?>" />
                     <?php } ?>
                 </td>
-                <td class="sf-border-none">
+                <td>
                     <?php if ($forum->forum_status) echo '<img class="sfalignright" src="' . SPADMINIMAGES . 'sp_LockedBig.png" alt="" />'; ?>
                     <?php if ($subforum) { ?>
                         <?php if ($forum->forum_disabled) echo '<img class="sfalignright" src="' . SPADMINIMAGES . 'sp_NoWrite.png" alt="" title="' . SP()->primitives->admin_text('Subforum is disabled') . '" /> '; ?>
@@ -228,13 +231,13 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                     }
                     ?>
                 </td>
-                <td class="sf-border-none sf-mobile-width-by-content sf-mobile-no-vertical-padding">
+                <td class="sf-mobile-width-by-content sf-mobile-no-vertical-padding">
                     <?php sp_display_item_stats(SPTOPICS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Topics')) ?>
                 </td>
-                <td class="sf-border-none sf-mobile-width-by-content sf-mobile-no-vertical-padding">
+                <td class="sf-mobile-width-by-content sf-mobile-no-vertical-padding">
                     <?php sp_display_item_stats(SPPOSTS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Posts')) ?>
                 </td>
-                <td class="sf-border-none">
+                <td>
                     <div class="sf-panel-body-top-right sf-mobile-btns sf-mobile-stack-btns sf-mobile-no-vertical-margin">
                         <?php
                         $base = wp_nonce_url(SPAJAXURL . 'forums-loader', 'forums-loader');

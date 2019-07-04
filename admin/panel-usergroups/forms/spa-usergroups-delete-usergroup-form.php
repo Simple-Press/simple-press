@@ -30,7 +30,7 @@ function spa_usergroups_delete_usergroup_form($usergroup_id) {
 ?>
 					<input type="hidden" name="usergroup_id" value="<?php echo $usergroup->usergroup_id; ?>" />
 <?php
-					echo '<p>';
+					echo '<div class="sf-alert-block sf-info"><p>';
 					SP()->primitives->admin_etext("Warning! You are about to delete a User Group!");
 					echo '</p>';
 					echo '<p>';
@@ -41,7 +41,7 @@ function spa_usergroups_delete_usergroup_form($usergroup_id) {
 					echo '</p>';
 					echo '<p>';
 					SP()->primitives->admin_etext('Click on the Delete User Group button below to proceed');
-					echo '</p>';
+					echo '</p></div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_usergroup_delete_panel');

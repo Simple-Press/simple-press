@@ -15,6 +15,7 @@ function spa_forums_view_forums_permission_form($forum_id)
 	$forum = SP()->DB->table(SPFORUMS, "forum_id=$forum_id", 'row');
 
 	spa_paint_options_init();
+	?><div class="sf-form"><?php
 	spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('View Forum Permissions'), false);
@@ -84,6 +85,6 @@ function spa_forums_view_forums_permission_form($forum_id)
 		</div>
 	</form>
 	<?php spa_paint_close_tab(); ?>
-	<div class="sfform-panel-spacer"></div>
+	</div>
 <?php
 }

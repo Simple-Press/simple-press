@@ -379,13 +379,28 @@ $Rev:2099 $
 #sf-root-wrap .sf-border-none {
     border: none !important;
 }
+
+#sf-root-wrap .sfinline-form form,
+#sf-root-wrap .sfinline-form .sf-form {
+    float: left;
+    width: 100%;
+    background: #FFF;
+    padding: 0 20px 20px;
+}
+#sf-root-wrap .sf-panel-body-top .sfinline-form form,
+#sf-root-wrap .sf-panel-body-top .sfinline-form .sf-form {
+    padding-top: 20px;
+}
 #sf-root-wrap .sfinline-form .sf-panel-head {
     display: none;
 }
 #sf-root-wrap .sfinline-form .sf-panel-body {
-    margin-top: 20px !important;
+    /*margin-top: 20px !important;*/
     padding: 20px !important;
-    background-color: rgb(241, 241, 241);
+    background-color: #F9F9F9;
+}
+#sf-root-wrap .sfinline-form .sf-panel-body .sf-full-form .sf-panel-body-top:after {
+    display: none;
 }
 
 #sf-root-wrap .sf-pull-left {
@@ -848,6 +863,10 @@ $Rev:2099 $
     float: left;
     margin-right: 10px;
 }
+#sf-root-wrap .sf-icon.sf-about {
+    -webkit-mask-image: url("../icons/About.svg");
+    mask-image: url("../icons/About.svg");
+}
 #sf-root-wrap .sf-icon.sf-install {
     -webkit-mask-image: url("../icons/Install.svg");
     mask-image: url("../icons/Install.svg");
@@ -1186,6 +1205,9 @@ $Rev:2099 $
     border-radius: 3px;
     border: 1px solid #00b9d0;
 }
+#sfmaincontainer .sf-alert-block p {
+    color: inherit;
+}
 #sfmaincontainer .sf-alert-block .sf-icon {
     margin-right: 10px;
 }
@@ -1215,6 +1237,9 @@ $Rev:2099 $
     width: 100%;
     margin: 30px 0 0 0;
     padding: 0;
+}
+#sfmaincontainer .sf-alert-block+.sf-form-submit-bar {
+    margin-top: 0;
 }
 
 #sfmaincontainer .sf-form-row {
@@ -1282,6 +1307,8 @@ $Rev:2099 $
 #sfmaincontainer .sf-panel-body .sf-full-form .sf-title-block h4,
 #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-left h4 {
     margin: 0;
+    font-size: 16px;
+    line-height: 22px;
     color: #006992;
 }
 #sfmaincontainer .sf-panel-body .sf-full-form .sf-title-block p,
@@ -1342,6 +1369,9 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-panel-body .sf-half-form .sf-panel-body-top-left h4 {
     margin: 0;
+    font-size: 14px;
+    line-height: 19px;
+    color: #006992;
 }
 #sfmaincontainer .sf-panel-body .sf-half-form .sf-panel-body-top-right {
     float: right;
@@ -1456,7 +1486,7 @@ $Rev:2099 $
     line-height: 14px;
     text-transform: uppercase;
 }
-#sfmaincontainer .sf-item-controls .sf-icon {
+#sfmaincontainer .sf-item-controls>.sf-icon {
     margin-right: 10px;
 }
 
@@ -1651,7 +1681,12 @@ $Rev:2099 $
 #sfmaincontainer td {
     vertical-align: top
 }
-
+#sfmaincontainer table {
+    width: 100%;
+}
+#sfmaincontainer table tr.sf-border-none>td {
+    border: none !important;
+}
 #sfmaincontainer table .sf-img-wrap {
     float: left;
 }
@@ -1716,6 +1751,14 @@ $Rev:2099 $
 #sfmaincontainer table.widefat tbody tr:last-of-type td,
 #sfmaincontainer table.widefat tbody tr:last-of-type th {
     border: none;
+}
+#sfmaincontainer table.widefat tbody tr td:first-of-type,
+#sfmaincontainer table.widefat tbody tr th:first-of-type {
+    padding-left: 20px;
+}
+#sfmaincontainer table.widefat tbody tr td:last-of-type,
+#sfmaincontainer table.widefat tbody tr th:last-of-type {
+    padding-right: 20px;
 }
 #sfmaincontainer table.widefat tfoot {
     display: none;
@@ -2151,7 +2194,7 @@ div[class^="collapsible-"] {
     }
     #sfmaincontainer .sf-panel-body .sf-mobile-btns.sf-mobile-stack-btns {
         float: none;
-        width: fit-content;
+        width: fit-content !important;
     }
     #sfmaincontainer .sf-panel-body .sf-mobile-btns.sf-mobile-stack-btns .sf-icon-button {
         width: auto;
@@ -2161,6 +2204,7 @@ div[class^="collapsible-"] {
     }
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right {
         margin: 0;
+        width: 100%;
     }
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-right.sf-mobile-btns {
         margin: 20px auto 0;

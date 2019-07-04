@@ -31,7 +31,7 @@ function spa_forums_delete_group_form($group_id) {
 					<input type="hidden" name="group_id" value="<?php echo $group->group_id; ?>" />
 					<input type="hidden" name="cgroup_seq" value="<?php echo $group->group_seq; ?>" />
 <?php
-					echo '<p>';
+					echo '<div class="sf-alert-block sf-info"><p>';
 					SP()->primitives->admin_etext('Warning! You are about to delete a group');
 					echo '</p>';
 					echo '<p>';
@@ -42,7 +42,7 @@ function spa_forums_delete_group_form($group_id) {
 					echo '</p>';
 					echo '<p>';
 					SP()->primitives->admin_etext('Click on the delete group button below to proceed');
-					echo '</p>';
+					echo '</p></div>';
 
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
