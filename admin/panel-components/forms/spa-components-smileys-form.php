@@ -86,7 +86,7 @@ function spa_components_smileys_form() {
 ?>
             <div class="sf-panel-body-top">
                 <div class="sf-panel-body-top-left">
-                    <h4><?php echo SP()->primitives->admin_text('Custom Smileys') ?></h4>
+                    <h4><?php echo SP()->primitives->admin_text('Manage Custom Smileys') ?></h4>
                     <span><?php echo SP()->primitives->admin_text('Re-order your Smileys by dragging and dropping the buttons below. To edit - click on the open control to the right') ?>.</span>
                 </div>
                 <div class="sf-panel-body-top-right sf-mobile-btns">
