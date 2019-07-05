@@ -82,7 +82,7 @@ function spa_options_newposts_form() {
             </div>
             <?php spa_paint_input(SP()->primitives->admin_text('Flag Text'), 'flagstext', $sfoptions['flagstext'], false, false, '', SP()->primitives->admin_text('Text to use in flags')) ?>
             <div class="sf-form-row sf-half sf-wrap-farbtastic">
-                <div class="sf-form-group sf-input-icon">
+                <div class="sf-input-group sf-input-icon">
                     <label for="flag-color"><?php echo SP()->primitives->admin_text('text color') ?></label>
                     <input id="flag-color" type="text" value="#<?php echo $sfoptions['flagscolor']; ?>" name="flagscolor" />
                     <span class="sf-icon sf-themes"></span>
@@ -91,7 +91,7 @@ function spa_options_newposts_form() {
                 <span class="sf-sublabel sf-sublabel-small"><?php echo SP()->primitives->admin_text('New Post Flag text color') ?></span>
             </div>
             <div class="sf-form-row sf-half sf-wrap-farbtastic">
-                <div class="sf-form-group sf-input-icon">
+                <div class="sf-input-group sf-input-icon">
                     <label for="flag-background"><?php echo SP()->primitives->admin_text('background color') ?></label>
                     <input id="flag-background" type="text" value="#<?php echo $sfoptions['flagsbground']; ?>" name="flagsbground" />
                     <span class="sf-icon sf-themes"></span>

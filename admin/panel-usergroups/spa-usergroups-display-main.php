@@ -69,13 +69,24 @@ function spa_usergroups_usergroup_main() {
                                    class="sf-button-secondary spUsergroupShowMembers" 
                                    value="<?php echo esc_js(SP()->primitives->admin_text('Show')) ?>" 
                                    data-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug=$usergroup->usergroup_id", 'usergroups') ?>"
-                                   data-img="<?php echo SPADMINIMAGES ?>"
+                                   data-img="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>"
                                    data-id="<?php echo $usergroup->usergroup_id; ?>"
                                    />
                             <input type="button"
                                    id="remove<?php echo $usergroup->usergroup_id; ?>"
                                    class="sf-button-secondary spLoadForm"
-                                   value="<?php SP()->primitives->admin_etext('Remove/Move'); ?>"
+                                   value="<?php SP()->primitives->admin_etext('Remove'); ?>"
+                                   data-form="delmembers" 
+                                   data-url="<?php echo $base; ?>"
+                                   data-target="<?php echo $target; ?>"
+                                   data-img="<?php echo SPADMINIMAGES ?>"
+                                   data-id="<?php echo $usergroup->usergroup_id; ?>"
+                                   data-open="" 
+                                   />
+                            <input type="button"
+                                   id="remove<?php echo $usergroup->usergroup_id; ?>"
+                                   class="sf-button-secondary spLoadForm"
+                                   value="<?php SP()->primitives->admin_etext('Move'); ?>"
                                    data-form="delmembers" 
                                    data-url="<?php echo $base; ?>"
                                    data-target="<?php echo $target; ?>"
@@ -98,7 +109,6 @@ function spa_usergroups_usergroup_main() {
                         <td>
                             <div class="sf-item-controls sf-mobile-btns sf-mobile-stack-btns">
                                 <?php
-                                $base = wp_nonce_url(SPAJAXURL . 'usergroups-loader', 'usergroups-loader');
                                 $target = "usergroup-$usergroup->usergroup_id";
                                 ?>
                                 <button class="sf-icon-button sf-small spOpenDialog"
@@ -156,33 +166,154 @@ function spa_usergroups_usergroup_main() {
     spa_paint_close_fieldset();
     spa_paint_close_container();
     spa_paint_close_tab();
+
+    if ($usergroups) {
+        spa_members_not_belonging_to_any_usergroup_tab($usergroups);
+    }
     ?>
-    <div class="sfform-panel-spacer"></div>
+
+
+
+    <!--<div class="sfform-panel-spacer"></div>
     <table class="sfmaintable">
         <tr>
             <th scope="col"><?php SP()->primitives->admin_etext('Members Not Belonging To Any Usergroup') ?></th>
         </tr>
         <tr class="sfsubtable sfugrouptable">
             <td>
-                <?php
-                $site = wp_nonce_url(SPAJAXURL . 'usergroups&amp;ug=0', 'usergroups');
-                $gif = SPCOMMONIMAGES . 'working.gif';
-                $text = esc_js(SP()->primitives->admin_text('Show/Hide Members with No Memberships'));
-                ?>
-                <input type="button" id="show-0" class="sf-button-secondary spUsergroupShowMembers" value="<?php echo $text; ?>" data-url="<?php echo $site; ?>" data-img="<?php echo $gif; ?>" data-id="0" />
+                <input type="button"
+                       id="show-0"
+                       class="sf-button-secondary spUsergroupShowMembers"
+                       value="<?php echo esc_js(SP()->primitives->admin_text('Show/Hide Members with No Memberships')) ?>"
+                       data-url="<?php echo wp_nonce_url(SPAJAXURL . 'usergroups&amp;ug=0', 'usergroups') ?>"
+                       data-img="<?php echo SPCOMMONIMAGES . 'working.gif' ?>"
+                       data-id="0"
+                       />
             </td>
         </tr>
         <tr class="sfinline-form"> <!-- This row will hold hidden forms for the current user group membership-->
-            <td>
+            <!--<td>
                 <div id="members-0"></div>
             </td>
         </tr>
-    </table>
+    </table>-->
     <?php
 }
 
-//function sp_paint_usergroup_tip($ugid, $ugname) {
-//    $site = wp_nonce_url(SPAJAXURL . "usergroup-tip&amp;group=$ugid", 'usergroup-tip');
-//    $title = esc_js($ugname);
-//    echo "<input type='button' class='sf-button-secondary spOpenDialog' value='" . SP()->primitives->admin_text('User Group Usage') . "' data-site='$site' data-label='$title' data-width='600' data-height='0' data-align='center' />";
-//}
+function spa_members_not_belonging_to_any_usergroup_tab($usergroups) {
+    spa_paint_open_nohead_tab(true);
+    $totalMembers = 300;
+    ?>
+    <div class="sf-panel-body-top">
+        <div class="sf-panel-body-top-left">
+            <h4><?php echo SP()->primitives->admin_text('Members Not Belonging To Any Usergroup') ?></h4>
+        </div>
+        <div class="sf-panel-body-top-right">
+            <div class="sf-wrap-select-user-uroup">
+                <div class="sf-input-group sf-input-small sf-input-rounded">
+                    <div class="sf-form-control sf-select-wrap">
+                        <select>
+                            <option value=""><?php echo SP()->primitives->admin_text('Select User Group') ?></option>
+                            <?php foreach ($usergroups as $usergroup) : ?>
+                                <option value="<?php echo $usergroup->usergroup_id ?>"><?php echo SP()->displayFilters->title($usergroup->usergroup_name); ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                    <div class="sf-input-group-addon">
+                        <button class="sf-input-group-btn sf-button-primary"><?php echo SP()->primitives->admin_text('Move') ?></button>
+                    </div>
+                </div>
+            </div>
+            <p class="search-box">
+                <input type="search" name="s" value="">
+                <input type="submit" id="search-submit" class="button" value="Search Members"> 
+            </p>
+            <?php echo spa_paint_help('...', '...') ?>
+        </div>
+    </div>
+
+    <table class="widefat sf-table-small sf-table-mobile">
+        <thead>
+            <tr class="sf-v-a-middle" class="sf-narrow">
+                <th class="sf-narrow"><input type="checkbox"></th>
+                <th>
+                    <div class="sf-alphabet">
+                        <button class="sf-button sf-active"><?php echo SP()->primitives->admin_text('All') ?></button>
+                        <button class="sf-button">0 - 9</button>
+                        <button class="sf-button">A</button>
+                        <button class="sf-button">B</button>
+                        <button class="sf-button">C</button>
+                        <button class="sf-button">D</button>
+                        <button class="sf-button">E</button>
+                        <button class="sf-button">F</button>
+                        <button class="sf-button">G</button>
+                        <button class="sf-button">H</button>
+                        <button class="sf-button">I</button>
+                        <button class="sf-button">J</button>
+                        <button class="sf-button">K</button>
+                        <button class="sf-button">L</button>
+                        <button class="sf-button">M</button>
+                        <button class="sf-button">N</button>
+                        <button class="sf-button">O</button>
+                        <button class="sf-button">P</button>
+                        <button class="sf-button">Q</button>
+                        <button class="sf-button">R</button>
+                        <button class="sf-button">S</button>
+                        <button class="sf-button">T</button>
+                        <button class="sf-button">U</button>
+                        <button class="sf-button">V</button>
+                        <button class="sf-button">W</button>
+                        <button class="sf-button">X</button>
+                        <button class="sf-button">Y</button>
+                        <button class="sf-button">Z</button>
+                    </div>
+                </th>
+                <th>
+                    <div class="sf-pull-right">
+                        <?php echo sprintf('%s %d %s', SP()->primitives->admin_text('Total'), $totalMembers, SP()->primitives->admin_text('Members')) ?>
+                    </div>
+                </th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="sp-v-a-middle">
+                <td class="sf-narrow"><input type="checkbox"></td>
+                <td colspan="2">
+                    <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                    <span class="sf-user-name">Aria Smith</span>
+                </td>
+            </tr>
+            <tr class="sp-v-a-middle">
+                <td class="sf-narrow"><input type="checkbox"></td>
+                <td colspan="2">
+                    <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                    <span class="sf-user-name">Aria Smith</span>
+                </td>
+            </tr>
+            <tr class="sp-v-a-middle">
+                <td class="sf-narrow"><input type="checkbox"></td>
+                <td colspan="2">
+                    <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                    <span class="sf-user-name">Aria Smith</span>
+                </td>
+            </tr>
+            <tr class="sp-v-a-middle">
+                <td class="sf-narrow"><input type="checkbox"></td>
+                <td colspan="2">
+                    <div class="sf-avatar "><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                    <span class="sf-user-name">Aria Smith</span>
+                </td>
+            </tr>
+            <tr class="sp-v-a-middle">
+                <td class="sf-narrow"><input type="checkbox"></td>
+                <td colspan="2">
+                    <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                    <span class="sf-user-name">Aria Smith</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <?php
+    spa_paint_close_container();
+    spa_paint_close_tab();
+}
