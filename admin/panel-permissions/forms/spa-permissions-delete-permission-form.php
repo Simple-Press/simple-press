@@ -30,7 +30,7 @@ function spa_permissions_delete_permission_form($role_id) {
 ?>
 					<input type="hidden" name="role_id" value="<?php echo $role->role_id; ?>" />
 <?php
-					echo '<p>';
+					echo '<div class="sf-alert-block sf-info"><p>';
 					SP()->primitives->admin_etext("Warning! You are about to delete a Permission!");
 					echo '</p>';
 					echo '<p>';
@@ -41,7 +41,7 @@ function spa_permissions_delete_permission_form($role_id) {
 					echo '</p>';
 					echo '<p>';
 					SP()->primitives->admin_etext('Click on the Delete Permission button below to proceed.');
-					echo '</p>';
+					echo '</p></div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_perm_delete_perm_panel');

@@ -44,8 +44,8 @@ function spa_display_member_roll($members, $text1, $text2) {
 	$out = '';
 	$cap = '';
 	$first = true;
-	$out.= '<fieldset class="sfsubfieldset">';
-	$out.= '<legend>'.$text1.'</legend>';
+	$out.= '<div class="sf-form">';
+	$out.= '<h4>'.$text1.'</h4>';
 	if ($members) {
 		$out.= '<p><b>'.count($members).' '.SP()->primitives->admin_text('member(s) in this user group').'</b></p>';
 		for ($x = 0; $x < count($members); $x++) {
@@ -69,7 +69,7 @@ function spa_display_member_roll($members, $text1, $text2) {
 	} else {
 		$out.= $text2;
 	}
-	$out.= '</fieldset>';
+	$out.= '</div>';
 
 	return $out;
 }

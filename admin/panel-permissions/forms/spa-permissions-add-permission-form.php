@@ -35,12 +35,12 @@ function spa_permissions_add_permission_form() {
       spa_paint_open_fieldset(SP()->primitives->admin_text('Permission Set Details'), 'true', 'create-new-permission-set');
       ?></div><div class="sf-half-panel-in"><?php
       spa_paint_input(SP()->primitives->admin_text('Set Name'), "role_name", '', false, true);
-      spa_paint_input(SP()->primitives->admin_text('Set Description'), "role_desc", '', false, true);
+			spa_paint_wide_textarea('Set Description', 'role_desc', '','',4);
       spa_paint_select_start(SP()->primitives->admin_text('Clone Existing'), 'role', 'role');
       spa_display_permission_select('', false);
-      spa_paint_select_end('<div class="text-small"><small>'.SP()->primitives->admin_text('Select an existing Set to Clone').'</small></div>');
+      spa_paint_select_end('<div class="text-small"><small>'.SP()->primitives->admin_text('Select an existing Permission Set to Clone').'</small></div>');
       ?></div><div class="sf-form-submit-bar">
-	        <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" />
+	        <input type="submit" class="sf-button-primary view-non-mobile" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" />
 	      </div>
         
       </div>
@@ -50,19 +50,30 @@ function spa_permissions_add_permission_form() {
       ?>
          </div><div class="sf-half-panel-in">
          <br/>
-        <div class="sf-panel-warning">
+        <div class="sf-panel-warning view-non-mobile">
           <img src="<?=SPADMINIMAGES?>sp_GuestPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />
           <small>&nbsp;<?=SP()->primitives->admin_text('Action settings displaying this icon will be ignored for Guest Users')?></small>
         </div>
-        <div class="sf-panel-warning">
+        <div class="sf-panel-warning view-mobile">
+          <img src="<?=SPADMINIMAGES?>sp_GuestPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />
+          <small>&nbsp;<?=SP()->primitives->admin_text('Ignored for Guest Users')?></small>
+        </div>
+        <div class="sf-panel-warning view-non-mobile">
           <img src="<?=SPADMINIMAGES?>sp_GlobalPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />
           <small>&nbsp;<?=SP()->primitives->admin_text('Action settings displaying this icon require enabling to use')?></small>
         </div>
-        <div class="sf-panel-warning">
+        <div class="sf-panel-warning view-mobile">
+          <img src="<?=SPADMINIMAGES?>sp_GlobalPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />
+          <small>&nbsp;<?=SP()->primitives->admin_text('Require enabling to use')?></small>
+        </div>
+        <div class="sf-panel-warning view-non-mobile">
           <img src="<?=SPADMINIMAGES?>sp_Warning.png" alt="" style="width:16px;height:16px;vertical-align:top" />
           <small>&nbsp;<?=SP()->primitives->admin_text('Action settings displaying this icon should be used with great care')?></small>
         </div>
-        
+        <div class="sf-panel-warning view-mobile">
+          <img src="<?=SPADMINIMAGES?>sp_Warning.png" alt="" style="width:16px;height:16px;vertical-align:top" />
+          <small>&nbsp;<?=SP()->primitives->admin_text('Use with great care')?></small>
+        </div>
 <?php
 					
 					sp_build_site_auths_cache();
@@ -122,11 +133,10 @@ function spa_permissions_add_permission_form() {
 								<span class="permentry<?php echo $warn; ?>" >
 
 								<input type="checkbox" name="<?php echo $button; ?>" id="sf<?php echo $button; ?>"  />
-								<label for="sf<?php echo $button; ?>" class="sflabel">
+								<label for="sf<?php echo $button; ?>" class="sflabel view-non-mobile">
 								
 								<?php SP()->primitives->admin_etext(SP()->core->forumData['auths'][$auth_id]->auth_desc); ?></label>
-                </span>
-								<?php if ($span == '') { ?>
+	<?php if ($span == '') { ?>
 									<span style="text-align:center;width:32px" class="permentry"></span>
                   <img style="width:16px;height:16px; border: 0 none ;float:right; margin: 3px 3px 0 3px; padding: 0;" class="" title="<?php echo $tooltips[$auth_name]; ?>" src="<?php echo SPADMINIMAGES; ?>sp_Information.png" alt="" />
 <?php
@@ -146,6 +156,8 @@ function spa_permissions_add_permission_form() {
 ?>
 								    </span><span class="permentry" style="width:32px"></span>
                                 <?php } ?>
+                </span>
+							
 							</div>
                         <?php } ?>
               
@@ -159,10 +171,11 @@ function spa_permissions_add_permission_form() {
 			do_action('sph_perm_add_perm_panel');
 		spa_paint_close_container();
 ?>
-	<!--<div class="sf-form-submit-bar">
-	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" />
-	</div>-->
+	<div class="sf-form-submit-bar view-mobile">
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" />
+	</div>
 	<?php spa_paint_close_tab(); ?>
+		<!-- <input type="submit" class="sf-button-primary view-mobile" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" /> -->
 	</form>
 	<div class="sfform-panel-spacer"></div>
   <script type="text/javascript">
