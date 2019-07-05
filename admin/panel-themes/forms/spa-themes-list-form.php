@@ -41,9 +41,7 @@ function spa_themes_list_form() {
   $strout .= "<a href='".esc_url(add_query_arg('themegroup', 'child', SPADMINTHEMES))."'>$stroutname</a>" . $strspace;
   spa_paint_open_panel();
   ?>
-  <style>
-    
-  </style>
+
   <fieldset class="sf-fieldset">
   <form id="theme-filter" method="get" action="<?php echo SPADMINTHEMES; ?>">
                     <input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME.'/admin/panel-themes/spa-themes.php'; ?>" />
