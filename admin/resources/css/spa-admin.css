@@ -392,7 +392,9 @@ $Rev:2099 $
     -webkit-border-radius: 50%;
     border-radius: 50%; 
 }
-
+#sf-root-wrap .sfhidden {
+    display: none !important;
+}
 
 #sf-root-wrap .sfinline-form form,
 #sf-root-wrap .sfinline-form .sf-form {
