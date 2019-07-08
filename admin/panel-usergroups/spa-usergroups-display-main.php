@@ -66,7 +66,7 @@ function spa_usergroups_usergroup_main() {
                             ?>
                             <input type="button" 
                                    id="show<?php echo $usergroup->usergroup_id; ?>"
-                                   class="sf-button-secondary spUsergroupShowMembers" 
+                                   class="sf-button-secondary sf-button-small spUsergroupShowMembers" 
                                    value="<?php echo esc_js(SP()->primitives->admin_text('Show')) ?>" 
                                    data-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug=$usergroup->usergroup_id", 'usergroups') ?>"
                                    data-img="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>"
@@ -74,7 +74,7 @@ function spa_usergroups_usergroup_main() {
                                    />
                             <input type="button"
                                    id="remove<?php echo $usergroup->usergroup_id; ?>"
-                                   class="sf-button-secondary spLoadForm"
+                                   class="sf-button-secondary sf-button-small spLoadForm"
                                    value="<?php SP()->primitives->admin_etext('Remove'); ?>"
                                    data-form="delmembers" 
                                    data-url="<?php echo $base; ?>"
@@ -85,7 +85,7 @@ function spa_usergroups_usergroup_main() {
                                    />
                             <input type="button"
                                    id="remove<?php echo $usergroup->usergroup_id; ?>"
-                                   class="sf-button-secondary spLoadForm"
+                                   class="sf-button-secondary sf-button-small spLoadForm"
                                    value="<?php SP()->primitives->admin_etext('Move'); ?>"
                                    data-form="delmembers" 
                                    data-url="<?php echo $base; ?>"
@@ -96,7 +96,7 @@ function spa_usergroups_usergroup_main() {
                                    />
                             <input type="button"
                                    id="add<?php echo $usergroup->usergroup_id; ?>" 
-                                   class="sf-button-secondary spLoadForm" 
+                                   class="sf-button-secondary sf-button-small spLoadForm" 
                                    value="<?php SP()->primitives->admin_etext('Add'); ?>" 
                                    data-form="addmembers" 
                                    data-url="<?php echo $base; ?>" 
@@ -209,19 +209,17 @@ function spa_members_not_belonging_to_any_usergroup_tab($usergroups) {
             <h4><?php echo SP()->primitives->admin_text('Members Not Belonging To Any Usergroup') ?></h4>
         </div>
         <div class="sf-panel-body-top-right">
-            <div class="sf-wrap-select-user-uroup">
-                <div class="sf-input-group sf-input-small sf-input-rounded">
-                    <div class="sf-form-control sf-select-wrap">
-                        <select>
-                            <option value=""><?php echo SP()->primitives->admin_text('Select User Group') ?></option>
-                            <?php foreach ($usergroups as $usergroup) : ?>
-                                <option value="<?php echo $usergroup->usergroup_id ?>"><?php echo SP()->displayFilters->title($usergroup->usergroup_name); ?></option>
-                            <?php endforeach ?>
-                        </select>
-                    </div>
-                    <div class="sf-input-group-addon">
-                        <button class="sf-input-group-btn sf-button-primary"><?php echo SP()->primitives->admin_text('Move') ?></button>
-                    </div>
+            <div class="sf-input-group sf-input-small sf-input-rounded">
+                <div class="sf-form-control sf-select-wrap">
+                    <select>
+                        <option value=""><?php echo SP()->primitives->admin_text('Select User Group') ?></option>
+                        <?php foreach ($usergroups as $usergroup) : ?>
+                            <option value="<?php echo $usergroup->usergroup_id ?>"><?php echo SP()->displayFilters->title($usergroup->usergroup_name); ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+                <div class="sf-input-group-addon">
+                    <button class="sf-input-group-btn sf-button-primary"><?php echo SP()->primitives->admin_text('Move') ?></button>
                 </div>
             </div>
             <p class="search-box">

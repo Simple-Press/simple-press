@@ -33,8 +33,75 @@ function spa_usergroups_add_members_form($usergroup_id) {
         <?php
         spa_paint_open_nohead_tab(true, '');
         echo sp_create_nonce('forum-adminform_membernew');
+        ?>
+        <div class="sf-panel-body-top">
+            <div class="sf-panel-body-top-left">
+                <h4><?php echo SP()->primitives->admin_text('No members selected') ?></h4>
+            </div>
+            <div class="sf-panel-body-top-right">
+                <p class="_search-box sf-input-group">
+                    <input type="search" name="s" value="" placeholder="<?php echo SP()->primitives->admin_text('Search') ?>">
+                </p>
+                <div class="sf-input-group">
+                    <div class="sf-form-control sf-select-wrap">
+                        <select>
+                            <option value=""><?php echo SP()->primitives->admin_text('Select User Group') ?></option>
+                            <?php foreach (spa_get_usergroups_all(null) as $usergroup) : ?>
+                                <option value="<?php echo $usergroup->usergroup_id ?>"><?php echo SP()->displayFilters->title($usergroup->usergroup_name); ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                    <div class="sf-input-group-addon">
+                        <button class="sf-input-group-btn sf-button-primary">Move</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sf-grid-4">
+            <div class="sf-grid-item">
+                <input type="checkbox">
+                <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                <span class="sf-user-name">Aria Smith</span>
+            </div>
+            <div class="sf-grid-item">
+                <input type="checkbox">
+                <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                <span class="sf-user-name">Aria Smith</span>
+            </div>
+            <div class="sf-grid-item">
+                <input type="checkbox">
+                <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                <span class="sf-user-name">Aria Smith</span>
+            </div>
+            <div class="sf-grid-item">
+                <input type="checkbox">
+                <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                <span class="sf-user-name">Aria Smith</span>
+            </div>
+            <div class="sf-grid-item">
+                <input type="checkbox">
+                <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                <span class="sf-user-name">Aria Smith</span>
+            </div>
+            <div class="sf-grid-item">
+                <input type="checkbox">
+                <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                <span class="sf-user-name">Aria Smith</span>
+            </div>
+            <div class="sf-grid-item">
+                <input type="checkbox">
+                <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                <span class="sf-user-name">Aria Smith</span>
+            </div>
+            <div class="sf-grid-item">
+                <input type="checkbox">
+                <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
+                <span class="sf-user-name">Aria Smith</span>
+            </div>
+        </div>
 
-        $sfmemberopts = array();
+        <?php
+        /*$sfmemberopts = array();
         $sfmemberopts = SP()->options->get('sfmemberopts');
 
         if (!isset($sfmemberopts['sfsinglemembership'])) {
@@ -62,7 +129,7 @@ function spa_usergroups_add_members_form($usergroup_id) {
             <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $usergroup_id; ?>" id="sfmembernew<?php echo $usergroup_id; ?>" name="addmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" /></span>
         <br />
         <div class="pbar" id="progressbar"></div>
-        <?php
+        <?php */
         spa_paint_close_container();
         spa_paint_close_tab();
         ?>
