@@ -153,9 +153,10 @@ function spa_get_defpermissions_role($group_id, $usergroup_id) {
 
 function spa_display_usergroup_select($filter = false, $forum_id = 0, $showSelect = true) {
 	$usergroups = spa_get_usergroups_all();
-	if ($showSelect) echo SP()->primitives->admin_text('Select usergroup').':&nbsp;&nbsp;';
+	//if ($showSelect) echo SP()->primitives->admin_text('Select usergroup');
 	if ($showSelect) {
 		?>
+		<label><?php echo SP()->primitives->admin_text('Select usergroup') ?></label>
         <select class='sfacontrol' name='usergroup_id'>
 		<?php
 	}

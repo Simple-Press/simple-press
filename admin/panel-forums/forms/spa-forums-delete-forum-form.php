@@ -34,7 +34,7 @@ function spa_forums_delete_forum_form($forum_id) {
 					<input type="hidden" name="parent" value="<?php echo $forum->parent; ?>" />
 					<input type="hidden" name="children" value="<?php echo $forum->children; ?>" />
 <?php
-					echo '<p>';
+					echo '<div class="sf-alert-block sf-info"><p>';
 					SP()->primitives->admin_etext('Warning! You are about to delete a forum');
 					echo '</p>';
 					echo '<p>';
@@ -51,7 +51,7 @@ function spa_forums_delete_forum_form($forum_id) {
 					echo '</p>';
 					echo '<p><strong>';
 					SP()->primitives->admin_etext('IMPORTANT: Be patient. For busy forums this action can take some time');
-					echo '</strong></p>';
+					echo '</strong></p></div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_forums_delete_forum_panel');

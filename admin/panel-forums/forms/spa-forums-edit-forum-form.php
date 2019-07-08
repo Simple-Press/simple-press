@@ -27,7 +27,7 @@ function spa_forums_edit_forum_form($forum_id) {
 <?php
 		echo sp_create_nonce('forum-adminform_forumedit');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
-			spa_paint_open_panel();
+			//spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Details'), false);
 					$subforum = ($forum->parent) ? true : false;
 					echo "<input type='hidden' name='cgroup_id' value='$forum->group_id' />";
@@ -51,7 +51,7 @@ function spa_forums_edit_forum_form($forum_id) {
 
 					# Top level forum...
 					$style = ($subforum) ? ' style="display:none"' : ' style="display:block"';
-					echo "<div $style>";
+					echo "<div $style class='sf-form-row'>";
 					spa_paint_select_start(SP()->primitives->admin_text('The group this forum belongs to'), 'group_id', '');
 					echo spa_create_group_select($forum->group_id);
 					spa_paint_select_end();
@@ -59,7 +59,7 @@ function spa_forums_edit_forum_form($forum_id) {
 
 					# sub-forum...
 					$style = ($subforum) ? ' style="display:block"' : ' style="display:none"';
-					echo "<div $style>";
+					echo "<div $style class='sf-form-row'>";
 					spa_paint_select_start(SP()->primitives->admin_text('Parent forum this subforum belongs to'), 'parent', '');
 					echo spa_create_forum_select($forum->parent);
 					spa_paint_select_end();
@@ -67,8 +67,8 @@ function spa_forums_edit_forum_form($forum_id) {
 
 					$target = 'cforum_slug';
 					$ajaxURL = wp_nonce_url(SPAJAXURL.'forums', 'forums');
-					echo '<input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.$tab.'" name="forum_name" id="forum_name" value="'.esc_attr($forum->forum_name).'" data-url="'.$ajaxURL.'" data-target="'.$target.'" data-type="edit" />';
-					echo '<input type="hidden" name="forum_id" value="'.$forum->forum_id.'" />';
+					echo '<div class="sf-form-row"><input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.$tab.'" name="forum_name" id="forum_name" value="'.esc_attr($forum->forum_name).'" data-url="'.$ajaxURL.'" data-target="'.$target.'" data-type="edit" />';
+					echo '<input type="hidden" name="forum_id" value="'.$forum->forum_id.'" /></div>';
 
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Forum slug').'</label>';
@@ -80,9 +80,9 @@ function spa_forums_edit_forum_form($forum_id) {
 					spa_paint_input(SP()->primitives->admin_text('Description'), 'forum_desc', SP()->editFilters->text($forum->forum_desc), false, true);
 
 				spa_paint_close_fieldset();
-			spa_paint_close_panel();
+			//spa_paint_close_panel();
 
-			spa_paint_open_panel();
+			//spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Options'), false);
 					$target = 'cforum_slug';
 					$ajaxURL = wp_nonce_url(SPAJAXURL.'forums', 'forums');
@@ -168,15 +168,15 @@ function spa_forums_edit_forum_form($forum_id) {
 					spa_paint_input(SP()->primitives->admin_text('Custom meta keywords (SEO option must be enabled)'), 'forum_keywords', SP()->editFilters->text($forum->keywords), false, true);
 					spa_paint_wide_textarea('Special forum message to be displayed above forums', 'forum_message', SP()->editFilters->text($forum->forum_message));
 				spa_paint_close_fieldset();
-			spa_paint_close_panel();
+			//spa_paint_close_panel();
 
-			spa_paint_open_panel();
+			//spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Extended Forum Options'), false);
 
 					# As added by plugins
 					do_action('sph_forum_edit_forum_options', $forum);
 				spa_paint_close_fieldset();
-			spa_paint_close_panel();
+			//spa_paint_close_panel();
 			spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">

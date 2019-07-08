@@ -28,7 +28,7 @@ function spa_forums_add_group_permission_form($group_id) {
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Add a User Group Permission Set to an Entire Group'), 'true', 'add-a-user-group-permission-set-to-an-entire-group');
 ?>
-					<?php echo SP()->primitives->admin_text('Set a usergroup permission set for all forum in a group').': '.SP()->displayFilters->title($group->group_name); ?>
+					<div class="sf-alert-block sf-info"><?php echo SP()->primitives->admin_text('Set a usergroup permission set for all forum in a group').': '.SP()->displayFilters->title($group->group_name); ?></div>
 					<table class="form-table">
 						<tr>
 							<td class="sflabel"><?php spa_display_usergroup_select(); ?></td>
@@ -43,7 +43,7 @@ function spa_forums_add_group_permission_form($group_id) {
 					</table>
 
 					<input type="hidden" name="group_id" value="<?php echo $group->group_id; ?>" />
-					<p><?php SP()->primitives->admin_etext('Caution:  Any current permission set for the selected usergroup for any forum in this group will be overwritten'); ?></p>
+					<div class="sf-alert-block sf-info"><?php SP()->primitives->admin_etext('Caution:  Any current permission set for the selected usergroup for any forum in this group will be overwritten'); ?></div>
 <?php
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();

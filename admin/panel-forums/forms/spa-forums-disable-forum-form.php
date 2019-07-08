@@ -27,7 +27,7 @@ function spa_forums_disable_forum_form($forum_id) {
 ?>
 					<input type="hidden" name="forum_id" value="<?php echo $forum_id; ?>" />
 <?php
-					echo '<p><b>';
+					echo '<div class="sf-alert-block sf-info"><p><b>';
 					SP()->primitives->admin_etext('Warning! You are about to disable this forum');
 					echo '</b></p>';
 					echo '<p>';
@@ -38,7 +38,7 @@ function spa_forums_disable_forum_form($forum_id) {
 					echo '</p>';
 					echo '<p>';
 					SP()->primitives->admin_etext('Click on the disable forum button below to proceed.');
-					echo '</p>';
+					echo '</p></div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_forums_disable_forum_panel');

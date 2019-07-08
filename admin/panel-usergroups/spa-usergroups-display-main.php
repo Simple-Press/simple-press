@@ -313,6 +313,21 @@ function spa_members_not_belonging_to_any_usergroup_tab($usergroups) {
             </tr>
         </tbody>
     </table>
+
+    <div class="sf-pagination">
+        <span class="sf-pagination-links">
+            <a class="sf-first-page" href="#"></a>
+            <a class="" href="#">1</a>
+            <a class="" href="#">2</a>
+            <a class="sf-current-page" href="#">3</a>
+            <a class="" href="#">4</a>
+            <a class="" href="#">5</a>
+            <a class="" href="#">...</a>
+            <a class="" href="#">8</a>
+            <a class="sf-last-page" href="#"></a>
+        </span>
+    </div>
+
     <?php
     spa_paint_close_container();
     spa_paint_close_tab();
