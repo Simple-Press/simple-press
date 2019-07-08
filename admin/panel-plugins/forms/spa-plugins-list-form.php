@@ -44,6 +44,7 @@ function spa_plugins_list_form() {
 				});
 			});
 		});
+    
 	  $('.column-more img').click(function(e){
       if($(this).parent().find('.sp-plugin-more').css('display') === 'none'){
         $(this).parent().find('.sp-plugin-more').css('display', 'block');
@@ -51,165 +52,36 @@ function spa_plugins_list_form() {
         $(this).parent().find('.sp-plugin-more').css('display', 'none');
       }
     });
-    $('#sf-plugins-flt-t').click(function(e){
+    function display_filtr(){
       if($('#sf-plugins-flt-b').css('display') === 'none'){
         $('#sf-plugins-flt-b').css('display', 'block');
       }else{
         $('#sf-plugins-flt-b').css('display', 'none');
       }
-    });
+    }
+    $('#sf-plugins-flt-t').click(display_filtr);
   }(window.spj = window.spj || {}, jQuery));
 </script>
-<style>
-  .sf-panel-body-top-left-midle{
-    float: right;
-    padding: 10px 10px 0 10px;
-  }
-  .sf-actions-in{
-    border-radius: 20px;
-    border: 1px solid #F0F0F0 !important;
-    background-color: #FFFFFF;
-    padding: 5px;
-    width: 160px;
-    height: 40px;
-  }
-  .sf-actions {
-  position: relative;
-  float: left;
-  width: 110px;  
-  font-family: 'Poppins', sans-serif!important;
-}
- 
-/*To remove button from IE11, thank you Matt */
-  .sf-actions select::-ms-expand {
-     display: none;
-}
- 
-.sf-actions:after {
-  content: '>';
-  font: 20px "Consolas", monospace;
-  color: #00a0d2;
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-  right: 10px;
-  /*Adjust for position however you want*/
-  top: 0px;
-  padding: 0 0 8px;
-  /*border-bottom: 1px solid #999;*/
-  /*left line */
-  position: absolute;
-  pointer-events: none;
-}
- 
-.sf-actions select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  /* Add some styling */
-  font-family: 'Poppins', sans-serif!important;
-  display: block;
-  /*width: 100%;*/
-  max-width: 110px;
-  height: 30px!important;
-  float: right;
-  margin: 0px 0px;
-  padding: 5px 10px 5px 10px!important;
-  font-size: 12px;
-  line-height: 1.75;
-  color: #FFFFFF;
-  background-color: #FFFFFF;
-  background-image: none;
-  border: 0px solid #F0F0F0 !important;
-  -ms-word-break: normal;
-  word-break: normal;
-  border-radius: 10px;
-  outline:none;
-}
 
-.sf-actions select option{
-  font-size: 12px;
-  line-height: 1.75;
-  padding: 5px;
-  outline:none;
-  border: 0px solid #F0F0F0 !important;
-}
-
-.sf-actions-in .sf-action-button{
-  /*top: 26.5px;*/
-  position: absolute;
-}
-.sf-action-button-b{
-  background-color: #00B9D0;
-  color: #FFFFFF;
-  border: 1px solid #00B9D0 !important;
-  border-radius: 20px;
-  outline:none;
-  text-align: center;
-  vertical-align: middle;
-  padding: 6px 20px 11px 15px;
-  line-height: 0.5;
-  cursor: pointer;
-  font-weight: 900;
-  font-size: 30px;
-  letter-spacing: -8px;
-  word-spacing: 0px;
-  margin-top: -3px;
-}
-.column-act{
-  color: #00B9D0;
-}
-.column-more img{
-  width: 16px;
-  height: 16px;
-  opacity: 0.75;
-  cursor: pointer;
-}
-.sp-plugin-more{
-  display: none;
-  max-width: 300px;
-}
-.sf-plugins-flt{
-  width: 100%;
-  height: 40px;
-  background-color: #EAF0F4;
-  display: none;
-  padding: 12px;
-}
-.sf-plugins-flt #sf-plugins-flt-b div:hover{
-  background-color: #00B9D0;
-}
-.sf-plugins-flt:first-child:after {
-  content: '>';
-  font: 20px "Consolas", monospace;
-  color: #00a0d2;
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
-  right: 10px;
-  /*Adjust for position however you want*/
-  top: 0px;
-  padding: 0 0 8px;
-  /*border-bottom: 1px solid #999;*/
-  /*left line */
-  position: absolute;
-  pointer-events: none;
-}
-@media screen and (max-width: 768px){
-  .sf-plugins-flt{
-    display: block;
-  }
-  .sf-plugin-hide{
-    display: none;
-  }
-}
-</style>
 <?php
     # get plugins
 	$plugins = spa_get_plugins_list_data();
-
+  $plugins_active = 0;
+  $plugins_inactive = 0;
+  foreach ((array) $plugins as $plugin_file => $plugin_data){
+    $is_active = SP()->plugin->is_active($plugin_file);
+    $path = explode('/', $plugin_file);
+		$bad = is_numeric(substr($path[0], -1));
+    if($is_active){
+      $plugins_active++;
+    }else{
+      if($bad){
+        
+      }else{
+        $plugins_inactive++;
+      }
+    }
+  }
 	# get update version info
 	$xml = sp_load_version_xml();
 
@@ -235,6 +107,10 @@ function spa_plugins_list_form() {
         $ajaxURL = wp_nonce_url(SPAJAXURL.'plugins-loader&amp;saveform=list', 'plugins-loader');
 	$msg = esc_js(SP()->primitives->admin_text('Are you sure you want to delete the selected Simple Press plugins?'));
 ?>
+  <form id="plugin-filter" method="get" action="<?php echo SPADMINPLUGINS; ?>">
+        <input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins.php'; ?>" />
+   <?php submit_button('Search Plugins', '', '', false, array('id' => 'search-submit')); ?>
+  </form>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sppluginsform" name="sppluginsform" onsubmit="javascript: if (ActionType.options[ActionType.selectedIndex].value == 'delete-selected' || ActionType2.options[ActionType2.selectedIndex].value == 'delete-selected') {if (confirm('<?php echo $msg; ?>')) {return true;} else {return false;}} else {return true;}">
 	<?php echo sp_create_nonce('forum-adminform_plugins'); ?>
 <?php
@@ -249,9 +125,9 @@ function spa_plugins_list_form() {
   $strspace = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
   $stroutname0 = SP()->primitives->admin_text('All ') . '(' . count($plugins) . ')';
   $strout0 = "<a href='".esc_url(add_query_arg('plugingroup', 'all', SPADMINPLUGINS))."'>$stroutname0</a>" . $strspace;
-  $stroutname = SP()->primitives->admin_text('Active ') . '(' . (count($plugins) - count($invalid)) . ')';
+  $stroutname = SP()->primitives->admin_text('Active ') . '(' . $plugins_active . ')';
   $strout1 .= "<a href='".esc_url(add_query_arg('plugingroup', 'active', SPADMINPLUGINS))."'>$stroutname</a>" . $strspace;
-  $stroutname = SP()->primitives->admin_text('Inactive') . '(' . count($invalid) . ')';
+  $stroutname = SP()->primitives->admin_text('Inactive') . '(' . $plugins_inactive . ')';
   $strout2 .= "<a href='".esc_url(add_query_arg('plugingroup', 'inactive', SPADMINPLUGINS))."'>$stroutname</a>" . $strspace;
   $strout = $strout0 . $strout1 . $strout2;
   # start panel actions
@@ -261,7 +137,7 @@ function spa_plugins_list_form() {
 <fieldset class="sf-fieldset">
 <div class="sf-show sf-plugins-flt">
       <div id="sf-plugins-flt-t"><?=$stroutname0?></div>
-      <div style="display: none;z-index: 9999;" id="sf-plugins-flt-b">
+      <div id="sf-plugins-flt-b">
       <div><?=$strout0?></div>
       <div><?=$strout1?></div>
       <div><?=$strout2?></div>
@@ -276,14 +152,11 @@ function spa_plugins_list_form() {
     </div>
     
     <div class="sf-panel-body-top-right">
-      <form id="theme-filter" method="get" action="<?php echo SPADMINPLUGINS; ?>">
-        <input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins.php'; ?>" />
+     
             <p class="search-box">
               <label class="screen-reader-text" for="<?php echo esc_attr('search_id-search-input'); ?>">Search Plugins:</label>
-              <input type="search" id="<?php echo esc_attr('search_id-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" />
-              <?php submit_button('Search Plugins', '', '', false, array('id' => 'search-submit')); ?>
+              <input type="search" id="<?php echo esc_attr('search_id-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" form="plugin-filter"/>
             </p>
-      </form>
       <?php
         echo spa_paint_help('plugins', $adminhelpfile);
       ?>
@@ -326,7 +199,16 @@ function spa_plugins_list_form() {
 
 	<table class="wp-list-table widefat plugins">
         <thead>
-		<tr>
+		<tr class="sf-showm">
+      <td id='cb' class='manage-column column-cb check-column'>
+				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="cbhead" id="cbhead" />
+				<label class="wp-core-ui" for='cbhead'>&nbsp;</label>
+			</td>
+			<th class='manage-column column-name column-primary' colspan="5" style="width: 50%;">
+				<?php SP()->primitives->admin_etext('Plugin'); ?>
+			</th>
+    </tr>
+    <tr class="sf-plugin-hide">
 			<td id='cb' class='manage-column column-cb check-column'>
 				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="cbhead" id="cbhead" />
 				<label class="wp-core-ui" for='cbhead'>&nbsp;</label>
@@ -346,6 +228,7 @@ function spa_plugins_list_form() {
       <th class='manage-column column-more'>
       </th>
 		</tr>
+    
         </thead>
 
         <tbody class="the-list">
@@ -362,8 +245,9 @@ function spa_plugins_list_form() {
 			$bad = is_numeric(substr($path[0], -1));
 
     		$is_active = SP()->plugin->is_active($plugin_file);
-
+        if( isset($_REQUEST['s']) && strlen(trim($_REQUEST['s'])) && strripos($plugin_data['Name'], $_REQUEST['s']) === false ) continue; // Search by name
             if ($is_active) {
+              if( isset($_REQUEST['plugingroup']) && trim($_REQUEST['plugingroup']) === 'inactive' ) continue; //filter by inactive
                 $url = SPADMINPLUGINS.'&amp;action=deactivate&amp;plugin='.esc_attr($plugin_file).'&amp;title='.urlencode(esc_attr($plugin_data['Name'])).'&amp;sfnonce='.wp_create_nonce('forum-adminform_plugins');
                 $actionlink = "<a href='$url' title='".SP()->primitives->admin_text('Deactivate this Plugin')."'>".SP()->primitives->admin_text('Deactivate').'</a>';
 				$actionlink = apply_filters('sph_plugins_active_buttons', $actionlink, $plugin_file);
@@ -379,6 +263,7 @@ function spa_plugins_list_form() {
 	                $icon = '<img src="'.SPADMINIMAGES.'sp_NoWrite.png" title="'.SP()->primitives->admin_text('Warning').'" alt="" style="vertical-align:middle;" />';
 	                $disabled = ' disabled="disabled" ';
 				} else {
+          if( isset($_REQUEST['plugingroup']) && trim($_REQUEST['plugingroup']) === 'active' ) continue; //filter by active
 					$url = SPADMINPLUGINS.'&amp;action=activate&amp;plugin='.esc_attr($plugin_file).'&amp;title='.urlencode(esc_attr($plugin_data['Name'])).'&amp;sfnonce='.wp_create_nonce('forum-adminform_plugins');
 					$actionlink = "<a href='$url' title='".SP()->primitives->admin_text('Activate this Plugin')."'>".SP()->primitives->admin_text('Activate')."</a>";
 					$url = SPADMINPLUGINS.'&amp;action=delete&amp;plugin='.esc_attr($plugin_file).'&amp;title='.urlencode(esc_attr($plugin_data['Name'])).'&amp;sfnonce='.wp_create_nonce('forum-adminform_plugins');
