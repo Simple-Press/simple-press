@@ -1324,7 +1324,7 @@ $Rev:2099 $
 #sfmaincontainer .sf-grid-4 {
     float: left;
     width: calc(100% + 10px);
-    margin: 0 -5px;
+    margin: -5px;
 }
 #sfmaincontainer .sf-grid-4 .sf-grid-item {
     float: left;
