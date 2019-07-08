@@ -2647,4 +2647,168 @@ div[class^="collapsible-"] {
         margin-left: 0!important;
     }
 }
+/* Available Plugins */
+  .sf-panel-body-top-left-midle{
+    float: right;
+    padding: 10px 10px 0 10px;
+  }
+  .sf-actions-in{
+    border-radius: 20px;
+    border: 1px solid #F0F0F0 !important;
+    background-color: #FFFFFF;
+    padding: 5px;
+    width: 160px;
+    height: 40px;
+  }
+  .sf-actions {
+  position: relative;
+  float: left;
+  width: 110px;  
+  font-family: 'Poppins', sans-serif!important;
+}
+ 
+/*To remove button from IE11, thank you Matt */
+  .sf-actions select::-ms-expand {
+     display: none;
+}
+ 
+.sf-actions:after {
+  content: '>';
+  font: 20px "Consolas", monospace;
+  color: #00a0d2;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  right: 10px;
+  /*Adjust for position however you want*/
+  top: 0px;
+  padding: 0 0 8px;
+  /*border-bottom: 1px solid #999;*/
+  /*left line */
+  position: absolute;
+  pointer-events: none;
+}
+ 
+.sf-actions select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Add some styling */
+  font-family: 'Poppins', sans-serif!important;
+  display: block;
+  /*width: 100%;*/
+  max-width: 110px;
+  height: 30px!important;
+  float: right;
+  margin: 0px 0px;
+  padding: 5px 10px 5px 10px!important;
+  font-size: 12px;
+  line-height: 1.75;
+  color: #FFFFFF;
+  background-color: #FFFFFF;
+  background-image: none;
+  border: 0px solid #F0F0F0 !important;
+  -ms-word-break: normal;
+  word-break: normal;
+  border-radius: 10px;
+  outline:none;
+}
 
+.sf-actions select option{
+  font-size: 12px;
+  line-height: 1.75;
+  padding: 5px;
+  outline:none;
+  border: 0px solid #F0F0F0 !important;
+}
+
+.sf-actions-in .sf-action-button{
+  /*top: 26.5px;*/
+  position: absolute;
+}
+.sf-action-button-b{
+  background-color: #00B9D0;
+  color: #FFFFFF;
+  border: 1px solid #00B9D0 !important;
+  border-radius: 20px;
+  outline:none;
+  text-align: center;
+  vertical-align: middle;
+  padding: 6px 20px 11px 15px;
+  line-height: 0.5;
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 30px;
+  letter-spacing: -8px;
+  word-spacing: 0px;
+  margin-top: -3px;
+}
+.column-act{
+  color: #00B9D0;
+}
+.column-more img{
+  width: 16px;
+  height: 16px;
+  opacity: 0.75;
+  cursor: pointer;
+}
+.sp-plugin-more{
+  display: none;
+  max-width: 300px;
+}
+.sf-plugins-flt{
+  width: 100%;
+  height: 40px;
+  background-color: #EAF0F4;
+  display: none;
+  padding: 12px;
+  z-index: 9999;
+  pointer-events: all;
+}
+.sf-plugins-flt #sf-plugins-flt-b div:hover{
+  background-color: #00B9D0;
+}
+.sf-plugins-flt #sf-plugins-flt-b{
+  background-color: #EAF0F4;
+  position: relative;
+  z-index: 9999;
+  display: none;
+}
+.sf-plugins-flt:first-child:after {
+  content: '>';
+  font: 20px "Consolas", monospace;
+  color: #00a0d2;
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+  right: 10px;
+  /*Adjust for position however you want*/
+  top: 5px;
+  padding: 0 0 8px;
+  /*border-bottom: 1px solid #999;*/
+  /*left line */
+  position: absolute;
+  pointer-events: none;
+}
+.sf-showm{
+  display: none;
+}
+@media screen and (max-width: 768px){
+  .sf-plugins-flt{
+    display: block;
+    margin-bottom: 20px;
+  }
+  .sf-plugin-hide{
+    display: none;
+  }
+  .sf-showm{
+    display: table-row;
+  }
+  .sf-panel-body-top-left-midle{
+    float: left;
+    padding: 10px 10px 0 10px;
+  }
+}
+/* end Available Plugins */
