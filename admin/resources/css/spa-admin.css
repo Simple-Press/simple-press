@@ -1322,6 +1322,9 @@ $Rev:2099 $
 #sfmaincontainer .sf-panel-body .sf-panel-body {
     padding: 0;
 }
+#sfmaincontainer .sf-panel-body .sf-panel-head .sf-buttons {
+    display: none;
+}
 
 #sfmaincontainer .sf-grid-4 {
     float: left;
