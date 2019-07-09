@@ -27,7 +27,7 @@ function spa_forums_create_group_form() {
 			sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the %s Order Groups and Forums %s option from the Forums Menu'), '<b>', '</b>') .
 			'</div>';
 		
-		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Create New Group'), false, $info);
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Create New Group'), false, $info);
 
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Create New Group'), 'true', 'create-new-forum-group');

@@ -397,7 +397,7 @@ $Rev:2099 $
     height: 100%;
 }
 #sf-root-wrap .sfhidden {
-    display: none !important;
+    display: none/* !important*/;
 }
 
 #sf-root-wrap .sfinline-form form,
