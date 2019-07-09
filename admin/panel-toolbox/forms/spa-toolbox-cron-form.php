@@ -20,7 +20,7 @@ function spa_toolbox_cron_form() {
    	$cronData = spa_get_cron_data();
 
 	spa_paint_options_init();
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('CRON Inspector'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('CRON Inspector'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('CRON Schedules'), false);
 ?>
@@ -117,7 +117,7 @@ function spa_toolbox_cron_form() {
 
 	echo '<div class="sfform-panel-spacer"></div>';
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('CRON Update'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('CRON Update'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Add CRON'), true, 'cron-add');
 				spa_paint_input(SP()->primitives->admin_text('Next Run Timestamp'), 'add-timestamp', '');

@@ -12,7 +12,7 @@ function spa_toolbox_changelog_form() {
     #== CHANGELOG Tab ==========================================================
 	spa_paint_options_init();
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Change Log'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Change Log'), true);
 		spa_paint_open_panel();
     		spa_paint_open_fieldset(SP()->primitives->admin_text('Change Log'), false);
 

@@ -23,7 +23,7 @@ function spa_integration_page_form() {
 <?php
 	spa_paint_options_init();
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('Page and Permalink'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Integration').' - '.*/SP()->primitives->admin_text('Page and Permalink'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('WP Forum Page Details'), true, 'forum-page-details');
 				if ($sfoptions['sfpage'] == 0) echo '<tr><td colspan="2"><div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('ERROR: The page slug is either missing or incorrect. The forum will not display until this is corrected').'</div></td></tr>';

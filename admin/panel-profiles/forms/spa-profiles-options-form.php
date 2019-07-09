@@ -26,7 +26,7 @@ function spa_profiles_options_form() {
 
     #== PROFILE OPTIONS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Profiles').' - '.SP()->primitives->admin_text('Profile Options'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Profile Options'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Display Name Format'), true, 'display-name-format');
 				spa_paint_checkbox(SP()->primitives->admin_text('Let member choose display name'), 'nameformat', $sfoptions['nameformat']);

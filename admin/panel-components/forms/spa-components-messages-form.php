@@ -25,7 +25,7 @@ function spa_components_messages_form() {
 
     #== CUSTOM MESSAGES Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Components').' - '.SP()->primitives->admin_text('Custom Messages'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Components').' - '.*/SP()->primitives->admin_text('Custom Messages'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Custom Message Above Editor #1'), true, 'editor-message');
 				$submessage = SP()->primitives->admin_text('Text you enter here will be displayed above the editor (new topic and/or new post)');

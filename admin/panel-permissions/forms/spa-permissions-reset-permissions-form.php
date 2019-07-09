@@ -21,7 +21,7 @@ function spa_permissions_reset_perms_form() {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfresetpermissions" name="sfresetpermissions">
 <?php
 		echo sp_create_nonce('forum-adminform_resetpermissions');
-		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Reset All Permission'), true);
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Reset All Permission'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Reset all permissions back to initial state.'), 'true', 'reset-permissions');
 					echo '<div class="sf-alert-block sf-info">';

@@ -22,7 +22,7 @@ function spa_admins_global_options_form() {
 	<?php echo sp_create_nonce('global-admin_options'); ?>
 <?php
 	spa_paint_options_init();
-	spa_paint_open_tab(SP()->primitives->admin_text('Admins')." - ".SP()->primitives->admin_text('Global Admin Options'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Admins')." - ".*/SP()->primitives->admin_text('Global Admin Options'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Admin Options'), 'true', 'global-options');
 				spa_paint_checkbox(SP()->primitives->admin_text('Display forum statistics in the dashboard'), 'sfdashboardstats', $sfoptions['sfdashboardstats']);

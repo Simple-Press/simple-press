@@ -30,7 +30,7 @@ function spa_toolbox_housekeeping_form() {
 	<div id="sfhousekeepingformblock">
 <?php
 	spa_paint_options_init();
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Housekeeping'),true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Housekeeping'),true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Rebuild Indexes'), true, 'rebuild-indexes');
 ?>

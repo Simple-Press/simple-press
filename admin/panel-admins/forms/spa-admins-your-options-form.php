@@ -22,7 +22,7 @@ function spa_admins_your_options_form() {
 	<?php echo sp_create_nonce('my-admin_options'); ?>
 <?php
 	spa_paint_options_init();
-	spa_paint_open_tab(SP()->primitives->admin_text('Admins').' - '.SP()->primitives->admin_text('Your Admin Options'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Admins').' - '.*/SP()->primitives->admin_text('Your Admin Options'), true);
 
 		//spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Your Admin/Moderator Options'), 'true', 'your-admin-options');

@@ -73,7 +73,7 @@ function spa_forums_custom_icons_form() {
 <?php
 	spa_paint_options_init();
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Custom Icons'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Custom Icons'), true);
 		?>
             <div class="sf-panel-body-top">
                 <div class="sf-panel-body-top-left">

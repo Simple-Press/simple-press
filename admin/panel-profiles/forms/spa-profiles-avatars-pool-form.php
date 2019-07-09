@@ -76,7 +76,7 @@ function spa_profiles_avatars_pool_form() {
 
     #== PROFILE OPTIONS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Profiles').' - '.SP()->primitives->admin_text('Avatar Pool'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Avatar Pool'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Avatar Pool Upload'), true, 'avatar-pool-upload');
 				$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/';

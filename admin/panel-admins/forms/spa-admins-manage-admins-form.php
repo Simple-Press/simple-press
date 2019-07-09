@@ -37,7 +37,7 @@ function spa_admins_manage_admins_form() {
 		<form action="<?php echo $ajaxURL; ?>" method="post" id="sfupdatecaps" name="sfupdatecaps">
 		<?php echo sp_create_nonce('forum-adminform_sfupdatecaps'); ?>
 <?php
-		spa_paint_open_tab(SP()->primitives->admin_text('Admins')." - ".SP()->primitives->admin_text('Manage Admins and Moderators'), true);
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Admins')." - ".*/SP()->primitives->admin_text('Manage Admins and Moderators'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Current Admins and Moderators'), 'true', 'manage-admins');
 					for ($x = 1; $x < 3; $x++) {
