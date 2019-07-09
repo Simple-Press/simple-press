@@ -116,8 +116,8 @@ function spa_usergroups_usergroup_main() {
                                     </div>
                                     <div class="sf-mobile-show">
                                         <ul class="sf-list sf-list-v2">
-                                            <li class="sf-list-item-depth-0 spLayerToggle">
-                                                <div class="sf-list-item">
+                                            <li class="">
+                                                <div class="sf-list-item spLayerToggle">
                                                     <span class="sf-item-name"><?php echo esc_js(SP()->primitives->admin_text('Show Members')) ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
@@ -127,8 +127,8 @@ function spa_usergroups_usergroup_main() {
                                                     <?php spa_temp_no_members_selected_form() ?>
                                                 </div>
                                             </li>
-                                            <li class="sf-list-item-depth-0 spLayerToggle">
-                                                <div class="sf-list-item">
+                                            <li class="">
+                                                <div class="sf-list-item spLayerToggle">
                                                     <span class="sf-item-name"><?php SP()->primitives->admin_etext('Add Members'); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
@@ -138,8 +138,8 @@ function spa_usergroups_usergroup_main() {
                                                     <?php spa_temp_no_members_selected_form() ?>
                                                 </div>
                                             </li>
-                                            <li class="sf-list-item-depth-0 spLayerToggle">
-                                                <div class="sf-list-item">
+                                            <li class="">
+                                                <div class="sf-list-item spLayerToggle">
                                                     <span class="sf-item-name"><?php SP()->primitives->admin_etext('Move Members'); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
@@ -149,8 +149,8 @@ function spa_usergroups_usergroup_main() {
                                                     <?php spa_temp_no_members_selected_form() ?>
                                                 </div>
                                             </li>
-                                            <li class="sf-list-item-depth-0 spLayerToggle">
-                                                <div class="sf-list-item">
+                                            <li class="">
+                                                <div class="sf-list-item spLayerToggle">
                                                     <span class="sf-item-name"><?php SP()->primitives->admin_etext('Remove Members'); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
@@ -267,10 +267,10 @@ function spa_members_not_belonging_to_any_usergroup_tab($usergroups) {
     $totalMembers = 300;
     ?>
     <div class="sf-panel-body-top">
-        <div class="sf-panel-body-top-left">
+        <div class="sf-panel-body-top-left sf-mobile-full-width">
             <h4><?php echo SP()->primitives->admin_text('Members Not Belonging To Any Usergroup') ?></h4>
         </div>
-        <div class="sf-panel-body-top-right">
+        <div class="sf-panel-body-top-right sf-mobile-full-width">
             <div class="sf-input-group sf-input-small sf-input-rounded">
                 <div class="sf-form-control sf-select-wrap">
                     <select>
@@ -398,11 +398,11 @@ function spa_temp_no_members_selected_form() {
     <form action="https://wp.loc.com/wp-admin/admin-ajax.php?action=usergroups-loader&amp;saveform=addmembers&amp;_wpnonce=af658fc87f" method="post" id="sfmembernew1" name="sfmembernew1" onsubmit="spj.addDelMembers('sfmembernew1', 'https://wp.loc.com/wp-admin/admin-ajax.php?action=memberships&amp;targetaction=add&amp;_wpnonce=02deb3262b', 'sfmsgspot', 'Please Wait - Processing', 'Users added', 0, 50, '#amid1');">
         <div class="sf-panel-body "><div class="sf-full-form"><input type="hidden" name="forum-adminform_membernew" value="65f6b26809">
                 <div class="sf-panel-body-top">
-                    <div class="sf-panel-body-top-left">
+                    <div class="sf-panel-body-top-left sf-mobile-full-width">
                         <h4>No members selected</h4>
                     </div>
-                    <div class="sf-panel-body-top-right">
-                        <p class="_search-box sf-input-group">
+                    <div class="sf-panel-body-top-right sf-mobile-full-width">
+                        <p class="search-box-v2 sf-input-group">
                             <input type="search" name="s" value="" placeholder="Search">
                         </p>
                         <div class="sf-input-group select-user-group">

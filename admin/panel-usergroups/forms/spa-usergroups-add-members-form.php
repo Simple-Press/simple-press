@@ -35,11 +35,11 @@ function spa_usergroups_add_members_form($usergroup_id) {
         echo sp_create_nonce('forum-adminform_membernew');
         ?>
         <div class="sf-panel-body-top">
-            <div class="sf-panel-body-top-left">
+            <div class="sf-panel-body-top-left sf-mobile-full-width">
                 <h4><?php echo SP()->primitives->admin_text('No members selected') ?></h4>
             </div>
-            <div class="sf-panel-body-top-right">
-                <p class="_search-box sf-input-group">
+            <div class="sf-panel-body-top-right sf-mobile-full-width">
+                <p class="search-box-v2 sf-input-group">
                     <input type="search" name="s" value="" placeholder="<?php echo SP()->primitives->admin_text('Search') ?>">
                 </p>
                 <div class="sf-input-group select-user-group">
@@ -57,7 +57,7 @@ function spa_usergroups_add_members_form($usergroup_id) {
                 </div>
             </div>
         </div>
-        <div class="sf-grid-4">
+        <div class="sf-grid-4 sf-users-list">
             <div class="sf-grid-item">
                 <input type="checkbox">
                 <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
