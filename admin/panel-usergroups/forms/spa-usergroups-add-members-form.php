@@ -52,7 +52,7 @@ function spa_usergroups_add_members_form($usergroup_id) {
                         </select>
                     </div>
                     <div class="sf-input-group-addon">
-                        <button class="sf-input-group-btn sf-button-primary">Move</button>
+                        <button class="sf-input-group-btn sf-button-primary"><?php echo SP()->primitives->admin_text('Move') ?></button>
                     </div>
                 </div>
             </div>
