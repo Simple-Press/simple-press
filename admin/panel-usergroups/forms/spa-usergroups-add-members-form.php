@@ -42,7 +42,7 @@ function spa_usergroups_add_members_form($usergroup_id) {
                 <p class="_search-box sf-input-group">
                     <input type="search" name="s" value="" placeholder="<?php echo SP()->primitives->admin_text('Search') ?>">
                 </p>
-                <div class="sf-input-group">
+                <div class="sf-input-group select-user-group">
                     <div class="sf-form-control sf-select-wrap">
                         <select>
                             <option value=""><?php echo SP()->primitives->admin_text('Select User Group') ?></option>
