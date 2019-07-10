@@ -26,7 +26,7 @@ function spa_options_global_form() {
 
     #== GLOBAL Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('Global Settings'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('Global Settings'));
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Lock Down Forum'), true, 'lock-down-forum');
@@ -40,7 +40,7 @@ function spa_options_global_form() {
                 if ($sfoptions['blockadmin']) {
     				$roles = array_keys($wp_roles->role_names);
     				if ($roles) {
-    				    echo '<p class="subhead">'.SP()->primitives->admin_text('Allow these WP roles access to the WP admin').':</p>';
+    				    echo '<p class="sf-subhead">'.SP()->primitives->admin_text('Allow these WP roles access to the WP admin').':</p>';
          			    echo '<p><strong><small>('.SP()->primitives->admin_text('Administrators will always have access').')</small></strong></p>';
     					foreach ($roles as $index => $role) {
                             if ($role != 'administrator') {
@@ -91,34 +91,36 @@ function spa_options_global_form() {
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Post Editing'), true, 'post-editing');
 				?>
-				<?php SP()->primitives->admin_etext('Select Default Editor'); ?>:<br />
+				<div class="sf-form-row">
+					<label><?php SP()->primitives->admin_etext('Select Default Editor'); ?></label>
 
 <?php
                 if (defined('RICHTEXT')) {
 					$checked = ($sfoptions['defeditor'] == 1) ? 'checked="checked"' : '';
 ?>
 					<input type="radio" name="editor" id="sfradio-editor1"  tabindex="<?php echo $tab; $tab++; ?>" value="1" <?php echo $checked; ?> />
-					<label for="sfradio-editor1"><?php echo SP()->primitives->admin_text('Rich text').' ('.RICHTEXTNAME.')'; ?></label><br>
+					<label for="sfradio-editor1"><?php echo SP()->primitives->admin_text('Rich text').' ('.RICHTEXTNAME.')'; ?></label>
 <?php
                 }
                 if (defined('HTML')) {
 					$checked = ($sfoptions['defeditor'] == 2) ? 'checked="checked"' : '';
 ?>
 					<input type="radio" name="editor" id="sfradio-editor2"  tabindex="<?php echo $tab; $tab++; ?>" value="2" <?php echo $checked; ?> />
-					<label for="sfradio-editor2"><?php echo SP()->primitives->admin_text('HTML').' ('.HTMLNAME.')'; ?></label><br>
+					<label for="sfradio-editor2"><?php echo SP()->primitives->admin_text('HTML').' ('.HTMLNAME.')'; ?></label>
 <?php
                 }
                 if (defined('BBCODE')) {
 					$checked = ($sfoptions['defeditor'] == 3) ? 'checked="checked"' : '';
 ?>
 					<input type="radio" name="editor" id="sfradio-editor3"  tabindex="<?php echo $tab; $tab++; ?>" value="3" <?php echo $checked; ?> />
-					<label for="sfradio-editor3"><?php echo SP()->primitives->admin_text('bbCode').' ('.BBCODENAME.')'; ?></label><br>
+					<label for="sfradio-editor3"><?php echo SP()->primitives->admin_text('bbCode').' ('.BBCODENAME.')'; ?></label>
 <?php
                 }
                 $checked = ($sfoptions['defeditor'] == 4) ? 'checked="checked"' : '';
 ?>
 				<input type="radio" name="editor" id="sfradio-editor4"  tabindex="<?php echo $tab; $tab++; ?>" value="4" <?php echo $checked; ?> />
-				<label for="sfradio-editor4"><?php echo SP()->primitives->admin_text('Plain text').' ('.PLAINTEXTNAME.')'; ?></label><br /><br />
+				<label for="sfradio-editor4"><?php echo SP()->primitives->admin_text('Plain text').' ('.PLAINTEXTNAME.')'; ?></label>
+				</div>
 <?php
 				spa_paint_input(SP()->primitives->admin_text('# of days a post can be edited (if user has permission)'), 'editpostdays', $sfoptions['editpostdays']);
 			spa_paint_close_fieldset();
@@ -135,8 +137,8 @@ function spa_options_global_form() {
 
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Global Options'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Global Options'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

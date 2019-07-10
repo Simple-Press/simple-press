@@ -25,7 +25,7 @@ function spa_toolbox_toolbox_form() {
 
     #== TOOLBOX Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Toolbox'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Toolbox'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Current Version/Build'), false);
             	$version = SP()->primitives->admin_text('Version:').'&nbsp;<strong>'.SP()->options->get('sfversion').'</strong>';
@@ -39,7 +39,7 @@ function spa_toolbox_toolbox_form() {
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Modify Build Number'), true, 'modify-build-number');
-				echo '<div class="sfoptionerror">'.SP()->primitives->admin_text('WARNING: This value should not be changed unless requested by the Simple:Press team in the support forum as it may cause the install/upgrade script to be re-run.').'</div>';
+				echo '<div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('WARNING: This value should not be changed unless requested by the Simple:Press team in the support forum as it may cause the install/upgrade script to be re-run.').'</div>';
 				spa_paint_input(SP()->primitives->admin_text('Build number'), "sfbuild", SP()->options->get('sfbuild'), false, false);
 				spa_paint_checkbox(SP()->primitives->admin_text('Force upgrade to build number'), "sfforceupgrade", $sfoptions['sfforceupgrade']);
 			spa_paint_close_fieldset();
@@ -49,8 +49,8 @@ function spa_toolbox_toolbox_form() {
 		spa_paint_close_container();
 
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Toolbox'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Toolbox'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

@@ -25,7 +25,7 @@ function spa_options_members_form() {
 
     #== MEMBERS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('Member Settings'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('Member Settings'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Member Profiles'), true, 'member-profiles');
 				spa_paint_checkbox(SP()->primitives->admin_text('Disallow members not logged in to post as guests'), 'sfcheckformember', $sfoptions['sfcheckformember']);
@@ -49,7 +49,7 @@ function spa_options_members_form() {
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Inactive Members Account Auto Removal'), true, 'user-removal');
-				echo '<div class="sfoptionerror">';
+				echo '<div class="sf-alert-block sf-info">';
 				SP()->primitives->admin_etext('Remember - users are members of your WordPress site NOT members of Simple:Press. WordPress performs the actual user deletion which will include any components (like blog posts for example) that the user may have contributed. Use with care!');
 				echo '</div>';
 				spa_paint_checkbox(SP()->primitives->admin_text('Enable auto removal of member accounts'), 'sfuserremove', $sfoptions['sfuserremove']);
@@ -86,7 +86,7 @@ function spa_options_members_form() {
 		
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Deprecated Identities'), true, 'member-deprecated-identities');
-				echo SP()->primitives->admin_text('Certain identities such as AIM are part of services that no longer exists. We have removed these from the main user profile screen so that users can no longer enter new data for these identities. If you would still like your users to see these, turn this option on.');
+				echo '<div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('Certain identities such as AIM are part of services that no longer exists. We have removed these from the main user profile screen so that users can no longer enter new data for these identities. If you would still like your users to see these, turn this option on.').'</div>';
 				spa_paint_checkbox(SP()->primitives->admin_text('Display Deprecated Identities'), 'sfdisplaydeprecatedidentities', $sfoptions['display_deprecated_identities']);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();		
@@ -112,8 +112,8 @@ function spa_options_members_form() {
 
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Members Options'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Members Options'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

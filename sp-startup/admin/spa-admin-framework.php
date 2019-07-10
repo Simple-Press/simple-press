@@ -12,7 +12,7 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function spa_enqueue_datepicker() {
 	
 	$spAdminUIStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'jquery-ui.css' : SPADMINCSS.'jquery-ui.min.css';
-	wp_register_style('spAdminUIStyle', $spAdminUIStyleUrl);
+	wp_register_style('spAdminUIStyle', $spAdminUIStyleUrl, array(), SP_SCRIPTS_VERSION);
 	wp_enqueue_style('spAdminUIStyle');
 	
 	wp_enqueue_script( 'jquery-ui-datepicker', false, array('jquery') );
@@ -21,21 +21,18 @@ function spa_enqueue_datepicker() {
 
 function spa_enqueue_font_icon_picker() {
 	
-	// Make sure we enqueue color picker...
-	 wp_enqueue_style( 'wp-color-picker' );
-
-	// now everything else...
 	$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'jquery.fonticonpicker.js' : SPAJSCRIPT.'jquery.fonticonpicker.min.js';
 	
+	
 	wp_enqueue_script('sffonticonpicker', $script, array(
-			'jquery', 'wp-color-picker'
-			), false, false);
+			'jquery',
+			), SP_SCRIPTS_VERSION, false);
 	
 	
 	$theme_css = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS . 'bootstrap-theme/jquery.fonticonpicker.bootstrap.css' : SPADMINCSS . 'bootstrap-theme/jquery.fonticonpicker.bootstrap.min.css';
 	
-	wp_enqueue_style( 'jquery.fonticonpicker-css', SPADMINCSS . 'jquery.fonticonpicker.min.css' );
-	wp_enqueue_style( 'jquery.fonticonpicker.bootstrap-css', $theme_css );
+	wp_enqueue_style( 'jquery.fonticonpicker-css', SPADMINCSS . 'jquery.fonticonpicker.min.css', array(), SP_SCRIPTS_VERSION );
+	wp_enqueue_style( 'jquery.fonticonpicker.bootstrap-css', $theme_css, array(), SP_SCRIPTS_VERSION );
 	
 }
 
@@ -48,7 +45,7 @@ function spa_enqueue_font_icon_picker() {
  */
 function spa_load_admin_css() {
 	$spAdminStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'spa-admin.css' : SPADMINCSS.'spa-admin.min.css';
-	wp_register_style('spAdminStyle', $spAdminStyleUrl);
+	wp_register_style('spAdminStyle', $spAdminStyleUrl, array(), SP_SCRIPTS_VERSION);
 	
 	wp_enqueue_style('spAdminStyle');
 	wp_enqueue_style('farbtastic');
@@ -76,14 +73,14 @@ function spa_load_admin_scripts() {
 
 			$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'ajaxupload/ajaxupload.js' : SPAJSCRIPT.'ajaxupload/ajaxupload.min.js';
 			wp_enqueue_script('sfajaxupload', $script, array(
-				'jquery'), false, false);
+				'jquery'), SP_SCRIPTS_VERSION, false);
 
 			$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'nested-sortable/jquery.ui.nested.js' : SPAJSCRIPT.'nested-sortable/jquery.ui.nested.min.js';
 			wp_enqueue_script('sfanestedsortable', $script, array(
 				'jquery',
 				'jquery-ui-core',
 				'jquery-ui-widget',
-				'jquery-ui-sortable'), false, false);
+				'jquery-ui-sortable'), SP_SCRIPTS_VERSION, false);
 		}
 		
 		wp_enqueue_editor();
@@ -96,8 +93,8 @@ function spa_load_admin_scripts() {
 			'jquery-form',
 			'jquery-ui-accordion',
 			'jquery-ui-sortable',
-			'jquery-ui-tooltip'), false, false);
-
+			'jquery-ui-tooltip'), SP_SCRIPTS_VERSION, false);
+                
 		$platform = array(
 			'focus'			 => 'admin',
 			'mobile'		 => SP()->core->mobile,
@@ -115,7 +112,7 @@ function spa_load_admin_scripts() {
 			'jquery-ui-core',
 			'jquery-ui-widget',
 			'jquery-ui-dialog',
-			'jquery-ui-progressbar'), false, false);
+			'jquery-ui-progressbar'), SP_SCRIPTS_VERSION, false);
 		wp_enqueue_script('jquery-touch-punch', false, array(
 			'jquery',
 			'jquery-ui-core',
@@ -127,7 +124,8 @@ function spa_load_admin_scripts() {
 		wp_enqueue_script('spadminevents', $script, array(
 			'jquery',
 			'sfadmin',
-			'spcommon'), false, false);
+			'spcommon'), SP_SCRIPTS_VERSION, false);
+			
 		wp_enqueue_script('farbtastic');
 
 		do_action('sph_scripts_admin_end');
@@ -144,7 +142,7 @@ function spa_load_admin_scripts() {
 			'jquery',
 			'jquery-ui-core',
 			'jquery-ui-widget',
-			'jquery-ui-progressbar'), false, false);
+			'jquery-ui-progressbar'), SP_SCRIPTS_VERSION, false);
 	}
 	
 	spa_enqueue_font_icon_picker();
@@ -168,13 +166,7 @@ function spa_admin_header() {
 			<link rel="stylesheet" href="<?php echo SPADMINCSS; ?>spa-admin-rtl.css" />
 		<?php } ?>
 		<style>
-		<?php if (SP()->core->device == 'mobile') { ?>
-				#sfmaincontainer {margin:0 -10px 10px -15px;}
-		<?php } else { ?>
-				#sfmaincontainer {margin:0 0 10px 195px;}
-			<?php
-		}
-
+		<?php
 		do_action('sph_add_style');
 		?>
 		</style>
@@ -204,23 +196,23 @@ function spa_panel_header() {
 
 	$site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
 	$target = 'sfmaincontainer';
-	echo '<input style="width: 175px; font-weight:bold;" type="button" id="spHelp" class="button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help & Troubleshooting').'" data-url="'.$site.'" data-target="'.$target.'" />&nbsp;&nbsp;&nbsp;';
+	echo '<input style="width: 175px; font-weight:bold;" type="button" id="spHelp" class="sf-button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help & Troubleshooting').'" data-url="'.$site.'" data-target="'.$target.'" />&nbsp;&nbsp;&nbsp;';
 
 	$site = wp_nonce_url(SPAJAXURL.'adminsearch', 'adminsearch');
 	$target = 'sfmaincontainer';
 
 	echo '<img style="margin: -1px 0 0 20px;float:left;" src="'.SPADMINIMAGES.'sp_Help32.png" alt="" />';
-	echo '<input style="margin-left: 5px;font-weight:bold;" type="button" id="spSearch" class="button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('What do you need to do?').'" data-url="'.$site.'" data-target="'.$target.'" />&nbsp;&nbsp;&nbsp;';
+	echo '<input style="margin-left: 5px;font-weight:bold;" type="button" id="spSearch" class="sf-button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('What do you need to do?').'" data-url="'.$site.'" data-target="'.$target.'" />&nbsp;&nbsp;&nbsp;';
 
-	echo '<a class="button" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Simple:Press Online Documentation').'</a>&nbsp;&nbsp;&nbsp;';
+	echo '<a class="sf-button" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Simple:Press Online Documentation').'</a>&nbsp;&nbsp;&nbsp;';
 
 	$site = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
 	$title = SP()->primitives->admin_text('About Simple:Press');
-	echo '<a class="button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>&nbsp;&nbsp;&nbsp;';
+	echo '<a class="sf-button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>&nbsp;&nbsp;&nbsp;';
 	
-	echo '<a class="button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>&nbsp;&nbsp;&nbsp;';	
+	echo '<a class="sf-button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>&nbsp;&nbsp;&nbsp;';	
 	
-	echo '<a class="button" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
+	echo '<a class="sf-button" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
 
 	echo '</td>';
 	echo '</tr></table></div><div class="clearboth"></div>';
@@ -269,11 +261,11 @@ function spa_admin_footer_scripts() {
 
 	if (SP()->core->status == 'ok') {
 		if (SP()->admin->adminPage != 'notice') {
-			if (isset($activePanel)) {
+			/*if (isset($activePanel)) {
 				$panel = (!empty($sfactivepanels[$activePanel])) ? $sfactivepanels[$activePanel] : 0;
 			} else {
 				$panel = (!empty($sfactivepanels[SP()->admin->adminPage])) ? $sfactivepanels[SP()->admin->adminPage] : 0;
-			}
+			}*/
 
 			$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin-footer.js' : SPAJSCRIPT.'spa-admin-footer.min.js';
 			wp_enqueue_script('sfadminfooter', $script, array(
@@ -281,14 +273,14 @@ function spa_admin_footer_scripts() {
 				'jquery-ui-core',
 				'jquery-ui-widget',
 				'jquery-ui-accordion',
-				'jquery-ui-tooltip'), false, true);
+				'jquery-ui-tooltip'), SP_SCRIPTS_VERSION, true);
 
-			$admin = array(
+			/*$admin = array(
 				'panel'		 => $panel,
 				'panel_name' => $sfadminpanels[$panel][0]
 			);
 			$admin = apply_filters('sp_admin_footer_vars', $admin);
-			wp_localize_script('sfadminfooter', 'sp_admin_footer_vars', $admin);
+			wp_localize_script('sfadminfooter', 'sp_admin_footer_vars', $admin);*/
 		}
 	}
 }
@@ -320,7 +312,7 @@ function spa_render_sidemenu() {
 
 	if (isset($_GET['tab']) ? $formid = SP()->filters->str($_GET['tab']) : $formid = '') ;
 
-	if (SP()->core->device == 'mobile') {
+	if (SP()->core->device == '_mobile') { // @TODO admin design (no used)
 		echo '<div id="spaMobileAdmin">'."\n";
 		echo '<select class="wp-core-ui" onchange="location = this.options[this.selectedIndex].value;">'."\n";
 		foreach ($sfadminpanels as $index => $panel) {
@@ -363,16 +355,26 @@ function spa_render_sidemenu() {
 			}
 		}
 		echo '</select>'."\n";
-		echo '<a class="button button-secondary" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
+		echo '<a class="sf-button-secondary" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
 		echo '</div>'."\n";
 	} else {
 		echo '<div id="sfsidepanel">'."\n";
+                
+                echo '<span class="sf-tooggle-admin-menu">'."\n";
+                echo '<span class="sf-button sf-hide">'."\n";
+                echo __('Hide Admin Menu', 'sp');
+                echo '</span>'."\n";
+                echo '<span class="sf-button sf-show">'."\n";
+                echo __('Show Admin Menu', 'sp');
+                echo '</span>'."\n";
+                echo '</span>'."\n";
+                
 		echo '<div id="sfadminmenu">'."\n";
 		foreach ($sfadminpanels as $index => $panel) {
 			if (SP()->auths->current_user_can($panel[1]) || ($panel[0] == 'Admins' && (SP()->user->thisUser->admin || SP()->user->thisUser->moderator))) {
 				$pName = str_replace(' ', '', $panel[0]);
 				echo '<div class="sfsidebutton" id="sfacc'.$pName.'">'."\n";
-				echo '<div class="" title="'.esc_attr($panel[3]).'"><span class="spa'.$panel[4].'"></span><a href="#">'.$panel[0].'</a></div>'."\n";
+				echo '<div class="" title="'.esc_attr($panel[3]).'"><span class="sf-icon sf-'.$panel[4].' spa'.$panel[4].'"></span><a href="#">'.$panel[0].'</a></div>'."\n";
 				echo '</div>'."\n";
 				echo '<div class="sfmenublock">'."\n";
 
@@ -391,7 +393,7 @@ function spa_render_sidemenu() {
 						$save = (!empty($data['save']) ? $data['save'] : '');
 						$form = (!empty($data['form']) ? $data['form'] : '');
 						?>
-						<a<?php echo $id; ?> href="#" class="spAccordionLoadForm" data-form="<?php echo $formid; ?>" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="" data-open="open" data-upgrade="<?php echo $upgrade; ?>" data-admin="<?php echo $admin; ?>" data-save="<?php echo $save; ?>" data-sform="<?php echo $form; ?>" data-reload="<?php echo $reload; ?>"><?php echo $label; ?></a><?php echo "\n"; ?>
+						<a<?php echo $id; ?> href="javascript:void(0);" class="spAccordionLoadForm" data-form="<?php echo $formid; ?>" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="" data-open="open" data-upgrade="<?php echo $upgrade; ?>" data-admin="<?php echo $admin; ?>" data-save="<?php echo $save; ?>" data-sform="<?php echo $form; ?>" data-reload="<?php echo $reload; ?>"><?php echo $label; ?></a><?php echo "\n"; ?>
 						<?php
 					}
 					echo '</div>'."\n";

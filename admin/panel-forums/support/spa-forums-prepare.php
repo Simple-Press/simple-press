@@ -28,36 +28,34 @@ function spa_paint_custom_icons() {
 	closedir($dlist);
 
 	# start the table display
-	$out.= '<table class="wp-list-table widefat"><tr>';
-	$out.= '<th style="width:30%;text-align:center">'.SP()->primitives->admin_text('Icon').'</th>';
-	$out.= '<th style="width:50%;text-align:center">'.SP()->primitives->admin_text('Filename').'</th>';
-	$out.= '<th style="text-align:center">'.SP()->primitives->admin_text('Remove').'</th>';
-	$out.= '</tr>';
-
-    $out.= '<tr><td colspan="3">';
-    $out.= '<div id="sf-custom-icons">';
+	$out.= '<table id="sf-custom-icons" class="wp-list-table widefat">';
+	$out.= '<thead><tr>';
+	$out.= '<th>'.SP()->primitives->admin_text('Icon').'</th>';
+	$out.= '<th>'.SP()->primitives->admin_text('Filename').'</th>';
+	$out.= '<th>'.SP()->primitives->admin_text('Remove').'</th>';
+	$out.= '</thead></tr>';
 
     $row = 0;
 	if ($files) {
 		sort($files);
 		foreach ($files as $file) {
-		    $out.= '<table id="icon'.$row.'" style="width:100%">';
-			$out.= '<tr>';
-			$out.= '<td style="text-align:center;width:30%" class="spWFBorder"><img class="sfcustomicon " src="'.esc_url(SPCUSTOMURL.$file).'" alt="" /></td>';
-			$out.= '<td style="text-align:center;width:50%"  class="spWFBorder sflabel">';
+			$out.= '<tr id="icon'.$row.'">';
+			$out.= '<td class="spWFBorder"><img class="sfcustomicon " src="'.esc_url(SPCUSTOMURL.$file).'" alt="" /></td>';
+			$out.= '<td class="spWFBorder sflabel">';
 			$out.= $file;
 			$out.= '</td>';
-			$out.= '<td style="text-align:center"  class="spWFBorder">';
+			$out.= '<td class="spWFBorder">';
 			$site = esc_url(wp_nonce_url(SPAJAXURL."forums&amp;targetaction=delicon&amp;file=$file", 'forums'));
-			$out.= '<img src="'.SPCOMMONIMAGES.'delete.png" title="'.SP()->primitives->admin_text('Delete custom icon').'" alt="" class="spDeleteRow" data-url="'.$site.'" data-target="icon'.$row.'" />';
+			$out .= '<div class="sf-item-controls">';
+			$out.= '<span title="'.SP()->primitives->admin_text('Delete custom icon').'" class="sf-icon sf-delete spDeleteRow" data-url="'.$site.'" data-target="icon'.$row.'"></span>';
+			$out .= '</div>';
 			$out.= '</td>';
 			$out.= '</tr>';
-			$out.= '</table>';
             $row++;
 		}
 	}
-	$out.= '</div>';
-	$out.= '</td></tr></table>';
+
+	$out.= '</table>';
 	echo '<input type="hidden" id="icon-count" name="icon-count" value="'.$row.'" />';
 
 	echo $out;
@@ -83,33 +81,31 @@ function spa_paint_featured_images() {
 	closedir($dlist);
 
 	# start the table display
-	$out.= '<table class="wp-list-table widefat"><tr>';
-	$out.= '<th style="width:30%;text-align:center">'.SP()->primitives->admin_text('Image').'</th>';
-	$out.= '<th style="width:50%;text-align:center">'.SP()->primitives->admin_text('Filename').'</th>';
-	$out.= '<th style="text-align:center">'.SP()->primitives->admin_text('Remove').'</th>';
-	$out.= '</tr>';
+	$out.= '<table id="sf-featured-images" class="wp-list-table widefat">';
+	$out.= '<thead><tr>';
+	$out.= '<th>'.SP()->primitives->admin_text('Image').'</th>';
+	$out.= '<th>'.SP()->primitives->admin_text('Filename').'</th>';
+	$out.= '<th>'.SP()->primitives->admin_text('Remove').'</th>';
+	$out.= '</tr></thead>';
 
-    $out.= '<tr><td colspan="3">';
-    $out.= '<div id="sf-featured-images">';
 	if ($files) {
 		sort($files);
 		foreach ($files as $file) {
-		    $out.= '<table style="width:100%">';
 			$out.= '<tr>';
-			$out.= '<td style="text-align:center;width:30%" class="spWFBorder"><img class="sffeaturedimage " src="'.esc_url(SPOGIMAGEURL.$file).'" alt="" /></td>';
-			$out.= '<td style="text-align:center;width:50%"  class="spWFBorder sflabel">';
+			$out.= '<td class="spWFBorder"><img class="sffeaturedimage " src="'.esc_url(SPOGIMAGEURL.$file).'" alt="" /></td>';
+			$out.= '<td class="spWFBorder sflabel">';
 			$out.= $file;
 			$out.= '</td>';
-			$out.= '<td style="text-align:center"  class="spWFBorder">';
+			$out.= '<td class="spWFBorder">';
+			$out .= '<div class="sf-item-controls">';
 			$site = esc_url(wp_nonce_url(SPAJAXURL."forums&amp;targetaction=delimage&amp;file=$file", 'forums'));
-			$out.= '<img src="'.SPCOMMONIMAGES.'delete.png" title="'.SP()->primitives->admin_text('Delete featured image').'" alt="" class="spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadfi" />';
+			$out.= '<span title="'.SP()->primitives->admin_text('Delete featured image').'" class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadfi"></span>';
+			$out .= '</div>';
 			$out.= '</td>';
 			$out.= '</tr>';
-			$out.= '</table>';
 		}
 	}
-	$out.= '</div>';
-	$out.= '</td></tr></table>';
-
+	
+	$out.= '</table>';
 	echo $out;
 }

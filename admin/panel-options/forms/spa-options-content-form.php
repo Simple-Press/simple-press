@@ -25,7 +25,7 @@ function spa_options_content_form() {
 
     #== POSTS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('Content Settings'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('Content Settings'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Date/Time Formatting'), true, 'date-time-formatting');
 				spa_paint_input(SP()->primitives->admin_text('Date display format'), 'sfdates', $sfoptions['sfdates']);
@@ -98,8 +98,8 @@ function spa_options_content_form() {
 
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Content Options'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Content Options'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

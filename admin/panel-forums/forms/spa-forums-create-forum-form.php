@@ -24,15 +24,15 @@ function spa_forums_create_forum_form() {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumnew" name="sfforumnew">
 <?php
 		echo sp_create_nonce('forum-adminform_forumnew');
-		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Create New Forum'), true);
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Create New Forum'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Create New Forum'), 'true', 'create-new-forum');
 					# check there are groups before proceeding
 					if (SP()->DB->count(SPGROUPS) == 0) {
-						echo '<br /><div class="sfoptionerror">';
+						echo '<div class="sf-alert-block sf-info">';
 						SP()->primitives->admin_etext('There are no groups defined');
-						echo '<br />'.SP()->primitives->admin_text('Create new group');
-						echo '</div><br />';
+						echo SP()->primitives->admin_text('Create new group');
+						echo '</div>';
 						spa_paint_close_fieldset();
 						spa_paint_close_panel();
 						spa_paint_close_container();
@@ -42,8 +42,8 @@ function spa_forums_create_forum_form() {
 					}
 
 					# Select the forum type first
-					echo "<div class='sp-form-row'>\n";
-					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('What type of forum are you creating').":</div>\n";
+					echo "<div class='sf-form-row'>\n";
+					echo "<div class='sf-alert-block sf-info'>".SP()->primitives->admin_text('What type of forum are you creating')."</div>\n";
 					echo "<div class='wp-core-ui sp-radio'>";
 					echo '<input type="radio" name="forumtype" id="sfradio1" tabindex="'.$tab.'" value="1" checked="checked" class="spForumSetOptions" data-target="forum" />'."\n";
 					echo '<label for="sfradio1" class="wp-core-ui">'.SP()->primitives->admin_text('Standard Forum').'</label><br>'."\n";
@@ -61,22 +61,22 @@ function spa_forums_create_forum_form() {
 					$target = 'fseq';
 
 					echo '<div id="groupselect" style="display:block;">';
-					echo "<div class='sp-form-row'>\n";
-					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Select group new forum will belong to').":</div>\n";
-					echo '<select class="wp-core-ui sp-input-60 spForumSetSequence" tabindex="'.$tab.'" name="group_id">';
+					echo "<div class='sf-form-row'>\n";
+					echo "<label>".SP()->primitives->admin_text('Select group new forum will belong to')."</label>\n";
+					echo '<div class="sf-select-wrap"><select class="spForumSetSequence" tabindex="'.$tab.'" name="group_id">';
 					echo spa_create_group_select(0, 1);
-					echo "</select>\n";
+					echo "</select></div>\n";
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
 					$tab++;
 					echo '</div>';
 
 					echo '<div id="forumselect" style="display:none;">';
-					echo "<div class='sp-form-row'>\n";
-					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Select forum new subforum will belong to').":</div>\n";
-					echo '<select class="wp-core-ui sp-input-60 spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';
+					echo "<div class='sf-form-row'>\n";
+					echo "<label>".SP()->primitives->admin_text('Select forum new subforum will belong to').":</label>\n";
+					echo '<div class="sf-select-wrap"><select class="spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';
 					echo sp_render_group_forum_select(false, false, false, true);
-					echo "</select>\n";
+					echo "</select></div>\n";
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
 					$tab++;
@@ -84,10 +84,9 @@ function spa_forums_create_forum_form() {
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			spa_paint_close_container();
-			echo '<div class="sfform-panel-spacer"></div>';
-		spa_paint_close_tab();
+		//	echo '<div class="sfform-panel-spacer"></div>';
 
-        echo '<div class="sfform-panel-spacer"></div>';
+       // echo '<div class="sfform-panel-spacer"></div>';
 		echo '<div class="sfhidden" id="block1">';
 
 		spa_paint_open_nohead_tab(false);
@@ -97,15 +96,15 @@ function spa_forums_create_forum_form() {
 					$ajaxURL = wp_nonce_url(SPAJAXURL.'forums', 'forums');
 
 					# forum name and slug
-					echo "<div class='sp-form-row'>";
-					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Forum Name').':</div>';
+					echo "<div class='sf-form-row'>";
+					echo "<label>".SP()->primitives->admin_text('Forum Name').'</label>';
 					echo '<input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.$tab.'" name="forum_name" value="" data-url="'.$ajaxURL.'" data-target="'.$target.'" data-type="new" />';
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
 					$tab++;
 
-					echo "<div class='sp-form-row'>\n";
-					echo "<div class='wp-core-ui sflabel sp-label-40'>".SP()->primitives->admin_text('Forum slug').":</div>";
+					echo "<div class='sf-form-row'>\n";
+					echo "<label>".SP()->primitives->admin_text('Forum slug')."</label>";
 					echo '<input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.$tab.'" name="thisforumslug" id="thisforumslug" value="" disabled="disabled" data-url="'.$ajaxURL.'" data-target="'.$target.'" data-type="new" />';
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
@@ -120,7 +119,7 @@ function spa_forums_create_forum_form() {
 					spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', '', false);
 					spa_paint_select_end();
 
-					echo '<div class="sfoptionerror spaceabove">';
+					echo '<div class="sf-alert-block sf-info">';
 					echo '<p><b>'.SP()->primitives->front_text('Custom Icon Ordering').'</b></br>';
 					echo SP()->primitives->front_text('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
                     echo SP()->primitives->front_text('Locked').'<br />';
@@ -187,7 +186,7 @@ function spa_forums_create_forum_form() {
 					spa_paint_wide_textarea('Special forum message to be displayed above forums', 'forum_message', '');
 				spa_paint_close_fieldset();
 
-			echo '<div class="sfoptionerror spaceabove">';
+			echo '<div class="sf-alert-block sf-info">';
 			echo sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the %s Order Groups and Forums %s option from the Forums Menu'), '<b>', '</b>');
 			echo '</div>';
 
@@ -205,7 +204,7 @@ function spa_forums_create_forum_form() {
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Add User Group Permissions'), false);
 					echo '<div id="block2" class="sfhidden">';
-					echo '<strong>'.SP()->primitives->admin_text('You can selectively set the permission sets for the forum below. If you want to use the default permissions for the selected group, then do not select anything').'</strong>';
+					echo '<div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('You can selectively set the permission sets for the forum below. If you want to use the default permissions for the selected group, then do not select anything').'</div>';
 
 					# Permissions
 					$usergroups = spa_get_usergroups_all();
@@ -225,11 +224,12 @@ function spa_forums_create_forum_form() {
 			spa_paint_close_panel();
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
-            <input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Forum'); ?>" />
+		<div class="sf-form-submit-bar">
+            <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Forum'); ?>" />
 		</div>
     	<?php spa_paint_close_tab(); ?>
         </div>
+		<?php spa_paint_close_tab(); ?>
 	</form>
 	<div class="sfform-panel-spacer"></div>
 <?php

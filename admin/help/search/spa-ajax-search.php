@@ -49,7 +49,7 @@ spa_paint_open_tab(SP()->primitives->admin_text('Forum Admin Task Glossary'));
 
 
 spa_paint_spacer();
-spa_paint_close_container();
+//spa_paint_close_container();
 spa_paint_close_tab();
 
 die();

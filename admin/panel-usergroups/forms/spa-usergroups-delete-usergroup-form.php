@@ -30,7 +30,7 @@ function spa_usergroups_delete_usergroup_form($usergroup_id) {
 ?>
 					<input type="hidden" name="usergroup_id" value="<?php echo $usergroup->usergroup_id; ?>" />
 <?php
-					echo '<p>';
+					echo '<div class="sf-alert-block sf-info"><p>';
 					SP()->primitives->admin_etext("Warning! You are about to delete a User Group!");
 					echo '</p>';
 					echo '<p>';
@@ -41,15 +41,15 @@ function spa_usergroups_delete_usergroup_form($usergroup_id) {
 					echo '</p>';
 					echo '<p>';
 					SP()->primitives->admin_etext('Click on the Delete User Group button below to proceed');
-					echo '</p>';
+					echo '</p></div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_usergroup_delete_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="sfusergroupdel<?php echo $usergroup->usergroup_id; ?>" name="sfusergroupdel<?php echo $usergroup->usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Delete User Group'); ?>" />
-		<input type="button" class="button-primary spCancelForm" data-target="#usergroup-<?php echo $usergroup->usergroup_id; ?>" id="sfusergroupdel<?php echo $usergroup->usergroup_id; ?>" name="delusergroupcancel<?php echo $usergroup->usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+		<div class="sf-form-submit-bar">
+		<input type="submit" class="sf-button-primary" id="sfusergroupdel<?php echo $usergroup->usergroup_id; ?>" name="sfusergroupdel<?php echo $usergroup->usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Delete User Group'); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#usergroup-<?php echo $usergroup->usergroup_id; ?>" id="sfusergroupdel<?php echo $usergroup->usergroup_id; ?>" name="delusergroupcancel<?php echo $usergroup->usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 		</form>
 	<?php spa_paint_close_tab(); ?>

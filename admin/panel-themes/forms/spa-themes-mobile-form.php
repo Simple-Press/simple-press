@@ -29,7 +29,7 @@ function spa_themes_mobile_form() {
 	spa_paint_open_panel();
 
 	spa_paint_spacer();
-	echo '<div class="sfoptionerror">';
+	echo '<div class="sf-alert-block sf-info">';
 	echo SP()->primitives->admin_text('Themes Folder').': <b>'.realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['themes']).'</b>';
 	echo '</div>';
 
@@ -57,8 +57,8 @@ function spa_themes_mobile_form() {
 	spa_paint_close_container();
 
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Mobile Component'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Mobile Component'); ?>" />
 	</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
@@ -99,7 +99,7 @@ function spa_themes_mobile_form() {
 			}
 		}
 ?>
-		<p class="description" style="padding: 0;">
+		<p class="sf-description" style="padding: 0;">
 		<?php echo $themes[$mobileTheme['theme']]['Description']; ?>
 		</p>
 <?php
@@ -149,7 +149,7 @@ function spa_themes_mobile_form() {
 				echo '<option'.$selected.' value="'.esc_attr($overlay).'">'.esc_html($overlay).'</option>';
 			}
 			echo '</select> ';
-			echo ' <input type="submit" class="button-secondary action" id="saveit-cur" name="saveit-cur" value="'.SP()->primitives->admin_text('Update Overlay').'" />';
+			echo ' <input type="submit" class="sf-button-secondary action" id="saveit-cur" name="saveit-cur" value="'.SP()->primitives->admin_text('Update Overlay').'" />';
 			echo '</form>';
 			echo '</div>';
 
@@ -226,7 +226,7 @@ function spa_themes_mobile_form() {
 					}
 				}
 ?>
-				<p class="description" style="padding: 0;">
+				<p class="sf-description" style="padding: 0;">
 				<?php echo $theme_desc; ?>
 				</p>
 				<br>
@@ -259,7 +259,7 @@ function spa_themes_mobile_form() {
 					}
 				}
 ?>
-				<input type="submit" class="button-secondary action" id="saveit-<?php echo esc_attr($theme_file); ?>" name="saveit-<?php echo esc_attr($theme_file); ?>" value="<?php echo SP()->primitives->admin_etext('Activate Mobile Theme'); ?>" />
+				<input type="submit" class="sf-button-secondary action" id="saveit-<?php echo esc_attr($theme_file); ?>" name="saveit-<?php echo esc_attr($theme_file); ?>" value="<?php echo SP()->primitives->admin_etext('Activate Mobile Theme'); ?>" />
 				</form>
 				</div>
 <?php

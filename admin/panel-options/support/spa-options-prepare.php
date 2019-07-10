@@ -207,17 +207,17 @@ function spa_paint_iconsets_table() {
 		<tr>
 			<td><?php echo $iconset_options['name']; ?></td>
 			<td>
-				<span class="item-controls"><?php
+				<span class="sf-item-controls"><?php
 				
-				$toggle_img = SPADMINIMAGES. 'sp_' . ( $active ? 'Yes' : 'No' ) . '.png';
+				$toggle_img = $active ? 'sf-check' : 'sf-no-check';
 				$toggle_action = $active ? 'Disable' : 'Enable';
 				$toggle_link = esc_url( wp_nonce_url( SPAJAXURL . "options&amp;targetaction=" . strtolower( $toggle_action ) . "iconset&amp;iconset={$id}", 'options' ) );
 
-				printf( '<img src="%s" title="%s" alt="" style="vertical-align: middle;cursor:pointer;" class="spToggleRowReload" data-url="%s" data-reload="acciconsets" />&nbsp;&nbsp;', $toggle_img, SP()->primitives->admin_text( $toggle_action ), $toggle_link );
+				printf( '<span class="sf-icon %s spToggleRowReload" title="%s" data-url="%s" data-reload="acciconsets"></span>', $toggle_img, SP()->primitives->admin_text( $toggle_action ), $toggle_link );
 
 
 				$site = esc_url( wp_nonce_url( SPAJAXURL . "options&amp;targetaction=deliconset&amp;iconset={$id}", 'options' ) );
-				printf( '<img src="%s" title="%s" alt="" style="vertical-align: middle;cursor:pointer;" class="spDeleteRowReload" data-url="%s" data-reload="acciconsets" />&nbsp;&nbsp;', SPCOMMONIMAGES.'delete.png', SP()->primitives->admin_text( 'Delete Iconset' ), $site );
+				printf( '<span title="%s" class="sf-icon sf-delete spDeleteRowReload" data-url="%s" data-reload="acciconsets"></span>', SP()->primitives->admin_text( 'Delete Iconset' ), $site );
 						
 						
 						

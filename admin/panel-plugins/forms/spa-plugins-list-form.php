@@ -44,12 +44,44 @@ function spa_plugins_list_form() {
 				});
 			});
 		});
-	}(window.spj = window.spj || {}, jQuery));
+    
+	  $('.column-more img').click(function(e){
+      if($(this).parent().find('.sp-plugin-more').css('display') === 'none'){
+        $(this).parent().find('.sp-plugin-more').css('display', 'block');
+      }else{
+        $(this).parent().find('.sp-plugin-more').css('display', 'none');
+      }
+    });
+    function display_filtr(){
+      if($('#sf-plugins-flt-b').css('display') === 'none'){
+        $('#sf-plugins-flt-b').css('display', 'block');
+      }else{
+        $('#sf-plugins-flt-b').css('display', 'none');
+      }
+    }
+    $('#sf-plugins-flt-t').click(display_filtr);
+  }(window.spj = window.spj || {}, jQuery));
 </script>
+
 <?php
     # get plugins
 	$plugins = spa_get_plugins_list_data();
-
+  $plugins_active = 0;
+  $plugins_inactive = 0;
+  foreach ((array) $plugins as $plugin_file => $plugin_data){
+    $is_active = SP()->plugin->is_active($plugin_file);
+    $path = explode('/', $plugin_file);
+		$bad = is_numeric(substr($path[0], -1));
+    if($is_active){
+      $plugins_active++;
+    }else{
+      if($bad){
+        
+      }else{
+        $plugins_inactive++;
+      }
+    }
+  }
 	# get update version info
 	$xml = sp_load_version_xml();
 
@@ -75,6 +107,10 @@ function spa_plugins_list_form() {
         $ajaxURL = wp_nonce_url(SPAJAXURL.'plugins-loader&amp;saveform=list', 'plugins-loader');
 	$msg = esc_js(SP()->primitives->admin_text('Are you sure you want to delete the selected Simple Press plugins?'));
 ?>
+  <form id="plugin-filter" method="get" action="<?php echo SPADMINPLUGINS; ?>">
+        <input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins.php'; ?>" />
+   <?php submit_button('Search Plugins', '', '', false, array('id' => 'search-submit')); ?>
+  </form>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sppluginsform" name="sppluginsform" onsubmit="javascript: if (ActionType.options[ActionType.selectedIndex].value == 'delete-selected' || ActionType2.options[ActionType2.selectedIndex].value == 'delete-selected') {if (confirm('<?php echo $msg; ?>')) {return true;} else {return false;}} else {return true;}">
 	<?php echo sp_create_nonce('forum-adminform_plugins'); ?>
 <?php
@@ -83,13 +119,70 @@ function spa_plugins_list_form() {
 	spa_paint_open_panel();
 
 	spa_paint_spacer();
-	echo '<div class="sfoptionerror">';
+	echo '<div class="sf-alert-block sf-info">';
 	echo SP()->primitives->admin_text('Plugins Folder').': <b>'.realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['plugins']).'</b>';
 	echo '</div>';
+  $strspace = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+  $stroutname0 = SP()->primitives->admin_text('All ') . '(' . count($plugins) . ')';
+  $strout0 = "<a href='".esc_url(add_query_arg('plugingroup', 'all', SPADMINPLUGINS))."'>$stroutname0</a>" . $strspace;
+  $stroutname = SP()->primitives->admin_text('Active ') . '(' . $plugins_active . ')';
+  $strout1 .= "<a href='".esc_url(add_query_arg('plugingroup', 'active', SPADMINPLUGINS))."'>$stroutname</a>" . $strspace;
+  $stroutname = SP()->primitives->admin_text('Inactive') . '(' . $plugins_inactive . ')';
+  $strout2 .= "<a href='".esc_url(add_query_arg('plugingroup', 'inactive', SPADMINPLUGINS))."'>$stroutname</a>" . $strspace;
+  $strout = $strout0 . $strout1 . $strout2;
+  # start panel actions
+  spa_paint_open_panel();
+  ?>
 
-	spa_paint_open_fieldset(SP()->primitives->admin_text('Plugin Management'), true, 'plugins');
+<fieldset class="sf-fieldset">
+<div class="sf-show sf-plugins-flt">
+      <div id="sf-plugins-flt-t"><?=$stroutname0?></div>
+      <div id="sf-plugins-flt-b">
+      <div><?=$strout0?></div>
+      <div><?=$strout1?></div>
+      <div><?=$strout2?></div>
+      </div>
+</div>
+  <div class="sf-panel-body-top">
+    <div class="sf-panel-body-top-left sf-plugin-hide">
+          <?php
+          # display view links
+          echo $strout;
+          ?>
+    </div>
+    
+    <div class="sf-panel-body-top-right">
+     
+            <p class="search-box">
+              <label class="screen-reader-text" for="<?php echo esc_attr('search_id-search-input'); ?>">Search Plugins:</label>
+              <input type="search" id="<?php echo esc_attr('search_id-search-input'); ?>" name="s" value="<?php _admin_search_query(); ?>" form="plugin-filter"/>
+            </p>
+      <?php
+        echo spa_paint_help('plugins', $adminhelpfile);
+      ?>
+    </div>
+    <div class="sf-panel-body-top-left-midle">
+      <div class="sf-actions-in">
+    		<div class="sf-actions">
+    			<select id="ActionType" name="action1">
+    				<option selected="selected" value="-1"><?php echo SP()->primitives->admin_text('Bulk Actions'); ?></option>
+    				<option value="activate-selected"><?php echo SP()->primitives->admin_text('Activate'); ?></option>
+    				<option value="deactivate-selected"><?php echo SP()->primitives->admin_text('Deactivate'); ?></option>
+    				<?php if (!is_multisite() || is_super_admin()) { ?><option value="delete-selected"><?php echo SP()->primitives->admin_text('Delete'); ?></option><?php }?>
+    			</select>
+    		</div>
+        <span class="sf-action-button"><input id="doaction1" class="sf-action-button-b" type="submit" value="-&#8250;" /></span>
+    	</div>
+    </div>
+  </div>
+</fieldset>
+  <?php
+  # end panel actions
+  spa_paint_close_panel(); 
+  
+	//spa_paint_open_fieldset(SP()->primitives->admin_text('Plugin Management'), true, 'plugins');
 ?>
-	<div class="tablenav top">
+	<!--<div class="tablenav top">
 		<div class="alignleft actions">
 			<select id="ActionType" name="action1">
 				<option selected="selected" value="-1"><?php echo SP()->primitives->admin_text('Bulk Actions'); ?></option>
@@ -97,16 +190,25 @@ function spa_plugins_list_form() {
 				<option value="deactivate-selected"><?php echo SP()->primitives->admin_text('Deactivate'); ?></option>
 				<?php if (!is_multisite() || is_super_admin()) { ?><option value="delete-selected"><?php echo SP()->primitives->admin_text('Delete'); ?></option><?php }?>
 			</select>
-			<input id="doaction1" class="button-secondary action" type="submit" value="<?php echo SP()->primitives->admin_text('Apply'); ?>" />
+			<input id="doaction1" class="sf-button-secondary action" type="submit" value="<?php echo SP()->primitives->admin_text('Apply'); ?>" />
 		</div>
 		<div class="tablenav-pages one-page">
 			<span class="displaying-num"><?php echo count($plugins).' '.SP()->primitives->admin_text('plugins');?></span>
 		</div>
-	</div>
+	</div>-->
 
 	<table class="wp-list-table widefat plugins">
         <thead>
-		<tr>
+		<tr class="sf-showm">
+      <td id='cb' class='manage-column column-cb check-column'>
+				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="cbhead" id="cbhead" />
+				<label class="wp-core-ui" for='cbhead'>&nbsp;</label>
+			</td>
+			<th class='manage-column column-name column-primary' colspan="5" style="width: 50%;">
+				<?php SP()->primitives->admin_etext('Plugin'); ?>
+			</th>
+    </tr>
+    <tr class="sf-plugin-hide">
 			<td id='cb' class='manage-column column-cb check-column'>
 				&nbsp;&nbsp;&nbsp;<input type="checkbox" name="cbhead" id="cbhead" />
 				<label class="wp-core-ui" for='cbhead'>&nbsp;</label>
@@ -118,12 +220,20 @@ function spa_plugins_list_form() {
 			<th class='manage-column column-description'>
 				<?php SP()->primitives->admin_etext('Description'); ?>
 			</th>
+      <th class='manage-column column-vertion'>
+				<?php SP()->primitives->admin_etext('Vertion'); ?>
+			</th>
+      <th class='manage-column column-act'>
+      </th>
+      <th class='manage-column column-more'>
+      </th>
 		</tr>
+    
         </thead>
 
         <tbody class="the-list">
 <?php
-        if (empty($plugins)) echo '<tr><td colspan="4">'.SP()->primitives->admin_text('No plugins found.').'</td></tr>';
+        if (empty($plugins)) echo '<tr><td colspan="7">'.SP()->primitives->admin_text('No plugins found.').'</td></tr>';
 
 		$disabled = '';
 
@@ -135,15 +245,17 @@ function spa_plugins_list_form() {
 			$bad = is_numeric(substr($path[0], -1));
 
     		$is_active = SP()->plugin->is_active($plugin_file);
-
+        if( isset($_REQUEST['s']) && strlen(trim($_REQUEST['s'])) && strripos($plugin_data['Name'], $_REQUEST['s']) === false ) continue; // Search by name
             if ($is_active) {
+              if( isset($_REQUEST['plugingroup']) && trim($_REQUEST['plugingroup']) === 'inactive' ) continue; //filter by inactive
                 $url = SPADMINPLUGINS.'&amp;action=deactivate&amp;plugin='.esc_attr($plugin_file).'&amp;title='.urlencode(esc_attr($plugin_data['Name'])).'&amp;sfnonce='.wp_create_nonce('forum-adminform_plugins');
                 $actionlink = "<a href='$url' title='".SP()->primitives->admin_text('Deactivate this Plugin')."'>".SP()->primitives->admin_text('Deactivate').'</a>';
 				$actionlink = apply_filters('sph_plugins_active_buttons', $actionlink, $plugin_file);
+                $actionlink_out = $actionlink;
 				$actionlink.= sp_paint_plugin_tip($plugin_data['Name'], $plugin_file);
 				$rowClass = 'active';
                 if ($update) $rowClass.= ' update';
-                $icon = '<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Plugin activated').'" alt="" style="vertical-align:middle;" />';
+                $icon = '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Plugin activated').'"></span>';
             } else {
 				if ($bad) {
 					$rowClass = 'inactive spWarningBG';
@@ -151,6 +263,7 @@ function spa_plugins_list_form() {
 	                $icon = '<img src="'.SPADMINIMAGES.'sp_NoWrite.png" title="'.SP()->primitives->admin_text('Warning').'" alt="" style="vertical-align:middle;" />';
 	                $disabled = ' disabled="disabled" ';
 				} else {
+          if( isset($_REQUEST['plugingroup']) && trim($_REQUEST['plugingroup']) === 'active' ) continue; //filter by active
 					$url = SPADMINPLUGINS.'&amp;action=activate&amp;plugin='.esc_attr($plugin_file).'&amp;title='.urlencode(esc_attr($plugin_data['Name'])).'&amp;sfnonce='.wp_create_nonce('forum-adminform_plugins');
 					$actionlink = "<a href='$url' title='".SP()->primitives->admin_text('Activate this Plugin')."'>".SP()->primitives->admin_text('Activate')."</a>";
 					$url = SPADMINPLUGINS.'&amp;action=delete&amp;plugin='.esc_attr($plugin_file).'&amp;title='.urlencode(esc_attr($plugin_data['Name'])).'&amp;sfnonce='.wp_create_nonce('forum-adminform_plugins');
@@ -161,7 +274,7 @@ function spa_plugins_list_form() {
 					$actionlink = apply_filters('sph_plugins_inactive_buttons', $actionlink, $plugin_file);
 					$rowClass = 'inactive';
                     if ($update) $rowClass.= ' update';
-					$icon = '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Plugin not activated').'" alt="" style="vertical-align: middle;" />';
+					$icon = '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Plugin not activated').'"></span>';
 					$disabled = '';
 				}
             }
@@ -180,20 +293,21 @@ function spa_plugins_list_form() {
 				<td class='manage-column check-column'>
                 	<?php echo $icon; ?>
 				</td>
-        		<td class='manage-column column-name column-primary'>
+        <td class='manage-column column-name column-primary'>
 					<strong><?php echo esc_html($plugin_name); ?></strong>
-	        		<div class="row-actions-visible">
+	        		<!--<div class="row-actions-visible">
     	   				<span><?php echo str_replace('&nbsp;&nbsp;', '  |  ', $actionlink); ?></span>
-        			</div>
+        			</div>-->
 				</td>
-        		<td class='manage-column column-description'>
-        			<div class='manage-column column-description'>
+        <td class='manage-column column-description'>
+        	<div class='manage-column column-description'>
 						<?php echo $description; ?>
 					</div>
 					<div class='<?php echo $rowClass; ?> second plugin-version-author-uri'>
 <?php
 		        		$plugin_meta = array();
-		        		if (!empty($plugin_data['Version'])) $plugin_meta[] = sprintf(SP()->primitives->admin_text('Version %s'), $plugin_data['Version']);
+                //if (!empty($plugin_data['Version'])) $plugin_meta[] = sprintf(SP()->primitives->admin_text('Version %s'), $plugin_data['Version']);
+                if (!empty($plugin_data['Version'])) $plugin_version = sprintf(SP()->primitives->admin_text('%s'), $plugin_data['Version']);
 		        		if (!empty($plugin_data['Author'])) {
 		        			$author = $plugin_data['Author'];
 		        			if (!empty($plugin_data['AuthorURI'])) $author = '<a href="'.esc_url($plugin_data['AuthorURI']).'" title="'.SP()->primitives->admin_text('Visit author homepage').'">'.esc_html($plugin_data['Author']).'</a>';
@@ -201,10 +315,20 @@ function spa_plugins_list_form() {
 		        		}
 		        		if (!empty($plugin_data['PluginURI'])) $plugin_meta[] = '<a href="'.esc_url($plugin_data['PluginURI']).'" title="'.SP()->primitives->admin_text('Visit plugin site').'">'.esc_html(SP()->primitives->admin_text('Visit plugin site')).'</a>';
 
-		        		echo implode(' | ', $plugin_meta);
+		        		//echo implode(' | ', $plugin_meta);
 ?>
 					</div>
 				</td>
+        <td class='manage-column column-vertion'>
+          <?=$plugin_version ?>
+        </td>
+        <td class='manage-column column-act'>
+          <?=$actionlink ?>
+        </td>
+        <td class='manage-column column-more'>
+          <img src="<?=SP_PLUGIN_ICONS ?>More.svg" alt="" />
+          <div class="sp-plugin-more"><?=implode(' | ', $plugin_meta) ?></div>
+        </td>
         	</tr>
 <?php
 			# is it bad?
@@ -213,8 +337,8 @@ function spa_plugins_list_form() {
                 $suggest = str_replace($fix[0], '', $path[0]);
 ?>
 				<tr class='<?php echo $rowClass; ?>'>
-					<td colspan="4">
-						<div class="sfoptionerror">
+					<td colspan="7">
+						<div class="sf-alert-block sf-info">
 							<?php echo sprintf(SP()->primitives->admin_text('The folder name of this plugin has become corrupted - probably due to multiple downloads. Please remove the %s at the end of the folder name.  The proper folder name should be %s'), "<strong>$fix[0]</strong>", "<strong>$suggest</strong>"); ?>
 						</div>
 					</td>
@@ -313,7 +437,7 @@ function spa_plugins_list_form() {
         </tfoot>
     </table>
 
-	<div class="tablenav bottom">
+	<!--<div class="tablenav bottom">
 		<div class="alignleft actions">
 			<select id="ActionType2" name="action2">
 				<option selected="selected" value="-1"><?php echo SP()->primitives->admin_text('Bulk Actions'); ?></option>
@@ -321,12 +445,12 @@ function spa_plugins_list_form() {
 				<option value="deactivate-selected"><?php echo SP()->primitives->admin_text('Deactivate'); ?></option>
 				<?php if (!is_multisite() || is_super_admin()) { ?><option value="delete-selected"><?php echo SP()->primitives->admin_text('Delete'); ?></option><?php }?>
 			</select>
-			<input id="doaction2" class="button-secondary action" type="submit" value="<?php echo SP()->primitives->admin_text('Apply'); ?>" name="" />
+			<input id="doaction2" class="sf-button-secondary action" type="submit" value="<?php echo SP()->primitives->admin_text('Apply'); ?>" name="" />
 		</div>
 		<div class="tablenav-pages one-page">
 			<span class="displaying-num"><?php echo count($plugins).' '.SP()->primitives->admin_text('plugins');?></span>
 		</div>
-	</div>
+	</div>-->
 <?php
 	spa_paint_close_fieldset();
 	spa_paint_close_panel();

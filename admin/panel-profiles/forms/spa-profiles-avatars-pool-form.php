@@ -51,7 +51,7 @@ function spa_profiles_avatars_pool_form() {
 					/* add file to the list */
 					if (response==="success"){
 						site = "<?php echo SPAJAXURL.'profiles' ?>&amp;_wpnonce=<?php echo wp_create_nonce('profiles'); ?>&amp;targetaction=delavatar&amp;file=" + file;
-						$('<table style="width:100%"></table>').appendTo('#sf-avatar-pool').html('<tr><td class="spWFBorder" style="width:30%;text-align:center"><img class="sfavatarpool" src="<?php echo SPAVATARPOOLURL; ?>' + file + '" alt="" /></td><td class="spWFBorder" style="text-align:center;width:50%">' + file + '</td><td class="spWFBorder" style="text-align:center;"><img src="<?php echo SPCOMMONIMAGES; ?>' + 'delete.png' + '" title="<?php echo esc_js(SP()->primitives->admin_text('Delete Avatar')); ?>" alt="" class="spDeleteRowReload" data-url="' + site + '" data-reload="sfreloadpool" /></td></tr>');
+						$('<table style="width:100%"></table>').appendTo('#sf-avatar-pool').html('<tr><td class="spWFBorder" style="width:30%;text-align:center"><img class="sfavatarpool" src="<?php echo SPAVATARPOOLURL; ?>' + file + '" alt="" /></td><td class="spWFBorder" style="text-align:center;width:50%">' + file + '</td><td class="spWFBorder"><span title="<?php echo esc_js(SP()->primitives->admin_text('Delete Avatar')); ?>" class="sf-icon sf-delete spDeleteRowReload" data-url="' + site + '" data-reload="sfreloadpool"></span></td></tr>');
 						$('#sf-upload-status').html('<p class="sf-upload-status-success"><?php echo esc_js(SP()->primitives->admin_text('Avatar Uploaded!')); ?></p>');
 					} else if (response==="invalid"){
 						$('#sf-upload-status').html('<p class="sf-upload-status-fail"><?php echo esc_js(SP()->primitives->admin_text('Sorry, the file has an invalid format!')); ?></p>');
@@ -76,7 +76,7 @@ function spa_profiles_avatars_pool_form() {
 
     #== PROFILE OPTIONS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Profiles').' - '.SP()->primitives->admin_text('Avatar Pool'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Avatar Pool'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Avatar Pool Upload'), true, 'avatar-pool-upload');
 				$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/';

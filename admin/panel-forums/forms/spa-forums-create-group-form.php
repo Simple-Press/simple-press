@@ -22,7 +22,13 @@ function spa_forums_create_group_form() {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfgroupnew" name="sfgroupnew">
 <?php
 		echo sp_create_nonce('forum-adminform_groupnew');
-		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Create New Group'), false);
+		
+		$info = '<div class="sf-alert-block sf-info">' .
+			sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the %s Order Groups and Forums %s option from the Forums Menu'), '<b>', '</b>') .
+			'</div>';
+		
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Create New Group'), false, $info);
+
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Create New Group'), 'true', 'create-new-forum-group');
 
@@ -40,10 +46,6 @@ function spa_forums_create_group_form() {
 
 				spa_paint_close_fieldset();
 
-			echo '<div class="sfoptionerror spaceabove">';
-			echo sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the %s Order Groups and Forums %s option from the Forums Menu'), '<b>', '</b>');
-			echo '</div>';
-
 			spa_paint_close_panel();
 
 		spa_paint_tab_right_cell();
@@ -51,8 +53,10 @@ function spa_forums_create_group_form() {
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Default User Group Permissions'), false);
 
+					echo '<div class="sf-alert-block sf-info">';
 					echo '<strong>'.SP()->primitives->admin_text('Set default usergroup permission sets for this group').'</strong><br />';
 					echo SP()->primitives->admin_text('Note - This will not add or modify any current permissions. It is only a default setting for future forums created in this group.');
+					echo '</div>';
 
 					# Permissions
 					$usergroups = spa_get_usergroups_all();
@@ -72,8 +76,8 @@ function spa_forums_create_group_form() {
 			spa_paint_close_panel();
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Group'); ?>" />
+		<div class="sf-form-submit-bar">
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Group'); ?>" />
 		</div>
 
 	<?php spa_paint_close_tab(); ?>

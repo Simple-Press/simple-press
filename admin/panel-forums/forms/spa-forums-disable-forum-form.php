@@ -27,7 +27,7 @@ function spa_forums_disable_forum_form($forum_id) {
 ?>
 					<input type="hidden" name="forum_id" value="<?php echo $forum_id; ?>" />
 <?php
-					echo '<p><b>';
+					echo '<div class="sf-alert-block sf-info"><p><b>';
 					SP()->primitives->admin_etext('Warning! You are about to disable this forum');
 					echo '</b></p>';
 					echo '<p>';
@@ -38,15 +38,15 @@ function spa_forums_disable_forum_form($forum_id) {
 					echo '</p>';
 					echo '<p>';
 					SP()->primitives->admin_etext('Click on the disable forum button below to proceed.');
-					echo '</p>';
+					echo '</p></div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_forums_disable_forum_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
-    		<input type="submit" class="button-primary" id="sfforumdisable<?php echo $forum_id; ?>" name="sfforumdisable<?php echo $forum_id; ?>" value="<?php SP()->primitives->admin_etext('Disable Forum'); ?>" />
-    		<input type="button" class="button-primary spCancelForm" data-target="#forum-<?php echo $forum_id; ?>" id="sfforumdisable<?php echo $forum_id; ?>" name="disableforumcancel<?php echo $forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+		<div class="sf-form-submit-bar">
+    		<input type="submit" class="sf-button-primary" id="sfforumdisable<?php echo $forum_id; ?>" name="sfforumdisable<?php echo $forum_id; ?>" value="<?php SP()->primitives->admin_etext('Disable Forum'); ?>" />
+    		<input type="button" class="sf-button-primary spCancelForm" data-target="#forum-<?php echo $forum_id; ?>" id="sfforumdisable<?php echo $forum_id; ?>" name="disableforumcancel<?php echo $forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>

@@ -13,9 +13,8 @@
 
     // public methods
     $(document).ready(function() {
-        activateAccordion();
+        initAdminMenu();
         setupTooltips();
-        highlightMenu();
         spl_license_activate();
         spl_license_deactivate();
 		spLicenseRemove();
@@ -28,11 +27,30 @@
     });
 
     // private methods
-    function activateAccordion() {
+    function initAdminMenu() {
+        
+        // Highlight Menu
+        //$('.wp-submenu li').removeClass('current');
+        //$('.wp-submenu li').find('a:contains(' + sp_admin_footer_vars.panel_name + ')').parent().addClass('current');
+        
+        var num = $('li#toplevel_page_simple-press-admin-panel-forums-spa-forums ul.wp-submenu li.current').index() - 1;
+        
+        $('#sfadminmenu .sfsidebutton:eq('+num+')+.sfmenublock .sfsideitem:eq(0)').addClass('sf-active');
+        
         $("#sfadminmenu").accordion({
             heightStyle: 'content',
             collapsible: true,
-            active: parseInt(sp_admin_footer_vars.panel)
+            active: num
+        });
+        
+        $(document).on('click', '#sfsidepanel .sf-tooggle-admin-menu', function() {
+            $('#sfsidepanel').toggleClass('sf-admin-menu-mobile-show');
+        });
+    
+        $(document).on('click', '.ui-accordion .ui-accordion-content .sfsideitem', function(e) {
+			e.preventDefault();
+            $('.ui-accordion .ui-accordion-content .sfsideitem').removeClass('sf-active');
+            $(this).addClass('sf-active');
         });
     }
 
@@ -41,17 +59,12 @@
             $(document).tooltip({
                 tooltipClass: "ttip",
                 position: {
-                    my: "left+20 top",
-                    at: "left bottom+10"
+                    my: "center",
+                    at: "center top-30"
                 },
                 track: false
             });
         }
-    }
-
-    function highlightMenu() {
-        $('.wp-submenu li').removeClass('current');
-        $('.wp-submenu li').find('a:contains(' + sp_admin_footer_vars.panel_name + ')').parent().addClass('current');
     }
 
     //activate plugin license

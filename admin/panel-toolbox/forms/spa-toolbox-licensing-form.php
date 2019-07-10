@@ -11,7 +11,7 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function spa_toolbox_licensing_form() {
 	
 	spa_paint_options_init();
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Licensing'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Licensing'), true);
 	
 		/* Paint Instructions...*/
 		echo "<div class='sp-licensing-instructions-tab'>";
@@ -49,8 +49,8 @@ function spa_toolbox_licensing_form() {
 			echo '<br />';
 			echo SP()->primitives->admin_text('However, you can click the button below to check for updates to premium plugins and themes now.');
 
-			echo '<div class="sfform-submit-bar">';
-			echo '<input type="button" class="button-primary" id="force_update_check" name="force_update_check" value="'.SP()->primitives->admin_text('Check For Updates Now').'">';
+			echo '<div class="sf-form-submit-bar">';
+			echo '<input type="button" class="sf-button-primary" id="force_update_check" name="force_update_check" value="'.SP()->primitives->admin_text('Check For Updates Now').'">';
 			echo '</div>';
 		
 			spa_paint_close_fieldset();
@@ -76,8 +76,8 @@ function spa_toolbox_licensing_form() {
 				echo '</td>';
 				echo '</tr>';
 				echo '</table>';
-				echo '<div class="sfform-submit-bar">';
-				echo '<input type="submit" class="button-primary" id="saveit" name="save_store_url" value="'.SP()->primitives->admin_text('Update Licensing Server').'">';
+				echo '<div class="sf-form-submit-bar">';
+				echo '<input type="submit" class="sf-button-primary" id="saveit" name="save_store_url" value="'.SP()->primitives->admin_text('Update Licensing Server').'">';
 				echo '</div>';
 				echo '</form>';
 			spa_paint_close_fieldset();
@@ -108,7 +108,7 @@ function spa_toolbox_licensing_form_paint_instructions() {
 		spa_paint_hidden_input('ajax_error_message', SP()->primitives->admin_text('Something Went Wrong Please Try Again!'));
 	echo '</div>';
 	spa_paint_spacer();
-	echo '<div class="sfoptionerror">'.SP()->primitives->admin_text('Note: If you do not activate your license(s) you will not receive security and other automatic updates for your premium plugins and themes!').'</div>';	
+	echo '<div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('Note: If you do not activate your license(s) you will not receive security and other automatic updates for your premium plugins and themes!').'</div>';	
 }
 
 /*
@@ -158,7 +158,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 	
 	$button_id 	= $sp_addon_name;
 ?>
-	<div class="sffieldset">		
+	<div class="sf-fieldset">		
 		<div class="plugin_title sp_addon_title"><?php echo $sp_item_name; ?></div>
 		
 		<form method="post" action="<?php echo $ajaxURL; ?>" class="<?php echo $classname; ?>" name="<?php echo $form_name; ?>">
@@ -208,7 +208,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 								}
 							
 							}else {
-								echo '<br /><label class="description" for="sp_addon_license_key">'. SP()->primitives->admin_text('Your license key seems to be inactive or invalid.  Please enter your license key above and click the Activate button below.').'</label>';
+								echo '<br /><label class="sf-description" for="sp_addon_license_key">'. SP()->primitives->admin_text('Your license key seems to be inactive or invalid.  Please enter your license key above and click the Activate button below.').'</label>';
 							} ?>
 						</td>
 					</tr>
@@ -243,14 +243,14 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 						<td>
 							<?php if( $license_status !== false && $license_status == 'valid' ) { ?>
 								<span class="sp-licensing-key-active"><?php echo SP()->primitives->admin_text('Active'); ?></span>
-								<input type="submit" class="button-secondary" id="<?php echo $button_id; ?>" name="SP_license_deactivate" value="<?php echo SP()->primitives->admin_text('Deactivate License'); ?>"/>
+								<input type="submit" class="sf-button-secondary" id="<?php echo $button_id; ?>" name="SP_license_deactivate" value="<?php echo SP()->primitives->admin_text('Deactivate License'); ?>"/>
 							<?php } else {
 								?>
-								<input type="submit" class="button-secondary" id="<?php echo $button_id; ?>" name="SP_license_activate" value="<?php echo SP()->primitives->admin_text('Activate License'); ?>"/>
+								<input type="submit" class="sf-button-secondary" id="<?php echo $button_id; ?>" name="SP_license_activate" value="<?php echo SP()->primitives->admin_text('Activate License'); ?>"/>
 							<?php } 
 								
 								if($license_status != 'valid' && $get_key != ''){
-									echo '<input type="submit" class="button-secondary '.$button_id.'" name="SP_license_remove" value="'.SP()->primitives->admin_text('Delete License Key').'"/>';
+									echo '<input type="submit" class="sf-button-secondary '.$button_id.'" name="SP_license_remove" value="'.SP()->primitives->admin_text('Delete License Key').'"/>';
 								}
 							?>
 						</td>
@@ -301,7 +301,7 @@ function spa_toolbox_licensing_form_paint_plugin_licenses() {
 	if($count_plugins < 1){
 		echo '<table class="form-table">';
 			echo '<tr valign="top">';
-				echo '<div class="sfoptionerror sp_addons_not_found">';
+				echo '<div class="sf-alert-block sf-info sp_addons_not_found">';
 					echo SP()->primitives->admin_text('There are no items activated that require a license key at this time');
 				echo '</div>';
 			echo '</tr>';
@@ -341,7 +341,7 @@ function spa_toolbox_licensing_form_paint_theme_licenses() {
 	if($count_themes < 1){
 		echo '<table class="form-table">';
 			echo '<tr valign="top">';
-				echo '<div class="sfoptionerror sp_addons_not_found">';
+				echo '<div class="sf-alert-block sf-info sp_addons_not_found">';
 					echo SP()->primitives->admin_text('There are no items activated that require a license key at this time');
 				echo '</div>';	
 			echo '</tr>';

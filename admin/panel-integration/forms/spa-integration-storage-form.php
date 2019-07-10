@@ -29,17 +29,17 @@ function spa_integration_storage_form() {
 	<?php echo sp_create_nonce('forum-adminform_storage'); ?>
 <?php
 	spa_paint_options_init();
-	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('Storage Locations'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Integration').' - '.*/SP()->primitives->admin_text('Storage Locations'), true);
 		spa_paint_open_panel();
 
-			echo '<br /><div class="sfoptionerror">';
+			echo '<div class="sf-alert-block sf-info">';
 			SP()->primitives->admin_etext('BEWARE: Please read the help before making any changes to these locations. Incorrect changes may cause Simple:Press to stop functioning');
 			echo '</div>';
 
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Set Storage Locations'), true, 'storage-locations');
 			echo '<table><tr>';
-			echo '<td><img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Location found').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Location found').'</td>';
-			echo '<td><img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Location not found').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Location not found').'</td></tr><tr>';
+			echo '<td><span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Location found').'"></span>'.SP()->primitives->admin_text('Location found').'</td>';
+			echo '<td><span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Location not found').'"></span>'.SP()->primitives->admin_text('Location not found').'</td></tr><tr>';
 			echo '<td><img src="'.SPADMINIMAGES.'sp_YesWrite.png" title="'.SP()->primitives->admin_text('Write - OK').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Write - OK').'</td>';
 			echo '<td><img src="'.SPADMINIMAGES.'sp_NoWrite.png" title="'.SP()->primitives->admin_text('Write - denied').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Write - denied').'</td>';
 			echo '</tr></table>';
@@ -105,7 +105,7 @@ function spa_integration_storage_form() {
 			do_action('sph_integration_storage_panel_location');
 
 			if (!$ok) {
-				echo '<tr><td colspan="3"><br /><div class="sfoptionerror"><h4>';
+				echo '<tr><td colspan="3"><br /><div class="sf-alert-block sf-info"><h4>';
 				SP()->primitives->admin_etext('For Simple:Press to function correctly it is imperative that the above location errors are resolved');
 				echo '</h4></div></td></tr>';
 			}
@@ -118,8 +118,8 @@ function spa_integration_storage_form() {
 		do_action('sph_integration_storage_panel');
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Storage Locations'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Storage Locations'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();
@@ -140,9 +140,9 @@ function spa_paint_storage_input($label, $name, $value, $path, $na=false) {
 	}
 
 	if ($found) {
-		$icon1 = '<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Location found').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;';
+		$icon1 = '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Location found').'"></span>';
 	} else {
-		$icon1 = '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Location not found').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;';
+		$icon1 = '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Location not found').'"></span>';
 		$icon2 = '<img src="'.SPADMINIMAGES.'sp_NoWrite.png" title="'.SP()->primitives->admin_text('Write - denied').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;';
 	}
 

@@ -22,7 +22,7 @@ function spa_plugins_upload_form() {
         	<form method="post" enctype="multipart/form-data" action="<?php echo self_admin_url('update.php?action=upload-sp-plugin'); ?>" id="sfpluginuploadform" name="sfpluginuploadform">
                 <?php echo sp_create_nonce('forum-plugin_upload'); ?>
         		<p><input type="file" id="pluginzip" name="pluginzip" /></p>
-        		<p><input type="button" class="button-primary spPluginUpload" id="saveupload" name="saveupload" value="<?php SP()->primitives->admin_etext('Upload Now'); ?>" data-target="#saveupload" /></p>
+        		<p><input type="button" class="sf-button-primary spPluginUpload" id="saveupload" name="saveupload" value="<?php SP()->primitives->admin_etext('Upload Now'); ?>" data-target="#saveupload" /></p>
         	</form>
 <?php
 		spa_paint_close_fieldset();

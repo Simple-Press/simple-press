@@ -140,9 +140,9 @@ function spa_permissions_edit_permission_form($role_id) {
 			do_action('sph_perm_edit_perm_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="sfpermedit<?php echo $role->role_id; ?>" name="sfpermedit<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Update Permission'); ?>" />
-		<input type="button" class="button-primary spCancelForm" data-target="#perm-<?php echo $role->role_id; ?>" id="sfpermedit<?php echo $role->role_id; ?>" name="editpermcancel<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+		<div class="sf-form-submit-bar">
+		<input type="submit" class="sf-button-primary" id="sfpermedit<?php echo $role->role_id; ?>" name="sfpermedit<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Update Permission'); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#perm-<?php echo $role->role_id; ?>" id="sfpermedit<?php echo $role->role_id; ?>" name="editpermcancel<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 		</form>
 	<?php spa_paint_close_tab(); ?>

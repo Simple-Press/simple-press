@@ -10,6 +10,9 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 
 require_once 'spa-iconsets.php';
 
+wp_enqueue_script( 'wp-color-picker' );
+wp_enqueue_style( 'wp-color-picker' );
+
 function spa_get_forums_in_group($groupid) {
 	return SP()->DB->table(SPFORUMS, "group_id=$groupid", '', 'forum_seq');
 }
@@ -150,10 +153,11 @@ function spa_get_defpermissions_role($group_id, $usergroup_id) {
 
 function spa_display_usergroup_select($filter = false, $forum_id = 0, $showSelect = true) {
 	$usergroups = spa_get_usergroups_all();
-	if ($showSelect) echo SP()->primitives->admin_text('Select usergroup').':&nbsp;&nbsp;';
+	//if ($showSelect) echo SP()->primitives->admin_text('Select usergroup');
 	if ($showSelect) {
 		?>
-        <select style="width:145px" class='sfacontrol' name='usergroup_id'>
+		<label><?php echo SP()->primitives->admin_text('Select usergroup') ?></label>
+        <select class='sfacontrol' name='usergroup_id'>
 		<?php
 	}
 	$out = '<option value="-1">'.SP()->primitives->admin_text('Select usergroup').'</option>';
@@ -182,7 +186,7 @@ function spa_display_permission_select($cur_perm = 0, $showSelect = true) {
 	?>
 	<?php $roles = sp_get_all_roles(); ?>
 	<?php if ($showSelect) { ?>
-        <select style="width:165px" class='sfacontrol' name='role'>
+        <select class='sfacontrol' name='role'>
 		<?php
 	}
 	$out = '';
@@ -241,7 +245,7 @@ function spa_get_custom_icons( $path = '', $url_base = '' ) {
  * @param string $selected
  * @param boolean $show_label
  */
-function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = array() ,$selected = '', $show_label = true ) {
+function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = array() ,$selected = '', $show_label = true, $css_classes = '' ) {
 	
 	$iconsets = array_merge( $extra_icon_groups, spa_get_all_active_iconsets() );
 	
@@ -272,8 +276,8 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	
 	
 	if( $show_label ) {
-		echo "<div class='sp-form-row'>\n";
-		echo "<div class='wp-core-ui sflabel sp-label-40'>$label:</div>\n";
+		echo "<div class='sf-form-row ". $css_classes ."'>\n";
+		echo "<label class='sp-label-40'>$label</label>\n";
 	}
 	
 	$icon_picker_id = 'icon_picker_' . rand( 111111, 999999 );
@@ -281,7 +285,7 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	
 	$icon_size_id = $icon_picker_id . '_size';
 	
-	echo '<div class="sp-icon-picker-row">';
+	echo '<div class="sf-icon-picker-row sf-select-wrap">';
 	
 	printf( '<input type="hidden" name="%s" value="%s" class="icon_value" />', $name, esc_attr( json_encode( $selected_icon ) ) );
 	
@@ -346,9 +350,9 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 				iconGenerator: function( icon ) {
 
 					if( icon.match(/\.(jpeg|jpg|gif|png)$/) != null ) {
-						return '<i class="sp-iconset-icon"><img src="'+ icon + '" /></i>';
+						return '<i class="sf-iconset-icon"><img src="'+ icon + '" /></i>';
 					} else {
-						return '<i class="'+icon+' sp-iconset-icon"></i>';
+						return '<i class="'+icon+' sf-iconset-icon"></i>';
 					}
 
 				}
@@ -356,10 +360,10 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 				spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>' );
 			});
 	
-		$( '<?php echo $font_style_fields ?>' ).insertBefore( _icon_ins.closest('.sp-icon-picker-row').find('.selector-popup .fip-icons-container') );
+		$( '<?php echo $font_style_fields ?>' ).insertBefore( _icon_ins.closest('.sf-icon-picker-row').find('.selector-popup .fip-icons-container') );
 		
 		
-		$( '#<?php echo $icon_picker_id; ?>').closest('.sp-icon-picker-row').find('.font-style-size, .font-style-size_type').on( 'change', function() {
+		$( '#<?php echo $icon_picker_id; ?>').closest('.sf-icon-picker-row').find('.font-style-size, .font-style-size_type').on( 'change', function() {
 			spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>' );
 		})
 			
@@ -626,7 +630,12 @@ function sp_add_caps() {
 
 function sp_display_item_stats($table, $key, $value, $label) {
 	$c = SP()->DB->count($table, "$key = $value");
-	echo '<span class = "spItemStat">'.$label.' <b>'.$c.'</b></span>';
+        ?>
+        <div>
+            <div class="sf-item-type"><?php echo $label ?></div>
+            <span class="sf-number"><?php echo $c ?></span>
+        </div>
+        <?php
 }
 
 function spa_build_forum_permalink_slugs() {

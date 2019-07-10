@@ -20,7 +20,7 @@ function spa_toolbox_cron_form() {
    	$cronData = spa_get_cron_data();
 
 	spa_paint_options_init();
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('CRON Inspector'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('CRON Inspector'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('CRON Schedules'), false);
 ?>
@@ -117,7 +117,7 @@ function spa_toolbox_cron_form() {
 
 	echo '<div class="sfform-panel-spacer"></div>';
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('CRON Update'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('CRON Update'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Add CRON'), true, 'cron-add');
 				spa_paint_input(SP()->primitives->admin_text('Next Run Timestamp'), 'add-timestamp', '');
@@ -146,8 +146,8 @@ function spa_toolbox_cron_form() {
 		do_action('sph_toolbox_right_cron_panel');
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update CRON'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update CRON'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

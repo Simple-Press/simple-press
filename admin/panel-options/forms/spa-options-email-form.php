@@ -25,7 +25,7 @@ function spa_options_email_form() {
 
     #== EMAIL Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('Email Settings'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('Email Settings'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('New User Email'), true, 'new-user-email');
 				spa_paint_checkbox(SP()->primitives->admin_text('Use the Simple:Press new user email version'), 'sfusespfreg', $sfoptions['sfusespfreg']);
@@ -52,8 +52,8 @@ function spa_options_email_form() {
 
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Email Options'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Email Options'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

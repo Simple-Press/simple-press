@@ -33,8 +33,8 @@ function spa_components_sr_del_members_form($rank_id) {
 <?php
         $loc = 'sfrankshow-'.$rank_id;
 ?>
-		<input type="submit" class="button-primary spSpecialRankDel" id="sfmemberdel<?php echo $rank_id; ?>" name="sfmemberdel<?php echo $rank_id; ?>" data-target="#dmember_id<?php echo $rank_id; ?>" value="<?php SP()->primitives->admin_etext('Remove Members'); ?>" />
-		<input type="button" class="button-primary spSpecialRankCancel" data-target="#members-<?php echo $rank_id; ?>" data-loc="<?php echo $loc; ?>" id="sfmemberdel<?php echo $rank_id; ?>" name="addmemberscancel<?php echo $rank_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+		<input type="submit" class="sf-button-primary spSpecialRankDel" id="sfmemberdel<?php echo $rank_id; ?>" name="sfmemberdel<?php echo $rank_id; ?>" data-target="#dmember_id<?php echo $rank_id; ?>" value="<?php SP()->primitives->admin_etext('Remove Members'); ?>" />
+		<input type="button" class="sf-button-primary spSpecialRankCancel" data-target="#members-<?php echo $rank_id; ?>" data-loc="<?php echo $loc; ?>" id="sfmemberdel<?php echo $rank_id; ?>" name="addmemberscancel<?php echo $rank_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 	</form>
 
 	<div class="sfform-panel-spacer"></div>
