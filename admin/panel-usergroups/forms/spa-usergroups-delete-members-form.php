@@ -49,7 +49,7 @@ function spa_usergroups_delete_members_form($usergroup_id) {
         <?php
         do_action('sph_usergroup_delete_member_panel');
         ?>
-        <span><input type="submit" class="sf-button-primary" id="sfmemberdel<?php echo $usergroup_id; ?>" name="sfmemberdel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Delete/Move Members'); ?>" /> <span class="sf-button sfhidden" id='onFinish'></span>
+        <span><input type="submit" class="sf-button-primary" id="sfmemberdel<?php echo $usergroup_id; ?>" name="sfmemberdel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Delete/Move Members'); ?>" /> <span class="_sf-button sfhidden" id='onFinish'></span>
             <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $usergroup_id; ?>" id="sfmemberdel<?php echo $usergroup_id; ?>" name="delmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" /></span>
         <br />
         <div class="pbar" id="progressbar"></div>
