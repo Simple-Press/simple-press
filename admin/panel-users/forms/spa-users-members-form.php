@@ -33,13 +33,15 @@ function spa_users_members_form() {
                         $columns = array(
                             'cb'                => '<input type="checkbox" />',
                             'user_id'           => SP()->primitives->admin_text('ID'),
-                            'user_login'        => SP()->primitives->admin_text('User Login'),
+                            'avatar'            => SP()->primitives->admin_text('Avatar'),
                             'display_name'      => SP()->primitives->admin_text('Display Name'),
-                            'user_registered'   => SP()->primitives->admin_text('Registered'),
-                            'lastvisit'         => SP()->primitives->admin_text('Last Visit'),
+                            'user_login'        => SP()->primitives->admin_text('Login'),
                             'posts'             => SP()->primitives->admin_text('Posts'),
                             'memberships'       => SP()->primitives->admin_text('Memberships'),
                             'rank'              => SP()->primitives->admin_text('Forum Rank'),
+                            'user_registered'   => SP()->primitives->admin_text('Registered On'),
+                            'lastvisit'         => SP()->primitives->admin_text('Last Visit'),
+                            'more'              => SP()->primitives->admin_text(''),
                         );
                         return $columns;
                     }
@@ -74,9 +76,9 @@ function spa_users_members_form() {
                     function display_rows() {
                         $records = $this->items;
                         if (!empty($records)) {
-                    		list($columns, $hidden, $sortable, $primary) = $this->get_column_info();
+                            list($columns, $hidden, $sortable, $primary) = $this->get_column_info();
                             foreach ($records as $rec) {
-                                echo '<tr class="spMobileTableData">';
+                                echo '<div class="spMobileTableData">';
 
                                 foreach ($columns as $column_name => $column_display_name) {
                         			$classes = "$column_name column-$column_name";
@@ -85,11 +87,11 @@ function spa_users_members_form() {
 
                                     switch ($column_name) {
                                         case 'cb':
-                            				echo '<th scope="row" class="check-column">'.sprintf('<input style="left:0; position:relative" type="checkbox" name="users[]" value="%s" />', $rec['user_id']).'</th>';
+                            				echo '<div scope="row" class="check-column">'.sprintf('<input style="left:0; position:relative" type="checkbox" name="users[]" value="%s" />', $rec['user_id']).'</div>';
                                             break;
 
                                         default;
-                                            echo "<td $attributes>";
+                                            echo "<div $attributes>";
                                             switch ($column_name) {
                                                 case 'user_id':
                                                     echo $rec['user_id'];
@@ -99,9 +101,9 @@ function spa_users_members_form() {
                             						$title = SP()->primitives->admin_text('Member Profile');
                             						$user_action = (is_multisite()) ? 'remove' : 'delete';
                                                     $actions = array(
-                                                        'edit'      => '<a href="'.admin_url('user-edit.php?user_id='.$rec['user_id']).'&amp;wp_http_referer=admin.php?page='.SP_FOLDER_NAME.'/admin/panel-users/spa-users.php">'.SP()->primitives->admin_text('Edit').'</a>',
-                                                        'delete'   => '<a href="'.admin_url('users.php?action='.$user_action.'&amp;user='.$rec['user_id']."&amp;_wpnonce=$nonce&amp;wp_http_referer=admin.php?page=".SP_FOLDER_NAME."/admin/panel-users/spa-users.php").'">'.SP()->primitives->admin_text('Delete').'</a>',
-                                                        'profile'    => '<a id="memberprofile'.$rec['user_id'].'" class="spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="750" data-height="0" data-align="center">'.SP()->primitives->admin_text('Profile').'</a>',
+                                                        'edit'      => '<a href="'.admin_url('user-edit.php?user_id='.$rec['user_id']).'&amp;wp_http_referer=admin.php?page='.SP_FOLDER_NAME.'/admin/panel-users/spa-users.php"><span class="sf-icon sf-blue sf-edit"></span></a>',
+                                                        'delete'   => '<a href="'.admin_url('users.php?action='.$user_action.'&amp;user='.$rec['user_id']."&amp;_wpnonce=$nonce&amp;wp_http_referer=admin.php?page=".SP_FOLDER_NAME."/admin/panel-users/spa-users.php").'"><span class="sf-icon sf-blue sf-delete"></span></a>',
+                                                        'profile'    => '<a id="memberprofile'.$rec['user_id'].'" class="spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="750" data-height="0" data-align="center"><span class="sf-icon sf-blue sf-profiles"></span></a>',
                                                     );
 
                                                     echo $this->row_actions($actions);
@@ -123,11 +125,11 @@ function spa_users_members_form() {
                                                 default:
                                                     echo $rec[$column_name];
                                                 }
-                                            echo '</td>';
+                                            echo '</div>';
                                     }
                                 }
 
-                                echo '</tr>';
+                                echo '</div>';
                             }
                         }
                     }
@@ -167,7 +169,7 @@ function spa_users_members_form() {
                        	$query = new stdClass();
                         $query->table        = SPMEMBERS;
                         $query->found_rows   = true;
-                        $query->fields       = SPMEMBERS.'.user_id, '.SPMEMBERS.'.display_name, lastvisit, posts, admin, moderator, user_login, user_registered';
+                        $query->fields       = SPMEMBERS.'.user_id, '.SPMEMBERS.'.display_name, lastvisit, posts, admin, moderator, user_login, user_registered, avatar';
         				$query->join         = array(SPUSERS.' ON '.SPMEMBERS.'.user_id = '.SPUSERS.'.ID');
 
                         # handle specific usergroup
@@ -315,6 +317,82 @@ function spa_users_members_form() {
                     $membersTable->display();
                     ?>
                 </form>
+                <script>
+
+                    if (jQuery(window).width() < 768) putDiv();
+                    var $action = jQuery('.row-actions');
+
+                    jQuery('.row-actions').remove();
+                    jQuery('.column-more').each(function(index){
+                        jQuery(this).append($action[index]);
+                        jQuery(this).append("<div class=\"drop-down\"><span class=\"sf-icon sf-gray sf-more\"></div>");
+                    });
+
+                    jQuery('.column-more .row-actions').toggleClass('hide');
+                    
+                    jQuery('.drop-down').on('click', function(){
+                        jQuery(this).parent().find('.row-actions').toggleClass('hide');
+                    });
+
+                    jQuery(window).on('resize',function(){
+                        if (jQuery(window).width() < 768) {
+                            putDiv()
+                        } else delDiv();
+                    });
+                    function delDiv(){
+                        if ( jQuery(".avatar-text-lable").length != 0 ) {
+                            jQuery(".avatar-text-lable").remove();
+                        };
+                        if ( jQuery(".login-text-lable").length != 0 ) {
+                            jQuery(".login-text-lable").remove();
+                        };
+                        if ( jQuery(".name-text-lable").length != 0 ) {
+                            jQuery(".name-text-lable").remove();
+                        };
+                        if ( jQuery(".reg-text-lable").length != 0 ) {
+                            jQuery(".reg-text-lable").remove();
+                        };
+                        if ( jQuery(".visit-text-lable").length != 0 ) {
+                            jQuery(".visit-text-lable").remove();
+                        };
+                        if ( jQuery(".posts-text-lable").length != 0 ) {
+                            jQuery(".posts-text-lable").remove();
+                        };
+                        if ( jQuery(".member-text-lable").length != 0 ) {
+                            jQuery(".member-text-lable").remove();
+                        };
+                        if ( jQuery(".rank-text-lable").length != 0 ) {
+                            jQuery(".rank-text-lable").remove();
+                        };
+
+                    }
+                    function putDiv(){
+                        if ( jQuery(".avatar-text-lable").length == 0 ) {
+                            jQuery("<div class=\"avatar-text-lable\">Avatar</div>").insertBefore(".spMobileTableData [data-label=\"Avatar\"]");
+                        };
+                        if ( jQuery(".name-text-lable").length == 0 ) {
+                            jQuery("<div class=\"name-text-lable\">Display Name</div>").insertAfter(".spMobileTableData .avatar-text-lable");
+                        };
+                        if ( jQuery(".login-text-lable").length == 0 ) {
+                            jQuery("<div class=\"login-text-lable\">User Login</div>").insertBefore(".spMobileTableData [data-label=\"Login\"]");
+                        };
+                        if ( jQuery(".posts-text-lable").length == 0 ) {
+                            jQuery("<div class=\"posts-text-lable\">Posts</div>").insertAfter(".spMobileTableData .login-text-lable");
+                        };
+                        if ( jQuery(".member-text-lable").length == 0 ) {
+                            jQuery("<div class=\"member-text-lable\">Memberships</div>").insertBefore(".spMobileTableData [data-label=\"Memberships\"]");
+                        };
+                        if ( jQuery(".rank-text-lable").length == 0 ) {
+                            jQuery("<div class=\"rank-text-lable\">Forum Rank</div>").insertAfter(".spMobileTableData .member-text-lable");
+                        };
+                        if ( jQuery(".reg-text-lable").length == 0 ) {
+                            jQuery("<div class=\"reg-text-lable\">Registered</div>").insertBefore(".spMobileTableData [data-label=\"Registered On\"]");
+                        };
+                        if ( jQuery(".visit-text-lable").length == 0 ) {
+                            jQuery("<div class=\"visit-text-lable\">Last Visit</div>").insertAfter(".spMobileTableData .reg-text-lable");
+                        };
+                    };
+                </script>
 <?php
 			spa_paint_close_fieldset();
            	echo '<div class="sfform-panel-spacer"></div>';
