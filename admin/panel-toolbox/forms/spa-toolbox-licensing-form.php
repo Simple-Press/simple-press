@@ -11,7 +11,7 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function spa_toolbox_licensing_form() {
 	
 	spa_paint_options_init();
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Licensing'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Licensing'), true);
 	
 		/* Paint Instructions...*/
 		echo "<div class='sp-licensing-instructions-tab'>";

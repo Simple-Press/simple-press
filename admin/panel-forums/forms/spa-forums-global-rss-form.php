@@ -23,7 +23,7 @@ function spa_forums_global_rss_form() {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfnewglobalrss" name="sfnewglobalrss">
 <?php
 		echo sp_create_nonce('forum-adminform_globalrss');
-		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Global RSS Settings'), true);
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Global RSS Settings'), true);
 			spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Globally Enable/Disable RSS Feeds'), true, 'global-rss');
 

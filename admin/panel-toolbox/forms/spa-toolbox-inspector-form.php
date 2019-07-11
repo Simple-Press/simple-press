@@ -24,7 +24,7 @@ function spa_toolbox_inspector_form() {
 
     #== UNINSTALL Tab ==========================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Data Inspector'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Data Inspector'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Data Inspector'), true, 'inspect-data');
 				echo '<div class="sf-alert-block sf-info">';

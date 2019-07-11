@@ -26,7 +26,7 @@ function spa_toolbox_uninstall_form() {
 
     #== UNINSTALL Tab ==========================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Uninstall'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Uninstall'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Removing Simple:Press'), true, 'uninstall');
 				echo '<div class="sf-alert-block sf-info">';

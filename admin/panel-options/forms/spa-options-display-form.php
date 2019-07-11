@@ -24,7 +24,7 @@ function spa_options_display_form() {
 
 		#== GLOBAL Tab ============================================================
 
-		spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('General Display Settings'));
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('General Display Settings'));
 		spa_paint_open_panel();
 		spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Page Title'), true, 'forum-page-title');
 		spa_paint_checkbox(SP()->primitives->admin_text('Remove page title completely'), 'sfnotitle', $sfoptions['sfnotitle']);

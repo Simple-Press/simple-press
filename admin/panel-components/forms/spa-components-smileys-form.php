@@ -82,7 +82,7 @@ function spa_components_smileys_form() {
 
 	#== SMILEYS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Components').' - '.SP()->primitives->admin_text('Smileys'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Components').' - '.*/SP()->primitives->admin_text('Smileys'), true);
 ?>
             <div class="sf-panel-body-top">
                 <div class="sf-panel-body-top-left">

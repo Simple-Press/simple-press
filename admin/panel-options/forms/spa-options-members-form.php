@@ -25,7 +25,7 @@ function spa_options_members_form() {
 
     #== MEMBERS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('Member Settings'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('Member Settings'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Member Profiles'), true, 'member-profiles');
 				spa_paint_checkbox(SP()->primitives->admin_text('Disallow members not logged in to post as guests'), 'sfcheckformember', $sfoptions['sfcheckformember']);

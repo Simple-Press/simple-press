@@ -55,7 +55,7 @@ function spa_options_newposts_form() {
 
     #== GLOBAL Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('New Posts Handling'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('New Posts Handling'));
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Post Caching'), true, 'topic-cache');

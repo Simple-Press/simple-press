@@ -25,7 +25,7 @@ function spa_components_login_form() {
 
     #== LOGIN Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Components').' - '.SP()->primitives->admin_text('Login And Registration'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Components').' - '.*/SP()->primitives->admin_text('Login And Registration'));
 			if (false == get_option('users_can_register')) {
 				spa_paint_open_panel();
 					spa_paint_open_fieldset(SP()->primitives->admin_text('Member Registrations'), true, 'no-login');

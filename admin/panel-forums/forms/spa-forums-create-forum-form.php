@@ -24,14 +24,14 @@ function spa_forums_create_forum_form() {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumnew" name="sfforumnew">
 <?php
 		echo sp_create_nonce('forum-adminform_forumnew');
-		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Create New Forum'), true);
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Create New Forum'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Create New Forum'), 'true', 'create-new-forum');
 					# check there are groups before proceeding
 					if (SP()->DB->count(SPGROUPS) == 0) {
 						echo '<div class="sf-alert-block sf-info">';
 						SP()->primitives->admin_etext('There are no groups defined');
-						echo ''.SP()->primitives->admin_text('Create new group');
+						echo SP()->primitives->admin_text('Create new group');
 						echo '</div>';
 						spa_paint_close_fieldset();
 						spa_paint_close_panel();
@@ -63,9 +63,9 @@ function spa_forums_create_forum_form() {
 					echo '<div id="groupselect" style="display:block;">';
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Select group new forum will belong to')."</label>\n";
-					echo '<select class="wp-core-ui sp-input-60 spForumSetSequence" tabindex="'.$tab.'" name="group_id">';
+					echo '<div class="sf-select-wrap"><select class="spForumSetSequence" tabindex="'.$tab.'" name="group_id">';
 					echo spa_create_group_select(0, 1);
-					echo "</select>\n";
+					echo "</select></div>\n";
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
 					$tab++;
@@ -74,9 +74,9 @@ function spa_forums_create_forum_form() {
 					echo '<div id="forumselect" style="display:none;">';
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Select forum new subforum will belong to').":</label>\n";
-					echo '<select class="wp-core-ui sp-input-60 spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';
+					echo '<div class="sf-select-wrap"><select class="spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';
 					echo sp_render_group_forum_select(false, false, false, true);
-					echo "</select>\n";
+					echo "</select></div>\n";
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
 					$tab++;
@@ -84,9 +84,9 @@ function spa_forums_create_forum_form() {
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			spa_paint_close_container();
-			echo '<div class="sfform-panel-spacer"></div>';
+		//	echo '<div class="sfform-panel-spacer"></div>';
 
-        echo '<div class="sfform-panel-spacer"></div>';
+       // echo '<div class="sfform-panel-spacer"></div>';
 		echo '<div class="sfhidden" id="block1">';
 
 		spa_paint_open_nohead_tab(false);

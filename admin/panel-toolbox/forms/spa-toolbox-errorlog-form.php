@@ -16,7 +16,7 @@ function spa_toolbox_errorlog_form() {
 <?php
 	$sflog = spa_get_errorlog_data();
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Error Log'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Error Log'), true);
 		spa_paint_open_fieldset(SP()->primitives->admin_text('Error Log'), false);
 			echo '<p>'.SP()->primitives->admin_text('Error Logging can be disabled in the Global Options panel').'<br /></p>';
 

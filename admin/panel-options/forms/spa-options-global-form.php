@@ -26,7 +26,7 @@ function spa_options_global_form() {
 
     #== GLOBAL Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('Global Settings'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('Global Settings'));
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Lock Down Forum'), true, 'lock-down-forum');

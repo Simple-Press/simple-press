@@ -29,7 +29,7 @@ function spa_integration_storage_form() {
 	<?php echo sp_create_nonce('forum-adminform_storage'); ?>
 <?php
 	spa_paint_options_init();
-	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('Storage Locations'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Integration').' - '.*/SP()->primitives->admin_text('Storage Locations'), true);
 		spa_paint_open_panel();
 
 			echo '<div class="sf-alert-block sf-info">';

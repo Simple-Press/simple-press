@@ -58,7 +58,7 @@ function spa_profiles_tabs_menus_form() {
 
     #== CUSTOM FIELDS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Profiles').' - '.SP()->primitives->admin_text('Tabs'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Tabs'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Profile Menu Order'), true, 'profile-menus');
 				echo '<div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('Here you can set the order of Profile Tabs and Menus by dragging and dropping below.  Additionally, you can edit any of the Tabs or Menus.').'</div>';

@@ -96,7 +96,7 @@ function spa_options_iconsets_form() {
 
 	#== Iconsets Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('Iconsets'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('Iconsets'), true);
 	?>
             <div class="sf-panel-body-top">
                 <div class="sf-panel-body-top-left">

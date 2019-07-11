@@ -25,7 +25,7 @@ function spa_options_content_form() {
 
     #== POSTS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('Content Settings'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('Content Settings'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Date/Time Formatting'), true, 'date-time-formatting');
 				spa_paint_input(SP()->primitives->admin_text('Date display format'), 'sfdates', $sfoptions['sfdates']);

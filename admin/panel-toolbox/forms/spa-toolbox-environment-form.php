@@ -18,7 +18,7 @@ function spa_toolbox_environment_form() {
 	$wp_plugins = get_plugins();
 	$sp_plugins = SP()->plugin->get_list();
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Environment'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Environment'), true);
 		spa_paint_open_panel();
 		spa_paint_open_fieldset(SP()->primitives->admin_text('Environment'), false);
 

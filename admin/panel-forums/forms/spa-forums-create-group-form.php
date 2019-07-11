@@ -24,23 +24,23 @@ function spa_forums_create_group_form() {
 		echo sp_create_nonce('forum-adminform_groupnew');
 		
 		$info = '<div class="sf-alert-block sf-info">' .
-			sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the %s Order Groups and Forums %s option from the Forums Menu'), '<b>', '</b>') .
+			sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the Order Groups and Forums option from the Forums Menu'), '<b>', '</b>') .
 			'</div>';
 		
-		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Create New Group'), false, $info);
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Create New Group'), false, $info);
 
 			spa_paint_open_panel();
-				spa_paint_open_fieldset(SP()->primitives->admin_text('Create New Group'), 'true', 'create-new-forum-group');
+				spa_paint_open_fieldset(SP()->primitives->admin_text('Group Details'), 'true', 'create-new-forum-group');
 
-					spa_paint_input(SP()->primitives->admin_text('Group Name'), 'group_name', '', false, true);
+                    spa_paint_input(SP()->primitives->admin_text('Group name'), 'group_name', '', false, false,'sf-half');
+
+					$custom_icons =  spa_get_custom_icons();
+
+					spa_select_iconset_icon_picker('group_icon', SP()->primitives->admin_text('Group Icon'), array( 'Custom Icons' => $custom_icons ), '',true, 'sf-half' );
+
 					spa_paint_input(SP()->primitives->admin_text('Description'), 'group_desc', '', false, true);
 
-					
-					$custom_icons =  spa_get_custom_icons();
-					
-					spa_select_iconset_icon_picker('group_icon', SP()->primitives->admin_text('Select Custom Icon'), array( 'Custom Icons' => $custom_icons ) );
-
-					spa_paint_wide_textarea('Special group message to be displayed above forums', 'group_message', '');
+					spa_paint_wide_textarea('Message', 'group_message', '','','4', 'Special group message to be displayed above forums');
 
 					do_action('sph_forums_create_group_panel');
 
@@ -51,11 +51,10 @@ function spa_forums_create_group_form() {
 		spa_paint_tab_right_cell();
 
 			spa_paint_open_panel();
-				spa_paint_open_fieldset(SP()->primitives->admin_text('Default User Group Permissions'), false);
+				spa_paint_open_fieldset(SP()->primitives->admin_text('Group Permissions'), true, 'create-new-forum-permissions');
 
 					echo '<div class="sf-alert-block sf-info">';
-					echo '<strong>'.SP()->primitives->admin_text('Set default usergroup permission sets for this group').'</strong><br />';
-					echo SP()->primitives->admin_text('Note - This will not add or modify any current permissions. It is only a default setting for future forums created in this group.');
+					echo SP()->primitives->admin_text('This will not add or modify any current permissions.');
 					echo '</div>';
 
 					# Permissions
@@ -77,7 +76,7 @@ function spa_forums_create_group_form() {
 		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
-		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Group'); ?>" />
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create Group'); ?>" />
 		</div>
 
 	<?php spa_paint_close_tab(); ?>

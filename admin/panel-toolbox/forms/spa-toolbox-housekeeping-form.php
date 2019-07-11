@@ -30,7 +30,7 @@ function spa_toolbox_housekeeping_form() {
 	<div id="sfhousekeepingformblock">
 <?php
 	spa_paint_options_init();
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Housekeeping'),true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('House Keeping'),true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Rebuild Indexes'), true, 'rebuild-indexes');
 ?>
@@ -40,12 +40,15 @@ function spa_toolbox_housekeeping_form() {
 ?>
 				<br/>
 				<form action="<?php echo $ajaxURL; ?>" method="post" id="sfindexes" name="sfindexes">
+
 				<?php echo sp_create_nonce('forum-adminform_housekeeping'); ?>
-				<span class="sf-sublabel">
-					<select class="wp-core-ui" name="forum_id" >
-						<?php echo sp_render_group_forum_select(false, false, false, true, '', '', 'wp-core-ui', 20); ?>
-					</select>
-				</span>
+                    <div class="sf-form-row sf-sublabel">
+				        <div class="sf-select-wrap">
+					        <select class="wp-core-ui sp-input-60" name="forum_id" >
+						        <?php echo sp_render_group_forum_select(false, false, false, true, '', '', 'wp-core-ui', 20); ?>
+					        </select>
+				        </div>
+				    </div>
 				<br />
 <?php
 				echo '<p class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Rebuilding the forum indexes may take some time if you have a large number of topics or posts.').'</p>';
@@ -71,12 +74,16 @@ function spa_toolbox_housekeeping_form() {
 
 				<span class="sf-sublabel">
 				<input class="wp-core-ui" type="text" value="30" name="sfdays" /></span>
-				<br /><br/>
+                    <p class="sf-sublabel sf-sublabel-small">
+						<?php echo SP()->primitives->admin_text('Cleaning up the New Post Lists may take some time if you have a large number of users that meet the criteria.')?>
+                    </p>
+                    <br /><br/>
 				<input type="submit" class="sf-button-primary spShowElement" id="saveit2" name="clean-newposts" value="<?php SP()->primitives->admin_etext('Clean New Posts List'); ?>" data-target="#npcimg" />
+
 				<img class="sfhidden" id="npcimg" src="<?php echo SPCOMMONIMAGES.'working.gif'; ?>" alt=""/>
 				</form>
 <?php
-				echo '<p class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Cleaning up the New Post Lists may take some time if you have a large number of users that meet the criteria.').'</p>';
+
 ?>
 			</div>
 <?php
@@ -92,12 +99,13 @@ function spa_toolbox_housekeeping_form() {
 ?>
 				<form action="<?php echo $ajaxURL; ?>" method="post" id="sfpostcountcleanup" name="sfpostcountcleanup">
 				<?php echo sp_create_nonce('forum-adminform_housekeeping'); ?><br />
+                    <p class="sf-sublabel .sf-sublabel-small">
+	                    <?php echo ''.SP()->primitives->admin_text('Recalculating user post counts may take some time if you have a large number of users and cannot be reversed.').''; ?>
+                    </p>
 				<input type="submit" class="sf-button-primary spShowElement" id="saveit3" name="postcount-cleanup" value="<?php SP()->primitives->admin_etext('Clean Up Post Counts'); ?>" data-target="#pcimg" />
 				<img class="sfhidden" id="pcimg" src="<?php echo SPCOMMONIMAGES.'working.gif'; ?>" alt=""/>
 				</form>
-<?php
-				echo '<p class="sf-sublabel .sf-sublabel-small">'.SP()->primitives->admin_text('Recalculating user post counts may take some time if you have a large number of users and cannot be reversed.').'</p>';
-?>
+
 			</div>
 <?php
 				spa_paint_close_fieldset();

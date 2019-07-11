@@ -15,7 +15,7 @@ function spa_users_members_form() {
 
 	spa_paint_options_init();
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Users').' - '.SP()->primitives->admin_text('Member Information'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Users').' - '.*/SP()->primitives->admin_text('Member Information'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Member Information'), false, '', false);
                 if (!class_exists('SP_List_Table')) require_once SP_PLUGIN_DIR.'/admin/library/sp-list-table.php';

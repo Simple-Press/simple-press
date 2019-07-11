@@ -153,9 +153,10 @@ function spa_get_defpermissions_role($group_id, $usergroup_id) {
 
 function spa_display_usergroup_select($filter = false, $forum_id = 0, $showSelect = true) {
 	$usergroups = spa_get_usergroups_all();
-	if ($showSelect) echo SP()->primitives->admin_text('Select usergroup').':&nbsp;&nbsp;';
+	//if ($showSelect) echo SP()->primitives->admin_text('Select usergroup');
 	if ($showSelect) {
 		?>
+		<label><?php echo SP()->primitives->admin_text('Select usergroup') ?></label>
         <select class='sfacontrol' name='usergroup_id'>
 		<?php
 	}
@@ -674,4 +675,40 @@ function spa_build_forum_permalink_slugs() {
 			$result        = SP()->DB->update($query);
 		}
 	}
+}
+
+function spa_pagination($callback, $countPages, $currentPageNum, $paginationLength = 8, $ellipsisLength = 2) {
+    if ($countPages <= $paginationLength) {
+	$paginationLength = $countPages;
+	$from = 1;
+    } else {
+	$c = floor($paginationLength / 2) - 1;
+	if ($currentPageNum <= $c) {
+		$from = 1;
+	} elseif ($currentPageNum + $c >= $countPages) {
+		$from = $countPages - $paginationLength + 1;
+	} else {
+		$from = $currentPageNum - $c;
+	}
+    }
+    $links = array(); 
+    $pagination = array_keys(array_fill($from, $paginationLength, ''));
+    
+    if (count($pagination) == $paginationLength && $ellipsisLength) {
+        foreach ($pagination as $k => $pageNumber) {
+            if ($currentPageNum + $ellipsisLength < $countPages && $paginationLength - $ellipsisLength < $k + 2 && $paginationLength - 1 > $k) {
+                if ($paginationLength - 2 == $k) {
+                    array_push($links, call_user_func_array($callback, array($pageNumber, '...')));
+                }
+            } else {
+                array_push($links, call_user_func_array($callback, array($pageNumber, $pageNumber)));
+            }
+        }
+    } else {
+        foreach ($pagination as $pageNumber) {
+            array_push($links, call_user_func_array($callback, array($pageNumber, $pageNumber)));
+        }
+    }
+    $links = array_slice($links, -($paginationLength - $ellipsisLength + 1));
+    return $links;
 }

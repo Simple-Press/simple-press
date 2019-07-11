@@ -100,7 +100,7 @@ function spa_profiles_avatars_form() {
 
 	#== PROFILE OPTIONS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Profiles').' - '.SP()->primitives->admin_text('Avatars'), !$sfoptions['sfshowavatars']);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Avatars'), !$sfoptions['sfshowavatars']);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Avatar Options'), true, 'avatar-options');
 				spa_paint_checkbox(SP()->primitives->admin_text('Display avatars'), 'sfshowavatars', $sfoptions['sfshowavatars']);

@@ -237,6 +237,9 @@
 				var mydata = $(this).data();
 				spj.filterMultiSelectList(mydata.url, mydata.uid, mydata.image);
 			});
+			$('#sfmaincontainer').on('blur', '.sf-filter-auto [type="search"]', function() {
+				$(this).closest('.sf-filter-auto').find('.spFilterList').click();
+			});
 		}
 	};
 

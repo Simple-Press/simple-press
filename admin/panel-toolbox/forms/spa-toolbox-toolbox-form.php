@@ -25,7 +25,7 @@ function spa_toolbox_toolbox_form() {
 
     #== TOOLBOX Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Toolbox'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Toolbox'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Current Version/Build'), false);
             	$version = SP()->primitives->admin_text('Version:').'&nbsp;<strong>'.SP()->options->get('sfversion').'</strong>';
