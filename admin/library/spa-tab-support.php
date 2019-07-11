@@ -210,7 +210,7 @@ function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1) {
 	$tab++;
 }
 
-function spa_paint_wide_textarea($label, $name, $value, $submessage='', $xrows=1) {
+function spa_paint_wide_textarea($label, $name, $value, $submessage='', $xrows=1, $placeholder='') {
 	global $tab;
 
 	echo "<div class='sf-form-row'>\n";
@@ -218,7 +218,7 @@ function spa_paint_wide_textarea($label, $name, $value, $submessage='', $xrows=1
 	echo "$label";
 	if (!empty($submessage)) echo "<small><strong>$submessage</strong></small>\n";
 	echo '</label>';
-	echo "<textarea rows='$xrows' cols='80' class='wp-core-ui sp-textarea' tabindex='$tab' name='$name'>".esc_attr($value)."</textarea>\n";
+	echo "<textarea placeholder='$placeholder' rows='$xrows' cols='80' class='wp-core-ui sp-textarea' tabindex='$tab' name='$name'>".esc_attr($value)."</textarea>\n";
 	//echo '<div class="clearboth"></div>';
 	echo '</div>';
 

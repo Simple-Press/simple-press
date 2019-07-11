@@ -14,6 +14,11 @@ Please note that User Groups are defined on the Manage User Groups admin page an
 This panel allows admins to remove ALL User Group Permission Sets from ALL Groups/Forums on the site. Please use caution as this action cannot be undone.
 [end]
 
+[create-new-forum-permissions]
+<strong>Set default usergroup permission sets for this group</strong><br /><br />
+Note - This will not add or modify any current permissions. It is only a default setting for future forums created in this group.
+[end]
+
 [create-new-forum-group]
 <strong>Create New Forum Group</strong><br /><br />
 This admin panel is used to create a new Forum Group. Enter the new Group name and description and select the desired display

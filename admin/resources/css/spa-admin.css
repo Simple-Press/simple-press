@@ -2180,6 +2180,7 @@ div[class^="collapsible-"] {
     background-color: #EAF0F4;
 }
 .collapsible-closed {
+    width: 100%!important;
     display: none;
     -webkit-transition: top 1s ease-out 0.5s;
     -moz-transition: top 1s ease-out 0.5s;
@@ -2187,6 +2188,7 @@ div[class^="collapsible-"] {
     transition: top 1s ease-out 0.5s;
 }
 .collapsible-open{
+    width: 100%!important;
     display: inline-block!important;
     -webkit-transition: top 1s ease-out 0.5s;
     -moz-transition: top 1s ease-out 0.5s;
