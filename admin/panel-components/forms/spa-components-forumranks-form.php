@@ -193,6 +193,40 @@ function spa_paint_rankings_table($rankings) {
 	# display rankings info
 	for ($x = 0; $x < count($rankings); $x++) {
 ?>
+    <!--empty row for new rank-->
+		<tr class="spMobileTableData">
+
+		<td data-label='<?php SP()->primitives->admin_etext('Rank Name'); ?>'>
+			<input type='text' size="12"  class='wp-core-ui' tabindex='<?php echo $tab; ?>' name='rankdesc[]' value='' placeholder="<?=SP()->primitives->admin_etext('Forum rank name')?>"/>
+			<input type='hidden' name='rankid[]' value='-1' />
+		</td>
+		<?php $tab++; ?>
+
+		<td data-label='<?php SP()->primitives->admin_etext('NUMBER OF POSTS'); ?>'>
+			<input type='text' class='wp-core-ui' size='5' tabindex='<?php echo $tab; ?>' name='rankpost[]' value='' placeholder="<?=SP()->primitives->admin_etext('# of posts for rank')?>"/>
+		</td>
+		<?php $tab++; ?>
+
+		<td data-label='<?php SP()->primitives->admin_etext('MEMBERSHIP GROUP'); ?>'>
+			<select class="wp-core-ui" name="rankug[]" style="width:135px;">
+<?php
+			$out = '<option value="none">'.SP()->primitives->admin_text('Select Group').'</option>';
+			foreach ($usergroups as $usergroup) {
+				$out.= '<option value="'.$usergroup->usergroup_id.'">'.SP()->displayFilters->title($usergroup->usergroup_name).'</option>';
+			}
+			echo $out;
+?>
+			</select>
+		</td>
+		<?php $tab++; ?>
+
+		<td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>'>
+			<?php spa_select_iconset_icon_picker( 'rankbadge[]', __( 'Select Badge' ), array('Badges' => $badges ), '', false ); ?>
+		</td>
+		<?php $tab++; ?>
+
+		<td></td>
+		</tr>
 		<tr id="rank<?php echo($x); ?>" class="spMobileTableData">
 
 		<td data-label='<?php SP()->primitives->admin_etext('Rank Name'); ?>'>
@@ -248,41 +282,7 @@ function spa_paint_rankings_table($rankings) {
 <?php
 	}
 ?>
-		<!--empty row for new rank-->
-		<tr class="spMobileTableData">
-
-		<td data-label='<?php SP()->primitives->admin_etext('Rank Name'); ?>'>
-			<input type='text' size="12"  class='wp-core-ui' tabindex='<?php echo $tab; ?>' name='rankdesc[]' value='' />
-			<input type='hidden' name='rankid[]' value='-1' />
-		</td>
-		<?php $tab++; ?>
-
-		<td data-label='<?php SP()->primitives->admin_etext('NUMBER OF POSTS'); ?>'>
-			<input type='text' class='wp-core-ui' size='5' tabindex='<?php echo $tab; ?>' name='rankpost[]' value='' />
-			<?php echo ' '.SP()->primitives->admin_text('Posts'); ?>
-		</td>
-		<?php $tab++; ?>
-
-		<td data-label='<?php SP()->primitives->admin_etext('MEMBERSHIP GROUP'); ?>'>
-			<select class="wp-core-ui" name="rankug[]" style="width:135px;">
-<?php
-			$out = '<option value="none">'.SP()->primitives->admin_text('None').'</option>';
-			foreach ($usergroups as $usergroup) {
-				$out.= '<option value="'.$usergroup->usergroup_id.'">'.SP()->displayFilters->title($usergroup->usergroup_name).'</option>';
-			}
-			echo $out;
-?>
-			</select>
-		</td>
-		<?php $tab++; ?>
-
-		<td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>'>
-			<?php spa_select_iconset_icon_picker( 'rankbadge[]', __( 'Select Badge' ), array('Badges' => $badges ), '', false ); ?>
-		</td>
-		<?php $tab++; ?>
-
-		<td></td>
-		</tr>
+		
 		</tbody>
 	</table>
 <?php

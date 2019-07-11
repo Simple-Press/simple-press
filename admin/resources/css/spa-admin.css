@@ -9,7 +9,7 @@ $Rev:2099 $
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
 /*@import url(//use.fontawesome.com/releases/v5.8.2/css/all.css);*/
 
-/*@import url(./scrapyard.css);*/
+@import url(./scrapyard.css);
 
 @font-face {
     font-family: 'Open Sans Semibold';
@@ -1751,7 +1751,7 @@ $Rev:2099 $
     line-height: 35px;
 }
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selected-icon i.fip-icon-block:before {
-    content: "Select Custom Icon";
+    content: "Select Badge";
     display: inline-block;
     width: 100%;
     margin: 0;
