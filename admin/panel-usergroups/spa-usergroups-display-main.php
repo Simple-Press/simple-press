@@ -396,7 +396,9 @@ function spa_members_not_belonging_to_any_usergroup_tab($usergroups) {
 function spa_temp_no_members_selected_form() {
     ?>
     <form action="https://wp.loc.com/wp-admin/admin-ajax.php?action=usergroups-loader&amp;saveform=addmembers&amp;_wpnonce=af658fc87f" method="post" id="sfmembernew1" name="sfmembernew1" onsubmit="spj.addDelMembers('sfmembernew1', 'https://wp.loc.com/wp-admin/admin-ajax.php?action=memberships&amp;targetaction=add&amp;_wpnonce=02deb3262b', 'sfmsgspot', 'Please Wait - Processing', 'Users added', 0, 50, '#amid1');">
-        <div class="sf-panel-body "><div class="sf-full-form"><input type="hidden" name="forum-adminform_membernew" value="65f6b26809">
+        <div class="sf-panel-body ">
+            <div class="sf-full-form">
+                <input type="hidden" name="forum-adminform_membernew" value="65f6b26809">
                 <div class="sf-panel-body-top">
                     <div class="sf-panel-body-top-left sf-mobile-full-width">
                         <h4>No members selected</h4>

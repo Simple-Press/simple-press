@@ -365,6 +365,9 @@ $Rev:2099 $
 #sf-root-wrap .sfhidden {
     display: none;
 }
+#sf-root-wrap .sf-hidden-important {
+    display: none !important;
+}
 #sf-root-wrap .sf-uppercase {
     text-transform: uppercase;
 }
@@ -399,7 +402,8 @@ $Rev:2099 $
     height: 40px;
     -khtml-border-radius: 50%;
     -webkit-border-radius: 50%;
-    border-radius: 50%; 
+    border-radius: 50%;
+    overflow: hidden;
 }
 #sf-root-wrap .sf-avatar img {
     width: 100%;
@@ -1669,6 +1673,8 @@ $Rev:2099 $
 
 #sfmaincontainer .sf-pagination {
     float: left;
+    width: 100%;
+    margin-top: 20px;
 }
 #sfmaincontainer .sf-pagination a {
     position: relative;
@@ -2880,7 +2886,7 @@ div[class^="collapsible-"] {
     /**
      < #sf-tab-usergroup-main
     */
-    
+
     #sfmaincontainer .sf-msbox-list .sf-pagination {
         position: absolute;
     }
