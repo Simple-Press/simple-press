@@ -32,3 +32,27 @@ function spa_get_storage_data() {
 	$sfstorage = SP()->options->get('sfconfig');
 	return $sfstorage;
 }
+
+/**
+ * Integration
+ * Storage location options
+ * @return array
+ */
+function spa_get_storage_options()
+{
+	return array(
+		array('name' => 'plugins',              'title' => 'Plugins Folder'),
+		array('name' => 'themes',               'title' => 'Themes Folder'),
+		array('name' => 'avatars',              'title' => 'Avatars Folder'),
+		array('name' => 'avatar-pool',          'title' => 'Avatar Pool Folder'),
+		array('name' => 'smileys',              'title' => 'Smileys Folder'),
+		array('name' => 'ranks',                'title' => 'Forum Badges Folder'),
+		array('name' => 'custom-icons',         'title' => 'Custom Icons Folder'),
+		array('name' => 'iconsets',             'title' => 'Iconsets Folder'),
+		array('name' => 'language-sp',          'title' => 'Simple:Press Language Files'),
+		array('name' => 'language-sp-plugins',  'title' => 'Simple:Press Plugin Language Files'),
+		array('name' => 'language-sp-themes',   'title' => 'Simple:Press Theme Language Files'),
+		array('name' => 'cache',                'title' => 'Forum CSS/JS Cache'),
+		array('name' => 'forum-images',         'title' => 'Forum Feature Images'),
+	);
+}
