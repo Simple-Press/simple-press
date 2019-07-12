@@ -35,13 +35,13 @@ if (isset($_GET['page_msbox'])) {
 # handle include of file but not via ajax
 if (isset($action)) {
 
-    if(!isset($to)) {
+    if (!isset($to)) {
         $to = '';
     }
-    if(!isset($ug)) {
+    if (!isset($ug)) {
         $ug = '';
     }
-    
+
     if ($action == 'addug') {
         spa_prepare_msbox_list('usergroup_add', $usergroup_id);
         echo spa_populate_msbox_list('usergroup_add', $usergroup_id, 'amid', $from, $to, $ug);
@@ -243,50 +243,38 @@ function spa_render_msbox_list($msbox, $uid, $name, $from, $num, $records, $offs
 }
 
 function spa_msbox_pagination($msbox, $uid, $name, $from, $num, $offset, $max, $filter, $ug) {
-    $paginationLength = 8;
-    $ellipsisLength = 2;
 
     $out = '';
 
-    if ($num < 1) {
-        return $out;
+    $countPages = ceil($max / $num);
+    $currentPageNum = ceil($offset / $num);
+    $pagination = spa_pagination($countPages, $currentPageNum);
+    if ($pagination) {
+        $out .= '<div class="sf-pagination">';
+        $out .= '<span class="sf-pagination-links">';
+        $out .= '<a class="sf-first-page spUpdateList" href="javascript:void(0)"'
+                . ' data-uid="' . $name . $uid . '"'
+                . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=0&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '"'
+                . '></a>';
+        foreach ($pagination['array'] as $n => $v) {
+            $out .= '<a href="javascript:void(0)"'
+                    . ' class="spUpdateList' . ($currentPageNum == $n - 1 ? ' sf-current-page' : '') . '"'
+                    . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=" . (($n - 1 ) * $num) . "&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '"'
+                    . ' data-uid="' . $name . $uid . '">' . $v . '</a>';
+        }
+        $out .= '<a class="sf-last-page spUpdateList"  href="javascript:void(0)"'
+                . ' data-uid="' . $name . $uid . '"'
+                . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=" . (($pagination['last'] - 1 ) * $num) . "&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '" '
+                . '></a>';
+        $out .= '</span>';
+        $out .= '</div>';
     }
-
-    $last = floor($max / $num) * $num;
-    if ($last >= $max) {
-        $last = $last - $num;
-    }
-
-    $countPages = floor($max / $num) + 1;
-    if ($countPages < 2) {
-        return $out;
-    }
-    $currentPageNum = floor($offset / $num) + 1;
-
-    $paginationLinks = spa_pagination(function($pageNumber, $linkText) use($currentPageNum, $msbox, $uid, $name, $from, $num, $max, $filter, $ug) {
-        return '<a href="javascript:void(0)"'
-                . ' class="spUpdateList' . ($currentPageNum == $pageNumber ? ' sf-current-page' : '') . '"'
-                . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=" . (($pageNumber - 1 ) * $num) . "&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '"'
-                . ' data-uid="' . $name . $uid . '">' . $linkText . '</a>';
-    }, $countPages, $currentPageNum, $paginationLength, $ellipsisLength);
-
-    //print_r($paginationLinks);
-    // New pagination
-    $out .= '<div class="sf-pagination">';
-    $out .= '<span class="sf-pagination-links">';
-    $out .= '<a class="sf-first-page spUpdateList" href="javascript:void(0)"'
-            . ($offset == 0 ? '' : (' data-uid="' . $name . $uid . '"'
-            . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=0&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '"'
-            )) . '></a>';
-    $out .= implode('', $paginationLinks);
-    $out .= '<a class="sf-last-page spUpdateList"  href="javascript:void(0)"'
-            . (($offset + $num) >= $max ? '' : (' data-uid="' . $name . $uid . '"'
-            . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=$last&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '" '
-            )) . '></a>';
-    $out .= '</span>';
-    $out .= '</div>';
 
     /* Old pagination
+      $last = floor($max / $num) * $num;
+      if ($last >= $max) {
+      $last = $last - $num;
+      }
       $out .= '<div class="sf-pagination">';
       $out .= '<input type="button"'
       . ($offset == 0 ? ' disabled="disabled"' : '')

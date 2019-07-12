@@ -118,7 +118,7 @@ function spa_usergroups_usergroup_main() {
                                         <ul class="sf-list sf-list-v2">
                                             <li class="">
                                                 <div class="sf-list-item spLayerToggle">
-                                                    <span class="sf-item-name"><?php echo esc_js(SP()->primitives->admin_text('Show Members')) ?></span>
+                                                    <span class="sf-item-name"><?php echo SP()->primitives->admin_etext('Show Members'); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
                                                     </span>
@@ -192,7 +192,8 @@ function spa_usergroups_usergroup_main() {
                                     </button>
                                     <button class="sf-icon-button sf-small spLoadForm"
                                             title="<?php echo SP()->primitives->admin_text('Delete User Group'); ?>"
-                                            data-form="delusergroup" data-url="<?php echo $base; ?>"
+                                            data-form="delusergroup"
+                                            data-url="<?php echo $base; ?>"
                                             data-target="<?php echo $target; ?>"
                                             data-img="<?php echo SPADMINIMAGES ?>"
                                             data-id="<?php echo $usergroup->usergroup_id; ?>"
@@ -219,16 +220,18 @@ function spa_usergroups_usergroup_main() {
             </table>
             <?php
         } else {
-            echo '<div class="sfempty">' . SP()->primitives->admin_text('There are no User Groups defined') . '</div>';
+            echo '<div class="sf-alert-block sf-info">' . SP()->primitives->admin_text('There are no User Groups defined') . '</div>';
         }
         spa_paint_close_fieldset();
         spa_paint_close_container();
         spa_paint_close_tab();
 
         if ($usergroups) {
-            ?><div class="sf-mobile-hide"><?php
-            spa_members_not_belonging_to_any_usergroup_tab($usergroups);
-            ?></div><?php
+            ?>
+            <div class="sf-mobile-hide">
+                <?php spa_members_not_belonging_to_any_usergroup_tab(); ?>
+            </div>
+            <?php
         }
         ?>
 
@@ -262,9 +265,46 @@ function spa_usergroups_usergroup_main() {
     <?php
 }
 
-function spa_members_not_belonging_to_any_usergroup_tab($usergroups) {
-    spa_paint_open_nohead_tab(true);
-    $totalMembers = 300;
+function spa_members_not_belonging_to_any_usergroup_tab() {
+    spa_paint_open_nohead_tab(true, 'sf-not-belonging-to-any-usergroup');
+    spa_members_not_belonging_to_any_usergroup();
+    spa_paint_close_container();
+    spa_paint_close_tab();
+}
+
+function spa_members_not_belonging_to_any_usergroup($filter = '', $pageNum = 1, $maxItemsOnPage = 3) {
+    $alphabet = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    $members = array();
+    $pagination = array();
+    $filter = trim($filter);
+    if ($pageNum < 1) {
+        $pageNum = 1;
+    }
+    $sql = 'SELECT COUNT(*)
+        FROM ' . SPMEMBERS . '
+        LEFT JOIN ' . SPMEMBERSHIPS . ' ON ' . SPMEMBERS . '.user_id = ' . SPMEMBERSHIPS . '.user_id
+        WHERE ' . SPMEMBERSHIPS . '.usergroup_id IS NULL AND admin=0';
+
+    $countTotal = SP()->DB->select($sql, 'var');
+
+    $offset = $maxItemsOnPage * ($pageNum - 1);
+
+    if ($offset < $countTotal) {
+        $sql = 'SELECT ' . SPMEMBERS . '.user_id, display_name
+            FROM ' . SPMEMBERS . '
+            LEFT JOIN ' . SPMEMBERSHIPS . ' ON ' . SPMEMBERS . '.user_id = ' . SPMEMBERSHIPS . '.user_id
+            WHERE ' . SPMEMBERSHIPS . ".usergroup_id IS NULL AND admin=0";
+        if (mb_strlen($filter)) {
+            $sql .= " AND display_name REGEXP '.*{$filter}.*'";
+        }
+        $sql .= " ORDER BY display_name LIMIT $offset, $maxItemsOnPage";
+
+        $members = SP()->DB->select($sql);
+        if ($members) {
+            $countPages = ceil($countTotal / $maxItemsOnPage);
+            $pagination = spa_pagination($countPages, $pageNum, 8, 2);
+        }
+    }
     ?>
     <div class="sf-panel-body-top">
         <div class="sf-panel-body-top-left sf-mobile-full-width">
@@ -273,9 +313,9 @@ function spa_members_not_belonging_to_any_usergroup_tab($usergroups) {
         <div class="sf-panel-body-top-right sf-mobile-full-width">
             <div class="sf-input-group sf-input-small sf-input-rounded">
                 <div class="sf-form-control sf-select-wrap">
-                    <select>
+                    <select name="usergroup_id">
                         <option value=""><?php echo SP()->primitives->admin_text('Select User Group') ?></option>
-                        <?php foreach ($usergroups as $usergroup) : ?>
+                        <?php foreach (spa_get_usergroups_all(null) as $usergroup) : ?>
                             <option value="<?php echo $usergroup->usergroup_id ?>"><?php echo SP()->displayFilters->title($usergroup->usergroup_name); ?></option>
                         <?php endforeach ?>
                     </select>
@@ -285,114 +325,66 @@ function spa_members_not_belonging_to_any_usergroup_tab($usergroups) {
                 </div>
             </div>
             <p class="search-box">
-                <input type="search" name="s" value="">
+                <input type="search" name="s" value="<?php echo $filter; ?>" placeholder="<?php echo SP()->primitives->admin_text('Search members') ?>">
                 <input type="submit" id="search-submit" class="button" value="Search Members"> 
             </p>
             <?php echo spa_paint_help('...', '...') ?>
         </div>
     </div>
-
-    <table class="widefat sf-table-small sf-table-mobile">
-        <thead>
-            <tr class="sf-v-a-middle" class="sf-narrow">
-                <th class="sf-narrow"><input type="checkbox"></th>
-                <th>
-                    <div class="sf-alphabet">
-                        <button class="sf-button sf-active"><?php echo SP()->primitives->admin_text('All') ?></button>
-                        <button class="sf-button">0 - 9</button>
-                        <button class="sf-button">A</button>
-                        <button class="sf-button">B</button>
-                        <button class="sf-button">C</button>
-                        <button class="sf-button">D</button>
-                        <button class="sf-button">E</button>
-                        <button class="sf-button">F</button>
-                        <button class="sf-button">G</button>
-                        <button class="sf-button">H</button>
-                        <button class="sf-button">I</button>
-                        <button class="sf-button">J</button>
-                        <button class="sf-button">K</button>
-                        <button class="sf-button">L</button>
-                        <button class="sf-button">M</button>
-                        <button class="sf-button">N</button>
-                        <button class="sf-button">O</button>
-                        <button class="sf-button">P</button>
-                        <button class="sf-button">Q</button>
-                        <button class="sf-button">R</button>
-                        <button class="sf-button">S</button>
-                        <button class="sf-button">T</button>
-                        <button class="sf-button">U</button>
-                        <button class="sf-button">V</button>
-                        <button class="sf-button">W</button>
-                        <button class="sf-button">X</button>
-                        <button class="sf-button">Y</button>
-                        <button class="sf-button">Z</button>
-                    </div>
-                </th>
-                <th>
-                    <div class="sf-pull-right">
-                        <?php echo sprintf('%s %d %s', SP()->primitives->admin_text('Total'), $totalMembers, SP()->primitives->admin_text('Members')) ?>
-                    </div>
-                </th> 
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="sp-v-a-middle">
-                <td class="sf-narrow"><input type="checkbox"></td>
-                <td colspan="2">
-                    <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
-                    <span class="sf-user-name">Aria Smith</span>
-                </td>
-            </tr>
-            <tr class="sp-v-a-middle">
-                <td class="sf-narrow"><input type="checkbox"></td>
-                <td colspan="2">
-                    <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
-                    <span class="sf-user-name">Aria Smith</span>
-                </td>
-            </tr>
-            <tr class="sp-v-a-middle">
-                <td class="sf-narrow"><input type="checkbox"></td>
-                <td colspan="2">
-                    <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
-                    <span class="sf-user-name">Aria Smith</span>
-                </td>
-            </tr>
-            <tr class="sp-v-a-middle">
-                <td class="sf-narrow"><input type="checkbox"></td>
-                <td colspan="2">
-                    <div class="sf-avatar "><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
-                    <span class="sf-user-name">Aria Smith</span>
-                </td>
-            </tr>
-            <tr class="sp-v-a-middle">
-                <td class="sf-narrow"><input type="checkbox"></td>
-                <td colspan="2">
-                    <div class="sf-avatar"><img src="<?php echo SPADMINIMAGES . 'Avatar.png' ?>" alt="avatar"></div>
-                    <span class="sf-user-name">Aria Smith</span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="sf-pagination">
-        <span class="sf-pagination-links">
-            <a class="sf-first-page" href="#"></a>
-            <a class="" href="#">1</a>
-            <a class="" href="#">2</a>
-            <a class="sf-current-page" href="#">3</a>
-            <a class="" href="#">4</a>
-            <a class="" href="#">5</a>
-            <a class="" href="#">...</a>
-            <a class="" href="#">8</a>
-            <a class="sf-last-page" href="#"></a>
-        </span>
-    </div>
-
+    <?php if ($members): ?> 
+        <table class="widefat sf-table-small sf-table-mobile">
+            <thead>
+                <tr class="sf-v-a-middle" class="sf-narrow">
+                    <th class="sf-narrow"><input type="checkbox"></th>
+                    <th>
+                        <div class="sf-alphabet">
+                            <button class="sf-button<?php echo (!mb_strlen($filter)) ? ' sf-active' : '' ?>"><?php echo SP()->primitives->admin_text('All') ?></button>
+                            <button class="sf-button<?php echo $filter == '[0-9]' ? ' sf-active' : '' ?>" value="[0-9]">0 - 9</button>
+                            <?php foreach ($alphabet as $letter): ?>
+                                <button class="sf-button<?php echo strcasecmp($filter, $letter) == 0 ? ' sf-active' : '' ?>" value="<?php echo $letter ?>"><?php echo $letter ?></button>
+                            <?php endforeach ?>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="sf-pull-right">
+                            <?php echo sprintf('%s %d %s', SP()->primitives->admin_text('Total'), $countTotal, SP()->primitives->admin_text('Members')) ?>
+                        </div>
+                    </th> 
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($members as $member) : ?>
+                    <tr class="sp-v-a-middle">
+                        <td class="sf-narrow"><input type="checkbox" name="dmid[]" value="<?php echo $member->user_id ?>"></td>
+                        <td colspan="2">
+                            <div class="sf-avatar"><img src="<?php echo get_avatar_url($member->user_id) ?>" alt="avatar"></div>
+                            <span class="sf-user-name"><?php echo $member->display_name ?></span>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+        <?php if ($pagination): ?>
+            <div class="sf-pagination">
+                <span class="sf-pagination-links">
+                    <a class="sf-first-page" href="javascript:void(0);"
+                       ></a>
+                       <?php foreach ($pagination['array'] as $n => $v): ?>
+                        <a class="" href="javascript:void(0);"
+                           ><?php echo $v ?></a>
+                    <?php endforeach ?>
+                    <a class="sf-last-page" href="javascript:void(0);"
+                       ></a>
+                </span>
+            </div>
+        <?php endif ?>
+    <?php else: ?>
+        <div class="sf-alert-block sf-info"><?php echo SP()->primitives->admin_text('List is empty') ?></div> 
+    <?php endif ?>
     <?php
-    spa_paint_close_container();
-    spa_paint_close_tab();
 }
 
+////////////////////////////////////////////////////////////////////
 function spa_temp_no_members_selected_form() {
     ?>
     <form action="https://wp.loc.com/wp-admin/admin-ajax.php?action=usergroups-loader&amp;saveform=addmembers&amp;_wpnonce=af658fc87f" method="post" id="sfmembernew1" name="sfmembernew1" onsubmit="spj.addDelMembers('sfmembernew1', 'https://wp.loc.com/wp-admin/admin-ajax.php?action=memberships&amp;targetaction=add&amp;_wpnonce=02deb3262b', 'sfmsgspot', 'Please Wait - Processing', 'Users added', 0, 50, '#amid1');">
@@ -409,11 +401,11 @@ function spa_temp_no_members_selected_form() {
                         </p>
                         <div class="sf-input-group select-user-group">
                             <div class="sf-form-control sf-select-wrap">
-                                <select>
-                                    <option value="">Select User Group</option>
-                                    <option value="1">Guests</option>
-                                    <option value="2">Members</option>
-                                    <option value="3">Moderators</option>
+                                <select name="usergroup_id">
+                                    <option value=""><?php echo SP()->primitives->admin_text('Select User Group') ?></option>
+                                    <?php foreach (spa_get_usergroups_all(null) as $usergroup) : ?>
+                                        <option value="<?php echo $usergroup->usergroup_id ?>"><?php echo SP()->displayFilters->title($usergroup->usergroup_name); ?></option>
+                                    <?php endforeach ?>
                                 </select>
                             </div>
                             <div class="sf-input-group-addon">

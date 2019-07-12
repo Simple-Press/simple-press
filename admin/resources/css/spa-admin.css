@@ -2432,19 +2432,20 @@ div[class^="collapsible-"] {
 
 #sfmaincontainer .sf-alphabet .sf-button {
     margin: 0;
+    height: 30px;
     color: #27476E;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding: 0 7px;
     background: transparent;
     border: none;
     box-shadow: none;
     -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
+    text-transform: uppercase;
 }
 #sfmaincontainer .sf-alphabet .sf-button.sf-active {
     color: #FFF;
-    padding: 7px 15px;
+    padding: 0 15px;
     background-color: #85A2BC;
 }
 
@@ -2618,7 +2619,7 @@ body .spMobileTableData .row-actions > span {
     #sfsidepanel .sf-tooggle-admin-menu .sf-button {
         font-size: 12px;
         text-transform: uppercase;
-        margin-left: 0;
+        margin: 0;
         background-color: #85A2BC;
         color: #FFF;
         -khtml-border-radius: 3px 3px 0 0;
@@ -2644,6 +2645,7 @@ body .spMobileTableData .row-actions > span {
     #sfsidepanel.sf-admin-menu-mobile-show #sfadminmenu,
     #sfsidepanel.sf-admin-menu-mobile-show .sf-tooggle-admin-menu .sf-button.sf-hide {
         display: block;
+        width: 100%;
     }
     #sfadminmenu {
         display: none;
