@@ -61,9 +61,10 @@ function spa_toolbox_licensing_form() {
 		/* Paint field for getting alternate license server url */
 		/*******************************************************/		
 		spa_paint_open_panel();
+				echo '<br><br>';
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Licensing Server'), true, 'licensing-server');
 				$sp_addon_store_url = SP()->options->get( 'sp_addon_store_url');
-				
+
 				echo SP()->primitives->admin_text('This field is usually blank which defaults the licensing server to simple-press.com.');
 				echo('<br />');
 				echo SP()->primitives->admin_text('But upon instruction by Simple:Press support staff you can use it to enter an alternative licensing server.');
@@ -93,9 +94,9 @@ function spa_toolbox_licensing_form() {
 function spa_toolbox_licensing_form_paint_instructions() {
 	echo '<div class="sf-licensing-instructions-wrap">'.'<h2>'.SP()->primitives->admin_text('Instructions for using this licensing screen').'</h2>';
 		echo '<ul class="sp-licensing_note_list">';
-			echo '<li><strong>'.SP()->primitives->admin_text('Step 1: ').'</strong>'.SP()->primitives->admin_text('Look up your license key in your ACCOUNT area on our website. License keys should also be in your purchase confirmation emails.').'</li>';		
-			echo '<li><strong>'.SP()->primitives->admin_text('Step 2: ').'</strong>'.SP()->primitives->admin_text('Enter your license key into the &#39;License Key&#39; field next to your products').'</li>';
-			echo '<li><strong>'.SP()->primitives->admin_text('Step 3: ').'</strong>'.SP()->primitives->admin_text('Click the &#39;Activate License&#39; button next to your products').'</li>';			
+			echo '<li><strong>'.SP()->primitives->admin_text('Step 1: ').'</strong>'.SP()->primitives->admin_text('Look up your license key in your ACCOUNT area on our website. License keys should also be in your purchase confirmation emails.').'<br><br></li>';
+			echo '<li><strong>'.SP()->primitives->admin_text('Step 2: ').'</strong>'.SP()->primitives->admin_text('Enter your license key into the &#39;License Key&#39; field next to your products').'<br><br></li>';
+			echo '<li><strong>'.SP()->primitives->admin_text('Step 3: ').'</strong>'.SP()->primitives->admin_text('Click the &#39;Activate License&#39; button next to your products').'<br><br></li>';
 		echo '</ul>';
 		echo SP()->primitives->admin_text('Click the HELP icon in the upper right of this panel for more information about licenses.');
 		echo '<br/>';
@@ -104,7 +105,7 @@ function spa_toolbox_licensing_form_paint_instructions() {
 		echo '<br/>';
 		//@todo:  The string below needs to be constructed using printf so that the url can be replaced in the appropriate %s section during translation.
 		echo SP()->primitives->admin_text('A license to one of our ') . '<a href="https://simple-press.com/pricing"> '.SP()->primitives->admin_text('plugin and theme bundles').'</a> ' . SP()->primitives->admin_text('grants you up-to-date access to more than 70 premium Simple:Press plugins and themes!');	
-		echo '<br/>';
+		echo '<br/><br/>';
 		spa_paint_hidden_input('ajax_error_message', SP()->primitives->admin_text('Something Went Wrong Please Try Again!'));
 	echo '</div>';
 	spa_paint_spacer();
