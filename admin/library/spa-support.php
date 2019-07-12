@@ -676,3 +676,39 @@ function spa_build_forum_permalink_slugs() {
 		}
 	}
 }
+
+function spa_pagination($callback, $countPages, $currentPageNum, $paginationLength = 8, $ellipsisLength = 2) {
+    if ($countPages <= $paginationLength) {
+	$paginationLength = $countPages;
+	$from = 1;
+    } else {
+	$c = floor($paginationLength / 2) - 1;
+	if ($currentPageNum <= $c) {
+		$from = 1;
+	} elseif ($currentPageNum + $c >= $countPages) {
+		$from = $countPages - $paginationLength + 1;
+	} else {
+		$from = $currentPageNum - $c;
+	}
+    }
+    $links = array(); 
+    $pagination = array_keys(array_fill($from, $paginationLength, ''));
+    
+    if (count($pagination) == $paginationLength && $ellipsisLength) {
+        foreach ($pagination as $k => $pageNumber) {
+            if ($currentPageNum + $ellipsisLength < $countPages && $paginationLength - $ellipsisLength < $k + 2 && $paginationLength - 1 > $k) {
+                if ($paginationLength - 2 == $k) {
+                    array_push($links, call_user_func_array($callback, array($pageNumber, '...')));
+                }
+            } else {
+                array_push($links, call_user_func_array($callback, array($pageNumber, $pageNumber)));
+            }
+        }
+    } else {
+        foreach ($pagination as $pageNumber) {
+            array_push($links, call_user_func_array($callback, array($pageNumber, $pageNumber)));
+        }
+    }
+    $links = array_slice($links, -($paginationLength - $ellipsisLength + 1));
+    return $links;
+}
