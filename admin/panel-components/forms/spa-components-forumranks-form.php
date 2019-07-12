@@ -72,6 +72,11 @@ function spa_components_forumranks_form() {
 		});
 	}(window.spj = window.spj || {}, jQuery));
 </script>
+<style>
+  .sf-Left{
+    text-align: left!important;
+  }
+</style>
 <?php
 	$rankings = spa_get_forumranks_data();
 
@@ -194,7 +199,7 @@ function spa_paint_rankings_table($rankings) {
 	for ($x = 0; $x < count($rankings); $x++) {
 ?>
     <!--empty row for new rank-->
-		<tr class="spMobileTableData">
+		<tr >
 
 		<td data-label='<?php SP()->primitives->admin_etext('Rank Name'); ?>'>
 			<input type='text' size="12"  class='wp-core-ui' tabindex='<?php echo $tab; ?>' name='rankdesc[]' value='' placeholder="<?=SP()->primitives->admin_etext('Forum rank name')?>"/>
@@ -227,7 +232,63 @@ function spa_paint_rankings_table($rankings) {
 
 		<td></td>
 		</tr>
-		<tr id="rank<?php echo($x); ?>" class="spMobileTableData">
+    <tr id="vrank<?php echo($x); ?>" >
+      <td data-label='<?php SP()->primitives->admin_etext('Rank Name'); ?>' class="sf-Left">
+  			<span><?php echo esc_attr($ranks['title'][$x]); ?></span>
+  		</td>
+      <td data-label='<?php SP()->primitives->admin_etext('NUMBER OF POSTS'); ?>' class="sf-Left">
+  			<span><?php echo $ranks['posts'][$x]; ?>&nbsp;posts</span>
+  		</td>
+      <td data-label='<?php SP()->primitives->admin_etext('MEMBERSHIP GROUP'); ?>' class="sf-Left">
+        <?php
+			if ($ranks['usergroup'][$x] == 'none'){
+        echo "<span>" . SP()->primitives->admin_text('None') . "</span>";
+      }else{
+        foreach ($usergroups as $usergroup) {
+				  if ($ranks['usergroup'][$x] == $usergroup->usergroup_id){
+            echo "<span>" . SP()->displayFilters->title($usergroup->usergroup_name) . "</span>";
+          }
+        }
+      }
+      ?>
+      </td>
+      <td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>' class="sf-Left">
+        <?php
+        
+        $selected_icon = array();
+	      $selected = $ranks['badge'][$x];
+      	if( !empty( $selected ) && is_array( json_decode( $selected, true ) ) && ( json_last_error() == JSON_ERROR_NONE ) ) {
+      		
+      		$ar_icon = json_decode( $selected, true );
+      		
+      		$selected_icon['icon']		= isset( $ar_icon['i'] ) ? $ar_icon['i'] : '';
+      		$selected_icon['color']		= isset( $ar_icon['c'] ) ? $ar_icon['c'] : '';
+      		
+      		
+      		$size_ar = isset( $ar_icon['s'] ) ? spa_iconset_parse_size( $ar_icon['s'] ) : array();
+      		
+      		if( !empty( $size_ar ) ) {
+      			$selected_icon['size']		= isset( $size_ar['size'] )		 ? $size_ar['size']		 : '';
+      			$selected_icon['size_type'] = isset( $size_ar['size_type'] ) ? $size_ar['size_type'] : '';
+      		}
+      	} else {
+      		$selected_icon['icon']		= $selected;
+      		$selected_icon['color']		= '';
+      		$selected_icon['size']		= '';
+      		$selected_icon['size_type'] = '';
+      	}
+        print("<i class='".$selected_icon['icon']."'> </i>"); // не учтены картинки
+        ?>
+      </td>
+      <td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>' class="sf-Left">
+    		<span class="sf-item-controls">
+    			<span class="sf-icon sf-edit"></span>
+    			<?php $site = wp_nonce_url(SPAJAXURL.'components&amp;targetaction=del_rank&amp;key='.$ranks['id'][$x], 'components'); ?>
+    			<span class="sf-icon sf-delete spDeleteRow" data-url="<?php echo $site; ?>" data-target="rank<?php echo $x; ?>" title="<?php SP()->primitives->admin_etext('Delete Rank'); ?>"></span>
+    		</span>
+		  </td>
+    </tr>
+		<tr id="rank<?php echo($x); ?>" >
 
 		<td data-label='<?php SP()->primitives->admin_etext('Rank Name'); ?>'>
 			<input type='text' size="12" class='wp-core-ui' tabindex='<?php echo $tab; ?>' name='rankdesc[]' value='<?php echo esc_attr($ranks['title'][$x]); ?>' />
