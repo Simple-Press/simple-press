@@ -36,12 +36,12 @@ function spa_usergroups_delete_members_form($usergroup_id) {
         echo sp_create_nonce('forum-adminform_memberdel');
         ?>
         <input type="hidden" name="usergroupid" value="<?php echo $usergroup_id; ?>" />
-        <p><?php SP()->primitives->admin_etext('Select members to delete/move (use CONTROL for multiple users)') ?></p>
-        <p><?php SP()->primitives->admin_etext('To move members, select a new usergroup') ?></p>
-        <?php spa_display_usergroup_select() ?>
+        <!--<p><?php SP()->primitives->admin_etext('Select members to delete/move (use CONTROL for multiple users)') ?></p>
+        <p><?php SP()->primitives->admin_etext('To move members, select a new usergroup') ?></p>-->
+        <?php //spa_display_usergroup_select() ?>
         <?php
         $from = esc_js(SP()->primitives->admin_text('Current Members'));
-        $to = esc_js(SP()->primitives->admin_text('Selected Members'));
+        $ug = true;
         $action = 'delug';
         require_once SP_PLUGIN_DIR . '/admin/library/ajax/spa-ajax-multiselect.php';
         ?>
@@ -49,8 +49,10 @@ function spa_usergroups_delete_members_form($usergroup_id) {
         <?php
         do_action('sph_usergroup_delete_member_panel');
         ?>
-        <span><input type="submit" class="sf-button-primary" id="sfmemberdel<?php echo $usergroup_id; ?>" name="sfmemberdel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Delete/Move Members'); ?>" /> <span class="_sf-button sfhidden" id='onFinish'></span>
-            <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $usergroup_id; ?>" id="sfmemberdel<?php echo $usergroup_id; ?>" name="delmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" /></span>
+        <span class="sf-controls">
+            <input type="submit" class="sf-button-primary" id="sfmemberdel<?php echo $usergroup_id; ?>" name="sfmemberdel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Delete/Move Members'); ?>" /> <span class="_sf-button sf-hidden-important" id='onFinish'></span>
+            <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $usergroup_id; ?>" id="sfmemberdel<?php echo $usergroup_id; ?>" name="delmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+        </span>
         <br />
         <div class="pbar" id="progressbar"></div>
          <?php

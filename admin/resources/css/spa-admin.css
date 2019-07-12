@@ -412,6 +412,11 @@ $Rev:2099 $
 #sf-root-wrap .sfhidden {
     display: none/* !important*/;
 }
+#sf-root-wrap .sf-controls {
+    float: left;
+    width: 100%;
+    margin: 20px 0 20px;
+}
 
 #sf-root-wrap .sfinline-form form,
 #sf-root-wrap .sfinline-form .sf-form {

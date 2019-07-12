@@ -678,6 +678,7 @@ function spa_build_forum_permalink_slugs() {
 }
 
 function spa_pagination($callback, $countPages, $currentPageNum, $paginationLength = 8, $ellipsisLength = 2) {
+    $maxPaginationLength = $paginationLength;
     if ($countPages <= $paginationLength) {
 	$paginationLength = $countPages;
 	$from = 1;
@@ -709,6 +710,8 @@ function spa_pagination($callback, $countPages, $currentPageNum, $paginationLeng
             array_push($links, call_user_func_array($callback, array($pageNumber, $pageNumber)));
         }
     }
-    $links = array_slice($links, -($paginationLength - $ellipsisLength + 1));
+    if(count($links) > $maxPaginationLength - $ellipsisLength) {
+        $links = array_slice($links, -($paginationLength - $ellipsisLength + 1));
+    }
     return $links;
 }
