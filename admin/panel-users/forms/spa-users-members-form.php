@@ -10,7 +10,7 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 
 function spa_users_members_form() {
         global $adminhelpfile;
-    
+  require_once SP_PLUGIN_DIR.'/forum/content/sp-common-view-functions.php';
 	add_screen_option('layout_columns', array('default' => 2));
 
 	spa_paint_options_init();
@@ -49,6 +49,7 @@ function spa_users_members_form() {
                     public function get_sortable_columns() {
                         $sortable_columns = array(
                             'user_id'           => array('user_id', true),
+                            'avatar'             => array('avatar', false),
                             'user_login'        => array('user_login', false),
                             'display_name'      => array('display_name', false),
                             'user_registered'   => array('user_registered', false),
@@ -77,6 +78,7 @@ function spa_users_members_form() {
                         $records = $this->items;
                         if (!empty($records)) {
                             list($columns, $hidden, $sortable, $primary) = $this->get_column_info();
+                            
                             foreach ($records as $rec) {
                                 echo '<div class="spMobileTableData">';
 
@@ -121,7 +123,14 @@ function spa_users_members_form() {
                                                 case 'posts':
                                                     echo max($rec['posts'], 0);
                                                     break;
-
+                                                case 'avatar':
+                                                    //echo "<div style='max-width:16px;'>".get_avatar($rec['user_id'],  16)."</div>";
+                                                    $avatarClass = "sf-Avatar";
+                                                    $imgClass = "sf-imgClass";
+                                                    $avatarSize = 20;
+                                                    echo "<style>.sf-Avatar,.sf-imgClass{border-radius: 50%;}</style>";
+                                                    echo sp_UserAvatar("tagClass=$avatarClass&size=$avatarSize&imgClass=$imgClass&link=none&context=user&echo=0", $rec['user_id']);
+                                                    break;
                                                 default:
                                                     echo $rec[$column_name];
                                                 }
@@ -218,7 +227,6 @@ function spa_users_members_form() {
 
                         # do our members query
                         $query = apply_filters('sph_admin_members_list_query', $query);
-
                         $records = SP()->DB->select($query);
 
                         # set up page links
@@ -273,6 +281,7 @@ function spa_users_members_form() {
             					$members[$idx]['posts']            = $data->posts;
             					$members[$idx]['memberships']      = $user_memberships;
             					$members[$idx]['rank']             = $rank[0]['name'];
+                      $members[$idx]['avatar']          = $data->avatar;
                             }
                         }
 
