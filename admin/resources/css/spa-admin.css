@@ -981,6 +981,11 @@ $Rev:2099 $
     -webkit-mask-image: url("../icons/Requires Enable.svg");
     mask-image: url("../icons/Requires Enable.svg");
 }
+#sf-root-wrap .sf-icon.sf-warning {
+    background-color: #C3282C;
+    -webkit-mask-image: url("../icons/Warning.svg");
+    mask-image: url("../icons/Warning.svg");
+}
 #sf-root-wrap .sf-icon.sf-disable-forum {
     background-color: #408EAD;
     -webkit-mask-image: url("../icons/Disable Forum.svg");
