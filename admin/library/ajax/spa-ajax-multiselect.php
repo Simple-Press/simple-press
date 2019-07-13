@@ -243,9 +243,7 @@ function spa_render_msbox_list($msbox, $uid, $name, $from, $num, $records, $offs
 }
 
 function spa_msbox_pagination($msbox, $uid, $name, $from, $num, $offset, $max, $filter, $ug) {
-
     $out = '';
-
     $countPages = ceil($max / $num);
     $currentPageNum = ceil($offset / $num);
     $pagination = spa_pagination($countPages, $currentPageNum);
@@ -256,7 +254,7 @@ function spa_msbox_pagination($msbox, $uid, $name, $from, $num, $offset, $max, $
                 . ' data-uid="' . $name . $uid . '"'
                 . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=0&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '"'
                 . '></a>';
-        foreach ($pagination['array'] as $n => $v) {
+        foreach ($pagination as $n => $v) {
             $out .= '<a href="javascript:void(0)"'
                     . ' class="spUpdateList' . ($currentPageNum == $n - 1 ? ' sf-current-page' : '') . '"'
                     . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=" . (($n - 1 ) * $num) . "&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '"'
@@ -264,7 +262,7 @@ function spa_msbox_pagination($msbox, $uid, $name, $from, $num, $offset, $max, $
         }
         $out .= '<a class="sf-last-page spUpdateList"  href="javascript:void(0)"'
                 . ' data-uid="' . $name . $uid . '"'
-                . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=" . (($pagination['last'] - 1 ) * $num) . "&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '" '
+                . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=" . (($countPages - 1 ) * $num) . "&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '" '
                 . '></a>';
         $out .= '</span>';
         $out .= '</div>';

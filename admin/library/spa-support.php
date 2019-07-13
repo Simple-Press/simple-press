@@ -677,7 +677,7 @@ function spa_build_forum_permalink_slugs() {
 	}
 }
 
-function spa_pagination($countPages, $currentPageNum, $paginationLength = 8, $ellipsisLength = 2) {
+function _spa_pagination($countPages, $currentPageNum, $paginationLength = 8, $ellipsisLength = 2) {
     $pagination = array();
     if ($countPages > 1) {
         $maxPaginationLength = $paginationLength;
@@ -720,6 +720,51 @@ function spa_pagination($countPages, $currentPageNum, $paginationLength = 8, $el
             $pagination['first'] = 1;
             $pagination['last'] = $countPages;
         } else {
+            $pagination = array();
+        }
+    }
+    return $pagination;
+}
+
+function spa_pagination($countPages, $currentPageNum, $paginationLength = 8, $ellipsisLength = 2) {
+    $pagination = array();
+    if ($countPages > 1) {
+        $maxPaginationLength = $paginationLength;
+        if ($countPages <= $paginationLength) {
+            $paginationLength = $countPages;
+            $from = 1;
+        } else {
+            $c = floor($paginationLength / 2) - 1;
+            if ($currentPageNum <= $c) {
+                $from = 1;
+            } elseif ($currentPageNum + $c >= $countPages) {
+                $from = $countPages - $paginationLength + 1;
+            } else {
+                $from = $currentPageNum - $c;
+            }
+        }
+
+        $arr = array_keys(array_fill($from, $paginationLength, ''));
+
+        if (count($arr) == $paginationLength && $ellipsisLength) {
+            foreach ($arr as $k => $pageNumber) {
+                if ($currentPageNum + $ellipsisLength < $countPages && $paginationLength - $ellipsisLength < $k + 2 && $paginationLength - 1 > $k) {
+                    if ($paginationLength - 2 == $k) {
+                        $pagination[$pageNumber] = '...';
+                    }
+                } else {
+                    $pagination[$pageNumber] = $pageNumber;
+                }
+            }
+        } else {
+            foreach ($arr as $pageNumber) {
+                $pagination[$pageNumber] = $pageNumber;
+            }
+        }
+        if (count($pagination) > $maxPaginationLength - $ellipsisLength) {
+            $pagination = array_slice($pagination, -($paginationLength - $ellipsisLength + 1), null, true);
+        }
+        if (count($pagination) == 1) {
             $pagination = array();
         }
     }

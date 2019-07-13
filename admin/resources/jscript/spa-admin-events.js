@@ -424,14 +424,47 @@
                                 }
                         });
                 }
-        }
+        };
         
+        filtering = {
+                init : function() {
+                    $('#sfmaincontainer .sf-filtering [data-filter-url][data-target]').off('blur');
+                    $('#sfmaincontainer .sf-filtering .sf-alphabet button').off('click');
+                    $('#sfmaincontainer').on('blur', '[data-filter-url][data-target]', function() {
+                        var $el = $(this);
+                        $($el.data('target')).load(
+                                $el.data('filterUrl') 
+                                + '&filter=' + encodeURIComponent($el.val())+ '&rnd='
+                                + new Date().getTime()
+                                );
+                    });
+                    $('#sfmaincontainer').on('click', '.sf-filtering .sf-alphabet button', function(e) {
+                        e.preventDefault();
+                        var $el = $(this), $filtering = $el.closest('.sf-filtering');
+                        $filtering.find('[data-filter-url][data-target]').val($el.val()).blur();
+                        $filtering.find('.sf-alphabet button.sf-active').removeClass('sf-active');
+                        $el.addClass('sf-active');
+                    });
+                }
+        };
+        
+        tableCheckUncheckCb = {
+                init : function() {
+                    $('#sfmaincontainer table [data-bind-cb]').off('click');
+                    $('#sfmaincontainer').on('click', 'table [data-bind-cb]', function() {
+                        var $el = $(this);
+                        $el.closest('table').find($el.data('bindCb')).prop('checked', $el.prop('checked'));
+                    });
+                }
+        };
 
 	// public properties
 
 	// public methods
 	$(document).ready(function() {
 		$('#sfmaincontainer').on('adminformloaded', function() {
+                        filtering.init();
+                        tableCheckUncheckCb.init();
 			toggleLayer.init();
 			//toggleRow.init();
 			deleteRow.init();
