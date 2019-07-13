@@ -1619,6 +1619,7 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-fieldset .subsubsub li {
     float: left;
+    width: auto;
     margin-right: 20px;
 }
 #sfmaincontainer .sf-fieldset .subsubsub a {
