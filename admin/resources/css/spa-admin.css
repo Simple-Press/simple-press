@@ -372,7 +372,7 @@ $Rev:2099 $
     text-transform: uppercase;
 }
 #sf-root-wrap .sf-full-width {
-    width: 100%;
+    width: 100% !important;
 }
 #sf-root-wrap .sf-v-a-top,
 #sf-root-wrap tr.sf-v-a-top th,
