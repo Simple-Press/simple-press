@@ -215,6 +215,7 @@
 
 	multiselectTransfer = {
 		init: function() {
+                        $('#sfmaincontainer').off('click', '.spTransferList');
 			$('#sfmaincontainer').on('click', '.spTransferList', function() {
 				var mydata = $(this).data();
 				spj.transferMultiSelectList(mydata.from, mydata.to, mydata.msg, mydata.exceed, mydata.recip);
@@ -224,6 +225,7 @@
 
 	multiselectUpdate = {
 		init: function() {
+                        $('#sfmaincontainer').off('click', '.spUpdateList');
 			$('#sfmaincontainer').on('click', '.spUpdateList', function() {
 				var mydata = $(this).data();
 				spj.updateMultiSelectList(mydata.url, mydata.uid);
@@ -233,10 +235,12 @@
 
 	multiselectFilter = {
 		init: function() {
+                        $('#sfmaincontainer').off('click', '.spFilterList');
 			$('#sfmaincontainer').on('click', '.spFilterList', function() {
 				var mydata = $(this).data();
 				spj.filterMultiSelectList(mydata.url, mydata.uid, mydata.image);
 			});
+                        $('#sfmaincontainer').off('blur', '.sf-filter-auto [type="search"]');
 			$('#sfmaincontainer').on('blur', '.sf-filter-auto [type="search"]', function() {
 				$(this).closest('.sf-filter-auto').find('.spFilterList').click();
 			});
@@ -399,6 +403,7 @@
 
 	setForumSlug = {
 		init: function() {
+                        $('#sfmaincontainer').off('change', '.spForumSetSlug');
 			$('#sfmaincontainer').on('change', '.spForumSetSlug', function() {
 				var mydata = $(this).data();
 				spj.setForumSlug(this, mydata.url, mydata.target, mydata.type);
@@ -428,8 +433,7 @@
         
         filtering = {
                 init : function() {
-                    $('#sfmaincontainer .sf-filtering [data-filter-url][data-target]').off('blur');
-                    $('#sfmaincontainer .sf-filtering .sf-alphabet button').off('click');
+                    $('#sfmaincontainer').off('blur', '[data-filter-url][data-target]');
                     $('#sfmaincontainer').on('blur', '[data-filter-url][data-target]', function() {
                         var $el = $(this);
                         $($el.data('target')).load(
@@ -438,6 +442,7 @@
                                 + new Date().getTime()
                                 );
                     });
+                    $('#sfmaincontainer').off('click', '.sf-filtering .sf-alphabet button');
                     $('#sfmaincontainer').on('click', '.sf-filtering .sf-alphabet button', function(e) {
                         e.preventDefault();
                         var $el = $(this), $filtering = $el.closest('.sf-filtering');
@@ -450,7 +455,7 @@
         
         tableCheckUncheckCb = {
                 init : function() {
-                    $('#sfmaincontainer table [data-bind-cb]').off('click');
+                    $('#sfmaincontainer').off('click', 'table [data-bind-cb]');
                     $('#sfmaincontainer').on('click', 'table [data-bind-cb]', function() {
                         var $el = $(this);
                         $el.closest('table').find($el.data('bindCb')).prop('checked', $el.prop('checked'));
@@ -462,6 +467,7 @@
 
 	// public methods
 	$(document).ready(function() {
+                $('#sfmaincontainer').off('adminformloaded');
 		$('#sfmaincontainer').on('adminformloaded', function() {
                         filtering.init();
                         tableCheckUncheckCb.init();
@@ -502,6 +508,7 @@
                         prepareDatePicker.init();
 		});
 
+                $('#sfmaincontainer').off('troubleshootingformloaded');
 		$('#sfmaincontainer').on('troubleshootingformloaded', function() {
 			searchTool.init();
 		});

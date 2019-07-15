@@ -834,6 +834,7 @@ $Rev:2099 $
     background: #00B9D0;
     box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
     color: #FFF;
+    text-transform: inherit;
 }
 #sf-root-wrap .sf-button-primary.sf-focus,
 #sf-root-wrap .sf-button-primary.sf-hover,
@@ -1110,6 +1111,9 @@ $Rev:2099 $
 }
 #sf-root-wrap .sf-icon.sf-gray{
     background-color: #F0F0F0;
+}
+#sf-root-wrap .sf-icon.sf-white {
+    background-color: #FFF;
 }
 /**
 * < .sf-icon
@@ -1853,6 +1857,7 @@ $Rev:2099 $
 
 #sfmaincontainer ul.sf-list li {
     width: 340px;
+    float: none;
 }
 #sfmaincontainer ul.sf-list ul > li {
     margin-left: 20px;
