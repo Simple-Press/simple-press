@@ -24,19 +24,19 @@ function spa_toolbox_cron_form() {
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('CRON Schedules'), false);
 ?>
-                <table class="widefat fixed striped spMobileTable800">
+                <table class="widefat fixed striped _spMobileTable800">
                     <thead>
                         <tr>
-                            <th style='text-align:center'><?php SP()->primitives->admin_etext('Name'); ?></th>
-                            <th style='text-align:center'><?php SP()->primitives->admin_etext('Description'); ?></th>
-                            <th style='text-align:center'><?php SP()->primitives->admin_etext('Interval'); ?></th>
+                            <th><?php SP()->primitives->admin_etext('Name'); ?></th>
+                            <th><?php SP()->primitives->admin_etext('Description'); ?></th>
+                            <th><?php SP()->primitives->admin_etext('Interval'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
 <?php
                     foreach ($cronData->schedules as $name => $schedule) {
 ?>
-                        <tr class='spMobileTableData'>
+                        <tr class='_spMobileTableData'>
                             <td data-label='<?php SP()->primitives->admin_etext('Name'); ?>'><?php echo $name; ?></td>
                             <td data-label='<?php SP()->primitives->admin_etext('Description'); ?>'><?php echo $schedule['display']; ?></td>
                             <td data-label='<?php SP()->primitives->admin_etext('Interval'); ?>'><?php echo $schedule['interval']; ?></td>
@@ -48,17 +48,22 @@ function spa_toolbox_cron_form() {
                 </table>
 <?php
 			spa_paint_close_fieldset();
+                spa_paint_close_panel();
+        spa_paint_close_panel();
+        spa_paint_close_tab();
+                        
+                        spa_paint_open_nohead_tab(true);
 
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Active CRON'), false);
  ?>
-                <table class="widefat fixed spMobileTable1280">
+                <table class="widefat fixed _spMobileTable1280">
                     <thead>
                         <tr>
-                            <th style='text-align:center'><?php SP()->primitives->admin_etext('Next Run (date)'); ?></th>
-                            <th style='text-align:center'><?php SP()->primitives->admin_etext('Next Run (timestamp)'); ?></th>
-                            <th style='text-align:center'><?php SP()->primitives->admin_etext('Schedule'); ?></th>
-                            <th style='text-align:center'><?php SP()->primitives->admin_etext('Hook'); ?></th>
-                            <th style='text-align:center'><?php SP()->primitives->admin_etext('Arguments'); ?></th>
+                            <th><?php SP()->primitives->admin_etext('Next Run (date)'); ?></th>
+                            <th><?php SP()->primitives->admin_etext('Next Run (timestamp)'); ?></th>
+                            <th><?php SP()->primitives->admin_etext('Schedule'); ?></th>
+                            <th><?php SP()->primitives->admin_etext('Hook'); ?></th>
+                            <th><?php SP()->primitives->admin_etext('Arguments'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,7 +72,7 @@ function spa_toolbox_cron_form() {
                         foreach ($cron as $hook => $items) {
                             foreach ($items as $item) {
 ?>
-                                <tr class='spMobileTableData'>
+                                <tr class='_spMobileTableData'>
                                     <td data-label='<?php SP()->primitives->admin_etext('Next Run (date)'); ?>'><?php echo $item['date']; ?></td>
                                     <td data-label='<?php SP()->primitives->admin_etext('Next Run (timestamp)'); ?>'><?php echo $time; ?></td>
                                     <td data-label='<?php SP()->primitives->admin_etext('Schedule'); ?>'>
@@ -117,7 +122,8 @@ function spa_toolbox_cron_form() {
 
 	echo '<div class="sfform-panel-spacer"></div>';
 
-	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('CRON Update'), true);
+        //spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('CRON Update'), true);
+	spa_paint_open_nohead_tab();
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Add CRON'), true, 'cron-add');
 				spa_paint_input(SP()->primitives->admin_text('Next Run Timestamp'), 'add-timestamp', '');
