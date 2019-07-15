@@ -3127,5 +3127,27 @@ body .spMobileTableData .row-actions > span {
         float: left;
         padding: 10px 10px 0 10px;
     }
+    .sf-Hide{
+      display: none;
+    }
+    .sf-Leftm{
+      text-align: left!important;
+      padding-left: 10px!important;
+    }
+    .sf-Leftm .sf-item-controls{
+      float: none!important;
+    }
 }
 /* end Available Plugins */
+.sf-Left{
+  text-align: left!important;
+}
+.sf-Hide{
+  display: none;
+}
+#sf-root-wrap .sf-icon.sf-cancel{
+  -webkit-mask-image: url("../icons/Cancel.svg");
+  mask-image: url("../icons/Cancel.svg");
+  background-image: url("../icons/Cancel.svg");
+  margin-top: 15px;
+}
