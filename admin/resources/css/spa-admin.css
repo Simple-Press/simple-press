@@ -967,6 +967,10 @@ $Rev:2099 $
     margin-top: 60px;
 }
 
+#sf-root-wrap #sfmaincontainer #sfstorageform .sf-panel+.sf-panel {
+    margin: 0;
+}
+
 /**
 * .sf-icon >
 */
@@ -3179,26 +3183,26 @@ body .spMobileTableData .row-actions > span {
         padding: 10px 10px 0 10px;
     }
     .sf-Hide{
-      display: none;
+        display: none;
     }
     .sf-Leftm{
-      text-align: left!important;
-      padding-left: 10px!important;
+        text-align: left!important;
+        padding-left: 10px!important;
     }
     .sf-Leftm .sf-item-controls{
-      float: none!important;
+        float: none!important;
     }
 }
 /* end Available Plugins */
 .sf-Left{
-  text-align: left!important;
+    text-align: left!important;
 }
 .sf-Hide{
-  display: none;
+    display: none;
 }
 #sf-root-wrap .sf-icon.sf-cancel{
-  -webkit-mask-image: url("../icons/Cancel.svg");
-  mask-image: url("../icons/Cancel.svg");
-  background-image: url("../icons/Cancel.svg");
-  margin-top: 15px;
+    -webkit-mask-image: url("../icons/Cancel.svg");
+    mask-image: url("../icons/Cancel.svg");
+    background-image: url("../icons/Cancel.svg");
+    margin-top: 15px;
 }
