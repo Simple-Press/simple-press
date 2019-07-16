@@ -51,33 +51,24 @@ function spa_forums_forums_main() {
 
             foreach ($groups as $group) {
                 spa_paint_open_nohead_tab(true, '');
-                if (empty($group->group_icon)) {
-                    $icon = SPTHEMEICONSURL . 'sp_GroupIcon.png';
-                } else {
-                    $icon = esc_url(SPCUSTOMURL . $group->group_icon);
-                    if (!file_exists(SPCUSTOMDIR . $group->group_icon))
-                        $icon = SPTHEMEICONSURL . 'sp_GroupIcon.png';
-                }
-
-                $group_icon_type = 'file';
 
                 if (empty($group->group_icon)) {
-                    $icon = SPTHEMEICONSURL . 'sp_GroupIcon.png';
+                    $group_icon = array(
+                        'type' => 'file',
+                        'icon' => SPTHEMEICONSURL . 'sp_GroupIcon.png',
+                    );
                 } else {
-
                     $group_icon = spa_get_saved_icon($group->group_icon);
-
-                    if ('file' === $group_icon['type']) {
-                        $icon = esc_url(SPCUSTOMURL . $group_icon['icon']);
-                        if (!file_exists(SPCUSTOMDIR . $group_icon['icon'])) {
-                            $icon = SPTHEMEICONSURL . 'sp_GroupIcon.png';
-                        }
+                }
+                
+                if ('file' === $group_icon['type']) {
+                    if (empty($group_icon['icon']) || !file_exists(SPCUSTOMDIR . $group_icon['icon'])) {
+                        $group_icon['icon'] = SPTHEMEICONSURL . 'sp_GroupIcon.png';
                     } else {
-                        $group_icon_type = 'font';
-                        $icon = $group_icon['icon'];
+                         $group_icon['icon'] = esc_url(SPCUSTOMURL . $group_icon['icon']);
                     }
                 }
-
+                
                 # Group
                 ?>
                 <div id="grouprow-<?php echo $group->group_id; ?>" class="sf-panel-body-top sf-mobile-no-horizontal-padding">
@@ -85,10 +76,14 @@ function spa_forums_forums_main() {
                         <tr>
                             <td class="sf-v-a-middle">
                                 <?php
-                                if ('file' === $group_icon_type) {
-                                    echo '<img src="' . $icon . '" alt="" title="' . SP()->primitives->admin_text('Current group icon') . '" />';
+                                if ('file' === $group_icon['type']) {
+                                    echo '<img src="' . $group_icon['icon'] . '" alt="" title="' . SP()->primitives->admin_text('Current group icon') . '" />';
                                 } else {
-                                    echo '<i class="' . $icon . '"></i>';
+                                    echo '<i class="' . $group_icon['icon'] . '"';
+                                    if(!empty($group_icon['color'])) {
+                                        echo ' style="color:'. $group_icon['color'] .'"';
+                                    }
+                                    echo '></i>';
                                 }
                                 ?>
                                 <!--<a title="<?php SP()->primitives->admin_etext('Collapse/expand forum listing'); ?>" class="spExpandCollapseGroup" data-target="forum-group-<?php echo $group->group_id; ?>">&ndash;</a>-->
