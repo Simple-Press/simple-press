@@ -9,7 +9,7 @@ $Rev:2099 $
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
 /*@import url(//use.fontawesome.com/releases/v5.8.2/css/all.css);*/
 
-@import url(./scrapyard.css);
+/*@import url(./scrapyard.css);*/
 
 @font-face {
     font-family: 'Open Sans Semibold';
@@ -29,6 +29,35 @@ $Rev:2099 $
         url('fonts/sp-admin.svg?-1norbm#sp-admin') format('svg');
     font-weight: normal;
     font-style: normal;
+}
+
+.sfhelptext td.spaErrCell {
+    width: 20%;
+    text-align: center;
+}
+.spaErrError {
+    background: #FFE4E1;
+    border-bottom: 5px solid #FFFFFF;
+}
+
+.spaErrWarning {
+    background: #FFE4B5;
+    border-bottom: 5px solid #FFFFFF;
+}
+
+.spaErrNotice {
+    background: #B0E0E6;
+    border-bottom: 5px solid #FFFFFF;
+}
+
+.spaErrStrict {
+    background: #DCDCDC;
+    border-bottom: 5px solid #FFFFFF;
+}
+
+.spaSecNotice {
+    background: #F7E5FF;
+    border-bottom: 5px solid #FFFFFF;
 }
 
 #toplevel_page_simplepress-admin-panel-forums-spa-forums .wp-menu-image:before,
@@ -372,7 +401,7 @@ $Rev:2099 $
     text-transform: uppercase;
 }
 #sf-root-wrap .sf-full-width {
-    width: 100%;
+    width: 100% !important;
 }
 #sf-root-wrap .sf-v-a-top,
 #sf-root-wrap tr.sf-v-a-top th,
@@ -834,6 +863,7 @@ $Rev:2099 $
     background: #00B9D0;
     box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
     color: #FFF;
+    text-transform: inherit;
 }
 #sf-root-wrap .sf-button-primary.sf-focus,
 #sf-root-wrap .sf-button-primary.sf-hover,
@@ -1110,6 +1140,9 @@ $Rev:2099 $
 }
 #sf-root-wrap .sf-icon.sf-gray{
     background-color: #F0F0F0;
+}
+#sf-root-wrap .sf-icon.sf-white {
+    background-color: #FFF;
 }
 /**
 * < .sf-icon
@@ -1853,6 +1886,7 @@ $Rev:2099 $
 
 #sfmaincontainer ul.sf-list li {
     width: 340px;
+    float: none;
 }
 #sfmaincontainer ul.sf-list ul > li {
     margin-left: 20px;
@@ -2694,6 +2728,9 @@ body .spMobileTableData .row-actions > span {
         -webkit-border-radius: 3px;
         border-radius: 3px;
     }
+    #sfmaincontainer ul.sf-list {
+        overflow: hidden;
+    }
     #sfmaincontainer ul.sf-list li {
         float: left;
         width: 100%;
@@ -2794,8 +2831,8 @@ body .spMobileTableData .row-actions > span {
     #sfmaincontainer table.sf-table-mobile tfoot {
         display: none;
     }
-    #sfmaincontainer table.sf-table-mobile tr td,
-    #sfmaincontainer table.sf-table-mobile tr th:not(.sf-inline) {
+    #sfmaincontainer table.sf-table-mobile tr td:not(.sf-mobile-inline),
+    #sfmaincontainer table.sf-table-mobile tr th:not(.sf-mobile-inline) {
         float: left;
         position: relative;
         width: 100% !important;
@@ -3122,5 +3159,27 @@ body .spMobileTableData .row-actions > span {
         float: left;
         padding: 10px 10px 0 10px;
     }
+    .sf-Hide{
+      display: none;
+    }
+    .sf-Leftm{
+      text-align: left!important;
+      padding-left: 10px!important;
+    }
+    .sf-Leftm .sf-item-controls{
+      float: none!important;
+    }
 }
 /* end Available Plugins */
+.sf-Left{
+  text-align: left!important;
+}
+.sf-Hide{
+  display: none;
+}
+#sf-root-wrap .sf-icon.sf-cancel{
+  -webkit-mask-image: url("../icons/Cancel.svg");
+  mask-image: url("../icons/Cancel.svg");
+  background-image: url("../icons/Cancel.svg");
+  margin-top: 15px;
+}

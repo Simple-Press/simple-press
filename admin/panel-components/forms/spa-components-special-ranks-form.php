@@ -56,13 +56,13 @@ function spa_special_rankings_form($rankings) {
 		//spa_paint_open_nohead_tab(true);
 		//spa_paint_open_panel();
 ?>
-		<table class="widefat fixed striped">
+		<table class="widefat fixed striped spMobileTable1280">
     		<thead>
     			<tr>
     				<th><?php SP()->primitives->admin_etext('Rank Name') ?></th>
     				<th><?php SP()->primitives->admin_etext('Badge') ?></th>
-    				<th width="45%"><?php SP()->primitives->admin_etext('Manage') ?></th>
-					<th width="5%"></th>
+    				<th width="50%"><?php SP()->primitives->admin_etext('Manage') ?></th>
+					<th width="15%"></th>
     			</tr>
     		</thead>
     		<tbody>
@@ -84,7 +84,7 @@ function spa_special_rankings_form($rankings) {
 <?php
                 		echo sp_create_nonce('special-rank-update');
 ?>
-                        <table class='wp-list-table widefat fixed'>
+                        <table class='wp-list-table widefat fixed spMobileTable1280'>
                             <tr>
             					<td>
             						<input type="hidden" name="<?php echo('currentname['.$rank['meta_id'].']'); ?>" value="<?php echo $rank['meta_key']; ?>" />
@@ -101,7 +101,7 @@ function spa_special_rankings_form($rankings) {
 									
 									?>
             					</td>
-            					<td width="45%">
+            					<td width="50%">
                 					<?php $loc = '#sfrankshow-'.$rank['meta_id']; ?>
 									<input type="button" id="show<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankShow" value="<?php echo esc_js(SP()->primitives->admin_text('Show')) ?>" data-loc="<?php echo $loc; ?>" data-site="<?php echo wp_nonce_url(SPAJAXURL.'components&amp;targetaction=show&amp;key='.$rank['meta_id'], 'components') ?>" data-img="<?php echo SPCOMMONIMAGES.'working.gif' ?>" data-id="<?php echo $rank['meta_id']; ?>" />
 
@@ -109,7 +109,7 @@ function spa_special_rankings_form($rankings) {
 										
 									<input type="button" id="add<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Add'); ?>" data-loc="<?php echo $loc; ?>" data-form="addmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
             					</td>
-								<td width="10%">
+								<td width="15%">
 									<span class="sf-item-controls">
 										<input type="submit" class="sf-icon sf-edit" id="updatespecialrank<?php echo $rank['meta_id']; ?>" name="updatespecialrank<?php echo $rank['meta_id']; ?>" value="<?php //SP()->primitives->admin_etext('Update Rank'); ?>" />
 										<span class="sf-icon sf-delete spDeleteRow" data-url="<?php echo $delsite; ?>" data-target="srank<?php echo $rank['meta_id']; ?>" title="<?php SP()->primitives->admin_etext('Delete Special Rank'); ?>"></span>

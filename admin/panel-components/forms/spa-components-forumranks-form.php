@@ -69,13 +69,14 @@ function spa_components_forumranks_form() {
 					}
 				}
 			});
-		});
+      $('.sf-Hide').css('display', 'none');
+      $('.sf-edit-item').on('click', function(e){var item = $(this).parent().parent().parent().next(); if(item.css('display') === 'none'){ item.css('display', 'table-row'); }else{ item.css('display', 'none'); } });
+		  $('#new-range-cancel').on('click', function(e){ $('#new-range-name').val(''); $('#new-range-post').val(''); $('#new-range-group').val('none');$('#new-range-badge').find('select').val('all');$('#new-range-badge').find('.selected-icon').find('i').remove();$('#new-range-badge').find('.selected-icon').append('<i class="fip-icon-block"></i>'); });
+    });
 	}(window.spj = window.spj || {}, jQuery));
 </script>
 <style>
-  .sf-Left{
-    text-align: left!important;
-  }
+  
 </style>
 <?php
 	$rankings = spa_get_forumranks_data();
@@ -110,9 +111,9 @@ function spa_components_forumranks_form() {
 
 		spa_paint_close_container();
 ?>
-	<div class="sf-form-submit-bar">
+	<!--<div class="sf-form-submit-bar">
 	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Forum Ranks Components'); ?>" />
-	</div>
+	</div>-->
 <?php
 	spa_paint_close_tab();
 ?>
@@ -196,24 +197,23 @@ function spa_paint_rankings_table($rankings) {
 	$badges =  spa_get_custom_icons( SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'] . '/' );
 
 	# display rankings info
-	for ($x = 0; $x < count($rankings); $x++) {
 ?>
     <!--empty row for new rank-->
 		<tr >
 
 		<td data-label='<?php SP()->primitives->admin_etext('Rank Name'); ?>'>
-			<input type='text' size="12"  class='wp-core-ui' tabindex='<?php echo $tab; ?>' name='rankdesc[]' value='' placeholder="<?=SP()->primitives->admin_etext('Forum rank name')?>"/>
+			<input type='text' size="12"  class='wp-core-ui' tabindex='<?php echo $tab; ?>' name='rankdesc[]' id="new-range-name" value='' placeholder="<?=SP()->primitives->admin_etext('Forum rank name')?>"/>
 			<input type='hidden' name='rankid[]' value='-1' />
 		</td>
 		<?php $tab++; ?>
 
 		<td data-label='<?php SP()->primitives->admin_etext('NUMBER OF POSTS'); ?>'>
-			<input type='text' class='wp-core-ui' size='5' tabindex='<?php echo $tab; ?>' name='rankpost[]' value='' placeholder="<?=SP()->primitives->admin_etext('# of posts for rank')?>"/>
+			<input type='text' class='wp-core-ui' size='5' tabindex='<?php echo $tab; ?>' name='rankpost[]' id="new-range-post" value='' placeholder="<?=SP()->primitives->admin_etext('# of posts for rank')?>"/>
 		</td>
 		<?php $tab++; ?>
 
 		<td data-label='<?php SP()->primitives->admin_etext('MEMBERSHIP GROUP'); ?>'>
-			<select class="wp-core-ui" name="rankug[]" style="width:135px;">
+			<select class="wp-core-ui" name="rankug[]" style="width:135px;" id="new-range-group" >
 <?php
 			$out = '<option value="none">'.SP()->primitives->admin_text('Select Group').'</option>';
 			foreach ($usergroups as $usergroup) {
@@ -225,13 +225,23 @@ function spa_paint_rankings_table($rankings) {
 		</td>
 		<?php $tab++; ?>
 
-		<td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>'>
+		<td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>' id="new-range-badge" >
 			<?php spa_select_iconset_icon_picker( 'rankbadge[]', __( 'Select Badge' ), array('Badges' => $badges ), '', false ); ?>
 		</td>
 		<?php $tab++; ?>
 
-		<td></td>
+		<td>
+      <!--<div class="sf-form-submit-bar">-->
+	      <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Save'); ?>" />
+        <!--<span class="sf-item-controls">-->
+    			<span class="sf-icon sf-cancel spDeleteRow" id="new-range-cancel"></span>
+        <!--</span>-->
+	    <!--</div>-->
+    </td>
 		</tr>
+    <?php
+    for ($x = 0; $x < count($rankings); $x++) {
+?>
     <tr id="vrank<?php echo($x); ?>" >
       <td data-label='<?php SP()->primitives->admin_etext('Rank Name'); ?>' class="sf-Left">
   			<span><?php echo esc_attr($ranks['title'][$x]); ?></span>
@@ -282,13 +292,13 @@ function spa_paint_rankings_table($rankings) {
       </td>
       <td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>' class="sf-Left">
     		<span class="sf-item-controls">
-    			<span class="sf-icon sf-edit"></span>
+    			<span class="sf-icon sf-edit spDeleteRow sf-edit-item"></span>
     			<?php $site = wp_nonce_url(SPAJAXURL.'components&amp;targetaction=del_rank&amp;key='.$ranks['id'][$x], 'components'); ?>
     			<span class="sf-icon sf-delete spDeleteRow" data-url="<?php echo $site; ?>" data-target="rank<?php echo $x; ?>" title="<?php SP()->primitives->admin_etext('Delete Rank'); ?>"></span>
     		</span>
 		  </td>
     </tr>
-		<tr id="rank<?php echo($x); ?>" >
+		<tr id="rank<?php echo($x); ?>" class="sf-Hide">
 
 		<td data-label='<?php SP()->primitives->admin_etext('Rank Name'); ?>'>
 			<input type='text' size="12" class='wp-core-ui' tabindex='<?php echo $tab; ?>' name='rankdesc[]' value='<?php echo esc_attr($ranks['title'][$x]); ?>' />
@@ -331,11 +341,7 @@ function spa_paint_rankings_table($rankings) {
 		<?php $tab++; ?>
 
 		<td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>'>
-			<span class="sf-item-controls">
-				<span class="sf-icon sf-edit"></span>
-				<?php $site = wp_nonce_url(SPAJAXURL.'components&amp;targetaction=del_rank&amp;key='.$ranks['id'][$x], 'components'); ?>
-				<span class="sf-icon sf-delete spDeleteRow" data-url="<?php echo $site; ?>" data-target="rank<?php echo $x; ?>" title="<?php SP()->primitives->admin_etext('Delete Rank'); ?>"></span>
-			</span>
+			<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Save'); ?>" />
 		</td>
 		<?php $tab++; ?>
 
