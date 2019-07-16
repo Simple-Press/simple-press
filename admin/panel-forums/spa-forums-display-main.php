@@ -231,10 +231,10 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                     }
                     ?>
                 </td>
-                <td class="sf-mobile-width-by-content sf-mobile-no-vertical-padding">
+                <td class="sf-mobile-width-by-content sf-mobile-no-vertical-padding sf-mobile-inline">
                     <?php sp_display_item_stats(SPTOPICS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Topics')) ?>
                 </td>
-                <td class="sf-mobile-width-by-content sf-mobile-no-vertical-padding">
+                <td class="sf-mobile-width-by-content sf-mobile-no-vertical-padding sf-mobile-inline">
                     <?php sp_display_item_stats(SPPOSTS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Posts')) ?>
                 </td>
                 <td>

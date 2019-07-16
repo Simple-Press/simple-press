@@ -9,7 +9,7 @@ $Rev:2099 $
 @import url(//fonts.googleapis.com/css?family=Open+Sans);
 /*@import url(//use.fontawesome.com/releases/v5.8.2/css/all.css);*/
 
-@import url(./scrapyard.css);
+/*@import url(./scrapyard.css);*/
 
 @font-face {
     font-family: 'Open Sans Semibold';
@@ -29,6 +29,35 @@ $Rev:2099 $
         url('fonts/sp-admin.svg?-1norbm#sp-admin') format('svg');
     font-weight: normal;
     font-style: normal;
+}
+
+.sfhelptext td.spaErrCell {
+    width: 20%;
+    text-align: center;
+}
+.spaErrError {
+    background: #FFE4E1;
+    border-bottom: 5px solid #FFFFFF;
+}
+
+.spaErrWarning {
+    background: #FFE4B5;
+    border-bottom: 5px solid #FFFFFF;
+}
+
+.spaErrNotice {
+    background: #B0E0E6;
+    border-bottom: 5px solid #FFFFFF;
+}
+
+.spaErrStrict {
+    background: #DCDCDC;
+    border-bottom: 5px solid #FFFFFF;
+}
+
+.spaSecNotice {
+    background: #F7E5FF;
+    border-bottom: 5px solid #FFFFFF;
 }
 
 #toplevel_page_simplepress-admin-panel-forums-spa-forums .wp-menu-image:before,
@@ -2699,6 +2728,9 @@ body .spMobileTableData .row-actions > span {
         -webkit-border-radius: 3px;
         border-radius: 3px;
     }
+    #sfmaincontainer ul.sf-list {
+        overflow: hidden;
+    }
     #sfmaincontainer ul.sf-list li {
         float: left;
         width: 100%;
@@ -2799,8 +2831,8 @@ body .spMobileTableData .row-actions > span {
     #sfmaincontainer table.sf-table-mobile tfoot {
         display: none;
     }
-    #sfmaincontainer table.sf-table-mobile tr td,
-    #sfmaincontainer table.sf-table-mobile tr th:not(.sf-inline) {
+    #sfmaincontainer table.sf-table-mobile tr td:not(.sf-mobile-inline),
+    #sfmaincontainer table.sf-table-mobile tr th:not(.sf-mobile-inline) {
         float: left;
         position: relative;
         width: 100% !important;

@@ -141,7 +141,7 @@ function spa_paint_storage_input($label, $name, $value, $na = false) {
 	}
 
 	echo "<span style='float: left; margin-top: 15px; margin-left: 10px'>$icon1 $icon2 </span>";
-	spa_paint_open_fieldset(SP()->primitives->admin_text($label), true, $name, truetrue,'', $adminhelpfile);
+	spa_paint_open_fieldset(SP()->primitives->admin_text($label), true, $name, true,'', $adminhelpfile);
 
 	echo '<div class="collapsible-closed">';
         echo SP_STORE_RELATIVE_BASE;
