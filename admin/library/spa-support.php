@@ -376,6 +376,7 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 			}
 		});
 		
+                _icon_ins.change();
 	});
 
 	</script>

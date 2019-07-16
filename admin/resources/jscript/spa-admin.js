@@ -350,7 +350,9 @@
 		};
                 
                 $('#'+id).closest('.sf-icon-picker-row').find('.icon_value').val( JSON.stringify( val ) );
-        }
+                
+                $('#'+id).closest('.sf-icon-picker-row').find('.selected-icon i').css({color: color});
+        };
         
 
 	// private methods
