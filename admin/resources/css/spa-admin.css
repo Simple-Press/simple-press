@@ -963,6 +963,9 @@ $Rev:2099 $
 #sf-root-wrap .sf-full-form .sf-icon-button.sf-small:hover .sf-icon {
     opacity: 1;
 }
+#sf-root-wrap .sf-full-form .sf-panel+.sf-panel {
+    margin-top: 60px;
+}
 
 /**
 * .sf-icon >
@@ -1354,6 +1357,8 @@ $Rev:2099 $
     margin:0 0 0 300px;
     padding: 0;
 }
+
+
 #sfmaincontainer .sf-panel-head {
     float: left;
     width: 100%;

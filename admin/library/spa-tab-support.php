@@ -94,7 +94,7 @@ function spa_paint_tab_right_cell() {
 }
 
 function spa_paint_open_panel() {
-	echo '<div>';
+	echo '<div class="sf-panel">';
 }
 
 function spa_paint_close_panel() {
