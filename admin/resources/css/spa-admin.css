@@ -489,6 +489,20 @@ $Rev:2099 $
     margin-right: 0;
 }
 
+#sf-root-wrap .sfinline-form .sf-panel-body .sf-half-form .sf-panel-body-top:after {
+    display: none;
+}
+#sf-root-wrap .sfinline-form .sf-panel-body .sf-half-form .sf-panel-body-top .sf-panel-body-top-left {
+    margin: 0;
+}
+#sf-root-wrap .sfinline-form .sf-panel-body .sf-half-form .sf-panel-body-top .sf-panel-body-top-right {
+    margin: 0;
+}
+#sf-root-wrap .sfinline-form .sf-panel-body .sf-half-form .sf-panel-body-top .sf-panel-body-top-right .sf-icon-button {
+    padding: 0;
+}
+
+
 #sf-root-wrap .sf-pull-left {
     float: left;
 }
