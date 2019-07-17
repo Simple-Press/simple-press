@@ -2564,11 +2564,16 @@ div[class^="collapsible-"] {
 .spMobileTableData {
     display: grid;
     width: 100%;
-    grid-template-columns: 1fr 2fr 2fr 2fr 2fr 2fr 2fr 2fr 3fr 3fr 1fr;
+    grid-template-columns: 1fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr 3fr 3fr 1fr;
     color: #27476E;
     font-family: "Open Sans Regular";
     background-color: white;
     padding: 25px 20px;
+    align-items: center;
+    grid-gap: 0 5px;
+}
+.spMobileTableData > div{
+    text-align: center!important;
 }
 body .spMobileTableData .row-actions {
     grid-template-columns: 1fr 1fr 1fr;
@@ -2584,6 +2589,28 @@ body .spMobileTableData .row-actions > span {
     font-size: 12px;
     font-family: "Open Sans Semibold";
     text-transform: uppercase;
+}
+.spMobileTableData .column-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.spMobileTableData .column-more .row-actions {
+    position: absolute;
+    left: 25px;
+    top: -20px;
+}
+#sfmaincontainer .sf-fieldset #members-filter .subsubsub li {
+    width: auto;
+}
+.sf-dropdown-cur {
+    background-color: #EAF0F4;
+    padding: 15px;
+    font-family: "Open Sans Semibold";
+}
+.sf-hide-full{
+    display: none;
 }
 @media screen and ( max-width: 1350px ) {
     #sfmaincontainer .sf-panel-body .sf-half {
@@ -2612,6 +2639,17 @@ body .spMobileTableData .row-actions > span {
     /*#sf-root-wrap [class*=sf-button]+[class*=sf-button] {
         margin-left: 0;
     }*/
+    .sf-hide-full {
+        display: block;
+    }
+    .sf-hide-mobile{
+        display: none!important;
+    }
+    #sfmaincontainer .sf-fieldset #members-filter .subsubsub li {
+        width: 100%;
+        text-align: left;
+        padding: 5px 15px;
+    }
     .spMobileTableData {
         grid-template-columns: 1fr 1fr;
         grid-gap: 10px;

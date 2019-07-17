@@ -117,7 +117,8 @@ function spa_users_members_form() {
 
                                                 case 'user_registered':
                                                 case 'lastvisit':
-                                                    echo SP()->dateTime->format_date('d', $rec[$column_name]).'<br />'.SP()->dateTime->format_date('t', $rec[$column_name]);
+                                                    $newDate = new DateTime($rec[$column_name]);
+                                                    echo $newDate->format('M j, Y');
                                                     break;
 
                                                 case 'posts':
@@ -327,14 +328,21 @@ function spa_users_members_form() {
                     ?>
                 </form>
                 <script>
-
+                    
+                    ///////////////////////////////////////////////////////////////////////////////
+                    // More Column
                     if (jQuery(window).width() < 768) putDiv();
                     var $action = jQuery('.row-actions');
-
+                    console.log($action);
                     jQuery('.row-actions').remove();
                     jQuery('.column-more').each(function(index){
+                        jQuery(this).addClass('sf-hide-mobile');
                         jQuery(this).append($action[index]);
                         jQuery(this).append("<div class=\"drop-down\"><span class=\"sf-icon sf-gray sf-more\"></div>");
+                    });
+                    jQuery('.column-user_id').each(function(index){
+                        // jQuery(this).append($action[index]);
+                        jQuery(this).find('.row-actions').addClass('sf-hide-full');
                     });
 
                     jQuery('.column-more .row-actions').toggleClass('hide');
@@ -342,11 +350,28 @@ function spa_users_members_form() {
                     jQuery('.drop-down').on('click', function(){
                         jQuery(this).parent().find('.row-actions').toggleClass('hide');
                     });
+                    var paggs = '<div class="pagginator"><ul></ul></div>';
+                    ////////////////////////////////////////////////////////////////////////////////
+                    // DropdownMenu
+                    jQuery('#members-filter > table').insertAfter("#members-filter > .sf-panel-body-top");
 
+                    jQuery('<div class="sf-dropdown"></div>').insertBefore('#members-filter .sf-panel-body-top .subsubsub');
+                    jQuery('#members-filter .sf-panel-body-top .subsubsub').appendTo('#members-filter .sf-panel-body-top .sf-dropdown');
+                    
+                    jQuery('<div class="sf-dropdown-cur sf-hide-full">'+ jQuery('#members-filter .subsubsub .current').text()  +'</div>').insertBefore('#members-filter .sf-panel-body-top .sf-dropdown .subsubsub');
+                    
+
+                    jQuery('#members-filter .sf-panel-body-top .sf-dropdown .sf-dropdown-cur').on('click',function(){
+                        jQuery('#members-filter .sf-panel-body-top .subsubsub').toggleClass('sf-hide-full');
+                    });
+
+                    
                     jQuery(window).on('resize',function(){
                         if (jQuery(window).width() < 768) {
-                            putDiv()
-                        } else delDiv();
+                            putDiv();
+                        } else {
+                            delDiv()
+                        };
                     });
                     function delDiv(){
                         if ( jQuery(".avatar-text-lable").length != 0 ) {
