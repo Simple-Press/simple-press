@@ -18,6 +18,30 @@ function spa_integration_page_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'integration-loader&amp;saveform=page', 'integration-loader');
 ?>
+    <style>
+        .sf-plugin-list-mob {
+            text-align: left;
+            margin-top: 20px;
+            background-color: white;
+        }
+        .sf-plugin-list-mob {
+            content: '' !important;
+        }
+        .sf-plugin-list-mob td {
+            padding: 10px;
+        }
+        .sf-title-uppercase-blue {
+            color: #85A2BC;
+            text-transform: uppercase;
+        }
+
+        .sf-integration-permalink{
+            width: 100%;
+        }
+        .sf-integration-permalink table{
+            width: 100%;
+        }
+        </style>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="wppageform" name="wppage">
 	<?php echo sp_create_nonce('forum-adminform_integration'); ?>
 <?php
@@ -36,18 +60,40 @@ function spa_integration_page_form() {
 				$title = SP()->DB->table(SPWPPOSTS, 'ID='.$sfoptions['sfpage'], 'post_title');
 				$template = SP()->DB->table(SPWPPOSTMETA, "meta_key='_wp_page_template' AND post_id=".$sfoptions['sfpage'], 'meta_value');
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Current WP Forum Page'), false);
-					echo '<table class="table widefat">';
+					echo '<table class="table widefat  sf-plugin-hide">';
 					echo '<thead><tr>';
 					echo '<th>'.SP()->primitives->admin_text('Forum page ID').'</th>';
 					echo '<th>'.SP()->primitives->admin_text('Page title').'</th>';
 					echo '<th>'.SP()->primitives->admin_text('Page template').'</th>';
 					echo '</tr></thead>';
 					echo '<tbody><tr>';
-					echo '<td class="sflabel">'.$sfoptions['sfpage'].'</td>';
-					echo '<td class="sflabel">'.$title.'</td>';
-					echo '<td class="sflabel">'.$template.'</td>';
+					echo '<td>'.$sfoptions['sfpage'].'</td>';
+					echo '<td>'.$title.'</td>';
+					echo '<td>'.$template.'</td>';
 					echo '</tr></tbody></table>';
+
 				spa_paint_close_fieldset();
+
+				echo '<div style="width:100%; background:white">';
+				echo '<table class="sf-plugin-list-mob sf-showm">';
+				echo '<tbody><tr>';
+				echo '<td><span class="sf-title-uppercase-blue">'
+				     .SP()->primitives->admin_text('Forum page ID').
+				     '</span></td><td>'
+				     .$sfoptions['sfpage'].
+				     '</td></tr>';
+				echo '<tr><td><span class="sf-title-uppercase-blue">'
+				     .SP()->primitives->admin_text('Page title').
+				     '</span></td><td>'
+				     .$title.
+				     '</td></tr>';
+				echo '<tr><td><span class="sf-title-uppercase-blue">'
+				     .SP()->primitives->admin_text('Page template').
+				     '</span></td><td>'
+				     .$template.
+				     '</td>';
+				echo '</tr></tbody></table>';
+				echo '</div>';
 
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Update Forum Permalink'), true, 'forum-permalink');
 					echo '<p class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Current permalink').':<br /></p><div class="sf-subhead" id="adminupresult"><p>'.$sfoptions['sfpermalink'].'</p></div><br />';

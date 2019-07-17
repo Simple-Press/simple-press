@@ -213,15 +213,17 @@ function spa_paint_rankings_table($rankings) {
 		<?php $tab++; ?>
 
 		<td data-label='<?php SP()->primitives->admin_etext('MEMBERSHIP GROUP'); ?>'>
-			<select class="wp-core-ui" name="rankug[]" style="width:135px;" id="new-range-group" >
-<?php
-			$out = '<option value="none">'.SP()->primitives->admin_text('Select Group').'</option>';
-			foreach ($usergroups as $usergroup) {
-				$out.= '<option value="'.$usergroup->usergroup_id.'">'.SP()->displayFilters->title($usergroup->usergroup_name).'</option>';
-			}
+            <div class='sf-select-wrap'>
+			    <select class="wp-core-ui sp-input-40" name="rankug[]" style="width:135px;" id="new-range-group" >
+            <?php
+			    $out = '<option value="none">'.SP()->primitives->admin_text('Select Group').'</option>';
+			    foreach ($usergroups as $usergroup) {
+				    $out.= '<option value="'.$usergroup->usergroup_id.'">'.SP()->displayFilters->title($usergroup->usergroup_name).'</option>';
+			    }
 			echo $out;
-?>
+            ?>
 			</select>
+            </div>
 		</td>
 		<?php $tab++; ?>
 

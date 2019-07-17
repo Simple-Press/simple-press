@@ -479,12 +479,13 @@ class SP_List_Table {
         $out = '<div class="' . ( $always_visible ? 'row-actions visible' : 'row-actions' ) . '">';
         foreach ($actions as $action => $link) {
             ++$i;
-            ( $i == $action_count ) ? $sep = '' : $sep = ' | ';
+            // ( $i == $action_count ) ? $sep = '' : $sep = ' | ';
+            $sep = '';
             $out .= "<span class='$action'>$link$sep</span>";
         }
         $out .= '</div>';
 
-        $out .= '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __('Show more details') . '</span></button>';
+        // $out .= '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __('Show more details') . '</span></button>';
 
         return $out;
     }
