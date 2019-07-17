@@ -2612,6 +2612,9 @@ body .spMobileTableData .row-actions > span {
 .sf-hide-full{
     display: none;
 }
+#sf-root-wrap #members-filter .check-column input[type=checkbox]{
+    float: none;
+}
 @media screen and ( max-width: 1350px ) {
     #sfmaincontainer .sf-panel-body .sf-half {
         width: 100%!important;
@@ -2639,9 +2642,9 @@ body .spMobileTableData .row-actions > span {
     /*#sf-root-wrap [class*=sf-button]+[class*=sf-button] {
         margin-left: 0;
     }*/
-    .sf-hide-full {
+    /* .sf-hide-full {
         display: block;
-    }
+    } */
     .sf-hide-mobile{
         display: none!important;
     }

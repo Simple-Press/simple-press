@@ -333,15 +333,14 @@ function spa_users_members_form() {
                     // More Column
                     if (jQuery(window).width() < 768) putDiv();
                     var $action = jQuery('.row-actions');
-                    console.log($action);
                     jQuery('.row-actions').remove();
-                    jQuery('.column-more').each(function(index){
+                    jQuery('.spMobileTableData .column-more').each(function(index){
                         jQuery(this).addClass('sf-hide-mobile');
                         jQuery(this).append($action[index]);
                         jQuery(this).append("<div class=\"drop-down\"><span class=\"sf-icon sf-gray sf-more\"></div>");
                     });
-                    jQuery('.column-user_id').each(function(index){
-                        // jQuery(this).append($action[index]);
+                    jQuery('.spMobileTableData .column-user_id').each(function(index){
+                        jQuery(this).append($action[index]);
                         jQuery(this).find('.row-actions').addClass('sf-hide-full');
                     });
 
@@ -358,14 +357,29 @@ function spa_users_members_form() {
                     jQuery('<div class="sf-dropdown"></div>').insertBefore('#members-filter .sf-panel-body-top .subsubsub');
                     jQuery('#members-filter .sf-panel-body-top .subsubsub').appendTo('#members-filter .sf-panel-body-top .sf-dropdown');
                     
-                    jQuery('<div class="sf-dropdown-cur sf-hide-full">'+ jQuery('#members-filter .subsubsub .current').text()  +'</div>').insertBefore('#members-filter .sf-panel-body-top .sf-dropdown .subsubsub');
+                    jQuery('<div class="sf-dropdown-cur">'+ jQuery('#members-filter .subsubsub .current').text()  +'</div>').insertBefore('#members-filter .sf-panel-body-top .sf-dropdown .subsubsub');
                     
 
                     jQuery('#members-filter .sf-panel-body-top .sf-dropdown .sf-dropdown-cur').on('click',function(){
                         jQuery('#members-filter .sf-panel-body-top .subsubsub').toggleClass('sf-hide-full');
                     });
 
-                    
+                    if (jQuery(window).width() < 768) {
+                        jQuery('.sf-dropdown .subsubsub').addClass('sf-hide-full');
+                    } else {
+                        jQuery('.sf-dropdown .subsubsub').removeClass('sf-hide-full');
+                    };
+                    jQuery('#cb-select-all-1').on('change',function(event){
+                        if(jQuery(this)[0]["checked"]) {
+                            jQuery('.spMobileTableData .check-column input').each(function(index){
+                                jQuery(this)[0]["checked"] = true;
+                            })
+                        }else {
+                            jQuery('.spMobileTableData .check-column input').each(function(index){
+                                jQuery(this)[0]["checked"] = false;
+                            })
+                        };
+                    });
                     jQuery(window).on('resize',function(){
                         if (jQuery(window).width() < 768) {
                             putDiv();
