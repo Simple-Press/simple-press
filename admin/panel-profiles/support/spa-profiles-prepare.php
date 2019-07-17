@@ -91,12 +91,11 @@ function spa_paint_avatar_defaults() {
 			$border = (in_array($file, $def) ? '2px solid red' : '2px solid lightgray');
 
 			$out.= '<div class="av-file" style="text-align:left;border:'.$border.';margin:5px;padding:6px;float:left;">';
-
+				$out.= '<div class="sf-form-row">';
 				$out.= '<div class="sf-avatar"><img src="'.esc_url(SPAVATARURL.'defaults/'.$file).'" alt="" /></div>';
-
 				$site = esc_url(wp_nonce_url(SPAJAXURL."profiles&amp;targetaction=deldefault&amp;file=$file", 'profiles'));
-				$out.= '<span class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadav"></span>';
-				$out.= '<div class="clearboth"></div>';
+				$out.= '<span class="sf-icon sf-delete spDeleteRowReload sf-pull-right" data-url="'.$site.'" data-reload="sfreloadav"></span>';
+				$out.= '</div>';
 
 				$fileid = str_replace('.', 'z1z2z3', $file);
 				$checked = ($def['admin']==$file) ? ' checked="checked" ' : '';

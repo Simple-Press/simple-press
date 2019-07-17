@@ -193,7 +193,9 @@ function spa_profiles_avatars_form() {
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Default Avatar Upload'), true, 'avatar-default-upload');
 					$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['avatars'].'/defaults/';
+					echo '<div class="sf-form-row">';
 					spa_paint_file(SP()->primitives->admin_text('Select avatar to upload'), 'newavatar', false, true, $loc);
+					echo '</div>';
 					echo '<div class="sf-alert-block sf-info">';
 					SP()->primitives->admin_etext('Please be advised that Admin uploaded default avatar replacements are NOT subject to the user uploaded avatar size limits. So use caution when picking avatars');
 					echo '</div>';

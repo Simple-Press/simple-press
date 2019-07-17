@@ -79,8 +79,10 @@ function spa_profiles_avatars_pool_form() {
 	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Avatar Pool'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Avatar Pool Upload'), true, 'avatar-pool-upload');
+				echo '<div class="sf-form-row">';
 				$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/';
 				spa_paint_file(SP()->primitives->admin_text('Select avatar to upload'), 'newavatar', false, true, $loc);
+				echo '</div>';
 				echo '<div class="sf-alert-block sf-info">';
 				SP()->primitives->admin_etext('Please be advised that Admin uploaded avatars for the avatar pool are NOT subject to the user uploaded avatar size limits.  So use caution when picking avatars for your avatar pool');
 				echo '</div>';
