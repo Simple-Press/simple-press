@@ -147,7 +147,6 @@ function spa_permissions_add_permission_form() {
             <input type="submit" class="sf-button-primary" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" />
         </div>
         <?php
-        spa_paint_close_container();
         spa_paint_close_tab();
         ?>
             <!-- <input type="submit" class="sf-button-primary view-mobile" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" /> -->
