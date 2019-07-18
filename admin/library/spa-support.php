@@ -749,7 +749,10 @@ function spa_pagination($countPages, $currentPageNum, $paginationLength = 8, $el
 
         if (count($arr) == $paginationLength && $ellipsisLength) {
             foreach ($arr as $k => $pageNumber) {
-                if ($currentPageNum + $ellipsisLength < $countPages && $paginationLength - $ellipsisLength < $k + 2 && $paginationLength - 1 > $k) {
+                if (count($pagination) > $maxPaginationLength - 3
+                        &&  $currentPageNum + $ellipsisLength < $countPages 
+                        && $paginationLength - $ellipsisLength < $k + 2 
+                        && $paginationLength - 1 > $k) {
                     if ($paginationLength - 2 == $k) {
                         $pagination[$pageNumber] = '...';
                     }
