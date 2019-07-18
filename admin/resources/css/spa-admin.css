@@ -2264,6 +2264,9 @@ $Rev:2099 $
 #sfhousekeepingformblock .sf-panel-body .sf-full-form fieldset div[class^="collapsible-"] {
     margin: 15px 0;
 }
+#sfhousekeepingformblock .sf-panel-body .sf-full-form .sf-panel+.sf-panel {
+    margin: 0;
+}
 div[class^="collapsible-"] {
     overflow: auto;
 }

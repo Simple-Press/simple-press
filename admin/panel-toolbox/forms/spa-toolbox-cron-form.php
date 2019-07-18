@@ -24,7 +24,7 @@ function spa_toolbox_cron_form() {
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('CRON Schedules'), false);
 ?>
-                <table class="widefat fixed striped _spMobileTable800">
+                <table class="widefat fixed striped sf-table-mobile">
                     <thead>
                         <tr>
                             <th><?php SP()->primitives->admin_etext('Name'); ?></th>
@@ -56,7 +56,7 @@ function spa_toolbox_cron_form() {
 
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Active CRON'), false);
  ?>
-                <table class="widefat fixed _spMobileTable1280">
+                <table class="widefat fixed sf-table-mobile">
                     <thead>
                         <tr>
                             <th><?php SP()->primitives->admin_etext('Next Run (date)'); ?></th>
