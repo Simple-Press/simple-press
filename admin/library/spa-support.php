@@ -749,7 +749,7 @@ function spa_pagination($countPages, $currentPageNum, $paginationLength = 8, $el
 
         if (count($arr) == $paginationLength && $ellipsisLength) {
             foreach ($arr as $k => $pageNumber) {
-                if (count($pagination) > $maxPaginationLength - 3
+                if (count($pagination) > $maxPaginationLength - 4
                         &&  $currentPageNum + $ellipsisLength < $countPages 
                         && $paginationLength - $ellipsisLength < $k + 2 
                         && $paginationLength - 1 > $k) {
@@ -765,9 +765,9 @@ function spa_pagination($countPages, $currentPageNum, $paginationLength = 8, $el
                 $pagination[$pageNumber] = $pageNumber;
             }
         }
-        if (count($pagination) > $maxPaginationLength - $ellipsisLength) {
-            $pagination = array_slice($pagination, -($paginationLength - $ellipsisLength + 1), null, true);
-        }
+        //if (count($pagination) > $maxPaginationLength - $ellipsisLength) {
+            //$pagination = array_slice($pagination, -($paginationLength - $ellipsisLength + 1), null, true);
+        //}
         if (count($pagination) == 1) {
             $pagination = array();
         }
