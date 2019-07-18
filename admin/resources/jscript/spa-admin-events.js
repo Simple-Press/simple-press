@@ -81,8 +81,9 @@
 		init: function() {
 			$('#sfmaincontainer').off('click', '.spCancelForm');
 			$('#sfmaincontainer').on('click', '.spCancelForm', function() {
-				var mydata = $(this).data();
-				$(mydata.target).html('');
+				//var mydata = $(this).data();
+				//$(mydata.target).html('');
+                                $(this).closest('form').remove();
 			});
 		}
 	};
@@ -290,7 +291,7 @@
 			$('.spSpecialRankShow').click(function() {
 				var mydata = $(this).data();
 				spj.toggleRow(mydata.loc);
-				spj.showMemberList(mydata.site, mydata.img, mydata.id);
+				spj.showMemberList(mydata.site, mydata.img, mydata.id, mydata.target);
 			});
 		}
 	};
@@ -375,7 +376,7 @@
 		init: function() {
 			$('.spUsergroupShowMembers').click(function() {
 				var mydata = $(this).data();
-				spj.showMemberList(mydata.url, mydata.img, mydata.id);
+				spj.showMemberList(mydata.url, mydata.img, mydata.id, mydata.target);
 			});
 		}
 	};

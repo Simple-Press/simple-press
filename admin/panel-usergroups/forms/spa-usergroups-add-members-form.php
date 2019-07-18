@@ -10,11 +10,12 @@ if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
     die('Access denied - you cannot directly call this file');
 
 function spa_usergroups_add_members_form($usergroup_id) {
+    $formId = sprintf('sfmembernew-%s-%d', uniqid(), $usergroup_id);
     ?>
     <script>
         (function (spj, $, undefined) {
             $(document).ready(function () {
-                $('#sfmembernew<?php echo $usergroup_id; ?>').ajaxForm({
+                $('#<?php echo $formId; ?>').ajaxForm({
                     target: '#sfmsgspot',
                 });
             });
@@ -29,7 +30,14 @@ function spa_usergroups_add_members_form($usergroup_id) {
     $smessage = esc_js(SP()->primitives->admin_text('Please Wait - Processing'));
     $emessage = esc_js(SP()->primitives->admin_text('Users added'));
     ?>
-    <form action="<?php echo $ajaxURL; ?>" method="post" id="sfmembernew<?php echo $usergroup_id; ?>" name="sfmembernew<?php echo $usergroup_id ?>" onsubmit="spj.addDelMembers('sfmembernew<?php echo $usergroup_id ?>', '<?php echo $url; ?>', '<?php echo $target; ?>', '<?php echo $smessage; ?>', '<?php echo($emessage); ?>', 0, 50, '#amid<?php echo $usergroup_id; ?>');">
+    <form action="<?php echo $ajaxURL; ?>" method="post" id="<?php echo $formId; ?>" name="sfmembernew<?php echo $usergroup_id ?>" 
+          onsubmit="spj.addDelMembers(
+                      '<?php echo $formId; ?>',
+                      '<?php echo $url; ?>',
+                      '<?php echo $target; ?>',
+                      '<?php echo $smessage; ?>',
+                      '<?php echo($emessage); ?>',
+                      0, 50, '#amid<?php echo $usergroup_id; ?>');">
         <?php
         spa_paint_open_nohead_tab(true, '');
         echo sp_create_nonce('forum-adminform_membernew');
@@ -55,11 +63,10 @@ function spa_usergroups_add_members_form($usergroup_id) {
         do_action('sph_usergroup_add_member_panel');
         ?>
         <span class="sf-controls">
-            <input type="submit" class="sf-button-primary" id="sfmembernew<?php echo $usergroup_id; ?>" name="sfmembernew<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" />
-            <span class="sf-button sf-hidden-important" id='onFinish'></span>
-            <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $usergroup_id; ?>" id="sfmembernew<?php echo $usergroup_id; ?>" name="addmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+            <input type="submit" class="sf-button-primary" name="sfmembernew<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" />
+            <input type="button" class="sf-button-primary spCancelForm sf-mobile-hide" data-target="#members-<?php echo $usergroup_id; ?>" name="addmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
         </span>
-        <br />
+        <span class="sf-button sf-hidden-important" id='onFinish'></span>
         <div class="pbar" id="progressbar"></div>
         <?php
         spa_paint_close_container();

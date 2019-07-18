@@ -69,7 +69,8 @@ function spa_usergroups_usergroup_main() {
                                 <div _style="min-width:370px">
                                     <?php
                                     $base = wp_nonce_url(SPAJAXURL . 'usergroups-loader', 'usergroups-loader');
-                                    $target = "members-$usergroup->usergroup_id";
+                                    //$target = "members-$usergroup->usergroup_id";
+                                    $target = ".sf-res-usergroup-$usergroup->usergroup_id";
                                     ?>
                                     <div class="sf-mobile-hide">
                                         <input type="button" 
@@ -77,6 +78,7 @@ function spa_usergroups_usergroup_main() {
                                                class="sf-button-secondary sf-button-small spUsergroupShowMembers" 
                                                value="<?php echo esc_js(SP()->primitives->admin_text('Show')) ?>" 
                                                data-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug=$usergroup->usergroup_id", 'usergroups') ?>"
+                                               data-target="<?php echo $target; ?>"
                                                data-img="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>"
                                                data-id="<?php echo $usergroup->usergroup_id; ?>"
                                                />
@@ -117,47 +119,74 @@ function spa_usergroups_usergroup_main() {
                                     <div class="sf-mobile-show">
                                         <ul class="sf-list sf-list-v2">
                                             <li class="">
-                                                <div class="sf-list-item spLayerToggle">
+                                                <div class="sf-list-item spLayerToggle spUsergroupShowMembers"
+                                                     value="<?php echo esc_js(SP()->primitives->admin_text('Show')) ?>" 
+                                                     data-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug=$usergroup->usergroup_id", 'usergroups') ?>"
+                                                     data-target=".sf-res-m-show-usergroup-<?php echo $usergroup->usergroup_id; ?>"
+                                                     data-img="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>"
+                                                     data-id="<?php echo $usergroup->usergroup_id; ?>"
+                                                     >
                                                     <span class="sf-item-name"><?php echo SP()->primitives->admin_etext('Show Members'); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
                                                     </span>
                                                 </div>
                                                 <div class="sf-inline-edit sfinline-form">
-                                                    <?php spa_temp_no_members_selected_form() ?>
+                                                    <div class="sf-res-m-show-usergroup-<?php echo $usergroup->usergroup_id; ?>"></div>
                                                 </div>
                                             </li>
                                             <li class="">
-                                                <div class="sf-list-item spLayerToggle">
+                                                <div class="sf-list-item spLayerToggle spLoadForm"
+                                                     data-form="addmembers" 
+                                                     data-url="<?php echo $base; ?>" 
+                                                     data-target=".sf-res-m-add-usergroup-<?php echo $usergroup->usergroup_id; ?>" 
+                                                     data-img="<?php echo SPADMINIMAGES ?>"
+                                                     data-id="<?php echo $usergroup->usergroup_id; ?>" 
+                                                     data-open="" 
+                                                     >
                                                     <span class="sf-item-name"><?php SP()->primitives->admin_etext('Add Members'); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
                                                     </span>
                                                 </div>
                                                 <div class="sf-inline-edit sfinline-form">
-                                                    <?php spa_temp_no_members_selected_form() ?>
+                                                    <div class="sf-res-m-add-usergroup-<?php echo $usergroup->usergroup_id; ?>"></div>
                                                 </div>
                                             </li>
                                             <li class="">
-                                                <div class="sf-list-item spLayerToggle">
+                                                <div class="sf-list-item spLayerToggle spLoadForm"
+                                                     data-form="delmembers" 
+                                                     data-url="<?php echo $base; ?>"
+                                                     data-target=".sf-res-m-move-usergroup-<?php echo $usergroup->usergroup_id; ?>"
+                                                     data-img="<?php echo SPADMINIMAGES ?>"
+                                                     data-id="<?php echo $usergroup->usergroup_id; ?>"
+                                                     data-open="" 
+                                                     >
                                                     <span class="sf-item-name"><?php SP()->primitives->admin_etext('Move Members'); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
                                                     </span>
                                                 </div>
                                                 <div class="sf-inline-edit sfinline-form">
-                                                    <?php spa_temp_no_members_selected_form() ?>
+                                                    <div class="sf-res-m-move-usergroup-<?php echo $usergroup->usergroup_id; ?>"></div>
                                                 </div>
                                             </li>
                                             <li class="">
-                                                <div class="sf-list-item spLayerToggle">
+                                                <div class="sf-list-item spLayerToggle spLoadForm"
+                                                     data-form="delmembers" 
+                                                     data-url="<?php echo $base; ?>"
+                                                     data-target=".sf-res-m-remove-usergroup-<?php echo $usergroup->usergroup_id; ?>"
+                                                     data-img="<?php echo SPADMINIMAGES ?>"
+                                                     data-id="<?php echo $usergroup->usergroup_id; ?>"
+                                                     data-open="" 
+                                                     >
                                                     <span class="sf-item-name"><?php SP()->primitives->admin_etext('Remove Members'); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
                                                     </span>
                                                 </div>
                                                 <div class="sf-inline-edit sfinline-form">
-                                                    <?php spa_temp_no_members_selected_form() ?>
+                                                    <div class="sf-res-m-remove-usergroup-<?php echo $usergroup->usergroup_id; ?>"></div>
                                                 </div>
                                             </li>
                                         </ul>
@@ -166,9 +195,6 @@ function spa_usergroups_usergroup_main() {
                             </td>
                             <td class="sf-mobile-top">
                                 <div class="sf-item-controls sf-mobile-btns" _style="min-width:150px;">
-                                    <?php
-                                    $target = "usergroup-$usergroup->usergroup_id";
-                                    ?>
                                     <button class="sf-icon-button sf-small spOpenDialog"
                                             title='<?php echo SP()->primitives->admin_text('User Group Usage') ?>' 
                                             data-site='<?php echo wp_nonce_url(SPAJAXURL . "usergroup-tip&amp;group={$usergroup->usergroup_id}", 'usergroup-tip') ?>' 
@@ -207,12 +233,7 @@ function spa_usergroups_usergroup_main() {
 
                         <tr class="sfinline-form sf-border-none"> <!-- This row will hold ajax forms for the current user group -->
                             <td colspan="5" class="sf-padding-none">
-                                <div id="usergroup-<?php echo $usergroup->usergroup_id; ?>"></div>
-                            </td>
-                        </tr>
-                        <tr class="sfinline-form"> <!-- This row will hold hidden forms for the current user group membership-->
-                            <td colspan="5" class="sf-padding-none">
-                                <div id="members-<?php echo $usergroup->usergroup_id; ?>"></div>
+                                <div class="sf-res-usergroup-<?php echo $usergroup->usergroup_id; ?> sf-mobile-hide"></div>
                             </td>
                         </tr>
                     <?php endforeach ?>
@@ -302,127 +323,4 @@ function spa_members_not_belonging_to_any_usergroup_tab() {
     <?php
     spa_paint_close_container();
     spa_paint_close_tab();
-}
-
-////////////////////////////////////////////////////////////////////
-function spa_temp_no_members_selected_form() {
-    ?>
-    <form action="https://wp.loc.com/wp-admin/admin-ajax.php?action=usergroups-loader&amp;saveform=addmembers&amp;_wpnonce=af658fc87f" method="post" id="sfmembernew1" name="sfmembernew1" onsubmit="spj.addDelMembers('sfmembernew1', 'https://wp.loc.com/wp-admin/admin-ajax.php?action=memberships&amp;targetaction=add&amp;_wpnonce=02deb3262b', 'sfmsgspot', 'Please Wait - Processing', 'Users added', 0, 50, '#amid1');">
-        <div class="sf-panel-body ">
-            <div class="sf-full-form">
-                <input type="hidden" name="forum-adminform_membernew" value="65f6b26809">
-                <div class="sf-panel-body-top">
-                    <div class="sf-panel-body-top-left sf-mobile-full-width">
-                        <h4>No members selected</h4>
-                    </div>
-                    <div class="sf-panel-body-top-right sf-mobile-full-width">
-                        <p class="search-box-v2 sf-input-group">
-                            <input type="search" name="s" value="" placeholder="Search">
-                        </p>
-                        <div class="sf-input-group select-user-group">
-                            <div class="sf-form-control sf-select-wrap">
-                                <select name="usergroup_id">
-                                    <option value=""><?php echo SP()->primitives->admin_text('Select User Group') ?></option>
-                                    <?php foreach (spa_get_usergroups_all(null) as $usergroup) : ?>
-                                        <option value="<?php echo $usergroup->usergroup_id ?>"><?php echo SP()->displayFilters->title($usergroup->usergroup_name); ?></option>
-                                    <?php endforeach ?>
-                                </select>
-                            </div>
-                            <div class="sf-input-group-addon">
-                                <button class="sf-input-group-btn sf-button-primary">Move</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sf-grid-4 sf-users-list">
-                    <div class="sf-grid-item">
-                        <input type="checkbox">
-                        <div class="sf-avatar"><img src="https://wp.loc.com/wp-content/plugins/simple-press/admin/resources/images/Avatar.png" alt="avatar"></div>
-                        <span class="sf-user-name">Aria Smith</span>
-                    </div>
-                    <div class="sf-grid-item">
-                        <input type="checkbox">
-                        <div class="sf-avatar"><img src="https://wp.loc.com/wp-content/plugins/simple-press/admin/resources/images/Avatar.png" alt="avatar"></div>
-                        <span class="sf-user-name">Aria Smith</span>
-                    </div>
-                    <div class="sf-grid-item">
-                        <input type="checkbox">
-                        <div class="sf-avatar"><img src="https://wp.loc.com/wp-content/plugins/simple-press/admin/resources/images/Avatar.png" alt="avatar"></div>
-                        <span class="sf-user-name">Aria Smith</span>
-                    </div>
-                    <div class="sf-grid-item">
-                        <input type="checkbox">
-                        <div class="sf-avatar"><img src="https://wp.loc.com/wp-content/plugins/simple-press/admin/resources/images/Avatar.png" alt="avatar"></div>
-                        <span class="sf-user-name">Aria Smith</span>
-                    </div>
-                    <div class="sf-grid-item">
-                        <input type="checkbox">
-                        <div class="sf-avatar"><img src="https://wp.loc.com/wp-content/plugins/simple-press/admin/resources/images/Avatar.png" alt="avatar"></div>
-                        <span class="sf-user-name">Aria Smith</span>
-                    </div>
-                    <div class="sf-grid-item">
-                        <input type="checkbox">
-                        <div class="sf-avatar"><img src="https://wp.loc.com/wp-content/plugins/simple-press/admin/resources/images/Avatar.png" alt="avatar"></div>
-                        <span class="sf-user-name">Aria Smith</span>
-                    </div>
-                    <div class="sf-grid-item">
-                        <input type="checkbox">
-                        <div class="sf-avatar"><img src="https://wp.loc.com/wp-content/plugins/simple-press/admin/resources/images/Avatar.png" alt="avatar"></div>
-                        <span class="sf-user-name">Aria Smith</span>
-                    </div>
-                    <div class="sf-grid-item">
-                        <input type="checkbox">
-                        <div class="sf-avatar"><img src="https://wp.loc.com/wp-content/plugins/simple-press/admin/resources/images/Avatar.png" alt="avatar"></div>
-                        <span class="sf-user-name">Aria Smith</span>
-                    </div>
-                </div>
-
-            </div></div>    </form>
-    <?php
-}
-
-function ______________________123_temp() {
-    ?>
-    <span
-        id="_show<?php echo $usergroup->usergroup_id; ?>"
-        class="sf-button-secondary sf-button-small spUsergroupShowMembers" 
-        data-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug=$usergroup->usergroup_id", 'usergroups') ?>"
-        data-img="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>"
-        data-id="<?php echo $usergroup->usergroup_id; ?>"
-        ><?php echo esc_js(SP()->primitives->admin_text('Show Members')) ?>
-    </span>
-    <button
-        id="_add<?php echo $usergroup->usergroup_id; ?>" 
-        class="sf-button-secondary sf-button-small spLoadForm"
-        data-form="addmembers" 
-        data-url="<?php echo $base; ?>" 
-        data-target="<?php echo $target; ?>" 
-        data-img="<?php echo SPADMINIMAGES ?>"
-        data-id="<?php echo $usergroup->usergroup_id; ?>" 
-        data-open="" 
-        ><?php SP()->primitives->admin_etext('Add Members'); ?>
-    </button>
-    <button
-        id="_move<?php echo $usergroup->usergroup_id; ?>"
-        class="sf-button-secondary sf-button-small spLoadForm"
-        data-form="delmembers" 
-        data-url="<?php echo $base; ?>"
-        data-target="<?php echo $target; ?>"
-        data-img="<?php echo SPADMINIMAGES ?>"
-        data-id="<?php echo $usergroup->usergroup_id; ?>"
-        data-open="" 
-        ><?php SP()->primitives->admin_etext('Move Members'); ?>
-    </button>
-    <button
-        id="_remove<?php echo $usergroup->usergroup_id; ?>"
-        class="sf-button-secondary sf-button-small spLoadForm"
-        data-form="delmembers" 
-        data-url="<?php echo $base; ?>"
-        data-target="<?php echo $target; ?>"
-        data-img="<?php echo SPADMINIMAGES ?>"
-        data-id="<?php echo $usergroup->usergroup_id; ?>"
-        data-open="" 
-        ><?php SP()->primitives->admin_etext('Remove Members'); ?>
-    </button>
-    <?php
 }

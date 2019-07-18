@@ -11,7 +11,7 @@
 	// public properties
 
 	// public methods
-	spj.loadForm = function(formID, baseURL, targetDiv, imagePath, id, open, upgradeUrl, admin, save, sform, reload) {
+	spj.loadForm_OLD = function(formID, baseURL, targetDiv, imagePath, id, open, upgradeUrl, admin, save, sform, reload) {
 		/* close a dialog (popup help) if one is open */
 		if ($().dialog("isOpen")) {
 			$().dialog('destroy');
@@ -74,6 +74,64 @@
 			});
 		});
 	};
+
+        spj.loadForm = function(formID, baseURL, targetDiv, imagePath, id, open, upgradeUrl, admin, save, sform, reload) {
+		/* close a dialog (popup help) if one is open */
+		if ($().dialog("isOpen")) {
+			$().dialog('destroy');
+		}
+
+                var $target = $(/^\s*[a-z]/i.test(targetDiv) ? '#' + targetDiv : targetDiv);
+
+		/* remove any current form unless instructed to leave open */
+		if (open === null || open == undefined) {
+			$target.html('');
+		}
+
+		/* create vars we need */
+		var ajaxURL = baseURL + '&loadform=' + formID;
+
+		/* some sort of ID data? */
+		if (id) {
+			ajaxURL = ajaxURL + '&id=' + id;
+		}
+
+		/* user plugin? */
+		if (admin) {
+			ajaxURL = ajaxURL + '&admin=' + admin;
+		}
+		if (save) {
+			ajaxURL = ajaxURL + '&save=' + save;
+		}
+		if (sform) {
+			ajaxURL = ajaxURL + '&form=' + sform;
+		}
+		if (reload) {
+			ajaxURL = ajaxURL + '&reload=' + reload;
+		}
+
+		/* add random num to GET param to ensure its not cached */
+		ajaxURL = ajaxURL + '&rnd=' + new Date().getTime();
+
+		$(document).ready(function() {
+			/* fade out the msg area */
+			$('#sfmsgspot').fadeOut();
+
+			/* load the busy graphic */
+			$target.html('<img src="' + imagePath + 'sp_WaitBox.gif' + '" />');
+
+			/*  now load the form */
+			$target.load(ajaxURL, function(a, b) {
+				if (a == 'Upgrade') {
+					$target.hide();
+					window.location = upgradeUrl;
+					return;
+				}
+				$('#sfmaincontainer').trigger('adminformloaded');
+			});
+		});
+	};
+
 
 	spj.loadAjaxForm = function(aForm, reLoad) {
 		$(document).ready(function() {
@@ -145,7 +203,7 @@
 		$('#' + target).load(url);
 	};
 
-	spj.showMemberList = function(url, imageFile, groupID) {
+	spj.showMemberList_OLD = function(url, imageFile, groupID) {
 		var memberList = document.getElementById('members-' + groupID);
 		var target = 'members-' + groupID;
 
@@ -162,6 +220,16 @@
 		} else {
 			document.getElementById(target).innerHTML = '';
 		}
+	};
+        
+        spj.showMemberList = function(url, imageFile, groupID, target) {
+		var $el = target ? $(target) : $('#members-' + groupID);
+                if (imageFile) {
+                    $el.html('<img src="' + imageFile + '" />');
+                } else {
+                    $el.html('');
+                }
+                $el.load(url);
 	};
 
 	spj.updateMultiSelectList = function(url, uid) {
