@@ -1455,6 +1455,11 @@ $Rev:2099 $
 #sfmaincontainer .sf-fieldset {
     position: relative;
 }
+#sfmaincontainer .sf-fieldset>.sf-fieldset {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
 #sfmaincontainer li {
     margin: 0;
     float: left;
