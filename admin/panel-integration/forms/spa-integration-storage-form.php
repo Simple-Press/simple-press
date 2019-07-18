@@ -56,9 +56,7 @@ function spa_integration_storage_form() {
 	    foreach ($sfoptions as $option){
 		    spa_paint_open_panel();
 		            $r = spa_paint_storage_input(SP()->primitives->admin_text($option['title']), $option['name'], $sfdata[$option['name']]);
-
 		    spa_paint_close_panel();
-
 		    if (!$r) $ok = false;
 	    }
 		do_action('sph_integration_storage_panel_location');
@@ -82,11 +80,11 @@ function spa_integration_storage_form() {
         var questBtn = jQuery('#sfhousekeepingformblock fieldset .sf-panel-body-top-right').html();
         jQuery('#sfhousekeepingformblock fieldset .sf-panel-body-top-right').append(collapsiblebtn);
         jQuery('#sfhousekeepingformblock fieldset .sf-panel-body-top-right').children('.sfhelplink').toggleClass('hide');
-        jQuery('#sfhousekeepingformblock .sf-panel-body-top .sf-panel-body-top-left').on('click', function(){
-            jQuery(this).parent().find('.sfToggleBtn').children().toggleClass("sf-collapsed").toggleClass("sf-expanded");
-            jQuery(this).parent().parent().children('div[class^=\"collapsible-\"]').toggleClass('collapsible-closed').toggleClass('collapsible-open');
-            jQuery(this).parent().parent().children('div:nth-child(1)').toggleClass('bg-gray');
-            jQuery(this).parent().find('.sfhelplink').toggleClass('hide');
+        jQuery('#sfhousekeepingformblock .sf-panel-body-top').on('click', function(){
+            jQuery(this).parent().parent().find('.sfToggleBtn').children().toggleClass("sf-collapsed").toggleClass("sf-expanded");
+            jQuery(this).parent().children('div[class^=\"collapsible-\"]').toggleClass('collapsible-closed').toggleClass('collapsible-open');
+            jQuery(this).parent().children('div:nth-child(1)').toggleClass('bg-gray');
+            jQuery(this).parent().parent().find('.sfhelplink').toggleClass('hide');
         });
     </script>
 	<?php
