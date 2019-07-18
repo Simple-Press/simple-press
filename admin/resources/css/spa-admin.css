@@ -3385,6 +3385,9 @@ body .spMobileTableData .row-actions > span {
 .sf-ml-10{
     margin-top: 10px;
 }
+.sf-mr-5{
+    margin-right: 5px;
+}
 .sf-integration-storage{
     padding: 5px 5px 8px 0;
 }
