@@ -18,30 +18,7 @@ function spa_integration_page_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'integration-loader&amp;saveform=page', 'integration-loader');
 ?>
-    <style>
-        .sf-plugin-list-mob {
-            text-align: left;
-            margin-top: 20px;
-            background-color: white;
-        }
-        .sf-plugin-list-mob {
-            content: '' !important;
-        }
-        .sf-plugin-list-mob td {
-            padding: 10px;
-        }
-        .sf-title-uppercase-blue {
-            color: #85A2BC;
-            text-transform: uppercase;
-        }
 
-        .sf-integration-permalink{
-            width: 100%;
-        }
-        .sf-integration-permalink table{
-            width: 100%;
-        }
-        </style>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="wppageform" name="wppage">
 	<?php echo sp_create_nonce('forum-adminform_integration'); ?>
 <?php
@@ -74,7 +51,7 @@ function spa_integration_page_form() {
 
 				spa_paint_close_fieldset();
 
-				echo '<div style="width:100%; background:white">';
+				echo '<div class="sf-width-100-per sf-background-white">';
 				echo '<table class="sf-plugin-list-mob sf-showm">';
 				echo '<tbody><tr>';
 				echo '<td><span class="sf-title-uppercase-blue">'

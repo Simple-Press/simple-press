@@ -460,7 +460,7 @@ function spa_select_icon_dropdown($name, $label, $path, $cur, $showSelect = true
 
 	$w = '';
 	if ($width > 0) $w = 'width:'.$width.'px;';
-	if ($showSelect) echo '<select name="'.$name.'" class="sfcontrol" style="vertical-align:middle;'.$w.'">';
+	if ($showSelect) echo '<select name="'.$name.'" class="sfcontrol sf-vert-align-middle" '.$w.'">';
 	if ($cur != '') $label = SP()->primitives->admin_text('Remove');
 	echo '<option value="">'.$label.'</option>';
 

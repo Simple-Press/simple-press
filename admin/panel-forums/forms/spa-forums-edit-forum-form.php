@@ -50,16 +50,16 @@ function spa_forums_edit_forum_form($forum_id) {
 					echo '</div>';
 
 					# Top level forum...
-					$style = ($subforum) ? ' style="display:none"' : ' style="display:block"';
-					echo "<div $style class='sf-form-row'>";
+					$class = ($subforum) ? ' sf-dis-none' : ' sf-dis-block';
+					echo "<div class='sf-form-row $class'>";
 					spa_paint_select_start(SP()->primitives->admin_text('The group this forum belongs to'), 'group_id', '');
 					echo spa_create_group_select($forum->group_id);
 					spa_paint_select_end();
 					echo '</div>';
 
 					# sub-forum...
-					$style = ($subforum) ? ' style="display:block"' : ' style="display:none"';
-					echo "<div $style class='sf-form-row'>";
+					$class = ($subforum) ? ' sf-dis-block' : ' sf-dis-none';
+					echo "<div class='sf-form-row $class'>";
 					spa_paint_select_start(SP()->primitives->admin_text('Parent forum this subforum belongs to'), 'parent', '');
 					echo spa_create_forum_select($forum->parent);
 					spa_paint_select_end();

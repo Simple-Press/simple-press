@@ -550,39 +550,6 @@ function spa_dashboard_news() {
 	$sp_update_plugins = get_site_transient('sp_update_plugins');
 	$sp_update_themes = get_site_transient('sp_update_themes');
 	?>
-    <style>
-        #spa_dashboard_news h4 {
-            font-size: 17px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            padding-bottom: 6px;
-            line-height: 1.2em;
-            border-bottom: 1px solid #ddd;
-        }
-
-        #spa_dashboard_news .spa_dashboard_text p {
-            line-height: 1.3em;
-            margin: 6px 0 0 0;
-            font-size: 14px;
-        }
-        
-         #spa_dashboard_news .spa_dashboard_text h3 {
-        	
-        	font-weight: bold;
-        }
-        
-        #update-plugins-table{
-        	
-        	margin: 10px 0px;
-        }
-        
-        #update-themes-table{
-        	
-        	margin: 10px 0px 0px;
-        }
-
-        ;
-    </style>
 	<?php
 	echo '<div id="spa_dashboard_news" style="background:#FFFFEA;border:2px solid #666;border-radius:9px;margin:10px;padding:15px;">';
 	echo '<div style="vertical-align:middle;border-bottom:1px solid #666;margin-bottom:16px;padding:7px 0;">';

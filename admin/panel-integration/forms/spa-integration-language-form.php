@@ -119,7 +119,7 @@ function spa_integration_language_form() {
 				$version = $item->version;
 
 				echo '<table class="wp-list-table widefat striped">';
-					echo '<tr><td style="width:50%"><b>Core: Simple:Press '.$version.'</b></td>';
+					echo '<tr><td class="sf-width-50-per"><b>Core: Simple:Press '.$version.'</b></td>';
 					$thisItem = $site.'&amp;item=corefront&amp;version='.sp_format_version($version).'&amp;langcode='.$userLang['spCode'].'&amp;textdom=sp';
 					$target = 'spItem'.$x;
 					$x++;
@@ -128,7 +128,7 @@ function spa_integration_language_form() {
 					echo '&nbsp;&nbsp;';
 					echo '<input type="button" class="logDetail button spLoadAjax" value="'.$btext.'" data-url="'.$thisItem.'" data-target="'.$target.'" data-img="'.$gif.'" /></span></td></tr>';
 
-					echo '<tr><td style="width:50%"><b>Core: Administration '.$version.'</b></td>';
+					echo '<tr><td class="sf-width-50-per"><b>Core: Administration '.$version.'</b></td>';
 					$thisItem = $site.'&amp;item=coreadmin&amp;version='.sp_format_version($version).'&amp;langcode='.$userLang['spCode'].'&amp;textdom=spa';
 					$target = 'spItem'.$x;
 					$x++;
@@ -165,7 +165,7 @@ function spa_integration_language_form() {
 
 					$data = sp_get_xml_theme_entry($list, $theme);
 					$name = (isset($data->name)) ? $data->name : $theme;
-					echo '<tr><td style="width:50%"><b>'.$name.'</b>';
+					echo '<tr><td class="sf-width-50-per"><b>'.$name.'</b>';
 					if ($child) echo '&nbsp;('.SP()->primitives->admin_text('Child Theme Parent').')';
 					echo '</td>';
 					if (isset($data->name)) {
@@ -202,8 +202,8 @@ function spa_integration_language_form() {
 
 							$data = sp_get_xml_theme_entry($list, $theme);
 							$name = (isset($data->name)) ? $data->name : $theme;
-							echo '<tr><td style="width:50%"><b>'.$name.'</b></td>';
-							echo '<tr><td style="width:50%"><b>'.$name.'</b>';
+							echo '<tr><td class="sf-width-50-per"><b>'.$name.'</b></td>';
+							echo '<tr><td class="sf-width-50-per"><b>'.$name.'</b>';
 							if($child) echo '&nbsp;('.SP()->primitives->admin_text('Child Theme Parent').')';
 							echo '</td>';
 							if (isset($data->name)) {
@@ -242,7 +242,7 @@ function spa_integration_language_form() {
 
 							$data = sp_get_xml_theme_entry($list, $theme);
 							$name = (isset($data->name)) ? $data->name : $theme;
-							echo '<tr><td style="width:50%"><b>'.$name.'</b>';
+							echo '<tr><td class="sf-width-50-per"><b>'.$name.'</b>';
 							if ($child) echo '&nbsp;('.SP()->primitives->admin_text('Child Theme Parent').')';
 							echo '</td>';
 							if (isset($data->name)) {
@@ -277,7 +277,7 @@ function spa_integration_language_form() {
 							$name = explode('/', $plugin);
 							$data = sp_get_xml_plugin_entry($list, $name[0]);
 							$plugname = (isset($data->name)) ? $data->name : $name[0];
-							echo '<tr><td style="width:50%"><b>'.$plugname.'</b></td>';
+							echo '<tr><td class="sf-width-50-per"><b>'.$plugname.'</b></td>';
 							if (isset($data->name)) {
 								$thisItem = $site.'&amp;item=plugin&amp;langcode='.$userLang['spCode'].'&amp;textdom='.$data->lang.'&amp;name='.$name[0];
 								$target = 'spItem'.$x;

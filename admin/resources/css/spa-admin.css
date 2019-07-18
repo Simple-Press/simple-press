@@ -3293,3 +3293,105 @@ body .spMobileTableData .row-actions > span {
     background-image: url("../icons/Cancel.svg");
     margin-top: 15px;
 }
+
+/* add ------------- */
+#spa_dashboard_news h4 {
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    line-height: 1.2em;
+    border-bottom: 1px solid #ddd;
+}
+#spa_dashboard_news .spa_dashboard_text p {
+    line-height: 1.3em;
+    margin: 6px 0 0 0;
+    font-size: 14px;
+}
+#spa_dashboard_news .spa_dashboard_text h3 {
+    font-weight: bold;
+}
+#update-plugins-table{
+    margin: 10px 0px;
+}
+#update-themes-table{
+    margin: 10px 0px 0px;
+}
+.sf-help-search-ajax-keywords-div{
+    margin:3px 0 0 27px;
+}
+.sf-help-search-ajax-keywords-p{
+    line-height:1.4em;
+}
+.sf-vert-align-middle{
+    vertical-align:middle;
+}
+.sf-vert-align-top{
+    vertical-align: top;
+}
+.sf-panel-comp-forum-rank-select{
+    width:135px;
+}
+.sf-text-al-center{
+    text-align:center
+}
+.sf-display-table-row{
+    display: table-row;
+}
+.sf-dis-block{
+    display: block;
+}
+.sf-dis-none{
+    display: none;
+}
+.sf-forum-perms-table{
+    padding:5px;
+    border-spacing:3px;
+    border-collapse:separate;
+}
+.sf-width-50-per{
+    width:50%
+}
+.sf-width-100-per{
+    width:100%
+}
+.sf-width-90-per{
+    width:90%
+}
+.sf-plugin-list-mob {
+    text-align: left;
+    margin-top: 20px;
+    background-color: white;
+}
+.sf-plugin-list-mob {
+    content: '' !important;
+}
+.sf-plugin-list-mob td {
+    padding: 10px;
+}
+.sf-title-uppercase-blue {
+    color: #85A2BC;
+    text-transform: uppercase;
+}
+.sf-background-white{
+    background: white;
+}
+.sf-float-l{
+    float: left;
+}
+.sf-mt-15{
+    margin-top: 15px;
+}
+.sf-ml-10{
+    margin-top: 10px;
+}
+.sf-integration-storage{
+    padding: 5px 5px 8px 0;
+}
+.sf-line-h-2-em{
+    line-height:2em;
+}
+.sf-perm-edit-img{
+    width:16px;
+    height:16px;
+}

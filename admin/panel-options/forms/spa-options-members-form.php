@@ -58,7 +58,7 @@ function spa_options_members_form() {
 				spa_paint_input(SP()->primitives->admin_text('Number of days back to remove inactive members and/or members with no forum posts (if auto removal enabled)'), 'sfuserperiod', $sfoptions['sfuserperiod']);
 				if ($sfoptions['sched']) {
 					$msg = SP()->primitives->admin_text('Users auto removal cron job is scheduled to run daily');
-					echo '<tr><td class="message" colspan="2" style="line-height:2em;">&nbsp;<u>'.$msg.'</u></td></tr>';
+					echo '<tr><td class="message" colspan="2" class="sf-line-h-2-em">&nbsp;<u>'.$msg.'</u></td></tr>';
 				}
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();

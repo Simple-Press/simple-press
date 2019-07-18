@@ -75,9 +75,7 @@ function spa_components_forumranks_form() {
     });
 	}(window.spj = window.spj || {}, jQuery));
 </script>
-<style>
-  
-</style>
+
 <?php
 	$rankings = spa_get_forumranks_data();
 
@@ -184,11 +182,11 @@ function spa_paint_rankings_table($rankings) {
 	<table class="widefat fixed striped spMobileTable1280">
 		<thead>
 			<tr>
-				<th style='text-align:center'><?php SP()->primitives->admin_etext('Rank Name'); ?></th>
-				<th style='text-align:center'><?php SP()->primitives->admin_etext('NUMBER OF POSTS'); ?></th>
-				<th style='text-align:center'><?php SP()->primitives->admin_etext('MEMBERSHIP GROUP'); ?></th>
-				<th style='text-align:center'><?php SP()->primitives->admin_etext('Badge'); ?></th>
-				<th style='text-align:center'><?php //SP()->primitives->admin_etext('Remove'); ?></th>
+				<th class='sf-text-al-center'><?php SP()->primitives->admin_etext('Rank Name'); ?></th>
+				<th class='sf-text-al-center'><?php SP()->primitives->admin_etext('NUMBER OF POSTS'); ?></th>
+				<th class='sf-text-al-center'><?php SP()->primitives->admin_etext('MEMBERSHIP GROUP'); ?></th>
+				<th class='sf-text-al-center'><?php SP()->primitives->admin_etext('Badge'); ?></th>
+				<th class='sf-text-al-center'><?php //SP()->primitives->admin_etext('Remove'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -214,7 +212,7 @@ function spa_paint_rankings_table($rankings) {
 
 		<td data-label='<?php SP()->primitives->admin_etext('MEMBERSHIP GROUP'); ?>'>
             <div class='sf-select-wrap'>
-			    <select class="wp-core-ui sp-input-40" name="rankug[]" style="width:135px;" id="new-range-group" >
+			    <select class="wp-core-ui sp-input-40 sf-panel-comp-forum-rank-select" name="rankug[]" id="new-range-group" >
             <?php
 			    $out = '<option value="none">'.SP()->primitives->admin_text('Select Group').'</option>';
 			    foreach ($usergroups as $usergroup) {
@@ -315,7 +313,7 @@ function spa_paint_rankings_table($rankings) {
 		<?php $tab++; ?>
 
 		<td data-label='<?php SP()->primitives->admin_etext('MEMBERSHIP GROUP'); ?>'>
-			<select class="wp-core-ui" name="rankug[]" style="width:135px;">
+			<select class="wp-core-ui sf-panel-comp-forum-rank-select" name="rankug[]">
 <?php
 			if ($ranks['usergroup'][$x] == 'none') {
 				$out = '<option value="none" selected="selected">'.SP()->primitives->admin_text('None').'</option>';

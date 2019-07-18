@@ -136,17 +136,17 @@ function spa_paint_storage_input($label, $name, $value, $na = false) {
 	}
 
 	if ($na) {
-		$icon2 = '<img src="'.SPADMINIMAGES.'sp_NA.gif" title="" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;';
+		$icon2 = '<img src="'.SPADMINIMAGES.'sp_NA.gif" title="" alt="" class="sf-vert-align-middle" />&nbsp;&nbsp;';
 		$ok = $found;
 	}
 
-	echo "<span style='float: left; margin-top: 15px; margin-left: 10px'>$icon1 $icon2 </span>";
+	echo "<span class='sf-float-l sf-mt-15 sf-ml-10'>$icon1 $icon2 </span>";
 	spa_paint_open_fieldset(SP()->primitives->admin_text($label), true, $name, true,'', $adminhelpfile);
 
 	echo '<div class="collapsible-closed">';
         echo SP_STORE_RELATIVE_BASE;
 
-        echo '<input type="text" style="width:90%" class="wp-core-ui " tabindex="'.$tab.'" name="'.$name.'" value="'.esc_attr($value).'" ';
+        echo '<input type="text" class="wp-core-ui sf-width-90-per " tabindex="'.$tab.'" name="'.$name.'" value="'.esc_attr($value).'" ';
 	echo '</div>';
 	spa_paint_close_fieldset();
 	$tab++;
@@ -168,7 +168,7 @@ function spa_check_upgrade_error() {
 	if ($sCreate && $sCopy && $sUnzip) {
 		return;
 	} else {
-		$image = "<img src='".SP_PLUGIN_URL."/sp-startup/install/resources/images/important.png' alt='' style='float:left;padding: 5px 5px 8px 0;' />";
+		$image = "<img src='".SP_PLUGIN_URL."/sp-startup/install/resources/images/important.png' alt='' class='sf-float-l sf-integration-storage' />";
 
 		echo '<h3><br />';
 		SP()->primitives->admin_etext('YOU WILL NEED TO PERFORM THE FOLLOWING TASKS TO ALLOW SIMPLE:PRESS TO WORK CORRECTLY');

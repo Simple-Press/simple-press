@@ -147,7 +147,7 @@ function spa_paint_rank_images() {
 		$ext = strtolower($path_info['extension']);
 		if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif' || $ext == 'bmp') {
 ?>
-			<tr id='rankbadge<?php echo $row; ?>' class="spMobileTableData" style="display: table-row;">
+			<tr id='rankbadge<?php echo $row; ?>' class="spMobileTableData sf-display-table-row">
 				<td data-label='<?php SP()->primitives->admin_etext('Filename'); ?>' class="sf-Leftm">
 					<?php echo($file); ?>
 				</td>
