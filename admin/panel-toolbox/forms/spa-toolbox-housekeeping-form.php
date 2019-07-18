@@ -256,6 +256,12 @@ function spa_toolbox_housekeeping_form() {
 			jQuery(this).parent().parent().children('div:nth-child(1)').toggleClass('bg-gray');
 			jQuery(this).parent().find('.sfhelplink').toggleClass('hide');
 		});
+    jQuery('.sfToggleBtn').on('click', function(){
+			jQuery(this).children().toggleClass("sf-collapsed").toggleClass("sf-expanded");
+			jQuery(this).parent().parent().parent().children('div[class^=\"collapsible-\"]').toggleClass('collapsible-closed').toggleClass('collapsible-open');
+			jQuery(this).parent().parent().parent().children('div:nth-child(1)').toggleClass('bg-gray');
+			jQuery(this).parent().parent().find('.sfhelplink').toggleClass('hide');
+		});
 	</script>
 	<?php
 }

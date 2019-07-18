@@ -21,6 +21,9 @@ function spa_users_members_form() {
                 if (!class_exists('SP_List_Table')) require_once SP_PLUGIN_DIR.'/admin/library/sp-list-table.php';
 
                 class SP_Members_Table extends SP_List_Table {
+                  public $per_page = 2;
+                  public $current_page = 1;
+                  public $count_pages = 0;
                     function __construct() {
                         parent::__construct( array(
                             'singular'=> SP()->primitives->admin_text('member'),
@@ -32,8 +35,8 @@ function spa_users_members_form() {
                     function get_columns(){
                         $columns = array(
                             'cb'                => '<input type="checkbox" />',
-                            'user_id'           => SP()->primitives->admin_text('ID'),
                             'avatar'            => SP()->primitives->admin_text('Avatar'),
+                            'user_id'           => SP()->primitives->admin_text('ID'),
                             'display_name'      => SP()->primitives->admin_text('Display Name'),
                             'user_login'        => SP()->primitives->admin_text('Login'),
                             'posts'             => SP()->primitives->admin_text('Posts'),
@@ -202,12 +205,6 @@ function spa_users_members_form() {
                         $order = (!empty($_GET['order'])) ? SP()->filters->esc_sql($_GET['order']) : '';
                         $query->orderby = (!empty($orderby) && !empty($order)) ? "$orderby $order" : '';
 
-                        # pagination
-                        $per_page = 50;
-                        $current_page = $this->get_pagenum();
-                        $offset = ($current_page - 1) * $per_page;
-            			$query->limits = "$offset, $per_page";
-
                         # searching
                 		$search_term = isset($_GET['s']) ? SP()->saveFilters->title(trim($_GET['s'])) : '';
                         if ($search_term) {
@@ -229,7 +226,14 @@ function spa_users_members_form() {
                         # do our members query
                         $query = apply_filters('sph_admin_members_list_query', $query);
                         $records = SP()->DB->select($query);
-
+                        $this->count_pages = count($records);
+                        # pagination
+                        $per_page = $this->per_page;
+                        $current_page = $this->get_pagenum();
+                        $offset = ($current_page - 1) * $per_page;
+            			  $query->limits = "$offset, $per_page";
+                        $query = apply_filters('sph_admin_members_list_query', $query);
+                        $records = SP()->DB->select($query);
                         # set up page links
                         $total_items = SP()->DB->select('SELECT FOUND_ROWS()', 'var');
                         $this->set_pagination_args(array(
@@ -327,6 +331,33 @@ function spa_users_members_form() {
                     $membersTable->display();
                     ?>
                 </form>
+    <?php
+    $countItems = $membersTable->count_pages;
+    $maxItemsOnPage = $membersTable->per_page;
+    $countPages = ceil($countItems / $maxItemsOnPage);
+    $pageNum = $membersTable->get_pagenum();
+    $pagination = spa_pagination($countPages, $pageNum, 8, 2); ?>
+    <?php if ($pagination): ?>
+        <div class="sf-pagination">
+            <span class="sf-pagination-links">
+                <a class="sf-first-page spLoadAjax" href="javascript:void(0);"
+                   data-target=".sf-full-form"
+                   data-url="<?php echo wp_nonce_url(SPAJAXURL . "users&amp;ug_no=1&amp;page=1&amp;filter={$filter}", 'users') ?>"
+                   ></a>
+                   <?php foreach ($pagination as $n => $v): ?>
+                    <a class="spLoadAjax<?php echo $pageNum == $n ? ' sf-current-page' : '' ?>" href="javascript:void(0);"
+                       data-target=".sf-full-form"
+                       data-url="<?php echo wp_nonce_url(SPAJAXURL . "users&amp;ug_no=1&amp;page={$n}&amp;filter={$filter}", 'users') ?>"
+                       ><?php echo $v ?></a>
+                   <?php endforeach ?>
+                <a class="sf-last-page spLoadAjax" href="javascript:void(0);"
+                   data-target=".sf-full-form"
+                   data-url="<?php echo wp_nonce_url(SPAJAXURL . "users&amp;ug_no=1&amp;page={$countPages}&amp;filter={$filter}", 'users') ?>"
+                   ></a>
+            </span>
+        </div>
+    <?php endif ?>
+
                 <script>
                     
                     ///////////////////////////////////////////////////////////////////////////////
