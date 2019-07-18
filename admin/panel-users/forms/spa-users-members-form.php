@@ -229,7 +229,8 @@ function spa_users_members_form() {
                         $this->count_pages = count($records);
                         # pagination
                         $per_page = $this->per_page;
-                        $current_page = $this->get_pagenum();
+                        $current_page = (int)$_GET['page'] ? (int)$_GET['page'] : 1;//$this->get_pagenum();
+                        $this->current_page = $current_page;
                         $offset = ($current_page - 1) * $per_page;
             			  $query->limits = "$offset, $per_page";
                         $query = apply_filters('sph_admin_members_list_query', $query);
@@ -335,24 +336,24 @@ function spa_users_members_form() {
     $countItems = $membersTable->count_pages;
     $maxItemsOnPage = $membersTable->per_page;
     $countPages = ceil($countItems / $maxItemsOnPage);
-    $pageNum = $membersTable->get_pagenum();
+    $pageNum = $membersTable->current_page;
     $pagination = spa_pagination($countPages, $pageNum, 8, 2); ?>
     <?php if ($pagination): ?>
         <div class="sf-pagination">
             <span class="sf-pagination-links">
                 <a class="sf-first-page spLoadAjax" href="javascript:void(0);"
-                   data-target=".sf-full-form"
-                   data-url="<?php echo wp_nonce_url(SPAJAXURL . "users&amp;ug_no=1&amp;page=1&amp;filter={$filter}", 'users') ?>"
+                   data-target="sfmaincontainer"
+                   data-url="<?php echo wp_nonce_url(SPAJAXURL . "users-loader&loadform=member-info&amp;ug_no=1&amp;page=1&amp;filter={$filter}", 'users-loader') ?>"
                    ></a>
                    <?php foreach ($pagination as $n => $v): ?>
                     <a class="spLoadAjax<?php echo $pageNum == $n ? ' sf-current-page' : '' ?>" href="javascript:void(0);"
-                       data-target=".sf-full-form"
-                       data-url="<?php echo wp_nonce_url(SPAJAXURL . "users&amp;ug_no=1&amp;page={$n}&amp;filter={$filter}", 'users') ?>"
+                       data-target="sfmaincontainer"
+                       data-url="<?php echo wp_nonce_url(SPAJAXURL . "users-loader&loadform=member-info&amp;ug_no=1&amp;page={$n}&amp;filter={$filter}", 'users-loader') ?>"
                        ><?php echo $v ?></a>
                    <?php endforeach ?>
                 <a class="sf-last-page spLoadAjax" href="javascript:void(0);"
-                   data-target=".sf-full-form"
-                   data-url="<?php echo wp_nonce_url(SPAJAXURL . "users&amp;ug_no=1&amp;page={$countPages}&amp;filter={$filter}", 'users') ?>"
+                   data-target="sfmaincontainer"
+                   data-url="<?php echo wp_nonce_url(SPAJAXURL . "users-loader&loadform=member-info&amp;ug_no=1&amp;page={$countPages}&amp;filter={$filter}", 'users-loader') ?>"
                    ></a>
             </span>
         </div>
