@@ -3489,3 +3489,8 @@ body .spMobileTableDataUsers .row-actions > span {
 }
 
 /*Users => Member Information end*/
+.sf-icon-midle{
+  padding: 0px 30px 0px 20px;
+  margin-bottom: 25%;
+  margin-top: 25%;
+}
