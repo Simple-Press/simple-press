@@ -263,12 +263,12 @@ function spa_plugins_list_form() {
               </span>
                 </div>
 
-                <div class="sf-panel-body-top-right sf-showm">
+                <div class="sf-panel-body-top-right sf-showm sf-width-100-per">
                     <p class="search-box">
                         <input type="search" style="width:100%" id="<?php echo esc_attr( 'search_id-search-input' ); ?>" name="s" value="<?php _admin_search_query(); ?>" form="plugin-filter"
                                placeholder="<?php echo SP()->primitives->admin_text( 'Search plugins' ) ?>"/>
                     </p>
-                    <div style="padding-top: 15px;">
+                    <div class="sf-pt-15">
 						<?php
 						echo spa_paint_help( 'plugins' );
 						?>
