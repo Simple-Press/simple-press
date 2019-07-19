@@ -250,7 +250,7 @@ function spa_paint_rankings_table($rankings) {
             <?php
             for ($x = 0; $x < count($rankings); $x++) {
                 ?>
-                <tr id="vrank<?php echo($x); ?>" >
+                <tr id="vrank<?php echo($x); ?>">
                     <td data-label='<?php SP()->primitives->admin_etext('Rank Name'); ?>' class="sf-Left">
                         <span><?php echo esc_attr($ranks['title'][$x]); ?></span>
                     </td>
