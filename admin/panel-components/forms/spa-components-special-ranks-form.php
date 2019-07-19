@@ -126,15 +126,15 @@ function spa_special_rankings_form($rankings) {
                                             spa_select_iconset_icon_picker('specialrankbadge[' . $rank['meta_id'] . ']', SP()->primitives->admin_text('Select Badge'), array('Badges' => $badges), $rank['meta_value']['badge'], false);
                                             ?>
                                         </td>
-                                        <td width="35%">
+                                        <!--<td width="35%">
                                             <?php $loc = '#sfrankshow-' . $rank['meta_id']; ?>
                                             <input type="button" id="show<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankShow" value="<?php echo esc_js(SP()->primitives->admin_text('Show')) ?>" data-loc="<?php echo $loc; ?>" data-site="<?php echo wp_nonce_url(SPAJAXURL . 'components&amp;targetaction=show&amp;key=' . $rank['meta_id'], 'components') ?>" data-img="<?php echo SPCOMMONIMAGES . 'working.gif' ?>" data-id="<?php echo $rank['meta_id']; ?>" />
 
                                             <input type="button" id="remove<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Remove'); ?>" data-loc="<?php echo $loc; ?>" data-form="delmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
 
                                             <input type="button" id="add<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Add'); ?>" data-loc="<?php echo $loc; ?>" data-form="addmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
-                                        </td>
-                                        <td width="20%">
+                                        </td>-->
+                                        <td colspan="2">
                                             <span class="sf-item-controls">
                                                 <input type="submit" class="sf-button-primary" id="updatespecialrank<?php echo $rank['meta_id']; ?>" name="updatespecialrank<?php echo $rank['meta_id']; ?>" value="<?php SP()->primitives->admin_etext('Save'); ?>" />
                                                 <span class="sf-icon-button"><span class="sf-icon sf-cancel spHideRow"></span></span>	
