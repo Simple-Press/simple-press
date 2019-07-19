@@ -16,17 +16,17 @@ $Rev:2099 $
     font-style: normal;
     font-weight: 400;
     src: local('Open Sans Semibold'), local('OpenSansSemibold-Regular'),
-    url(./fonts/open-sans-semibold.woff) format('woff'),
-    url(./fonts/open-sans-semibold.ttf) format('truetype');
+        url(./fonts/open-sans-semibold.woff) format('woff'),
+        url(./fonts/open-sans-semibold.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'sp-admin';
     src: url('fonts/sp-admin.eot?-1norbm');
     src: url('fonts/sp-admin.eot?#iefix-1norbm') format('embedded-opentype'),
-    url('fonts/sp-admin.woff?-1norbm') format('woff'),
-    url('fonts/sp-admin.ttf?-1norbm') format('truetype'),
-    url('fonts/sp-admin.svg?-1norbm#sp-admin') format('svg');
+        url('fonts/sp-admin.woff?-1norbm') format('woff'),
+        url('fonts/sp-admin.ttf?-1norbm') format('truetype'),
+        url('fonts/sp-admin.svg?-1norbm#sp-admin') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -2406,9 +2406,9 @@ div[class^="collapsible-"] {
     background-color: #0E7198;
     float: right;
 }.sf-permition-panel-expand{
-     background-color: #0E7198;
-     float: right;
- }
+    background-color: #0E7198;
+    float: right;
+}
 #sf-root-wrap .view-mobile {
     display: none;
 }
@@ -2940,6 +2940,10 @@ body .spMobileTableData .row-actions > span {
         margin-bottom: 0;
         width: fit-content;
     }*/
+    #sfmaincontainer .sfinline-form .sf-half-form .sf-fieldset .sf-panel-body-top {
+        margin-left: -20px;
+        padding: 20px;
+    }
     #sfmaincontainer .sf-upload #sf-upload-button {
         width: auto;
     }
@@ -2972,7 +2976,16 @@ body .spMobileTableData .row-actions > span {
         float: left;
         position: relative;
         width: 100% !important;
+
     }
+
+    #sfmaincontainer table.sf-table-mobile tr:last-of-type th,
+    #sfmaincontainer table.sf-table-mobile tr:last-of-type td,
+    #sfmaincontainer table.sf-table-mobile tr td:not(:last-of-type),
+    #sfmaincontainer table.sf-table-mobile tr th:not(:last-of-type) {
+        border-bottom: none;
+    }
+
     /*#sfmaincontainer table.sf-table-small tr td:first-of-type,
     #sfmaincontainer table.sf-table-small tr th:first-of-type {
         padding-left: 10px;
@@ -3023,7 +3036,7 @@ body .spMobileTableData .row-actions > span {
         display: none;
     }
     #sf-root-wrap .sf-mobile-show {
-        display: initial;
+        display: initial !important;
     }
     #sfmaincontainer .sf-grid-4 {
         width: 100%;
