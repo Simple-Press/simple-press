@@ -23,7 +23,7 @@ function spa_get_mapping_data() {
     return $sfoptions;
 }
 
-function spa_members_not_belonging_to_any_usergroup($pageNum = 1, $filter = '', $maxItemsOnPage = 3) {
+function spa_members_not_belonging_to_any_usergroup($pageNum = 1, $filter = '', $maxItemsOnPage = 10) {
     global $wpdb;
     $alphabet = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
     $members = array();
@@ -65,7 +65,7 @@ function spa_members_not_belonging_to_any_usergroup($pageNum = 1, $filter = '', 
         $members = SP()->DB->select($sql);
         if ($members) {
             $countPages = ceil($countItems / $maxItemsOnPage);
-            $pagination = spa_pagination($countPages, $pageNum, 8, 2);
+            $pagination = spa_pagination($countPages, $pageNum);
         }
     }
     ?>

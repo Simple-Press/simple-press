@@ -66,6 +66,15 @@
 			});
 		}
 	};
+        
+        hideRow = {
+            init: function() {
+			$('#sfmaincontainer').off('click', '.spHideRow');
+			$('#sfmaincontainer').on('click', '.spHideRow', function() {
+				$(this).closest('tr').hide();
+                        });
+		}
+        };
 
 	loadForm = {
 		init: function() {
@@ -81,8 +90,9 @@
 		init: function() {
 			$('#sfmaincontainer').off('click', '.spCancelForm');
 			$('#sfmaincontainer').on('click', '.spCancelForm', function() {
-				var mydata = $(this).data();
-				$(mydata.target).html('');
+				//var mydata = $(this).data();
+				//$(mydata.target).html('');
+                                $(this).closest('form').remove();
 			});
 		}
 	};
@@ -287,16 +297,18 @@
 
 	componentsSpecialRankShow = {
 		init: function() {
+			$('.spSpecialRankShow').off('click');
 			$('.spSpecialRankShow').click(function() {
 				var mydata = $(this).data();
 				spj.toggleRow(mydata.loc);
-				spj.showMemberList(mydata.site, mydata.img, mydata.id);
+				spj.showMemberList(mydata.site, mydata.img, mydata.id, mydata.target);
 			});
 		}
 	};
 
 	componentsSpecialRankForm = {
 		init: function() {
+			$('.spSpecialRankForm').off('click');
 			$('.spSpecialRankForm').click(function() {
 				var mydata = $(this).data();
 				$(mydata.loc).show();
@@ -375,7 +387,7 @@
 		init: function() {
 			$('.spUsergroupShowMembers').click(function() {
 				var mydata = $(this).data();
-				spj.showMemberList(mydata.url, mydata.img, mydata.id);
+				spj.showMemberList(mydata.url, mydata.img, mydata.id, mydata.target);
 			});
 		}
 	};
@@ -463,18 +475,54 @@
                 }
         };
 
+        opener = {
+                init : function() {
+                    $('#sfmaincontainer').off('click', '.sf-opener-button-open');
+                    $('#sfmaincontainer').on('click', '.sf-opener-button-open', function() {
+                        var $el = $(this), $root = $el.closest('.sf-opener');
+                        if($root.length) {
+                            var $target = $root.find('.sf-opener-target');
+                            if($target.length) {
+                                $root[$target.is(':visible') ? 'removeClass' : 'addClass']('sf-open');
+                            }
+                        }
+                    }); $('#sfmaincontainer').off('click', '.sf-opener-button-open');
+                    $('#sfmaincontainer').on('click', '.sf-opener-button-open', function() {
+                        var $el = $(this), $root = $el.closest('.sf-opener');
+                        if($root.length) {
+                            var $target = $root.find('.sf-opener-target');
+                            if($target.length) {
+                                $root[$target.is(':visible') ? 'removeClass' : 'addClass']('sf-open');
+                            }
+                        }
+                    });
+                    $('#sfmaincontainer').off('click', '.sf-opener-button-close');
+                    $('#sfmaincontainer').on('click', '.sf-opener-button-close', function() {
+                        var $el = $(this), $root = $el.closest('.sf-opener');
+                        if($root.length) {
+                            var $target = $root.find('.sf-opener-target');
+                            if($target.length) {
+                                $root.removeClass('sf-open');
+                            }
+                        }
+                    });
+                }
+        };
+
 	// public properties
 
 	// public methods
 	$(document).ready(function() {
                 $('#sfmaincontainer').off('adminformloaded');
 		$('#sfmaincontainer').on('adminformloaded', function() {
+                        opener.init();
                         filtering.init();
                         tableCheckUncheckCb.init();
 			toggleLayer.init();
 			//toggleRow.init();
 			deleteRow.init();
 			deleteRowReload.init();
+                        hideRow.init();
 			loadForm.init();
 			cancelForm.init();
 			loadAjax.init();

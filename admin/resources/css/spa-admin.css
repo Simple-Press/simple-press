@@ -606,7 +606,8 @@ $Rev:2099 $
 #sf-root-wrap .sf-input-group.sf-input-small select,
 #sf-root-wrap .sf-input-group.sf-input-small input /* ... */ {
     height: 40px;
-    padding: 12px 30px 12px 20px;
+    /*padding: 12px 30px 12px 20px;*/
+    padding: 12px 25px 12px 20px;
 }
 #sf-root-wrap select {
     font-family: "Open Sans Semibold";
@@ -954,6 +955,9 @@ $Rev:2099 $
 #sf-root-wrap .sf-full-form .sf-icon-button.sf-small {
     padding: 17px;
 }
+#sf-root-wrap .sf-full-form .sf-icon-button.sf-small.sf-little {
+    padding: 12px;
+}
 #sf-root-wrap .sf-full-form .sf-icon-button.sf-small:focus .sf-icon,
 #sf-root-wrap .sf-full-form .sf-icon-button.sf-small:hover .sf-icon {
     opacity: 1;
@@ -1071,6 +1075,11 @@ $Rev:2099 $
     -webkit-mask-image: url("../icons/Add.svg");
     mask-image: url("../icons/Add.svg");
 }
+#sf-root-wrap .sf-icon.sf-cancel {
+    background-color: #0E7198;
+    -webkit-mask-image: url("../icons/Cancel.svg");
+    mask-image: url("../icons/Cancel.svg");
+}
 #sf-root-wrap .sf-icon.sf-edit {
     background-color: #0E7198;
     -webkit-mask-image: url("../icons/Edit.svg");
@@ -1183,6 +1192,10 @@ $Rev:2099 $
 /**
 * < .sf-icon
 */
+
+#sf-root-wrap .sf-opener:not(.sf-open) .sf-opener-target {
+    display: none;
+}
 
 #sf-root-wrap .sf-input-group {
     position: relative;
@@ -1453,6 +1466,11 @@ $Rev:2099 $
 
 #sfmaincontainer .sf-fieldset {
     position: relative;
+}
+#sfmaincontainer .sf-fieldset>.sf-fieldset {
+    margin: 0;
+    padding: 0;
+    background: transparent;
 }
 #sfmaincontainer li {
     margin: 0;
@@ -1865,6 +1883,7 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-popup {
     width: 100%;
+    min-width: 285px;
     margin: 0;
 }
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-popup .selector-category {
@@ -2267,6 +2286,9 @@ $Rev:2099 $
 }
 #sfhousekeepingformblock .sf-panel-body .sf-full-form fieldset div[class^="collapsible-"] {
     margin: 15px 0;
+}
+#sfhousekeepingformblock .sf-panel-body .sf-full-form .sf-panel+.sf-panel {
+    margin: 0;
 }
 div[class^="collapsible-"] {
     overflow: auto;
@@ -3060,9 +3082,6 @@ body .spMobileTableData .row-actions > span {
     #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-panel-body-top h4 {
         margin: 3px 0 21px;
     }
-    #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-users-list {
-        margin-bottom: 136px;
-    }
     #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-users-list .sf-grid-item {
         padding: 15px 20px;
         background-color: #F9F9F9;
@@ -3074,6 +3093,10 @@ body .spMobileTableData .row-actions > span {
     #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-users-list .sf-grid-item .sf-avatar {
         display: none;
     }
+
+    /*#sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-users-list {
+        margin-bottom: 136px;
+    }
     #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-panel-body-top .select-user-group {
         position: absolute;
         bottom: 0;
@@ -3084,12 +3107,27 @@ body .spMobileTableData .row-actions > span {
         width: calc(100% - 40px);
         margin: 0 20px 10px;
         border: 1px solid #F0F0F0;
+    }*/
+
+    #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-users-list {
+
     }
+    #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-panel-body-top .select-user-group {
+
+    }
+    #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-panel-body-top .select-user-group .sf-select-wrap {
+        margin-top: 10px;
+        border: 1px solid #F0F0F0;
+    }
+
     #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-panel-body-top .select-user-group .sf-input-group-addon {
-        width: 100%;
-        float: left;
-        padding: 0 20px;
-        margin: 0 0 27px;
+        display: none;
+    }
+    #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-controls {
+        margin: 15px 0 7px 0;
+    }
+    #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-controls .sf-button-primary {
+        margin: 0;
     }
     /**
      < #sf-tab-usergroup-main
@@ -3293,12 +3331,6 @@ body .spMobileTableData .row-actions > span {
 }
 .sf-Hide{
     display: none;
-}
-#sf-root-wrap .sf-icon.sf-cancel{
-    -webkit-mask-image: url("../icons/Cancel.svg");
-    mask-image: url("../icons/Cancel.svg");
-    background-image: url("../icons/Cancel.svg");
-    margin-top: 15px;
 }
 
 /* add ------------- */
