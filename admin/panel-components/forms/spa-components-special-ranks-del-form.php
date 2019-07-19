@@ -20,9 +20,10 @@ function spa_components_sr_del_members_form($rank_id) {
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfmemberdel<?php echo $rank_id; ?>" name="sfmemberdel<?php echo $rank_id; ?>">
 <?php
+                spa_paint_open_nohead_tab(true, '');
 		echo sp_create_nonce('special-rank-del');
 ?>
-					<p><?php SP()->primitives->admin_etext('Select member to add (use CONTROL for multiple members)'); ?></p>
+					<!--<p><?php SP()->primitives->admin_etext('Select member to add (use CONTROL for multiple members)'); ?></p>-->
 <?php
                 	$from = esc_js(SP()->primitives->admin_text('Current members'));
                 	$to = esc_js(SP()->primitives->admin_text('Selected Members'));
@@ -33,9 +34,15 @@ function spa_components_sr_del_members_form($rank_id) {
 <?php
         $loc = 'sfrankshow-'.$rank_id;
 ?>
+            <div class="sf-controls">
 		<input type="submit" class="sf-button-primary spSpecialRankDel" id="sfmemberdel<?php echo $rank_id; ?>" name="sfmemberdel<?php echo $rank_id; ?>" data-target="#dmember_id<?php echo $rank_id; ?>" value="<?php SP()->primitives->admin_etext('Remove Members'); ?>" />
-		<input type="button" class="sf-button-primary spSpecialRankCancel" data-target="#members-<?php echo $rank_id; ?>" data-loc="<?php echo $loc; ?>" id="sfmemberdel<?php echo $rank_id; ?>" name="addmemberscancel<?php echo $rank_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
-	</form>
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $rank_id; ?>" data-loc="<?php echo $loc; ?>" id="sfmemberdel<?php echo $rank_id; ?>" name="addmemberscancel<?php echo $rank_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+            </div>
+	 <?php
+        spa_paint_close_container();
+        spa_paint_close_tab();
+        ?>
+        </form>
 
 	<div class="sfform-panel-spacer"></div>
 <?php

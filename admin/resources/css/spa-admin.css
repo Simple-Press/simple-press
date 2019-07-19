@@ -955,6 +955,9 @@ $Rev:2099 $
 #sf-root-wrap .sf-full-form .sf-icon-button.sf-small {
     padding: 17px;
 }
+#sf-root-wrap .sf-full-form .sf-icon-button.sf-small.sf-little {
+    padding: 12px;
+}
 #sf-root-wrap .sf-full-form .sf-icon-button.sf-small:focus .sf-icon,
 #sf-root-wrap .sf-full-form .sf-icon-button.sf-small:hover .sf-icon {
     opacity: 1;
@@ -1072,6 +1075,11 @@ $Rev:2099 $
     -webkit-mask-image: url("../icons/Add.svg");
     mask-image: url("../icons/Add.svg");
 }
+#sf-root-wrap .sf-icon.sf-cancel {
+    background-color: #0E7198;
+    -webkit-mask-image: url("../icons/Cancel.svg");
+    mask-image: url("../icons/Cancel.svg");
+}
 #sf-root-wrap .sf-icon.sf-edit {
     background-color: #0E7198;
     -webkit-mask-image: url("../icons/Edit.svg");
@@ -1184,6 +1192,10 @@ $Rev:2099 $
 /**
 * < .sf-icon
 */
+
+#sf-root-wrap .sf-opener:not(.sf-open) .sf-opener-target {
+    display: none;
+}
 
 #sf-root-wrap .sf-input-group {
     position: relative;
@@ -1866,6 +1878,7 @@ $Rev:2099 $
 }
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-popup {
     width: 100%;
+    min-width: 285px;
     margin: 0;
 }
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-popup .selector-category {
@@ -3311,12 +3324,6 @@ body .spMobileTableData .row-actions > span {
 }
 .sf-Hide{
     display: none;
-}
-#sf-root-wrap .sf-icon.sf-cancel{
-    -webkit-mask-image: url("../icons/Cancel.svg");
-    mask-image: url("../icons/Cancel.svg");
-    background-image: url("../icons/Cancel.svg");
-    margin-top: 15px;
 }
 
 /* add ------------- */
