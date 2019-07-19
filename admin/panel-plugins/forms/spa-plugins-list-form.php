@@ -56,7 +56,6 @@ function spa_plugins_list_form() {
             });
 
             function display_filtr() {
-                alert(111);
                 if ($('#sf-plugins-flt-b').css('display') === 'none') {
                     $('#sf-plugins-flt-b').css('display', 'block');
                 } else {
