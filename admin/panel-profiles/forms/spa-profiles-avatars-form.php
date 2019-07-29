@@ -159,9 +159,10 @@ function spa_profiles_avatars_form() {
 
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Avatar Priorities'), true, 'avatar-priorities');
-
+                                        echo '<div class="sf-alert-block sf-info">';
 					SP()->primitives->admin_etext('Select the avatar dislay priority order by dragging and dropping the buttons below.	The top of the list is the highest priority order.	When an avatar is found for the current priority, it is used.  If none is found, the next priority is checked and so on.  An SP Default Avatar will always be found. Any avatar after the SP Default Avatar is essentially ignored');
-					$list = array(0 => SP()->primitives->admin_text('Gravatars'), 1 => SP()->primitives->admin_text('WP Avatars'), 2 => SP()->primitives->admin_text('Uploaded Avatar'), 3 => SP()->primitives->admin_text('SP Default Avatars'), 4 => SP()->primitives->admin_text('Avatar Pool'), 5 => SP()->primitives->admin_text('Remote Avatar'));
+					echo '</div>';
+                                        $list = array(0 => SP()->primitives->admin_text('Gravatars'), 1 => SP()->primitives->admin_text('WP Avatars'), 2 => SP()->primitives->admin_text('Uploaded Avatar'), 3 => SP()->primitives->admin_text('SP Default Avatars'), 4 => SP()->primitives->admin_text('Avatar Pool'), 5 => SP()->primitives->admin_text('Remote Avatar'));
 					$a = '';
 
 					echo '<div>';
@@ -170,7 +171,7 @@ function spa_profiles_avatars_form() {
 					if ($sfoptions['sfavatarpriority']) {
 
 						foreach ($sfoptions['sfavatarpriority'] as $priority) {
-							echo '<li id="aitem_'.$priority.'" class="sf-list-item sf-list-item-depth-0"><span class="sf-item-name">'.$list[$priority].'</span></li>';
+							echo '<li id="aitem_'.$priority.'" class="sf-list-item sf-list-item-depth-0 sf-full-width"><span class="sf-item-name">'.$list[$priority].'</span></li>';
 							$a.='aitem[]='.$priority.'&';
 						}
 
@@ -187,17 +188,17 @@ function spa_profiles_avatars_form() {
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 
-			echo '</div>';
+			//echo '</div>';
 
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Default Avatar Upload'), true, 'avatar-default-upload');
 					$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['avatars'].'/defaults/';
+					echo '<div class="sf-form-row">';
 					spa_paint_file(SP()->primitives->admin_text('Select avatar to upload'), 'newavatar', false, true, $loc);
-					echo '<table><tr>';
-					echo '<td class="sflabel"><small>';
+					echo '</div>';
+					echo '<div class="sf-alert-block sf-info">';
 					SP()->primitives->admin_etext('Please be advised that Admin uploaded default avatar replacements are NOT subject to the user uploaded avatar size limits. So use caution when picking avatars');
-					echo '</small></td>';
-					echo '</tr></table>';
+					echo '</div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 

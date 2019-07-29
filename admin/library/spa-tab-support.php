@@ -94,16 +94,17 @@ function spa_paint_tab_right_cell() {
 }
 
 function spa_paint_open_panel() {
-	echo '<div>';
+	echo '<div class="sf-panel">';
 }
 
 function spa_paint_close_panel() {
 	echo '</div>';
 }
 
-function spa_paint_open_fieldset($legend, $displayhelp=false, $helpname='', $displaylegend=true, $subTitle = '') {
-	global $adminhelpfile;
-
+function spa_paint_open_fieldset($legend, $displayhelp = false, $helpname = '', $displaylegend = true, $subTitle = '', $adminhelpfile = false) {
+    if(!$adminhelpfile){
+	    global $adminhelpfile;
+    }
 	echo "<fieldset class='sf-fieldset'>\n";
 	if($displaylegend) {
 		echo "<div class='sf-panel-body-top'><div class='sf-panel-body-top-left'><h4>$legend</h4>";

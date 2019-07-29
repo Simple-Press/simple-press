@@ -74,12 +74,12 @@
 	// public methods
 
 	spj.loadAjax = function(url, target, image) {
-		if (image !== '') {
-			document.getElementById(target).innerHTML = '<img src="' + image + '" />';
+                var $target = $(/^\s*[a-z]/i.test(target) ? '#' + target : target);
+		if (image) {
+			$target.html('<img src="' + image + '" />');
 		}
 		url = url + '&rnd=' + new Date().getTime();
-		$('#' + target).show();
-		$('#' + target).load(url);
+		$target.show().load(url);
 	};
 
 	spj.batch = function(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum) {

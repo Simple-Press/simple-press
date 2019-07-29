@@ -63,10 +63,10 @@ function spa_forums_edit_group_form($group_id) {
 		spa_paint_tab_right_cell();
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Default User Group Permissions'), false);
-
+                                        echo '<div class="sf-alert-block sf-info">';
 					echo '<strong>'.SP()->primitives->admin_text('Set default usergroup permission sets for this group').'</strong><br />';
 					echo SP()->primitives->admin_text('Note - This will not will add or modify any current permissions. It is only a default setting for future forums created in this group.  Existing default usergroup settings will be shown in the drop down menus');
-
+                                        echo '</div>';
 					# Permissions
 					$usergroups = spa_get_usergroups_all();
 					$roles = sp_get_all_roles();

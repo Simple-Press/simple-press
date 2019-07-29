@@ -10,11 +10,12 @@ if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
     die('Access denied - you cannot directly call this file');
 
 function spa_usergroups_delete_members_form($usergroup_id) {
+    $formId = sprintf('sfmemberdel-%s-%d', uniqid(), $usergroup_id);
     ?>
     <script>
         (function (spj, $, undefined) {
             $(document).ready(function () {
-                $('#sfmemberdel<?php echo $usergroup_id; ?>').ajaxForm({
+                $('#<?php echo $formId; ?>').ajaxForm({
                     target: '#sfmsgspot',
                 });
             });
@@ -30,18 +31,26 @@ function spa_usergroups_delete_members_form($usergroup_id) {
     $smessage = esc_js(SP()->primitives->admin_text('Please Wait - Processing'));
     $emessage = esc_js(SP()->primitives->admin_text('Users Deleted/Moved'));
     ?>
-    <form action="<?php echo $ajaxURL; ?>" method="post" id="sfmemberdel<?php echo $usergroup_id; ?>" name="sfmemberdel<?php echo $usergroup_id ?>" onsubmit="spj.addDelMembers('sfmemberdel<?php echo $usergroup_id ?>', '<?php echo $url; ?>', '<?php echo $target; ?>', '<?php echo $smessage; ?>', '<?php echo $emessage; ?>', 0, 50, '#dmid<?php echo $usergroup_id; ?>');">
+    <form class="sf-usergroups-delete-members" action="<?php echo $ajaxURL; ?>" method="post" id="<?php echo $formId; ?>" name="sfmemberdel<?php echo $usergroup_id ?>"
+          onsubmit="spj.addDelMembers(
+                      '<?php echo $formId; ?>',
+                      '<?php echo $url; ?>',
+                      '<?php echo $target; ?>',
+                      '<?php echo $smessage; ?>',
+                      '<?php echo $emessage; ?>',
+                      0, 50, '#dmid<?php echo $usergroup_id; ?>'
+                      );">
         <?php
         spa_paint_open_nohead_tab(true, '');
         echo sp_create_nonce('forum-adminform_memberdel');
         ?>
         <input type="hidden" name="usergroupid" value="<?php echo $usergroup_id; ?>" />
-        <p><?php SP()->primitives->admin_etext('Select members to delete/move (use CONTROL for multiple users)') ?></p>
-        <p><?php SP()->primitives->admin_etext('To move members, select a new usergroup') ?></p>
-        <?php spa_display_usergroup_select() ?>
+        <!--<p><?php SP()->primitives->admin_etext('Select members to delete/move (use CONTROL for multiple users)') ?></p>
+        <p><?php SP()->primitives->admin_etext('To move members, select a new usergroup') ?></p>-->
+        <?php //spa_display_usergroup_select() ?>
         <?php
         $from = esc_js(SP()->primitives->admin_text('Current Members'));
-        $to = esc_js(SP()->primitives->admin_text('Selected Members'));
+        $ug = true;
         $action = 'delug';
         require_once SP_PLUGIN_DIR . '/admin/library/ajax/spa-ajax-multiselect.php';
         ?>
@@ -49,9 +58,14 @@ function spa_usergroups_delete_members_form($usergroup_id) {
         <?php
         do_action('sph_usergroup_delete_member_panel');
         ?>
-        <span><input type="submit" class="sf-button-primary" id="sfmemberdel<?php echo $usergroup_id; ?>" name="sfmemberdel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Delete/Move Members'); ?>" /> <span class="_sf-button sfhidden" id='onFinish'></span>
-            <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $usergroup_id; ?>" id="sfmemberdel<?php echo $usergroup_id; ?>" name="delmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" /></span>
-        <br />
+        <span class="sf-controls sf-mobile-hide">
+            <input type="submit" class="sf-button-primary" name="sfmemberdel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Delete/Move Members'); ?>" />
+            <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $usergroup_id; ?>" name="delmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+        </span>
+        <span class="sf-controls sf-mobile-show">
+            <input type="submit" class="sf-button-primary" name="sfmemberdel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Move'); ?>" />
+        </span>
+        <span class="_sf-button sf-hidden-important" id='onFinish'></span>
         <div class="pbar" id="progressbar"></div>
          <?php
         spa_paint_close_container();

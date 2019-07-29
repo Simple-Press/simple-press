@@ -63,9 +63,8 @@ function spa_admins_manage_admins_form() {
 
                     $title = ($x == 1) ? SP()->primitives->admin_text('Admin') : SP()->primitives->admin_text('Moderator');
                     spa_paint_open_fieldset($title . ': ' . $adminName, false);
-
-                    echo SP()->primitives->admin_text('ID') . ': ' . $adminId . ' - ' . SP()->primitives->admin_text('Name') . ': <strong>' . $adminName . '</strong>';
                     ?>
+					<h4><?php echo SP()->primitives->admin_text('ID') . ': ' . $adminId . ' - ' . SP()->primitives->admin_text('Name') ?>: <strong><?php echo $adminName ?></strong></h4>
                     <input type="hidden" name="uids[]" value="<?php echo $adminId; ?>" />
 
                     <ul class='sf-float-list'>

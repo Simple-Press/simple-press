@@ -58,7 +58,7 @@ function spa_profiles_tabs_menus_form() {
 
     #== CUSTOM FIELDS Tab ============================================================
 
-	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Tabs'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Profile Tabs & Menus'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Profile Menu Order'), true, 'profile-menus');
 				echo '<div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('Here you can set the order of Profile Tabs and Menus by dragging and dropping below.  Additionally, you can edit any of the Tabs or Menus.').'</div>';
@@ -93,7 +93,7 @@ function spa_profiles_tabs_menus_form() {
                                 $class = ($menu['display']) ? '' : ' sf-list-item-disabled';
 								echo "<div class='sf-list-item$class'>";
 								echo '<span class="sf-item-name">'.$menu['name'].'</span>';
-								echo '<span class="sf-item-controls">';
+								echo '<span class="sf-item-controls sf-mr-5">';
 								echo '<span class="sf-item-type">'.SP()->primitives->admin_text('Menu').'</span>';
 								echo '<a class="sf-item-edit spLayerToggle" data-target="item-edit-'.$tindex.'-'.$mindex.'" >Edit Menu</a>';
 								echo '</span>';

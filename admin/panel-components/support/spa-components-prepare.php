@@ -131,7 +131,7 @@ function spa_paint_rank_images() {
 
 	# start the table display
 ?>
-	<table id="sf-rank-badges" class="widefat fixed striped spMobileTable800">
+	<table id="sf-rank-badges" class="widefat sf-table-small sf-table-mobile">
 		<thead>
 			<tr>
 				<th><?php SP()->primitives->admin_etext('Filename'); ?></th>
@@ -147,17 +147,17 @@ function spa_paint_rank_images() {
 		$ext = strtolower($path_info['extension']);
 		if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif' || $ext == 'bmp') {
 ?>
-			<tr id='rankbadge<?php echo $row; ?>' class="spMobileTableData">
-				<td data-label='<?php SP()->primitives->admin_etext('Filename'); ?>'>
+			<tr id='rankbadge<?php echo $row; ?>' class="spMobileTableData sf-display-table-row">
+				<td data-label='<?php SP()->primitives->admin_etext('Filename'); ?>' class="sf-Leftm">
 					<?php echo($file); ?>
 				</td>
-				<td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>'>
+				<td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>' class="sf-Leftm">
 					<img class="sfrankbadge" src="<?php echo(esc_url(SPRANKS.$file)); ?>" alt="" />
 				</td>
-				<td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>'>
+				<td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>' class="sf-Leftm">
 <?php
 					$site = esc_url(wp_nonce_url(SPAJAXURL."components&amp;targetaction=delbadge&amp;file=$file", 'components'));
-					echo '<span class="sf-item-controls"><span class="sf-icon sf-delete spDeleteRow" title="'.SP()->primitives->admin_text('Delete Rank Badge').'" data-url="'.$site.'" data-target="rankbadge'.$row.'"></span></span>';
+					echo '<span class="sf-item-controls"><span class="sf-icon-button sf-small sf-little spDeleteRow" title="'.SP()->primitives->admin_text('Delete Rank Badge').'" data-url="'.$site.'" data-target="rankbadge'.$row.'"><span class="sf-icon sf-delete"></></span></span>';
 ?>
 				</td>
 			</tr>

@@ -41,7 +41,7 @@ function spa_permissions_edit_permission_form($role_id) {
 ?>
 					<br /><p><strong><?php SP()->primitives->admin_etext("Permission Set Actions") ?>:</strong></p>
 <?php
-					echo '<p><img src="'.SPADMINIMAGES.'sp_GuestPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />';
+					echo '<p><img src="'.SPADMINIMAGES.'sp_GuestPerm.png" alt="" class="sf-vert-align-top sf-perm-edit-img" />';
 					echo '<small>&nbsp;'.SP()->primitives->admin_text('Note: Action settings displaying this icon will be ignored for Guest Users').'</small><br />';
 					echo '<img src="'.SPADMINIMAGES.'sp_GlobalPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />';
 					echo '<small>&nbsp;'.SP()->primitives->admin_text('Note: Action settings displaying this icon require enabling to use').'</small><br />';

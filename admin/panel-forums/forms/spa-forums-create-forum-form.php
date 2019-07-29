@@ -60,7 +60,7 @@ function spa_forums_create_forum_form() {
 					$ajaxURL = wp_nonce_url(SPAJAXURL.'forums', 'forums');
 					$target = 'fseq';
 
-					echo '<div id="groupselect" style="display:block;">';
+					echo '<div id="groupselect" class="sf-dis-block">';
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Select group new forum will belong to')."</label>\n";
 					echo '<div class="sf-select-wrap"><select class="spForumSetSequence" tabindex="'.$tab.'" name="group_id">';
@@ -71,7 +71,7 @@ function spa_forums_create_forum_form() {
 					$tab++;
 					echo '</div>';
 
-					echo '<div id="forumselect" style="display:none;">';
+					echo '<div id="forumselect" class="sf-dis-block">';
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Select forum new subforum will belong to').":</label>\n";
 					echo '<div class="sf-select-wrap"><select class="spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';

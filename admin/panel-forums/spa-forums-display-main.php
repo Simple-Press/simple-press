@@ -51,50 +51,22 @@ function spa_forums_forums_main() {
 
             foreach ($groups as $group) {
                 spa_paint_open_nohead_tab(true, '');
-                if (empty($group->group_icon)) {
-                    $icon = SPTHEMEICONSURL . 'sp_GroupIcon.png';
-                } else {
-                    $icon = esc_url(SPCUSTOMURL . $group->group_icon);
-                    if (!file_exists(SPCUSTOMDIR . $group->group_icon))
-                        $icon = SPTHEMEICONSURL . 'sp_GroupIcon.png';
-                }
-
-                $group_icon_type = 'file';
-
-                if (empty($group->group_icon)) {
-                    $icon = SPTHEMEICONSURL . 'sp_GroupIcon.png';
-                } else {
-
-                    $group_icon = spa_get_saved_icon($group->group_icon);
-
-                    if ('file' === $group_icon['type']) {
-                        $icon = esc_url(SPCUSTOMURL . $group_icon['icon']);
-                        if (!file_exists(SPCUSTOMDIR . $group_icon['icon'])) {
-                            $icon = SPTHEMEICONSURL . 'sp_GroupIcon.png';
-                        }
-                    } else {
-                        $group_icon_type = 'font';
-                        $icon = $group_icon['icon'];
-                    }
-                }
-
                 # Group
                 ?>
                 <div id="grouprow-<?php echo $group->group_id; ?>" class="sf-panel-body-top sf-mobile-no-horizontal-padding">
                     <table class="sf-full-width sf-table-mobile">
                         <tr>
                             <td class="sf-v-a-middle">
-                                <?php
-                                if ('file' === $group_icon_type) {
-                                    echo '<img src="' . $icon . '" alt="" title="' . SP()->primitives->admin_text('Current group icon') . '" />';
-                                } else {
-                                    echo '<i class="' . $icon . '"></i>';
-                                }
-                                ?>
+                                
                                 <!--<a title="<?php SP()->primitives->admin_etext('Collapse/expand forum listing'); ?>" class="spExpandCollapseGroup" data-target="forum-group-<?php echo $group->group_id; ?>">&ndash;</a>-->
                             </td>
                             <td class="sf-v-a-middle">
-                                <div class="sf-title-block">
+                                <div class="sf-v-a-middle sf-pull-left" >
+                                  <div  class="sf-icon-midle">
+                                    <?php echo spa_get_saved_icon_html(!empty($group->group_icon) ? $group->group_icon : '', SP()->primitives->admin_text('Current group icon'), SPTHEMEICONSURL . 'sp_GroupIcon.png') ?>
+                                  </div>
+                                </div>
+                                <div class="sf-title-block sf-pull-left">
                                     <h4><?php echo SP()->displayFilters->title($group->group_name); ?></h4>
                                     <?php echo SP()->displayFilters->text($group->group_desc); ?>
                                     <?php
@@ -194,19 +166,24 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
             }
             ?>
             <tr id="forumrow-<?php echo $forum->forum_id; ?>" class="<?php echo implode(' ', $rowClasses) ?>"> <!-- display forum information for each forum -->
-                <td><?php
-                    if ('file' === $forum_icon_type) {
-                        echo '<img src="' . $icon . '" alt="" title="' . SP()->primitives->admin_text('Current forum icon') . '" />';
-                    } else {
-                        echo '<i class="' . $icon . '"></i>';
-                    }
-                    ?>
-
-                    <?php if ($haschild) { ?>
-                        <img class="parentArrow" src="<?php echo SPADMINIMAGES . 'sp_HasChild.png'; ?>" alt="" title="<?php SP()->primitives->admin_etext('Parent Forum'); ?>" />
-                    <?php } ?>
+                <td>
                 </td>
                 <td>
+                    <div class="sf-v-a-middle sf-pull-left" >
+                      <div  class="sf-icon-midle">
+                        <?php
+                        if ('file' === $forum_icon_type) {
+                            echo '<img src="' . $icon . '" alt="" title="' . SP()->primitives->admin_text('Current forum icon') . '" />';
+                        } else {
+                            echo '<i class="' . $icon . '"></i>';
+                        }
+                        ?>
+
+                        <?php if ($haschild) { ?>
+                            <img class="parentArrow" src="<?php echo SPADMINIMAGES . 'sp_HasChild.png'; ?>" alt="" title="<?php SP()->primitives->admin_etext('Parent Forum'); ?>" />
+                        <?php } ?>
+                      </div>
+                    </div>
                     <?php if ($forum->forum_status) echo '<img class="sfalignright" src="' . SPADMINIMAGES . 'sp_LockedBig.png" alt="" />'; ?>
                     <?php if ($subforum) { ?>
                         <?php if ($forum->forum_disabled) echo '<img class="sfalignright" src="' . SPADMINIMAGES . 'sp_NoWrite.png" alt="" title="' . SP()->primitives->admin_text('Subforum is disabled') . '" /> '; ?>
@@ -231,10 +208,10 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                     }
                     ?>
                 </td>
-                <td class="sf-mobile-width-by-content sf-mobile-no-vertical-padding">
+                <td class="sf-mobile-width-by-content sf-mobile-no-vertical-padding sf-mobile-inline">
                     <?php sp_display_item_stats(SPTOPICS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Topics')) ?>
                 </td>
-                <td class="sf-mobile-width-by-content sf-mobile-no-vertical-padding">
+                <td class="sf-mobile-width-by-content sf-mobile-no-vertical-padding sf-mobile-inline">
                     <?php sp_display_item_stats(SPPOSTS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Posts')) ?>
                 </td>
                 <td>

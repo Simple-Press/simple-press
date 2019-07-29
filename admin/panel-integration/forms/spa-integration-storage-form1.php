@@ -13,80 +13,69 @@ function spa_integration_storage_form() {
     <script>
         spj.loadAjaxForm('sfstorageform', 'sfreloadsl');
     </script>
-<?php
+	<?php
 	$sfdata = spa_get_storage_data();
 	$sfoptions = spa_get_storage_options();
 
-	spa_paint_options_init();
-
 	$ajaxURL = wp_nonce_url(SPAJAXURL.'integration-loader&amp;saveform=storage', 'integration-loader');
-?>
-    <div id="sfhousekeepingformblock">
+	?>
     <form action="<?php echo $ajaxURL; ?>" method="post" id="sfstorageform" name="sfstorage">
+		<?php echo sp_create_nonce('forum-adminform_storage'); ?>
+		<?php
+		spa_paint_options_init();
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Integration').' - '.*/SP()->primitives->admin_text('Storage Locations'), true);
+		spa_paint_open_panel();
 
-		<?php echo sp_create_nonce('forum-adminform_storage');
+		echo '<div class="sf-alert-block sf-info">';
+		SP()->primitives->admin_etext('BEWARE: Please read the help before making any changes to these locations. Incorrect changes may cause Simple:Press to stop functioning');
+		echo '</div>';
 
-	    $info = '<div class="sf-alert-block sf-info">' .
-	            sprintf(SP()->primitives->front_text('BEWARE: Please read the help before making any changes to these locations. Incorrect changes may cause Simple:Press to stop functioning'), '<b>', '</b>') .
-	            '</div>';
+		spa_paint_open_fieldset(SP()->primitives->admin_text('Set Storage Locations'), true, 'storage-locations');
+		echo '<table><tr>';
 
-	    spa_paint_open_tab(SP()->primitives->admin_text('Storage Locations'), true, $info);
+		echo '<td><span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Location found').'"></span>'.SP()->primitives->admin_text('Location found').'</td>';
+		echo '<td><span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Location not found').'"></span>'.SP()->primitives->admin_text('Location not found').'</td></tr><tr>';
+		echo '<td><span class="sf-icon sf-requires-enable" title="'.SP()->primitives->admin_text('Write - OK').'"></span>'.SP()->primitives->admin_text('Write - OK').'</td>';
+		echo '<td><span class="sf-icon sf-warning" title="'.SP()->primitives->admin_text('Write - denied').'"></span>'.SP()->primitives->admin_text('Write - denied').'</td></tr><tr>';
 
-	    spa_paint_open_panel();
-		    spa_paint_open_fieldset(SP()->primitives->admin_text('Set Storage Locations'), 'true', 'storage-locations', 'true');
-		echo '<div class="collapsible-closed">';
-                echo '<table><tr>';
-                echo '<td><span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Location found').'"></span>'
-                     .SP()->primitives->admin_text('Location found').'</td>';
-                echo '<td><span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Location not found').'"></span>'
-                     .SP()->primitives->admin_text('Location not found').'</td></tr><tr>';
-                echo '<td><span class="sf-icon sf-requires-enable" title="'.SP()->primitives->admin_text('Write - OK').'"></span>'
-                     .SP()->primitives->admin_text('Write - OK').'</td>';
-                echo '<td><span class="sf-icon sf-warning" title="'.SP()->primitives->admin_text('Write - denied').'"></span>'
-                     .SP()->primitives->admin_text('Write - denied').'</td></tr><tr>';
-                echo '</tr></table>';
-            echo '</div>';
+		echo '</tr></table>';
 		echo '<br>';
-	        spa_paint_close_fieldset();
-	    spa_paint_close_panel();
+		echo '<div class="sf-alert-block sf-info">';
+		SP()->primitives->admin_etext('Set the new location of your:');
+		echo '</div>';
 
-	    echo '<br>';
-	    $ok = true;
+		echo '<table class="wp-list-table widefat">';
 
-	    foreach ($sfoptions as $option){
-		    spa_paint_open_panel();
-		            $r = spa_paint_storage_input(SP()->primitives->admin_text($option['title']), $option['name'], $sfdata[$option['name']]);
-		    spa_paint_close_panel();
-		    if (!$r) $ok = false;
-	    }
+		$ok = true;
+
+		foreach ($sfoptions as $option){
+			$r = spa_paint_storage_input(SP()->primitives->admin_text($option['title']), $option['name'], $sfdata[$option['name']]);
+			if (!$r) $ok = false;
+		}
+
 		do_action('sph_integration_storage_panel_location');
-	    if (!$ok) {
-		    echo '<tr><td colspan="3"><br /><div class="sf-alert-block sf-info"><h4>';
-		    SP()->primitives->admin_etext('For Simple:Press to function correctly it is imperative that the above location errors are resolved');
-		    echo '</h4></div></td></tr>';
-	    }
-		do_action('sph_integration_storage_panel');
-	    spa_paint_close_container();
-	    ?>
 
+		if (!$ok) {
+			echo '<tr><td colspan="3"><br /><div class="sf-alert-block sf-info"><h4>';
+			SP()->primitives->admin_etext('For Simple:Press to function correctly it is imperative that the above location errors are resolved');
+			echo '</h4></div></td></tr>';
+		}
+
+		echo '</table>';
+		spa_paint_close_fieldset();
+
+		spa_paint_close_panel();
+
+		do_action('sph_integration_storage_panel');
+		spa_paint_close_container();
+		?>
         <div class="sf-form-submit-bar">
             <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Storage Locations'); ?>" />
         </div>
-		<?php spa_paint_close_tab(); ?>
+		<?php
+		spa_paint_close_tab();
+		?>
     </form>
-    </div>
-    <script>
-        var collapsiblebtn = "<a class=\"sf-icon-button sfToggleBtn\"><span class=\"sf-icon sf-expanded\"></span></a>";
-        var questBtn = jQuery('#sfhousekeepingformblock fieldset .sf-panel-body-top-right').html();
-        jQuery('#sfhousekeepingformblock fieldset .sf-panel-body-top-right').append(collapsiblebtn);
-        jQuery('#sfhousekeepingformblock fieldset .sf-panel-body-top-right').children('.sfhelplink').toggleClass('hide');
-        jQuery('#sfhousekeepingformblock .sf-panel-body-top').on('click', function(){
-            jQuery(this).parent().parent().find('.sfToggleBtn').children().toggleClass("sf-collapsed").toggleClass("sf-expanded");
-            jQuery(this).parent().children('div[class^=\"collapsible-\"]').toggleClass('collapsible-closed').toggleClass('collapsible-open');
-            jQuery(this).parent().children('div:nth-child(1)').toggleClass('bg-gray');
-            jQuery(this).parent().parent().find('.sfhelplink').toggleClass('hide');
-        });
-    </script>
 	<?php
 	spa_check_upgrade_error();
 }
@@ -116,8 +105,7 @@ function spa_paint_storage_input($label, $name, $value, $na = false) {
 		$ok = true;
 	}
 
-	if ($found)
-	{
+	if ($found) {
 		$icon1 = '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Location found').'"></span>';
 	} else {
 		$icon1 = '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Location not found').'"></span>';
@@ -138,15 +126,16 @@ function spa_paint_storage_input($label, $name, $value, $na = false) {
 		$ok = $found;
 	}
 
-	echo "<span class='sf-float-l sf-mt-15 sf-ml-10'>$icon1 $icon2 </span>";
+	echo "<tr>\n";
+	echo "<td>";
+	echo "<span class='sf-float-l'>$icon1 $icon2 </span>";
 	spa_paint_open_fieldset(SP()->primitives->admin_text($label), true, $name, true,'', $adminhelpfile);
+	echo SP_STORE_RELATIVE_BASE;
 
-	echo '<div class="collapsible-closed">';
-        echo SP_STORE_RELATIVE_BASE;
+	echo '<input type="text" class="wp-core-ui sf-width-90-per " tabindex="'.$tab.'" name="'.$name.'" value="'.esc_attr($value).'" ';
+	echo "/></td>\n";
 
-        echo '<input type="text" class="wp-core-ui sf-width-90-per " tabindex="'.$tab.'" name="'.$name.'" value="'.esc_attr($value).'" ';
-	echo '</div>';
-	spa_paint_close_fieldset();
+	echo "</tr>\n";
 	$tab++;
 	return $ok;
 }

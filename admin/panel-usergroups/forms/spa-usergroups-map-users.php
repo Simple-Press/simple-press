@@ -117,7 +117,7 @@ function spa_usergroups_map_users() {
 		spa_paint_close_container();
 ?>
     	<div class="sf-form-submit-bar">
-        	<span><input type="submit" class="sf-button-primary" id="saveit2" name="saveit2" value="<?php SP()->primitives->admin_etext('Map Users'); ?>" /> <span class="_sf-button sfhidden" id='onFinish'></span></span>
+        	<span><input type="submit" class="sf-button-primary" id="saveit2" name="saveit2" value="<?php SP()->primitives->admin_etext('Map Users'); ?>" /> <span class="_sf-button sf-hidden-important" id='onFinish'></span></span>
         	<br />
         	<div class="pbar" id="progressbar"></div>
     	</div>

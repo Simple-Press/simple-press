@@ -376,6 +376,7 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 			}
 		});
 		
+                _icon_ins.change();
 	});
 
 	</script>
@@ -459,7 +460,7 @@ function spa_select_icon_dropdown($name, $label, $path, $cur, $showSelect = true
 
 	$w = '';
 	if ($width > 0) $w = 'width:'.$width.'px;';
-	if ($showSelect) echo '<select name="'.$name.'" class="sfcontrol" style="vertical-align:middle;'.$w.'">';
+	if ($showSelect) echo '<select name="'.$name.'" class="sfcontrol sf-vert-align-middle" '.$w.'">';
 	if ($cur != '') $label = SP()->primitives->admin_text('Remove');
 	echo '<option value="">'.$label.'</option>';
 
@@ -677,38 +678,99 @@ function spa_build_forum_permalink_slugs() {
 	}
 }
 
-function spa_pagination($callback, $countPages, $currentPageNum, $paginationLength = 8, $ellipsisLength = 2) {
-    if ($countPages <= $paginationLength) {
-	$paginationLength = $countPages;
-	$from = 1;
-    } else {
-	$c = floor($paginationLength / 2) - 1;
-	if ($currentPageNum <= $c) {
-		$from = 1;
-	} elseif ($currentPageNum + $c >= $countPages) {
-		$from = $countPages - $paginationLength + 1;
-	} else {
-		$from = $currentPageNum - $c;
-	}
-    }
-    $links = array(); 
-    $pagination = array_keys(array_fill($from, $paginationLength, ''));
-    
-    if (count($pagination) == $paginationLength && $ellipsisLength) {
-        foreach ($pagination as $k => $pageNumber) {
-            if ($currentPageNum + $ellipsisLength < $countPages && $paginationLength - $ellipsisLength < $k + 2 && $paginationLength - 1 > $k) {
-                if ($paginationLength - 2 == $k) {
-                    array_push($links, call_user_func_array($callback, array($pageNumber, '...')));
-                }
+function _spa_pagination($countPages, $currentPageNum, $paginationLength = 8, $ellipsisLength = 2) {
+    $pagination = array();
+    if ($countPages > 1) {
+        $maxPaginationLength = $paginationLength;
+        if ($countPages <= $paginationLength) {
+            $paginationLength = $countPages;
+            $from = 1;
+        } else {
+            $c = floor($paginationLength / 2) - 1;
+            if ($currentPageNum <= $c) {
+                $from = 1;
+            } elseif ($currentPageNum + $c >= $countPages) {
+                $from = $countPages - $paginationLength + 1;
             } else {
-                array_push($links, call_user_func_array($callback, array($pageNumber, $pageNumber)));
+                $from = $currentPageNum - $c;
             }
         }
-    } else {
-        foreach ($pagination as $pageNumber) {
-            array_push($links, call_user_func_array($callback, array($pageNumber, $pageNumber)));
+
+        $arr = array_keys(array_fill($from, $paginationLength, ''));
+
+        if (count($arr) == $paginationLength && $ellipsisLength) {
+            $pagination['array'] = array();
+            foreach ($arr as $k => $pageNumber) {
+                if ($currentPageNum + $ellipsisLength < $countPages && $paginationLength - $ellipsisLength < $k + 2 && $paginationLength - 1 > $k) {
+                    if ($paginationLength - 2 == $k) {
+                        $pagination['array'][$pageNumber] = '...';
+                    }
+                } else {
+                    $pagination['array'][$pageNumber] = $pageNumber;
+                }
+            }
+        } else {
+            foreach ($arr as $pageNumber) {
+                $pagination['array'][$pageNumber] = $pageNumber;
+            }
+        }
+        if (count($pagination) > $maxPaginationLength - $ellipsisLength) {
+            $pagination = array_slice($pagination, -($paginationLength - $ellipsisLength + 1));
+        }
+        if (count($pagination['array']) > 1) {
+            $pagination['first'] = 1;
+            $pagination['last'] = $countPages;
+        } else {
+            $pagination = array();
         }
     }
-    $links = array_slice($links, -($paginationLength - $ellipsisLength + 1));
-    return $links;
+    return $pagination;
+}
+
+function spa_pagination($countPages, $currentPageNum, $paginationLength = 8, $ellipsisLength = 2) {
+    $pagination = array();
+    if ($countPages > 1) {
+        $maxPaginationLength = $paginationLength;
+        if ($countPages <= $paginationLength) {
+            $paginationLength = $countPages;
+            $from = 1;
+        } else {
+            $c = floor($paginationLength / 2) - 1;
+            if ($currentPageNum <= $c) {
+                $from = 1;
+            } elseif ($currentPageNum + $c >= $countPages) {
+                $from = $countPages - $paginationLength + 1;
+            } else {
+                $from = $currentPageNum - $c;
+            }
+        }
+
+        $arr = array_keys(array_fill($from, $paginationLength, ''));
+
+        if (count($arr) == $paginationLength && $ellipsisLength) {
+            foreach ($arr as $k => $pageNumber) {
+                if (count($pagination) > $maxPaginationLength - 4
+                        &&  $currentPageNum + $ellipsisLength < $countPages 
+                        && $paginationLength - $ellipsisLength < $k + 2 
+                        && $paginationLength - 1 > $k) {
+                    if ($paginationLength - 2 == $k) {
+                        $pagination[$pageNumber] = '...';
+                    }
+                } else {
+                    $pagination[$pageNumber] = $pageNumber;
+                }
+            }
+        } else {
+            foreach ($arr as $pageNumber) {
+                $pagination[$pageNumber] = $pageNumber;
+            }
+        }
+        //if (count($pagination) > $maxPaginationLength - $ellipsisLength) {
+            //$pagination = array_slice($pagination, -($paginationLength - $ellipsisLength + 1), null, true);
+        //}
+        if (count($pagination) == 1) {
+            $pagination = array();
+        }
+    }
+    return $pagination;
 }

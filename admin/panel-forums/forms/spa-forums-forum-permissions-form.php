@@ -22,9 +22,9 @@ function spa_forums_view_forums_permission_form($forum_id)
 				$perms = sp_get_forum_permissions($forum->forum_id);
 				if ($perms) {
 ?>
-					<table class="sfmaintable" style="padding:5px;border-spacing:3px;border-collapse:separate;">
+					<table class="sfmaintable sf-forum-perms-table">
 						<tr>
-							<td style="text-align:center" colspan="3"><strong><?php echo SP()->primitives->admin_text('Current permission set for forum').' '.SP()->displayFilters->title($forum->forum_name); ?></strong></td>
+							<td class="sf-text-al-center" colspan="3"><strong><?php echo SP()->primitives->admin_text('Current permission set for forum').' '.SP()->displayFilters->title($forum->forum_name); ?></strong></td>
 						</tr>
 <?php
 					foreach ($perms as $perm) {
@@ -33,7 +33,7 @@ function spa_forums_view_forums_permission_form($forum_id)
 ?>
 						<tr>
 							<td class="sflabel"><?php echo SP()->displayFilters->title($usergroup->usergroup_name); ?> => <?php echo SP()->displayFilters->title($role->role_name); ?></td>
-							<td style="text-align:center">
+							<td class="sf-text-al-center" >
 <?php
                                 $base = wp_nonce_url(SPAJAXURL.'forums-loader', 'forums-loader');
 								$target = "curperm-$perm->permission_id";
@@ -50,7 +50,7 @@ function spa_forums_view_forums_permission_form($forum_id)
 						</tr>
 					<?php } ?>
 				<?php } else { ?>
-					<table class="sfmaintable" style="padding:5px;border-spacing:3px;border-collapse:separate;">
+					<table class="sfmaintable sf-forum-perms-table">
 						<tr>
 							<td>
 								<?php SP()->primitives->admin_etext('No permission sets for any usergroup'); ?>
@@ -58,7 +58,7 @@ function spa_forums_view_forums_permission_form($forum_id)
 						</tr>
 				<?php } ?>
 			   			<tr>
-			   				<td colspan="3" style="text-align:center">
+			   				<td colspan="3" class="sf-text-al-center" >
 <?php
                                 $base = wp_nonce_url(SPAJAXURL.'forums-loader', 'forums-loader');
 								$target = "newperm-$forum->forum_id";

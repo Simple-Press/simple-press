@@ -41,34 +41,29 @@ function spa_paint_avatar_pool() {
 	}
 
 	# start the table display
-	$out.= '<table class="wp-list-table widefat"><tr>';
-	$out.= '<th style="width:30%;text-align:center">'.SP()->primitives->admin_text('Avatar').'</th>';
-	$out.= '<th style="width:50%;text-align:center">'.SP()->primitives->admin_text('Filename').'</th>';
-	$out.= '<th style="text-align:center">'.SP()->primitives->admin_text('Remove').'</th>';
-	$out.= '</tr>';
-
-	$out.= '<tr><td colspan="3">';
-	$out.= '<div id="sf-avatar-pool">';
+	$out.= '<table class="widefat sf-table-small sf-table-mobile"><thead><tr>';
+	$out.= '<th>'.SP()->primitives->admin_text('Avatar').'</th>';
+	$out.= '<th>'.SP()->primitives->admin_text('Filename').'</th>';
+	$out.= '<th>'.SP()->primitives->admin_text('Remove').'</th>';
+	$out.= '</tr></thead>';
+	$out.= '<tbody>';
 	while (false !== ($file = readdir($dlist))) {
 		if ($file != "." && $file != "..") {
-			$out.= '<table style="width:100%">';
 			$out.= '<tr>';
 //			ashow(SPAVATARPOOLURL);
 //			ashow($file);
-			$out.= '<td style="text-align:center;width:30%" class="spWFBorder"><img class="sfavatarpool" src="'.esc_url(SPAVATARPOOLURL.$file).'" alt="" /></td>';
-			$out.= '<td style="text-align:center;width:50%" class="spWFBorder sflabel">';
+			$out.= '<td class="spWFBorder"><div class="sf-avatar"><img class="sfavatarpool" src="'.esc_url(SPAVATARPOOLURL.$file).'" alt="" /></div></td>';
+			$out.= '<td class="spWFBorder sflabel">';
 			$out.= $file;
 			$out.= '</td>';
-			$out.= '<td style="text-align:center" class="spWFBorder">';
+			$out.= '<td class="spWFBorder"><div class="sf-item-controls">';
 			$site = esc_url(wp_nonce_url(SPAJAXURL."profiles&amp;targetaction=delavatar&amp;file=$file", 'profiles'));
 			$out.= '<span title="'.SP()->primitives->admin_text('Delete Avatar').'" class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadpool"></span>';
-			$out.= '</td>';
+			$out.= '</div></td>';
 			$out.= '</tr>';
-			$out.= '</table>';
 		}
 	}
-	$out.= '</div>';
-	$out.= '</td></tr></table>';
+	$out.= '</tbody></table>';
 	closedir($dlist);
 
 	echo $out;
@@ -96,12 +91,11 @@ function spa_paint_avatar_defaults() {
 			$border = (in_array($file, $def) ? '2px solid red' : '2px solid lightgray');
 
 			$out.= '<div class="av-file" style="text-align:left;border:'.$border.';margin:5px;padding:6px;float:left;">';
-
-				$out.= '<img src="'.esc_url(SPAVATARURL.'defaults/'.$file).'" alt="" />';
-
+				$out.= '<div class="sf-form-row">';
+				$out.= '<div class="sf-avatar"><img src="'.esc_url(SPAVATARURL.'defaults/'.$file).'" alt="" /></div>';
 				$site = esc_url(wp_nonce_url(SPAJAXURL."profiles&amp;targetaction=deldefault&amp;file=$file", 'profiles'));
-				$out.= '<span class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadav"></span>';
-				$out.= '<div class="clearboth"></div>';
+				$out.= '<span class="sf-icon sf-delete spDeleteRowReload sf-pull-right" data-url="'.$site.'" data-reload="sfreloadav"></span>';
+				$out.= '</div>';
 
 				$fileid = str_replace('.', 'z1z2z3', $file);
 				$checked = ($def['admin']==$file) ? ' checked="checked" ' : '';
