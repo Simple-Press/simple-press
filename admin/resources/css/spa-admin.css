@@ -1735,6 +1735,27 @@ $Rev:2099 $
     display: none;
 }
 
+
+#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav {
+        display: initial;
+}
+
+
+#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .tablenav-pages {
+        display: none;
+}
+
+
+#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions select {
+        width: auto;
+        margin: 0;
+}
+
+#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions {
+        margin: 13px 0;
+}
+
+
 #sfmaincontainer .sf-panel-body-top-right .sf-input-group,
 #sfmaincontainer .sf-panel-body-top-right .search-box {
     float: left;

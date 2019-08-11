@@ -102,7 +102,7 @@
 			$('#sfmaincontainer').off('click', '.spLoadAjax');
 			$('#sfmaincontainer').on('click', '.spLoadAjax', function() {
 				var mydata = $(this).data();
-				spj.loadAjax(mydata.url, mydata.target, mydata.img);
+				spj.loadAjax(mydata.url, mydata.target, mydata.img, mydata );
 			});
 		}
 	};
