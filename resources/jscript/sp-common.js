@@ -116,6 +116,11 @@
 			if (startNum < totalNum) {
 				spj.batch(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum);
 			} else {
+                                
+                                if( spj[thisFormID+'_Def'] !== undefined ) {
+                                        spj[thisFormID+'_Def'].resolve(a, b);
+                                }
+                                
 				$("#progressbar").hide();
 				$('#' + target).show();
 				$('#' + target).html(endMessage);

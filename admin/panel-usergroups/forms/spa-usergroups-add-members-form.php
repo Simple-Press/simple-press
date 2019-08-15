@@ -37,7 +37,7 @@ function spa_usergroups_add_members_form($usergroup_id) {
                       '<?php echo $target; ?>',
                       '<?php echo $smessage; ?>',
                       '<?php echo($emessage); ?>',
-                      0, 50, '#amid<?php echo $usergroup_id; ?>');">
+                      0, 50, '#amid<?php echo $usergroup_id; ?>', 'add');">
         <?php
         spa_paint_open_nohead_tab(true, '');
         echo sp_create_nonce('forum-adminform_membernew');

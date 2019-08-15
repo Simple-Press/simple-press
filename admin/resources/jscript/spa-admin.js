@@ -319,13 +319,46 @@
 		});
 	};
 
-	spj.addDelMembers = function(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, source) {
+	spj.addDelMembers = function(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, source, type ) {
 		var totalNum = 0;
 		$(source + ' option').each(function(i) {
 			$(this).prop('selected');
 			totalNum++;
 		});
-		spj.batch(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum);
+                
+                var groupid = '';
+                
+                if( $( '#' + thisFormID + ' input[name=usergroupid]').length === 1 ) {
+                        groupid = $( '#' + thisFormID + ' input[name=usergroupid]').val();
+                } else {
+                        groupid = $( '#' + thisFormID + ' input[name=usergroup_id]').val();
+                }
+                
+                var btn = $('input#'+type+groupid)
+                var image = btn.data('img');
+                
+                if( image ) {
+                        var load_img = $('<img src="' + image + 'sp_WaitBox.gif' + '" />');
+                        $( btn.data('target') ).prepend(load_img);
+                }
+                
+                spj[thisFormID+'_Def'] = $.Deferred();
+                
+                
+                $.when( spj[thisFormID+'_Def'] )
+                .then( function(a, b) {
+                        
+                        var mydata = btn.data();
+                        var ajaxURL = mydata.url + '&loadform=' + mydata.form + '&id=' + mydata.id;
+                        
+                        $(mydata.target).load(ajaxURL, function(c, d) {
+				$('#sfmaincontainer').trigger('adminformloaded');
+			});
+                } );
+                
+                
+                spj.batch(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum);
+                
 		$(source + ' option').remove();
 	};
 

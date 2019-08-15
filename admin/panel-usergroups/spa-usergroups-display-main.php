@@ -277,7 +277,8 @@ function spa_members_not_belonging_to_any_usergroup_tab() {
                             , '<?php echo $emessage; ?>'
                             , 0
                             , 50
-                            , '#dmid0'
+                            , '#dmid0',
+							''
                             );
 
                     $('#sfmsgspot').fadeOut(6000);
