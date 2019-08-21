@@ -273,7 +273,7 @@ function spa_paint_rankings_table($rankings) {
                     <td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>' class="sf-Left">
                         <?php echo spa_get_saved_icon_html($ranks['badge'][$x]) ?>
                     </td>
-                    <td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>' class="sf-Left">
+                    <td data-label='' class="sf-Left">
                         <span class="sf-item-controls">
                             <span class="sf-icon-button sf-small sf-little sf-edit-item"><span class="sf-icon sf-edit"></span></span>
                             <?php $site = wp_nonce_url(SPAJAXURL . 'components&amp;targetaction=del_rank&amp;key=' . $ranks['id'][$x], 'components'); ?>

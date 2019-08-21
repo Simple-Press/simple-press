@@ -139,7 +139,7 @@ function spa_users_members_form() {
 										//echo "<div style='max-width:16px;'>".get_avatar($rec['user_id'],  16)."</div>";
 										$avatarClass = "sf-Avatar";
 										$imgClass    = "sf-imgClass";
-										$avatarSize  = 20;
+										$avatarSize  = 40;
 										echo "<style>.sf-Avatar,.sf-imgClass{border-radius: 50%;}</style>";
 										echo sp_UserAvatar( "tagClass=$avatarClass&size=$avatarSize&imgClass=$imgClass&link=none&context=user&echo=0", $rec['user_id'] );
 										break;
