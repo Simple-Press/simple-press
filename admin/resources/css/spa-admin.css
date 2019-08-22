@@ -939,6 +939,7 @@ $Rev:2099 $
     height: 40px;
     padding: 11px 17px;
     min-width: 80px;
+    font-size: 12px;
 }
 
 #sf-root-wrap .sf-full-form .sf-icon-button {

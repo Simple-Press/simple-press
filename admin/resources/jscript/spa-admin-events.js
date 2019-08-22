@@ -250,10 +250,31 @@
 				var mydata = $(this).data();
 				spj.filterMultiSelectList(mydata.url, mydata.uid, mydata.image);
 			});
-                        $('#sfmaincontainer').off('blur', '.sf-filter-auto [type="search"]');
-			$('#sfmaincontainer').on('blur', '.sf-filter-auto [type="search"]', function() {
-				$(this).closest('.sf-filter-auto').find('.spFilterList').click();
-			});
+                        
+                        
+                        $("#sfmaincontainer").off('keydown', '.sf-filter-auto [type="search"]');
+                        
+                        $("#sfmaincontainer").on('keydown', '.sf-filter-auto [type="search"]' ,function (e) {
+                                
+                                if (e.keyCode === 13) {
+                                        e.preventDefault();
+                                        return false;
+                               }
+                                
+                        });
+                        
+                        
+                        $("#sfmaincontainer").off('keyup', '.sf-filter-auto [type="search"]');
+                        
+                        $("#sfmaincontainer").on('keyup', '.sf-filter-auto [type="search"]' ,function (e) {
+                                e.preventDefault();
+                                if (e.keyCode === 13) {
+                                        $(this).closest('.sf-filter-auto').find('.spFilterList').click();
+                                }
+                                
+                                
+                        });
+                        
 		}
 	};
 
