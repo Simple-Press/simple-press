@@ -161,8 +161,8 @@ function spa_save_usergroups_map_settings() {
 	# check for changes in wp role usergroup assignments
 	if (isset($_POST['sfrole'])) {
 		$roles = array_keys($wp_roles->role_names);
-		$maproles = array_map('sanitize_text_field', array_unique($_POST['sfrole']));
-		$oldmaproles = array_map('sanitize_text_field', array_unique($_POST['sfoldrole']));
+		$maproles = array_map('sanitize_text_field', $_POST['sfrole']);
+		$oldmaproles = array_map('sanitize_text_field', $_POST['sfoldrole']);
 		foreach ($maproles as $index => $role) {
 			if ($oldmaproles[$index] != $role) SP()->meta->add('default usergroup', $roles[$index], SP()->filters->integer($role));
 		}
