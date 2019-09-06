@@ -102,6 +102,14 @@ function spa_ajax_toolbox_loader() {
 add_action('wp_ajax_toolbox-loader', 'spa_ajax_toolbox_loader');
 add_action('wp_ajax_nopriv_toolbox-loader', 'spa_ajax_toolbox_loader');
 
+
+function spa_ajax_promotions_loader() {
+	require SP_PLUGIN_DIR.'/admin/panel-promotions/ajax/spa-ajax-promotions-loader.php';
+}
+
+add_action('wp_ajax_promotions-loader', 'spa_ajax_promotions_loader');
+add_action('wp_ajax_nopriv_promotions-loader', 'spa_ajax_promotions_loader');
+
 function spa_ajax_license_check() {
 	
 	require SP_PLUGIN_DIR.'/admin/panel-toolbox/ajax/spa-ajax-license-check.php';

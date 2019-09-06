@@ -411,6 +411,20 @@ function spa_setup_admin_menu() {
 		true);
 	$sfactivepanels['toolbox'] = 11;
 
+	$forms = array(
+		SP()->primitives->admin_text('Promotions') => array(
+			'promotions-1' => ''));
+	$sfadminpanels[] = array(
+		SP()->primitives->admin_text('Promotions'),
+		'SPF Manage Promotions',
+		SP_FOLDER_NAME.'/admin/panel-promotions/spa-promotions.php',
+		$sfatooltips['promotions'],
+		'icon-promotions',
+		wp_nonce_url(SPAJAXURL.'promotions-loader', 'promotions-loader'),
+		$forms,
+		true);
+	$sfactivepanels['promotions'] = 12;
+
 	# allow plugins to alter the admin menus
 	$sfadminpanels = apply_filters('sf_admin_panels', $sfadminpanels);
 	$sfactivepanels = apply_filters('sf_admin_activepanels', $sfactivepanels);

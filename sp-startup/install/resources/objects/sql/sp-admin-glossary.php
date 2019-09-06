@@ -82,7 +82,8 @@ VALUES
 	(52,'Version'),
 	(53,'Housekeeping'),
 	(54,'Development'),
-	(55,'Cron');";
+	(55,'Cron'),
+	(56,'Promotions');";
 SP()->DB->execute($sql);
 
 # table sfadmintasks
