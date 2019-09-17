@@ -13,11 +13,8 @@ if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 function spa_plugins_list_form() {
 	?>
     <script>
-		console.log('p l');
         (function (spj, $, undefined) {
-			console.log('p l 2');
             $(document).ready(function () {
-				console.log('p l 3');
                 spj.loadAjaxForm('sppluginsform', 'sfreloadpl');
                 /* wp check all logic */
                 $('thead, tfoot').find('.check-column :checkbox').click(function (e) {
@@ -51,9 +48,6 @@ function spa_plugins_list_form() {
 				
 				
 				$('.column-more img').click(function (e) {
-				
-					console.log('clicked');
-
 					if ($(this).parent().find('.sp-plugin-more').css('display') === 'none') {
 						$(this).parent().find('.sp-plugin-more').css('display', 'block');
 					} else {
