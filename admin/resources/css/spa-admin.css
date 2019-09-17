@@ -1426,6 +1426,7 @@ $Rev:2099 $
     -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
+    margin-bottom: 20px;
     /*overflow: hidden;*/
 }
 #sfmaincontainer .sf-panel-body.sfform-panel-nohead {
@@ -1938,6 +1939,12 @@ $Rev:2099 $
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-popup .wp-picker-holder * {
     box-sizing: content-box;
 }
+
+#sfmaincontainer .sf-icon-picker-row .font-color-container {
+        margin-top: 10px;
+        margin-bottom: 10px;
+}
+
 /**
  < icon-picker
 */
@@ -3306,6 +3313,12 @@ body .spMobileTableData .row-actions > span {
 .sp-plugin-more{
     display: none;
     max-width: 300px;
+    position: absolute;
+    width: 100%;
+    right: 26px;
+    margin-top: 10px;
+    text-align: right;
+    
 }
 .sf-plugins-flt{
     width: 100%;
@@ -3588,4 +3601,16 @@ input.spSpecialRankShow, input.spSpecialRankForm {
         }
         
         
+}
+
+
+
+#sf-root-wrap .search-box {
+        margin-bottom: 20px;
+}
+
+#sf-root-wrap input[type=search] {
+        width: auto;
+        margin-top: 0 !important;
+        margin-right: 6px;
 }

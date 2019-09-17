@@ -13,8 +13,11 @@ if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 function spa_plugins_list_form() {
 	?>
     <script>
+		console.log('p l');
         (function (spj, $, undefined) {
+			console.log('p l 2');
             $(document).ready(function () {
+				console.log('p l 3');
                 spj.loadAjaxForm('sppluginsform', 'sfreloadpl');
                 /* wp check all logic */
                 $('thead, tfoot').find('.check-column :checkbox').click(function (e) {
@@ -45,15 +48,22 @@ function spa_plugins_list_form() {
                             return false;
                         });
                 });
+				
+				
+				$('.column-more img').click(function (e) {
+				
+					console.log('clicked');
+
+					if ($(this).parent().find('.sp-plugin-more').css('display') === 'none') {
+						$(this).parent().find('.sp-plugin-more').css('display', 'block');
+					} else {
+						$(this).parent().find('.sp-plugin-more').css('display', 'none');
+					}
+				});
+				
             });
 
-            $('.column-more img').click(function (e) {
-                if ($(this).parent().find('.sp-plugin-more').css('display') === 'none') {
-                    $(this).parent().find('.sp-plugin-more').css('display', 'block');
-                } else {
-                    $(this).parent().find('.sp-plugin-more').css('display', 'none');
-                }
-            });
+            
 
             function display_filtr() {
                 if ($('#sf-plugins-flt-b').css('display') === 'none') {
@@ -244,23 +254,6 @@ function spa_plugins_list_form() {
                         </div>
                         <span class="sf-action-button"><input id="doaction1" class="sf-action-button-b" type="submit" value="-&#8250;"/></span>
                     </div>
-                </div>
-
-                <div class="sf-form-row sf-showm">
-                    <div class="sf-select-wrap" style="width: 80%">
-                        <select id="ActionType" name="action1" class="wp-core-ui">
-                            <option selected="selected" value="-1"><?php echo SP()->primitives->admin_text( 'Bulk Actions' ); ?></option>
-                            <option value="activate-selected"><?php echo SP()->primitives->admin_text( 'Activate' ); ?></option>
-                            <option value="deactivate-selected"><?php echo SP()->primitives->admin_text( 'Deactivate' ); ?></option>
-							<?php if ( ! is_multisite() || is_super_admin() ) { ?>
-                                <option value="delete-selected"><?php echo SP()->primitives->admin_text( 'Uninstall' ); ?>
-                                </option>
-							<?php } ?>
-                        </select>
-                    </div>
-                    <span style="width: 20%;">
-                  <input id="doActionRight" type="submit" value="-&#8250;"/>
-              </span>
                 </div>
 
                 <div class="sf-panel-body-top-right sf-showm sf-width-100-per">
