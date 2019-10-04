@@ -235,6 +235,7 @@ function spa_themes_list_form() {
 		<div class="theme-browser rendered">
 			<div class="spThemeContainer">
 			<div id="current-theme" class="spTheme">
+				<div class="spThemeInner">
 <?php
         if (file_exists(SPTHEMEBASEDIR.$curTheme['theme'].'/styles/'.$curTheme['style'])) {
 ?>
@@ -387,6 +388,7 @@ function spa_themes_list_form() {
      		echo '<h4>'.SP()->primitives->admin_text('The current theme stylesheet').':<br /><br />'.SPTHEMEBASEDIR.$curTheme['theme'].'/styles/'.$curTheme['style'].'<br /><br />'.SP()->primitives->admin_text('cannot be found. Please correct or select a new theme for proper operation.').'</h4>';
         }
 ?>
+		</div>
 	</div>
 <?php
 	    	foreach ((array) $themes as $theme_file => $theme_data) {
@@ -413,6 +415,7 @@ function spa_themes_list_form() {
                 }
 ?>
 				<div class="spTheme">
+					<div class="spThemeInner">
 					<h3 class="theme-name"><?php echo $theme_name . ' '.$theme_version; ?></h3>
 					<img alt="" src="<?php echo $theme_image; ?>" />
 					<h4>
@@ -452,7 +455,8 @@ function spa_themes_list_form() {
 						if ($theme_overlays) {
 							# only show if more than one overlay
 							if(count($theme_overlays) > 1) {
-								echo SP()->primitives->admin_text('Select Overlay').': ';
+								//echo '<div class="sf-form-row">';
+								echo '<label>' . SP()->primitives->admin_text('Select Overlay').': ' . '</label>';
 								echo ' <select name="color-'.esc_attr($theme_file).'" style="margin-bottom:5px;">';
 								foreach ($theme_overlays as $theme_overlay) {
 									$theme_overlay = trim($theme_overlay);
@@ -460,7 +464,8 @@ function spa_themes_list_form() {
 									echo '<option'.$selected.' value="'.esc_attr($theme_overlay).'">'.esc_html($theme_overlay).'</option>';
 								}
 								echo '</select> ';
-								echo '<div class="clearboth"></div>';
+								//echo '</div>';
+								//echo '<div class="clearboth"></div>';
 							}
 						}
 ?>
@@ -531,9 +536,40 @@ function spa_themes_list_form() {
 					}
 
 				echo '</div>';
+				echo '</div>';
        		}
 			echo "</div>";
     	echo '</div>';
+		
+		
+		
+		
+		?>
+		
+		<script>
+			
+			(function($) {
+				$(function() {
+					
+					
+					//$('#sfmaincontainer').off('adminformloaded');
+//					$('#sfmaincontainer').on('adminformloaded', function() {
+//						
+//						
+//					});
+				});
+			
+			}(jQuery))
+			
+			
+		
+		</script>
+					
+		
+		<?php
+		
+		
+		
 
  	} else {
  		echo SP()->primitives->admin_text('No other available themes found');

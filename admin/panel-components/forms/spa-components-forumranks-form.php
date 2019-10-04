@@ -109,7 +109,6 @@ function spa_components_forumranks_form() {
         <div class="sf-panel-body-top">
             <div class="sf-panel-body-top-left">
                 <h4><?php echo SP()->primitives->admin_text('Standard Forum Ranks') ?></h4>
-                <span><?php echo SP()->primitives->admin_text('Design is not just what it looks like and feels like. Design is how it works.') ?></span>
             </div>
             <div class="sf-panel-body-top-right sf-mobile-btns">
                 <?php echo spa_paint_help('forum-ranks') ?>
@@ -143,7 +142,6 @@ function spa_components_forumranks_form() {
     <div class="sf-panel-body-top">
         <div class="sf-panel-body-top-left">
             <h4><?php echo SP()->primitives->admin_text('Forum Rank Badges') ?></h4>
-            <span><?php echo SP()->primitives->admin_text('Design is not just what it looks like and feels like. Design is how it works') ?>.</span>
         </div>
         <div class="sf-panel-body-top-right sf-mobile-btns">
             <?php echo spa_paint_help('badges-upload') ?>

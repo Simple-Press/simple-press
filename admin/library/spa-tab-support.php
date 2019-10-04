@@ -20,15 +20,30 @@ function spa_paint_options_init() {
 	$tab = 100;
 }
 
-function spa_paint_tab_head($tabname) {
-        $site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
+function spa_paint_tab_head( $tabname, $buttons = true ) {
+    $site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
 	$target = 'sfmaincontainer';
 	
 	echo "<div class='sf-panel-head'>";
-	echo "<div class='sf-buttons'>";
-	echo '<a class="sf-button" href="'.SP()->spPermalinks->get_url().'"><span class="sf-icon sf-go"></span>'.SP()->primitives->admin_text('Go To Forum').'</a>';
-	echo '<span class="sf-button spTroubleshoot" data-url="'.$site.'" data-target="'.$target.'"><span class="sf-icon sf-help"></span>'.SP()->primitives->admin_text('Help & Troubleshooting').'</span>';
-	echo "</div>";
+	
+	if( $buttons ) {
+	
+		echo "<div class='sf-buttons'>";
+		echo '<a class="sf-button" href="'.SP()->spPermalinks->get_url().'"><span class="sf-icon sf-go"></span>'.SP()->primitives->admin_text('Go To Forum').'</a>';
+		//echo '<span class="sf-button spTroubleshoot" data-url="'.$site.'" data-target="'.$target.'"><span class="sf-icon sf-help"></span>'.SP()->primitives->admin_text('Help & Troubleshooting').'</span>';
+		echo '<a class="sf-button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>';
+	
+		$site = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
+		$title = SP()->primitives->admin_text('About Simple:Press');
+	
+		echo '<a class="sf-button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>';
+	
+		echo '<a class="sf-button" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Simple:Press Online Documentation').'</a>';
+	
+		echo "</div>";
+	
+	}
+	
 	echo "<h3>$tabname</h3>";
 	echo "</div>\n";
 }
@@ -48,8 +63,8 @@ function spa_paint_open_panel_body($class = '') {
 # spa_paint_open_tab()
 # Creates the containing block around a form or main section
 # ------------------------------------------------------------------
-function spa_paint_open_tab($tabname, $full=false, $info = "") {
-	spa_paint_tab_head($tabname);
+function spa_paint_open_tab( $tabname, $full=false, $info = "", $buttons = true ) {
+	spa_paint_tab_head( $tabname, $buttons );
 	spa_paint_open_panel_body();
 	echo $info;
 	if ($full) {
@@ -217,7 +232,7 @@ function spa_paint_wide_textarea($label, $name, $value, $submessage='', $xrows=1
 	echo "<div class='sf-form-row'>\n";
 	echo "<label class='sp-label'>\n";
 	echo "$label";
-	if (!empty($submessage)) echo "<small><strong>$submessage</strong></small>\n";
+	if (!empty($submessage)) echo "<br /><small><strong>$submessage</strong></small>\n";
 	echo '</label>';
 	echo "<textarea placeholder='$placeholder' rows='$xrows' cols='80' class='wp-core-ui sp-textarea' tabindex='$tab' name='$name'>".esc_attr($value)."</textarea>\n";
 	//echo '<div class="clearboth"></div>';
