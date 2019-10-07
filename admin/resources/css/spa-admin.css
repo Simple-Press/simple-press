@@ -3354,7 +3354,7 @@ body .spMobileTableData .row-actions > span {
 }
 .sp-plugin-more{
     display: none;
-    max-width: 300px;
+/*    max-width: 300px;*/
     position: absolute;
     width: 100%;
     right: 26px;
@@ -3362,6 +3362,11 @@ body .spMobileTableData .row-actions > span {
     text-align: right;
     
 }
+
+.plugin-description-author {
+        margin-top: 10px;
+}
+
 .sf-plugins-flt{
     width: 100%;
     height: 40px;
