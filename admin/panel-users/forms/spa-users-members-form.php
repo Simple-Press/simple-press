@@ -25,7 +25,7 @@ function spa_users_members_form() {
 	}
 
 	class SP_Members_Table extends SP_List_Table {
-		public $per_page = 2;
+		public $per_page = 25;
 		public $current_page = 1;
 		public $count_pages = 0;
 
@@ -139,7 +139,7 @@ function spa_users_members_form() {
 										//echo "<div style='max-width:16px;'>".get_avatar($rec['user_id'],  16)."</div>";
 										$avatarClass = "sf-Avatar";
 										$imgClass    = "sf-imgClass";
-										$avatarSize  = 20;
+										$avatarSize  = 40;
 										echo "<style>.sf-Avatar,.sf-imgClass{border-radius: 50%;}</style>";
 										echo sp_UserAvatar( "tagClass=$avatarClass&size=$avatarSize&imgClass=$imgClass&link=none&context=user&echo=0", $rec['user_id'] );
 										break;
@@ -441,11 +441,11 @@ function spa_users_members_form() {
                            placeholder="<?php echo SP()->primitives->admin_text( 'Search members' ) ?>"/>
                 </p>
                 <div class="sf-pt-15">
-					<? echo spa_paint_help( 'users-info', $adminhelpfile ); ?>
+					<?php echo spa_paint_help( 'users-info', $adminhelpfile ); ?>
                 </div>
             </div>
         </div>
-        <div class="sf-plugin-hide">
+        <div class="sf-plugin-hide sf-plugin-hide-users">
             <?php
             # display the members list table for desktop
             $membersTable->display();
@@ -471,24 +471,32 @@ function spa_users_members_form() {
         <div class="sf-pagination">
             <span class="sf-pagination-links">
                 <a class="sf-first-page spLoadAjax" href="javascript:void(0);"
-                   data-target=".sf-full-form"
-                   data-url="<?php echo wp_nonce_url( SPAJAXURL . "users&amp;ug_no=1&amp;page=1&amp;filter={$filter}", 'users' ) ?>"
+                   data-target=".sf-full-form" 
+				   data-after_cb="after_users_listing" 
+				   data-img="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>"
+                   data-url="<?php echo wp_nonce_url( SPAJAXURL . "users-loader&amp;loadform=member-info&amp;ug_no=1&amp;paged=1&amp;filter={$filter}", 'users-loader' ) ?>"
                 ></a>
                    <?php foreach ( $pagination as $n => $v ): ?>
                        <a class="spLoadAjax<?php echo $pageNum == $n ? ' sf-current-page' : '' ?>" href="javascript:void(0);"
-                          data-target=".sf-full-form"
-                          data-url="<?php echo wp_nonce_url( SPAJAXURL . "users&amp;ug_no=1&amp;page={$n}&amp;filter={$filter}", 'users' ) ?>"
+                          data-target=".sf-full-form" 
+						  data-after_cb="after_users_listing" 
+						  data-img="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>"
+                          data-url="<?php echo wp_nonce_url( SPAJAXURL . "users-loader&amp;loadform=member-info&amp;ug_no=1&amp;paged={$n}&amp;filter={$filter}", 'users-loader' ) ?>"
                        ><?php echo $v ?></a>
                    <?php endforeach ?>
                 <a class="sf-last-page spLoadAjax" href="javascript:void(0);"
-                   data-target=".sf-full-form"
-                   data-url="<?php echo wp_nonce_url( SPAJAXURL . "users&amp;ug_no=1&amp;page={$countPages}&amp;filter={$filter}", 'users' ) ?>"
+                   data-target=".sf-full-form" 
+				   data-after_cb="after_users_listing" 
+				   data-img="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>"
+                   data-url="<?php echo wp_nonce_url( SPAJAXURL . "users-loader&amp;loadform=member-info&amp;ug_no=1&amp;paged={$countPages}&amp;filter={$filter}", 'users-loader' ) ?>"
                 ></a>
             </span>
         </div>
 	<?php endif ?>
 
     <script>
+		
+		spj.after_users_listing();
 
         ///////////////////////////////////////////////////////////////////////////////
         // More Column

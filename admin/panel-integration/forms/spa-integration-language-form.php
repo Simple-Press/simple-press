@@ -104,13 +104,13 @@ function spa_integration_language_form() {
 	$site = wp_nonce_url(SPAJAXURL.'integration-langs', 'integration-langs');
 	$x = 0;
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('Language Translations'), true);
+	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('Language Translations'), true, '', false );
 		spa_paint_open_panel();
 			echo '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Translation file installed').'"></span>'
 				.SP()->primitives->admin_text('Translation file installed');
-			echo '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Translation install failed').'"></span>'
+			echo '&nbsp;&nbsp;&nbsp;&nbsp;<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Translation install failed').'"></span>'
 				.SP()->primitives->admin_text('Install failed - or there is no available translation');
-
+				echo '<br /><br /><br />';
 # Core - front and admin --------------------------------------
 
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Core Simple:Press'), false);

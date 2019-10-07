@@ -109,7 +109,6 @@ function spa_components_forumranks_form() {
         <div class="sf-panel-body-top">
             <div class="sf-panel-body-top-left">
                 <h4><?php echo SP()->primitives->admin_text('Standard Forum Ranks') ?></h4>
-                <span><?php echo SP()->primitives->admin_text('Design is not just what it looks like and feels like. Design is how it works.') ?></span>
             </div>
             <div class="sf-panel-body-top-right sf-mobile-btns">
                 <?php echo spa_paint_help('forum-ranks') ?>
@@ -143,7 +142,6 @@ function spa_components_forumranks_form() {
     <div class="sf-panel-body-top">
         <div class="sf-panel-body-top-left">
             <h4><?php echo SP()->primitives->admin_text('Forum Rank Badges') ?></h4>
-            <span><?php echo SP()->primitives->admin_text('Design is not just what it looks like and feels like. Design is how it works') ?>.</span>
         </div>
         <div class="sf-panel-body-top-right sf-mobile-btns">
             <?php echo spa_paint_help('badges-upload') ?>
@@ -273,7 +271,7 @@ function spa_paint_rankings_table($rankings) {
                     <td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>' class="sf-Left">
                         <?php echo spa_get_saved_icon_html($ranks['badge'][$x]) ?>
                     </td>
-                    <td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>' class="sf-Left">
+                    <td data-label='' class="sf-Left">
                         <span class="sf-item-controls">
                             <span class="sf-icon-button sf-small sf-little sf-edit-item"><span class="sf-icon sf-edit"></span></span>
                             <?php $site = wp_nonce_url(SPAJAXURL . 'components&amp;targetaction=del_rank&amp;key=' . $ranks['id'][$x], 'components'); ?>

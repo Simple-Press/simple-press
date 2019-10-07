@@ -283,5 +283,28 @@
             });
         });
     }
+    
+    
+    
+        spj.resizeThemeItems = function(){
+                var container = $('.spThemeContainer');
+                if( container.length !== 1 ) {
+                        return;
+                }
+                
+                $('.spTheme').each( function() {
+
+                        var item = this;
+                        var rowHeight = parseInt(container.css('grid-auto-rows'));
+                        var rowGap = parseInt(container.css('grid-row-gap'));
+
+                        rowSpan = Math.ceil(( $(item).find('.spThemeInner').height() + rowGap ) / ( rowHeight + rowGap ) );
+                        $(item).css( 'gridRowEnd', "span " + rowSpan );
+
+                });
+
+        }
+
+        
 
 }(window.spj = window.spj || {}, jQuery));

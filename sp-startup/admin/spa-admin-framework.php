@@ -191,31 +191,8 @@ function spa_panel_header() {
 	echo '<h1>'.SP()->primitives->admin_text('Simple:Press Administration').'</h1>';
 	echo '<div class="clearboth"></div>';
 
-	echo '<table class="sfamenutable" style="width:100%">';
-	echo '<tr><td style="text-align:right">';
-
-	$site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
-	$target = 'sfmaincontainer';
-	echo '<input style="width: 175px; font-weight:bold;" type="button" id="spHelp" class="sf-button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help & Troubleshooting').'" data-url="'.$site.'" data-target="'.$target.'" />&nbsp;&nbsp;&nbsp;';
-
-	$site = wp_nonce_url(SPAJAXURL.'adminsearch', 'adminsearch');
-	$target = 'sfmaincontainer';
-
-	echo '<img style="margin: -1px 0 0 20px;float:left;" src="'.SPADMINIMAGES.'sp_Help32.png" alt="" />';
-	echo '<input style="margin-left: 5px;font-weight:bold;" type="button" id="spSearch" class="sf-button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('What do you need to do?').'" data-url="'.$site.'" data-target="'.$target.'" />&nbsp;&nbsp;&nbsp;';
-
-	echo '<a class="sf-button" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Simple:Press Online Documentation').'</a>&nbsp;&nbsp;&nbsp;';
-
-	$site = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
-	$title = SP()->primitives->admin_text('About Simple:Press');
-	echo '<a class="sf-button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>&nbsp;&nbsp;&nbsp;';
 	
-	echo '<a class="sf-button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>&nbsp;&nbsp;&nbsp;';	
-	
-	echo '<a class="sf-button" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
-
-	echo '</td>';
-	echo '</tr></table></div><div class="clearboth"></div>';
+	echo '</div><div class="clearboth"></div>';
 
 	# define container for the dialog box popup
 	echo '<div id="dialogcontainer" style="display:none;"></div>';
@@ -358,6 +335,24 @@ function spa_render_sidemenu() {
 		echo '<a class="sf-button-secondary" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
 		echo '</div>'."\n";
 	} else {
+		
+		echo '<table class="sfamenutable" style="float : right;">';
+		echo '<tr>';
+
+		$site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
+		$target = 'sfmaincontainer';
+		echo '<td style="text-align:right"><input style="font-weight:bold;" type="button" id="spHelp" class="sf-button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help & Troubleshooting').'" data-url="'.$site.'" data-target="'.$target.'" /></td>';
+
+		$site = wp_nonce_url(SPAJAXURL.'adminsearch', 'adminsearch');
+		$target = 'sfmaincontainer';
+
+		echo '<td style="text-align:right"><input style="margin-left: 5px;margin-right:0; font-weight:bold;" type="button" id="spSearch" class="sf-button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('What do you need to do?').'" data-url="'.$site.'" data-target="'.$target.'" /></td>';
+
+		echo '</tr></table>';
+		
+		echo '<div style="clear: both;float: none;"></div>';
+		
+		
 		echo '<div id="sfsidepanel">'."\n";
                 
                 echo '<span class="sf-tooggle-admin-menu">'."\n";

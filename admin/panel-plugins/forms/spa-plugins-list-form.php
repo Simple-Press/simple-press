@@ -45,15 +45,19 @@ function spa_plugins_list_form() {
                             return false;
                         });
                 });
+				
+				
+				$('.column-more img').click(function (e) {
+					if ($(this).parent().find('.sp-plugin-more').css('display') === 'none') {
+						$(this).parent().find('.sp-plugin-more').css('display', 'block');
+					} else {
+						$(this).parent().find('.sp-plugin-more').css('display', 'none');
+					}
+				});
+				
             });
 
-            $('.column-more img').click(function (e) {
-                if ($(this).parent().find('.sp-plugin-more').css('display') === 'none') {
-                    $(this).parent().find('.sp-plugin-more').css('display', 'block');
-                } else {
-                    $(this).parent().find('.sp-plugin-more').css('display', 'none');
-                }
-            });
+            
 
             function display_filtr() {
                 if ($('#sf-plugins-flt-b').css('display') === 'none') {
@@ -246,23 +250,6 @@ function spa_plugins_list_form() {
                     </div>
                 </div>
 
-                <div class="sf-form-row sf-showm">
-                    <div class="sf-select-wrap" style="width: 80%">
-                        <select id="ActionType" name="action1" class="wp-core-ui">
-                            <option selected="selected" value="-1"><?php echo SP()->primitives->admin_text( 'Bulk Actions' ); ?></option>
-                            <option value="activate-selected"><?php echo SP()->primitives->admin_text( 'Activate' ); ?></option>
-                            <option value="deactivate-selected"><?php echo SP()->primitives->admin_text( 'Deactivate' ); ?></option>
-							<?php if ( ! is_multisite() || is_super_admin() ) { ?>
-                                <option value="delete-selected"><?php echo SP()->primitives->admin_text( 'Uninstall' ); ?>
-                                </option>
-							<?php } ?>
-                        </select>
-                    </div>
-                    <span style="width: 20%;">
-                  <input id="doActionRight" type="submit" value="-&#8250;"/>
-              </span>
-                </div>
-
                 <div class="sf-panel-body-top-right sf-showm sf-width-100-per">
                     <p class="search-box">
                         <input type="search" style="width:100%" id="<?php echo esc_attr( 'search_id-search-input' ); ?>" name="s" value="<?php _admin_search_query(); ?>" form="plugin-filter"
@@ -332,8 +319,8 @@ function spa_plugins_list_form() {
 						$actionlink     = "<a href='$url' title='" . SP()->primitives->admin_text( 'Deactivate this Plugin' ) . "'>"
                                           . SP()->primitives->admin_text( 'Deactivate' ) . '</a>';
 						$actionlink_mob = $actionlink;
-//						$actionlink     = apply_filters( 'sph_plugins_active_buttons', $actionlink, $plugin_file );
-//						$actionlink .= sp_paint_plugin_tip( $plugin_data['Name'], $plugin_file );
+						//$actionlink     = apply_filters( 'sph_plugins_active_buttons', $actionlink, $plugin_file );
+						//$actionlink .= sp_paint_plugin_tip( $plugin_data['Name'], $plugin_file );
 						$rowClass   = 'active';
 						if ( $update ) {
 							$rowClass .= ' update';
@@ -401,22 +388,40 @@ function spa_plugins_list_form() {
                             <div class='manage-column column-description'>
 								<?php $mobile[ $thisId ]['description'] = $description; ?>
 								<?php echo $description; ?>
+									
+								<?php	
+									if ( ! empty( $plugin_data['Author'] ) ) {
+										$author = $plugin_data['Author'];
+
+										if ( ! empty( $plugin_data['AuthorURI'] ) ) {
+											$author = '<a href="' . esc_url( $plugin_data['AuthorURI'] ) . '" title="' . SP()->primitives->admin_text( 'Visit author homepage' ) . '">' . esc_html( $plugin_data['Author'] ) . '</a>';
+										}
+										echo '<div class="plugin-description-author">' . sprintf( SP()->primitives->admin_text( 'By %s' ), $author ) . '</div>';
+									}
+								
+								?>
+									
+									
+									
                             </div>
                             <div class='<?php echo $rowClass; ?> second plugin-version-author-uri'>
 
 								<?php $plugin_meta = array();
+								
+								
+								if ( $is_active ) {
+									$plugin_meta[] = sp_paint_plugin_tip( $plugin_data['Name'], $plugin_file );
+									
+									
+									
+									$plugin_meta = array_merge( $plugin_meta, sp_active_plugin_options( $plugin_file ) );
+									
+								}
 
 								if ( ! empty( $plugin_data['Version'] ) ) {
 									$plugin_version = sprintf( SP()->primitives->admin_text( '%s' ), $plugin_data['Version'] );
 								}
-								if ( ! empty( $plugin_data['Author'] ) ) {
-									$author = $plugin_data['Author'];
-
-									if ( ! empty( $plugin_data['AuthorURI'] ) ) {
-										$author = '<a href="' . esc_url( $plugin_data['AuthorURI'] ) . '" title="' . SP()->primitives->admin_text( 'Visit author homepage' ) . '">' . esc_html( $plugin_data['Author'] ) . '</a>';
-									}
-									$plugin_meta[] = sprintf( SP()->primitives->admin_text( 'By %s' ), $author );
-								}
+								
 								if ( ! empty( $plugin_data['PluginURI'] ) ) {
 									$plugin_meta[] = '<a href="' . esc_url( $plugin_data['PluginURI'] ) . '" title="' . SP()->primitives->admin_text( 'Visit plugin site' ) . '">' . esc_html( SP()->primitives->admin_text( 'Visit plugin site' ) ) . '</a>';
 								}
@@ -636,4 +641,30 @@ function sp_paint_plugin_tip( $name, $file ) {
 	$out    .= '<a class="spLinkHighlight spOpenDialog" data-site="' . $site . '" data-label="' . $htitle . '" data-width="400" data-height="0" data-align="center"><b>' . $atitle . '</b></a>';
 
 	return $out;
+}
+
+
+/**
+ * Return plugin related options except uninstall
+ * 
+ * @param string $plugin_file
+ */
+function sp_active_plugin_options( $plugin_file ) {
+	
+	$plugin_options  = explode('&nbsp;&nbsp;', apply_filters( 'sph_plugins_active_buttons', '', $plugin_file ) );
+									
+	$plugin_options = array_filter( $plugin_options );
+
+
+	foreach( $plugin_options as $po_id => $po_tag ) {
+
+		preg_match('~>\K[^<>]*(?=<)~', $po_tag, $match );
+
+		if( strtolower( $match[0] ) === 'uninstall' ) {
+			unset( $plugin_options[$po_id] );
+		}
+	}
+	
+	
+	return $plugin_options;
 }

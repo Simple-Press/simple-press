@@ -102,7 +102,7 @@
 			$('#sfmaincontainer').off('click', '.spLoadAjax');
 			$('#sfmaincontainer').on('click', '.spLoadAjax', function() {
 				var mydata = $(this).data();
-				spj.loadAjax(mydata.url, mydata.target, mydata.img);
+				spj.loadAjax(mydata.url, mydata.target, mydata.img, mydata );
 			});
 		}
 	};
@@ -250,10 +250,31 @@
 				var mydata = $(this).data();
 				spj.filterMultiSelectList(mydata.url, mydata.uid, mydata.image);
 			});
-                        $('#sfmaincontainer').off('blur', '.sf-filter-auto [type="search"]');
-			$('#sfmaincontainer').on('blur', '.sf-filter-auto [type="search"]', function() {
-				$(this).closest('.sf-filter-auto').find('.spFilterList').click();
-			});
+                        
+                        
+                        $("#sfmaincontainer").off('keydown', '.sf-filter-auto [type="search"]');
+                        
+                        $("#sfmaincontainer").on('keydown', '.sf-filter-auto [type="search"]' ,function (e) {
+                                
+                                if (e.keyCode === 13) {
+                                        e.preventDefault();
+                                        return false;
+                               }
+                                
+                        });
+                        
+                        
+                        $("#sfmaincontainer").off('keyup', '.sf-filter-auto [type="search"]');
+                        
+                        $("#sfmaincontainer").on('keyup', '.sf-filter-auto [type="search"]' ,function (e) {
+                                e.preventDefault();
+                                if (e.keyCode === 13) {
+                                        $(this).closest('.sf-filter-auto').find('.spFilterList').click();
+                                }
+                                
+                                
+                        });
+                        
 		}
 	};
 
@@ -378,6 +399,25 @@
 			});
 		}
 	};
+        
+        themesGrid = {
+                init: function() {
+                        var _this = this;
+                        setTimeout( function() {
+                                _this.setup();
+                        }, 100 )
+                },
+                
+                setup : function() {
+                        if( $('.spThemeContainer').length === 1 ) {
+                                spj.resizeThemeItems();
+                                
+                                window.addEventListener( 'resize', spj.resizeThemeItems );
+                        } else {
+                                window.removeEventListener( 'resize', spj.resizeThemeItems )
+                        }
+                }
+        };
 
 	/*****************************
 	 admin usegroups event handlers
@@ -548,6 +588,7 @@
 			profileAvatarUpdatePriorities.init();
 			themesDeleteConfirm.init();
 			themesUpload.init();
+                        themesGrid.init();
 			ugShowMembers.init();
 			setForumOptions.init();
 			setForumSequence.init();

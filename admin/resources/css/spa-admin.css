@@ -939,6 +939,7 @@ $Rev:2099 $
     height: 40px;
     padding: 11px 17px;
     min-width: 80px;
+    font-size: 12px;
 }
 
 #sf-root-wrap .sf-full-form .sf-icon-button {
@@ -1425,6 +1426,7 @@ $Rev:2099 $
     -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
+    margin-bottom: 20px;
     /*overflow: hidden;*/
 }
 #sfmaincontainer .sf-panel-body.sfform-panel-nohead {
@@ -1735,6 +1737,27 @@ $Rev:2099 $
     display: none;
 }
 
+
+#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav {
+        display: initial;
+}
+
+
+#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .tablenav-pages {
+        display: none;
+}
+
+
+#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions select {
+        width: auto;
+        margin: 0;
+}
+
+#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions {
+        margin: 13px 0;
+}
+
+
 #sfmaincontainer .sf-panel-body-top-right .sf-input-group,
 #sfmaincontainer .sf-panel-body-top-right .search-box {
     float: left;
@@ -1916,6 +1939,12 @@ $Rev:2099 $
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-popup .wp-picker-holder * {
     box-sizing: content-box;
 }
+
+#sfmaincontainer .sf-icon-picker-row .font-color-container {
+        margin-top: 10px;
+        margin-bottom: 10px;
+}
+
 /**
  < icon-picker
 */
@@ -2127,12 +2156,17 @@ $Rev:2099 $
     -webkit-border-radius: 0 4px 0 0;
     border-radius: 0 4px 0 0;
 }
-#sfmaincontainer table.widefat tbody tr {
+#sfmaincontainer table.widefat:not(.striped) tbody tr {
     background-color: #FFF;
 }
+
+#sfmaincontainer table.widefat:not(.striped) tbody tr td, 
+#sfmaincontainer table.widefat tbody tr th {
+        background-color: #FFF;
+}
+
 #sfmaincontainer table.widefat tbody tr td,
 #sfmaincontainer table.widefat tbody tr th {
-    background-color: #FFF;
     border-bottom: 1px solid #F0F0F0;
     padding-top: 31px;
     padding-bottom: 30px;
@@ -2325,15 +2359,25 @@ div[class^="collapsible-"] {
 #sfhousekeepingformblock .sf-button-primary {
     margin-top: 10px;
 }
+
+.spThemeContainer {
+    display: grid;
+    grid-gap: 20px;
+    grid-auto-rows: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+}
+
 .spThemeContainer .spTheme {
     display: block;
-    width: 32%;
+/*    width: 32%;*/
     float: left;
-    margin-left:2%;
+/*    margin-left:2%;*/
+/*    margin-bottom: 30px;*/
     background-color: white;
 }
 .spThemeContainer .spTheme > img {
     width: 100%;
+    margin-top: 10px;
 }
 .spThemeContainer .spTheme a {
     color: #00B9D0;
@@ -2341,13 +2385,36 @@ div[class^="collapsible-"] {
 .spThemeContainer .spTheme .action-links {
     padding-bottom: 10px;
 }
-.spThemeContainer .spTheme:nth-child(3n-2){
+
+.spThemeContainer #current-theme.spTheme .action-links {
+    border-top: #f0f0f0 solid 1px;
+}
+
+.spThemeContainer .spTheme .action-links input[type=submit] {
+        margin: 0 !important;
+}
+
+.spThemeContainer .spTheme .plugin-update-tr {
+    padding-bottom: 20px;
+}
+
+.spThemeContainer .spTheme .plugin-update-tr .update-message {
+        padding-left: 12px;
+}
+
+.spThemeContainer .spTheme .spThemeInner:nth-child(3n-2){
     margin-left:0%;
 }
-.spThemeContainer .spTheme > * {
-    padding-left: 10px;
-    padding-right: 10px;
+.spThemeContainer .spTheme .spThemeInner > * {
+    padding-left: 20px;
+    padding-right: 20px;
 }
+
+.spThemeContainer .spTheme .spThemeInner img {
+        width: 100%;
+        margin-top: 10px;
+}
+
 .spThemeContainer a {
     font-family: "Open Sans Regular";
 }
@@ -2355,16 +2422,20 @@ div[class^="collapsible-"] {
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 100%;
-    grid-gap: 10px;
+    grid-gap: 6px;
 }
-.spThemeContainer #current-theme .action-links form {
-    display: grid;
-    grid-template-columns: 1fr;
-    width: 100%;
-    grid-gap: 10px;
+
+.spThemeContainer .action-links form label {
+        margin-top: 28px;
 }
+
+.spThemeContainer .action-links form .action-links-buttons input {
+    margin: 0 !important;
+}
+
 .spThemeContainer #current-theme .action-links form .currentTheme {
     text-align: center;
+    grid-column : 2 span;
 }
 .spThemeContainer #current-theme .action-links form .currentTheme span{
     line-height: 51px;
@@ -2632,11 +2703,11 @@ div[class^="collapsible-"] {
 
 
 .spMobileTableData {
-    display: grid;
+/*    display: grid;
     width: 100%;
-    grid-template-columns: 1fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr 3fr 3fr 1fr;
+    grid-template-columns: 1fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr 3fr 3fr 1fr;*/
     color: #27476E;
-    font-family: "Open Sans Regular";
+    font-family: "Open Sans";
     background-color: white;
     padding: 25px 20px;
     align-items: center;
@@ -2685,6 +2756,7 @@ body .spMobileTableData .row-actions > span {
 }
 #sf-root-wrap #members-filter .check-column input[type=checkbox]{
     float: none;
+    margin-top: 0;
 }
 @media screen and ( max-width: 1350px ) {
     #sfmaincontainer .sf-panel-body .sf-half {
@@ -2696,9 +2768,9 @@ body .spMobileTableData .row-actions > span {
         padding: 0!important;
     }
     .spThemeContainer .spTheme {
-        width: 49%;
-        margin-left: 2%;
-        margin-bottom: 15px;
+/*        width: 49%;*/
+/*        margin-left: 2%;*/
+/*        margin-bottom: 15px;*/
     }
     .spThemeContainer .spTheme:nth-child(2n-1) {
         margin-left: 0%;
@@ -2998,11 +3070,21 @@ body .spMobileTableData .row-actions > span {
     #sfmaincontainer table.sf-table-small tbody tr th {
         padding: 20px;
     }
+    
+    #sfmaincontainer table.widefat thead tr {
+            display: none;
+    }
+    
     #sfmaincontainer table.widefat tbody tr {
         position: relative;
-        float: left;
+/*        float: left;*/
         width: 100%;
     }
+    
+    #sfmaincontainer table.widefat tbody td {
+            width: 100%;
+    }
+    
     #sfmaincontainer .sf-full-form .sf-icon-button.sf-small {
         background-color: #F9F9F9;
     }
@@ -3272,8 +3354,19 @@ body .spMobileTableData .row-actions > span {
 }
 .sp-plugin-more{
     display: none;
-    max-width: 300px;
+/*    max-width: 300px;*/
+    position: absolute;
+    width: 100%;
+    right: 26px;
+    margin-top: 10px;
+    text-align: right;
+    
 }
+
+.plugin-description-author {
+        margin-top: 10px;
+}
+
 .sf-plugins-flt{
     width: 100%;
     height: 40px;
@@ -3506,4 +3599,65 @@ body .spMobileTableDataUsers .row-actions > span {
   padding: 0px 30px 0px 20px;
   margin-bottom: 25%;
   margin-top: 25%;
+}
+
+
+
+
+input.spSpecialRankShow, input.spSpecialRankForm {
+        height: 36px !important;
+        padding: 10px 20px !important;
+        line-height: 16px !important;
+        font-size: 13px !important;
+}
+
+
+@media screen and (max-width: 782px) {
+        
+        
+        .sf-table-mobile tr:not(.inline-edit-row):not(.no-items) td:not(.column-primary)::before {
+                position: initial;
+                left: 10px;
+                display: block;
+                overflow: hidden;
+                width: 32%;
+                content: attr(data-label);
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                color: #85A2BC;
+                font-size: 13px;
+                line-height: 14px;
+                text-transform: uppercase;
+                margin-bottom: 12px;
+        }
+        
+        #sfmaincontainer table.widefat thead tr {
+                display: none;
+        }
+        
+        #sfmaincontainer table.widefat tbody tr:after {
+                content: " ";
+                display: block;
+                border-bottom: 1px solid #F0F0F0
+        }
+        
+        #sfmaincontainer table.widefat tbody td {
+                padding-top: 15px !important;
+                padding-bottom: 14px !important;
+                border-bottom: none !important;
+        }
+        
+        
+}
+
+
+
+#sf-root-wrap .search-box {
+        margin-bottom: 20px;
+}
+
+#sf-root-wrap input[type=search] {
+        width: auto;
+        margin-top: 0 !important;
+        margin-right: 6px;
 }

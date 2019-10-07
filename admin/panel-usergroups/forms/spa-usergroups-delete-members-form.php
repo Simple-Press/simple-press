@@ -38,7 +38,8 @@ function spa_usergroups_delete_members_form($usergroup_id) {
                       '<?php echo $target; ?>',
                       '<?php echo $smessage; ?>',
                       '<?php echo $emessage; ?>',
-                      0, 50, '#dmid<?php echo $usergroup_id; ?>'
+                      0, 50, '#dmid<?php echo $usergroup_id; ?>',
+					  'move'
                       );">
         <?php
         spa_paint_open_nohead_tab(true, '');

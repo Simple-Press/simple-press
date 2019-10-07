@@ -14,7 +14,7 @@ function spa_usergroups_usergroup_main() {
     $defaults = spa_get_mapping_data();
     ?><div id="sf-tab-usergroup-main"><?php
     spa_paint_open_tab(SP()->primitives->admin_text('Manage User Groups'), true);
-    spa_paint_open_fieldset(SP()->primitives->admin_text('User Groups'), true, '...');
+    spa_paint_open_fieldset(SP()->primitives->admin_text('User Groups'), true, 'manage-user-groups');
     ?>
 
         <?php
@@ -277,7 +277,8 @@ function spa_members_not_belonging_to_any_usergroup_tab() {
                             , '<?php echo $emessage; ?>'
                             , 0
                             , 50
-                            , '#dmid0'
+                            , '#dmid0',
+							''
                             );
 
                     $('#sfmsgspot').fadeOut(6000);
@@ -313,7 +314,7 @@ function spa_members_not_belonging_to_any_usergroup_tab() {
                            data-filter-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1", 'usergroups') ?>"
                            >
                 </p>
-                <?php echo spa_paint_help('...', '...') ?>
+                <?php echo spa_paint_help('manage-user-groups') ?>
             </div>
         </div>
         <div class="sf-not-belonging-to-any-usergroup">
