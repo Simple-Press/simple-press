@@ -774,3 +774,86 @@ function spa_pagination($countPages, $currentPageNum, $paginationLength = 8, $el
     }
     return $pagination;
 }
+
+
+/**
+ * Print pagination
+ * 
+ * @param array $link_args
+ * @param int $countPages
+ * @param int $currentPageNum
+ * @param int $paginationLength
+ * @param int $ellipsisLength
+ */
+function spa_print_pagination( $link_args, $countPages, $currentPageNum, $paginationLength = 8, $ellipsisLength = 2 ) {
+	
+	$pagination     = spa_pagination( $countPages, $currentPageNum, $paginationLength, $ellipsisLength ); ?>
+	
+	
+	<?php if ( $pagination ): 
+		
+		
+		$load_type = isset( $link_args['load_type'] ) ? $link_args['load_type'] : 'ajax';
+		
+	
+		$url = $link_args['url'];
+		$nonce_action = $link_args['nonce_action'] ? $link_args['nonce_action'] : '';
+		$url_data_param = isset( $link_args['url_data_param'] ) ? $link_args['url_data_param'] : 'url';
+	
+		$target = $link_args['target'] ? $link_args['target'] : '.sf-full-form';
+		$callback = $link_args['callback'] ? $link_args['callback'] : '';
+		$gif = $link_args['gif'] ? $link_args['gif'] : SPADMINIMAGES . 'sp_WaitBox.gif';
+		$link_callback = $link_args['link_callback'] ? $link_args['link_callback'] : '';
+		
+		
+		
+		$anchor_tag_attrs = array();
+		
+		$anchor_tag_attrs['href'] = '';
+		if( $load_type === 'ajax' ) {
+			$anchor_tag_attrs['target']		= 'data-target="'.$target.'"';
+			$anchor_tag_attrs['after_cb']	= 'data-after_cb="'.$callback.'"';
+			$anchor_tag_attrs['img']		= 'data-img="'.$gif.'"';
+		}
+		
+		$anchor_ajax_class = $load_type === 'ajax' ? 'spLoadAjax' : '';
+		
+		?>
+        <div class="sf-pagination">
+            <span class="sf-pagination-links">
+					
+				<?php
+				$a_url = wp_nonce_url( str_replace( '{page_num}', '1', $url ), $nonce_action );
+				$href = $load_type === 'ajax' ? 'javascript:void(0);' : $a_url;
+				
+				?>
+                <a class="sf-first-page <?php echo $anchor_ajax_class; ?>" 
+				   <?php echo implode( ' ', $anchor_tag_attrs ); ?> 
+				   data-url="<?php echo $a_url; ?>" 
+				   href="<?php echo $href; ?>"
+                ></a>
+                   <?php foreach ( $pagination as $n => $v ): 
+					   
+						$a_url = wp_nonce_url( str_replace( '{page_num}', $n, $url ), $nonce_action );
+						$href = $load_type === 'ajax' ? 'javascript:void(0);' : $a_url;
+					   ?>
+                       <a class="<?php echo $anchor_ajax_class; ?><?php echo $currentPageNum == $n ? ' sf-current-page' : '' ?>" 
+                          <?php echo implode( ' ', $anchor_tag_attrs ); ?>
+                          data-url="<?php echo $a_url; ?>" 
+						  href="<?php echo $href; ?>"
+                       ><?php echo $v ?></a>
+                   <?php endforeach;
+				   
+					$a_url = wp_nonce_url( str_replace( '{page_num}', $countPages, $url ), $nonce_action );
+					$href = $load_type === 'ajax' ? 'javascript:void(0);' : $a_url;
+				   
+				   ?>
+                <a class="sf-last-page <?php echo $anchor_ajax_class; ?>" 
+                   <?php echo implode( ' ', $anchor_tag_attrs ); ?>
+					data-url="<?php echo $a_url; ?>" 
+					href="<?php echo $href; ?>"
+                ></a>
+            </span>
+        </div>
+	<?php endif;
+}

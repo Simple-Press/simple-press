@@ -71,15 +71,15 @@ function spa_themes_tablet_form() {
 		# get update version info
 		$xml = sp_load_version_xml();
 
-		spa_paint_open_tab(SP()->primitives->admin_text('Available Themes').' - '.SP()->primitives->admin_text('Select Simple:Press Tablet Theme'), true);
+		spa_paint_open_tab(SP()->primitives->admin_text('Available Themes').' - '.SP()->primitives->admin_text('Select Simple:Press Tablet Theme'), true, '', false );
 		spa_paint_open_panel();
 		spa_paint_open_fieldset(SP()->primitives->admin_text('Tablet Theme Management'), true, 'themes');
 ?>
 		<h3><?php echo SP()->primitives->admin_text('Current Tablet Theme'); ?></h3>
 		<div class="theme-browser rendered">
 		<div class="spThemeContainer">
-		<div id="current-theme" class="spTheme">
-
+		<div id="current-theme" class="spTheme spThemeTablet">
+		<div class="spThemeInner">
 		<h3 class="theme-name"><?php echo $themes[$tabletTheme['theme']]['Name']; ?></h3>
 		<img src="<?php echo SPTHEMEBASEURL.$tabletTheme['theme'].'/'.$themes[$tabletTheme['theme']]['Screenshot']; ?>" alt="" />
 		<h4>
@@ -98,7 +98,7 @@ function spa_themes_tablet_form() {
 			}
 		}
 ?>
-		<p class="sf-description" style="padding: 0;">
+		<p class="sf-description">
 		<?php echo $themes[$tabletTheme['theme']]['Description']; ?>
 		</p>
 <?php
@@ -140,7 +140,7 @@ function spa_themes_tablet_form() {
 			# if only one overlay hide select controls
 			$style = (count($overlays) > 1) ? 'style="display:block"' : 'style="display:none"';
 			echo '<div '.$style.'>';
-			echo SP()->primitives->admin_text('Select Overlay').': ';
+			echo '<label>'.SP()->primitives->admin_text('Select Overlay').': '.'</label>';
 			echo '<select name="color-'.esc_attr($tabletTheme['theme']).'">';
 			foreach ($overlays as $overlay) {
 				$overlay = trim($overlay);
@@ -153,7 +153,7 @@ function spa_themes_tablet_form() {
 			echo '</div>';
 
 			if(current_theme_supports('sp-theme-customiser')) {
-				echo '<b>'.SP()->primitives->admin_text('Use the Customiser option in the Simple:Press Themes menu to customise your colours').'</b>';
+				echo '<div><b>'.SP()->primitives->admin_text('Use the Customiser option in the Simple:Press Themes menu to customise your colours').'</b></div>';
 			}
 		}
 
@@ -163,7 +163,7 @@ function spa_themes_tablet_form() {
 				if ($themes[$tabletTheme['theme']]['Name'] == $latest->name) {
 					if ((version_compare($latest->version, $themes[$tabletTheme['theme']]['Version'], '>') == 1)) {
 						echo '<br />';
-						echo '<p style="padding: 0;">';
+						echo '<p>';
 						echo '<strong>'.SP()->primitives->admin_text('There is an update for the').' '.$themes[$tabletTheme['theme']]['Name'].' '.SP()->primitives->admin_text('theme').'.</strong> ';
 						echo SP()->primitives->admin_text('Version').' '.$latest->version.' '.SP()->primitives->admin_text('is available').'. ';
 						echo SP()->primitives->admin_text('For details and to download please visit').' '.SPPLUGHOME.' '.SP()->primitives->admin_text('or').' '.SP()->primitives->admin_text('go to the').' ';
@@ -175,7 +175,7 @@ function spa_themes_tablet_form() {
 			}
 		}
 ?>
-		</div></div></div>
+		</div></div></div></div>
 
 		<br class="clear" />
 
@@ -206,7 +206,8 @@ function spa_themes_tablet_form() {
 					$theme_overlays = array_merge($theme_overlays, $parent_overlays);
 				}
 ?>
-				<div class="spTheme">
+				<div class="spTheme spThemeTablet">
+				<div class="spThemeInner">
 				<h3 class="theme-name"><?php echo $theme_name; ?></h3>
 				<img alt="" src="<?php echo $theme_image; ?>" />
 				<h4>
@@ -225,7 +226,7 @@ function spa_themes_tablet_form() {
 					}
 				}
 ?>
-				<p class="sf-description" style="padding: 0;">
+				<p class="sf-description">
 				<?php echo $theme_desc; ?>
 				</p>
 				<br>
@@ -246,7 +247,7 @@ function spa_themes_tablet_form() {
 				if ($theme_overlays) {
 					# only show if more than one overlay
 					if(count($theme_overlays) > 1) {
-						echo SP()->primitives->admin_text('Select Overlay').': ';
+						echo '<label>'.SP()->primitives->admin_text('Select Overlay').': '.'</label>';
 						echo ' <select name="color-'.esc_attr($theme_file).'" style="margin-bottom:5px;">';
 						foreach ($theme_overlays as $theme_overlay) {
 							$theme_overlay = trim($theme_overlay);
@@ -279,7 +280,7 @@ function spa_themes_tablet_form() {
 						}
 					}
 				}
-				echo '</div>';
+				echo '</div></div>';
 			}
 			echo '</div>';
 			echo '</div>';

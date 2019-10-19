@@ -163,7 +163,9 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 	
 	$button_id 	= $sp_addon_name;
 ?>	
-		<div class="plugin_title sp_addon_title"><?php echo $sp_item_name; ?></div>
+		<div class="plugin_title sp_addon_title">
+				<label class="sp-label-60"><?php echo $sp_item_name; ?></label>
+		</div>
 		
 		<form method="post" action="<?php echo $ajaxURL; ?>" class="<?php echo $classname; ?>" name="<?php echo $form_name; ?>">
 			

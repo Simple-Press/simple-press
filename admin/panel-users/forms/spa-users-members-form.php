@@ -429,7 +429,7 @@ function spa_users_members_form() {
 			?>
             <div class="sf-panel-body-top-right sf-plugin-hide">
                 <p class="search-box">
-                    <input type="search" id="<?php echo esc_attr( 'search_id' ); ?>" name="s" value="<?php _admin_search_query(); ?>" form="plugin-filter"
+                    <input type="search" id="<?php echo esc_attr( 'search_id' ); ?>" value="<?php _admin_search_query(); ?>" form="plugin-filter"
                            placeholder="<?php echo SP()->primitives->admin_text( 'Search members' ) ?>"/>
                 </p>
 				<?php echo spa_paint_help( 'users-info', $adminhelpfile ); ?>
@@ -437,13 +437,16 @@ function spa_users_members_form() {
 
             <div class="sf-panel-body-top-right sf-showm sf-width-100-per">
                 <p class="search-box">
-                    <input type="search" class="" id="<?php echo esc_attr( 'search_id' ); ?>" name="s" value="<?php _admin_search_query(); ?>" form="plugin-filter"
+                    <input type="search" class="" id="<?php echo esc_attr( 'search_id_mobile' ); ?>" value="<?php _admin_search_query(); ?>" form="plugin-filter"
                            placeholder="<?php echo SP()->primitives->admin_text( 'Search members' ) ?>"/>
                 </p>
                 <div class="sf-pt-15">
 					<?php echo spa_paint_help( 'users-info', $adminhelpfile ); ?>
                 </div>
             </div>
+				
+				
+			<input type="hidden" name="s" value="<?php _admin_search_query(); ?>" />
         </div>
         <div class="sf-plugin-hide sf-plugin-hide-users">
             <?php
@@ -495,6 +498,18 @@ function spa_users_members_form() {
 	<?php endif ?>
 
     <script>
+		
+		$('.search-box input[type="search"]').keyup( function(e) {
+			
+			if( e.which == 13 ) {
+				$('select[name^="action"]').val('-1');
+				
+				$('input[type=hidden][name=s]').val($(this).val());
+				$(this).closest('form').submit();
+			}
+			
+		});
+		
 		
 		spj.after_users_listing();
 

@@ -287,20 +287,50 @@
     
     
         spj.resizeThemeItems = function(){
-                var container = $('.spThemeContainer');
-                if( container.length !== 1 ) {
-                        return;
+                
+                
+                var rows = new Array();
+                
+                
+                var row = new Array();
+                $('.spThemeContainer .spTheme').each(function() {
+                    if($(this).prev().length > 0) {
+                        if($(this).position().top != $(this).prev().position().top) {
+                                rows.push(row);
+                                row = new Array();
+                        }
+                        row.push($(this));
+                    }
+                    else {
+                          row.push($(this));
+                    }
+                });
+                
+                if( row.length > 0 ) {
+                        rows.push(row);
                 }
                 
-                $('.spTheme').each( function() {
-
-                        var item = this;
-                        var rowHeight = parseInt(container.css('grid-auto-rows'));
-                        var rowGap = parseInt(container.css('grid-row-gap'));
-
-                        rowSpan = Math.ceil(( $(item).find('.spThemeInner').height() + rowGap ) / ( rowHeight + rowGap ) );
-                        $(item).css( 'gridRowEnd', "span " + rowSpan );
-
+                
+                
+                
+                
+                var maxHeight = 0;
+                $.each( rows, function() {
+                        maxHeight = 0;
+                        $.each( this, function() {
+                                
+                                var _height = $(this).find('.spThemeInner').height();
+                                
+                                if ( _height > maxHeight) { 
+                                        maxHeight = _height; 
+                                }
+                             
+                        });
+                        
+                        $.each( this, function() {
+                                $(this).height(maxHeight);
+                        });
+                        
                 });
 
         }

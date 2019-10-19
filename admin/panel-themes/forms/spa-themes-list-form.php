@@ -241,7 +241,7 @@ function spa_themes_list_form() {
 ?>
 			<h3 class="theme-name"><?php echo $themes[$curTheme['theme']]['Name'].' '.$themes[$curTheme['theme']]['Version']; ?></h3>
 
-    		<img src="<?php echo SPTHEMEBASEURL.$curTheme['theme'].'/'.$themes[$curTheme['theme']]['Screenshot']; ?>" alt="" />
+			<div><img src="<?php echo SPTHEMEBASEURL.$curTheme['theme'].'/'.$themes[$curTheme['theme']]['Screenshot']; ?>" alt="" /></div>
     		<h4>
     			<?php echo SP()->primitives->admin_text('By').' <a href="'.$themes[$curTheme['theme']]['AuthorURI'].'" title="'.SP()->primitives->admin_text('Visit author homepage').'">'.$themes[$curTheme['theme']]['Author'].'</a>'; ?>
     		</h4>
@@ -417,7 +417,7 @@ function spa_themes_list_form() {
 				<div class="spTheme">
 					<div class="spThemeInner">
 					<h3 class="theme-name"><?php echo $theme_name . ' '.$theme_version; ?></h3>
-					<img alt="" src="<?php echo $theme_image; ?>" />
+					<div><img alt="" src="<?php echo $theme_image; ?>" /></div>
 					<h4>
 						<?php echo SP()->primitives->admin_text('By').' <a href="'.$theme_uri.'" title="'.SP()->primitives->admin_text('Visit author homepage').'">'.$theme_author.'</a>'; ?>
 					</h4>
