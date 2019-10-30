@@ -1421,6 +1421,10 @@ img.spOnlineStatus {
     color: #d54e21 !important;
 }
 
+.sfsidebutton#sfaccPromotions a {
+	color: #4BB6A2;
+}
+
 .sfmenublock {
     padding: 4px 0 4px 4px;
     overflow: visible !important;
@@ -2156,4 +2160,23 @@ Style font- icon picker
 
 .sp-icon-picker-row .wp-picker-container .wp-color-result.button {
         padding-left: 45px;
+}
+
+/* promotions */
+
+.spa-promo-row {
+	width: 100%;
+}
+
+.spa-promo-row:not(.spa-promo-row1) {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: stretch;
+	height: 200px;
+}
+
+@media only screen and (max-width: 600px) {
+	.spa-promo-row {
+	}
 }

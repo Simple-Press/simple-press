@@ -372,6 +372,12 @@ if ($build < $section) {
 	
 }
 
+$users = sp_get_admins();
+# set up the user(s) as SP admins
+foreach ($users as $user_id) {
+	$user->add_cap('SPF Manage Promotions');
+}
+
 # Start of Upgrade Routines - 6.2.1 ============================================================
 
 sp_bump_build($build, 15862);
