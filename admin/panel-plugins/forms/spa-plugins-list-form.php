@@ -10,11 +10,34 @@ if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 	die( 'Access denied - you cannot directly call this file' );
 }
 
+$search_term = isset( $_REQUEST['s'] ) ? $_REQUEST['s'] : '';
+
+?>
+
+<form action="<?php echo SPADMINPLUGINS; ?>" method="post" id="sppluginssearchform" name="sppluginssearchform">
+		<?php echo sp_create_nonce( 'forum-adminform_plugins' ); ?>
+		<input type="hidden" name="s" value="<?php echo $search_term; ?>" />
+
+</form>
+<?php
+
+
+
 function spa_plugins_list_form() {
 	?>
     <script>
         (function (spj, $, undefined) {
             $(document).ready(function () {
+
+				$('.search-box input[type="search"]').keyup( function(e) {
+					if( e.which == 13 ) {
+						$('select[name^="action"]').val('-1');
+
+						$('#sppluginssearchform input[type=hidden][name=s]').val($(this).val());
+						$('#sppluginssearchform').submit();
+					}
+				});
+				
                 spj.loadAjaxForm('sppluginsform', 'sfreloadpl');
                 /* wp check all logic */
                 $('thead, tfoot').find('.check-column :checkbox').click(function (e) {

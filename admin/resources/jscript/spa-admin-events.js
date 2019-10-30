@@ -409,7 +409,7 @@
                 },
                 
                 setup : function() {
-                        if( $('.spThemeContainer').length === 1 ) {
+                        if( $('.spThemeContainer').length > 0 ) {
                                 spj.resizeThemeItems();
                                 
                                 window.addEventListener( 'resize', spj.resizeThemeItems );
