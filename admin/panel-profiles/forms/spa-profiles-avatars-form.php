@@ -100,7 +100,7 @@ function spa_profiles_avatars_form() {
 
 	#== PROFILE OPTIONS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Profiles').' - '.SP()->primitives->admin_text('Avatars'), !$sfoptions['sfshowavatars']);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Avatars'), !$sfoptions['sfshowavatars']);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Avatar Options'), true, 'avatar-options');
 				spa_paint_checkbox(SP()->primitives->admin_text('Display avatars'), 'sfshowavatars', $sfoptions['sfshowavatars']);
@@ -111,7 +111,7 @@ function spa_profiles_avatars_form() {
 
 					$checked = ($sfoptions['sfavataruploads']) ? ' checked="checked"' : '';
 					?>
-					<div class="sp-form-row">
+					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavataruploads" name="sfavataruploads" tabindex="102" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_2" />
 					<label class="wp-core-ui" for="sf-sfavataruploads"><?php echo(SP()->primitives->admin_text('Enable avatar uploading')); ?></label>
 					<div class="clearboth"></div></div>
@@ -123,7 +123,7 @@ function spa_profiles_avatars_form() {
 
 					$checked = ($sfoptions['sfavatarpool']) ? ' checked="checked"' : '';
 					?>
-					<div class="sp-form-row">
+					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavatarpool" name="sfavatarpool" tabindex="106" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_4" />
 					<label class="wp-core-ui" for="sf-sfavatarpool"><?php echo(SP()->primitives->admin_text('Enable avatar pool selection')); ?></label>
 					<div class="clearboth"></div></div>
@@ -131,7 +131,7 @@ function spa_profiles_avatars_form() {
 
 					$checked = ($sfoptions['sfavatarremote']) ? ' checked="checked"' : '';
 					?>
-					<div class="sp-form-row">
+					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavatarremote" name="sfavatarremote" tabindex="105" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_5" />
 					<label class="wp-core-ui" for="sf-sfavatarremote"><?php echo(SP()->primitives->front_text('Enable remote avatars')); ?></label>
 					<div class="clearboth"></div></div>
@@ -142,13 +142,13 @@ function spa_profiles_avatars_form() {
 
 					$checked = ($sfoptions['sfavatarreplace']) ? ' checked="checked"' : '';
 					?>
-					<div class="sp-form-row">
+					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavatarreplace" name="sfavatarreplace" tabindex="111" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_1" />
 					<label class="wp-core-ui" for="sf-sfavatarreplace"><?php echo(SP()->primitives->front_text('Replace WP avatar with SP avatar')); ?></label>
 					<div class="clearboth"></div></div>
 					<?php
 
-					echo '<br /><div class="sfoptionerror">';
+					echo '<div class="sf-alert-block sf-info">';
 					SP()->primitives->admin_etext('Warning: If you want to replace WP avatars with SP avatars, make sure you dont have WP avatars in your avatar priorities (have it below SP Default Avatars) or you will have a circular reference');
 					echo '</div>';
 				spa_paint_close_fieldset();
@@ -159,45 +159,46 @@ function spa_profiles_avatars_form() {
 
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Avatar Priorities'), true, 'avatar-priorities');
-
+                                        echo '<div class="sf-alert-block sf-info">';
 					SP()->primitives->admin_etext('Select the avatar dislay priority order by dragging and dropping the buttons below.	The top of the list is the highest priority order.	When an avatar is found for the current priority, it is used.  If none is found, the next priority is checked and so on.  An SP Default Avatar will always be found. Any avatar after the SP Default Avatar is essentially ignored');
-					$list = array(0 => SP()->primitives->admin_text('Gravatars'), 1 => SP()->primitives->admin_text('WP Avatars'), 2 => SP()->primitives->admin_text('Uploaded Avatar'), 3 => SP()->primitives->admin_text('SP Default Avatars'), 4 => SP()->primitives->admin_text('Avatar Pool'), 5 => SP()->primitives->admin_text('Remote Avatar'));
+					echo '</div>';
+                                        $list = array(0 => SP()->primitives->admin_text('Gravatars'), 1 => SP()->primitives->admin_text('WP Avatars'), 2 => SP()->primitives->admin_text('Uploaded Avatar'), 3 => SP()->primitives->admin_text('SP Default Avatars'), 4 => SP()->primitives->admin_text('Avatar Pool'), 5 => SP()->primitives->admin_text('Remote Avatar'));
 					$a = '';
 
 					echo '<div>';
-					echo '<ul id="sfavataroptions" class="menu">';
+					echo '<ul id="sfavataroptions" class="sf-list">';
 
 					if ($sfoptions['sfavatarpriority']) {
 
 						foreach ($sfoptions['sfavatarpriority'] as $priority) {
-							echo '<li id="aitem_'.$priority.'" class="menu-item menu-item-depth-0"><span class="item-name">'.$list[$priority].'</span></li>';
+							echo '<li id="aitem_'.$priority.'" class="sf-list-item sf-list-item-depth-0 sf-full-width"><span class="sf-item-name">'.$list[$priority].'</span></li>';
 							$a.='aitem[]='.$priority.'&';
 						}
 
 					}
 					echo '</ul>';
 
-					echo '<input type="text" class="inline_edit" size="70" id="sfavataropts" name="sfavataropts" value="'.rtrim($a, '&').'" />';
+					echo '<input type="hidden" size="70" id="sfavataropts" name="sfavataropts" value="'.rtrim($a, '&').'" />';
 					echo '</div>';
 
-					echo '<br /><div class="sfoptionerror">';
+					echo '<div class="sf-alert-block sf-info">';
 					SP()->primitives->admin_etext('Recommendation: If you make use of Gravatars we strongly recommend using our Gravatar Cache plugin which will boost overall performance of any view containing gravatars');
 					echo '</div>';
 
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 
-			echo '</div>';
+			//echo '</div>';
 
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Default Avatar Upload'), true, 'avatar-default-upload');
 					$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['avatars'].'/defaults/';
+					echo '<div class="sf-form-row">';
 					spa_paint_file(SP()->primitives->admin_text('Select avatar to upload'), 'newavatar', false, true, $loc);
-					echo '<table><tr>';
-					echo '<td class="sflabel"><small>';
+					echo '</div>';
+					echo '<div class="sf-alert-block sf-info">';
 					SP()->primitives->admin_etext('Please be advised that Admin uploaded default avatar replacements are NOT subject to the user uploaded avatar size limits. So use caution when picking avatars');
-					echo '</small></td>';
-					echo '</tr></table>';
+					echo '</div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 
@@ -212,8 +213,8 @@ function spa_profiles_avatars_form() {
 
 		do_action('sph_profiles_avatar_right_panel');
 ?>
-		<div class="sfform-submit-bar">
-		   <input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Avatar Options'); ?>" />
+		<div class="sf-form-submit-bar">
+		   <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Avatar Options'); ?>" />
 		</div>
 <?php
 		spa_paint_close_container();

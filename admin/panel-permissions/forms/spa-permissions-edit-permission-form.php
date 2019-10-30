@@ -41,7 +41,7 @@ function spa_permissions_edit_permission_form($role_id) {
 ?>
 					<br /><p><strong><?php SP()->primitives->admin_etext("Permission Set Actions") ?>:</strong></p>
 <?php
-					echo '<p><img src="'.SPADMINIMAGES.'sp_GuestPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />';
+					echo '<p><img src="'.SPADMINIMAGES.'sp_GuestPerm.png" alt="" class="sf-vert-align-top sf-perm-edit-img" />';
 					echo '<small>&nbsp;'.SP()->primitives->admin_text('Note: Action settings displaying this icon will be ignored for Guest Users').'</small><br />';
 					echo '<img src="'.SPADMINIMAGES.'sp_GlobalPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />';
 					echo '<small>&nbsp;'.SP()->primitives->admin_text('Note: Action settings displaying this icon require enabling to use').'</small><br />';
@@ -140,9 +140,9 @@ function spa_permissions_edit_permission_form($role_id) {
 			do_action('sph_perm_edit_perm_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="sfpermedit<?php echo $role->role_id; ?>" name="sfpermedit<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Update Permission'); ?>" />
-		<input type="button" class="button-primary spCancelForm" data-target="#perm-<?php echo $role->role_id; ?>" id="sfpermedit<?php echo $role->role_id; ?>" name="editpermcancel<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+		<div class="sf-form-submit-bar">
+		<input type="submit" class="sf-button-primary" id="sfpermedit<?php echo $role->role_id; ?>" name="sfpermedit<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Update Permission'); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#perm-<?php echo $role->role_id; ?>" id="sfpermedit<?php echo $role->role_id; ?>" name="editpermcancel<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 		</form>
 	<?php spa_paint_close_tab(); ?>

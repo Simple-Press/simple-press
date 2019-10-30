@@ -46,7 +46,7 @@ function sp_plain_load_filters($editor) {
 function sp_plain_load($editor) {
 	if ($editor == PLAINTEXT) {
 		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SP_PLUGIN_URL.'/forum/editor/sp-text-editor.js' : SP_PLUGIN_URL.'/forum/editor/sp-text-editor.min.js';
-		wp_enqueue_script('speditor', $script, array('jquery'), false, true);
+		wp_enqueue_script('speditor', $script, array('jquery'), SP_SCRIPTS_VERSION, true);
 	}
 }
 

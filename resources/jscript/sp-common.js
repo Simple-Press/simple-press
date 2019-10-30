@@ -73,13 +73,29 @@
 
 	// public methods
 
-	spj.loadAjax = function(url, target, image) {
-		if (image !== '') {
-			document.getElementById(target).innerHTML = '<img src="' + image + '" />';
+	spj.loadAjax = function(url, target, image, data) {
+                var $target = $(/^\s*[a-z]/i.test(target) ? '#' + target : target);
+		if (image) {
+			$target.html('<img src="' + image + '" />');
 		}
 		url = url + '&rnd=' + new Date().getTime();
-		$('#' + target).show();
-		$('#' + target).load(url);
+                
+                $.ajax(url, {
+                        success : function(content) {
+                                
+                                $target.show().html(content);
+                                
+                                if( data && data['after_cb'] !== undefined ) {
+                                        var after_cb = data['after_cb'];
+                                        if( spj[after_cb] && spj[after_cb] !== undefined ) {
+                                                spj[after_cb]();
+                                        }
+                                }
+                        }
+                });
+                
+                
+		//$target.show().load(url);
 	};
 
 	spj.batch = function(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum) {
@@ -100,6 +116,11 @@
 			if (startNum < totalNum) {
 				spj.batch(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum);
 			} else {
+                                
+                                if( spj[thisFormID+'_Def'] !== undefined ) {
+                                        spj[thisFormID+'_Def'].resolve(a, b);
+                                }
+                                
 				$("#progressbar").hide();
 				$('#' + target).show();
 				$('#' + target).html(endMessage);
@@ -251,4 +272,16 @@
 			spj.dialogPanel(e, url, dClass);
 		}
         };
+        
+        
+        spj.after_users_listing = function() {
+                console.log('loaded');
+		
+		$('.sf-plugin-hide-users .actions.bulkactions .button.action')
+                        .addClass('sf-button')
+			.css({marginTop:'5px'});
+        }
+        
+        
+        
 }(window.spj = window.spj || {}, jQuery));

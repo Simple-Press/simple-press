@@ -48,7 +48,7 @@ function spa_download_language_file($item) {
 
 	if (isset($_GET['remove'])) {
 		$status = unlink($home);
-		echo '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Translation file removed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Translation file removed');
+		echo '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Translation file removed').'"></span>'.SP()->primitives->admin_text('Translation file removed');
 		die();
 	} else {
 		$fData = file_get_contents($url);
@@ -61,9 +61,11 @@ function spa_download_language_file($item) {
 	}
 
 	if ($status) {
-		echo '<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('Translation file installed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Translation file installed');
+		echo '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Translation file installed').'"></span>'
+			.SP()->primitives->admin_text('Translation file installed');
 	} else {
-		echo '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Translation install failed').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;'.SP()->primitives->admin_text('Install failed - or there is no available translation');
+		echo '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Translation install failed').'"></span>'
+			.SP()->primitives->admin_text('Install failed - or there is no available translation');
 	}
 }
 

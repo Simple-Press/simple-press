@@ -263,6 +263,47 @@ function spa_get_saved_icon( $icon ) {
 }
 
 /**
+ * Get saved icon and type
+ * 
+ * @param string $jsonIcon
+ * @param string $title [optional]
+ * @param string $defaultFileUrl [optional]
+ * 
+ * @return string html of icon
+ */
+function spa_get_saved_icon_html($jsonIcon, $title = '', $defaultFileUrl = '') {
+    $out = '';
+    if ($jsonIcon) {
+        $arr_icon = spa_get_saved_icon($jsonIcon);
+    } else if ($defaultFileUrl) {
+        $arr_icon = array(
+            'type' => 'file',
+            'icon' => $defaultFileUrl,
+        );
+    }
+    if (empty($arr_icon)) {
+        return $out;
+    }
+    if ('file' === $arr_icon['type']) {
+        if (empty($arr_icon['icon']) || !file_exists(SPCUSTOMDIR . $arr_icon['icon'])) {
+            $arr_icon['icon'] = $defaultFileUrl;
+        } else {
+            $arr_icon['icon'] = esc_url(SPCUSTOMURL . $arr_icon['icon']);
+        }
+    }
+    if ('file' === $arr_icon['type']) {
+        $out .= '<img src="' . $arr_icon['icon'] . '" alt="" title="' . $title . '" />';
+    } else {
+        $out .= '<i class="' . $arr_icon['icon'] . '"';
+        if (!empty($arr_icon['color'])) {
+            $out .= ' style="color:' . $arr_icon['color'] . '"';
+        }
+        $out .= '></i>';
+    }
+    return $out;
+}
+
+/**
  * Return size value and unit from string
  * 
  * @param string $size
@@ -307,12 +348,12 @@ function spa_iconset_size_type_field( $current = '' ) {
 		
 	$size_units = spa_iconset_icon_size_units();
 
-	$field = '<select class="font-style-size_type">';
+	$field = '<div class="sf-select-wrap"><select class="font-style-size_type">';
 	foreach( $size_units as $unit )  {
 		$selected = $current == $unit ? ' selected="selected"' : '';
 		$field .= sprintf( '<option value="%s"%s>%s</option>', $unit, $selected, $unit );
 	}
-	$field .= '</select>';
+	$field .= '</select></div>';
 
 	return $field;
 }

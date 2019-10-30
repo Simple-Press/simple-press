@@ -25,15 +25,17 @@ function spa_options_content_form() {
 
     #== POSTS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Options').' - '.SP()->primitives->admin_text('Content Settings'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('Content Settings'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Date/Time Formatting'), true, 'date-time-formatting');
 				spa_paint_input(SP()->primitives->admin_text('Date display format'), 'sfdates', $sfoptions['sfdates']);
 				spa_paint_input(SP()->primitives->admin_text('Time display format'), 'sftimes', $sfoptions['sftimes']);
+				echo '<span class="sf-sublabel sf-sublabel-small">';
 				spa_paint_link('http://codex.wordpress.org/Formatting_Date_and_Time', SP()->primitives->admin_text('Date/Time help'));
 				$tz = get_option('timezone_string');
 				if (empty($tz)) $tz = SP()->primitives->admin_text('Unknown');
 				echo '&nbsp;'.SP()->primitives->admin_text('Server timezone set to').': '.$tz;
+				echo '</span>';
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
@@ -98,8 +100,8 @@ function spa_options_content_form() {
 
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Content Options'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Content Options'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

@@ -176,8 +176,8 @@ function spa_save_tabs_menus_data() {
 
 			# now update menus for this tab
 			if (!empty($_POST['spMenusOrder'.$oldTab])) {
-				$menuList = explode('&', sanitize_text_field($_POST['spMenusOrder'.$oldTab]));
-				foreach ($menuList as $curMenu => $menu) {
+				$list = explode('&', sanitize_text_field($_POST['spMenusOrder'.$oldTab]));
+				foreach ($list as $curMenu => $menu) {
  					# extract the menu index from the jquery sortable mess
 					$menuData = explode('=', $menu);
 					$thisMenu = $menuData[1];

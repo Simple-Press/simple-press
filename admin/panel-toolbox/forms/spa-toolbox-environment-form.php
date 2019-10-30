@@ -18,12 +18,12 @@ function spa_toolbox_environment_form() {
 	$wp_plugins = get_plugins();
 	$sp_plugins = SP()->plugin->get_list();
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Environment'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Environment'), true);
 		spa_paint_open_panel();
 		spa_paint_open_fieldset(SP()->primitives->admin_text('Environment'), false);
 
 			echo '<div id="sp-environment-data">';
-			echo '<table class="widefat">';
+			echo '<table class="widefat sf-table-small">';
 
 			spa_env_open(SP()->primitives->admin_text('Simple:Press'));
 			spa_env_info(SP()->primitives->admin_text('Version'), SPVERSION);

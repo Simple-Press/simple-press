@@ -25,7 +25,7 @@ function spa_components_seo_form() {
 
     #== EXTENSIONS Tab ============================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Components').' - '.SP()->primitives->admin_text('SEO'));
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Components').' - '.*/SP()->primitives->admin_text('SEO'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Page/Browser Title (SEO)'), true, 'seo-plugin-integration');
 				spa_paint_checkbox(SP()->primitives->admin_text('Overwrite page/browser title with ours'), 'sfseo_overwrite', $sfcomps['sfseo_overwrite']);
@@ -80,8 +80,8 @@ function spa_components_seo_form() {
 
 		spa_paint_close_container();
 ?>
-    	<div class="sfform-submit-bar">
-        	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update SEO Component'); ?>" />
+    	<div class="sf-form-submit-bar">
+        	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update SEO Component'); ?>" />
     	</div>
 <?php
 	spa_paint_close_tab();

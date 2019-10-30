@@ -51,8 +51,9 @@ function spa_themes_editor_form() {
 	spa_paint_open_tab(SP()->primitives->admin_text('SP Theme Editor').' - '.SP()->primitives->admin_text('Edit Simple:Press Themes'), true);
 	spa_paint_open_panel();
 	spa_paint_open_fieldset(SP()->primitives->admin_text('SP Theme Editor'), true, 'theme-editor');
+	
 
-	echo '<div id="sfeditside">';
+	echo '<div class="clear"></div><div id="sfeditside">';
 
 	# list the template files
 	echo '<h3>'.SP()->primitives->admin_text('Template Files').'</h3>';
@@ -66,7 +67,7 @@ function spa_themes_editor_form() {
 			if ($template == $filename) echo '</span>';
 			echo '</li>';
 		}
-		echo '</ul>';
+		echo '</ul><div class="clear"></div><br />';
 	}
 
 	# list the stylesheets files
@@ -90,7 +91,7 @@ function spa_themes_editor_form() {
 			if ($style == $filename) echo '</span>';
 			echo '</li>';
 		}
-		echo '</ul>';
+		echo '</ul><div class="clear"></div><br />';
 	}
 
 	# list the overlay files
@@ -120,7 +121,7 @@ function spa_themes_editor_form() {
     }
 
     # main div
-	echo '</div>';
+	echo '</div><div class="clear"></div><br />';
 
 	echo '<div id="sfeditwindow">';
 	echo '<h3>'.SP()->primitives->admin_text('Editing Theme File').': '.$filename.'</h3>';
@@ -133,8 +134,8 @@ function spa_themes_editor_form() {
 	spa_paint_close_container();
 	if (is_writeable($file)) {
 ?>
-    	<div class="sfform-submit-bar">
-    	   <input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update File'); ?>" />
+    	<div class="sf-form-submit-bar">
+    	   <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update File'); ?>" />
     	</div>
 <?php
 	} else {

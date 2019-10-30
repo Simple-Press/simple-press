@@ -41,7 +41,7 @@ if (!empty($_GET['install'])) {
 	echo '<div class="clearboth"></div>';
 
 	spa_paint_spacer();
-	spa_paint_close_container();
+	//spa_paint_close_container();
 	spa_paint_close_tab();
 
 	echo '<div class="sfform-panel-spacer"></div>';
@@ -68,7 +68,7 @@ echo '</div>';
 spa_paint_close_panel();
 
 spa_paint_spacer();
-spa_paint_close_container();
+//spa_paint_close_container();
 spa_paint_close_tab();
 
 echo '<div class="sfform-panel-spacer"></div>';
@@ -94,7 +94,7 @@ echo '</div>';
 spa_paint_close_panel();
 
 spa_paint_spacer();
-spa_paint_close_container();
+//spa_paint_close_container();
 spa_paint_close_tab();
 
 echo '<div class="sfform-panel-spacer"></div>';
@@ -120,7 +120,7 @@ echo '</div>';
 spa_paint_close_panel();
 
 spa_paint_spacer();
-spa_paint_close_container();
+//spa_paint_close_container();
 spa_paint_close_tab();
 
 die();

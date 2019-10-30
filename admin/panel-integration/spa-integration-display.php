@@ -12,7 +12,7 @@ function spa_render_integration_panel($formid) {
 ?>
 	<div class="clearboth"></div>
 
-	<div class="wrap sfatag">
+	<div id="sf-root-wrap" class="wrap">
 		<?php
 			spa_render_sidemenu();
 		?>

@@ -2,6 +2,21 @@
 $LastChangedDate: 2016-04-27 05:11:08 -0500 (Wed, 27 Apr 2016) $
 $Rev: 14159 $
 
+[manage-user-groups]
+<strong>Manage User Groups</strong><br /><br />
+This admin panel is used to create a new User Group. When created, this User Group will not have any members and will not have any
+permissions for your Forums. You will need to add members via thi Manage User Groups page and then add the User Group to your Forums with a
+Permission set via the Manage Forums admin page.
+<br /><br />
+Enter a User Group name and description and check the moderation box if this user group should be considered moderators.
+This considered moderators box is used to display moderators for the forums. User Group Permissions are still controlled via the
+Permission Sets.
+<br /><br />
+You can also optionally assign a badge for each usergroup.  Then this badge can be displayed on the topic view user post info area.
+You can also opt to hide any users destined for this user group from showing up in the new members and top posters statistics - but note
+that if a user belongs to more than one user group and any one group allows them to be listed then they will be shown.
+[end]
+
 [create-new-user-group]
 <strong>Create New User Group</strong><br /><br />
 This admin panel is used to create a new User Group. When created, this User Group will not have any members and will not have any

@@ -23,16 +23,18 @@ function spa_forums_merge_form() {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfmergeforums" name="sfmergeforums">
 <?php
 		echo sp_create_nonce('forum-adminform_mergeforums');
-		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Merge Forums'));
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Merge Forums'));
 
 			spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Select Source Forum to Merge From'), false);
 ?>
-				<div id="forumselect1">
-					<?php SP()->primitives->admin_etext('The source forum selected here will have all sub-forums, topics, posts and references transferred to the forum selected as the target for the merge. It will then be deleted.'); ?><br /><br />
-					<select class="sfacontrol" name="source">
+				<div class="sf-alert-block sf-info">	
+					<?php SP()->primitives->admin_etext('The source forum selected here will have all sub-forums, topics, posts and references transferred to the forum selected as the target for the merge. It will then be deleted.'); ?>
+				</div>
+                                <div id="forumselect1" class="sf-select-wrap">				
+                                    <select name="source">
 						<?php echo sp_render_group_forum_select(false, false, false, true, SP()->primitives->admin_text('Select Source Forum to Merge From')); ?>
-					</select>
+                                    </select>
 				</div>
 <?php
 			spa_paint_close_fieldset();
@@ -43,11 +45,13 @@ function spa_forums_merge_form() {
 			spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Select Target Forum to Merge To'), true, 'merge-forums');
 ?>
-				<div id="forumselect2">
-					<?php SP()->primitives->admin_etext('The target forum selected here will inherit all sub-forums, topics, posts and references from the source forum. Current permissions for this forum will be retained.'); ?><br /><br />
-					<select class="sfacontrol" name="target">
+				<div class="sf-alert-block sf-info">
+					<?php SP()->primitives->admin_etext('The target forum selected here will inherit all sub-forums, topics, posts and references from the source forum. Current permissions for this forum will be retained.'); ?>
+				</div>
+				<div id="forumselect2" class="sf-select-wrap">	
+                                    <select name="target">
 						<?php echo sp_render_group_forum_select(false, false, false, true, SP()->primitives->admin_text('Select Target Forum to Merge To')); ?>
-					</select>
+                                    </select>
 				</div>
 <?php
 			spa_paint_close_fieldset();
@@ -57,8 +61,8 @@ function spa_forums_merge_form() {
 
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Perform Forum Merge'); ?>" />
+		<div class="sf-form-submit-bar">
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Perform Forum Merge'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>

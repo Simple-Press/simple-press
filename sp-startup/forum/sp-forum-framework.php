@@ -32,14 +32,14 @@ function sp_load_forum_scripts() {
 	$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPJSCRIPT.'sp-forum.js' : SPJSCRIPT.'sp-forum.min.js';
 	SP()->plugin->enqueue_script('spforum', $script, array(
 		'jquery',
-		'jquery-form'), false, $footer);
+		'jquery-form'), SP_SCRIPTS_VERSION, $footer);
 
 	# load up forum front end event handlers
 	$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPJSCRIPT.'sp-forum-events.js' : SPJSCRIPT.'sp-forum-events.min.js';
 	SP()->plugin->enqueue_script('spforumevents', $script, array(
 		'jquery',
 		'spforum',
-		'spcommon'), false, $footer);
+		'spcommon'), SP_SCRIPTS_VERSION, $footer);
 
 	# load up common javascript for front end
 	$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPCJSCRIPT.'sp-common.js' : SPCJSCRIPT.'sp-common.min.js';
@@ -49,7 +49,7 @@ function sp_load_forum_scripts() {
 		'jquery-ui-widget',
 		'jquery-ui-dialog',
 		'jquery-ui-autocomplete',
-		'jquery-effects-slide'), false, $footer);
+		'jquery-effects-slide'), SP_SCRIPTS_VERSION, $footer);
 
 	# load up forum vars to be localized for use in javascript
 	$strings = array(
@@ -83,7 +83,7 @@ function sp_load_forum_scripts() {
 	# load the print this script for topics
 	$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPJSCRIPT.'print-this/printThis.js' : SPJSCRIPT.'print-this/printThis.min.js';
 	SP()->plugin->enqueue_script('sfprintthis', $script, array(
-		'jquery'), false, $footer);
+		'jquery'), SP_SCRIPTS_VERSION, $footer);
 
 	# load up few other miscellaneous scripts
 	if (SP()->core->device != 'desktop') {
@@ -142,7 +142,7 @@ function sp_load_forum_footer_scripts() {
 	# load up quicklinks dropdown js
 	$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPJSCRIPT.'msdropdown/msdropdown.js' : SPJSCRIPT.'msdropdown/msdropdown.min.js';
 	wp_enqueue_script('jquery.msdropdown', $script, array(
-		'jquery'), false, true);
+		'jquery'), SP_SCRIPTS_VERSION, true);
 
 	# load up forum front end javascript that must be in footer
 	$footer_dep = array(
@@ -153,7 +153,7 @@ function sp_load_forum_footer_scripts() {
 			'jquery-ui-widget',
 			'jquery-ui-tooltip'));
 	$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPJSCRIPT.'sp-forum-footer.js' : SPJSCRIPT.'sp-forum-footer.min.js';
-	wp_enqueue_script('spforumfooter', $script, $footer_dep, false, true);
+	wp_enqueue_script('spforumfooter', $script, $footer_dep, SP_SCRIPTS_VERSION, true);
 
 	# load up some variables for javascript use
 	$target = (isset(SP()->rewrites->pageData['forumid'])) ? SP()->rewrites->pageData['forumid'] : 'global';

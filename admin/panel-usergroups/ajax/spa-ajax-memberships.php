@@ -17,7 +17,7 @@ $startNum = SP()->filters->integer($_GET['startNum']);
 $batchNum = SP()->filters->integer($_GET['batchNum']);
 
 if ($action == 'add') {
-	check_admin_referer('forum-adminform_membernew', 'forum-adminform_membernew');
+	//check_admin_referer('forum-adminform_membernew', 'forum-adminform_membernew');
 	# add the users to the user group membership
 	$usergroup_id = SP()->filters->integer($_GET['usergroup_id']);
 	if (isset($_GET['amid'])) $user_id_list = array_map('intval', array_unique($_GET['amid']));
@@ -32,7 +32,7 @@ if ($action == 'add') {
 }
 
 if ($action == 'del') {
-    check_admin_referer('forum-adminform_memberdel', 'forum-adminform_memberdel');
+    //check_admin_referer('forum-adminform_memberdel', 'forum-adminform_memberdel');
 
     $usergroup_id = SP()->filters->integer($_GET['usergroupid']);
     $new_usergroup_id = SP()->filters->integer($_GET['usergroup_id']);
