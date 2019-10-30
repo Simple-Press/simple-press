@@ -261,6 +261,7 @@ function spa_deactivate_plugin() {
 			$user->remove_cap('SPF Manage Plugins');
 			$user->remove_cap('SPF Manage Themes');
 			$user->remove_cap('SPF Manage Integration');
+			$user->remove_cap('SPF Manage Promotions');
 			$user->remove_cap('SPF Manage Configuration'); # no longer used but some may still have it
 		}
 

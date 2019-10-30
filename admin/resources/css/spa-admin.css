@@ -3675,14 +3675,12 @@ body .spMobileTableDataUsers .row-actions > span {
 }
 
 /*Users => Member Information end*/
+
 .sf-icon-midle{
   padding: 0px 30px 0px 20px;
   margin-bottom: 25%;
   margin-top: 25%;
 }
-
-
-
 
 input.spSpecialRankShow, input.spSpecialRankForm {
         height: 36px !important;
@@ -3730,8 +3728,6 @@ input.spSpecialRankShow, input.spSpecialRankForm {
         
 }
 
-
-
 #sf-root-wrap .search-box {
         margin-bottom: 20px;
 }
@@ -3741,3 +3737,29 @@ input.spSpecialRankShow, input.spSpecialRankForm {
         margin-top: 0 !important;
         margin-right: 6px;
 }
+
+
+}
+
+/* promotions */
+.spa-promo-row {
+	width: 100%;
+}
+
+.sfsidebutton#sfaccPromotions a {
+	color: #4BB6A2;
+}
+
+.spa-promo-row:not(.spa-promo-row1) {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: stretch;
+	height: 200px;
+}
+
+@media only screen and (max-width: 600px) {
+	.spa-promo-row {
+	}
+}
+/* End promotions */

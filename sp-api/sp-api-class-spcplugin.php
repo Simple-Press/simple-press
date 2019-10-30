@@ -14,7 +14,7 @@
  * get_data($plugin_file, $markup, $translate)
  * activate($plugin)
  * deactivate($plugins, $silent)
- * delete($plugin)
+ * delete($plugin, $remove_options)
  * is_active($plugin)
  * validate_active()
  * add_admin_panel($name, $capability, $tooltop, $icon, $subpanels, $position)
@@ -347,13 +347,14 @@ class spcPlugin {
 	 *
 	 * @returns    string    success/fail for plugin deletion
 	 */
-	public function delete($plugin) {
+	public function delete($plugin, $remove_options = true) {
 		if (!SP()->plugin->is_active($plugin)) {
 			$parts = explode('/', $plugin);
 			SP()->primitives->remove_dir(SPPLUGINDIR.$parts[0]);
-			do_action('sph_delete_'.trim($plugin));
-			do_action('sph_deleted_sp_plugin', trim($plugin));
-
+			if ( $remove_options ) {
+				do_action('sph_delete_'.trim($plugin));
+				do_action('sph_deleted_sp_plugin', trim($plugin));
+			}
 			$mess = SP()->primitives->front_text('Plugin successfully deleted');
 		} else {
 			$mess = SP()->primitives->front_text('Plugin is active and cannot be deleted');

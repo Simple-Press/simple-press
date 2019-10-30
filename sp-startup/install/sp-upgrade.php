@@ -372,6 +372,16 @@ if ($build < $section) {
 	
 }
 
+# Start of Upgrade Routines - 6.3.0 ============================================================
+$section = 15862;
+	if ($build < $section) {
+	$users = sp_get_admins();
+	# set up the user(s) as SP admins
+	foreach ($users as $user_id) {
+		$user->add_cap('SPF Manage Promotions');
+	}	
+}
+
 # ****** IMPORTANT: THE FINAL $section values MUST be the same as the SPBUILD constant
 # ******			for the Upgrade to complete correctly
 

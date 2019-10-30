@@ -657,6 +657,11 @@ function sp_paint_plugin_tip( $name, $file ) {
 	if ( $file == ( $xfile = str_replace( '-plugin.php', '-help.php', $file ) ) ) {
 		return '';
 	}
+	# if help file does not exist dont show the help option.
+	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['plugins'] . '/' . $xfile;
+	if ( ! realpath( $path ) ) {
+		return '';
+	}	
 	$site   = wp_nonce_url( SPAJAXURL . "plugin-tip&amp;file=$xfile", 'plugin-tip' );
 	$atitle = SP()->primitives->admin_text( 'Getting Started' );
 	$htitle = $atitle . ' - ' . esc_js( $name );
