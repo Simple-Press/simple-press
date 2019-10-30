@@ -60,7 +60,7 @@ function spa_admins_manage_admins_form() {
                     $manage_plugins = user_can($user, 'SPF Manage Plugins');
                     $manage_themes = user_can($user, 'SPF Manage Themes');
                     $manage_integration = user_can($user, 'SPF Manage Integration');
-										<?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Plugins'), 'manage-plugins['.$adminId.']', $manage_plugins, $adminId); ?>
+					$manage_promotions = user_can($user, 'SPF Manage Promotions');
 
                     $title = ($x == 1) ? SP()->primitives->admin_text('Admin') : SP()->primitives->admin_text('Moderator');
                     spa_paint_open_fieldset($title . ': ' . $adminName, false);
@@ -114,10 +114,10 @@ function spa_admins_manage_admins_form() {
                             <input type="hidden" name="old-integration[<?php echo $adminId; ?>]" value="<?php echo $manage_integration; ?>" />
                         </li>
                         <li>
-			spa_paint_close_fieldset();
-		spa_paint_close_panel();
-
-		spa_paint_close_container();
+							<?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Promotions'), 'manage-promotions['.$adminId.']', $manage_promotions, $adminId); ?>
+							<input type="hidden" name="old-promotions[<?php echo $adminId; ?>]" value="<?php echo $manage_promotions; ?>" />
+						</li>
+						<li>						
                             <?php
                             if ($adminId == SP()->user->thisUser->ID) {
                                 ?>
