@@ -419,7 +419,7 @@ function spa_setup_admin_menu() {
 		'SPF Manage Promotions',
 		SP_FOLDER_NAME.'/admin/panel-promotions/spa-promotions.php',
 		$sfatooltips['promotions'],
-		'icon-promotions',
+		'go',
 		wp_nonce_url(SPAJAXURL.'promotions-loader', 'promotions-loader'),
 		$forms,
 		true);
