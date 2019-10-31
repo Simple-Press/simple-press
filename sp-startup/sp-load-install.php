@@ -268,31 +268,32 @@ function sp_go_upgrade($current_version, $current_build) {
 
     $targetbuild = SPBUILD;
     ?>
-    <div class="wrap">
-        <div class="updated">
-            <img class="stayleft" src="<?php echo SPCOMMONIMAGES; ?>sp-mini-logo.png" alt="" title="" />
-            <h3><?php SP()->primitives->admin_etext('Simple:Press is being upgraded'); ?></h3>
-        </div>
-        <div id="sf-root-wrap" class="wrap">
-            <div class="imessage" id="imagezone"></div>
-        </div>
-        <div class="pbar" id="progressbar"></div>
-        <div id="sf-root-wrap" class="wrap">
-            <div class="sf-zmessage" id="errorzone"></div>
-            <div id="finishzone"></div>
-        </div>
-        <div id="debug">
-            <p><b>Please copy the details below and include them on any support forum question you may have:</b></p>
-        </div>
-        <?php
-        $messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
-        $out = '<script>' . "\n";
-        $out .= '(function(spj, $, undefined) {';
-        $out .= 'spj.performUpgrade("' . $phpfile . '", "' . $current_build . '", "' . $targetbuild . '", "' . $current_build . '", "' . $image . '", "' . $messages . '", "' . SP()->spPermalinks->get_url() . '", "' . SP_FOLDER_NAME . '");' . "\n";
-        $out .= '}(window.spj = window.spj || {}, jQuery));';
-        $out .= '</script>' . "\n";
-        echo $out;
-        ?>
+    <div id="sf-root-wrap" class="wrap">
+		<div id="sfmaincontainer" class="sf-installation">
+			<div class="sf-panel-head">
+				<!-- <img class="stayleft" src="<?php echo SPCOMMONIMAGES; ?>sp-mini-logo.png" alt="" title="" /> -->
+				<h3><?php SP()->primitives->admin_etext('Simple:Press is being upgraded to version '); echo SPVERSION ; echo ' / build #'; echo SPBUILD ?></h3>
+			</div>
+			<div class="sf-panel-body">
+                <div class="pbar" id="progressbar"></div>
+			</div>
+			<div class="sf-zmessage" id="errorzone"></div>
+			<div id="finishzone"></div>
+			<div id="imagezone"></div>
+			<div id="debug">
+				<br />
+				<p><b>If there are any messages shown below, please copy and include them on any support forum question you may have.</b></p>
+			</div>
+			<?php
+			$messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
+			$out = '<script>' . "\n";
+			$out .= '(function(spj, $, undefined) {';
+			$out .= 'spj.performUpgrade("' . $phpfile . '", "' . $current_build . '", "' . $targetbuild . '", "' . $current_build . '", "' . $image . '", "' . $messages . '", "' . SP()->spPermalinks->get_url() . '", "' . SP_FOLDER_NAME . '");' . "\n";
+			$out .= '}(window.spj = window.spj || {}, jQuery));';
+			$out .= '</script>' . "\n";
+			echo $out;
+			?>
+		</div>
     </div>
     <?php
     # clear any combined css/js cached files

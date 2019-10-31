@@ -107,8 +107,8 @@
 				messageStrings = installtext.split("@");
 
 				/* display upgrading message and progressbar */
-				$('#imagezone').html('<p><br /><img src="' + image + '" /><br />' + messageStrings[1] + '<br /></p>');
-				$('#imagezone').fadeIn('slow');
+				// $('#imagezone').html('<p><br /><img src="' + image + '" /><br />' + messageStrings[1] + '<br /></p>');
+				// $('#imagezone').fadeIn('slow');
 				$("#progressbar").progressbar({value: 0});
 			} else {
 				/* calculate progress so far */
@@ -131,15 +131,14 @@
 						returnVal = response.section; /* get completed section */
 						if (returnVal == endBuild) {
 							/* last section complete - finish up */
-							$('#finishzone').html('<p>' + endUpgrade(messageStrings[0], messageStrings[4], homeUrl, folder) + '</p>');
-							$('#imagezone').html('<p>' + messageStrings[2] + '</p>');
+							$('#errorzone').empty();
+							$('#finishzone').html('<h3>' + messageStrings[2] + '</h3>' + '<p>' + endUpgrade(messageStrings[0], messageStrings[4], homeUrl, folder) + '</p>');
 							$("#progressbar").progressbar('option', 'value', 100);
 
 							/* any special messages? */
 							if (response.message != '') {
 								$('#imagezone').append('<p>' + response.message + '</p>');
 							}
-
 							return;
 						} else {
 							/* run next upgrade section */

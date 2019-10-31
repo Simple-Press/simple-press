@@ -344,8 +344,8 @@ if (!class_exists('spcSimplePress')) {
                         
             define('SP_SCRIPTS_VERSION', (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPVERSION . '.' . time() : SPVERSION);
                         
-			define('SPBUILD', 15862);
-			define('SPSILENT', 15862);
+			define('SPBUILD', 15865);
+			define('SPSILENT', 15865);
 			define('SPRELEASE', 'Release');
 
 			define('SPPLUGHOME', '<a class="spLink" href="https://simple-press.com" target="_blank">Simple:Press</a>');
