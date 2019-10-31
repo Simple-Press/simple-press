@@ -3744,6 +3744,7 @@ input.spSpecialRankShow, input.spSpecialRankForm {
 /* promotions */
 .spa-promo-row {
 	width: 100%;
+	margin-top: 2em;
 }
 
 .sfsidebutton#sfaccPromotions a {
@@ -3752,10 +3753,32 @@ input.spSpecialRankShow, input.spSpecialRankForm {
 
 .spa-promo-row:not(.spa-promo-row1) {
 	display: flex;
-	flex-wrap: wrap;
 	justify-content: space-around;
-	align-items: stretch;
-	height: 200px;
+}
+
+.spa-promo-col {
+	float: left;
+	max-width: 50%;	
+}
+
+.spa-promo-button {
+	border: solid;
+	border-width: 1px;
+	padding: 1em;
+	text-align: center;	
+	border-color:#00a0d2; 
+	font-size: 1.25em;
+	max-width: 40%;
+}
+
+.spa-promo-box {
+	background-color: white;
+	border-radius: 5px;
+	padding: 1em;
+	margin-right: 1em;
+	border:solid;
+	border-width:1px;
+	border-color: white;
 }
 
 @media only screen and (max-width: 600px) {
