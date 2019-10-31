@@ -148,40 +148,44 @@ function sp_install_required() {
 
 function sp_upgrade_required() {
     ?>
-    <div class="wrap">
-        <?php
-        $bad = sp_version_checks();
-        if ($bad != '') {
-            echo $bad . '</div>';
-            return;
-        }
-        ?>
-        <div class="updated">
-            <img class="stayleft" src="<?php echo SPCOMMONIMAGES; ?>sp-mini-logo.png" alt="" title="" />
-            <h3><?php echo sprintf(SP()->primitives->admin_text('Upgrade Simple:Press From Version %s to %s'), SP()->options->get('sfversion'), SPVERSION); ?>
-                (<?php SP()->primitives->admin_etext('Build'); ?> <?php echo SP()->options->get('sfbuild'); ?> <?php SP()->primitives->admin_etext('to'); ?> <?php SP()->primitives->admin_etext('Build'); ?> <?php echo SPBUILD; ?>)</h3>
-            <p><?php echo SP()->primitives->admin_text('As with all WordPress related updates we recommend that you backup your site before proceeding with this upgrade.') ?></p>				
-        </div>
-        <hr />
-        <?php
-        $f = 'update' . str_replace('.', '-', SPVERSION) . '.html';
-        $path = SP_PLUGIN_DIR . '/sp-startup/install/resources/versions/' . $f;
-        if (file_exists($path)) {
-            readfile($path);
-        }
-        ?>
-        <form name="sfupgrade" method="post" action="<?php echo admin_url('admin.php?page=' . SPINSTALLPATH); ?>">
-            <?php if (SPVERSION == '5.0.0' && substr(SP()->options->get('sfversion'), 0, 1) != '5') { ?>
-                <p><b><input type="checkbox" name="dostorage" id="dostorage" />
-                        <label for="dostorage"><?php SP()->primitives->admin_etext('Check this box to have the upgrade attempt to convert current storage locations to V5 format (optional)'); ?></label>
-                    </b></p>
-            <?php } ?>
+    <div id="sf-root-wrap" class="wrap">
+        <div id="sfmaincontainer" class="sf-installation">
+			<?php
+			$bad = sp_version_checks();
+			if ($bad != '') {
+				echo $bad . '</div>';
+				return;
+			}
+			?>
 
-            <input type="submit" class="sf-button-primary" id="sbutton" name="goupgrade" value="<?php SP()->primitives->admin_etext('Perform Upgrade'); ?>" />
-            <?php if (is_multisite() && is_super_admin()) { ?>
-                <input type="submit" class="sf-button-primary" id="sbutton" name="gonetworkupgrade" value="<?php SP()->primitives->admin_etext('Perform Network Upgrade'); ?>" />
-            <?php } ?>
-        </form>
+			<div class="sf-panel-body">
+				<img class="stayleft" src="<?php echo SPCOMMONIMAGES; ?>sp-mini-logo.png" alt="" title="" />
+				<h3><?php echo sprintf(SP()->primitives->admin_text('Upgrade Simple:Press From Version %s to %s'), SP()->options->get('sfversion'), SPVERSION); ?>
+					(<?php SP()->primitives->admin_etext('Build'); ?> <?php echo SP()->options->get('sfbuild'); ?> <?php SP()->primitives->admin_etext('to'); ?> <?php SP()->primitives->admin_etext('Build'); ?> <?php echo SPBUILD; ?>)
+				</h3>
+				<p><?php echo SP()->primitives->admin_text('As with all WordPress related updates we recommend that you backup your site before proceeding with this upgrade.') ?></p>				
+			</div>
+			<hr />
+			<?php
+			$f = 'update' . str_replace('.', '-', SPVERSION) . '.html';
+			$path = SP_PLUGIN_DIR . '/sp-startup/install/resources/versions/' . $f;
+			if (file_exists($path)) {
+				readfile($path);
+			}
+			?>
+			<form name="sfupgrade" method="post" action="<?php echo admin_url('admin.php?page=' . SPINSTALLPATH); ?>">
+				<?php if (SPVERSION == '5.0.0' && substr(SP()->options->get('sfversion'), 0, 1) != '5') { ?>
+					<p><b><input type="checkbox" name="dostorage" id="dostorage" />
+							<label for="dostorage"><?php SP()->primitives->admin_etext('Check this box to have the upgrade attempt to convert current storage locations to V5 format (optional)'); ?></label>
+						</b></p>
+				<?php } ?>
+
+				<input type="submit" class="sf-button-primary" id="sbutton" name="goupgrade" value="<?php SP()->primitives->admin_etext('Perform Upgrade'); ?>" />
+				<?php if (is_multisite() && is_super_admin()) { ?>
+					<input type="submit" class="sf-button-primary" id="sbutton" name="gonetworkupgrade" value="<?php SP()->primitives->admin_etext('Perform Network Upgrade'); ?>" />
+				<?php } ?>
+			</form>
+		</div>
     </div>
     <?php
 }
