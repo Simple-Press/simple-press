@@ -1,7 +1,7 @@
-/* Simple:Press Version 5.0 Install/Upgrade */
+/* Simple:Press Version 6.0 Install/Upgrade */
 
 /* ---------------------------------
- Simple:Press - Version 5.0
+ Simple:Press - Version 6.0
  Forum Javascript loaded in footer after page loads
 
  $LastChangedDate: 2016-11-21 09:37:50 -0800 (Mon, 21 Nov 2016) $
@@ -20,7 +20,7 @@
 		try {
 			var phaseTotal = (parseInt(phaseCount) + parseInt(subPhaseCount));
                         
-                        currentPhase = parseInt(currentPhase);
+			currentPhase = parseInt(currentPhase);
 
 			/* If first time in - load up message strings and initialize progress */
 			if (currentPhase == 0) {
@@ -47,8 +47,8 @@
 				thisUrl = thisUrl + '&subphase=' + currentSubPhase;
 			}
 
-                        $("#zone" + currentPhase).addClass('sf-processing')
-                                .find('.sf-icon').removeClass('sf-waiting').addClass('sf-working');
+			$("#zone" + currentPhase).addClass('sf-processing')
+				.find('.sf-icon').removeClass('sf-waiting').addClass('sf-working');
 
 			$("#zone0").load(thisUrl, function(a, b) {
 				/* check for errors first */
@@ -61,8 +61,8 @@
 					return;
 				}
 
-                                $("#zone" + currentPhase).removeClass('sf-processing').addClass('sf-ready')
-                                        .find('.sf-icon').removeClass('sf-working').addClass('sf-check');
+				$("#zone" + currentPhase).removeClass('sf-processing').addClass('sf-ready')
+					.find('.sf-icon').removeClass('sf-working').addClass('sf-check');
 
 				if (currentPhase == 8) {
 					currentSubPhase++;
