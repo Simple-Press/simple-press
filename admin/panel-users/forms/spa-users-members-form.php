@@ -499,16 +499,21 @@ function spa_users_members_form() {
 
     <script>
 		
-		$('.search-box input[type="search"]').keyup( function(e) {
+		(function (spj, $, undefined) {
+            $(document).ready(function () {
+				$('.search-box input[type="search"]').keyup( function(e) {
 			
-			if( e.which == 13 ) {
-				$('select[name^="action"]').val('-1');
-				
-				$('input[type=hidden][name=s]').val($(this).val());
-				$(this).closest('form').submit();
-			}
-			
+					if( e.which == 13 ) {
+						$('select[name^="action"]').val('-1');
+
+						$('input[type=hidden][name=s]').val($(this).val());
+						$(this).closest('form').submit();
+					}
+
+				});
+			})
 		});
+		
 		
 		
 		spj.after_users_listing();
