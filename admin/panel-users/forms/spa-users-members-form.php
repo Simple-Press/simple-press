@@ -499,8 +499,9 @@ function spa_users_members_form() {
 
     <script>
 		
-		(function (spj, $, undefined) {
-            $(document).ready(function () {
+		(function($) {
+			$(function() {
+				
 				$('.search-box input[type="search"]').keyup( function(e) {
 			
 					if( e.which == 13 ) {
@@ -512,7 +513,8 @@ function spa_users_members_form() {
 
 				});
 			})
-		});
+			
+}(jQuery))
 		
 		
 		
