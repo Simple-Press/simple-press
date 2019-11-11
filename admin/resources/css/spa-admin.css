@@ -121,6 +121,7 @@ $Rev:2099 $
     padding: .2em 1em .2em;
     position: relative;
     height: 22px;
+    box-sizing: content-box !important;
 }
 .ui-dialog .ui-dialog-title {
     float: left;
@@ -3496,6 +3497,11 @@ body .spMobileTableData .row-actions > span {
     .sf-showm{
         display: table-row;
     }
+    
+    #members-filter .mobile_rows_container.sf-showm {
+            display: block;
+    }
+    
     .sf-panel-body-top-left-midle{
         float: left;
         padding: 10px 10px 0 10px;
@@ -3632,6 +3638,7 @@ body .spMobileTableData .row-actions > span {
 
 /*Users => Member Information start*/
 .spMobileTableDataUsers {
+    margin-top: 10px;
     display: grid;
     width: 100%;
     grid-template-columns: 1fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr 3fr 3fr 1fr;
@@ -3648,12 +3655,25 @@ body .spMobileTableData .row-actions > span {
 body .spMobileTableDataUsers .row-actions {
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 5px;
+    position: initial;
 }
 body .spMobileTableDataUsers .row-actions > span {
+    display: block;
+    float: left;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+body .spMobileTableDataUsers .row-actions a {
     text-align: center;
     background-color: #F9F9F9;
     border-radius: 5px;
+    background: #f9f9f9;
+    padding: 10px;
+    margin-right: 10px;
 }
+
 .spMobileTableDataUsers .column-more {
     display: flex;
     align-items: center;

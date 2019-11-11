@@ -10,8 +10,12 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 
 require_once 'spa-iconsets.php';
 
-wp_enqueue_script( 'wp-color-picker' );
-wp_enqueue_style( 'wp-color-picker' );
+function spa_enqueue_color_picker() {
+	wp_enqueue_script( 'wp-color-picker' );
+	wp_enqueue_style( 'wp-color-picker' );
+}
+
+add_action( 'admin_enqueue_scripts', 'spa_enqueue_color_picker' );
 
 function spa_get_forums_in_group($groupid) {
 	return SP()->DB->table(SPFORUMS, "group_id=$groupid", '', 'forum_seq');
