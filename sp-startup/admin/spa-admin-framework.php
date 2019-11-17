@@ -11,7 +11,7 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 
 function spa_enqueue_datepicker() {
 	
-	$spAdminUIStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'jquery-ui.css' : SPADMINCSS.'jquery-ui.min.css';
+	$spAdminUIStyleUrl = SPADMINCSS.'jquery-ui.css';
 	wp_register_style('spAdminUIStyle', $spAdminUIStyleUrl, array(), SP_SCRIPTS_VERSION);
 	wp_enqueue_style('spAdminUIStyle');
 	
@@ -21,7 +21,7 @@ function spa_enqueue_datepicker() {
 
 function spa_enqueue_font_icon_picker() {
 	
-	$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'jquery.fonticonpicker.js' : SPAJSCRIPT.'jquery.fonticonpicker.min.js';
+	$script = SPAJSCRIPT.'jquery.fonticonpicker.js';
 	
 	
 	wp_enqueue_script('sffonticonpicker', $script, array(
@@ -29,7 +29,7 @@ function spa_enqueue_font_icon_picker() {
 			), SP_SCRIPTS_VERSION, false);
 	
 	
-	$theme_css = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS . 'bootstrap-theme/jquery.fonticonpicker.bootstrap.css' : SPADMINCSS . 'bootstrap-theme/jquery.fonticonpicker.bootstrap.min.css';
+	$theme_css = SPADMINCSS . 'bootstrap-theme/jquery.fonticonpicker.bootstrap.css';
 	
 	wp_enqueue_style( 'jquery.fonticonpicker-css', SPADMINCSS . 'jquery.fonticonpicker.min.css', array(), SP_SCRIPTS_VERSION );
 	wp_enqueue_style( 'jquery.fonticonpicker.bootstrap-css', $theme_css, array(), SP_SCRIPTS_VERSION );
@@ -44,7 +44,7 @@ function spa_enqueue_font_icon_picker() {
  * @return void
  */
 function spa_load_admin_css() {
-	$spAdminStyleUrl = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPADMINCSS.'spa-admin.css' : SPADMINCSS.'spa-admin.min.css';
+	$spAdminStyleUrl = SPADMINCSS.'spa-admin.css';
 	wp_register_style('spAdminStyle', $spAdminStyleUrl, array(), SP_SCRIPTS_VERSION);
 	
 	wp_enqueue_style('spAdminStyle');
@@ -71,11 +71,11 @@ function spa_load_admin_scripts() {
 		if (SP()->admin->adminPage != 'notice') {
 			do_action('sph_scripts_admin_start');
 
-			$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'ajaxupload/ajaxupload.js' : SPAJSCRIPT.'ajaxupload/ajaxupload.min.js';
+			$script = SPAJSCRIPT.'ajaxupload/ajaxupload.js';
 			wp_enqueue_script('sfajaxupload', $script, array(
 				'jquery'), SP_SCRIPTS_VERSION, false);
 
-			$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'nested-sortable/jquery.ui.nested.js' : SPAJSCRIPT.'nested-sortable/jquery.ui.nested.min.js';
+			$script = SPAJSCRIPT.'nested-sortable/jquery.ui.nested.js';
 			wp_enqueue_script('sfanestedsortable', $script, array(
 				'jquery',
 				'jquery-ui-core',
@@ -87,7 +87,7 @@ function spa_load_admin_scripts() {
 		
 		spa_enqueue_datepicker();
 		
-		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin.js' : SPAJSCRIPT.'spa-admin.min.js';
+		$script = SPAJSCRIPT.'spa-admin.js';
 		wp_enqueue_script('sfadmin', $script, array(
 			'jquery',
 			'jquery-form',
@@ -106,7 +106,7 @@ function spa_load_admin_scripts() {
 		$platform = apply_filters('sph_platform_vars', $platform);
 		wp_localize_script('sfadmin', 'sp_platform_vars', $platform);
 
-		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPCJSCRIPT.'sp-common.js' : SPCJSCRIPT.'sp-common.min.js';
+		$script = SPCJSCRIPT.'sp-common.js';
 		wp_enqueue_script('spcommon', $script, array(
 			'jquery',
 			'jquery-ui-core',
@@ -120,7 +120,7 @@ function spa_load_admin_scripts() {
 			'jquery-ui-mouse'), false, false);
 
 		# load up admin event handlers
-		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin-events.js' : SPAJSCRIPT.'spa-admin-events.min.js';
+		$script = SPAJSCRIPT.'spa-admin-events.js';
 		wp_enqueue_script('spadminevents', $script, array(
 			'jquery',
 			'sfadmin',
@@ -137,7 +137,7 @@ function spa_load_admin_scripts() {
 			'callback'	 => 'spa_add_slider_help'));
 	} else {
 		# Install and Upgrade
-		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.js' : SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.min.js';
+		$script = SP_PLUGIN_URL.'/sp-startup/install/resources/jscript/sp-install.js';
 		wp_enqueue_script('sfjs', $script, array(
 			'jquery',
 			'jquery-ui-core',
@@ -244,7 +244,7 @@ function spa_admin_footer_scripts() {
 				$panel = (!empty($sfactivepanels[SP()->admin->adminPage])) ? $sfactivepanels[SP()->admin->adminPage] : 0;
 			}*/
 
-			$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SPAJSCRIPT.'spa-admin-footer.js' : SPAJSCRIPT.'spa-admin-footer.min.js';
+			$script = SPAJSCRIPT.'spa-admin-footer.js';
 			wp_enqueue_script('sfadminfooter', $script, array(
 				'jquery',
 				'jquery-ui-core',
