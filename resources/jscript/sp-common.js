@@ -69,6 +69,8 @@
 		if (sp_platform_vars.tooltips) {
 			$('.ui-tooltip').hide();
 		}
+                
+                $('.ui-dialog').prependTo('#sf-root-wrap');
 	}
 
 	// public methods

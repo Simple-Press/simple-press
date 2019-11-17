@@ -1542,8 +1542,8 @@ function sp_ProfileShowSearchPosts($args = '', $label = '', $labelStarted = '', 
 		$text1 = $labelPosted;
 		$text2 = $labelStarted;
 	}
-	$out .= '<input type="submit" class="spSubmit" name="membersearch" value="'.$text1.'" />';
-	$out .= '<input type="submit" class="spSubmit" name="memberstarted" value="'.$text2.'" />';
+	$out .= '<input type="submit" class="spSubmit sf-button-primary" name="membersearch" value="'.$text1.'" />';
+	$out .= '<input type="submit" class="spSubmit sf-button-primary" name="memberstarted" value="'.$text2.'" />';
 	$out .= '</form>';
 	$out .= "</div>\n";
 

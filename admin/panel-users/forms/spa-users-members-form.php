@@ -455,7 +455,7 @@ function spa_users_members_form() {
             ?>
         </div>
 
-        <div class="sf-showm">
+        <div class="sf-showm mobile_rows_container">
             <input type="checkbox" name="cbhead" id="cbhead_mob"/>
             <label class="wp-core-ui sf-label-select-all" for='cbhead_mob'>SELECT ALL</label>
                 <?php
@@ -499,16 +499,51 @@ function spa_users_members_form() {
 
     <script>
 		
-		$('.search-box input[type="search"]').keyup( function(e) {
-			
-			if( e.which == 13 ) {
-				$('select[name^="action"]').val('-1');
+		(function($) {
+			$(function() {
 				
-				$('input[type=hidden][name=s]').val($(this).val());
-				$(this).closest('form').submit();
-			}
+				$('.search-box input[type="search"]').keyup( function(e) {
 			
-		});
+					if( e.which == 13 ) {
+						$('select[name^="action"]').val('-1');
+
+						$('input[type=hidden][name=s]').val($(this).val());
+						$(this).closest('form').submit();
+					}
+
+				});
+				
+				
+				
+				$('#cbhead_mob').on('change', function() {
+					if( $(this).prop('checked') ) {
+						$('.spMobileTableDataUsers .check-column input[type=checkbox]').prop('checked', true );
+					} else {
+						$('.spMobileTableDataUsers .check-column input[type=checkbox]').prop('checked', false );
+					}
+				});
+				
+				
+				$('.spMobileTableDataUsers .check-column input[type=checkbox]').on('change', function() {
+					if( !$(this).prop('checked') ) {
+						$('#cbhead_mob').prop( 'checked', false );
+					}
+					
+					
+					if( $(this).prop('checked') ) {
+						
+						if( $('.spMobileTableDataUsers .check-column input[type=checkbox]:not(:checked)').length === 0 ) {
+							$('#cbhead_mob').prop( 'checked', true );
+						}
+						
+					}
+					
+				});
+			});
+				
+			
+}(jQuery))
+		
 		
 		
 		spj.after_users_listing();
@@ -517,15 +552,10 @@ function spa_users_members_form() {
         // More Column
         if (jQuery(window).width() < 768) putDiv();
         var $action = jQuery('.row-actions');
-        jQuery('.row-actions').remove();
         jQuery('.spMobileTableDataUsers .column-more').each(function (index) {
             jQuery(this).addClass('sf-hide-mobile');
             jQuery(this).append($action[index]);
             jQuery(this).append("<div class=\"drop-down\"><span class=\"sf-icon sf-gray sf-more\"></div>");
-        });
-        jQuery('.spMobileTableDataUsers .column-user_id').each(function (index) {
-            jQuery(this).append($action[index]);
-            jQuery(this).find('.row-actions').addClass('sf-hide-full');
         });
 
         jQuery('.column-more .row-actions').toggleClass('hide');
