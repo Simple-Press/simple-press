@@ -289,7 +289,7 @@ function sp_go_upgrade($current_version, $current_build) {
 				<p><b>If there are any messages shown below, please copy and include them on any support forum question you may have.</b></p>
 			</div>
 			<?php
-			$messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
+			$messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed - please upgrade your plugins and themes to the latest versions!')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
 			$out = '<script>' . "\n";
 			$out .= '(function(spj, $, undefined) {';
 			$out .= 'spj.performUpgrade("' . $phpfile . '", "' . $current_build . '", "' . $targetbuild . '", "' . $current_build . '", "' . $image . '", "' . $messages . '", "' . SP()->spPermalinks->get_url() . '", "' . SP_FOLDER_NAME . '");' . "\n";
@@ -352,7 +352,7 @@ function sp_go_network_upgrade($current_version, $current_build) {
             SP()->options->update('sfStartUpgrade', $current_build);
 
             # upgrade the network site
-            $messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
+            $messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed - please upgrade your plugins and themes to the latest versions!')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
             $out .= '<script>' . "\n";
             $out .= '(function(spj, $, undefined) {';
             $out .= 'spj.performUpgrade("' . $phpfile . '", "' . $current_build . '", "' . $targetbuild . '", "' . $current_build . '", "' . $image . '", "' . $messages . '", "' . SP()->spPermalinks->get_url() . '", "' . SP_FOLDER_NAME . '");' . "\n";
