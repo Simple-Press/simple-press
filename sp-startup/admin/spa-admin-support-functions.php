@@ -1074,13 +1074,13 @@ function spa_check_plugin_addon_update() {
 
 		$sp_news = SP()->meta->get('news', 'news');
 		if (empty($sp_news)) {
-			$sp_news_meta = array('show' => 1, 'news' => 'There is one or more Simple:Press plugin updates available');
+			$sp_news_meta = array('show' => 1, 'news' => 'There are one or more Simple:Press plugin updates available');
 			SP()->meta->add('news', 'news', $sp_news_meta);
 		}else{
 
 			if(!isset($sp_news[0]['meta_value']['news'])){
 				$sp_news[0]['meta_value']['show'] = 1;
-				$sp_news[0]['meta_value']['news'] = 'There is one or more Simple:Press plugin updates available';
+				$sp_news[0]['meta_value']['news'] = 'There are one or more Simple:Press plugin updates available';
 				SP()->meta->update('news', 'news', $sp_news[0]['meta_value'], $sp_news[0]['meta_id']);
 			}
 		}
@@ -1254,12 +1254,12 @@ function spa_check_theme_addon_update(){
 
 		$sp_news = SP()->meta->get('news', 'news');
 		if (empty($sp_news)) {
-			$sp_news_meta = array('show' => 1, 'news' => 'There is one or more Simple:Press plugin updates available');
+			$sp_news_meta = array('show' => 1, 'news' => 'There are one or more Simple:Press plugin updates available');
 			SP()->meta->add('news', 'news', $sp_news_meta);
 		}else{
 			if(!isset($sp_news[0]['meta_value']['news'])){
 				$sp_news[0]['meta_value']['show'] = 1;
-				$sp_news[0]['meta_value']['news'] = 'There is one or more Simple:Press plugin updates available';
+				$sp_news[0]['meta_value']['news'] = 'There are one or more Simple:Press plugin updates available';
 				SP()->meta->update('news', 'news', $sp_news[0]['meta_value'], $sp_news[0]['meta_id']);
 			}
 		}

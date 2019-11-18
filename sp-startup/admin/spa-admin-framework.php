@@ -422,7 +422,7 @@ function spa_check_warnings() {
 	# check for plugins with updates
 	$up = get_site_transient('sp_update_plugins');
 	if (!empty($up)) {
-		$msg = apply_filters('sph_plugins_update_notice', SP()->primitives->admin_text('There is one or more Simple:Press plugin updates available'));
+		$msg = apply_filters('sph_plugins_update_notice', SP()->primitives->admin_text('There are one or more Simple:Press plugin updates available'));
 		if (!empty($msg)) {
 			$update = true;
 			$update_msg .= $msg.'<br />';
@@ -432,7 +432,7 @@ function spa_check_warnings() {
 	# check for themes with updates
 	$up = get_site_transient('sp_update_themes');
 	if (!empty($up)) {
-		$msg = apply_filters('sph_themes_update_notice', SP()->primitives->admin_text('There is one or more Simple:Press theme updates available'));
+		$msg = apply_filters('sph_themes_update_notice', SP()->primitives->admin_text('There are one or more Simple:Press theme updates available'));
 		if (!empty($msg)) {
 			$update = true;
 			$update_msg .= $msg.'<br />';
