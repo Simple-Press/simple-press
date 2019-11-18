@@ -431,13 +431,13 @@ function spa_setup_admin_menu() {
 }
 
 
-add_action( 'admin_enqueue_scripts', 'spa_enqueue_dashboard_style' );
+add_action( 'admin_enqueue_scripts', 'spa_enqueue_menu_style' );
 
 /**
  * Add css for forum menu icon
  */
-function spa_enqueue_dashboard_style() {
-	$spAdminDashboardUrl = SPADMINCSS.'spa-dashboard.css';
-	wp_register_style('spAdminDashboard', $spAdminDashboardUrl, array(), SP_SCRIPTS_VERSION);
-	wp_enqueue_style('spAdminDashboard');
+function spa_enqueue_menu_style() {
+	$spAdminMenuUrl = SPADMINCSS.'spa-menu.css';
+	wp_register_style('spAdminMenu', $spAdminMenuUrl, array(), SP_SCRIPTS_VERSION);
+	wp_enqueue_style('spAdminMenu');
 }
