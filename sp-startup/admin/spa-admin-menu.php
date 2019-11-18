@@ -429,3 +429,15 @@ function spa_setup_admin_menu() {
 	$sfadminpanels = apply_filters('sf_admin_panels', $sfadminpanels);
 	$sfactivepanels = apply_filters('sf_admin_activepanels', $sfactivepanels);
 }
+
+
+add_action( 'admin_enqueue_scripts', 'spa_enqueue_dashboard_style' );
+
+/**
+ * Add css for forum menu icon
+ */
+function spa_enqueue_dashboard_style() {
+	$spAdminDashboardUrl = SPADMINCSS.'spa-dashboard.css';
+	wp_register_style('spAdminDashboard', $spAdminDashboardUrl, array(), SP_SCRIPTS_VERSION);
+	wp_enqueue_style('spAdminDashboard');
+}
