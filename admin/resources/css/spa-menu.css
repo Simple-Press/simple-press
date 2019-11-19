@@ -14,7 +14,16 @@ Simple:Press Admin Menu CSS
 }
 
 
-#toplevel_page_simple-press-admin-panel-forums-spa-forums .wp-menu-image:before {
+/* 
+ 
+ Set the menu icon - note that this is harcoded to assume that SP is installed 
+ in the simple-press or simplepress folders.  Any other folder and the icon
+ will not show up when the admin isn't directly on the menu.
+ 
+ When the admin is directly on the menu, the icon is set by the spa-admin.css file.
+*/
+#toplevel_page_simple-press-admin-panel-forums-spa-forums .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-forums-spa-forums .wp-menu-image:before {
     font-family: sp-admin !important;
     content: "\e100";
 }
