@@ -600,6 +600,7 @@
                 $('#sfmaincontainer').off('troubleshootingformloaded');
 		$('#sfmaincontainer').on('troubleshootingformloaded', function() {
 			searchTool.init();
+                        troubleshooting.init();
 		});
 	});
 

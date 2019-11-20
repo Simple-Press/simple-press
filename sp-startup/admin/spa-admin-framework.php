@@ -336,20 +336,6 @@ function spa_render_sidemenu() {
 		echo '</div>'."\n";
 	} else {
 		
-		echo '<table class="sfamenutable" style="float : right;">';
-		echo '<tr>';
-
-		$site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
-		$target = 'sfmaincontainer';
-		echo '<td style="text-align:right"><input style="font-weight:bold;" type="button" id="spHelp" class="sf-button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help & Troubleshooting').'" data-url="'.$site.'" data-target="'.$target.'" /></td>';
-
-		$site = wp_nonce_url(SPAJAXURL.'adminsearch', 'adminsearch');
-		$target = 'sfmaincontainer';
-
-		echo '<td style="text-align:right"><input style="margin-left: 5px;margin-right:0; font-weight:bold;" type="button" id="spSearch" class="sf-button-primary spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('What do you need to do?').'" data-url="'.$site.'" data-target="'.$target.'" /></td>';
-
-		echo '</tr></table>';
-		
 		echo '<div style="clear: both;float: none;"></div>';
 		
 		
