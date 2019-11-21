@@ -104,15 +104,15 @@ function sp_install_required() {
             # OK - we can contiunue to offer full install
             ?>
             <div class="sf-panel-head">
-                <div class='sf-buttons'>
-                    <span class="sf-button"><span class="sf-icon sf-help"></span><?php echo SP()->primitives->admin_etext('Installation Help') ?></span>
+                <div class='sf-buttons'>					
+					<?php echo '<a class="sf-button sf-help" target="_blank" href="https://simple-press.com/documentation/installation/new-install/install/">'.SP()->primitives->admin_text('Installation Help').'</a>'; ?>
                 </div>
                 <h3><?php SP()->primitives->admin_etext('Simple:Press'); ?> <?php echo SPVERSION; ?> <?php SP()->primitives->admin_etext('Installation'); ?></h3>
             </div>
             <form class="sf-panel-body" name="sfinstall" method="post" action="<?php echo admin_url('admin.php?page=' . SPINSTALLPATH); ?>">
                 <div class="sf-form-row">
                     <label for="pagename"><?php echo SP()->primitives->admin_etext('Forum Name') ?></label>
-                    <input type="text" id="pagename" name="pagename" tabindex="3" placeholder="<?php SP()->primitives->admin_etext('WordPress page name you want the forum to appear on'); ?>" />
+                    <input type="text" id="pagename" name="pagename" tabindex="3" placeholder="<?php SP()->primitives->admin_etext('WordPress page name you want the forum to appear on (default is FORUM)'); ?>" />
                     <span class="sf-sublabel sf-sublabel-small">
                         <?php SP()->primitives->admin_etext('Simple:Press creates a new WordPress page for the forum display - the default name is Forum'); ?>
                     </span>
@@ -122,7 +122,7 @@ function sp_install_required() {
                     <label class="wp-core-ui" for="sample">
                         <?php SP()->primitives->admin_etext('Include some basic Sample Data when performing the forum installation'); ?>
                         <span class="sf-sublabel sf-sublabel-small">
-                            <?php SP()->primitives->admin_etext('If you opt to include the sample data it can be later removed with a simple click of a supplied button'); ?>
+                            <?php SP()->primitives->admin_etext('If you opt to include the sample data it can be removed later with the simple click of a button'); ?>
                         </span>
                     </label>
                 </div>
