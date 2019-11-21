@@ -2767,6 +2767,18 @@ div[class^="collapsible-"] {
     height: auto;
 }
 
+/* Some styles on the help screens...*/
+#sfmaincontainer .codex-head{
+	/* Mostly used on the first screen that the user sees after installation*/
+	font-weight: bold;
+	font-size: 22px;
+}
+#sfmaincontainer .codex-sub{
+	/* Mostly used on the first screen that the user sees after installation*/
+	font-weight: bold;
+	font-size: 18px;
+}
+/* End Some styles on the help screens...*/
 
 .spMobileTableData {
 /*    display: grid;
