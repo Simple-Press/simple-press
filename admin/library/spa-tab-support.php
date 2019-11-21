@@ -34,21 +34,21 @@ function spa_paint_tab_head( $tabname, $buttons = true ) {
 		echo '<a class="sf-button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>';
 	
 		$site = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
-		$title = SP()->primitives->admin_text('About Simple:Press');
+		$title = SP()->primitives->admin_text('About');
 	
 		echo '<a class="sf-button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>';
 	
-		echo '<a class="sf-button" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Simple:Press Online Documentation').'</a>';
+		echo '<a class="sf-button" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Documentation').'</a>';
 		
 		
 		$site = wp_nonce_url(SPAJAXURL.'adminsearch', 'adminsearch');
 		$target = 'sfmaincontainer';
-		echo '<input type="button" id="spSearch" class="sf-button spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('What do you need to do?').'" data-url="'.$site.'" data-target="'.$target.'" />';
+		echo '<input type="button" id="spSearch" class="sf-button spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Glossary').'" data-url="'.$site.'" data-target="'.$target.'" />';
 		
 		
 		$site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
 		$target = 'sfmaincontainer';
-		echo '<input type="button" id="spHelp" class="sf-button spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help & Troubleshooting').'" data-url="'.$site.'" data-target="'.$target.'" />';
+		echo '<input type="button" id="spHelp" class="sf-button spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help').'" data-url="'.$site.'" data-target="'.$target.'" />';
 	
 		echo "</div>";
 	
