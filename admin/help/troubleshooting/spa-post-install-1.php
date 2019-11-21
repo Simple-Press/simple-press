@@ -14,9 +14,6 @@
 
 	<div class="sfform-panel-spacer"></div>
 
-
-	<img class="spLeft" src="<?php echo SPCOMMONIMAGES; ?>question.png" alt="" title="" />
-	<div class="codex-head">Getting you Started</div>
 	<div class="clearboth"></div>
 
 	<span class="spaicon-Admins post-install"></span>

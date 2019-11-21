@@ -99,7 +99,7 @@ spa_paint_close_tab();
 
 echo '<div class="sfform-panel-spacer"></div>';
 
-spa_paint_open_tab(SP()->primitives->admin_text('Support and Customisation'));
+spa_paint_open_tab(SP()->primitives->admin_text('Support and Customization'));
 
 spa_paint_open_panel();
 echo '<div class="helpAndFAQ">';
