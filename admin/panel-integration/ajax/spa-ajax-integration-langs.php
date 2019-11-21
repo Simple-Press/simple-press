@@ -32,17 +32,17 @@ function spa_download_language_file($item) {
 	if (isset($_GET['name'])) $itemName = SP()->filters->str($_GET['name']);
 
 	if ($item == 'corefront' || $item == 'coreadmin') {
-		$url = 'http://glotpress.simple-press.com/glotpress/projects/simple-press-core/version-'.SP()->filters->str($_GET['version']).'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
+		$url = 'https://glotpress.simple-press.com/glotpress/projects/simple-press-core/version-'.SP()->filters->str($_GET['version']).'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
 		$home = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/'.$homeName.'-'.$locale.'.mo';
 	}
 
 	if ($item == 'theme') {
-		$url = 'http://glotpress.simple-press.com/glotpress/projects/simple-press-themes/'.$itemName.'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
+		$url = 'https://glotpress.simple-press.com/glotpress/projects/simple-press-themes/'.$itemName.'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
 		$home = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp-themes'].'/'.$homeName.'-'.$locale.'.mo';
 	}
 
 	if ($item == 'plugin') {
-		$url = 'http://glotpress.simple-press.com/glotpress/projects/simple-press-plugins/'.$itemName.'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
+		$url = 'https://glotpress.simple-press.com/glotpress/projects/simple-press-plugins/'.$itemName.'/'.$homeName.'/'.$langCode.'/default/export-translations?format=mo';
 		$home = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp-plugins'].'/'.$homeName.'-'.$locale.'.mo';
 	}
 
