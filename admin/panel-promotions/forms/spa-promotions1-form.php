@@ -9,9 +9,12 @@ $Rev: 15817 $
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function spa_promotions_1_form() {
+	
+	spa_paint_open_tab('Simple:Press Forums - Specials and Promotions');
+		
+	spa_paint_close_tab();
 ?>
 	<div class="spa-promo-row spa-promo-row1">
-		<h1><?php echo SP()->primitives->admin_text('Simple:Press Forums - Specials and Promotions');?></h1>
 		<p><?php echo SP()->primitives->admin_text('Simple:Press has premium options that can supercharge your forums - check some of them out below!');?></p>
 	</div>
 	<div class="spa-promo-row spa-promo-row2">
