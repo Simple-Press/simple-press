@@ -6,11 +6,9 @@ $Rev:2099 $
 
 /* Some overrides of WP Admin to fit our panels */
 
-@import url(//fonts.googleapis.com/css?family=Open+Sans);
-/*@import url(//use.fontawesome.com/releases/v5.8.2/css/all.css);*/
+@import url(//fonts.googleapis.com/css?family=Open+Sans,400,600,800,900);
 
-/*@import url(./scrapyard.css);*/
-
+/*
 @font-face {
     font-family: 'Open Sans Semibold';
     font-style: normal;
@@ -19,6 +17,7 @@ $Rev:2099 $
         url(./fonts/open-sans-semibold.woff) format('woff'),
         url(./fonts/open-sans-semibold.ttf) format('truetype');
 }
+*/
 
 @font-face {
     font-family: 'sp-admin';
@@ -29,6 +28,16 @@ $Rev:2099 $
         url('fonts/sp-admin.svg?-1norbm#sp-admin') format('svg');
     font-weight: normal;
     font-style: normal;
+}
+
+/* 
+ Set the H2 font used throughout the admin area.
+ Applicable as long as its inside the SF container with the #sfmaincontainer css ID...
+*/
+#sfmaincontainer h2 {
+	font-family: 'Open Sans';
+	font-size: 1.3em;
+	font-weight: normal;
 }
 
 .sfhelptext td.spaErrCell {
@@ -771,7 +780,7 @@ $Rev:2099 $
     font-family: "Open Sans Semibold";
 }
 #sf-root-wrap label strong {
-    font-family: "Open Sanse";
+    font-family: "Open Sans";
     font-weight: 600;
 }
 
