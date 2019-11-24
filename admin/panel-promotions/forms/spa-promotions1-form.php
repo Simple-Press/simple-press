@@ -19,8 +19,8 @@ function spa_promotions_1_form() {
 	</div>
 	<div class="spa-promo-row spa-promo-row2">
 		<div class="spa-promo-col spa-promo-box">
-			<h1><?php echo SP()->primitives->admin_text('Platinum - $199/yr');?></h1>
-			<p><?php echo SP()->primitives->admin_text('Over 100 additional features are included in our Simple:Press Forums Platinum Bundle including:');?></p>
+			<h1><?php echo SP()->primitives->admin_text('Simple:Press Forums Platinum Bundle - $199/yr');?></h1>
+			<p><?php echo SP()->primitives->admin_text_noesc('Over 100 additional features are included in our <b>Simple:Press Forums Platinum Bundle</b> including:');?></p>
 			<ul>
 				<li><?php echo SP()->primitives->admin_text('Enhanced charts and statistics');?></p></li>
 				<li><?php echo SP()->primitives->admin_text('Private messaging');?></p></li>
@@ -50,6 +50,9 @@ function spa_promotions_1_form() {
 		</div>
 	</div>
 	<div class="spa-promo-row spa-promo-row3">
+		<h2><?php echo sprintf(SP()->primitives->admin_text_noesc('Need general WordPress support, FAST?  Then check out <a href="%1s">GetSupportWP.com</a>'),'https://www.getsupportwp.com/?utm_source=simple-press-plugin-promotions-page');?></h2>
+	</div>		
+	<div class="spa-promo-row spa-promo-row4">
 		<div class="spa-promo-col spa-promo-box">
 			<h1><?php echo SP()->primitives->admin_text('Simple:Press Member Subscriptions - Starting at $99/yr');?></h1>
 			<p><?php echo SP()->primitives->admin_text('Need to charge users for access to your site or forum?  The Simple:Press Member Subscriptions plugin has you covered!');?></p>
