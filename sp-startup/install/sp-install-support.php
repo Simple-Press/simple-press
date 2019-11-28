@@ -240,7 +240,6 @@ function sp_install_iconsets() {
 		
 		$default = array(
 			'id' => $iconset_id,
-			'path' => $iconsets_base_dir . $iconset_id,
 			'active' => false
 		);
 		
