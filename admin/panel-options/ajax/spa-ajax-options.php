@@ -42,8 +42,8 @@ if ($action == 'deliconset') {
 	
 	if( isset( $iconsets[ $iconset_id ] ) ) {
 		
-		
-		$path = $iconsets[ $iconset_id ]['path'];
+		$sfconfig   = SP()->options->get('sfconfig');
+		$path		= SP_STORE_DIR . '/' . $sfconfig['iconsets'] . '/' . $iconset_id;
 		
 		spa_remove_dir( $path . '/*');
 		

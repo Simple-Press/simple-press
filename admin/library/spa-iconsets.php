@@ -10,9 +10,10 @@
 function spa_add_iconset( $set = array() ) {
 	
 	$iconsets = spa_get_all_iconsets();
+	$sfconfig          = SP()->options->get('sfconfig');
 	
 	$id				= isset( $set['id'] )	  ? $set['id']     : rand( 1111111, 9999999 );
-	$path			= isset( $set['path'] )   ? $set['path']   : '';
+	$path			= SP_STORE_DIR . '/' . $sfconfig['iconsets'] . '/' . $id;
 	$prefix			= isset( $set['prefix'] ) ? $set['prefix'] : '';
 	$css_path		= trailingslashit( $path ) . 'style.css';
 	
@@ -193,15 +194,13 @@ add_action( 'admin_enqueue_scripts', 'sp_enqueue_iconsets' );
 function sp_enqueue_iconsets() {
 	
 	$active_iconsets = spa_get_all_active_iconsets();
+	$sfconfig          = SP()->options->get('sfconfig');
 	
 	foreach( $active_iconsets as $set_id => $iconset ) {
 		
+		$css_url = SP_STORE_URL . '/' . $sfconfig['iconsets'] . "/{$set_id}/style.css";
 		
-		$css_path = $iconset['path'] . '/style.css';
-		
-		$css_path = str_replace( SP_STORE_DIR, SP_STORE_URL, $css_path );
-		
-		wp_enqueue_style( $set_id . '-iconset-style', $css_path );
+		wp_enqueue_style( $set_id . '-iconset-style', $css_url );
 		
 	}
 }
