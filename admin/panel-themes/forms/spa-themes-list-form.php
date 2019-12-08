@@ -297,8 +297,8 @@ function spa_themes_list_form() {
 
 				# if only one overlay hide select controls
 				$style = (count($overlays) > 1) ? 'style="display:block"' : 'style="display:none"';
-				echo '<div '.$style.'>';
-    			echo SP()->primitives->admin_text('Select Overlay').': ';
+				//echo '<div '.$style.'>';
+				echo '<label>' . SP()->primitives->admin_text('Select Overlay').': ' . '</label>';
     			echo '<select name="color-'.esc_attr($curTheme['theme']).'">';
             	foreach ($overlays as $overlay) {
             		$overlay = trim($overlay);
@@ -306,10 +306,10 @@ function spa_themes_list_form() {
     				echo '<option'.$selected.' value="'.esc_attr($overlay).'">'.esc_html($overlay).'</option>';
         		}
     			echo '</select> ';
-								echo ' <input type="submit" class="sf-button-secondary action" id="update" name="update" value="'.SP()->primitives->admin_text('Update Overlay').'" />';
+								echo ' <input type="submit" class="currentThemeUpdate sf-button-secondary action" id="update" name="update" value="'.SP()->primitives->admin_text('Update Overlay').'" />';
 								echo '</form>';
 					echo '</div>';
-				echo '</div>';
+				//echo '</div>';
 
 				// if(current_theme_supports('sp-theme-customiser')) {
 				// 	echo '<b>'.SP()->primitives->admin_text('Use the Customiser option in the Simple:Press Themes menu to customise your colours').'</b>';
