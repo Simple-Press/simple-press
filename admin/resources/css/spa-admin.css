@@ -2506,6 +2506,11 @@ div[class^="collapsible-"] {
     text-align: center;
     grid-column : 2 span;
 }
+
+.spThemeContainer #current-theme .action-links form .currentThemeUpdate {
+    grid-column : 2 span;
+}
+
 .spThemeContainer #current-theme .action-links form .currentTheme span{
     line-height: 51px;
     font-weight: 600;

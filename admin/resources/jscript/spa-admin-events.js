@@ -212,11 +212,25 @@
 	accordionLoadForm = {
 		init: function() {
 			$('#sfadminmenu').off('click', '.spAccordionLoadForm');
+                        
+                        var _this = this;
 			$('#sfadminmenu').on('click', '.spAccordionLoadForm', function() {
 				var mydata = $(this).data();
 				spj.loadForm(mydata.form, mydata.url, mydata.target, mydata.img, mydata.id, mydata.open, mydata.upgrade, mydata.admin, mydata.save, mydata.sform, mydata.reload);
+                                $('#sfmaincontainer').on('adminformloaded', _this.scrollPage );
+                                
 			});
-		}
+		},
+                
+                
+                scrollPage: function() {
+                        $('html, body').animate({
+                                scrollTop: $("#sfmaincontainer").offset().top - 50
+                        }, 500);
+                        
+                        $('#sfmaincontainer').off('adminformloaded', this.scrollPage );
+                }
+                
 	};
 
 	/*****************************
