@@ -143,8 +143,9 @@ function spa_themes_list_form() {
     			echo '</select> ';
 
                 echo ' <input type="submit" class="sf-button-secondary action" id="update" name="update" value="'.SP()->primitives->admin_text('Update Overlay').'" />';
-                echo '</form>';
-				echo '</div>';
+                echo '</div>';
+				echo '</form>';
+				
 
 				if(current_theme_supports('sp-theme-customiser')) {
 					echo '<b>'.SP()->primitives->admin_text('Use the Customiser option in the Simple:Press Themes menu to customise your colours').'</b>';
@@ -261,7 +262,7 @@ function spa_themes_list_form() {
     		<p class="sf-description" style="">
     			<?php echo $themes[$curTheme['theme']]['Description']; ?>
 				</p><br/>
-				<div class="action-links">
+				
 				
 <?php
             $overlays = SP()->theme->get_overlays(SPTHEMEBASEDIR.$curTheme['theme'].'/styles/overlays');
@@ -274,6 +275,7 @@ function spa_themes_list_form() {
             }
 
             if (!empty($overlays)) {
+				echo '<div class="action-links">';
 ?>
                 <script>
                         spj.loadAjaxForm('sftheme-<?php echo esc_js($curTheme['theme']); ?>', 'sfreloadtlist');
