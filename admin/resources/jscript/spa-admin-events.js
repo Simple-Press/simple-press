@@ -225,7 +225,7 @@
                 
                 scrollPage: function() {
                         $('html, body').animate({
-                                scrollTop: $("#sfmaincontainer").offset().top - 50
+                                scrollTop: $("#sfmaincontainer").offset().top - 100
                         }, 500);
                         
                         $('#sfmaincontainer').off('adminformloaded', this.scrollPage );
@@ -617,6 +617,21 @@
                         troubleshooting.init();
 		});
 	});
+        
+        
+        
+        
+        (function ($) {
+                
+                        $(function () {
+
+                                $('body').delegate( '#sfformmsgspot button', 'click', function(e) {
+                                        $(this).closest('div.notice').remove();
+                                });
+
+                        })
+                
+                }(jQuery));
 
 	// private methods
 }(window.spj = window.spj || {}, jQuery));

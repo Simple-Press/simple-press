@@ -136,7 +136,7 @@
 	spj.loadAjaxForm = function(aForm, reLoad) {
 		$(document).ready(function() {
 			$('#' + aForm).ajaxForm({
-				target: '#sfmsgspot',
+				//target: '#sfmsgspot',
                                 
                                 beforeSerialize : function() {
                                         if( typeof tinymce !== 'undefined' ) {
@@ -147,12 +147,16 @@
 					$('#sfmsgspot').show();
 					$('#sfmsgspot').html(sp_platform_vars.pWait);
 				},
-				success: function() {
+				success: function( msg ) {
+                                        
+                                        $('#sfformmsgspot').prepend('<div class="updated notice is-dismissible">\
+                                                <p>'+msg+'</p>\
+                                                <button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>\
+                                        </div>');
+                                        
 					if (reLoad != '') {
-						$('#sfmsgspot').hide();
 						$('#' + reLoad).click();
 					}
-					$('#sfmsgspot').fadeIn();
 					$('#sfmsgspot').fadeOut(6000);
 				}
 			});

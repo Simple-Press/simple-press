@@ -17,6 +17,7 @@ function spa_render_integration_panel($formid) {
 			spa_render_sidemenu();
 		?>
 		<div id='sfmsgspot'></div>
+		<div id="sfformmsgspot"></div>
 		<div id="sfmaincontainer">
 			<?php spa_render_integration_container($formid); ?>
 		</div>

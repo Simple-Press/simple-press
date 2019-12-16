@@ -339,6 +339,10 @@ $Rev:2099 $
     border-radius: 0 0 8px 8px;
 }
 
+#sfformmsgspot {
+        margin-left: 300px;
+}
+
 #sf-root-wrap {
     margin-top: 30px;
     font-family: "Open Sans";
