@@ -628,6 +628,13 @@
                                 $('body').delegate( '#sfformmsgspot button', 'click', function(e) {
                                         $(this).closest('div.notice').remove();
                                 });
+                                
+                                // Add theme or plugin file name when selecting new file to upload
+                                $('body').delegate( '#themezip, #pluginzip', 'change', function(e) {
+                                        $(this).closest('form').find('.sf-upload-file-name label').html( e.target.files[0].name );
+                                });
+                                
+                                
 
                         })
                 
