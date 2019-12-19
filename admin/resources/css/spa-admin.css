@@ -333,19 +333,29 @@ $Rev:2099 $
 #sfmsgspot {
     display: none;
     position: fixed;
-    top: 0;
+	padding-top: 40px;
+	padding-bottom: 40px;
+    top: 45px;
+	left:40px;
+	right: 40px;
+	text-align: center;
+	width:95%;
     z-index: 1000000;
-    font-size: 90%;
+    font-size: 125%;
     font-weight: 600;
-    color: #000000;
-    border: 2px solid gray;
-    background-color: #f9fad3;
-    margin: 0 20px 0 180px !important;
-    padding: 20px;
-    width: auto;
-    -khtml-border-radius: 0 0 8px 8px;
-    -webkit-border-radius: 0 0 8px 8px;
-    border-radius: 0 0 8px 8px;
+    color: white;
+	opacity: 0.8;
+    border: 2px solid white;
+    background-color: #007BBB;
+    -khtml-border-radius: 0 0 0px 0px;
+    -webkit-border-radius: 0 0 0px 0px;
+    border-radius: 0 0 0px 0px;
+}
+
+#sfmsgspot img {
+	/* This will cause the 'working' image, if its present, to not be so close to the text being displayed in the sfmsgspot div/bubble */
+	padding-right: 10px;
+	vertical-align: middle;
 }
 
 #sf-root-wrap {
@@ -3351,6 +3361,12 @@ body .spMobileTableData .row-actions > span {
         position: absolute;
         left: 0;
     }
+	
+	/* Message bubble at the top of the screen */
+	#sfmsgspot {
+		left:0px;
+		width:99%;
+	}		
 }
 /* Available Plugins */
 .sf-panel-body-top-left-midle{
