@@ -569,14 +569,14 @@
 	$(document).ready(function() {
                 $('#sfmaincontainer').off('adminformloaded');
 		$('#sfmaincontainer').on('adminformloaded', function() {
-                        opener.init();
-                        filtering.init();
-                        tableCheckUncheckCb.init();
+			opener.init();
+			filtering.init();
+			tableCheckUncheckCb.init();
 			toggleLayer.init();
 			//toggleRow.init();
 			deleteRow.init();
 			deleteRowReload.init();
-                        hideRow.init();
+			hideRow.init();
 			loadForm.init();
 			cancelForm.init();
 			loadAjax.init();
@@ -602,20 +602,25 @@
 			profileAvatarUpdatePriorities.init();
 			themesDeleteConfirm.init();
 			themesUpload.init();
-                        themesGrid.init();
+			themesGrid.init();
 			ugShowMembers.init();
 			setForumOptions.init();
 			setForumSequence.init();
 			setForumSlug.init();
-                        prepareEditors.init();
-                        prepareDatePicker.init();
+			prepareEditors.init();
+			prepareDatePicker.init();
 		});
 
-                $('#sfmaincontainer').off('troubleshootingformloaded');
+		$('#sfmaincontainer').off('troubleshootingformloaded');
 		$('#sfmaincontainer').on('troubleshootingformloaded', function() {
 			searchTool.init();
                         troubleshooting.init();
 		});
+		
+		// Add theme or plugin file name when selecting new file to upload
+		$('body').delegate( '#themezip, #pluginzip', 'change', function(e) {
+				$(this).closest('form').find('.sf-upload-file-name label').html( e.target.files[0].name );
+		});		
 	});
 
 	// private methods

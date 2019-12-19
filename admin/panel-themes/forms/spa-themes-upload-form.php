@@ -23,6 +23,9 @@ function spa_themes_upload_form() {
             </div>
             <form method="post" enctype="multipart/form-data" action="<?php echo self_admin_url('update.php?action=upload-sp-theme'); ?>" id="sfthemeuploadform" name="sfthemeuploadform">
             <?php echo sp_create_nonce('forum-theme_upload'); ?>
+				<div class="clear"></div>
+				<div class="sf-upload-file-name"><label class="sp-label"></label></div>
+				<div class="clear"></div>			
                 <label class="sf-button-primary">
                     <input type="file" id="themezip" name="themezip" class="sf-hidden-important" />
                     <span class="sf-icon sf-icon-button sf-white sf-upload"></span>

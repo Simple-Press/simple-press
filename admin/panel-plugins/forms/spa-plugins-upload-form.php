@@ -23,6 +23,9 @@ function spa_plugins_upload_form() {
             </div>
             <form method="post" enctype="multipart/form-data" action="<?php echo self_admin_url('update.php?action=upload-sp-plugin'); ?>" id="sfpluginuploadform" name="sfpluginuploadform">
             <?php echo sp_create_nonce('forum-plugin_upload'); ?>
+				<div class="clear"></div>
+				<div class="sf-upload-file-name"><label class="sp-label"></label></div>
+				<div class="clear"></div>			
                 <label class="sf-button-primary">
                     <input type="file" id="pluginzip" name="pluginzip" class="sf-hidden-important" />
                     <span class="sf-icon sf-icon-button sf-white sf-upload"></span>

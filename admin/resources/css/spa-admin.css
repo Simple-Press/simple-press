@@ -3847,3 +3847,9 @@ input.spSpecialRankShow, input.spSpecialRankForm {
 	}
 }
 /* End promotions */
+
+/* Handle the upload file name in the themes and plugins uploader */
+.sf-upload-file-name {
+        margin: 0 0 10px 6px;
+}
+/* End Handle the upload file name in the themes and plugins uploader */
