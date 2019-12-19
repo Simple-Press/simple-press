@@ -22,9 +22,10 @@ function spa_forums_remove_perms_form() {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfallpermissionsdel" name="sfallpermissionsdel">
 <?php
 		echo sp_create_nonce('forum-adminform_allpermissionsdelete');
-		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Delete All Permission Sets'), true);
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Delete All Permission Sets'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Delete All Forum Permission Sets'), 'true', 'delete-all-forum-permission-sets');
+					echo '<div class="sf-alert-block sf-info">';
 					echo '<p>';
 					SP()->primitives->admin_etext('Warning! You are about to delete all permission sets');
 					echo '</p>';
@@ -37,12 +38,13 @@ function spa_forums_remove_perms_form() {
 					echo '<p>';
 					SP()->primitives->admin_etext('Click on the delete all permission sets button below to proceed');
 					echo '</p>';
+					echo '<div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Delete All Permission Sets'); ?>" />
+		<div class="sf-form-submit-bar">
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Delete All Permission Sets'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>

@@ -16,7 +16,7 @@ function spa_toolbox_errorlog_form() {
 <?php
 	$sflog = spa_get_errorlog_data();
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Error Log'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Error Log'), true);
 		spa_paint_open_fieldset(SP()->primitives->admin_text('Error Log'), false);
 			echo '<p>'.SP()->primitives->admin_text('Error Logging can be disabled in the Global Options panel').'<br /></p>';
 
@@ -59,9 +59,9 @@ function spa_toolbox_errorlog_form() {
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfclearlog" name="sfclearlog">
 	<?php echo sp_create_nonce('forum-adminform_clearlog'); ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Empty Error Log'); ?>" />
-	<input type="button" class="button-primary spReloadForm" id="reloadit" name="reloadit" value="<?php SP()->primitives->admin_etext('Reload Error Log'); ?>" data-target="#sfreloadel" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Empty Error Log'); ?>" />
+	<input type="button" class="sf-button-primary spReloadForm" id="reloadit" name="reloadit" value="<?php SP()->primitives->admin_etext('Reload Error Log'); ?>" data-target="#sfreloadel" />
 	</div>
 	</form>
 <?php

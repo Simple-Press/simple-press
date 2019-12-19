@@ -372,15 +372,34 @@ if ($build < $section) {
 	
 }
 
-$users = sp_get_admins();
-# set up the user(s) as SP admins
-foreach ($users as $user_id) {
-	$user->add_cap('SPF Manage Promotions');
+# Start of Upgrade Routines - 6.3.0 ============================================================
+$section = 15863;
+if ($build < $section) {
+	// blank upgrade...
+	sp_response($section);
 }
+$section = 15864;
+if ($build < $section) {
+	// blank upgrade...
+	sp_response($section);
+}
+$section = 15865;
+if ($build < $section) {	
+	# Add a role to the system...
+	$administrator_role = get_role('administrator');
+	$administrator_role->add_cap('SPF Manage Promotions');
 
-# Start of Upgrade Routines - 6.2.1 ============================================================
-
-sp_bump_build($build, 15862);
+	# Add the new role to users tagged as simple:press admins (some users may not be wp admins!)
+	$users = sp_get_admins();
+	foreach ($users as $user_id => $display_name) {
+		$user = get_user_by('ID', $user_id);
+		$user->add_cap('SPF Manage Promotions');
+	}
+	
+	sp_response($section);
+	
+}
+# End of Upgrade Routines - 6.3.0 ============================================================
 
 # ****** IMPORTANT: THE FINAL $section values MUST be the same as the SPBUILD constant
 # ******			for the Upgrade to complete correctly

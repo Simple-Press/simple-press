@@ -34,7 +34,7 @@ function sp_search_admin_tasks() {
 
 			foreach($tasks as $task) {
 				echo '<div class="task-link"></div>';
-				echo '<div style="margin:3px 0 0 27px;"><p style="line-height:1.4em;"><a href="'.$base.'/'.$task->url.'" >';
+				echo '<div class="sf-help-search-ajax-keywords-div" ><p class="sf-help-search-ajax-keywords-p"><a href="'.$base.'/'.$task->url.'" >';
 				echo $task->task;
 				echo '</a></p></div>';
 				echo '<div class="clearboth"></div>';

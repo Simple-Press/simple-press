@@ -38,8 +38,8 @@ function spa_themes_user_form($admin, $save, $form, $reload) {
 
 	if ($form) {
 ?>
-    	<div class="sfform-submit-bar">
-    	   <input type="submit" class="button-primary" value="<?php SP()->primitives->admin_etext('Update'); ?>" />
+    	<div class="sf-form-submit-bar">
+    	   <input type="submit" class="sf-button-primary" value="<?php SP()->primitives->admin_etext('Update'); ?>" />
     	</div>
         </form>
 

@@ -30,7 +30,7 @@ function spa_permissions_delete_permission_form($role_id) {
 ?>
 					<input type="hidden" name="role_id" value="<?php echo $role->role_id; ?>" />
 <?php
-					echo '<p>';
+					echo '<div class="sf-alert-block sf-info"><p>';
 					SP()->primitives->admin_etext("Warning! You are about to delete a Permission!");
 					echo '</p>';
 					echo '<p>';
@@ -41,15 +41,15 @@ function spa_permissions_delete_permission_form($role_id) {
 					echo '</p>';
 					echo '<p>';
 					SP()->primitives->admin_etext('Click on the Delete Permission button below to proceed.');
-					echo '</p>';
+					echo '</p></div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_perm_delete_perm_panel');
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="sfpermedit<?php echo $role->role_id; ?>" name="sfpermdel<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Delete Permission'); ?>" />
-		<input type="button" class="button-primary spCancelForm" data-target="#perm-<?php echo $role->role_id; ?>" id="sfpermdel<?php echo $role->role_id; ?>" name="delpermcancel<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+		<div class="sf-form-submit-bar">
+		<input type="submit" class="sf-button-primary" id="sfpermedit<?php echo $role->role_id; ?>" name="sfpermdel<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Delete Permission'); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#perm-<?php echo $role->role_id; ?>" id="sfpermdel<?php echo $role->role_id; ?>" name="delpermcancel<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 		</form>
 	<?php spa_paint_close_tab(); ?>

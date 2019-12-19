@@ -21,9 +21,10 @@ function spa_permissions_reset_perms_form() {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfresetpermissions" name="sfresetpermissions">
 <?php
 		echo sp_create_nonce('forum-adminform_resetpermissions');
-		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Reset All Permission'), true);
+		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Reset All Permission'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Reset all permissions back to initial state.'), 'true', 'reset-permissions');
+					echo '<div class="sf-alert-block sf-info">';
 					echo '<p>';
 					SP()->primitives->admin_etext('Warning! You are about to reset your permissions back to the install state.');
 					echo '</p>';
@@ -36,12 +37,13 @@ function spa_permissions_reset_perms_form() {
 					echo '<p>';
 					SP()->primitives->admin_etext('Click on the reset permissions button below to proceed');
 					echo '</p>';
+					echo '</div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 		spa_paint_close_container();
 ?>
-		<div class="sfform-submit-bar">
-		<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Reset Permissions'); ?>" />
+		<div class="sf-form-submit-bar">
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Reset Permissions'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>

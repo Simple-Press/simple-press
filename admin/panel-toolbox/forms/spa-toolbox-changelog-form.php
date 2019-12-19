@@ -12,7 +12,7 @@ function spa_toolbox_changelog_form() {
     #== CHANGELOG Tab ==========================================================
 	spa_paint_options_init();
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Change Log'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Change Log'), true);
 		spa_paint_open_panel();
     		spa_paint_open_fieldset(SP()->primitives->admin_text('Change Log'), false);
 
@@ -49,14 +49,18 @@ function spa_toolbox_changelog_form() {
     				spa_paint_open_fieldset(SP()->primitives->admin_text('Review Change Logs'), false);
     				echo '<div id="sp-changelog-list">';
     				echo '<form name="loadchangelog" method="post" action="admin.php?page='.SP_FOLDER_NAME.'/admin/panel-toolbox/spa-toolbox.php&amp;tab=changelog">';
-    				echo '<select name="clselect" class="wp-core-ui" style="vertical-align:middle;font-weight: normal;font-size:13px;">';
+    				echo '<div class="sf-select-wrap">';
+					echo '<select name="clselect" class="wp-core-ui" style="vertical-align:middle;font-weight: normal;font-size:13px;">';
     				foreach ($l->log as $x) {
     					if ($x->build == $current ? $s = " selected='selected' " : $s = '');
     					echo "<option class='wp-core-ui' value='".$x->build."' $s>".$x->build.' ('.$x->version.') - '.$x->date.'</option>';
     				}
     				echo '</select>';
-    				echo '<input type="submit" class="button-primary" id="gochangelog" name="gochangelog" value="'.SP()->primitives->admin_text('Display Change Log').'" />';
-    				echo '</form>';
+					echo '</div>';
+					echo '<div class="sf-form-submit-bar">';
+    				echo '<input type="submit" class="sf-button-primary" id="gochangelog" name="gochangelog" value="'.SP()->primitives->admin_text('Display Change Log').'" />';
+    				echo '</div>';
+					echo '</form>';
     				echo '</div>';
     				spa_paint_close_fieldset();
         		spa_paint_close_panel();
@@ -65,6 +69,6 @@ function spa_toolbox_changelog_form() {
 
 		do_action('sph_toolbox_changelog_panel');
 		spa_paint_close_container();
-		echo '<div class="sfform-panel-spacer"></div>';
+		//echo '<div class="sfform-panel-spacer"></div>';
 	spa_paint_close_tab();
 }

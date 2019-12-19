@@ -125,7 +125,7 @@ function spa_save_admins_caps_data() {
 		    			isset($manage_tools[$uid]) ||
 		    			isset($manage_plugins[$uid]) ||
 		    			isset($manage_themes[$uid]) ||
-		    			isset($manage_integration[$uid])) ||
+		    			isset($manage_integration[$uid]) ||
 		    			isset($manage_promotions[$uid]));
 		$still_admin = apply_filters('sph_admin_caps_update', $still_admin, $remove_admin, $user);
 		if (empty($still_admin)) SP()->memberData->update($uid, 'admin', 0);

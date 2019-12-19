@@ -18,15 +18,16 @@ function spa_integration_page_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'integration-loader&amp;saveform=page', 'integration-loader');
 ?>
+
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="wppageform" name="wppage">
 	<?php echo sp_create_nonce('forum-adminform_integration'); ?>
 <?php
 	spa_paint_options_init();
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('Page and Permalink'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Integration').' - '.*/SP()->primitives->admin_text('Page and Permalink'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('WP Forum Page Details'), true, 'forum-page-details');
-				if ($sfoptions['sfpage'] == 0) echo '<tr><td colspan="2"><div class="sfoptionerror">'.SP()->primitives->admin_text('ERROR: The page slug is either missing or incorrect. The forum will not display until this is corrected').'</div></td></tr>';
+				if ($sfoptions['sfpage'] == 0) echo '<tr><td colspan="2"><div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('ERROR: The page slug is either missing or incorrect. The forum will not display until this is corrected').'</div></td></tr>';
 				spa_paint_select_start(SP()->primitives->admin_text('Select the WP Page to be used to display your forum'), 'slug', 'slug');
 				echo spa_create_page_select($sfoptions['sfpage']);
 				spa_paint_select_end();
@@ -36,29 +37,54 @@ function spa_integration_page_form() {
 				$title = SP()->DB->table(SPWPPOSTS, 'ID='.$sfoptions['sfpage'], 'post_title');
 				$template = SP()->DB->table(SPWPPOSTMETA, "meta_key='_wp_page_template' AND post_id=".$sfoptions['sfpage'], 'meta_value');
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Current WP Forum Page'), false);
-					echo '<table class="form-table"><tr>';
+					echo '<table class="table widefat  sf-plugin-hide">';
+					echo '<thead><tr>';
 					echo '<th>'.SP()->primitives->admin_text('Forum page ID').'</th>';
 					echo '<th>'.SP()->primitives->admin_text('Page title').'</th>';
 					echo '<th>'.SP()->primitives->admin_text('Page template').'</th>';
-					echo '</tr>';
-					echo '<tr>';
-					echo '<td class="sflabel">'.$sfoptions['sfpage'].'</td>';
-					echo '<td class="sflabel">'.$title.'</td>';
-					echo '<td class="sflabel">'.$template.'</td>';
-					echo '</tr></table>';
+					echo '</tr></thead>';
+					echo '<tbody><tr>';
+					echo '<td>'.$sfoptions['sfpage'].'</td>';
+					echo '<td>'.$title.'</td>';
+					echo '<td>'.$template.'</td>';
+					echo '</tr></tbody></table>';
+
 				spa_paint_close_fieldset();
 
+				echo '<div class="sf-width-100-per sf-background-white">';
+				echo '<table class="sf-plugin-list-mob sf-showm">';
+				echo '<tbody><tr>';
+				echo '<td><span class="sf-title-uppercase-blue">'
+				     .SP()->primitives->admin_text('Forum page ID').
+				     '</span></td><td>'
+				     .$sfoptions['sfpage'].
+				     '</td></tr>';
+				echo '<tr><td><span class="sf-title-uppercase-blue">'
+				     .SP()->primitives->admin_text('Page title').
+				     '</span></td><td>'
+				     .$title.
+				     '</td></tr>';
+				echo '<tr><td><span class="sf-title-uppercase-blue">'
+				     .SP()->primitives->admin_text('Page template').
+				     '</span></td><td>'
+				     .$template.
+				     '</td>';
+				echo '</tr></tbody></table>';
+				echo '</div>';
+
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Update Forum Permalink'), true, 'forum-permalink');
-					echo '<p class="sublabel">'.SP()->primitives->admin_text('Current permalink').':<br /></p><div class="subhead" id="adminupresult"><p>'.$sfoptions['sfpermalink'].'</p></div><br />';
+					echo '<p class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Current permalink').':<br /></p><div class="sf-subhead" id="adminupresult"><p>'.$sfoptions['sfpermalink'].'</p></div><br />';
 					spa_paint_update_permalink();
 				spa_paint_close_fieldset();
 			}
 
 		spa_paint_close_panel();
 	spa_paint_close_tab();
+        spa_paint_close_tab();
 	spa_paint_spacer();
-	spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('WordPress and WordPress Theme'), false);
-		spa_paint_open_panel();
+	//spa_paint_open_tab(SP()->primitives->admin_text('Integration').' - '.SP()->primitives->admin_text('WordPress and WordPress Theme'), false);
+        spa_paint_open_nohead_tab(false);
+                    spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Integration Options'), true, 'integration-options');
 				spa_paint_checkbox(SP()->primitives->admin_text('Filter WP list pages'), 'sfwplistpages', $sfoptions['sfwplistpages']);
 				spa_paint_checkbox(SP()->primitives->admin_text('Load javascript in footer'), 'sfscriptfoot', $sfoptions['sfscriptfoot']);
@@ -81,8 +107,8 @@ function spa_integration_page_form() {
 		do_action('sph_integration_panel');
 		spa_paint_close_container();
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update WP Integration'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update WP Integration'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();
@@ -134,5 +160,5 @@ function spa_paint_update_permalink() {
 	$target = 'adminupresult';
 	$gif = SPCOMMONIMAGES.'working.gif';
 
-	echo '<input type="button" class="button button-highlighted spAdminTool" value="'.SP()->primitives->admin_text('Update Forum Permalink').'" data-url="'.$site.'" data-target="'.$target.'" data-img="'.$gif.'" />';
+	echo '<input type="button" class="sf-button sf-button-highlighted spAdminTool" value="'.SP()->primitives->admin_text('Update Forum Permalink').'" data-url="'.$site.'" data-target="'.$target.'" data-img="'.$gif.'" />';
 }

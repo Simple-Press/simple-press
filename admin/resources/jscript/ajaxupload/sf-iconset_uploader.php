@@ -62,7 +62,6 @@ if ( move_uploaded_file( $_FILES['uploadfile']['tmp_name'], $uploadfile ) ) {
 	if ($archive->error_code == 0) {
 		
 		$response = spa_add_iconset( array(
-			'path' => $extract_to,
 			'id'	=> $iconset_id,
 			'active' => true
 		) );

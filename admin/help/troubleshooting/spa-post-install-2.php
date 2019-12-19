@@ -9,7 +9,7 @@
 	<div class="clearboth"></div>
 
 	<span class="spaicon-UserGroups post-install"></span>
-	<p class="codex-sub">If your User Requirements are more Complex</p>
+	<p class="codex-sub">If your user requirements are more complex</p>
 	<p><b>User Groups Menu > Create New User Group</b><br>
 	Two default User Groups were created during the install ('Members' and 'Guests') which is often enough to get started.
 	But if your forums need to be a little more complex than this then we do recommend creating your
@@ -18,7 +18,7 @@
 	<div class="clearboth"></div>
 
 	<span class="spaicon-Permissions post-install"></span>
-	<p class="codex-sub">If your need to carefully Control Who Can Do What</p>
+	<p class="codex-sub">If you need to carefully Control Who Can Do What</p>
 	<p><b>Permissions Menu > Add New Permission</b><br>
 	Like User Groups, a handful of Permission Sets were created during install ('No Access', 'Read Only', 'Limited',
 	'Standard', 'Full' and 'Moderator'). These define what a user can see and do and are often sufficient but if

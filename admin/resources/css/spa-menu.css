@@ -1,0 +1,29 @@
+/*
+Simple:Press Admin Menu CSS
+*/
+
+@font-face {
+    font-family: 'sp-admin';
+    src: url('fonts/sp-admin.eot?-1norbm');
+    src: url('fonts/sp-admin.eot?#iefix-1norbm') format('embedded-opentype'),
+    url('fonts/sp-admin.woff?-1norbm') format('woff'),
+    url('fonts/sp-admin.ttf?-1norbm') format('truetype'),
+    url('fonts/sp-admin.svg?-1norbm#sp-admin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/* 
+ 
+ Set the menu icon - note that this is harcoded to assume that SP is installed 
+ in the simple-press or simplepress folders.  Any other folder and the icon
+ will not show up when the admin isn't directly on the menu.
+ 
+ When the admin is directly on the menu, the icon is set by the spa-admin.css file.
+*/
+#toplevel_page_simple-press-admin-panel-forums-spa-forums .wp-menu-image:before,
+#toplevel_page_simplepress-admin-panel-forums-spa-forums .wp-menu-image:before {
+    font-family: sp-admin !important;
+    content: "\e100";
+}

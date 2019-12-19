@@ -29,7 +29,7 @@ function spa_themes_mobile_form() {
 	spa_paint_open_panel();
 
 	spa_paint_spacer();
-	echo '<div class="sfoptionerror">';
+	echo '<div class="sf-alert-block sf-info">';
 	echo SP()->primitives->admin_text('Themes Folder').': <b>'.realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['themes']).'</b>';
 	echo '</div>';
 
@@ -57,8 +57,8 @@ function spa_themes_mobile_form() {
 	spa_paint_close_container();
 
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Mobile Component'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Mobile Component'); ?>" />
 	</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
@@ -72,17 +72,17 @@ function spa_themes_mobile_form() {
 		# get update version info
 		$xml = sp_load_version_xml();
 
-		spa_paint_open_tab(SP()->primitives->admin_text('Available Themes').' - '.SP()->primitives->admin_text('Select Simple:Press Mobile Theme'), true);
+		spa_paint_open_tab(SP()->primitives->admin_text('Available Themes').' - '.SP()->primitives->admin_text('Select Simple:Press Mobile Theme'), true, '', false);
 		spa_paint_open_panel();
 		spa_paint_open_fieldset(SP()->primitives->admin_text('Mobile Theme Management'), true, 'themes');
 ?>
 		<h3><?php echo SP()->primitives->admin_text('Current Mobile Theme'); ?></h3>
 		<div class="theme-browser rendered">
 		<div class="spThemeContainer">
-		<div id="current-theme" class="spTheme">
-
+		<div id="current-theme" class="spTheme spThemeMobile">
+		<div class="spThemeInner">
 		<h3 class="theme-name"><?php echo $themes[$mobileTheme['theme']]['Name']; ?></h3>
-		<img src="<?php echo SPTHEMEBASEURL.$mobileTheme['theme'].'/'.$themes[$mobileTheme['theme']]['Screenshot']; ?>" alt="" />
+		<div><img src="<?php echo SPTHEMEBASEURL.$mobileTheme['theme'].'/'.$themes[$mobileTheme['theme']]['Screenshot']; ?>" alt="" /></div>
 		<h4>
 		<?php echo $themes[$mobileTheme['theme']]['Name'].' '.$themes[$mobileTheme['theme']]['Version'].' '.SP()->primitives->admin_text('by').' <a href="'.$themes[$mobileTheme['theme']]['AuthorURI'].'" title="'.SP()->primitives->admin_text('Visit author homepage').'">'.$themes[$mobileTheme['theme']]['Author'].'</a>'; ?>
 		</h4>
@@ -99,7 +99,7 @@ function spa_themes_mobile_form() {
 			}
 		}
 ?>
-		<p class="description" style="padding: 0;">
+		<p class="sf-description">
 		<?php echo $themes[$mobileTheme['theme']]['Description']; ?>
 		</p>
 <?php
@@ -141,7 +141,7 @@ function spa_themes_mobile_form() {
 			# if only one overlay hide select controls
 			$style = (count($overlays) > 1) ? 'style="display:block"' : 'style="display:none"';
 			echo '<div '.$style.'>';
-			echo SP()->primitives->admin_text('Select Overlay').': ';
+			echo '<label>'.SP()->primitives->admin_text('Select Overlay').': '.'</label>';
 			echo '<select name="color-'.esc_attr($mobileTheme['theme']).'">';
 			foreach ($overlays as $overlay) {
 				$overlay = trim($overlay);
@@ -149,12 +149,12 @@ function spa_themes_mobile_form() {
 				echo '<option'.$selected.' value="'.esc_attr($overlay).'">'.esc_html($overlay).'</option>';
 			}
 			echo '</select> ';
-			echo ' <input type="submit" class="button-secondary action" id="saveit-cur" name="saveit-cur" value="'.SP()->primitives->admin_text('Update Overlay').'" />';
+			echo ' <input type="submit" class="sf-button-secondary action" id="saveit-cur" name="saveit-cur" value="'.SP()->primitives->admin_text('Update Overlay').'" />';
 			echo '</form>';
 			echo '</div>';
 
 			if(current_theme_supports('sp-theme-customiser')) {
-				echo '<b>'.SP()->primitives->admin_text('Use the Customiser option in the Simple:Press Themes menu to customise your colours').'</b>';
+				echo '<div><b>'.SP()->primitives->admin_text('Use the Customiser option in the Simple:Press Themes menu to customise your colours').'</b></div>';
 			}
 		}
 
@@ -164,7 +164,7 @@ function spa_themes_mobile_form() {
 				if ($themes[$mobileTheme['theme']]['Name'] == $latest->name) {
 					if ((version_compare($latest->version, $themes[$mobileTheme['theme']]['Version'], '>') == 1)) {
 						echo '<br />';
-						echo '<p style="padding: 0;">';
+						echo '<p>';
 						echo '<strong>'.SP()->primitives->admin_text('There is an update for the').' '.$themes[$mobileTheme['theme']]['Name'].' '.SP()->primitives->admin_text('theme').'.</strong> ';
 						echo SP()->primitives->admin_text('Version').' '.$latest->version.' '.SP()->primitives->admin_text('is available').'. ';
 						echo SP()->primitives->admin_text('For details and to download please visit').' '.SPPLUGHOME.' '.SP()->primitives->admin_text('or').' '.SP()->primitives->admin_text('go to the').' ';
@@ -176,7 +176,7 @@ function spa_themes_mobile_form() {
 			}
 		}
 ?>
-		</div></div></div>
+		</div></div></div></div>
 
 		<br class="clear" />
 
@@ -207,9 +207,10 @@ function spa_themes_mobile_form() {
 					$theme_overlays = array_merge($theme_overlays, $parent_overlays);
 				}
 ?>
-				<div class="spTheme">
+				<div class="spTheme spThemeMobile">
+				<div class="spThemeInner">
 				<h3 class="theme-name"><?php echo $theme_name; ?></h3>
-				<img alt="" src="<?php echo $theme_image; ?>" />
+				<div><img alt="" src="<?php echo $theme_image; ?>" /></div>
 				<h4>
 				<?php echo $theme_name.' '.$theme_version.' '.SP()->primitives->admin_text('by').' <a href="'.$theme_uri.'" title="'.SP()->primitives->admin_text('Visit author homepage').'">'.$theme_author.'</a>'; ?>
 				</h4>
@@ -226,7 +227,7 @@ function spa_themes_mobile_form() {
 					}
 				}
 ?>
-				<p class="description" style="padding: 0;">
+				<p class="sf-description">
 				<?php echo $theme_desc; ?>
 				</p>
 				<br>
@@ -247,7 +248,7 @@ function spa_themes_mobile_form() {
 				if ($theme_overlays) {
 					# only show if more than one overlay
 					if(count($theme_overlays) > 1) {
-						echo SP()->primitives->admin_text('Select Overlay').': ';
+						echo '<label>'.SP()->primitives->admin_text('Select Overlay').': '.'</label>';
 						echo ' <select name="color-'.esc_attr($theme_file).'" style="margin-bottom:5px;">';
 						foreach ($theme_overlays as $theme_overlay) {
 							$theme_overlay = trim($theme_overlay);
@@ -259,7 +260,7 @@ function spa_themes_mobile_form() {
 					}
 				}
 ?>
-				<input type="submit" class="button-secondary action" id="saveit-<?php echo esc_attr($theme_file); ?>" name="saveit-<?php echo esc_attr($theme_file); ?>" value="<?php echo SP()->primitives->admin_etext('Activate Mobile Theme'); ?>" />
+				<input type="submit" class="sf-button-secondary action" id="saveit-<?php echo esc_attr($theme_file); ?>" name="saveit-<?php echo esc_attr($theme_file); ?>" value="<?php echo SP()->primitives->admin_etext('Activate Mobile Theme'); ?>" />
 				</form>
 				</div>
 <?php
@@ -280,6 +281,7 @@ function spa_themes_mobile_form() {
 						}
 					}
 				}
+				echo '</div>';
 				echo '</div>';
 			}
 			echo '</div>';

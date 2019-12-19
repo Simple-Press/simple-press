@@ -13,7 +13,7 @@ function spa_toolbox_log_form() {
 
     #== log Tab ==========================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox')." - ".SP()->primitives->admin_text('Install Log'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox')." - ".*/SP()->primitives->admin_text('Install Log'), true);
 			if (!$sflog) {
 				SP()->primitives->admin_etext("There are no Install Log Entries");
 				return;

@@ -126,17 +126,17 @@ function spa_paint_rank_images() {
 	}
 	closedir($dlist);
 
-	if (empty($files)) return;
+	//if (empty($files)) return;
 	sort($files);
 
 	# start the table display
 ?>
-	<table id="sf-rank-badges" class="widefat fixed striped spMobileTable800">
+	<table id="sf-rank-badges" class="widefat sf-table-small sf-table-mobile">
 		<thead>
 			<tr>
-				<th style='text-align:center'><?php SP()->primitives->admin_etext('Badge'); ?></th>
-				<th style='text-align:center'><?php SP()->primitives->admin_etext('Filename'); ?></th>
-				<th style='text-align:center'><?php SP()->primitives->admin_etext('Remove'); ?></th>
+				<th><?php SP()->primitives->admin_etext('Filename'); ?></th>
+				<th><?php SP()->primitives->admin_etext('Badge'); ?></th>
+				<th><?php //SP()->primitives->admin_etext('Remove'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -147,17 +147,17 @@ function spa_paint_rank_images() {
 		$ext = strtolower($path_info['extension']);
 		if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif' || $ext == 'bmp') {
 ?>
-			<tr id='rankbadge<?php echo $row; ?>' class="spMobileTableData">
-				<td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>'>
-					<img class="sfrankbadge" src="<?php echo(esc_url(SPRANKS.$file)); ?>" alt="" />
-				</td>
-				<td data-label='<?php SP()->primitives->admin_etext('Filename'); ?>'>
+			<tr id='rankbadge<?php echo $row; ?>' class="spMobileTableData sf-display-table-row">
+				<td data-label='<?php SP()->primitives->admin_etext('Filename'); ?>' class="sf-Leftm">
 					<?php echo($file); ?>
 				</td>
-				<td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>'>
+				<td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>' class="sf-Leftm">
+					<img class="sfrankbadge" src="<?php echo(esc_url(SPRANKS.$file)); ?>" alt="" />
+				</td>
+				<td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>' class="sf-Leftm">
 <?php
 					$site = esc_url(wp_nonce_url(SPAJAXURL."components&amp;targetaction=delbadge&amp;file=$file", 'components'));
-					echo '<img class="spDeleteRow" src="'.SPCOMMONIMAGES.'delete.png" title="'.SP()->primitives->admin_text('Delete Rank Badge').'" alt="" data-url="'.$site.'" data-target="rankbadge'.$row.'" />';
+					echo '<span class="sf-item-controls"><span class="sf-icon-button sf-small sf-little spDeleteRow" title="'.SP()->primitives->admin_text('Delete Rank Badge').'" data-url="'.$site.'" data-target="rankbadge'.$row.'"><span class="sf-icon sf-delete"></></span></span>';
 ?>
 				</td>
 			</tr>
@@ -181,26 +181,29 @@ function spa_paint_custom_smileys() {
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/';
 	$dlist = @opendir($path);
 
-	echo '<div class="sfoptionerror">';
+	
 	if (!$dlist) {
+           echo '<div class="sf-alert-block sf-info">';
 	   echo '<table><tr><td class="sflabel"><strong>'.SP()->primitives->admin_text('The forum-smileys folder does not exist').'</strong></td></tr></table>';
-	   return;
+	   echo '</div>';
+           return;
 	} else {
-    	echo '<p><b>'.SP()->primitives->admin_text('Re-order your Smileys by dragging and dropping the buttons below. To edit - click on the open control to the right').'</b></p>';
+    	//echo '<p><b>'.SP()->primitives->admin_text('Re-order your Smileys by dragging and dropping the buttons below. To edit - click on the open control to the right').'</b></p>';
 	}
 
-	$yes = '<img src="'.SPADMINIMAGES.'sp_Yes.png" title="'.SP()->primitives->admin_text('In use').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;';
-	$no =  '<img src="'.SPADMINIMAGES.'sp_No.png" title="'.SP()->primitives->admin_text('Not in use').'" alt="" style="vertical-align: middle;" />&nbsp;&nbsp;';
+	$yes = '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('In use').'"></span>';
+	$no =  '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Not in use').'"></span>';
 
-	echo '<table><tr>';
-	echo '<td>'.$yes.'&nbsp;'.SP()->primitives->admin_text('Smiley is in use').'&nbsp;&nbsp;&nbsp;</td>';
-	echo '<td>'.$no.'&nbsp;'.SP()->primitives->admin_text('Smiley is not in use').'</td>';
-	echo '</tr></table>';
+        echo '<div class="sf-alert-block sf-info">';
+	echo $yes.SP()->primitives->admin_text('Smiley is in use');
+	echo '</div>';
+        echo '<div class="sf-alert-block sf-info">';
+	echo $no.SP()->primitives->admin_text('Smiley is not in use');
 	echo '</div>';
 
 	# start the table display
 	echo '<div>';
-	echo '<ul id="spSmileyListSet" class="menu">';
+	echo '<ul id="spSmileyListSet" class="sf-list">';
 
 	# gather the file data
 	while (false !== ($file = readdir($dlist))) {
@@ -267,51 +270,52 @@ function spa_paint_custom_smileys() {
 
 			# image and file name and input fields
 
-			echo '<li id="smfile_'.$scount.'" class="menu-item-depth-0" style="margin-bottom:5px;">';
-				echo "<div class='menu-item'>";
-					echo '<img class="spSmiley" src="'.SPSMILEYS.$file.'" alt="" style="margin-top:8px;"/>';
-					echo '&nbsp;&nbsp;&nbsp;<span class="item-name">';
-						echo $sname;
-					echo '</span>';
-					echo '<input type="hidden" name="smfile[]" value="'.$file.'" />';
-					echo '<span class="item-controls">';
-
-						$site = esc_url(wp_nonce_url(SPAJAXURL."components&amp;targetaction=delsmiley&amp;file=$file", 'components'));
-						echo '<img src="'.SPCOMMONIMAGES.'delete.png" title="'.SP()->primitives->admin_text('Delete Smiley').'" alt="" style="vertical-align: middle;cursor:pointer;" class="spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadsm" />&nbsp;&nbsp;';
-						if($in_use) {
-							echo $yes;
-						} else {
-							echo $no;
-						}
-						echo '<a class="item-edit spLayerToggle" data-target="item-edit-'.$scount.'">Edit Menu</a>';
-						echo '<div class="inline_edit" size="70" id="spMenusOrder'.$scount.'" name="spMenusOrder'.$scount.'"></div>';
-					echo '</span>';
-				echo '</div>';
-
-				echo '<div id="item-edit-'.$scount.'" class="menu-item-settings inline_edit">';
-
-					echo '<p class="description">'.SP()->primitives->admin_text('Smiley Name').'<br />';
-					echo '<input type="text" class="sfpostcontrol" id="smname-'.$scount.'" name="smname[]" value="'.SP()->displayFilters->title($sname).'" /></p>';
-
-					echo '<p class="description">'.SP()->primitives->admin_text('Smiley Code').'<br />';
-					echo '<input type="text" class="sfpostcontrol" id="smcode-'.$scount.'" name="smcode[]" value="'.SP()->displayFilters->title($code).'" /></p>';
-
-					echo '<p class="description">';
-					$checked = ($break) ? ' checked="checked" ' : '';
-					echo '<input type="checkbox" class="sfpostcontrol" id="break-'.$scount.'" name="smbreak-'.$sname.'" '.$checked.'/>';
-					echo '<label for="break-'.$scount.'">'.SP()->primitives->admin_text('Break Smileys Row in Editor Display').'</label></p>';
-
-					echo '<p class="description">';
-					$checked = ($in_use) ? ' checked="checked" ' : '';
-					echo '<input type="checkbox" class="sfpostcontrol" id="in_use-'.$scount.'" name="sminuse-'.$sname.'" '.$checked.'/>';
-					echo '<label for="in_use-'.$scount.'">'.SP()->primitives->admin_text('Allow Use of this Smiley').'</label></p>';
-
-				echo '</div>';
+			echo '<li id="smfile_'.$scount.'" class="sf-list-item-depth-0">';
+                            echo "<div class='sf-list-item'>";
+				echo '<img class="spSmiley" src="'.SPSMILEYS.$file.'" alt=""/>';
+                                echo '<span class="sf-item-name">';
+                                    echo $sname;
+                                echo '</span>';
+                                echo '<input type="hidden" name="smfile[]" value="'.$file.'" />';
+                                echo '<span class="sf-item-controls">';
+                                    echo $in_use ? $yes : $no;
+                                    echo '<a class="sf-item-edit spLayerToggle" data-target="item-edit-'.$scount.'">Edit Menu</a>';
+                                echo '</span>';
+                            echo '</div>';
+                            echo '<div id="item-edit-'.$scount.'" class="sf-list-item-settings sf-inline-edit">';
+                                echo '<div class="sf-form-row">';
+                                    echo '<label>'.SP()->primitives->admin_text('Smiley Name');
+                                    echo '<input type="text" class="sfpostcontrol" id="smname-'.$scount.'" name="smname[]" value="'.SP()->displayFilters->title($sname).'" /></label>';
+                                echo '</div>';
+                                echo '<div class="sf-form-row">';
+                                    echo '<label>'.SP()->primitives->admin_text('Smiley Code');
+                                    echo '<input type="text" class="sfpostcontrol" id="smcode-'.$scount.'" name="smcode[]" value="'.SP()->displayFilters->title($code).'" /></label>';
+                                echo '</div>';
+                                $checked = ($break) ? ' checked="checked" ' : '';
+                                echo '<div class="sf-form-row">';
+                                    echo '<input type="checkbox" class="sfpostcontrol" id="break-'.$scount.'" name="smbreak-'.$sname.'" '.$checked.'/>';
+                                    echo '<label for="break-'.$scount.'">'.SP()->primitives->admin_text('Break Smileys Row in Editor Display').'</label>';
+                                echo '</div>';
+                                $checked = ($in_use) ? ' checked="checked" ' : '';
+                                echo '<div class="sf-form-row">';
+                                    echo '<input type="checkbox" class="sfpostcontrol" id="in_use-'.$scount.'" name="sminuse-'.$sname.'" '.$checked.'/>';
+                                    echo '<label for="in_use-'.$scount.'">'.SP()->primitives->admin_text('Allow Use of this Smiley').'</label>';
+                                echo '</div>';
+                                $site = esc_url(wp_nonce_url(SPAJAXURL."components&amp;targetaction=delsmiley&amp;file=$file", 'components'));
+                                echo '<div class="sf-form-submit-bar">';
+                                    echo '<span title="'.SP()->primitives->admin_text('Delete Smiley').'" class="sf-link spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadsm"><span class="sf-icon sf-delete"></span>'.SP()->primitives->admin_text('Delete ').'</span>';	
+                                    echo '<div class="sf-pull-right">';
+                                        echo '<a class="sf-button-secondary sf-btn-small spLayerToggle">Cancel</a>';
+                                        echo '<input type="submit" class="sf-button-primary sf-btn-small" name="saveit" value="'.SP()->primitives->admin_text('Save').'" />';
+                                    echo '</div>';
+                                echo '</div>';
+                            echo '</div>';
 			echo '</li>';
 			}
 		}
-		echo '<input type="hidden" id="smiley-count" name="smiley-count" value="'.$scount.'" />';
+		
 	echo '</ul>';
+        echo '<input type="hidden" id="smiley-count" name="smiley-count" value="'.$scount.'" />';
 	echo '</div>';
 
 	closedir($dlist);

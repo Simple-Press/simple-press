@@ -26,28 +26,27 @@ function spa_toolbox_uninstall_form() {
 
     #== UNINSTALL Tab ==========================================================
 
-	spa_paint_open_tab(SP()->primitives->admin_text('Toolbox').' - '.SP()->primitives->admin_text('Uninstall'), true);
+	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Uninstall'), true);
 		spa_paint_open_panel();
-			echo '<br /><div class="sfoptionerror">';
-			SP()->primitives->admin_etext('Should you, at any time, decide to remove Simple:Press, check the uninstall option below and then deactivate the Simple Press plugin in the standard WP fashion');
-            echo '.<br />';
-			SP()->primitives->admin_etext('If you have initiated uninstall, but changed your mind prior to Simple Press plugin deactivation, you can uncheck the uninstall option and it will be reversed');
-            echo '.<br />';
-            echo '<br />';
-            SP()->primitives->admin_etext('UNINSTALLING SIMPLE PRESS WILL REMOVE ALL FORUM DATA FROM YOUR DATABASE');
-            echo '!<br />';
-            echo '<br />';
-            SP()->primitives->admin_etext('UNINSTALLING SIMPLE PRESS WILL REMOVE ALL STORAGE LOCATIONS IF YOU ALSO ENABLE THE STORAGE LOCATUON REMOVAL OPTION');
-            echo '!<br />';
-            echo '<br />';
-            SP()->primitives->admin_etext('ONCE YOU ENABLE UNINSTALL AND DEACTIVATE THE SIMPLE PRESS PLUGIN, THIS ACTION CAN NOT BE REVERSED');
-            echo '!<br />';
-            echo '<br />';
-            SP()->primitives->admin_etext('Please note that you will still need to remove the Simple:Press core plugin files manually or use the wp plugin deletion functionalty');
-            echo '.<br />';
-			echo '</div>';
-
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Removing Simple:Press'), true, 'uninstall');
+				echo '<div class="sf-alert-block sf-info">';
+				SP()->primitives->admin_etext('Should you, at any time, decide to remove Simple:Press, check the uninstall option below and then deactivate the Simple Press plugin in the standard WP fashion');
+				echo '.<br />';
+				SP()->primitives->admin_etext('If you have initiated uninstall, but changed your mind prior to Simple Press plugin deactivation, you can uncheck the uninstall option and it will be reversed');
+				echo '.<br />';
+				echo '<br />';
+				SP()->primitives->admin_etext('UNINSTALLING SIMPLE PRESS WILL REMOVE ALL FORUM DATA FROM YOUR DATABASE');
+				echo '!<br />';
+				echo '<br />';
+				SP()->primitives->admin_etext('UNINSTALLING SIMPLE PRESS WILL REMOVE ALL STORAGE LOCATIONS IF YOU ALSO ENABLE THE STORAGE LOCATUON REMOVAL OPTION');
+				echo '!<br />';
+				echo '<br />';
+				SP()->primitives->admin_etext('ONCE YOU ENABLE UNINSTALL AND DEACTIVATE THE SIMPLE PRESS PLUGIN, THIS ACTION CAN NOT BE REVERSED');
+				echo '!<br />';
+				echo '<br />';
+				SP()->primitives->admin_etext('Please note that you will still need to remove the Simple:Press core plugin files manually or use the wp plugin deletion functionalty');
+				echo '.<br />';
+				echo '</div>';
 				spa_paint_checkbox(SP()->primitives->admin_text('Uninstall Simple Press - Requires plugin deactivation after enabling option (this will completely remove Simple:Press database entries)'), 'sfuninstall', $sfoptions['sfuninstall']);
 				spa_paint_checkbox(SP()->primitives->admin_text('When uninstalling, completely remove Simple:Press storage locations'), 'removestorage', $sfoptions['removestorage']);
 			spa_paint_close_fieldset();
@@ -56,8 +55,8 @@ function spa_toolbox_uninstall_form() {
 		spa_paint_close_container();
 
 ?>
-	<div class="sfform-submit-bar">
-	<input type="submit" class="button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Uninstall'); ?>" />
+	<div class="sf-form-submit-bar">
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Uninstall'); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();
