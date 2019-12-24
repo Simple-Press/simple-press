@@ -168,9 +168,10 @@
 	};
 
 	adminHelp = {
-		init: function() {
-			$('.spHelpLink').off();
-			$('.spHelpLink').click(function(eventObject) {
+                init: function() {
+			$('#sfmaincontainer').off('click', '.spHelpLink');
+                        $('#sfmaincontainer').on('click', '.spHelpLink', function(eventObject) {
+                        
 				eventObject.preventDefault();
 				var mydata = $(this).data();
 				spj.dialogAjax(this, mydata.site, mydata.label, mydata.width, mydata.height, mydata.align);
@@ -201,8 +202,9 @@
 
 	troubleshooting = {
 		init: function() {
-			$('.spTroubleshoot').off();
-			$('.spTroubleshoot').click(function() {
+			$('#sfmaincontainer').off('click', '.spTroubleshoot');
+                        $('#sfmaincontainer').on('click', '.spTroubleshoot', function() {
+                        
 				var mydata = $(this).data();
 				spj.troubleshooting(mydata.url, mydata.target);
 			});
