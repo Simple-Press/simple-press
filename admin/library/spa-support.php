@@ -298,10 +298,9 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	$tab++;
 	
 	foreach( $iconsets as $iconset_name => $iconset ) {
-		echo '<option value=""></option>';
 		echo '<optgroup label="'.$iconset_name.'">';
 		
-		printf( '<option value=""></option><optgroup label="%s">', $iconset_name );
+		printf( '<option value=""></option>', $iconset_name );
 		
 		foreach ( $iconset['icons'] as $icon_id => $icon ) {
 			
