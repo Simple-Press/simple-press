@@ -3853,3 +3853,55 @@ input.spSpecialRankShow, input.spSpecialRankForm {
         margin: 0 0 10px 6px;
 }
 /* End Handle the upload file name in the themes and plugins uploader */
+
+
+/* Style for user profile popup */
+.spColumnSection.spProfileRightCol {
+        margin-bottom: 20px;
+}
+
+.spColumnSection.spProfileLeftCol p {
+        display: block;
+        font-family: "Open Sans Semibold";
+        font-size: 12px;
+        line-height: 17px;
+        text-transform: uppercase;
+        white-space: normal;
+        color: #27476E;
+        margin-bottom: 0;
+}
+
+.spColumnSection.spProfileRightCol p {
+        height: 50px;
+        margin: 0;
+        padding: 15px 16px 14px;
+        width: 100%;
+        color: #47484A;
+        -khtml-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        box-shadow: none;
+        border: 1px solid #F0F0F0;
+}
+
+spProfileShowInfoSection.spLeft {
+        float: right;
+                
+}
+
+.spProfileShowInfoSection .spForumRank, .spProfileShowInfoSection .spSpecialRank {
+        margin: 0 10px 0 0;
+        font-size: 12px;
+        display: inline-block;
+        padding: 4px 10px !important;
+        background: #eaf0f4 !important;
+        border-radius: 5px;
+}
+
+.spPlainSection.avatarSection {
+        float:left;
+}
+
+.spProfileShowLinksSection {
+        float: right;
+}

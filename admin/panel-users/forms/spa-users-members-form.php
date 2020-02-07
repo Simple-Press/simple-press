@@ -110,7 +110,7 @@ function spa_users_members_form() {
 										echo $rec['user_id'];
 
 										$nonce       = wp_create_nonce( 'bulk-users' );
-										$site        = wp_nonce_url( SPAJAXURL . 'profile&amp;targetaction=popup&amp;user=' . $rec['user_id'], 'profile' );
+										$site        = wp_nonce_url( SPAJAXURL . 'profile&amp;targetaction=spa_popup&amp;user=' . $rec['user_id'], 'profile' );
 										$title       = SP()->primitives->admin_text( 'Member Profile' );
 										$user_action = ( is_multisite() ) ? 'remove' : 'delete';
 										$actions     = array(
@@ -192,7 +192,7 @@ function spa_users_members_form() {
 									case 'user_id':
 
 										$nonce       = wp_create_nonce( 'bulk-users' );
-										$site        = wp_nonce_url( SPAJAXURL . 'profile&amp;targetaction=popup&amp;user=' . $rec['user_id'], 'profile' );
+										$site        = wp_nonce_url( SPAJAXURL . 'profile&amp;targetaction=spa_popup&amp;user=' . $rec['user_id'], 'profile' );
 										$title       = SP()->primitives->admin_text( 'Member Profile' );
 										$user_action = ( is_multisite() ) ? 'remove' : 'delete';
 										$actions     = array(
