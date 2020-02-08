@@ -334,8 +334,9 @@
 
 	componentsSpecialRankShow = {
 		init: function() {
-			$('.spSpecialRankShow').off('click');
-			$('.spSpecialRankShow').click(function() {
+			$('#sfmaincontainer').off('click', '.spSpecialRankShow');
+                        $('#sfmaincontainer').on('click', '.spSpecialRankShow', function() {
+                        
 				var mydata = $(this).data();
 				spj.toggleRow(mydata.loc);
 				spj.showMemberList(mydata.site, mydata.img, mydata.id, mydata.target);
@@ -345,8 +346,12 @@
 
 	componentsSpecialRankForm = {
 		init: function() {
-			$('.spSpecialRankForm').off('click');
-			$('.spSpecialRankForm').click(function() {
+                        
+                        $('#sfmaincontainer').off('click', '.spSpecialRankForm');
+                        
+                        $('#sfmaincontainer').on('click', '.spSpecialRankForm', function() {
+                                
+                        
 				var mydata = $(this).data();
 				$(mydata.loc).show();
 				spj.loadForm(mydata.form, mydata.base, mydata.target, mydata.img, mydata.id, 'open');
