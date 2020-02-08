@@ -441,7 +441,9 @@
 
 	ugShowMembers = {
 		init: function() {
-			$('.spUsergroupShowMembers').click(function() {
+                        $('body').undelegate( ".spUsergroupShowMembers", "click" );
+                        $('body').delegate('.spUsergroupShowMembers', 'click', function() {
+                        
 				var mydata = $(this).data();
 				spj.showMemberList(mydata.url, mydata.img, mydata.id, mydata.target);
 			});
