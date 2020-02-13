@@ -860,3 +860,25 @@ function spa_print_pagination( $link_args, $countPages, $currentPageNum, $pagina
         </div>
 	<?php endif;
 }
+
+
+/**
+ * Return list groups related to a user
+ * 
+ * @global object $wpdb
+ * @param int $user_id
+ * 
+ * @return array
+ */
+function spa_user_groups_list( $user_id ) {
+	global $wpdb;
+	
+	$sql = "SELECT m.usergroup_id, ug.usergroup_name FROM " . SPMEMBERSHIPS . " m
+			LEFT JOIN " . SPUSERGROUPS . " ug ON ug.usergroup_id = m.usergroup_id
+			WHERE m.user_id = %d";
+	
+	
+	$results =  $wpdb->get_results( $wpdb->prepare( $sql, $user_id ) );
+	
+	return $results;
+}
