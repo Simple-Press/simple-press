@@ -190,7 +190,11 @@
 
 	openDialog = {
 		init: function() {
-			$('.spOpenDialog').click(function() {
+                        
+                        
+                        $('#sfmaincontainer').off('click', '.spOpenDialog');
+                        $('#sfmaincontainer').on('click', '.spOpenDialog', function() {
+                        
 				var mydata = $(this).data();
 				spj.dialogAjax(this, mydata.site, mydata.label, mydata.width, mydata.height, mydata.align);
 				$('#dialog, #spMobilePanel').one('opened', function() {
