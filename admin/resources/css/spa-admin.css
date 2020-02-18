@@ -768,7 +768,6 @@ $Rev:2099 $
     speak: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-indent: -9999px;
 }
 #sf-root-wrap input[type=radio] {
     -khtml-border-radius: 50%;
