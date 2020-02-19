@@ -36,9 +36,7 @@
         var wp_submenu = $('li#toplevel_page_simple-press-admin-panel-forums-spa-forums ul.wp-submenu li.current a').html();
         var num = $('li#toplevel_page_simple-press-admin-panel-forums-spa-forums ul.wp-submenu li.current').index() - 1;
         
-        console.log( wp_submenu );
         $('#sfadminmenu .sfsidebutton').each( function(k, v) {
-                console.log( wp_submenu );
                 if( $(this).find('a').html() == wp_submenu ) {
                         num = k;
                 }
