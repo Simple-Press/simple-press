@@ -101,7 +101,8 @@ function spa_load_admin_scripts() {
 			'device'		 => SP()->core->device,
 			'tooltips'		 => '1',
 			'mobiletheme'	 => '0',
-			'pWait'			 => '<img src="'.SPCOMMONIMAGES.'working.gif" />'.SP()->primitives->admin_text('Please Wait...')
+			'pWait'			 => '<img src="'.SPCOMMONIMAGES.'working.gif" />'.SP()->primitives->admin_text('Please Wait...'),
+			'dirName'		 => basename( dirname( dirname( dirname(__file__) ) )),
 		);
 		$platform = apply_filters('sph_platform_vars', $platform);
 		wp_localize_script('sfadmin', 'sp_platform_vars', $platform);
