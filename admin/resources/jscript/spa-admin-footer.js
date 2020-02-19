@@ -33,7 +33,16 @@
         //$('.wp-submenu li').removeClass('current');
         //$('.wp-submenu li').find('a:contains(' + sp_admin_footer_vars.panel_name + ')').parent().addClass('current');
         
+        var wp_submenu = $('li#toplevel_page_simple-press-admin-panel-forums-spa-forums ul.wp-submenu li.current a').html();
         var num = $('li#toplevel_page_simple-press-admin-panel-forums-spa-forums ul.wp-submenu li.current').index() - 1;
+        
+        console.log( wp_submenu );
+        $('#sfadminmenu .sfsidebutton').each( function(k, v) {
+                console.log( wp_submenu );
+                if( $(this).find('a').html() == wp_submenu ) {
+                        num = k;
+                }
+        });
         
         $('#sfadminmenu .sfsidebutton:eq('+num+')+.sfmenublock .sfsideitem:eq(0)').addClass('sf-active');
         
