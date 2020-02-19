@@ -22,7 +22,7 @@ $action = (isset($_GET['targetaction'])) ? $_GET['targetaction'] : '';
 $out = '';
 
 # is it a popup profile?
-if ($action == 'popup') {
+if ($action == 'popup' || $action == 'spa_popup' ) {
 	if (empty($userid)) {
 		SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Invalid profile request'));
 		$out .= SP()->notifications->render_queued();
@@ -36,7 +36,14 @@ if ($action == 'popup') {
 	sp_SetupUserProfileData($userid);
 
 	echo '<div id="spMainContainer">';
-	sp_load_template('spProfilePopupShow.php');
+	
+	if ($action == 'spa_popup') {
+		include 'profile-popup.php';
+	} else {
+		sp_load_template('spProfilePopupShow.php');
+	}
+	
+	
 	echo '</div>';
 
 	die();

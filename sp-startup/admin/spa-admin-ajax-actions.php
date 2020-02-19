@@ -176,6 +176,8 @@ function spa_ajax_profiles() {
 add_action('wp_ajax_profiles', 'spa_ajax_profiles');
 add_action('wp_ajax_nopriv_profiles', 'spa_ajax_profiles');
 
+add_action('wp_ajax_membergroup', 'spa_ajax_users_loader');
+
 # Admin Form Support -----------------------------------------------------------------------
 
 function spa_ajax_multiselect() {

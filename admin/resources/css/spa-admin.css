@@ -651,10 +651,11 @@ $Rev:2099 $
     font-size: 12px;
     line-height: 17px;
     color: #006992;
-    appearance: button;
-    -moz-appearance: button;
-    -webkit-appearance: button;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
     background: transparent;
+    max-width: 100%;
 }
 #sf-root-wrap .sf-select-wrap:before {
     content: '\2335';
@@ -772,6 +773,7 @@ $Rev:2099 $
     -khtml-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
+    text-indent: -9999px;
 }
 #sf-root-wrap input[type=radio]:checked:before {
     content: "\2022";
@@ -3853,3 +3855,76 @@ input.spSpecialRankShow, input.spSpecialRankForm {
         margin: 0 0 10px 6px;
 }
 /* End Handle the upload file name in the themes and plugins uploader */
+
+
+/* Style for user profile popup */
+.spColumnSection.spProfileRightCol {
+        margin-bottom: 20px;
+}
+
+.spColumnSection.spProfileLeftCol p {
+        display: block;
+        font-family: "Open Sans Semibold";
+        font-size: 12px;
+        line-height: 17px;
+        text-transform: uppercase;
+        white-space: normal;
+        color: #27476E;
+        margin-bottom: 0;
+}
+
+.spColumnSection.spProfileRightCol p {
+        height: 50px;
+        margin: 0;
+        padding: 15px 16px 14px;
+        width: 100%;
+        color: #47484A;
+        -khtml-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        box-shadow: none;
+        border: 1px solid #F0F0F0;
+}
+
+spProfileShowInfoSection.spLeft {
+        float: right;
+                
+}
+
+.spProfileShowInfoSection .spForumRank, .spProfileShowInfoSection .spSpecialRank {
+        margin: 0 10px 0 0;
+        font-size: 12px;
+        display: inline-block;
+        padding: 4px 10px !important;
+        background: #eaf0f4 !important;
+        border-radius: 5px;
+}
+
+.spPlainSection.avatarSection {
+        float:left;
+}
+
+.spProfileShowLinksSection {
+        float: right;
+}
+
+.spUsergroupEmpty {
+        text-align: center;
+}
+
+.spUsergroupEmpty, .spUsergroupListMsg {
+        padding: 20px 10px;
+        font-size: 14px;
+        font-weight: 600;
+}
+
+.spUsergroupListMsg {
+        padding-left: 0;
+}
+
+
+.spUsergroupsList li {
+        border-top: #f1f1f1 solid 1px;
+        padding: 6px;
+        font-weight: 600;
+}

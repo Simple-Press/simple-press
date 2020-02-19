@@ -39,4 +39,41 @@ if (isset($_GET['saveform'])) {
     die();
 }
 
+
+
+$userid = (isset($_GET['user'])) ? SP()->filters->integer($_GET['user']) : 0;
+$action = (isset($_GET['action'])) ? $_GET['action'] : '';
+
+$out = '';
+
+# is it a popup profile user groups?
+if ($action == 'membergroup' ) {
+	
+	if (empty($userid)) {
+		SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Invalid profile request'));
+		$out .= SP()->notifications->render_queued();
+		$out .= '<div class="sfmessagestrip">';
+		$out .= apply_filters('sph_ProfileErrorMsg', SP()->primitives->front_text('Sorry, an invalid profile groups request was detected'));
+		$out .= '</div>';
+
+		return $out;
+	}
+
+	require_once SP_PLUGIN_DIR.'/forum/content/sp-common-control-functions.php';
+	require_once SP_PLUGIN_DIR.'/forum/content/sp-template-control.php';
+	require_once SP_PLUGIN_DIR.'/forum/content/sp-common-view-functions.php';
+	require_once SP_PLUGIN_DIR.'/forum/content/sp-profile-view-functions.php';
+	
+	sp_SetupUserProfileData($userid);
+	
+	$groups = spa_user_groups_list( $userid );
+
+	echo '<div id="spMainContainer">';
+	include 'user-groups.php';
+	echo '</div>';
+
+	die();
+}
+
+
 die();
