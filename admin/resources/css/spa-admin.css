@@ -773,6 +773,7 @@ $Rev:2099 $
     -khtml-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
+    text-indent: -9999px;
 }
 #sf-root-wrap input[type=radio]:checked:before {
     content: "\2022";
