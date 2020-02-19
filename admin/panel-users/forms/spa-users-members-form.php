@@ -110,13 +110,18 @@ function spa_users_members_form() {
 										echo $rec['user_id'];
 
 										$nonce       = wp_create_nonce( 'bulk-users' );
-										$site        = wp_nonce_url( SPAJAXURL . 'profile&amp;targetaction=popup&amp;user=' . $rec['user_id'], 'profile' );
+										$site        = wp_nonce_url( SPAJAXURL . 'profile&amp;targetaction=spa_popup&amp;user=' . $rec['user_id'], 'profile' );
 										$title       = SP()->primitives->admin_text( 'Member Profile' );
 										$user_action = ( is_multisite() ) ? 'remove' : 'delete';
+										
+										$site_groups        = wp_nonce_url( SPAJAXURL . 'membergroup&amp;user=' . $rec['user_id'], 'users-loader' );
+										$title_group       = SP()->primitives->admin_text( 'Member Groups' );
+										
 										$actions     = array(
 											'edit'    => '<a href="' . admin_url( 'user-edit.php?user_id=' . $rec['user_id'] ) . '&amp;wp_http_referer=admin.php?page=' . SP_FOLDER_NAME . '/admin/panel-users/spa-users.php"><span class="sf-icon sf-blue sf-edit"></span></a>',
 											'delete'  => '<a href="' . admin_url( 'users.php?action=' . $user_action . '&amp;user=' . $rec['user_id'] . "&amp;_wpnonce=$nonce&amp;wp_http_referer=admin.php?page=" . SP_FOLDER_NAME . "/admin/panel-users/spa-users.php" ) . '"><span class="sf-icon sf-blue sf-delete"></span></a>',
 											'profile' => '<a id="memberprofile' . $rec['user_id'] . '" class="spOpenDialog" data-site="' . $site . '" data-label="' . $title . '" data-width="750" data-height="0" data-align="center"><span class="sf-icon sf-blue sf-profiles"></span></a>',
+											'groups' => '<a id="membergroup' . $rec['user_id'] . '" class="spOpenDialog" data-site="' . $site_groups . '" data-label="' . $title_group . '" data-width="750" data-height="0" data-align="center"><span class="sf-icon sf-user-groups sf-blue"></span></a>'
 										);
 
 										echo $this->row_actions( $actions );
@@ -192,13 +197,18 @@ function spa_users_members_form() {
 									case 'user_id':
 
 										$nonce       = wp_create_nonce( 'bulk-users' );
-										$site        = wp_nonce_url( SPAJAXURL . 'profile&amp;targetaction=popup&amp;user=' . $rec['user_id'], 'profile' );
+										$site        = wp_nonce_url( SPAJAXURL . 'profile&amp;targetaction=spa_popup&amp;user=' . $rec['user_id'], 'profile' );
 										$title       = SP()->primitives->admin_text( 'Member Profile' );
 										$user_action = ( is_multisite() ) ? 'remove' : 'delete';
+										
+										$site_groups        = wp_nonce_url( SPAJAXURL . 'membergroup&amp;user=' . $rec['user_id'], 'users-loader' );
+										$title_group       = SP()->primitives->admin_text( 'Member Groups' );
+										
 										$actions     = array(
 											'edit'    => '<a href="' . admin_url( 'user-edit.php?user_id=' . $rec['user_id'] ) . '&amp;wp_http_referer=admin.php?page=' . SP_FOLDER_NAME . '/admin/panel-users/spa-users.php"><span class="sf-icon sf-blue sf-edit"></span></a>',
 											'delete'  => '<a href="' . admin_url( 'users.php?action=' . $user_action . '&amp;user=' . $rec['user_id'] . "&amp;_wpnonce=$nonce&amp;wp_http_referer=admin.php?page=" . SP_FOLDER_NAME . "/admin/panel-users/spa-users.php" ) . '"><span class="sf-icon sf-blue sf-delete"></span></a>',
 											'profile' => '<a id="memberprofile' . $rec['user_id'] . '" class="spOpenDialog" data-site="' . $site . '" data-label="' . $title . '" data-width="750" data-height="0" data-align="center"><span class="sf-icon sf-blue sf-profiles"></span></a>',
+											'groups' => '<a id="membergroup' . $rec['user_id'] . '" class="spOpenDialog" data-site="' . $site_groups . '" data-label="' . $title_group . '" data-width="750" data-height="0" data-align="center"><span class="sf-icon sf-user-groups sf-blue"></span></a>'
 										);
 
 										echo $this->row_actions( $actions );

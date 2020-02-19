@@ -168,9 +168,10 @@
 	};
 
 	adminHelp = {
-		init: function() {
-			$('.spHelpLink').off();
-			$('.spHelpLink').click(function(eventObject) {
+                init: function() {
+			$('#sfmaincontainer').off('click', '.spHelpLink');
+                        $('#sfmaincontainer').on('click', '.spHelpLink', function(eventObject) {
+                        
 				eventObject.preventDefault();
 				var mydata = $(this).data();
 				spj.dialogAjax(this, mydata.site, mydata.label, mydata.width, mydata.height, mydata.align);
@@ -189,7 +190,11 @@
 
 	openDialog = {
 		init: function() {
-			$('.spOpenDialog').click(function() {
+                        
+                        
+                        $('#sfmaincontainer').off('click', '.spOpenDialog');
+                        $('#sfmaincontainer').on('click', '.spOpenDialog', function() {
+                        
 				var mydata = $(this).data();
 				spj.dialogAjax(this, mydata.site, mydata.label, mydata.width, mydata.height, mydata.align);
 				$('#dialog, #spMobilePanel').one('opened', function() {
@@ -201,8 +206,9 @@
 
 	troubleshooting = {
 		init: function() {
-			$('.spTroubleshoot').off();
-			$('.spTroubleshoot').click(function() {
+			$('#sfmaincontainer').off('click', '.spTroubleshoot');
+                        $('#sfmaincontainer').on('click', '.spTroubleshoot', function() {
+                        
 				var mydata = $(this).data();
 				spj.troubleshooting(mydata.url, mydata.target);
 			});
@@ -332,8 +338,9 @@
 
 	componentsSpecialRankShow = {
 		init: function() {
-			$('.spSpecialRankShow').off('click');
-			$('.spSpecialRankShow').click(function() {
+			$('#sfmaincontainer').off('click', '.spSpecialRankShow');
+                        $('#sfmaincontainer').on('click', '.spSpecialRankShow', function() {
+                        
 				var mydata = $(this).data();
 				spj.toggleRow(mydata.loc);
 				spj.showMemberList(mydata.site, mydata.img, mydata.id, mydata.target);
@@ -343,8 +350,12 @@
 
 	componentsSpecialRankForm = {
 		init: function() {
-			$('.spSpecialRankForm').off('click');
-			$('.spSpecialRankForm').click(function() {
+                        
+                        $('#sfmaincontainer').off('click', '.spSpecialRankForm');
+                        
+                        $('#sfmaincontainer').on('click', '.spSpecialRankForm', function() {
+                                
+                        
 				var mydata = $(this).data();
 				$(mydata.loc).show();
 				spj.loadForm(mydata.form, mydata.base, mydata.target, mydata.img, mydata.id, 'open');
@@ -439,7 +450,9 @@
 
 	ugShowMembers = {
 		init: function() {
-			$('.spUsergroupShowMembers').click(function() {
+                        $('body').undelegate( ".spUsergroupShowMembers", "click" );
+                        $('body').delegate('.spUsergroupShowMembers', 'click', function() {
+                        
 				var mydata = $(this).data();
 				spj.showMemberList(mydata.url, mydata.img, mydata.id, mydata.target);
 			});

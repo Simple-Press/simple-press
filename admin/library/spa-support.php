@@ -298,10 +298,9 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	$tab++;
 	
 	foreach( $iconsets as $iconset_name => $iconset ) {
-		echo '<option value=""></option>';
 		echo '<optgroup label="'.$iconset_name.'">';
 		
-		printf( '<option value=""></option><optgroup label="%s">', $iconset_name );
+		printf( '<option value=""></option>', $iconset_name );
 		
 		foreach ( $iconset['icons'] as $icon_id => $icon ) {
 			
@@ -860,4 +859,26 @@ function spa_print_pagination( $link_args, $countPages, $currentPageNum, $pagina
             </span>
         </div>
 	<?php endif;
+}
+
+
+/**
+ * Return list groups related to a user
+ * 
+ * @global object $wpdb
+ * @param int $user_id
+ * 
+ * @return array
+ */
+function spa_user_groups_list( $user_id ) {
+	global $wpdb;
+	
+	$sql = "SELECT m.usergroup_id, ug.usergroup_name FROM " . SPMEMBERSHIPS . " m
+			LEFT JOIN " . SPUSERGROUPS . " ug ON ug.usergroup_id = m.usergroup_id
+			WHERE m.user_id = %d";
+	
+	
+	$results =  $wpdb->get_results( $wpdb->prepare( $sql, $user_id ) );
+	
+	return $results;
 }
