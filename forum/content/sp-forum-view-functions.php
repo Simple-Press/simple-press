@@ -2224,6 +2224,7 @@ function sp_TopicForumToolButton($args = '', $label = '', $toolTip = '') {
 	              'icon'           => 'sp_ForumTools.png',
 	              'iconClass'      => 'spIcon',
 	              'hide'           => 1,
+				  'stack'          => 0,
 	              'containerClass' => 'spForumTopicSection');
 	$a    = wp_parse_args($args, $defs);
 	$a    = apply_filters('sph_TopicForumToolButton_args', $a);
@@ -2236,17 +2237,19 @@ function sp_TopicForumToolButton($args = '', $label = '', $toolTip = '') {
 	$iconClass      = esc_attr($iconClass);
 	$containerClass = esc_attr($containerClass);
 	$hide           = (int) $hide;
+	$stack       = (int) $stack;
 	$toolTip        = esc_attr($toolTip);
 	$label          = SP()->displayFilters->title($label);
 
 	$tagId = str_ireplace('%ID%', SP()->forum->view->thisTopic->topic_id, $tagId);
+	($stack ? $att = '<br />' : $att = ' ');
 
 	$addStyle = '';
 	if ($hide) $addStyle = " style='display:none;' ";
 
 	$site  = wp_nonce_url(SPAJAXURL."spForumTopicTools&amp;targetaction=topictools&amp;topic=".SP()->forum->view->thisTopic->topic_id."&amp;forum=".SP()->forum->view->thisForum->forum_id."&amp;page=".SP()->forum->view->thisForum->display_page, 'spForumToolsMenu');
 	$title = esc_attr(SP()->primitives->front_text('Forum Tools'));
-	$out   = "<a class='$tagClass spForumTopicTools' id='$tagId' title='$toolTip' rel='nofollow' $addStyle data-site='$site' data-label='$title' data-width='350' data-height='0' data-align='0'>";
+	$out   = "$att" . "<a class='$tagClass spForumTopicTools' id='$tagId' title='$toolTip' rel='nofollow' $addStyle data-site='$site' data-label='$title' data-width='350' data-height='0' data-align='0'>";
 
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= $label;

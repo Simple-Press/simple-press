@@ -2549,7 +2549,7 @@ function sp_ForumTimeZone($args = '', $label = '') {
 	if ($get) return $tz;
 
 	$out = "<div class='$tagClass'>";
-	if (!empty($label)) $out .= '<span>'.SP()->displayFilters->title($label).'</span>';
+	if (!empty($label)) $out .= '<span class="spTimeZoneLabel">'.SP()->displayFilters->title($label).'</span>';
 	$out .= $tz;
 	$out .= '</div>';
 	$out = apply_filters('sph_ForumTimeZone', $out, $a);
@@ -2591,7 +2591,7 @@ function sp_UserTimeZone($args = '', $label = '') {
 	if ($get) return $tz;
 
 	$out = "<div class='$tagClass'>";
-	if (!empty($label)) $out .= '<span>'.SP()->displayFilters->title($label).'</span>';
+	if (!empty($label)) $out .= '<span class="spTimeZoneLabel">'.SP()->displayFilters->title($label).'</span>';
 	$out .= $tz;
 	$out .= '</div>';
 	$out = apply_filters('sph_UserTimeZone', $out, $a);
@@ -2618,6 +2618,7 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	              'pBrowsingClass' => 'spCurrentBrowsing',
 	              'linkNames'      => 1,
 	              'usersOnly'      => 0,
+				  'stack'          => 0,
 	              'echo'           => 1,
 	              'get'            => 0,);
 	$a    = wp_parse_args($args, $defs);
@@ -2630,12 +2631,16 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	$pBrowsingClass = esc_attr($pBrowsingClass);
 	$linkNames      = (int) $linkNames;
 	$usersOnly      = (int) $usersOnly;
+	$stack			= (int) $stack;
 	$echo           = (int) $echo;
 	$get            = (int) $get;
 	if (!empty($mostLabel)) $mostLabel = SP()->displayFilters->title($mostLabel);
 	if (!empty($currentLabel)) $currentLabel = SP()->displayFilters->title($currentLabel);
 	if (!empty($browsingLabel)) $browsingLabel = SP()->displayFilters->title($browsingLabel);
 	if (!empty($guestLabel)) $guestLabel = SP()->displayFilters->title($guestLabel);
+	
+	# Stack labels and data on top of each other?
+	($stack ? $stackAtt = '<br />' : $stackAtt = ' ');
 
 	# grab most online stat and update if new most
 	$max    = SP()->options->get('spMostOnline');
@@ -2657,16 +2662,17 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	}
 
 	# render the max online stats
-	$out = "<div class='$pMostClass'><span>$mostLabel</span>$max</div>";
+	$out = "<div class='$pMostClass'><span class='spMostClassLabel'>$mostLabel $stackAtt</span><span class='spMostClassData'>$max</span></div>";
 
 	# render the current online stats
 	$browse = '';
-	$out .= "<div class='$pCurrentClass'><span>$currentLabel</span>";
+	$out .= "<div class='$pCurrentClass'><span class='spCurrentClassLabel'>$currentLabel $stackAtt</span>";
 
 	# members online
 	if ($members) {
 		$firstOnline   = true;
 		$firstBrowsing = true;
+		$memberCount = 0;
 		$spMemberOpts  = SP()->options->get('sfmemberopts');
 		foreach ($members as $user) {
 			$userOpts = unserialize($user->user_options);
@@ -2677,6 +2683,7 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 				$out .= SP()->user->name_display($user->trackuserid, SP()->displayFilters->name($user->display_name), $linkNames);
 				$out .= '</span>';
 				$firstOnline = false;
+				$memberCount++;
 
 				# Set up the members browsing current item list while here
 				# Check that pageview is  set as this might be called from outside of the forum
@@ -2696,14 +2703,14 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	# guests online
 	if (!$usersOnly && $online && ($online > count($members))) {
 		$guests = ($online - count($members));
-		$out .= "<br />$guests <div class='spOnlineUser spType-Guest'>$guestLabel</div>";
+		$out .= "<br />$guests <div class='spOnlineUser spType-Guest'>$guestLabel $stackAtt</div>";
 	}
 	$out .= '</div>';
 
 	# Members and guests browsing
 	$out .= "<div class='$pBrowsingClass'>";
 	$guestBrowsing = sp_guests_browsing();
-	if ($browse || $guestBrowsing) $out .= "<span>$browsingLabel</span>";
+	if ($browse || $guestBrowsing) $out .= "<span class='spCurrentBrowsingLabel'>$browsingLabel $stackAtt</span>";
 	if ($browse) $out .= $browse;
 	if (!$usersOnly && $guestBrowsing != 0) $out .= "<br />$guestBrowsing <span class='spOnlineUser spType-Guest'>$guestLabel</span>";
 	$out .= "</div>\n";
