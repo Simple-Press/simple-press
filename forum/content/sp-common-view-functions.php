@@ -2616,6 +2616,7 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	$defs = array('pMostClass'     => 'spMostOnline',
 	              'pCurrentClass'  => 'spCurrentOnline',
 	              'pBrowsingClass' => 'spCurrentBrowsing',
+				  'pGuestsClass' 	=> 'spGuestsOnline',
 	              'linkNames'      => 1,
 	              'usersOnly'      => 0,
 				  'stack'          => 0,
@@ -2629,6 +2630,7 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	$pMostClass     = esc_attr($pMostClass);
 	$pCurrentClass  = esc_attr($pCurrentClass);
 	$pBrowsingClass = esc_attr($pBrowsingClass);
+	$pGuestsClass 	= esc_attr($pGuestsClass);
 	$linkNames      = (int) $linkNames;
 	$usersOnly      = (int) $usersOnly;
 	$stack			= (int) $stack;
@@ -2703,7 +2705,8 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	# guests online
 	if (!$usersOnly && $online && ($online > count($members))) {
 		$guests = ($online - count($members));
-		$out .= "<br />$guests <div class='spOnlineUser spType-Guest'>$guestLabel $stackAtt</div>";
+		//$out .= "<br />$guests <div class='spOnlineUser spType-Guest'>$guestLabel $stackAtt</div>";
+		$out .= "<div class='$pGuestsClass'><span class='spGuestsClassLabel'>$guestLabel $stackAtt</span><span class='spGuestsClassData'>$guests</span></div>";		
 	}
 	$out .= '</div>';
 
