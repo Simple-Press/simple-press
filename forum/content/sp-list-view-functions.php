@@ -33,6 +33,7 @@ function sp_ListForumName($args = '', $toolTip = '', $label = '') {
 
 	$defs = array('tagId'    => 'spListForumName%POS%',
 	              'tagClass' => 'spListForumRowName',
+				  'prefix'   => '',  
 	              'truncate' => 0,
 	              'echo'     => 1,
 	              'get'      => 0,);
@@ -44,6 +45,7 @@ function sp_ListForumName($args = '', $toolTip = '', $label = '') {
 	$tagId    = esc_attr($tagId);
 	$tagClass = esc_attr($tagClass);
 	$toolTip  = esc_attr($toolTip);
+	$prefix   = esc_attr($prefix);
 	$truncate = (int) $truncate;
 	$echo     = (int) $echo;
 	$get      = (int) $get;
@@ -58,7 +60,7 @@ function sp_ListForumName($args = '', $toolTip = '', $label = '') {
 	if (SP()->forum->view->listTopics->popup == false && !empty($label)) {
 		$out = "<p id='$tagId' class='$tagClass'>$label</p>\n";
 	} else {
-		$out = (empty(SP()->forum->view->thisListTopic->forum_name)) ? '' : "<a href='".SP()->forum->view->thisListTopic->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>".SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->forum_name, $truncate)."</a>\n";
+		$out = (empty(SP()->forum->view->thisListTopic->forum_name)) ? '' : "<a href='".SP()->forum->view->thisListTopic->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>$prefix ".SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->forum_name, $truncate)."</a>\n";
 	}
 	$out = apply_filters('sph_ListForumName', $out, $a);
 
@@ -209,6 +211,7 @@ function sp_ListTopicName($args = '', $toolTip = '') {
 	$defs = array('tagId'     => 'spListTopicName%ID%',
 	              'tagClass'  => 'spListTopicRowName',
 	              'linkClass' => 'spLink',
+				  'prefix'   => '',
 	              'truncate'  => 0,
 	              'echo'      => 1,
 	              'get'       => 0,);
@@ -220,6 +223,7 @@ function sp_ListTopicName($args = '', $toolTip = '') {
 	$tagId     = esc_attr($tagId);
 	$tagClass  = esc_attr($tagClass);
 	$linkClass = esc_attr($linkClass);
+	$prefix    = esc_attr($prefix);
 	$toolTip   = esc_attr($toolTip);
 	$toolTip   = str_ireplace('%NAME%', htmlspecialchars(SP()->forum->view->thisListTopic->topic_name, ENT_QUOTES, SPCHARSET), $toolTip);
 	$truncate  = (int) $truncate;
@@ -230,7 +234,7 @@ function sp_ListTopicName($args = '', $toolTip = '') {
 
 	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->topic_name, $truncate);
 
-	$out = "<div class='$tagClass'><a class='$linkClass' href='".SP()->forum->view->thisListTopic->topic_permalink."' id='$tagId' title='$toolTip'>".SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->topic_name, $truncate)."</a></div>\n";
+	$out = "<div class='$tagClass'><a class='$linkClass' href='".SP()->forum->view->thisListTopic->topic_permalink."' id='$tagId' title='$toolTip'>$prefix ".SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->topic_name, $truncate)."</a></div>\n";
 	$out = apply_filters('sph_ListTopicName', $out, $a);
 
 	if ($echo) {
