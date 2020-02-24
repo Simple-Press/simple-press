@@ -9,7 +9,7 @@ $Rev: 15408 $
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
 
 function sp_render_inline_login_form($a) {
-	extract($a, EXTR_SKIP);
+	extract($a, EXTR_SKIP);  // See function sp_LoginForm() in sp-common-view-functions.php for a list of variables that this will produce.
 	$user_login = '';
 	$user_pass = '';
 	$using_cookie = false;
@@ -36,6 +36,10 @@ function sp_render_inline_login_form($a) {
 
     $sfrpx = SP()->options->get('sfrpx');
     if ($sfrpx['sfrpxenable']) $out.= sp_rpx_loginform('spLoginForm', '100%', true);
+	
+	if ($title) {
+		$out = $out . "<div id='".$titleClass."' class='".$titleClass."'>$title</div> \n" ;
+	}
 
 	$out.= "<label class='$labelClass' for='log'>$labelUserName<br /><input type='text' class='$controlInput' tabindex='84' name='log' id='log' value='".esc_attr($user_login)."' size='11' /></label>\n";
 	$out.= sp_InsertBreak('echo=0&spacer=12px');

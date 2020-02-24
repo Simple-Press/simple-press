@@ -642,12 +642,14 @@ function sp_LoginForm($args = '') {
 	$defs = array('tagId'           => 'spLoginForm',
 	              'tagClass'        => 'spForm',
 				  'labelClass'		=> '',
+				  'titleClass'		=> 'spLoginFormTitle',
 	              'controlFieldset' => 'spControl',
 	              'controlInput'    => 'spControl',
 	              'controlSubmit'   => 'spSubmit',
 	              'controlIcon'     => 'spIcon',
 	              'controlLink'     => 'spLink',
 	              'iconName'        => 'sp_LogInOut.png',
+				  'title'           => '',
 	              'labelUserName'   => '',
 	              'labelPassword'   => '',
 	              'labelRemember'   => '',
@@ -677,11 +679,13 @@ function sp_LoginForm($args = '') {
 	$a['tagId']           = esc_attr($a['tagId']);
 	$a['labelClass']	  = esc_attr($a['labelClass']);
 	$a['tagClass']        = esc_attr($a['tagClass']);
+	$a['titleClass']      = esc_attr($a['titleClass']);
 	$a['controlFieldset'] = esc_attr($a['controlFieldset']);
 	$a['controlInput']    = esc_attr($a['controlInput']);
 	$a['controlSubmit']   = esc_attr($a['controlSubmit']);
 	$a['controlIcon']     = esc_attr($a['controlIcon']);
 	$a['controlLink']     = esc_attr($a['controlLink']);
+	$a['title']           = esc_attr($a['title']);
 	$a['iconName']        = sanitize_file_name($a['iconName']);
 	$a['showRegister']    = (int) $a['showRegister'];
 	$a['showLostPass']    = (int) $a['showLostPass'];
@@ -697,9 +701,12 @@ function sp_LoginForm($args = '') {
 	$a['separator']       = esc_attr($a['separator']);
 	$a['echo']            = (int) $a['echo'];
 
+	$a = apply_filters('sph_LoginFormAttributes', $a);	
+
 	$out = "<div id='".$a['tagId']."' class='".$a['tagClass']."'>\n";
 	$out .= sp_inline_login_form($a);
 	$out .= "</div>\n";
+
 	$out = apply_filters('sph_LoginForm', $out, $a);
 
 	if ($a['echo']) {
