@@ -3662,7 +3662,7 @@ function sp_attach_user_profile_link($userid, $targetitem) {
 			$site     = wp_nonce_url(SPAJAXURL."profile&amp;targetaction=popup&amp;user=$userid", 'profile');
 			$position = 'center';
 
-			return "<a rel='nofollow' class='spLink spOpenDialog' title='$title' data-site='$site' data-label='$title' data-width='750' data-height='0' data-align='$position'>$targetitem</a>";
+			return "<a rel='nofollow' class='spLink spOpenDialog' title='$title' data-site='$site' data-label='$title' data-width='100%' data-height='0' data-align='$position'>$targetitem</a>";
 
 		case 2:
 			# SF Profile page
