@@ -451,9 +451,52 @@ function sp_ForumIndexIcon($args = '') {
 
 # --------------------------------------------------------------------------------------
 #
+#	sp_ForumIndexLink()
+#	Display a LINK to the forum
+#	Scope:	Forum sub Loop
+#	Version: 6.5
+#
+# --------------------------------------------------------------------------------------
+function sp_ForumIndexLink($args = '', $toolTip = '') {
+	$defs = array('tagId'    => 'spForumIndexLink%ID%',
+	              'tagClass' => 'spRowLink',
+				  'label'	 => __sp('View Forum'),
+	              'truncate' => 0,
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexName_args', $a);
+	extract($a, EXTR_SKIP);
+
+	# sanitize before use
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$label = esc_attr($label);
+	$truncate = (int) $truncate;
+	$toolTip  = esc_attr($toolTip);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
+
+	$tagId   = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
+	$toolTip = str_ireplace('%NAME%', htmlspecialchars(SP()->forum->view->thisForum->forum_name, ENT_QUOTES, SPCHARSET), $toolTip);
+
+	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisForum->forum_name, $truncate);
+
+	$out = "<a href='".SP()->forum->view->thisForum->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>".$label."</a>\n";
+	$out = apply_filters('sph_ForumIndexLink', $out, $a);
+
+	if ($echo) {
+		echo $out;
+	} else {
+		return $out;
+	}
+}
+
+# --------------------------------------------------------------------------------------
+#
 #	sp_ForumIndexName()
 #	Display Forum Name/Title in Header
-#	Scope:	Forumn sub Loop
+#	Scope:	Forum sub Loop
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
