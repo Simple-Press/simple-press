@@ -775,8 +775,8 @@ function sp_perform_install($phase, $subphase = 0) {
 
 			# default theme
 			$theme			 = array();
-			$theme['theme']	 = 'barebones';
-			$theme['style']	 = 'barebones.php';
+			$theme['theme']	 = 'modern-2020';
+			$theme['style']	 = 'modern-2020.php';
 			$theme['color']	 = 'custom';
 			$theme['parent'] = '';
 			$theme['icons']	 = '';
@@ -792,8 +792,8 @@ function sp_perform_install($phase, $subphase = 0) {
 
 			$theme					 = array();
 			$theme['active']		 = false;
-			$theme['theme']			 = 'barebones';
-			$theme['style']			 = 'barebones.php';
+			$theme['theme']			 = 'modern-2020';
+			$theme['style']			 = 'modern-2020.php';
 			$theme['color']			 = 'custom';
 			$theme['usetemplate']	 = false;
 			$theme['pagetemplate']	 = '';
@@ -1123,8 +1123,8 @@ function sp_perform_install($phase, $subphase = 0) {
 			} else {
 				$path = SP_STORE_DIR.'/uploads/';
 			}
-			require $path.'/sp-resources/forum-themes/barebones/admin/sp-barebones-activate.php';
-			sp_barebones_setup(false);
+			require $path.'/sp-resources/forum-themes/modern-2020/admin/sp-modern2020-activate.php';
+			sp_modern_2020_setup(false);
 
 			# UPDATE VERSION/BUILD NUMBERS -------------------------
 

@@ -236,7 +236,7 @@ class spcTheme {
 		$this->images[$idx]['url'] = SPTHEMEBASEURL.$p;
 		$idx++;
 
-		# if Child theme add porent locations
+		# if Child theme add parent locations
 		if (!empty($curTheme['parent'])) {
 			# Parent theme special icons folder (overlay specified)
 			if (!empty($curTheme['icons'])) {
