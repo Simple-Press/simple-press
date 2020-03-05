@@ -293,14 +293,13 @@ function sp_PostNewButton($args = '', $label = '', $toolTip = '', $toolTipLock =
 
 	# is the forum locked?
 	$out  = '';
-
 	$out  = "<div id='$tagId'>";
-
+		
 	$lock = false;
 	if (SP()->core->forumData['lockdown'] || SP()->forum->view->thisTopic->forum_status || SP()->forum->view->thisTopic->topic_status) {
 		if (!empty($iconLock)) {
-			$out .= "<a class='$tagClass' title='$toolTipDenied'>\n";
-			$iconLock = SP()->theme->paint_icon($iconClass.' '.$iconStatusClass, SPTHEMEICONSURL, sanitize_file_name($iconLock), $toolTipLock);
+			$out .= "<a class='$tagClass spLockIconWrap' title='$toolTipDenied'>\n";
+			$iconLock = SP()->theme->paint_icon($iconClass.' '.$iconStatusClass.' spIconLockLink', SPTHEMEICONSURL, sanitize_file_name($iconLock), $toolTipLock);
 			$out .= SP()->theme->paint_icon_id($iconLock, $tagId);
 			$out.= "</a>";
 		}
@@ -317,13 +316,13 @@ function sp_PostNewButton($args = '', $label = '', $toolTip = '', $toolTipLock =
 	# Display if user not allowed to start topics
 	if (!$allowed && !empty($toolTipDenied)) {
 		if (!empty($iconDenied)) {
-			$out .= "<a class='$tagClass' title='$toolTipDenied'>\n";
-			$out .= SP()->theme->paint_icon($iconStatusClass, SPTHEMEICONSURL, sanitize_file_name($iconDenied), $toolTipDenied);
+			$out .= "<a class='$tagClass spDeniedIconWrap' title='$toolTipDenied'>\n";
+			$out .= SP()->theme->paint_icon($iconStatusClass.' spIconDeniedLink', SPTHEMEICONSURL, sanitize_file_name($iconDenied), $toolTipDenied);
 			$out .= "</a>\n";
 		}
 	}
-
-	$out.= '</div>';
+	
+	$out .= '</div>';
 
 	$out = apply_filters('sph_PostNewButton', $out, $a);
 

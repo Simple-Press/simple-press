@@ -329,7 +329,7 @@ function spa_deactivate_plugin() {
 			# note the sp-resources dir may not exist - but its our default. if user creates other parent dir for languages, we wont know about it
 			SP()->primitives->remove_dir(SP_STORE_DIR.'/sp-resources/forum-language');
 
-			# now remove the barebones custom settings storage
+			# now remove the barebones/modern-2020 custom settings storage
 			SP()->primitives->remove_dir(SP_STORE_DIR.'/sp-custom-settings');
 		}
 	}

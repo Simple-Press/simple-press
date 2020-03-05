@@ -191,4 +191,8 @@ class spcView {
 	public function the_postlist() {
 		$this->thisListPost = $this->listPosts->the_postlist();
 	}
+	
+	public function forum_count() {
+		return $this->groups->forum_count();
+	}
 }

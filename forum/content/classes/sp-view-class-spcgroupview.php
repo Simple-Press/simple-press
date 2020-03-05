@@ -545,4 +545,19 @@ class spcGroupView {
 
 		return $f;
 	}
+	
+	/**
+	 * This method returns the count of Forum records.
+	 *
+	 * @access public
+	 *
+	 * @since 6.5
+	 *
+	 * @param void
+	 *
+	 * @returns int
+	 */
+	public function forum_count() {
+		return $this->forumCount;		
+	}
 }

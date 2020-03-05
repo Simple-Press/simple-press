@@ -642,12 +642,14 @@ function sp_LoginForm($args = '') {
 	$defs = array('tagId'           => 'spLoginForm',
 	              'tagClass'        => 'spForm',
 				  'labelClass'		=> '',
+				  'titleClass'		=> 'spLoginFormTitle',
 	              'controlFieldset' => 'spControl',
 	              'controlInput'    => 'spControl',
 	              'controlSubmit'   => 'spSubmit',
 	              'controlIcon'     => 'spIcon',
 	              'controlLink'     => 'spLink',
 	              'iconName'        => 'sp_LogInOut.png',
+				  'title'           => '',
 	              'labelUserName'   => '',
 	              'labelPassword'   => '',
 	              'labelRemember'   => '',
@@ -677,11 +679,13 @@ function sp_LoginForm($args = '') {
 	$a['tagId']           = esc_attr($a['tagId']);
 	$a['labelClass']	  = esc_attr($a['labelClass']);
 	$a['tagClass']        = esc_attr($a['tagClass']);
+	$a['titleClass']      = esc_attr($a['titleClass']);
 	$a['controlFieldset'] = esc_attr($a['controlFieldset']);
 	$a['controlInput']    = esc_attr($a['controlInput']);
 	$a['controlSubmit']   = esc_attr($a['controlSubmit']);
 	$a['controlIcon']     = esc_attr($a['controlIcon']);
 	$a['controlLink']     = esc_attr($a['controlLink']);
+	$a['title']           = esc_attr($a['title']);
 	$a['iconName']        = sanitize_file_name($a['iconName']);
 	$a['showRegister']    = (int) $a['showRegister'];
 	$a['showLostPass']    = (int) $a['showLostPass'];
@@ -697,9 +701,12 @@ function sp_LoginForm($args = '') {
 	$a['separator']       = esc_attr($a['separator']);
 	$a['echo']            = (int) $a['echo'];
 
+	$a = apply_filters('sph_LoginFormAttributes', $a);	
+
 	$out = "<div id='".$a['tagId']."' class='".$a['tagClass']."'>\n";
 	$out .= sp_inline_login_form($a);
 	$out .= "</div>\n";
+
 	$out = apply_filters('sph_LoginForm', $out, $a);
 
 	if ($a['echo']) {
@@ -2549,7 +2556,7 @@ function sp_ForumTimeZone($args = '', $label = '') {
 	if ($get) return $tz;
 
 	$out = "<div class='$tagClass'>";
-	if (!empty($label)) $out .= '<span>'.SP()->displayFilters->title($label).'</span>';
+	if (!empty($label)) $out .= '<span class="spTimeZoneLabel">'.SP()->displayFilters->title($label).'</span>';
 	$out .= $tz;
 	$out .= '</div>';
 	$out = apply_filters('sph_ForumTimeZone', $out, $a);
@@ -2591,7 +2598,7 @@ function sp_UserTimeZone($args = '', $label = '') {
 	if ($get) return $tz;
 
 	$out = "<div class='$tagClass'>";
-	if (!empty($label)) $out .= '<span>'.SP()->displayFilters->title($label).'</span>';
+	if (!empty($label)) $out .= '<span class="spTimeZoneLabel">'.SP()->displayFilters->title($label).'</span>';
 	$out .= $tz;
 	$out .= '</div>';
 	$out = apply_filters('sph_UserTimeZone', $out, $a);
@@ -2616,8 +2623,10 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	$defs = array('pMostClass'     => 'spMostOnline',
 	              'pCurrentClass'  => 'spCurrentOnline',
 	              'pBrowsingClass' => 'spCurrentBrowsing',
+				  'pGuestsClass' 	=> 'spGuestsOnline',
 	              'linkNames'      => 1,
 	              'usersOnly'      => 0,
+				  'stack'          => 0,
 	              'echo'           => 1,
 	              'get'            => 0,);
 	$a    = wp_parse_args($args, $defs);
@@ -2628,14 +2637,19 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	$pMostClass     = esc_attr($pMostClass);
 	$pCurrentClass  = esc_attr($pCurrentClass);
 	$pBrowsingClass = esc_attr($pBrowsingClass);
+	$pGuestsClass 	= esc_attr($pGuestsClass);
 	$linkNames      = (int) $linkNames;
 	$usersOnly      = (int) $usersOnly;
+	$stack			= (int) $stack;
 	$echo           = (int) $echo;
 	$get            = (int) $get;
 	if (!empty($mostLabel)) $mostLabel = SP()->displayFilters->title($mostLabel);
 	if (!empty($currentLabel)) $currentLabel = SP()->displayFilters->title($currentLabel);
 	if (!empty($browsingLabel)) $browsingLabel = SP()->displayFilters->title($browsingLabel);
 	if (!empty($guestLabel)) $guestLabel = SP()->displayFilters->title($guestLabel);
+	
+	# Stack labels and data on top of each other?
+	($stack ? $stackAtt = '<br />' : $stackAtt = ' ');
 
 	# grab most online stat and update if new most
 	$max    = SP()->options->get('spMostOnline');
@@ -2657,16 +2671,17 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	}
 
 	# render the max online stats
-	$out = "<div class='$pMostClass'><span>$mostLabel</span>$max</div>";
+	$out = "<div class='$pMostClass'><span class='spMostClassLabel'>$mostLabel $stackAtt</span><span class='spMostClassData'>$max</span></div>";
 
 	# render the current online stats
 	$browse = '';
-	$out .= "<div class='$pCurrentClass'><span>$currentLabel</span>";
+	$out .= "<div class='$pCurrentClass'><span class='spCurrentClassLabel'>$currentLabel $stackAtt</span>";
 
 	# members online
 	if ($members) {
 		$firstOnline   = true;
 		$firstBrowsing = true;
+		$memberCount = 0;
 		$spMemberOpts  = SP()->options->get('sfmemberopts');
 		foreach ($members as $user) {
 			$userOpts = unserialize($user->user_options);
@@ -2677,6 +2692,7 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 				$out .= SP()->user->name_display($user->trackuserid, SP()->displayFilters->name($user->display_name), $linkNames);
 				$out .= '</span>';
 				$firstOnline = false;
+				$memberCount++;
 
 				# Set up the members browsing current item list while here
 				# Check that pageview is  set as this might be called from outside of the forum
@@ -2696,14 +2712,15 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	# guests online
 	if (!$usersOnly && $online && ($online > count($members))) {
 		$guests = ($online - count($members));
-		$out .= "<br />$guests <div class='spOnlineUser spType-Guest'>$guestLabel</div>";
+		//$out .= "<br />$guests <div class='spOnlineUser spType-Guest'>$guestLabel $stackAtt</div>";
+		$out .= "<div class='$pGuestsClass'><span class='spGuestsClassLabel'>$guestLabel $stackAtt</span><span class='spGuestsClassData'>$guests</span></div>";		
 	}
 	$out .= '</div>';
 
 	# Members and guests browsing
 	$out .= "<div class='$pBrowsingClass'>";
 	$guestBrowsing = sp_guests_browsing();
-	if ($browse || $guestBrowsing) $out .= "<span>$browsingLabel</span>";
+	if ($browse || $guestBrowsing) $out .= "<span class='spCurrentBrowsingLabel'>$browsingLabel $stackAtt</span>";
 	if ($browse) $out .= $browse;
 	if (!$usersOnly && $guestBrowsing != 0) $out .= "<br />$guestBrowsing <span class='spOnlineUser spType-Guest'>$guestLabel</span>";
 	$out .= "</div>\n";
@@ -3645,7 +3662,7 @@ function sp_attach_user_profile_link($userid, $targetitem) {
 			$site     = wp_nonce_url(SPAJAXURL."profile&amp;targetaction=popup&amp;user=$userid", 'profile');
 			$position = 'center';
 
-			return "<a rel='nofollow' class='spLink spOpenDialog' title='$title' data-site='$site' data-label='$title' data-width='750' data-height='0' data-align='$position'>$targetitem</a>";
+			return "<a rel='nofollow' class='spLink spOpenDialog' title='$title' data-site='$site' data-label='$title' data-width='100%' data-height='0' data-align='$position'>$targetitem</a>";
 
 		case 2:
 			# SF Profile page

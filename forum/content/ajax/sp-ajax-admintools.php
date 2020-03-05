@@ -337,6 +337,9 @@ function sp_forum_sort_order() {
     # if already reversed remove flag or reverse if not
     $key = false;
 	$sort_data = SP()->meta->get_value('sort_order', 'forum');
+	if (empty($sort_data)) {
+		$sort_data = array();  // $sort_data needs to be an array to avoid issues later below (especially around line #347 where it will error out if $sort_data is still a string).
+	}
     if (!empty($sort_data)) {
 	    $key = array_search($forumid, (array) $sort_data);
 	}
@@ -368,6 +371,9 @@ function sp_topic_sort_order() {
     # if already reversed remove flag or reverse if not
     $key = false;
 	$sort_data = SP()->meta->get_value('sort_order', 'topic');
+	if (empty($sort_data)) {
+		$sort_data = array();  // $sort_data needs to be an array to avoid issues later below (especially around line #381 where it will error out if $sort_data is still a string).
+	}	
     if (!empty($sort_data)) {
 	    $key = array_search($topicid, (array) $sort_data);
 	}

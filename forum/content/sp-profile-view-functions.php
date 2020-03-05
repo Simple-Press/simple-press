@@ -1479,7 +1479,9 @@ function sp_ProfileShowUserPosts($args = '', $label = '') {
 #	Version: 5.0
 #
 #	Version 5.5.9:
-#		Addeed arguments $labelYouStarted, $labelYouPosted
+#		Added arguments $labelYouStarted, $labelYouPosted
+#	Version 6.5.0
+#		Added argument $stackButtons - used on mobile themes to insert a line break between the two links/buttons.
 #
 # --------------------------------------------------------------------------------------
 function sp_ProfileShowSearchPosts($args = '', $label = '', $labelStarted = '', $labelPosted = '', $labelYouStarted = '', $labelYouPosted = '') {
@@ -1490,6 +1492,7 @@ function sp_ProfileShowSearchPosts($args = '', $label = '', $labelStarted = '', 
 	              'middleClass' => 'spColumnSection spProfileSpacerCol',
 	              'rightClass'  => 'spColumnSection spProfileRightCol',
 	              'linkClass'   => 'spButton spLeft',
+				  'stackButtons'=> 0,
 	              'echo'        => 1,);
 
 	$a = wp_parse_args($args, $defs);
@@ -1503,8 +1506,11 @@ function sp_ProfileShowSearchPosts($args = '', $label = '', $labelStarted = '', 
 	$rightClass  = esc_attr($rightClass);
 	$linkClass   = esc_attr($linkClass);
 	$label       = SP()->displayFilters->title($label);
+	$stackButtons= (int) $stackButtons;
 	$echo        = (int) $echo;
 
+	($stackButtons ? $stackBreak = '<br />' : $stackBreak = ' ');	
+	
 	if (SP()->user->profileUser->ID == SP()->user->thisUser->ID) {
 		if (empty($labelYouStarted)) $labelYouStarted = SP()->primitives->front_text('List Topics You Started');
 		if (empty($labelYouPosted)) $labelYouPosted = SP()->primitives->front_text('List Topics You Have Posted To');
@@ -1528,7 +1534,9 @@ function sp_ProfileShowSearchPosts($args = '', $label = '', $labelStarted = '', 
 	# output first name
 	$out = '';
 	$out .= "<div class='$leftClass'>";
-	$out .= "<p class='$tagClass'>$label:</p>";
+	if (!empty($label)) {
+		$out .= "<p class='$tagClass'>$label:</p>";
+	}
 	$out .= '</div>';
 	$out .= "<div class='$middleClass'></div>";
 	$out .= "<div class='$rightClass'>";
@@ -1542,7 +1550,7 @@ function sp_ProfileShowSearchPosts($args = '', $label = '', $labelStarted = '', 
 		$text1 = $labelPosted;
 		$text2 = $labelStarted;
 	}
-	$out .= '<input type="submit" class="spSubmit sf-button-primary" name="membersearch" value="'.$text1.'" />';
+	$out .= $stackBreak . '<input type="submit" class="spSubmit sf-button-primary" name="membersearch" value="'.$text1.'" />' . $stackBreak;
 	$out .= '<input type="submit" class="spSubmit sf-button-primary" name="memberstarted" value="'.$text2.'" />';
 	$out .= '</form>';
 	$out .= "</div>\n";

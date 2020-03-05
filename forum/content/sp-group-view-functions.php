@@ -451,9 +451,52 @@ function sp_ForumIndexIcon($args = '') {
 
 # --------------------------------------------------------------------------------------
 #
+#	sp_ForumIndexLink()
+#	Display a LINK to the forum
+#	Scope:	Forum sub Loop
+#	Version: 6.5
+#
+# --------------------------------------------------------------------------------------
+function sp_ForumIndexLink($args = '', $toolTip = '') {
+	$defs = array('tagId'    => 'spForumIndexLink%ID%',
+	              'tagClass' => 'spRowLink',
+				  'label'	 => __sp('View Forum'),
+	              'truncate' => 0,
+	              'echo'     => 1,
+	              'get'      => 0,);
+	$a    = wp_parse_args($args, $defs);
+	$a    = apply_filters('sph_ForumIndexName_args', $a);
+	extract($a, EXTR_SKIP);
+
+	# sanitize before use
+	$tagId    = esc_attr($tagId);
+	$tagClass = esc_attr($tagClass);
+	$label = esc_attr($label);
+	$truncate = (int) $truncate;
+	$toolTip  = esc_attr($toolTip);
+	$echo     = (int) $echo;
+	$get      = (int) $get;
+
+	$tagId   = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
+	$toolTip = str_ireplace('%NAME%', htmlspecialchars(SP()->forum->view->thisForum->forum_name, ENT_QUOTES, SPCHARSET), $toolTip);
+
+	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisForum->forum_name, $truncate);
+
+	$out = "<a href='".SP()->forum->view->thisForum->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>".$label."</a>\n";
+	$out = apply_filters('sph_ForumIndexLink', $out, $a);
+
+	if ($echo) {
+		echo $out;
+	} else {
+		return $out;
+	}
+}
+
+# --------------------------------------------------------------------------------------
+#
 #	sp_ForumIndexName()
 #	Display Forum Name/Title in Header
-#	Scope:	Forumn sub Loop
+#	Scope:	Forum sub Loop
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
@@ -909,7 +952,7 @@ function sp_ForumIndexInlinePosts() {
 #	Version: 5.0
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexPostCount($args = '', $label = '', $rtlLabel = '') {
+function sp_ForumIndexPostCount($args = '', $label = '', $rtlLabel = '', $labelAfter = '', $rtlLabelAfter = '') {
 	$defs = array('tagId'       => 'spForumIndexPostCount%ID%',
 	              'tagClass'    => 'spInRowCount',
 	              'labelClass'  => 'spInRowLabel',
@@ -932,6 +975,9 @@ function sp_ForumIndexPostCount($args = '', $label = '', $rtlLabel = '') {
 	$echo        = (int) $echo;
 	$get         = (int) $get;
 
+	$labelAfter = SP()->displayFilters->title($labelAfter);	
+	$rtlLabelAfter = SP()->displayFilters->title($rtlLabelAfter);
+	
 	if ($includeSubs && SP()->forum->view->thisForum->forum_id_sub == 0) $includeSubs = 0;
 
 	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
@@ -941,10 +987,11 @@ function sp_ForumIndexPostCount($args = '', $label = '', $rtlLabel = '') {
 	if ($get) return $data;
 
 	if (is_rtl() && $data == 1) $label = $rtlLabel;
+	if (is_rtl() && $data == 1) $labelAfter = $rtlLabelAfter;
 
 	$out = "<div id='$tagId' class='$tagClass'>\n";
 	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>\n";
-	$out .= "<span class='$numberClass'>$data</span>\n";
+	$out .= "<span class='$numberClass'>$data $labelAfter</span>\n";
 	$out .= "</div>\n";
 	$out = apply_filters('sph_ForumIndexPostCount', $out, $a);
 
@@ -965,7 +1012,7 @@ function sp_ForumIndexPostCount($args = '', $label = '', $rtlLabel = '') {
 #	5.5.1 = $rtlLabel parameter added
 #
 # --------------------------------------------------------------------------------------
-function sp_ForumIndexTopicCount($args = '', $label = '', $rtlLabel = '') {
+function sp_ForumIndexTopicCount($args = '', $label = '', $rtlLabel = '', $labelAfter = '', $rtlLabelAfter = '') {
 	$defs = array('tagId'       => 'spForumIndexTopicCount%ID%',
 	              'tagClass'    => 'spInRowCount',
 	              'labelClass'  => 'spInRowLabel',
@@ -987,6 +1034,9 @@ function sp_ForumIndexTopicCount($args = '', $label = '', $rtlLabel = '') {
 	$stack       = (int) $stack;
 	$echo        = (int) $echo;
 	$get         = (int) $get;
+	
+	$labelAfter = SP()->displayFilters->title($labelAfter);	
+	$rtlLabelAfter = SP()->displayFilters->title($rtlLabelAfter);	
 
 	if ($includeSubs && SP()->forum->view->thisForum->forum_id_sub == 0) $includeSubs = 0;
 
@@ -997,10 +1047,11 @@ function sp_ForumIndexTopicCount($args = '', $label = '', $rtlLabel = '') {
 	if ($get) return $data;
 
 	if (is_rtl() && $data == 1) $label = $rtlLabel;
+	if (is_rtl() && $data == 1) $labelAfter = $rtlLabelAfter;
 
 	$out = "<div id='$tagId' class='$tagClass'>\n";
 	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>\n";
-	$out .= "<span class='$numberClass'>$data</span>\n";
+	$out .= "<span class='$numberClass'>$data $labelAfter</span>\n";
 	$out .= "</div>\n";
 	$out = apply_filters('sph_ForumIndexTopicCount', $out, $a);
 

@@ -45,7 +45,7 @@ if (SPBUILD < $current_build || version_compare(SPVERSION, $current_version) == 
     return;
 }
 
-# Has the systen been installed?
+# Has the system been installed?
 if (version_compare($current_version, '1.0', '<')) {
     sp_install_required();
     return;
@@ -101,7 +101,7 @@ function sp_install_required() {
                 echo $bad . '</div>';
                 return;
             }
-            # OK - we can contiunue to offer full install
+            # OK - we can continue to offer full install
             ?>
             <div class="sf-panel-head">
                 <div class='sf-buttons'>					

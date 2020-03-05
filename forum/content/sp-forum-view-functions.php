@@ -1919,6 +1919,10 @@ function sp_TopicIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPin = '
 #	5.5.2	- 'labelLink' argument added
 #	5.5.9	- 'beforeUser' argument added
 #	5.5.9	- 'beforeDate' argument added
+#	6.5.0	- 'stackLabelLink argument added - allows the label link to break after its painted so you can style it as a button without including the date and author.
+#	6.5.0	= 'postIconLink' argument added - allows to disable the icon link.  The default is enabled or '1' for backwards compatibility.  
+#	While You could have used the presence or absence of the 'icon' argument, that would mean potentially breaking backwards compatibility
+#	or changing all other themes.  So we added this argument instead.
 #
 # --------------------------------------------------------------------------------------
 function sp_TopicIndexFirstPost($args = '', $label = '') {
@@ -1926,10 +1930,11 @@ function sp_TopicIndexFirstPost($args = '', $label = '') {
 	              'tagClass'     => 'spInRowPostLink',
 	              'labelClass'   => 'spInRowLabel',
 	              'infoClass'    => 'spInRowInfo',
-	              'linkClass'    => 'spInRowLastPostLink',
+	              'linkClass'    => 'spInRowFirstPostLink',
 	              'iconClass'    => 'spIcon',
 	              'icon'         => 'sp_ArrowRight.png',
 	              'labelLink'    => 0,
+				  'postIconLink' => 1,				  
 	              'tip'          => 1,
 	              'nicedate'     => 1,
 	              'date'         => 0,
@@ -1937,6 +1942,7 @@ function sp_TopicIndexFirstPost($args = '', $label = '') {
 	              'user'         => 1,
 	              'stackuser'    => 1,
 	              'stackdate'    => 0,
+				  'stackLabelLink' => 0,
 	              'truncateUser' => 0,
 	              'itemBreak'    => '<br />',
 	              'beforeUser'   => '&nbsp;',
@@ -1956,6 +1962,7 @@ function sp_TopicIndexFirstPost($args = '', $label = '') {
 	$iconClass    = esc_attr($iconClass);
 	$icon         = sanitize_file_name($icon);
 	$labelLink    = (int) $labelLink;
+	$postIconLink = (int) $postIconLink;
 	$tip          = (int) $tip;
 	$nicedate     = (int) $nicedate;
 	$date         = (int) $date;
@@ -1963,6 +1970,7 @@ function sp_TopicIndexFirstPost($args = '', $label = '') {
 	$user         = (int) $user;
 	$stackuser    = (int) $stackuser;
 	$stackdate    = (int) $stackdate;
+	$stackLabelink = (int) $stackLabelLink;
 	$truncateUser = (int) $truncateUser;
 	$echo         = (int) $echo;
 	$get          = (int) $get;
@@ -1975,23 +1983,29 @@ function sp_TopicIndexFirstPost($args = '', $label = '') {
 		$title = '';
 	}
 
-	($stackuser ? $ulb = '<br />' : $ulb = $beforeUser);
-	($stackdate ? $dlb = '<br />' : $dlb = ' - ');
+	($stackuser ? $ulb = '<br />' .$beforeUser : $ulb = $beforeUser);
+	($stackdate ? $dlb = '<br />' .$beforeDate : $dlb = ' - ');
+	
+	($stackLabelLink ? $labelLinkBreak = '<br />' : $labelLinkBreak = '');
 
 	$out = "<div id='$tagId' class='$tagClass'>\n";
 	$out .= "<span class='$labelClass'>\n";
+	
+	# Link to post using label
 	if ($labelLink) {
-		$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisTopic->first_post_permalink."'>\n";
+		$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisTopic->first_post_permalink."'>\n ";
 	}
 	$out .= SP()->displayFilters->title($label);
 	if ($labelLink) {
-		$out .= "</a>\n";
+		$out .= "</a>\n $labelLinkBreak";
 	}
 
-	# Link to post
-	$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisTopic->first_post_permalink."'>\n";
-	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-	$out .= "</a></span>\n";
+	# Link to post using icon
+	if ($postIconLink) {
+		$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisTopic->first_post_permalink."'>\n";
+		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+		$out .= "</a></span>\n";
+	}
 
 	# user
 	$poster = SP()->user->name_display(SP()->forum->view->thisTopic->first_user_id, SP()->primitives->truncate_name(SP()->forum->view->thisTopic->first_display_name, $truncateUser));
@@ -2045,6 +2059,10 @@ function sp_TopicIndexFirstPost($args = '', $label = '') {
 #	5.5.2	- 'labelLink' argument added
 #	5.5.9	- 'beforeUser' argument added
 #	5.5.9	- 'beforeDate' argument added
+#	6.5.0	- 'stackLabelLink argument added - allows the label link to break after its painted so you can style it as a button without including the date and author.
+#	6.5.0	= 'postIconLink' argument added - allows to disable the icon link.  The default is enabled or '1' for backwards compatibility.  
+#	While You could have used the presence or absence of the 'icon' argument, that would mean potentially breaking backwards compatibility
+#	or changing all other themes.  So we added this argument instead.
 #
 # --------------------------------------------------------------------------------------
 function sp_TopicIndexLastPost($args = '', $label = '') {
@@ -2059,6 +2077,7 @@ function sp_TopicIndexLastPost($args = '', $label = '') {
 	              'iconClass'    => 'spIcon',
 	              'icon'         => 'sp_ArrowRight.png',
 	              'labelLink'    => 0,
+				  'postIconLink' => 1,
 	              'tip'          => 1,
 	              'nicedate'     => 1,
 	              'date'         => 0,
@@ -2066,6 +2085,7 @@ function sp_TopicIndexLastPost($args = '', $label = '') {
 	              'user'         => 1,
 	              'stackuser'    => 1,
 	              'stackdate'    => 0,
+				  'stackLabelLink' => 0,
 	              'truncateUser' => 0,
 	              'itemBreak'    => '<br />',
 	              'beforeUser'   => '&nbsp;',
@@ -2085,6 +2105,7 @@ function sp_TopicIndexLastPost($args = '', $label = '') {
 	$iconClass    = esc_attr($iconClass);
 	$icon         = sanitize_file_name($icon);
 	$labelLink    = (int) $labelLink;
+	$postIconLink = (int) $postIconLink;
 	$tip          = (int) $tip;
 	$nicedate     = (int) $nicedate;
 	$date         = (int) $date;
@@ -2092,6 +2113,7 @@ function sp_TopicIndexLastPost($args = '', $label = '') {
 	$user         = (int) $user;
 	$stackuser    = (int) $stackuser;
 	$stackdate    = (int) $stackdate;
+	$stackLabelink = (int) $stackLabelLink;
 	$truncateUser = (int) $truncateUser;
 	$echo         = (int) $echo;
 	$get          = (int) $get;
@@ -2104,24 +2126,29 @@ function sp_TopicIndexLastPost($args = '', $label = '') {
 		$title = '';
 	}
 
-	($stackuser ? $ulb = '<br />' : $ulb = $beforeUser);
-	($stackdate ? $dlb = '<br />' : $dlb = ' - ');
+	($stackuser ? $ulb = '<br />' .$beforeUser : $ulb = $beforeUser);
+	($stackdate ? $dlb = '<br />' .$beforeUser : $dlb = ' - ');
 
+	($stackLabelLink ? $labelLinkBreak = '<br />' : $labelLinkBreak = '');
+	
 	$out = "<div id='$tagId' class='$tagClass'>\n";
 	$out .= "<span class='$labelClass'>\n";
 
+	# Link to post using the label
 	if ($labelLink) {
 		$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisTopic->last_post_permalink."'>\n";
 	}
 	$out .= SP()->displayFilters->title($label);
 	if ($labelLink) {
-		$out .= "</a>\n";
+		$out .= "</a>\n $labelLinkBreak";
 	}
 
-	# Link to post
-	$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisTopic->last_post_permalink."'>\n";
-	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-	$out .= "</a></span>\n";
+	# Link to post using icon
+	if ($postIconLink) {
+		$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisTopic->last_post_permalink."'>\n";
+		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
+		$out .= "</a></span>\n";
+	}
 
 	# user
 	$poster = SP()->user->name_display(SP()->forum->view->thisTopic->last_user_id, SP()->primitives->truncate_name(SP()->forum->view->thisTopic->last_display_name, $truncateUser));
@@ -2224,6 +2251,7 @@ function sp_TopicForumToolButton($args = '', $label = '', $toolTip = '') {
 	              'icon'           => 'sp_ForumTools.png',
 	              'iconClass'      => 'spIcon',
 	              'hide'           => 1,
+				  'stack'          => 0,
 	              'containerClass' => 'spForumTopicSection');
 	$a    = wp_parse_args($args, $defs);
 	$a    = apply_filters('sph_TopicForumToolButton_args', $a);
@@ -2236,17 +2264,19 @@ function sp_TopicForumToolButton($args = '', $label = '', $toolTip = '') {
 	$iconClass      = esc_attr($iconClass);
 	$containerClass = esc_attr($containerClass);
 	$hide           = (int) $hide;
+	$stack       = (int) $stack;
 	$toolTip        = esc_attr($toolTip);
 	$label          = SP()->displayFilters->title($label);
 
 	$tagId = str_ireplace('%ID%', SP()->forum->view->thisTopic->topic_id, $tagId);
+	($stack ? $att = '<br />' : $att = ' ');
 
 	$addStyle = '';
 	if ($hide) $addStyle = " style='display:none;' ";
 
 	$site  = wp_nonce_url(SPAJAXURL."spForumTopicTools&amp;targetaction=topictools&amp;topic=".SP()->forum->view->thisTopic->topic_id."&amp;forum=".SP()->forum->view->thisForum->forum_id."&amp;page=".SP()->forum->view->thisForum->display_page, 'spForumToolsMenu');
 	$title = esc_attr(SP()->primitives->front_text('Forum Tools'));
-	$out   = "<a class='$tagClass spForumTopicTools' id='$tagId' title='$toolTip' rel='nofollow' $addStyle data-site='$site' data-label='$title' data-width='350' data-height='0' data-align='0'>";
+	$out   = "$att" . "<a class='$tagClass spForumTopicTools' id='$tagId' title='$toolTip' rel='nofollow' $addStyle data-site='$site' data-label='$title' data-width='350' data-height='0' data-align='0'>";
 
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= $label;
