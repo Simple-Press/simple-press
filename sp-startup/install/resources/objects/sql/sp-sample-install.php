@@ -40,7 +40,7 @@ SP()->DB->execute($sql);
 
 $sql = "INSERT INTO ".SPGROUPS." (group_id, group_name, group_seq, group_desc, group_rss, group_icon, group_message, sample)
 VALUES
-	(1,'My First Forum Group',1,'Forum Groups are a way of organising your forums into sections helping your users navigate',NULL,'','',1),
+	(1,'My First Forum Group',1,'Forum Groups are a way of organizing your forums into sections helping your users navigate',NULL,'','',1),
 	(2,'A Members Only Forum Group',2,'In this group the permissions have been set to allow no access to unregistered users',NULL,'','',1);";
 SP()->DB->execute($sql);
 
