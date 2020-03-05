@@ -401,8 +401,14 @@ if ($build < $section) {
 }
 # End of Upgrade Routines - 6.3.0 ============================================================
 
-# Start of Upgrade Routines - 6.3.1 ============================================================
+# Start of Upgrade Routines - 6.4.0 ============================================================
 $section = 15866;
+if ($build < $section) {
+	// blank upgrade...
+	sp_response($section);
+}
+# Start of Upgrade Routines - 6.5.0 ============================================================
+$section = 15867;
 if ($build < $section) {
 	// blank upgrade...
 	sp_response($section);
