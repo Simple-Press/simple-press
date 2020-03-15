@@ -32,7 +32,7 @@ $sql = "INSERT INTO ".SPFORUMS." (forum_id, forum_name, group_id, forum_seq, for
 VALUES
 	(1,'My First Forum',1,1,'An example of a main forum - this one allows non-members to create topics',0,0,'my-first-forum', 'my-first-forum', '','','','','','','','','','',1,1,1,1,1,0,0,'','',''),
 	(2,'My Second Forum',1,2,'Another example of a main forum - this one with a sub or child forum',0,0,'my-second-forum', 'my-second-forum', NULL,'','','','','','','','','',NULL,NULL,0,0,0,0,0,'a:1:{i:0;s:1:\"3\";}','',''),
-	(3,'A Sub-Forum',1,3,'Sub-forums are moist useful when you need a lot of forums but do not want to present them in one long list',0,0,'a-sub-forum', 'my-second-forum/a-sub-forum', NULL,'','','','','','','','','',NULL,NULL,0,0,0,0,2,'','',''),
+	(3,'A Sub-Forum',1,3,'Sub-forums are most useful when you need a lot of forums but do not want to present them in one long list',0,0,'a-sub-forum', 'my-second-forum/a-sub-forum', NULL,'','','','','','','','','',NULL,NULL,0,0,0,0,2,'','',''),
 	(4,'A Private Forum for Members',2,1,'Forums can inherit the permissions set up in their parent Forum Group',0,0,'a-private-forum-for-members', 'a-private-forum-for-members', NULL,'','','','','','','','','',NULL,NULL,0,0,0,0,0,'','','');";
 SP()->DB->execute($sql);
 
