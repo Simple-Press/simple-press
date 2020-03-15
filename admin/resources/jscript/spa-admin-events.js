@@ -369,11 +369,15 @@
 
 	pluginsUpload = {
 		init: function() {
-			$('.spPluginUpload').click(function() {
+                        
+                        $('#sfmaincontainer').off('click', '.spPluginUpload');
+                        
+                        $('#sfmaincontainer').on('click', '.spPluginUpload', function() {
 				var mydata = $(this).data();
 				$(mydata.target).attr('disabled', 'disabled');
 				document.sfpluginuploadform.submit();
-			});
+                        });
+                        
 		}
 	};
 
@@ -465,18 +469,23 @@
 
 	setForumOptions = {
 		init: function() {
-			$('.spForumSetOptions').change(function() {
-				var mydata = $(this).data();
+                        
+                        $('#sfmaincontainer').off('change', '.spForumSetOptions');
+			$('#sfmaincontainer').on('change', '.spForumSetOptions', function() {
+                                var mydata = $(this).data();
 				spj.setForumOptions(mydata.target);
-			});
+                        });
 		}
 	};
 
 	setForumSequence = {
 		init: function() {
-			$('.spForumSetSequence').change(function() {
-				spj.setForumSequence();
-			});
+                        
+                        
+                        $('#sfmaincontainer').off('change', '.spForumSetSequence');
+			$('#sfmaincontainer').on('change', '.spForumSetSequence', function() {
+                                spj.setForumSequence();
+                        });
 		}
 	};
 
