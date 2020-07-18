@@ -549,6 +549,15 @@ class spcDB {
 	private function executeSelect($sql, $queryType = 'set', $resultType = OBJECT) {
 		global $wpdb;
 
+		// PHP 7.4 fix: PHP Warning - Creating default object from empty value
+		// Not sure why none of the components of SP() is unavailable here even though SP() itself is fine.  
+		// Tracing through the code shows that SP()->rewrites = new spcRewrites(); is getting called before this function 
+		// in file /sp-api/sp-load-class-spccoreloader.php around line 76.  So the fact that it's not already an object here 
+		// sometimes is quite puzzling.
+		if ( ! is_object(SP()->rewrites) ) {
+			SP()->rewrites = new spcRewrites();
+		}	
+
 		SP()->rewrites->pageData['queryrows'] = 0;
 
 		$wpdb->hide_errors();
