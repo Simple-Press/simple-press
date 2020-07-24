@@ -12,7 +12,9 @@ if (!defined('SPCHARSET')) define('SPCHARSET', get_bloginfo('charset'));
 
 # Storage Locations
 if (is_multisite() && !get_site_option('ms_files_rewriting')) {
-	$sp_install_version = SP()->DB->select('SELECT version FROM '.SPLOG.' LIMIT 1', 'var');
+	$sp_install_version = '';
+	/* removing line below and added the one above.  This is because it causes an error when activating on multisite - table SPLOG/sflog doesn't exist yet!*/
+	// $sp_install_version = SP()->DB->select('SELECT version FROM '.SPLOG.' LIMIT 1', 'var');
 	if (empty($sp_install_version) || $sp_install_version < 5.6) {
 		if (!defined('SP_STORE_DIR')) define('SP_STORE_DIR', WP_CONTENT_DIR);
 		if (!defined('SP_STORE_URL')) define('SP_STORE_URL', content_url());
