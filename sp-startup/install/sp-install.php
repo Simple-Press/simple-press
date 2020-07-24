@@ -910,17 +910,17 @@ function sp_perform_install($phase, $subphase = 0) {
 				# We just want the /uploads/sites/5 portion of it.
 				$wpc_position = strpos(INSTALL_STORE_DIR, 'wp-content');
 				$wpc_portion = substr(INSTALL_STORE_DIR, $wpc_position);
-				$wpc_portion = str_replace('wp-content', $wpc_portion);
+				$wpc_portion = str_replace('wp-content', '', $wpc_portion);
 				
 
-				$sfconfig['avatars']		 = wpc_portion.'/'.$basepath.'forum-avatars';
-				$sfconfig['avatar-pool']	 = wpc_portion.'/'.$basepath.'forum-avatar-pool';
-				$sfconfig['smileys']		 = wpc_portion.'/'.$basepath.'forum-smileys';
-				$sfconfig['ranks']			 = wpc_portion.'/'.$basepath.'forum-badges';
-				$sfconfig['custom-icons']	 = wpc_portion.'/'.$basepath.'forum-custom-icons';
-				$sfconfig['cache']			 = wpc_portion.'/'.$basepath.'forum-cache';
-				$sfconfig['forum-images']	 = wpc_portion.'/'.$basepath.'forum-feature-images';
-				$sfconfig['iconsets']		 = wpc_portion.'/'.$basepath.'forum-iconsets';				
+				$sfconfig['avatars']		 = $wpc_portion.'/'.$basepath.'forum-avatars';
+				$sfconfig['avatar-pool']	 = $wpc_portion.'/'.$basepath.'forum-avatar-pool';
+				$sfconfig['smileys']		 = $wpc_portion.'/'.$basepath.'forum-smileys';
+				$sfconfig['ranks']			 = $wpc_portion.'/'.$basepath.'forum-badges';
+				$sfconfig['custom-icons']	 = $wpc_portion.'/'.$basepath.'forum-custom-icons';
+				$sfconfig['cache']			 = $wpc_portion.'/'.$basepath.'forum-cache';
+				$sfconfig['forum-images']	 = $wpc_portion.'/'.$basepath.'forum-feature-images';
+				$sfconfig['iconsets']		 = $wpc_portion.'/'.$basepath.'forum-iconsets';				
 			} else {
 				# standard install - default paths are under wp-content/sp-resources
 				$sfconfig['avatars']		 = $basepath.'forum-avatars';
