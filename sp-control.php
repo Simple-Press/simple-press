@@ -21,8 +21,8 @@
  *
  * For full acknowledgments click on the copyright/version strip at the bottom of forum pages.
  *
- * $LastChangedDate: 2018-12-16 19:11:16 -0600 (Sun, 16 Dec 2018) $
- * $Rev: 15858 $
+ * $LastChangedDate: 2020-07-24 19:11:16 -0600 (Sun, 16 Dec 2018) $
+ * $Rev: 15869 $
  *
  */
 if (!class_exists('spcSimplePress')) {
