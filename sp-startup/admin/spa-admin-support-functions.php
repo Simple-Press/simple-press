@@ -64,7 +64,7 @@ function spa_block_admin() {
 }
 
 /**
- * This function checks is the forum permalink has changed.
+ * This function checks to see if the forum permalink has changed.
  *
  * @access public
  *
@@ -119,7 +119,7 @@ function spa_check_page_change($postid, $pObj) {
 }
 
 /**
- * This function add extra Simple Press links underneath the WP plugins page display for out plugin.
+ * This function add extra Simple:Press links underneath the WP plugins page display for our plugin.
  *
  * @access public
  *
@@ -598,12 +598,43 @@ function spa_remove_news() {
 	<?php
 }
 
+/**
+ * This function returns true based on certain white-label / super-admin conditions
+ *
+ * @access public
+ *
+ * @since 6.5.2
+ *
+ * @return void
+ */
+if ( ! function_exists( 'spa_white_label_check' ) ) {
+	function spa_white_label_check($uid = false) {
+		# Make sure we have some sort of user id to work with.
+		if (empty($uid)) {
+			$uid=get_current_user_id();
+		}
+		
+		#check white label conditions
+		if ((defined('SP_WHITE_LABEL') && true === SP_WHITE_LABEL)) {
+			if (true == is_multisite() && true == is_super_admin($uid)) {
+				return false ;
+			} else {
+				return true ;
+			}
+		} elseif (!defined('SP_WHITE_LABEL')) {
+			return false ;
+		} elseif (defined('SP_WHITE_LABEL') && false === SP_WHITE_LABEL) {
+			return false ;
+		}
+		return false ;
+	}
+}
+
 
 /**
  * This function determines if there is an update available to the core Simple Press plugin and themes.
  *
  */
-
 if ( ! function_exists( 'spa_plugin_updater_object' ) ) {
 	
 	function spa_plugin_updater_object($plugin_file, $plugin_data){
@@ -671,7 +702,6 @@ if ( ! function_exists( 'spa_theme_updater_object' ) ) {
 }
 
 # spa_addons_changelog function for plugins or themes changelog popup
-
 function spa_addons_changelog($_data, $_action = '', $_args = null ){
 	
 	
@@ -749,8 +779,7 @@ function spa_addons_changelog($_data, $_action = '', $_args = null ){
 	return $_data;	
 }
 
-# Lis of Plugins of update in dashboard notification if there any update available by licensing method or by xml 
-
+# List of Plugins to update in dashboard notification if there any update available by licensing method or by xml 
 function spa_plugin_addon_dashboard_update()
 {
 	
@@ -829,8 +858,7 @@ function spa_plugin_addon_dashboard_update()
 	}
 }
 
-# Lis of Themes of update in dashboard notification if there any update available by licensing method or by xml 
-
+# List of Themes to update in dashboard notification if there any update available by licensing method or by xml 
 function spa_theme_addon_dashboard_update()
 {
 	$themes = SP()->theme->get_list();
@@ -909,8 +937,7 @@ function spa_theme_addon_dashboard_update()
 	}
 }
 
-# Lis of Plugins of update in admin Updates page if there any update available by licensing method or by xml 
-
+# List of Plugins to update in admin Updates page if there any update available by licensing method or by xml 
 function spa_check_plugin_addon_update() {
 	
 	
