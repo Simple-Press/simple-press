@@ -685,6 +685,16 @@ class spcUser {
 		if (!$userid) return;
 
 		global $wpdb;
+		
+		# Make sure we have the RIGHT sp_prefix.  $wpdb->prefix will be incorrect
+		# in a multisite situation.  The global constant SP_PREFIX should be defined
+		# already with the RIGHT prefix.  But if for some reason it's not we'll 
+		# use the $wpdb->prefix anyway.
+		if (!defined('SP_PREFIX')) {
+			$dbprefix = $wpdb->prefix; 
+		} else {
+			$dbprefix = SP_PREFIX;
+		}
 
 		# if removing user from network site, make sure sp installed on that network site
 		if (!empty($blog_id)) {
@@ -702,8 +712,8 @@ class spcUser {
 				$newuser = (isset($_POST['sp_reassign_user'])) ? SP()->filters->integer($_POST['sp_reassign_user']) : $reassign;
 
 				# Set poster ID to the new user id
-				$wpdb->query('UPDATE '.$wpdb->prefix."sfposts SET user_id=$newuser WHERE user_id=$userid");
-				$wpdb->query('UPDATE '.$wpdb->prefix."sftopics SET user_id=$newuser WHERE user_id=$userid");
+				$wpdb->query('UPDATE '.$dbprefix."sfposts SET user_id=$newuser WHERE user_id=$userid");
+				$wpdb->query('UPDATE '.$dbprefix."sftopics SET user_id=$newuser WHERE user_id=$userid");
 				break;
 
 			case 'spdelete':
@@ -732,7 +742,7 @@ class spcUser {
 				# Set display name to guest and remove User ID and IP Address from all of their posts
 				$guest_name = SP()->primitives->front_text('Guest');
 
-				$sql = 'UPDATE '.$wpdb->prefix."sfposts SET user_id=0, guest_name='$guest_name', poster_ip=''";
+				$sql = 'UPDATE '.$dbprefix."sfposts SET user_id=0, guest_name='$guest_name', poster_ip=''";
 				if (!empty($mess)) {
 					$sql .= ", post_content ='$mess'";
 				}
@@ -740,20 +750,20 @@ class spcUser {
 
 				$wpdb->query($sql);
 				# and any refereneces from the topic records
-				$wpdb->query('UPDATE '.$wpdb->prefix."sftopics SET user_id=0 WHERE user_id=$userid");
+				$wpdb->query('UPDATE '.$dbprefix."sftopics SET user_id=0 WHERE user_id=$userid");
 		}
 
 		# flush and rebuild topic cache
 		SP()->meta->rebuild_topic_cache();
 
 		# remove from various core tables
-		$wpdb->query('DELETE FROM '.$wpdb->prefix."sfmembers WHERE user_id=$userid");
-		$wpdb->query('DELETE FROM '.$wpdb->prefix."sfmemberships WHERE user_id=$userid");
-		$wpdb->query('DELETE FROM '.$wpdb->prefix."sfspecialranks WHERE user_id=$userid");
-		$wpdb->query('DELETE FROM '.$wpdb->prefix."sftrack WHERE trackuserid=$userid");
-		$wpdb->query('DELETE FROM '.$wpdb->prefix."sfnotices WHERE user_id=$userid");
-		$wpdb->query('DELETE FROM '.$wpdb->prefix."sfuseractivity WHERE user_id=$userid");
-		$wpdb->query('DELETE FROM '.$wpdb->prefix."sfwaiting WHERE user_id=$userid");
+		$wpdb->query('DELETE FROM '.$dbprefix."sfmembers WHERE user_id=$userid");
+		$wpdb->query('DELETE FROM '.$dbprefix."sfmemberships WHERE user_id=$userid");
+		$wpdb->query('DELETE FROM '.$dbprefix."sfspecialranks WHERE user_id=$userid");
+		$wpdb->query('DELETE FROM '.$dbprefix."sftrack WHERE trackuserid=$userid");
+		$wpdb->query('DELETE FROM '.$dbprefix."sfnotices WHERE user_id=$userid");
+		$wpdb->query('DELETE FROM '.$dbprefix."sfuseractivity WHERE user_id=$userid");
+		$wpdb->query('DELETE FROM '.$dbprefix."sfwaiting WHERE user_id=$userid");
 
 		# eemove from recent members list if present
 		$this->remove_new($userid);
