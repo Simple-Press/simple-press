@@ -189,7 +189,11 @@ function spa_panel_header() {
 	echo '<!-- Common wrapper and header -->';
 	echo '<div class="wrap nosubsub">';
 	echo '<div class="mainicon icon-forums"></div>';
-	echo '<h1>'.SP()->primitives->admin_text('Simple:Press Administration').'</h1>';
+	if (!spa_white_label_check()) {	
+		echo '<h1>'.SP()->primitives->admin_text('Simple:Press Administration').'</h1>';
+	} else {
+		echo '<h1>'.SP()->primitives->admin_text('Forum Administration').'</h1>';
+	}
 	echo '<div class="clearboth"></div>';
 
 	
