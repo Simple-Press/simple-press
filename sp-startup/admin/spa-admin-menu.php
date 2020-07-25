@@ -348,6 +348,12 @@ function spa_setup_admin_menu() {
 			'plugin-list' => 'sfreloadpl'));
 	if (!is_multisite() || is_super_admin()) $forms[SP()->primitives->admin_text('Plugin Uploader')] = array(
 			'plugin-upload' => '');
+			
+	# Remove some items not needed when running as an saas
+	if (spa_saas_check()) {
+		unset($forms[SP()->primitives->admin_text('Plugin Uploader')]);
+	}
+	
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Plugins'),
 		'SPF Manage Plugins',
@@ -374,6 +380,21 @@ function spa_setup_admin_menu() {
 		$forms[SP()->primitives->admin_text('Theme Uploader')] = array(
 			'theme-upload' => '');
 	}
+	
+	# Remove some items not needed when running as an saas
+	if (spa_saas_check()) {
+		unset($forms[SP()->primitives->admin_text('Mobile Phone Theme')]);
+	}
+	if (spa_saas_check()) {
+		unset($forms[SP()->primitives->admin_text('Mobile Tablet Theme')]);
+	}	
+	if (spa_saas_check()) {
+		unset($forms[SP()->primitives->admin_text('Theme Editor')]);
+	}
+	if (spa_saas_check()) {
+		unset($forms[SP()->primitives->admin_text('Theme Uploader')]);
+	}	
+	
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Themes'),
 		'SPF Manage Themes',
