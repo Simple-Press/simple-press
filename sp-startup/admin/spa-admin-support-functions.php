@@ -630,6 +630,38 @@ if ( ! function_exists( 'spa_white_label_check' ) ) {
 	}
 }
 
+/**
+ * This function returns true based on certain SAAS / SUPERADMIN conditions
+ *
+ * @access public
+ *
+ * @since 6.5.2
+ *
+ * @return void
+ */
+if ( ! function_exists( 'spa_saas_check' ) ) {
+	function spa_saas_check($uid = false) {
+		# Make sure we have some sort of user id to work with.
+		if (empty($uid)) {
+			$uid=get_current_user_id();
+		}
+		
+		#check white label conditions
+		if ((defined('SP_SAAS') && true === SP_SAAS)) {
+			if (true == is_multisite() && true == is_super_admin($uid)) {
+				return false ;
+			} else {
+				return true ;
+			}
+		} elseif (!defined('SP_SAAS')) {
+			return false ;
+		} elseif (defined('SP_SAAS') && false === SP_SAAS) {
+			return false ;
+		}
+		return false ;
+	}
+}
+
 
 /**
  * This function determines if there is an update available to the core Simple Press plugin and themes.

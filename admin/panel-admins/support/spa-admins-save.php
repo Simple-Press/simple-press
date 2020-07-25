@@ -113,9 +113,9 @@ function spa_save_admins_caps_data() {
             unset($manage_promotions[$uid]);
         }
 		
-		# in a white-label situation we don't want any super user capabilities removed
+		# in an saas situation we don't want any super user capabilities removed
 		# so forceably turn them all on.
-		if (!spa_white_label_check($uid)) {
+		if (spa_saas_check($uid)) {			
             $manage_opts[$uid]='on';
             $manage_forums[$uid]='on';
             $manage_ugs[$uid]='on';

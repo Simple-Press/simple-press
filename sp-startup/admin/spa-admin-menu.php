@@ -268,6 +268,12 @@ function spa_setup_admin_menu() {
 			'storage' => 'sfreloadsl'),
 		SP()->primitives->admin_text('Language Translations')	 => array(
 			'language' => 'sfreloadla'));
+			
+		# Remove some items not needed when running as an saas
+		if (spa_saas_check()) {
+			unset($forms[SP()->primitives->admin_text('Storage Locations')]);
+		}	
+		
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Integration'),
 		'SPF Manage Integration',
@@ -401,8 +407,8 @@ function spa_setup_admin_menu() {
 		SP()->primitives->admin_text('Uninstall')		 => array(
 			'uninstall' => ''));
 		
-		# Remove some items not needed when under white label
-		if (spa_white_label_check()) {
+		# Remove some items not needed when running as an saas
+		if (spa_saas_check()) {
 			unset($forms[SP()->primitives->admin_text('Toolbox')]);
 			unset($forms[SP()->primitives->admin_text('Licensing')]);
 			unset($forms[SP()->primitives->admin_text('Data Inspector')]);			
@@ -430,7 +436,7 @@ function spa_setup_admin_menu() {
 	$sfactivepanels = apply_filters('sf_admin_activepanels', $sfactivepanels);
 	
 	# Add promotions menu to the bottom of the list
-	if (!spa_white_label_check()) {		
+	if (!spa_saas_check()) {		
 		$forms = array(
 			SP()->primitives->admin_text('Promotions') => array(
 				'promotions-1' => ''));
