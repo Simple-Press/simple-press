@@ -409,8 +409,15 @@ function spa_plugins_list_form() {
                         </td>
                         <td class='manage-column column-description'>
                             <div class='manage-column column-description'>
-								<?php $mobile[ $thisId ]['description'] = $description; ?>
-								<?php echo $description; ?>
+								<?php 
+								$mobile[ $thisId ]['description'] = $description; 
+								// Remove any "simple:press" or "simplepress" references from the description if running a white label installation.
+								if ( spa_white_label_check() ) {
+									$description = str_replace('Simple:Press', SP()->primitives->admin_text( 'Forum' ) , $description);
+								}								
+								// Now show the description
+								echo $description;
+								?>
 									
 								<?php	
 									if ( ! empty( $plugin_data['Author'] ) ) {
@@ -419,7 +426,10 @@ function spa_plugins_list_form() {
 										if ( ! empty( $plugin_data['AuthorURI'] ) ) {
 											$author = '<a href="' . esc_url( $plugin_data['AuthorURI'] ) . '" title="' . SP()->primitives->admin_text( 'Visit author homepage' ) . '">' . esc_html( $plugin_data['Author'] ) . '</a>';
 										}
-										echo '<div class="plugin-description-author">' . sprintf( SP()->primitives->admin_text( 'By %s' ), $author ) . '</div>';
+										
+										if ( !spa_white_label_check() && ! spa_saas_check() ) {
+											echo '<div class="plugin-description-author">' . sprintf( SP()->primitives->admin_text( 'By %s' ), $author ) . '</div>';
+										}
 									}
 								
 								?>
