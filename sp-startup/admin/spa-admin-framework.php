@@ -224,7 +224,9 @@ function spa_panel_header() {
  */
 function spa_admin_footer() {
 
-	if (SP()->isForumAdmin) echo SPPLUGHOME.' | '.SP()->primitives->admin_text('Version').' '.SPVERSION.'<br />';
+	if (!spa_white_label_check()) {
+		if (SP()->isForumAdmin) echo SPPLUGHOME.' | '.SP()->primitives->admin_text('Version').' '.SPVERSION.'<br />';
+	}
 
 	do_action('sph_admin_footer');
 }
