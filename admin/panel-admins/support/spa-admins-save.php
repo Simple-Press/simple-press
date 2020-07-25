@@ -112,6 +112,24 @@ function spa_save_admins_caps_data() {
             unset($manage_integration[$uid]);
             unset($manage_promotions[$uid]);
         }
+		
+		# in a white-label situation we don't want any super user capabilities removed
+		# so forceably turn them all on.
+		if (!spa_white_label_check($uid)) {
+            $manage_opts[$uid]='on';
+            $manage_forums[$uid]='on';
+            $manage_ugs[$uid]='on';
+            $manage_perms[$uid]='on';
+            $manage_comps[$uid]='on';
+            $manage_users[$uid]='on';
+            $manage_profiles[$uid]='on';
+            $manage_admins[$uid]='on';
+            $manage_tools[$uid]='on';
+            $manage_plugins[$uid]='on';
+            $manage_themes[$uid]='on';
+            $manage_integration[$uid]='on';
+            $manage_promotions[$uid]='on';			
+		}
 
 		# Is user still an admin?
 		$still_admin = (isset($manage_opts[$uid]) ||
