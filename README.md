@@ -33,4 +33,4 @@ For technical support please purchase a license on our site and then submit your
 
 ## Development History
 Most of the development of the plugin is archived in an off-line SVN repository.  
-Issues were tracked in a MANTIS issue tracker - you can view a comprehensive issue history prior to Version 6.0.6 [here](https://simplepress.mantishub.io)
+Issues prior to version 6.0.6 is also archived in an off-line zipfile.
