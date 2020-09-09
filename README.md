@@ -4,8 +4,8 @@ As of Jan 2019, it is available here on Github.
 
 ## Requirements
 
-- WordPress 4.9+
-- PHP 5.6+
+- WordPress 5.4+
+- PHP 7.0+
 
 ## Installation
 
