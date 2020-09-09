@@ -149,7 +149,7 @@ function spa_profiles_avatars_form() {
 					<?php
 
 					echo '<div class="sf-alert-block sf-info">';
-					SP()->primitives->admin_etext('Warning: If you want to replace WP avatars with SP avatars, make sure you dont have WP avatars in your avatar priorities (have it below SP Default Avatars) or you will have a circular reference');
+					SP()->primitives->admin_etext('Warning: If you want to replace WP avatars with SP avatars, make sure you don\'t have WP avatars in your avatar priorities (have it below SP Default Avatars) or you will have a circular reference');
 					echo '</div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();

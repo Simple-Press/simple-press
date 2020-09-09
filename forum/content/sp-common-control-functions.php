@@ -340,7 +340,7 @@ function sp_ColumnEnd($args = '', $columnName = '') {
 	do_action('sph_BeforeColumnEnd_'.$columnName, $a);
 
 	$out = '';
-	if (!empty($tagClass) || !empty($tagId)) $out .= "<div$tagId$tagClass></div>\n";
+	if (!empty($tagClass) || !empty($tagId)) $out .= "<div id='$tagId' class='$tagClass'></div>\n";
 
 	$out = apply_filters('sph_ColumnEnd', $out, $columnName, $a);
 	do_action('sph_ColumnEnd_'.$columnName, $a);

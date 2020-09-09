@@ -268,6 +268,12 @@ function spa_setup_admin_menu() {
 			'storage' => 'sfreloadsl'),
 		SP()->primitives->admin_text('Language Translations')	 => array(
 			'language' => 'sfreloadla'));
+			
+		# Remove some items not needed when running as an saas
+		if (spa_saas_check()) {
+			unset($forms[SP()->primitives->admin_text('Storage Locations')]);
+		}	
+		
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Integration'),
 		'SPF Manage Integration',
@@ -342,6 +348,12 @@ function spa_setup_admin_menu() {
 			'plugin-list' => 'sfreloadpl'));
 	if (!is_multisite() || is_super_admin()) $forms[SP()->primitives->admin_text('Plugin Uploader')] = array(
 			'plugin-upload' => '');
+			
+	# Remove some items not needed when running as an saas
+	if (spa_saas_check()) {
+		unset($forms[SP()->primitives->admin_text('Plugin Uploader')]);
+	}
+	
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Plugins'),
 		'SPF Manage Plugins',
@@ -368,6 +380,21 @@ function spa_setup_admin_menu() {
 		$forms[SP()->primitives->admin_text('Theme Uploader')] = array(
 			'theme-upload' => '');
 	}
+	
+	# Remove some items not needed when running as an saas
+	if (spa_saas_check()) {
+		unset($forms[SP()->primitives->admin_text('Mobile Phone Theme')]);
+	}
+	if (spa_saas_check()) {
+		unset($forms[SP()->primitives->admin_text('Mobile Tablet Theme')]);
+	}	
+	if (spa_saas_check()) {
+		unset($forms[SP()->primitives->admin_text('Theme Editor')]);
+	}
+	if (spa_saas_check()) {
+		unset($forms[SP()->primitives->admin_text('Theme Uploader')]);
+	}	
+	
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Themes'),
 		'SPF Manage Themes',
@@ -400,6 +427,20 @@ function spa_setup_admin_menu() {
 			'changelog' => ''),
 		SP()->primitives->admin_text('Uninstall')		 => array(
 			'uninstall' => ''));
+		
+		# Remove some items not needed when running as an saas
+		if (spa_saas_check()) {
+			unset($forms[SP()->primitives->admin_text('Toolbox')]);
+			unset($forms[SP()->primitives->admin_text('Licensing')]);
+			unset($forms[SP()->primitives->admin_text('Data Inspector')]);			
+			unset($forms[SP()->primitives->admin_text('CRON Inspector')]);
+			unset($forms[SP()->primitives->admin_text('Error Log')]);
+			unset($forms[SP()->primitives->admin_text('Environment')]);
+			unset($forms[SP()->primitives->admin_text('Install Log')]);
+			unset($forms[SP()->primitives->admin_text('Change Log')]);
+			unset($forms[SP()->primitives->admin_text('Uninstall')]);
+		}
+			
 	$sfadminpanels[] = array(
 		SP()->primitives->admin_text('Toolbox'),
 		'SPF Manage Toolbox',
@@ -416,19 +457,21 @@ function spa_setup_admin_menu() {
 	$sfactivepanels = apply_filters('sf_admin_activepanels', $sfactivepanels);
 	
 	# Add promotions menu to the bottom of the list
-	$forms = array(
-		SP()->primitives->admin_text('Promotions') => array(
-			'promotions-1' => ''));
-	$sfadminpanels[] = array(
-		SP()->primitives->admin_text('Promotions'),
-		'SPF Manage Promotions',
-		SP_FOLDER_NAME.'/admin/panel-promotions/spa-promotions.php',
-		$sfatooltips['promotions'],
-		'go',
-		wp_nonce_url(SPAJAXURL.'promotions-loader', 'promotions-loader'),
-		$forms,
-		true);
-	$sfactivepanels['promotions'] = 999;
+	if (!spa_saas_check()) {		
+		$forms = array(
+			SP()->primitives->admin_text('Promotions') => array(
+				'promotions-1' => ''));
+		$sfadminpanels[] = array(
+			SP()->primitives->admin_text('Promotions'),
+			'SPF Manage Promotions',
+			SP_FOLDER_NAME.'/admin/panel-promotions/spa-promotions.php',
+			$sfatooltips['promotions'],
+			'go',
+			wp_nonce_url(SPAJAXURL.'promotions-loader', 'promotions-loader'),
+			$forms,
+			true);
+		$sfactivepanels['promotions'] = 999;
+	}
 
 	# allow plugins to alter the admin menus after promotions item if they really really want to do so!
 	$sfadminpanels = apply_filters('sf_admin_panels_after_promo', $sfadminpanels);

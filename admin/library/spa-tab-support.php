@@ -29,26 +29,33 @@ function spa_paint_tab_head( $tabname, $buttons = true ) {
 	if( $buttons ) {
 	
 		echo "<div class='sf-buttons'>";
-		echo '<a class="sf-button" href="'.SP()->spPermalinks->get_url().'"><span class="sf-icon sf-go"></span>'.SP()->primitives->admin_text('Go To Forum').'</a>';
-		//echo '<span class="sf-button spTroubleshoot" data-url="'.$site.'" data-target="'.$target.'"><span class="sf-icon sf-help"></span>'.SP()->primitives->admin_text('Help & Troubleshooting').'</span>';
-		echo '<a class="sf-button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>';
+
+			echo '<a class="sf-button" href="'.SP()->spPermalinks->get_url().'"><span class="sf-icon sf-go"></span>'.SP()->primitives->admin_text('Go To Forum').'</a>';
+
+			if (!spa_saas_check() && !spa_white_label_check()) {
+				echo '<a class="sf-button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>';
+			}
 	
-		$site = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
-		$title = SP()->primitives->admin_text('About');
+			$site = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
+			
+			if (!spa_saas_check() && !spa_white_label_check()) {
+				$title = SP()->primitives->admin_text('About');
+				echo '<a class="sf-button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>';
+			}
 	
-		echo '<a class="sf-button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>';
-	
-		echo '<a class="sf-button" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Documentation').'</a>';
+			if (!spa_saas_check() && !spa_white_label_check()) {
+				echo '<a class="sf-button" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Documentation').'</a>';
+			}		
 		
-		
-		$site = wp_nonce_url(SPAJAXURL.'adminsearch', 'adminsearch');
-		$target = 'sfmaincontainer';
-		echo '<input type="button" id="spSearch" class="sf-button spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Glossary').'" data-url="'.$site.'" data-target="'.$target.'" />';
-		
-		
-		$site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));
-		$target = 'sfmaincontainer';
-		echo '<input type="button" id="spHelp" class="sf-button spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help').'" data-url="'.$site.'" data-target="'.$target.'" />';
+			$site = wp_nonce_url(SPAJAXURL.'adminsearch', 'adminsearch');			
+			$target = 'sfmaincontainer';
+			echo '<input type="button" id="spSearch" class="sf-button spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Glossary').'" data-url="'.$site.'" data-target="'.$target.'" />';				
+			
+			$site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));			
+			$target = 'sfmaincontainer';
+			if (!spa_saas_check() && !spa_white_label_check()) {
+				echo '<input type="button" id="spHelp" class="sf-button spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help').'" data-url="'.$site.'" data-target="'.$target.'" />';
+			}
 	
 		echo "</div>";
 	
@@ -625,7 +632,11 @@ function spa_paint_help($name, $helpfile = null, $show=true) {
             $helpfile = $adminhelpfile;
         }
 	$site = wp_nonce_url(SPAJAXURL."help&amp;file=$helpfile&amp;item=$name", 'help');
-	$title = SP()->primitives->admin_text('Simple:Press Help');
+	if (!spa_saas_check() && !spa_white_label_check()) {
+		$title = SP()->primitives->admin_text('Simple:Press Help');
+	} else {
+		$title = SP()->primitives->admin_text('Forum Help');
+	}
 	$out = '';
 
 	

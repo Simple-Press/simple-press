@@ -189,7 +189,11 @@ function spa_panel_header() {
 	echo '<!-- Common wrapper and header -->';
 	echo '<div class="wrap nosubsub">';
 	echo '<div class="mainicon icon-forums"></div>';
-	echo '<h1>'.SP()->primitives->admin_text('Simple:Press Administration').'</h1>';
+	if (!spa_saas_check() && !spa_white_label_check()) {	
+		echo '<h1>'.SP()->primitives->admin_text('Simple:Press Administration').'</h1>';
+	} else {
+		echo '<h1>'.SP()->primitives->admin_text('Forum Administration').'</h1>';
+	}
 	echo '<div class="clearboth"></div>';
 
 	
@@ -220,7 +224,9 @@ function spa_panel_header() {
  */
 function spa_admin_footer() {
 
-	if (SP()->isForumAdmin) echo SPPLUGHOME.' | '.SP()->primitives->admin_text('Version').' '.SPVERSION.'<br />';
+	if (!spa_white_label_check()) {
+		if (SP()->isForumAdmin) echo SPPLUGHOME.' | '.SP()->primitives->admin_text('Version').' '.SPVERSION.'<br />';
+	}
 
 	do_action('sph_admin_footer');
 }

@@ -266,7 +266,7 @@ class spcActivity {
 		$query->table   = SPUSERACTIVITY;
 		$query->fields  = '*';
 		$query->where   = "user_id=$uid AND type_id=$type";
-		$query->orderby = 'id $order';
+		$query->orderby = "id $order";
 		$query->limit   = $limit;
 		$data           = SP()->DB->select($query);
 
@@ -313,7 +313,7 @@ class spcActivity {
 			$query->table   = SPUSERACTIVITY;
 			$query->fields  = 'id';
 			$query->where   = "user_id=$uid AND type_id=$type";
-			$query->orderby = 'id $order';
+			$query->orderby = "id $order";
 			$query->limit   = $limit;
 			$data           = SP()->DB->select($query);
 		}

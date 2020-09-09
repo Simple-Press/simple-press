@@ -28,7 +28,11 @@ echo '<fieldset>';
 echo $helptext;
 echo '</fieldset>';
 echo '<div class="sfhelptextlogo">';
-echo '<img src="'.SPCOMMONIMAGES.'sp-mini-logo.png" alt="" title="" />';
+if (!spa_white_label_check($uid)) {
+	echo '<img src="'.SPCOMMONIMAGES.'sp-mini-logo.png" alt="" title="" />';
+} else {
+	# do nothing - do not show logo for white label situations.
+}
 echo '</div></div>';
 
 die();
