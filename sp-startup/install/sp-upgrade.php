@@ -421,8 +421,16 @@ if ($build < $section) {
 	// blank upgrade...
 	sp_response($section);
 }
-# Start of Upgrade Routines - 6.5.2 ============================================================
+
+# Start of Upgrade Routines - 6.6.0 ============================================================
 $section = 15869;
+if ($build < $section) {
+	// blank upgrade...
+	sp_response($section);
+}
+
+# Start of Upgrade Routines - 6.6.1 ============================================================
+$section = 15870;
 if ($build < $section) {
 	// blank upgrade...
 	sp_response($section);
