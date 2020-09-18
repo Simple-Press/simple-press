@@ -192,7 +192,7 @@ function spa_ajax_uploader() {
 }
 
 add_action('wp_ajax_uploader', 'spa_ajax_uploader');
-add_action('wp_ajax_nopriv_uploader', 'spa_ajax_uploader');
+//add_action('wp_ajax_nopriv_uploader', 'spa_ajax_uploader');
 
 
 /**
