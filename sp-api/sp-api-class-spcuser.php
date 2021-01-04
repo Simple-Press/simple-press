@@ -706,7 +706,7 @@ class spcUser {
 		do_action('sph_member_deleted', $userid);
 
 		# remove member from core
-		$option = (isset($_POST['SP()->options->delete'])) ? SP()->filters->str($_POST['SP()->options->delete']) : $delete_option;
+		$option = (isset($_POST['sp_delete_option'])) ? SP()->filters->str($_POST['sp_delete_option']) : $delete_option;
 		switch ($option) {
 			case 'spreassign':
 				$newuser = (isset($_POST['sp_reassign_user'])) ? SP()->filters->integer($_POST['sp_reassign_user']) : $reassign;
@@ -725,6 +725,8 @@ class spcUser {
 
 				# if any topics are now empty of posts, lets remove the topic and update the forum
 				if (!empty($topics)) {
+
+					require_once SP_PLUGIN_DIR.'/forum/database/sp-db-management.php';
 					foreach ($topics as $topic) {
 						$posts = SP()->DB->table(SPPOSTS, "topic_id=$topic->topic_id");
 						if (empty($posts)) {
