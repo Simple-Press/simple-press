@@ -778,7 +778,7 @@ function sp_perform_install($phase, $subphase = 0) {
 			$theme			 = array();
 			$theme['theme']	 = 'modern-2020';
 			$theme['style']	 = 'modern-2020.php';
-			$theme['color']	 = 'WP-2020-Theme-Colors';
+			$theme['color']	 = 'WP-2021-Theme-Colors';
 			$theme['parent'] = '';
 			$theme['icons']	 = '';
 			SP()->options->add('sp_current_theme', $theme);
@@ -795,7 +795,7 @@ function sp_perform_install($phase, $subphase = 0) {
 			$theme['active']		 = false;
 			$theme['theme']			 = 'modern-2020';
 			$theme['style']			 = 'modern-2020.php';
-			$theme['color']			 = 'WP-2020-Theme-Colors';
+			$theme['color']			 = 'WP-2021-Theme-Colors';
 			$theme['usetemplate']	 = false;
 			$theme['pagetemplate']	 = '';
 			$theme['notitle']		 = true;
