@@ -31,7 +31,7 @@ function spa_profiles_tabs_menus_form() {
 				update: function () {
 					/* run sortable on changed menu */
 					id = this.id;
-					tid = id.substring(8);
+					tid = id.substring(16);
 					$("input#spMenusOrder"+tid).val($("#sf-list-sortable"+tid).sortable('serialize'));
 				}
 			});
