@@ -774,14 +774,29 @@ function sp_perform_install($phase, $subphase = 0) {
 			$uKey = substr(chr(rand(97, 122)).md5(time()), 0, 10);
 			SP()->options->add('spukey', $uKey);
 
-			# default theme
-			$theme			 = array();
-			$theme['theme']	 = 'modern-2020';
-			$theme['style']	 = 'modern-2020.php';
-			$theme['color']	 = 'WP-2021-Theme-Colors';
-			$theme['parent'] = '';
-			$theme['icons']	 = '';
-			SP()->options->add('sp_current_theme', $theme);
+			# get Installed theme details.
+			$cur_theme = wp_get_theme();
+			$theme_domain = $cur_theme->get( 'TextDomain' );
+			# If WP2021 theme installed then activate SP2020 with 2021 overlay.
+			if($theme_domain === 'twentytwentyone'){
+				$theme = array();
+				$theme['theme'] = 'modern-2020';
+				$theme['style'] = 'modern-2020.php';
+				$theme['color'] = 'WP-2021-Theme-Colors';
+				$theme['parent']= '';
+				$theme['icons'] = '';
+				SP()->options->add('sp_current_theme', $theme);
+			}
+			# If WP theme is not 2021 then activate default SP-overlay-2020.
+			else{
+					$theme = array();
+					$theme['theme'] = 'modern-2020';
+					$theme['style'] = 'modern-2020.php';
+					$theme['color'] = 'WP-2020-Theme-Colors';
+					$theme['parent']= '';
+					$theme['icons'] = '';
+					SP()->options->add('sp_current_theme', $theme);
+			}
 
 			# privacy export
 			$privacy			= array();
@@ -790,17 +805,31 @@ function sp_perform_install($phase, $subphase = 0) {
 			$privacy['erase']	= 1;
 			$privacy['mess']	= SP()->primitives->admin_text('Post content removed by user request');
 			SP()->options->add('spPrivacy', $privacy);
-
-			$theme					 = array();
-			$theme['active']		 = false;
-			$theme['theme']			 = 'modern-2020';
-			$theme['style']			 = 'modern-2020.php';
-			$theme['color']			 = 'WP-2021-Theme-Colors';
-			$theme['usetemplate']	 = false;
-			$theme['pagetemplate']	 = '';
-			$theme['notitle']		 = true;
-			SP()->options->add('sp_mobile_theme', $theme);
-			SP()->options->add('sp_tablet_theme', $theme);
+			# If WP2021 theme installed then activate SP2020 with 2021 overlay.
+			if($theme_domain === 'twentytwentyone'){
+				$theme	= array();
+				$theme['active']		 = false;
+				$theme['theme']			 = 'modern-2020';
+				$theme['style']			 = 'modern-2020.php';
+				$theme['color']			 = 'WP-2021-Theme-Colors';
+				$theme['usetemplate']	 = false;
+				$theme['pagetemplate']	 = '';
+				$theme['notitle']		 = true;
+				SP()->options->add('sp_mobile_theme', $theme);
+				SP()->options->add('sp_tablet_theme', $theme);
+			}
+			else{
+				$theme	= array();
+				$theme['active']		 = false;
+				$theme['theme']			 = 'modern-2020';
+				$theme['style']			 = 'modern-2020.php';
+				$theme['color']			 = 'WP-2020-Theme-Colors';
+				$theme['usetemplate']	 = false;
+				$theme['pagetemplate']	 = '';
+				$theme['notitle']		 = true;
+				SP()->options->add('sp_mobile_theme', $theme);
+				SP()->options->add('sp_tablet_theme', $theme);
+			}
 
 			SP()->options->add('account-name', '');
 			SP()->options->add('display-name', '');
