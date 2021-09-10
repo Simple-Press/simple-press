@@ -260,7 +260,7 @@ class spcAuths {
 			$auth = (empty($user_auths[$id][SP()->core->forumData['auths_map'][$check]])) ? 0 : $user_auths[$id][SP()->core->forumData['auths_map'][$check]];
 		}
 
-		return ((int)$auth == 1);
+		return apply_filters("sp_get_auth_{$check}" , ((int)$auth == 1), $id, $user );
 	}
 
 	/**
