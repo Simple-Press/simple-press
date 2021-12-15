@@ -154,6 +154,9 @@ function sp_aioseo_homepage($title) {
 function sp_wp_seo_hooks($url) {
 	if (!defined('SP_USE_WPSEO_HEAD') || 'SP_USE_WPSEO_HEAD' != true) {
 		if (defined('WPSEO_VERSION')) {
+			if ( ! is_callable( array( 'WPSEO_Frontend', 'get_instance' ) ) ) {
+				return;
+			}
 			$instance = WPSEO_Frontend::get_instance();
 			remove_action('wpseo_head', array($instance,
 			                                  'canonical'), 20);
