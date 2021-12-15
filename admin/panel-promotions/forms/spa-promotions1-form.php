@@ -34,53 +34,23 @@ function spa_promotions_1_form() {
 			<div class="spa-promo-button"><a href="https://simple-press.com/simple-press-forums/sp-forums-pricing/"><?php echo SP()->primitives->admin_text('View all pricing options');?></a></div>
 		</div>
 		<div class="spa-promo-col spa-promo-box">
-			<h1><?php echo SP()->primitives->admin_text('Simple:Press Member Manager - Starting at $99/yr');?></h1>
-			<p><?php echo SP()->primitives->admin_text('All the features you need to create a full-featured membership site integrated with Simple:Press Forums');?></p>
+			<h1><?php echo SP()->primitives->admin_text('WPCloudDeploy - Starting at $299/yr');?></h1>
+			<p><?php echo SP()->primitives->admin_text('Deploy your own high-speed WordPress servers at any of the major cloud providers.');?></p>
 			<ul>
-				<li><?php echo SP()->primitives->admin_text('Beautiful login, account and user profile screens');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Custom registration and user profile forms');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Simple social networking functions');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('User directories');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Visual Form builder');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Custom welcome and other account related emails');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Sophisticated role-based user restrictions');?></p></li>
+				<li><?php echo SP()->primitives->admin_text('Unlimited Servers');?></p></li>
+				<li><?php echo SP()->primitives->admin_text('Unlimited Sites');?></p></li>
+				<li><?php echo SP()->primitives->admin_text('White Label Ready');?></p></li>
+				<li><?php echo SP()->primitives->admin_text('MicroCRM for Agencies');?></p></li>
+				<li><?php echo SP()->primitives->admin_text('Multisite Ready');?></p></li>
+				<li><?php echo SP()->primitives->admin_text('Open Source');?></p></li>
+				<li><?php echo SP()->primitives->admin_text('Developer Friendly');?></p></li>
 			</ul>
 			<p><?php echo SP()->primitives->admin_text('and a whole lot more!');?></p>
-			<div class="spa-promo-button"><a href="https://simple-press.com/simplepress-member-manager/"><?php echo SP()->primitives->admin_text('View all features');?></a></div>
+			<div class="spa-promo-button"><a href="https://wpclouddeploy.com/"><?php echo SP()->primitives->admin_text('View all features');?></a></div>
 		</div>
 	</div>
 	<div class="spa-promo-row spa-promo-row3">
-		<h2><?php echo sprintf(SP()->primitives->admin_text_noesc('Need general WordPress support, FAST?  Then check out <a href="%1s">GetSupportWP.com</a>'),'https://www.getsupportwp.com/?utm_source=simple-press-plugin-promotions-page');?></h2>
+		<h2><?php echo sprintf(SP()->primitives->admin_text_noesc('Get a complete pre-built membership system that includes Simple:Press, a page builder and more <a href="%1s">EasyMembershipSites.io</a>'),'https://www.easymembershipsites.io/?utm_source=simple-press-plugin-promotions-page');?></h2>
 	</div>		
-	<div class="spa-promo-row spa-promo-row4">
-		<div class="spa-promo-col spa-promo-box">
-			<h1><?php echo SP()->primitives->admin_text('Simple:Press Member Subscriptions - Starting at $99/yr');?></h1>
-			<p><?php echo SP()->primitives->admin_text('Need to charge users for access to your site or forum?  The Simple:Press Member Subscriptions plugin has you covered!');?></p>
-			<ul>
-				<li><?php echo SP()->primitives->admin_text('Multiple membership plans - free or paid.');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Content restriction by membership level');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Discount codes');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Stripe and Paypal payment gateways');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Drip content');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Charge for individual posts');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Private pages');?></p></li>
-			</ul>
-			<p><?php echo SP()->primitives->admin_text('and a whole lot more!');?></p>
-			<div class="spa-promo-button"><a href="https://simple-press.com/simplepress-paid-member-subscriptions/"><?php echo SP()->primitives->admin_text('View all features');?></a></div>
-		</div>
-		<div class="spa-promo-col spa-promo-box">
-			<h1><?php echo SP()->primitives->admin_text('Custom Work');?></h1>
-			<p><?php echo SP()->primitives->admin_text('Do you need additional functionality that is unique to your workflow?  We have you convered!');?></p>
-			<p><?php echo SP()->primitives->admin_text('Here are some examples of things we can handle for you:');?></p>
-			<ul>
-				<li><?php echo SP()->primitives->admin_text('Create custom themes for your forum or even your overall website');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Develop custom Simple:Press plugins or WordPress plugins');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Create entire websites, especially those that require sophisticated functionality');?></p></li>
-				<li><?php echo SP()->primitives->admin_text('Handle all your website support needs under a single monthly contract');?></p></li>
-			</ul>
-			<p><?php echo SP()->primitives->admin_text('Get the ball rolling by contacting us today!');?></p>
-			<div class="spa-promo-button"><a href="https://simple-press.com/contact/"><?php echo SP()->primitives->admin_text('Contact us');?></a></div>
-		</div>
-	</div>
 <?php
 }
