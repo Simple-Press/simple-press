@@ -408,7 +408,7 @@ function sp_forum_footer() {
  */
 function sp_render_forum($content) {
 	# make sure we are at least in the html body before outputting any content
-	if (!SP()->options->get('sfwpheadbypass') && !did_action('wp_head') && ! is_main_query()) return '';
+	if ( ! in_the_loop() ) return ''; // In FSE, content is processed before the header.
 
 	if (SP()->isForum && !post_password_required(get_post(SP()->options->get('sfpage')))) {
 		# Limit forum display to within the wp loop?
@@ -489,7 +489,7 @@ function sp_render_forum($content) {
 		do_action('sph_setup_forum');
 
 		# do we use output buffering?
-		$ob = SP()->options->get('sfuseob');
+		$ob = true; // This needs to be on. Content should not be echoed out in the_content callback.
 		if ($ob) ob_start();
 
 		# set up some stuff before wp page content
@@ -518,10 +518,8 @@ function sp_render_forum($content) {
 		do_action('sph_after_template_processing');
 
 		# Return if using output buffering
-		if ($ob) {
-			$forum = ob_get_contents();
-			ob_end_clean();
-			return $forum;
+		if ($ob) { // Should always be on.
+			return ob_get_clean(); // Shortened output.
 		}
 	}
 
