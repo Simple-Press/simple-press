@@ -793,7 +793,17 @@ function sp_perform_install($phase, $subphase = 0) {
 				$theme['icons'] = '';
 				SP()->options->add('sp_current_theme', $theme);
 			}
-			# If WP theme is not 2021 then activate default SP-overlay-2020.
+			# If WP theme is 2022 then activate default SP2020 with Black-and-White overlay
+			elseif($theme_domain === 'twentytwentytwo'){
+					$theme = array();
+					$theme['theme'] = 'modern-2020';
+					$theme['style'] = 'modern-2020.php';
+					$theme['color'] = 'Black-and-White';
+					$theme['parent']= '';
+					$theme['icons'] = '';
+					SP()->options->add('sp_current_theme', $theme);
+			}
+			# If WP theme is not 2021 or 2022 then activate default SP-overlay-2020.
 			else{
 					$theme = array();
 					$theme['theme'] = 'modern-2020';
@@ -824,6 +834,19 @@ function sp_perform_install($phase, $subphase = 0) {
 				SP()->options->add('sp_mobile_theme', $theme);
 				SP()->options->add('sp_tablet_theme', $theme);
 			}
+			# If WP theme is 2022 then activate default SP2020 with Black-and-White overlay
+			elseif($theme_domain === 'twentytwentytwo'){
+				$theme	= array();
+				$theme['active']		 = false;
+				$theme['theme']			 = 'modern-2020';
+				$theme['style']			 = 'modern-2020.php';
+				$theme['color']			 = 'Black-and-White';
+				$theme['usetemplate']	 = false;
+				$theme['pagetemplate']	 = '';
+				$theme['notitle']		 = true;
+				SP()->options->add('sp_mobile_theme', $theme);
+				SP()->options->add('sp_tablet_theme', $theme);
+			}			
 			else{
 				$theme	= array();
 				$theme['active']		 = false;
