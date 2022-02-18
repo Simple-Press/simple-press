@@ -5,6 +5,12 @@
 	<div class="clearboth"></div>
 
 	<div class="codex-link"></div>
+	<p><a href="<?php echo(SPHOMESITE); ?>/documentation/faq/troubleshooting/forum-is-not-appearing-on-fse-full-site-editing-themes/">
+	The forum does not appear on Block Themes (AKA Full Site Editing or FSE themes introduced in WP 5.9)
+	</a></p>
+	<div class="clearboth"></div>
+
+	<div class="codex-link"></div>
 	<p><a href="<?php echo(SPHOMESITE); ?>/documentation/faq/troubleshooting/i-am-seeing-multiple-forums-displayed/">
 	I am seeing multiple forums displayed
 	</a></p>
