@@ -769,6 +769,12 @@ function sp_perform_install($phase, $subphase = 0) {
 			SP()->options->add('sfwpheadbypass', false);
 			SP()->options->add('spwptexturize', false);
 			SP()->options->add('spheaderspace', 0);
+			
+			# the_content filter options need to be modified if the installation is occurring on a site with a FULL SITE EDITING theme activated - this was introduced in WP 5.9.
+			if (function_exists('wp_is_block_theme') && true === wp_is_block_theme()) {
+				SP()->options->add('sfwpheadbypass', true);  #In FSE, content is processed before the header.
+				SP()->options->add('sfuseob', true); # In FSE, output buffering must be used.
+			}
 
 			# Set up unique key
 			$uKey = substr(chr(rand(97, 122)).md5(time()), 0, 10);
