@@ -6,7 +6,7 @@ Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.0
 Tested up to: 5.9
 Requires PHP: 7.0
-Stable tag: 6.6.5
+Stable tag: 6.6.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -325,6 +325,10 @@ The editor in the free version is a pure text editor.  However, the premium vers
 
 == Changelog ==
 
+= 6.6.6 =
+* Fix
+	* G00000: Fix a drag-n-drop issue introduced by WP 5.9.
+	
 = 6.6.5 =
 * Fix
 	* G00000: Add support for FSE themes introduced in WP 5.9.
