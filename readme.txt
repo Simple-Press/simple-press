@@ -325,6 +325,11 @@ The editor in the free version is a pure text editor.  However, the premium vers
 
 == Changelog ==
 
+= 6.6.7 =
+* Fix
+	* G00121: Fix an issue with deleting subsites rendering all user posts go guests in any other site that has the forum in use.
+	* G00116: When sorting the user list under FORUM->USERS->MEMBER INFORMATION, the list would be unstyled.
+
 = 6.6.6 =
 * Fix
 	* G00000: Fix a drag-n-drop issue introduced by WP 5.9.
