@@ -291,7 +291,19 @@ class spcCoreLoader {
 		add_action('wpmu_activate_user', array(SP()->user, 'create_data'), 99);
 		add_action('added_existing_user', array(SP()->user, 'create_data'), 99);
 		add_action('wpmu_delete_user', array(SP()->user, 'delete_data'));
-		add_action('remove_user_from_blog', array(SP()->user, 'delete_data'), 10, 2);
+		
+		# This hook removed to fix github issue #121.
+		# When a subsite is deleted, there's no reason to also delete data for that user for that site.
+		# The way our delete_data function is written right now, it can't handle this call properly and 
+		# really isn't needed.
+		# The only reason to use this hook would be if we want to remove the user from the whole network.
+		# But you would only want to do that if the user wasn't in use on any other site.
+		# Given that a subsite can have thousands of users, we really don't want to evaluate
+		# each user before deleting the site anyway because that can cause php timeouts.
+		# If a user needs to be deleted, the admin should use our standard delete functions before 
+		# deleting the subsite.
+		# add_action('remove_user_from_blog', array(SP()->user, 'delete_data'), 10, 2);
+		
 		add_action('user_register', array(SP()->user, 'create_data'), 99);
 		add_action('delete_user', array(SP()->user, 'delete_data'));
 		add_action('profile_update', array(SP()->user, 'update_data'));
