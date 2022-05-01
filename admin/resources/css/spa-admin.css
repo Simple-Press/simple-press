@@ -1215,6 +1215,22 @@ $Rev:2099 $
 * < .sf-icon
 */
 
+/**
+* Icon Picker >
+*/
+
+/* Make sure that custom icons can fit inside the icon picker box. */
+img.sf-iconset-icon-img{
+	max-width: 50px;
+	max-height: 35px;
+	padding: 5px;
+}
+
+/**
+* < Icon Picker
+*/
+
+
 #sf-root-wrap .sf-opener:not(.sf-open) .sf-opener-target {
     display: none;
 }

@@ -228,7 +228,7 @@ function spa_get_custom_icons( $path = '', $url_base = '' ) {
 	
 	$icons = array();
 	
-	$images = array_map('basename', glob("{$path}/{*.jpg,*.jpeg,*.png,*.gif,*.JPG,*.JPEG,*.PNG,*.GIF}", GLOB_BRACE) );
+	$images = array_map('basename', glob("{$path}/{*.jpg,*.jpeg,*.png,*.gif,*.svg,*.webp,*.JPG,*.JPEG,*.PNG,*.GIF,*.SVG,*.WEBP}", GLOB_BRACE) );
 
 	sort( $images );
 	
@@ -351,9 +351,16 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 				iconsPerPage: 30,
 				allCategoryText : 'From All Libraries',
 				iconGenerator: function( icon ) {
+					
+					// A random number that will be used to break caching.
+					break_cache = Math.random();
+					break_cache = break_cache.toString();					
 
-					if( icon.match(/\.(jpeg|jpg|gif|png)$/) != null ) {
-						return '<i class="sf-iconset-icon"><img src="'+ icon + '" /></i>';
+					if( icon.match(/\.(jpeg|jpg|gif|png|svg|webp)$/) != null ) {
+						// The use of break_cache below uses "&" instead of "?" because the icon variable already has an "?" in it for some reason.  
+						// Probably because the iconpicker is trying to break the cache as well - except it uses a fixed string and caches that cache the querystring will not break with that.
+						// So we're still going to add in our break_cache var with an "&".
+						return '<i class="sf-iconset-icon"><img class="sf-iconset-icon-img" src="' + icon + '&break_cache=' + break_cache + '" /></i>';
 					} else {
 						return '<i class="'+icon+' sf-iconset-icon"></i>';
 					}
