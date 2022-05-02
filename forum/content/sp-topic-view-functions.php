@@ -1198,9 +1198,9 @@ function sp_PostIndexEditHistory($args = '', $label = '', $legend = '', $toolTip
 		$out = "<a class='$tagClass spEditPostHistory' id='$tagId' title='$toolTip' rel='nofollow' data-html='".esc_attr($history)."' data-label='$toolTip' data-width='400' data-height='0' data-align='0'>";
 		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 		if (!empty($label)) $out .= SP()->displayFilters->title($label);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	} else {
-		$out .= "<div id='$tagId' class='$tagClass'>$history</div>\n";
+		$out .= "<div id='$tagId' class='$tagClass'>$history</div>";
 	}
 	$out = apply_filters('sph_PostIndexEditHistory', $out, $a);
 
@@ -1288,7 +1288,7 @@ function sp_PostIndexPrint($args = '', $label = '', $toolTip = '') {
 	$out   = "<a class='$tagClass spPrintThisPost' id='$tagId' title='$toolTip' rel='nofollow' data-postid='spPostIndexContent".SP()->forum->view->thisPost->post_id."'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 	$out = apply_filters('sph_PostIndexPrint', $out, $a);
 
 	if ($echo) {
@@ -1458,7 +1458,7 @@ function sp_PostIndexDelete($args = '', $label = '', $toolTip = '') {
 	$out .= "<a class='$tagClass spDeletePost' id='$tagId' title='$toolTip' rel='nofollow' data-url='$ajaxUrl' data-postid='".SP()->forum->view->thisPost->post_id."' data-topicid='".SP()->forum->view->thisTopic->topic_id."'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 
 	$out = apply_filters('sph_PostIndexDelete', $out, $a);
 
@@ -2354,7 +2354,7 @@ function sp_PostForumToolButton($args = '', $label = '', $toolTip = '') {
 
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= $label;
-	$out .= "</a>\n";
+	$out .= "</a>";
 	$out = apply_filters('sph_PostForumToolButton', $out, $a);
 
 	echo $out;

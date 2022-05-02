@@ -821,7 +821,7 @@ function sp_ProfileEditButton($args = '', $label = '', $toolTip = '') {
 	$out .= "<a rel='nofollow' class='$tagClass' id='$tagId' title='$toolTip' href='$link'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 	if ($mobileMenu) $out .= sp_close_grid_cell();
 
 	$out = apply_filters('sph_ProfileEditButton', $out, $a);
