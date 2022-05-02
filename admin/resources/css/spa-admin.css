@@ -2276,7 +2276,7 @@ img.sf-iconset-icon-img{
 
 #sfmaincontainer table.widefat .sfcustomicon,
 #sfmaincontainer table.widefat .sffeaturedimage {
-    width: 50px;
+    max-width: 50px;
     max-height: 50px;
 }
 #sfmaincontainer table.widefat .sfrankbadge {
