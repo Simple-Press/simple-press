@@ -1414,6 +1414,7 @@ function sp_ForumIndexSubForums($args = '', $label = '', $toolTip = '') {
 			if ($stack) $out .= "<li>";
 
 			$out .= str_replace("<img ", "<img width='".$iconWidth."' ", $fIcon);
+			$out = str_replace(array("\n", "\t", "\r"), '', $out);  // Get rid of carriage returns, line feeds etc.
 
 			$thisTagId = str_ireplace('%ID%', $sub->forum_id, $tagId);
 			$out .= "<a href='$sub->forum_permalink' id='$thisTagId' class='$linkClass' title='$thisToolTip'>".SP()->primitives->truncate_name($sub->forum_name, $truncate)."</a>";
