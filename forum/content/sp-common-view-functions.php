@@ -231,7 +231,7 @@ function sp_UserAvatar($args = '', $contextData = '') {
 					if (empty($echo)) {
 						return $avatar;
 					} else {
-						echo $avatar."\n";
+						echo $avatar."";
 
 						return;
 					}
@@ -326,7 +326,7 @@ function sp_UserAvatar($args = '', $contextData = '') {
 
 		$avatar = sp_build_avatar_display($avatarData->userId, "<img src='".esc_url($avatarData->url)."' class='$imgClass'$width$maxwidth alt='".SP()->primitives->front_text('Avatar')."' />", $link);
 
-		$avatar = "<div class='$tagClass'>$avatar</div>\n";
+		$avatar = "<div class='$tagClass'>$avatar</div>";
 
 		if ($echo) {
 			echo $avatar;
@@ -521,7 +521,7 @@ function sp_LoggedInOutLabel($args = '', $inLabel = '', $outLabel = '', $outLabe
 		if (!empty(SP()->user->guest_cookie->display_name)) $outLabel .= ' ('.SP()->user->guest_cookie->display_name.')';
 		$label = SP()->displayFilters->title($outLabel);
 	}
-	$out = "<div id='$tagId' class='$tagClass'>$label</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>$label</div>";
 	$out = apply_filters('sph_LoggedInOutLabel', $out, $a);
 
 	if ($echo) {
@@ -589,7 +589,7 @@ function sp_LogInOutButton($args = '', $inLabel = '', $outLabel = '', $toolTip =
 		$out .= "href='$logOutLink'>";
 		if (!empty($logOutIcon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $logOutIcon).$br;
 		if (!empty($outLabel)) $out .= SP()->displayFilters->title($outLabel);
-		$out .= "</a>\n";
+		$out .= "</a>";
 		if ($mobileMenu) $out .= sp_close_grid_cell();
 	} else {
 		if ($mobileMenu) $out .= sp_open_grid_cell();
@@ -609,7 +609,7 @@ function sp_LogInOutButton($args = '', $inLabel = '', $outLabel = '', $toolTip =
 
 		if (!empty($logInIcon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $logInIcon).$br;
 		if (!empty($inLabel)) $out .= SP()->displayFilters->title($inLabel);
-		$out .= "</a>\n";
+		$out .= "</a>";
 		if ($mobileMenu) $out .= sp_close_grid_cell();
 	}
 	$out = apply_filters('sph_LogInOutButton', $out, $a);
@@ -703,9 +703,9 @@ function sp_LoginForm($args = '') {
 
 	$a = apply_filters('sph_LoginFormAttributes', $a);	
 
-	$out = "<div id='".$a['tagId']."' class='".$a['tagClass']."'>\n";
+	$out = "<div id='".$a['tagId']."' class='".$a['tagClass']."'>";
 	$out .= sp_inline_login_form($a);
-	$out .= "</div>\n";
+	$out .= "</div>";
 
 	$out = apply_filters('sph_LoginForm', $out, $a);
 
@@ -767,7 +767,7 @@ function sp_RegisterButton($args = '', $label = '', $toolTip = '') {
 	$out .= "<a class='$tagClass' id='$tagId' title='$toolTip' href='$link'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 	if ($mobileMenu) $out .= sp_close_grid_cell();
 
 	$out = apply_filters('sph_RegisterButton', $out, $a);
@@ -917,7 +917,7 @@ function sp_LastVisitLabel($args = '', $label = '') {
 
 	$label = SP()->displayFilters->title(str_replace('%LASTVISIT%', SP()->dateTime->format_date('d', SP()->user->thisUser->lastvisit), $label));
 
-	$out = "<span id='$tagId' class='$tagClass'>$label</span>\n";
+	$out = "<span id='$tagId' class='$tagClass'>$label</span>";
 	$out = apply_filters('sph_LastVisitLabel', $out, $a);
 
 	if ($echo) {
@@ -959,7 +959,7 @@ function sp_QuickLinksForum($args = '', $label = '') {
 	$groups = new spcGroupView('', false);
 	if ($groups->groupViewStatus == 'no access' || $groups->groupViewStatus == 'no data') return;
 
-	$out = "<div class='spQuickLinks $tagClass' id='$tagId'>\n";
+	$out = "<div class='spQuickLinks $tagClass' id='$tagId'>";
 
 	if (!empty($label)) {
 		$label  = SP()->displayFilters->title($label);
@@ -970,24 +970,24 @@ function sp_QuickLinksForum($args = '', $label = '') {
 	$level = 0;
 
 	if ($groups->pageData) {
-		$out .= "<select id='spQuickLinksForumSelect' class='quick-links $tagClass' name='spQuickLinksForumSelect'>\n";
+		$out .= "<select id='spQuickLinksForumSelect' class='quick-links $tagClass' name='spQuickLinksForumSelect'>";
 
-		if ($label) $out .= '<option>'.$label.'</option>'."\n";
+		if ($label) $out .= '<option>'.$label.'</option>'."";
 		foreach ($groups->pageData as $group) {
-			$out .= '<optgroup class="spList" label="'.esc_attr($indent.SP()->primitives->create_name_extract($group->group_name)).'">'."\n";
+			$out .= '<optgroup class="spList" label="'.esc_attr($indent.SP()->primitives->create_name_extract($group->group_name)).'">'."";
 			if ($group->forums) {
 				foreach ($group->forums as $forum) {
 					$out .= '<option value="'.$forum->forum_permalink.'">';
-					$out .= str_repeat($indent, $level).SP()->primitives->create_name_extract($forum->forum_name, $length).'</option>'."\n";
+					$out .= str_repeat($indent, $level).SP()->primitives->create_name_extract($forum->forum_name, $length).'</option>'."";
 					if (!empty($forum->subforums) && $showSubs) $out .= sp_compile_forums($forum->subforums, $forum->forum_id, 1, true);
 				}
 			}
-			$out .= "</optgroup>\n";
+			$out .= "</optgroup>";
 		}
-		$out .= "</select>\n";
+		$out .= "</select>";
 	}
 
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_QuickLinksForum', $out, $a);
 
 	if ($echo) {
@@ -1029,8 +1029,8 @@ function sp_QuickLinksTopic($args = '', $label = '') {
 	SP()->rewrites->pageData['QuickLinks']['label']  = $label;
 
 	$out = '';
-	$out .= "<div class='spQuickLinks $tagClass' id='$tagId'>\n";
-	$out .= "</div>\n";
+	$out .= "<div class='spQuickLinks $tagClass' id='$tagId'>";
+	$out .= "</div>";
 
 	if ($echo) {
 		echo $out;
@@ -1064,14 +1064,14 @@ function sp_PopulateQuickLinksTopic() {
 		$spList = new spcTopicList('', $show, true, '', 0, 1, 'topic quick links');
 	}
 	if (!empty($spList->listData)) {
-		$out .= "<select class='quick-inks' id='spQuickLinksTopicSelect'>\n";
-		$out .= "<option>$label</option>\n";
+		$out .= "<select class='quick-inks' id='spQuickLinksTopicSelect'>";
+		$out .= "<option>$label</option>";
 		$thisForum = 0;
 		$group     = false;
 		foreach ($spList->listData as $spPost) {
 			if ($spPost->forum_id != $thisForum) {
 				if ($group) $out .= '</optgroup>';
-				$out .= "<optgroup class='spList' label='".esc_attr(SP()->primitives->create_name_extract($spPost->forum_name, $length))."'>\n";
+				$out .= "<optgroup class='spList' label='".esc_attr(SP()->primitives->create_name_extract($spPost->forum_name, $length))."'>";
 				$thisForum = $spPost->forum_id;
 				$group     = true;
 			}
@@ -1084,10 +1084,10 @@ function sp_PopulateQuickLinksTopic() {
 				$class = 'spPostNew';
 				$title = "title='".SP()->theme->paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonBlue.png")."'";
 			}
-			$out .= "<option class='$class' $title value='$spPost->post_permalink'>".SP()->primitives->create_name_extract($spPost->topic_name, $length)."</option>\n";
+			$out .= "<option class='$class' $title value='$spPost->post_permalink'>".SP()->primitives->create_name_extract($spPost->topic_name, $length)."</option>";
 		}
-		$out .= "</optgroup>\n";
-		$out .= "</select>\n";
+		$out .= "</optgroup>";
+		$out .= "</select>";
 	}
 
 	$out = apply_filters('sph_PopulateQuickLinksTopic', $out);
@@ -1142,25 +1142,25 @@ function sp_QuickLinksForumMobile($args = '', $label = '') {
 
 	$out = '';
 	if ($groups->pageData) {
-		$out .= "<div class='$tagClass' id='$tagIdControl'>\n";
-		$out .= "<p id='spQLFTitle' data-tagidlist='$tagIdList' data-target='spQLFOpener' data-open='$openIcon' data-close='$closeIcon'>$label<span id='spQLFOpener'><img src='$openIcon' /></span></p>\n";
+		$out .= "<div class='$tagClass' id='$tagIdControl'>";
+		$out .= "<p id='spQLFTitle' data-tagidlist='$tagIdList' data-target='spQLFOpener' data-open='$openIcon' data-close='$closeIcon'>$label<span id='spQLFOpener'><img src='$openIcon' /></span></p>";
 		$out .= "</div>";
 
 		$out .= sp_InsertBreak('echo=false');
 
-		$out .= "<div id='$tagIdList' class='$listClass' style='display:none'>\n";
+		$out .= "<div id='$tagIdList' class='$listClass' style='display:none'>";
 		foreach ($groups->pageData as $group) {
-			$out .= "<div class='$listDataClass'><div>".esc_attr($indent.SP()->primitives->create_name_extract($group->group_name))."</div>\n";
+			$out .= "<div class='$listDataClass'><div>".esc_attr($indent.SP()->primitives->create_name_extract($group->group_name))."</div>";
 			if ($group->forums) {
 				foreach ($group->forums as $forum) {
 					$out .= '<p><a href="'.$forum->forum_permalink.'">';
-					$out .= SP()->primitives->create_name_extract($forum->forum_name, $length).'</a></p>'."\n";
+					$out .= SP()->primitives->create_name_extract($forum->forum_name, $length).'</a></p>'."";
 					if (!empty($forum->subforums) && $showSubs) $out .= sp_compile_forums_mobile($forum->subforums, $forum->forum_id, 1, true);
 				}
 			}
-			$out .= "</div>\n";
+			$out .= "</div>";
 		}
-		$out .= "</div>\n";
+		$out .= "</div>";
 	}
 
 	$out = apply_filters('sph_QuickLinksForumMobile', $out, $a);
@@ -1219,19 +1219,19 @@ function sp_QuickLinksTopicMobile($args = '', $label = '') {
 	}
 
 	if (!empty($spList->listData)) {
-		$out .= "<div class='$tagClass' id='$tagIdControl'>\n";
-		$out .= "<p id='spQLTitle'  data-tagidlist='$tagIdList' data-target='pQLFOpener' data-open='$openIcon' data-close='$closeIcon'>$label<span id='spQLOpener'><img src='$openIcon' /></span></p>\n";
+		$out .= "<div class='$tagClass' id='$tagIdControl'>";
+		$out .= "<p id='spQLTitle'  data-tagidlist='$tagIdList' data-target='pQLFOpener' data-open='$openIcon' data-close='$closeIcon'>$label<span id='spQLOpener'><img src='$openIcon' /></span></p>";
 		$out .= "</div>";
 
 		$out .= sp_InsertBreak('echo=false');
 
-		$out .= "<div id='$tagIdList' class='$listClass' style='display:none'>\n";
+		$out .= "<div id='$tagIdList' class='$listClass' style='display:none'>";
 		$thisForum = 0;
 		$group     = false;
 		foreach ($spList->listData as $spPost) {
 			if ($spPost->forum_id != $thisForum) {
 				if ($group) $out .= '</div>';
-				$out .= "<div class='$listDataClass'><p>".SP()->primitives->create_name_extract($spPost->forum_name, $length)."</p>\n";
+				$out .= "<div class='$listDataClass'><p>".SP()->primitives->create_name_extract($spPost->forum_name, $length)."</p>";
 				$thisForum = $spPost->forum_id;
 				$group     = true;
 			}
@@ -1244,9 +1244,9 @@ function sp_QuickLinksTopicMobile($args = '', $label = '') {
 				$class = 'spPostNew';
 				$image = "<img src='".SP()->theme->paint_file_icon(SPTHEMEICONSURL, "sp_QLBalloonBlue.png")."' alt='' />";
 			}
-			$out .= "<p><a class='$class' href='$spPost->post_permalink'>$image&nbsp;&nbsp;".SP()->primitives->create_name_extract($spPost->topic_name, $length)."</a></p>\n";
+			$out .= "<p><a class='$class' href='$spPost->post_permalink'>$image&nbsp;&nbsp;".SP()->primitives->create_name_extract($spPost->topic_name, $length)."</a></p>";
 		}
-		$out .= "</div></div>\n";
+		$out .= "</div></div>";
 	}
 
 	$out = apply_filters('sph_QuickLinksTopicMobile', $out, $a);
@@ -1459,14 +1459,14 @@ function sp_BreadCrumbsMobile($args = '', $forumLabel = '') {
 	$breadCrumbs .= "<div id='$tagId'>";
 
 	# wp page link for forum
-	$breadCrumbs .= "<a class='$tagClass' href='".SP()->spPermalinks->get_url()."'>$forumLabel</a>\n";
+	$breadCrumbs .= "<a class='$tagClass' href='".SP()->spPermalinks->get_url()."'>$forumLabel</a>";
 
 	# parent forum links if current forum is a sub-forum
 	if (isset(SP()->rewrites->pageData['parentforumid'])) {
 		$forumNames = array_reverse(SP()->rewrites->pageData['parentforumname']);
 		$forumSlugs = array_reverse(SP()->rewrites->pageData['parentforumslug']);
 		for ($x = 0; $x < count($forumNames); $x++) {
-			$breadCrumbs .= "<a class='$tagClass $curClass' href='".SP()->spPermalinks->build_url($forumSlugs[$x], '', 0, 0)."'>".SP()->primitives->truncate_name(SP()->displayFilters->title($forumNames[$x]), $truncate)."</a>\n";
+			$breadCrumbs .= "<a class='$tagClass $curClass' href='".SP()->spPermalinks->build_url($forumSlugs[$x], '', 0, 0)."'>".SP()->primitives->truncate_name(SP()->displayFilters->title($forumNames[$x]), $truncate)."</a>";
 		}
 	}
 
@@ -1474,12 +1474,12 @@ function sp_BreadCrumbsMobile($args = '', $forumLabel = '') {
 	if (!empty(SP()->rewrites->pageData['forumslug']) && (SP()->rewrites->pageData['forumslug'] != 'all') && (!empty(SP()->rewrites->pageData['forumname']))) {
 		# if showing a topic then check the return page of forum in transient store
 		$returnPage = (empty(SP()->rewrites->pageData['topicslug'])) ? 1 : sp_pop_topic_page(SP()->rewrites->pageData['forumid']);
-		$breadCrumbs .= "<a class='$tagClass $curClass' href='".SP()->spPermalinks->build_url(SP()->rewrites->pageData['forumslug'], '', $returnPage, 0)."'>".SP()->primitives->truncate_name(SP()->displayFilters->title(SP()->rewrites->pageData['forumname']), $truncate)."</a>\n";
+		$breadCrumbs .= "<a class='$tagClass $curClass' href='".SP()->spPermalinks->build_url(SP()->rewrites->pageData['forumslug'], '', $returnPage, 0)."'>".SP()->primitives->truncate_name(SP()->displayFilters->title(SP()->rewrites->pageData['forumname']), $truncate)."</a>";
 	}
 
 	# profile link
 	if (!empty(SP()->rewrites->pageData['profile'])) {
-		$breadCrumbs .= "<a class='$tagClass $curClass' href='".SP()->spPermalinks->get_url('profile')."'>".SP()->primitives->front_text('Profile')."</a>\n";
+		$breadCrumbs .= "<a class='$tagClass $curClass' href='".SP()->spPermalinks->get_url('profile')."'>".SP()->primitives->front_text('Profile')."</a>";
 	}
 
 	# recent post list (as page)
@@ -1544,11 +1544,11 @@ function sp_UserNotices($args = '', $label = '') {
 		foreach (SP()->user->thisUser->user_notices as $notice) {
 			$site = wp_nonce_url(SPAJAXURL.'spUserNotice&amp;notice='.$notice->notice_id, 'spUserNotice');
 			$nid  = 'noticeid-'.$notice->notice_id;
-			$m .= "<div id='$nid'>\n";
+			$m .= "<div id='$nid'>";
 			$m .= "<p class='$textClass'>".SP()->displayFilters->title($notice->message)." ";
 			if (!empty($notice->link_text)) $m .= "<a class='$linkClass' href='".esc_url($notice->link)."'>".SP()->displayFilters->title($notice->link_text)."</a>";
 			if (!empty($label)) $m .= "&nbsp;&nbsp;<a class='spLabelSmall spUserNotice' data-site='$site' data-nid='$nid'>".SP()->displayFilters->title($label)."</a>";
-			$m .= "</p></div>\n";
+			$m .= "</p></div>";
 		}
 	}
 
@@ -1557,7 +1557,7 @@ function sp_UserNotices($args = '', $label = '') {
 	if ($get) return $m;
 
 	if (!empty($m)) {
-		$out = "<div id='$tagId' class='$tagClass'>".$m."</div>\n";
+		$out = "<div id='$tagId' class='$tagClass'>".$m."</div>";
 		$out = apply_filters('sph_UserNotices', $out, $a);
 
 		if ($echo) {
@@ -1647,7 +1647,7 @@ function sp_UnreadPostsInfo($args = '', $label = '', $unreadToolTip = '', $markT
 			$out .= "<a href='#$markId'>";
 			if ($mobileMenu) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $markIcon, $markToolTip).$br;
 			if (!empty($markToolTip)) $out .= $markToolTip;
-			$out .= "</a>\n";
+			$out .= "</a>";
 			if ($mobileMenu) $out .= sp_close_grid_cell();
 
 			$args          = array();
@@ -1658,7 +1658,7 @@ function sp_UnreadPostsInfo($args = '', $label = '', $unreadToolTip = '', $markT
 			if ($mobileMenu) $out .= sp_open_grid_cell();
 			$out .= "<a rel='nofollow' id='$unreadLinkId' href='$url'>";
 			if ($mobileMenu) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $unreadIcon, $unreadToolTip).$br;
-			$out .= "$label</a>\n";
+			$out .= "$label</a>";
 			if ($mobileMenu) $out .= sp_close_grid_cell();
 		}
 	} else {
@@ -1684,7 +1684,7 @@ function sp_UnreadPostsInfo($args = '', $label = '', $unreadToolTip = '', $markT
 						$url           = add_query_arg($args, SP()->spPermalinks->get_url('newposts'));
 						$out .= "<a rel='nofollow' id='$unreadLinkId' href='$url'>";
 					}
-					$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $unreadIcon, $unreadToolTip)."</a>\n";
+					$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $unreadIcon, $unreadToolTip)."</a>";
 				}
 				if ($item == 'M') {
 					$out .= "<a class='spMarkAllRead' data-ajaxurl='$ajaxUrl' data-mobile='0'>".SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $markIcon, $markToolTip)."</a>";
@@ -1692,7 +1692,7 @@ function sp_UnreadPostsInfo($args = '', $label = '', $unreadToolTip = '', $markT
 			}
 		}
 
-		$out .= "</div>\n";
+		$out .= "</div>";
 	}
 	$out = apply_filters('sph_UnreadPostsInfo', $out, $a);
 
@@ -2015,7 +2015,7 @@ function sp_MobileMenuSearch($args = '', $label = '') {
 	$out .= "<a href='#$searchTagId'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
 	if (!empty($label)) $out .= $label;
-	$out .= "</a>\n";
+	$out .= "</a>";
 	$out .= sp_close_grid_cell();
 
 	$out = apply_filters('sph_MobileMenuSearch', $out, $a);
@@ -2063,7 +2063,7 @@ function sp_SearchToggleButton($args = '', $label = '',$toolTip = '') {
 	$out .= "<a class='$tagClass spOpenSearch' id='$tagId' title='$toolTip' >";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 
 	$out = apply_filters('sph_SearchToggleButton', $out, $a);
 
@@ -2220,10 +2220,10 @@ function sp_SearchForm($args = '') {
 		}
 	}
 
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out .= sp_InsertBreak('echo=0');
 	$out .= "<div id='$advSearchId' class='$advSearchClass'>".sp_inline_search_form($a).'</div>';
-	$out .= "</form>\n";
+	$out .= "</form>";
 
 	# finish it up
 	$out = apply_filters('sph_SearchForm', $out, $a);
@@ -2269,7 +2269,7 @@ function sp_GoToTop($args = '', $label = '', $toolTip = '') {
 	$out .= "<a class='$tagClass' href='#spForumTop'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon, $toolTip);
 	$out .= "$label</a>";
-	$out .= "</div>\n";
+	$out .= "</div>";
 
 	$out = apply_filters('sph_GoToTop', $out, $a);
 
@@ -2312,7 +2312,7 @@ function sp_GoToBottom($args = '', $label = '', $toolTip = '') {
 	$out .= "<a class='$tagClass spGoBottom'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon, $toolTip);
 	$out .= "$label</a>";
-	$out .= "</div>\n";
+	$out .= "</div>";
 
 	$out = apply_filters('sph_GoToBottom', $out, $a);
 
@@ -2371,7 +2371,7 @@ function sp_AllRSSButton($args = '', $label = '', $toolTip = '') {
 	$out = "<a class='$tagClass' id='$tagId' title='$toolTip' rel='nofollow' href='$rssUrl'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 	$out = apply_filters('sph_AllRSSButton', $out, $a);
 
 	if ($echo) {
@@ -2405,7 +2405,7 @@ function sp_ForumLockdown($args = '', $Message = '') {
 	$tagClass = esc_attr($tagClass);
 	$echo     = (int) $echo;
 
-	$out = "<div id='$tagId' class='$tagClass'>".SP()->displayFilters->title($Message)."</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>".SP()->displayFilters->title($Message)."</div>";
 	$out = apply_filters('sph_ForumLockdown', $out, $a);
 
 	if ($echo) {
@@ -2457,8 +2457,8 @@ function sp_RecentPostList($args = '', $label = '') {
 
 	if ((!$admins && SP()->user->thisUser->admin) || (!$mods && SP()->user->thisUser->moderator)) return;
 
-	echo "<div id='$tagId' class='$tagClass'>\n";
-	echo "<div class='$labelClass'>$label</div>\n";
+	echo "<div id='$tagId' class='$tagClass'>";
+	echo "<div class='$labelClass'>$label</div>";
 	$topics = (!empty(SP()->user->thisUser->newposts['topics'])) ? SP()->user->thisUser->newposts['topics'] : '';
 
 	if ($get) return $topics;
@@ -2515,7 +2515,7 @@ function sp_Acknowledgements($args = '', $label = '', $toolTip = '', $siteToolTi
 		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 		$out .= "$label</a>";
 	}
-	$out .= "</div>\n";
+	$out .= "</div>";
 	if ($showPopup) {
 		$out = apply_filters('sph_AcknowledgementsLink', $out, $a);
 	}
@@ -2723,7 +2723,7 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	if ($browse || $guestBrowsing) $out .= "<span class='spCurrentBrowsingLabel'>$browsingLabel $stackAtt</span>";
 	if ($browse) $out .= $browse;
 	if (!$usersOnly && $guestBrowsing != 0) $out .= "<br />$guestBrowsing <span class='spOnlineUser spType-Guest'>$guestLabel</span>";
-	$out .= "</div>\n";
+	$out .= "</div>";
 
 	# finish it up
 	$out = apply_filters('sph_OnlineStats', $out, $a);
@@ -2785,7 +2785,7 @@ function sp_DeviceStats($args = '', $statLabel = '', $phoneLabel = '', $tabletLa
 				break;
 		}
 	}
-	$out .= "</p>\n";
+	$out .= "</p>";
 
 	# finish it up
 	$out = apply_filters('sph_DeviceStats', $out, $a);
@@ -2842,7 +2842,7 @@ function sp_ForumStats($args = '', $titleLabel = '', $groupsLabel = '', $forumsL
 	$out .= "<div class='$pGroupsClass'>".$groupsLabel.$counts->groups.'</div>';
 	$out .= "<div class='$pForumsClass'>".$forumsLabel.$counts->forums.'</div>';
 	$out .= "<div class='$pTopicsClass'>".$topicsLabel.$counts->topics.'</div>';
-	$out .= "<div class='$pPostsClass'>".$postsLabel.$counts->posts."</div>\n";
+	$out .= "<div class='$pPostsClass'>".$postsLabel.$counts->posts."</div>";
 
 	# finish it up
 	$out = apply_filters('sph_ForumStats', $out, $a);
@@ -2900,7 +2900,7 @@ function sp_MembershipStats($args = '', $titleLabel = '', $membersLabel = '', $g
 	$out .= "<div class='$pGuestsClass'>$guestsLabel</div>";
 	$out .= "<div class='$pMembersClass'>$membersLabel</div>";
 	$out .= "<div class='$pModsClass'>$modsLabel</div>";
-	$out .= "<div class='$pAdminsClass'>$adminsLabel</div>\n";
+	$out .= "<div class='$pAdminsClass'>$adminsLabel</div>";
 
 	# finish it up
 	$out = apply_filters('sph_MembershipStats', $out, $a);
@@ -3020,7 +3020,7 @@ function sp_NewMembers($args = '', $titleLabel = '') {
 	}
 
 	# finish it up
-	if (!$list) $out .= "</div>\n";
+	if (!$list) $out .= "</div>";
 	$out = apply_filters('sph_NewMembers', $out, $a);
 
 	if ($echo) {
@@ -3092,7 +3092,7 @@ function sp_ModsList($args = '', $titleLabel = '') {
 	$out .= '</div>';
 
 	# finish it up
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_ModsList', $out, $a);
 
 	if ($echo) {
@@ -3161,7 +3161,7 @@ function sp_AdminsList($args = '', $titleLabel = '') {
 	$out .= '</div>';
 
 	# finish it up
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_AdminsList', $out, $a);
 
 	if ($echo) {
@@ -3231,7 +3231,7 @@ function sp_UserGroupList($args = '', $titleLabel = '', $userGroup = 0) {
 	$out .= '</p>';
 
 	# finish it up
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_UserGroupList', $out, $a);
 
 	if ($echo) {
@@ -3267,7 +3267,7 @@ function sp_Signature($args, $sig) {
 	# render the signature
 	$out = "<div class='$tagClass'>";
 	$out .= $sig;
-	$out .= '</div>'."\n";
+	$out .= '</div>'."";
 
 	$out = apply_filters('sph_Signature', $out, $a);
 
@@ -3371,7 +3371,7 @@ function sp_AddButton($args = '', $label = '', $toolTip = '', $perm = '', $butto
 	$out .= "<a class='$tagClass' id='$tagId' title='$toolTip' href='$link'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon).$br;
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 	if ($mobileMenu) $out .= sp_close_grid_cell();
 
 	$out = apply_filters('sph_AddButton', $out, $a);
@@ -3501,7 +3501,7 @@ function sp_UniversalTitle($args = '', $label = '') {
 
 	$out = "<div class='$tagClass'>";
 	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."</span>";
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_UniversalTitle', $out, $a);
 
 	if ($echo) {
@@ -3542,7 +3542,7 @@ function sp_AddIcon($args = '', $toolTip = '') {
 
 	$out = "<div id='$tagId' class='$tagClass' title='$toolTip'>";
 	$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-	$out .= "</div>\n";
+	$out .= "</div>";
 
 	$out = apply_filters('sph_AddIcon', $out, $a);
 
