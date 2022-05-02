@@ -1822,6 +1822,7 @@ img.sf-iconset-icon-img{
 
 
 #sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions select {
+		min-width: 150px;
         width: auto;
         margin: 0;
 }

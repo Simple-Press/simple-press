@@ -328,11 +328,13 @@ The editor in the free version is a pure text editor.  However, the premium vers
 = 6.6.7 =
 * New
 	* G00122: Add option to sort by the membership column in the FORUM->USERS->MEMBER INFORMATION list.
+	
 * Fix
 	* G00121: Fix an issue with deleting subsites rendering all user posts go guests in any other site that has the forum in use.
 	* G00116: When sorting the user list under FORUM->USERS->MEMBER INFORMATION, the list would be unstyled.
 	* G00117: Custom icons not rendering in drop-down properly.
 	* G00123: Large custom icon images need to be resized when viewing the forum list in admin.
+	* G00098: Fix admin screen issue where the Bulk Actions Arrow in MEMBER INFORMATION is too close to text.
 	* G00000: Multiple issues with caching icon files when a filename is reused.  Added cache-busting querystrings in the admin area to force cdns and page caches to re-request the file.
 
 = 6.6.6 =
