@@ -3406,6 +3406,12 @@ body .spMobileTableData .row-actions > span {
     font-family: 'Poppins', sans-serif!important;
 }
 
+/* Forum Row */
+#sfmaincontainer .sf-full-form .sf-icon-midle img {
+	max-width: 60px;
+	max-height: 40px;
+}
+
 /*To remove button from IE11, thank you Matt */
 .sf-actions select::-ms-expand {
     display: none;
