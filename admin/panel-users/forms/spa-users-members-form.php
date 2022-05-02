@@ -64,6 +64,7 @@ function spa_users_members_form() {
 				'user_registered' => array( 'user_registered', false ),
 				'lastvisit'       => array( 'lastvisit', false ),
 				'posts'           => array( 'posts', false ),
+				'memberships'     => array( 'memberships', false ),
 			);
 
 			return $sortable_columns;

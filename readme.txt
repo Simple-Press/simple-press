@@ -326,6 +326,8 @@ The editor in the free version is a pure text editor.  However, the premium vers
 == Changelog ==
 
 = 6.6.7 =
+* New
+	* G00122: Add option to sort by the membership column in the FORUM->USERS->MEMBER INFORMATION list.
 * Fix
 	* G00121: Fix an issue with deleting subsites rendering all user posts go guests in any other site that has the forum in use.
 	* G00116: When sorting the user list under FORUM->USERS->MEMBER INFORMATION, the list would be unstyled.
