@@ -53,6 +53,7 @@ function spa_forums_featured_image_form() {
 					/* add file to the list */
 					if (response==="success"){
 
+
 						// A random number that will be used to break caching.
 						break_cache = Math.random();
 						break_cache = break_cache.toString();

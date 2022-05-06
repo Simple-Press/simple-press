@@ -26,6 +26,9 @@ function spa_paint_custom_icons() {
 		}
 	}
 	closedir($dlist);
+	
+	#Random value that will be used to break caching.
+	$breakcache=time();
 
 	# start the table display
 	$out.= '<table id="sf-custom-icons" class="wp-list-table widefat">';
@@ -40,7 +43,7 @@ function spa_paint_custom_icons() {
 		sort($files);
 		foreach ($files as $file) {
 			$out.= '<tr id="icon'.$row.'">';
-			$out.= '<td class="spWFBorder"><img class="sfcustomicon " src="'.esc_url(SPCUSTOMURL.$file. '?break_cache=' . time()).'" alt="" /></td>';
+			$out.= '<td class="spWFBorder"><img class="sfcustomicon " src="'.esc_url(SPCUSTOMURL.$file.'?breakcache='.$breakcache).'" alt="" /></td>';
 			$out.= '<td class="spWFBorder sflabel">';
 			$out.= $file;
 			$out.= '</td>';
@@ -68,7 +71,7 @@ function spa_paint_featured_images() {
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/';
 	$dlist = @opendir($path);
 	if (!$dlist) {
-		echo '<table><tr><td class="sflabel"><strong>'.SP()->primitives->admin_text('The forum feauted images folder does not exist').'</strong></td></tr></table>';
+		echo '<table><tr><td class="sflabel"><strong>'.SP()->primitives->admin_text('The forum featured images folder does not exist').'</strong></td></tr></table>';
 		return;
 	}
 
@@ -79,6 +82,9 @@ function spa_paint_featured_images() {
 		}
 	}
 	closedir($dlist);
+	
+	#Random value that will be used to break caching.
+	$breakcache=time();	
 
 	# start the table display
 	$out.= '<table id="sf-featured-images" class="wp-list-table widefat">';
@@ -92,8 +98,9 @@ function spa_paint_featured_images() {
 	if ($files) {
 		sort($files);
 		foreach ($files as $file) {
-			$out.= '<tr id="img'.$rows.'">';
-			$out.= '<td class="spWFBorder"><img class="sffeaturedimage " src="'.esc_url(SPOGIMAGEURL.$file).'?break_cache=' . time().'" alt="" /></td>';
+
+			$out.= '<tr>';
+			$out.= '<td class="spWFBorder"><img class="sffeaturedimage " src="'.esc_url(SPOGIMAGEURL.$file.'?breakcache='.$breakcache).'" alt="" /></td>';
 			$out.= '<td class="spWFBorder sflabel">';
 			$out.= $file;
 			$out.= '</td>';

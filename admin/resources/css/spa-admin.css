@@ -1215,6 +1215,22 @@ $Rev:2099 $
 * < .sf-icon
 */
 
+/**
+* Icon Picker >
+*/
+
+/* Make sure that custom icons can fit inside the icon picker box. */
+img.sf-iconset-icon-img{
+	max-width: 50px;
+	max-height: 35px;
+	padding: 5px;
+}
+
+/**
+* < Icon Picker
+*/
+
+
 #sf-root-wrap .sf-opener:not(.sf-open) .sf-opener-target {
     display: none;
 }
@@ -1806,6 +1822,7 @@ $Rev:2099 $
 
 
 #sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions select {
+		min-width: 150px;
         width: auto;
         margin: 0;
 }
@@ -2260,7 +2277,7 @@ $Rev:2099 $
 
 #sfmaincontainer table.widefat .sfcustomicon,
 #sfmaincontainer table.widefat .sffeaturedimage {
-    width: 50px;
+    max-width: 50px;
     max-height: 50px;
 }
 #sfmaincontainer table.widefat .sfrankbadge {
@@ -3388,6 +3405,12 @@ body .spMobileTableData .row-actions > span {
     float: left;
     width: 110px;
     font-family: 'Poppins', sans-serif!important;
+}
+
+/* Forum Row */
+#sfmaincontainer .sf-full-form .sf-icon-midle img {
+	max-width: 60px;
+	max-height: 40px;
 }
 
 /*To remove button from IE11, thank you Matt */

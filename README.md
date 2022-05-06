@@ -1,5 +1,5 @@
 # Simple:Press WordPress Forum Plugin
-Simple:Press is the most feature-rich free forum plugin for WordPress. It was initially released when WordPress was just 3 years old and and has been under continuous development since then for over 12 years!
+Simple:Press is the most feature-rich free forum plugin for WordPress. It was initially released when WordPress was just 3 years old and and has been under continuous development since then for over 13 years!
 As of Jan 2019, it is available here on Github.
 
 ## Requirements
@@ -33,4 +33,5 @@ For technical support please purchase a license on our site and then submit your
 
 ## Development History
 Most of the development of the plugin is archived in an off-line SVN repository.  
-Issues prior to version 6.0.6 is also archived in an off-line zipfile.
+Issues prior to version 6.0.6 are also archived in an off-line zipfile.
+A more user-friendly readme with a list of fixes and changes to the 6.x line can be found on [WordPress.org](https://wordpress.org/plugins/simplepress/#developers)
