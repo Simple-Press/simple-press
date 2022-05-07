@@ -58,9 +58,9 @@ function sp_ListForumName($args = '', $toolTip = '', $label = '') {
 
 	#Allow the new post list to substitute a label if running in line
 	if (SP()->forum->view->listTopics->popup == false && !empty($label)) {
-		$out = "<p id='$tagId' class='$tagClass'>$label</p>\n";
+		$out = "<p id='$tagId' class='$tagClass'>$label</p>";
 	} else {
-		$out = (empty(SP()->forum->view->thisListTopic->forum_name)) ? '' : "<a href='".SP()->forum->view->thisListTopic->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>$prefix ".SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->forum_name, $truncate)."</a>\n";
+		$out = (empty(SP()->forum->view->thisListTopic->forum_name)) ? '' : "<a href='".SP()->forum->view->thisListTopic->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>$prefix ".SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->forum_name, $truncate)."</a>";
 	}
 	$out = apply_filters('sph_ListForumName', $out, $a);
 
@@ -234,7 +234,7 @@ function sp_ListTopicName($args = '', $toolTip = '') {
 
 	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->topic_name, $truncate);
 
-	$out = "<div class='$tagClass'><a class='$linkClass' href='".SP()->forum->view->thisListTopic->topic_permalink."' id='$tagId' title='$toolTip'>$prefix ".SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->topic_name, $truncate)."</a></div>\n";
+	$out = "<div class='$tagClass'><a class='$linkClass' href='".SP()->forum->view->thisListTopic->topic_permalink."' id='$tagId' title='$toolTip'>$prefix ".SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->topic_name, $truncate)."</a></div>";
 	$out = apply_filters('sph_ListTopicName', $out, $a);
 
 	if ($echo) {
@@ -302,24 +302,24 @@ function sp_ListLastPost($args = '', $label = '') {
 		$title = '';
 	}
 	$sp  = '&nbsp;';
-	$out = "<div id='$tagId' class='$tagClass'>\n";
+	$out = "<div id='$tagId' class='$tagClass'>";
 	if ($labelLink) {
-		$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisListTopic->post_permalink."'>\n";
+		$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisListTopic->post_permalink."'>";
 	}
-	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)." \n";
+	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)." ";
 	if ($labelLink) {
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 
 	# Link to post
-	$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisListTopic->post_permalink."'>\n";
+	$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisListTopic->post_permalink."'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-	$out .= "</a></span>\n";
+	$out .= "</a></span>";
 
 	# user
 	$poster = SP()->user->name_display(SP()->forum->view->thisListTopic->user_id, SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->display_name, $truncateUser));
 	if (empty($poster)) $poster = SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->guest_name, $truncateUser);
-	if ($user) $out .= "<span class='$labelClass'>$poster</span>\n";
+	if ($user) $out .= "<span class='$labelClass'>$poster</span>";
 
 	if ($get) {
 		$getData             = new stdClass();
@@ -336,17 +336,17 @@ function sp_ListLastPost($args = '', $label = '') {
 
 	# date/time
 	if ($niceDate) {
-		$out .= "<span class='$labelClass'>$sp".SP()->dateTime->nice_date(SP()->forum->view->thisListTopic->post_date)."</span>\n";
+		$out .= "<span class='$labelClass'>$sp".SP()->dateTime->nice_date(SP()->forum->view->thisListTopic->post_date)."</span>";
 	} else {
 		if ($date) {
 			$out .= "<span class='$labelClass'>$sp".SP()->dateTime->format_date('d', SP()->forum->view->thisListTopic->post_date);
 			if ($time) {
 				$out .= '-'.SP()->dateTime->format_date('t', SP()->forum->view->thisListTopic->post_date);
 			}
-			$out .= "</span>\n";
+			$out .= "</span>";
 		}
 	}
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_ListLastPost', $out, $a);
 
 	if ($echo) {
@@ -414,25 +414,25 @@ function sp_ListFirstPost($args = '', $label = '') {
 		$title = '';
 	}
 	$sp  = '&nbsp;';
-	$out = "<div id='$tagId' class='$tagClass'>\n";
+	$out = "<div id='$tagId' class='$tagClass'>";
 
 	if ($labelLink) {
-		$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisListTopic->first_post_permalink."'>\n";
+		$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisListTopic->first_post_permalink."'>";
 	}
-	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)." \n";
+	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)." ";
 	if ($labelLink) {
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 
 	# Link to post
-	$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisListTopic->first_post_permalink."'>\n";
+	$out .= "<a class='$linkClass' $title href='".SP()->forum->view->thisListTopic->first_post_permalink."'>";
 	$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-	$out .= "</a></span>\n";
+	$out .= "</a></span>";
 
 	# user
 	$poster = SP()->user->name_display(SP()->forum->view->thisListTopic->first_user_id, SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->first_display_name, $truncateUser));
 	if (empty($poster)) $poster = SP()->primitives->truncate_name(SP()->forum->view->thisListTopic->first_guest_name, $truncateUser);
-	if ($user) $out .= "<span class='$labelClass'>$poster</span>\n";
+	if ($user) $out .= "<span class='$labelClass'>$poster</span>";
 
 	if ($get) {
 		$getData             = new stdClass();
@@ -449,17 +449,17 @@ function sp_ListFirstPost($args = '', $label = '') {
 
 	# date/time
 	if ($niceDate) {
-		$out .= "<span class='$labelClass'>".$sp.SP()->dateTime->nice_date(SP()->forum->view->thisListTopic->first_post_date)."</span>\n";
+		$out .= "<span class='$labelClass'>".$sp.SP()->dateTime->nice_date(SP()->forum->view->thisListTopic->first_post_date)."</span>";
 	} else {
 		if ($date) {
 			$out .= "<span class='$labelClass'>".$sp.SP()->dateTime->format_date('d', SP()->forum->view->thisListTopic->first_post_date);
 			if ($time) {
 				$out .= '-'.SP()->dateTime->format_date('t', SP()->forum->view->thisListTopic->first_post_date);
 			}
-			$out .= "</span>\n";
+			$out .= "</span>";
 		}
 	}
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_ListFirstPost', $out, $a);
 
 	if ($echo) {
@@ -516,7 +516,7 @@ function sp_NoTopicsInListMessage($args = '', $definedMessage = '') {
 
 	if ($get) return $definedMessage;
 
-	$out = "<div id='$tagId' class='$tagClass'>".SP()->displayFilters->title($definedMessage)."</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>".SP()->displayFilters->title($definedMessage)."</div>";
 	$out = apply_filters('sph_NoTopicsInListMessage', $out, $a);
 
 	if ($echo) {

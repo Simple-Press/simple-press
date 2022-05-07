@@ -182,7 +182,7 @@ function sp_SectionStart($args = '', $sectionName = '') {
 	$class = '';
 	if (!empty($rowId)) $rowId = " id='$rowId'";
 	if (!empty($tagClass) || !empty($rowClass)) $class = " class='$tagClass$rowClass'";
-	$out = "<div$class$rowId>\n";
+	$out = "<div$class$rowId>";
 
 	$out = apply_filters('sph_SectionStart', $out, $sectionName, $a);
 
@@ -228,13 +228,13 @@ function sp_SectionEnd($args = '', $sectionName = '') {
 	do_action('sph_BeforeSectionEnd_'.$sectionName, $a);
 
 	$out = '';
-	if (!empty($tagClass) || !empty($tagId)) $out .= "<div$tagId$tagClass></div>\n";
+	if (!empty($tagClass) || !empty($tagId)) $out .= "<div$tagId$tagClass></div>";
 
 	$out = apply_filters('sph_SectionEnd', $out, $sectionName, $a);
 	do_action('sph_SectionEnd_'.$sectionName, $a);
 
 	# close the section begin
-	$out .= "</div>\n";
+	$out .= "</div>";
 
 	if ($echo) {
 		echo $out;
@@ -295,7 +295,7 @@ function sp_ColumnStart($args = '', $columnName = '') {
 
 	$out = "<div class='$tagClass$colClass'$tagId";
 	if ($wStyle != '' || $hStyle != '') $out .= " style='$wStyle $hStyle'";
-	$out .= ">\n";
+	$out .= ">";
 
 	$out = apply_filters('sph_ColumnStart', $out, $columnName, $a);
 
@@ -340,13 +340,13 @@ function sp_ColumnEnd($args = '', $columnName = '') {
 	do_action('sph_BeforeColumnEnd_'.$columnName, $a);
 
 	$out = '';
-	if (!empty($tagClass) || !empty($tagId)) $out .= "<div id='$tagId' class='$tagClass'></div>\n";
+	if (!empty($tagClass) || !empty($tagId)) $out .= "<div id='$tagId' class='$tagClass'></div>";
 
 	$out = apply_filters('sph_ColumnEnd', $out, $columnName, $a);
 	do_action('sph_ColumnEnd_'.$columnName, $a);
 
 	# close the column start
-	$out .= "</div>\n";
+	$out .= "</div>";
 
 	if ($echo) {
 		echo $out;
@@ -396,7 +396,7 @@ function sp_InsertBreak($args = '') {
 	do_action('sph_BeforeInsertBreak', $a);
 
 	$out = '';
-	if (!empty($tagClass) || !empty($tagId)) $out .= "<div$tagId$tagClass></div>\n";
+	if (!empty($tagClass) || !empty($tagId)) $out .= "<div$tagId$tagClass></div>";
 
 	$out = apply_filters('sph_InsertBreak', $out, $a);
 
@@ -569,7 +569,7 @@ function sp_MobileMenuStart($args = '', $header = '') {
 	$out .= "<a class='$tagClass spMobileMenuOpen' title='".esc_attr($header)."' href='#' data-source='$source'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($header)) $out .= $header;
-	$out .= "</a>\n";
+	$out .= "</a>";
 
 	$out .= "<div id='$tagId' class='spAdminLinksPopup' style='display:none;'>";
 	$out .= "<div class='spAdminLinksPopup'>";
@@ -692,7 +692,7 @@ function sp_OpenCloseControl($args = '', $toolTipOpen = '', $toolTipClose = '') 
 	} else {
 		$out .= "<img class='$tagClass' title='$toolTip' src='$icon' alt='' />";
 	}
-	$out .= "</span>\n";
+	$out .= "</span>";
 
 	$out = apply_filters('sph_OpenCloseControl', $out, $a);
 
