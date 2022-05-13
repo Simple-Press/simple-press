@@ -52,14 +52,20 @@ function spa_forums_featured_image_form() {
 					this.enable();
 					/* add file to the list */
 					if (response==="success"){
-						
+
+
 						// A random number that will be used to break caching.
 						break_cache = Math.random();
-						break_cache = break_cache.toString();						
-						
-						site = "<?php echo SPAJAXURL.'forums' ?>&amp;sfnonce=<?php echo wp_create_nonce('forums'); ?>&amp;targetaction=delimage&amp;file=" + file;
-						$('#sf-featured-images').append('<tr><td class="spWFBorder"><img class="sffeaturedimage" src="<?php echo SPOGIMAGEURL; ?>/' + file + '?break_cache=' + break_cache + '" alt="" /></td><td class="spWFBorder">' + file + '</td><td class="spWFBorder"><span title="<?php echo esc_js(SP()->primitives->admin_text('Delete Feature Image')); ?>" class="sf-icon sf-delete spDeleteRowReload" data-url="' + site + '" data-reload="sfreloadfi"></span></td></tr>');
+						break_cache = break_cache.toString();
+
+						site = "<?php echo SPAJAXURL.'forums' ?>&amp;_wpnonce=<?php echo wp_create_nonce('forums'); ?>&amp;targetaction=delimage&amp;file=" + file;
+						var icount = parseInt($('#img-count').val()) + 1;
+						var row_id = 'img' + icount + '-' + (Math.random() + 1).toString(36).substring(7);
+
+						$('#sf-featured-images').append('<tr id="'+row_id+'"><td class="spWFBorder"><img class="sffeaturedimage" src="<?php echo SPOGIMAGEURL; ?>/' + file + '?break_cache=' + break_cache + '" alt="" /></td><td class="spWFBorder">' + file + '</td><td class="spWFBorder"><span title="<?php echo esc_js(SP()->primitives->admin_text('Delete Feature Image')); ?>" class="sf-icon sf-delete spDeleteRowReload" data-url="' + site + '" data-target="' + row_id + '" data-reload="sfreloadfi"></span></td></tr>');
 						//$('#sf-upload-status').html('<p class="sf-upload-status-success"><?php echo esc_js(SP()->primitives->admin_text('Featured Image uploaded!')); ?></p>');
+						$('#img-count').val(icount);
+					
 					} else if (response==="invalid"){
 						$('#sf-upload-status').html('<p class="sf-upload-status-fail"><?php echo esc_js(SP()->primitives->admin_text('Sorry, the file has an invalid format!')); ?></p>');
 					} else if (response==="exists") {

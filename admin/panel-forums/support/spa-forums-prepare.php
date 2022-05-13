@@ -94,9 +94,11 @@ function spa_paint_featured_images() {
 	$out.= '<th>'.SP()->primitives->admin_text('Remove').'</th>';
 	$out.= '</tr></thead>';
 
+	$rows = 0;
 	if ($files) {
 		sort($files);
 		foreach ($files as $file) {
+
 			$out.= '<tr>';
 			$out.= '<td class="spWFBorder"><img class="sffeaturedimage " src="'.esc_url(SPOGIMAGEURL.$file.'?breakcache='.$breakcache).'" alt="" /></td>';
 			$out.= '<td class="spWFBorder sflabel">';
@@ -105,13 +107,16 @@ function spa_paint_featured_images() {
 			$out.= '<td class="spWFBorder">';
 			$out .= '<div class="sf-item-controls">';
 			$site = esc_url(wp_nonce_url(SPAJAXURL."forums&amp;targetaction=delimage&amp;file=$file", 'forums'));
-			$out.= '<span title="'.SP()->primitives->admin_text('Delete featured image').'" class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-reload="sfreloadfi"></span>';
+			$out.= '<span title="'.SP()->primitives->admin_text('Delete featured image').'" class="sf-icon sf-delete spDeleteRowReload" data-url="'.$site.'" data-target="img'.$rows.'" data-reload="sfreloadfi"></span>';
 			$out .= '</div>';
 			$out.= '</td>';
 			$out.= '</tr>';
+			$rows++;
 		}
 	}
 	
 	$out.= '</table>';
+	echo '<input type="hidden" id="img-count" name="img-count" value="'.$rows.'" />';
+
 	echo $out;
 }
