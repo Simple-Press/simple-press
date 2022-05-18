@@ -2350,7 +2350,7 @@ function sp_PostForumToolButton($args = '', $label = '', $toolTip = '') {
 	$last  = (SP()->forum->view->thisPost->last_post) ? 1 : 0;
 	$site  = wp_nonce_url(SPAJAXURL."spForumPostTools&amp;targetaction=posttools&amp;post=".SP()->forum->view->thisPost->post_id."&amp;page=".SP()->forum->view->thisTopic->display_page."&amp;postnum=".SP()->forum->view->thisPost->post_index."&amp;name=".urlencode(SP()->forum->view->thisPostUser->display_name)."&amp;forum=".SP()->forum->view->thisTopic->forum_id."&amp;last=$last", 'spForumToolsMenu');
 	$title = esc_attr(SP()->primitives->front_text('Forum Tools'));
-	$out   = "<a class='$tagClass spForumPostTools' id='$tagId' title='$toolTip' rel='nofollow' $addStyle data-site='$site' data-label='$title' data-width='350' data-height='0' data-align='0'>";
+	$out   = "<a class='$tagClass spForumPostTools' id='$tagId' title='$toolTip' rel='nofollow' $addStyle data-site='$site' data-label='$title' data-width='650' data-height='0' data-align='0'>";
 
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= $label;
