@@ -257,7 +257,8 @@ function spa_usergroups_usergroup_main() {
 
 function spa_members_not_belonging_to_any_usergroup_tab() {
     spa_paint_open_nohead_tab(true, 'sf-filtering sf-mobile-hide');
-    $ajaxURL = wp_nonce_url(SPAJAXURL . 'memberships&amp;targetaction=add&amp;startNum=0&amp;batchNum=50', 'memberships');
+    //$ajaxURL = wp_nonce_url(SPAJAXURL . 'memberships&amp;targetaction=add&amp;startNum=0&amp;batchNum=50', 'memberships');
+    $ajaxURL = wp_nonce_url(SPAJAXURL . 'memberships&amp;targetaction=add', 'memberships');
     $target = 'sfmsgspot';
     $smessage = esc_js(SP()->primitives->admin_text('Please Wait - Processing'));
     $emessage = esc_js(SP()->primitives->admin_text('Users Deleted/Moved'));
@@ -265,11 +266,11 @@ function spa_members_not_belonging_to_any_usergroup_tab() {
     <script>
         (function (spj, $, undefined) {
             $(document).ready(function () {
-                $('#members_not_belonging_to_any_usergroup').ajaxForm({
+                //$('#members_not_belonging_to_any_usergroup').ajaxForm({
                     //target: '#sfmsgspot',
-                });
+                //});
                 $('#members_not_belonging_to_any_usergroup').submit(function (e) {
-                    //e.preventDefault();
+                    e.preventDefault();
                     spj.addDelMembers('members_not_belonging_to_any_usergroup'
                             , ''
                             , '<?php echo $target; ?>'
@@ -278,7 +279,7 @@ function spa_members_not_belonging_to_any_usergroup_tab() {
                             , 0
                             , 50
                             , '#dmid0',
-							''
+							'move_not_belonging'
                             );
 
                     $('#sfmsgspot').fadeOut(6000);
@@ -320,6 +321,9 @@ function spa_members_not_belonging_to_any_usergroup_tab() {
         <div class="sf-not-belonging-to-any-usergroup">
             <?php spa_members_not_belonging_to_any_usergroup() ?>
         </div>
+
+        <span class="_sf-button sf-hidden-important" id='onFinish'></span>
+        <div class="pbar" id="progressbar"></div>
     </form>
     <?php
     spa_paint_close_container();

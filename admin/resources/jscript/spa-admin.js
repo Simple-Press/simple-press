@@ -325,39 +325,52 @@
 			$(this).prop('selected');
 			totalNum++;
 		});
+
+		var groupid = '';
+		
+		if( $( '#' + thisFormID + ' input[name=usergroupid]').length === 1 ) {
+				groupid = $( '#' + thisFormID + ' input[name=usergroupid]').val();
+		} else {
+				groupid = $( '#' + thisFormID + ' input[name=usergroup_id]').val();
+		}
+
+		
+		var btn = $('input#'+type+groupid);
+
+		var image = btn.data('img');
+		
+		if( image ) {
+			var load_img = $('<img src="' + image + 'sp_WaitBox.gif' + '" />');
+			$( btn.data('target') ).prepend(load_img);
+		}
+
+		if( type == 'move_not_belonging') {
+			url = $('#'+thisFormID).attr('action');
+			startNum = 0;
+			batchNum=50; 
+			totalNum = 50;
+		}
+		
+		spj[thisFormID+'_Def'] = $.Deferred();
+		
+		
+		$.when( spj[thisFormID+'_Def'] )
+		.then( function(a, b) {
+				
+			if( type == 'move_not_belonging') {
+				$('#sfreloadub').trigger('click');
+			} else {
+				var mydata = btn.data();
+				var ajaxURL = mydata.url + '&loadform=' + mydata.form + '&id=' + mydata.id;
+			
+				$(mydata.target).load(ajaxURL, function(c, d) {
+					$('#sfmaincontainer').trigger('adminformloaded');
+				});
+			}
+    	} );
                 
-                var groupid = '';
-                
-                if( $( '#' + thisFormID + ' input[name=usergroupid]').length === 1 ) {
-                        groupid = $( '#' + thisFormID + ' input[name=usergroupid]').val();
-                } else {
-                        groupid = $( '#' + thisFormID + ' input[name=usergroup_id]').val();
-                }
-                
-                var btn = $('input#'+type+groupid)
-                var image = btn.data('img');
-                
-                if( image ) {
-                        var load_img = $('<img src="' + image + 'sp_WaitBox.gif' + '" />');
-                        $( btn.data('target') ).prepend(load_img);
-                }
-                
-                spj[thisFormID+'_Def'] = $.Deferred();
-                
-                
-                $.when( spj[thisFormID+'_Def'] )
-                .then( function(a, b) {
-                        
-                        var mydata = btn.data();
-                        var ajaxURL = mydata.url + '&loadform=' + mydata.form + '&id=' + mydata.id;
-                        
-                        $(mydata.target).load(ajaxURL, function(c, d) {
-				$('#sfmaincontainer').trigger('adminformloaded');
-			});
-                } );
-                
-                
-                spj.batch(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum);
+      
+		spj.batch(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum);
                 
 		$(source + ' option').remove();
 	};
