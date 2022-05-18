@@ -335,6 +335,7 @@ The editor in the free version is a pure text editor.  However, the premium vers
 	* G00123: Large custom icon images need to be resized when viewing the forum list in admin.
 	* G00098: Fix admin screen issue where the Bulk Actions Arrow in MEMBER INFORMATION is too close to text.
 	* G00022: Deleting a topic from the FORUM TOOLS popup did not refresh the screen.
+	* G00100: Moving users not belonging to any user group did not refresh the section after the users were moved.
 	* G00000: Multiple issues with caching icon files when a filename is reused.  Added cache-busting querystrings in the admin area to force cdns and page caches to re-request the file.
 	* G00000: Multiple issues with caching featured images files when a filename is reused.  Added cache-busting querystrings in the admin area to force cdns and page caches to re-request the file.
 	* G00000: Multiple tweaks related to extra line breaks showing up in SP themes when the WP 59 FSE theme was in use.
