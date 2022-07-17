@@ -42,7 +42,7 @@ function sp_NoMembersListMessage($args = '', $deniedMessage = '', $definedMessag
 
 	if ($get) return $m;
 
-	$out = "<div id='$tagId' class='$tagClass'>$m</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>$m</div>";
 	$out = apply_filters('sph_NoMembersListMessage', $out, $a);
 
 	if ($echo) {
@@ -79,7 +79,7 @@ function sp_NoMemberMessage($args = '', $definedMessage = '') {
 
 	if ($get) return $m;
 
-	$out = "<div id='$tagId' class='$tagClass'>$m</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>$m</div>";
 	$out = apply_filters('sph_NoMembersMessage', $out, $a);
 
 	if ($echo) {
@@ -167,7 +167,7 @@ function sp_MembersUsergroupName($args = '') {
 
 	if ($get) return SP()->forum->view->thisMemberGroup->usergroup_name;
 
-	$out = (empty(SP()->forum->view->thisMemberGroup->usergroup_name)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->forum->view->thisMemberGroup->usergroup_name."</div>\n";
+	$out = (empty(SP()->forum->view->thisMemberGroup->usergroup_name)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->forum->view->thisMemberGroup->usergroup_name."</div>";
 	$out = apply_filters('sph_UsergroupName', $out, $a);
 
 	if ($echo) {
@@ -206,7 +206,7 @@ function sp_MembersUsergroupDescription($args = '') {
 
 	if ($get) return SP()->forum->view->thisMemberGroup->usergroup_desc;
 
-	$out = (empty(SP()->forum->view->thisMemberGroup->usergroup_desc)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->forum->view->thisMemberGroup->usergroup_desc."</div>\n";
+	$out = (empty(SP()->forum->view->thisMemberGroup->usergroup_desc)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->forum->view->thisMemberGroup->usergroup_desc."</div>";
 	$out = apply_filters('sph_UsergroupDescription', $out, $a);
 
 	if ($echo) {
@@ -245,7 +245,7 @@ function sp_MembersListName($args = '') {
 
 	if ($get) return SP()->forum->view->thisMember->display_name;
 
-	$out = "<span id='$tagId' class='$tagClass'>".SP()->user->name_display(SP()->forum->view->thisMember->user_id, SP()->forum->view->thisMember->display_name)."</span>\n";
+	$out = "<span id='$tagId' class='$tagClass'>".SP()->user->name_display(SP()->forum->view->thisMember->user_id, SP()->forum->view->thisMember->display_name)."</span>";
 	$out = apply_filters('sph_MembersListName', $out, $a);
 
 	if ($echo) {
@@ -296,7 +296,7 @@ function sp_MemberListPostCount($args = '', $label = '') {
 	$out = "<div id='$tagId' class='$tagClass'>";
 	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>";
 	$out .= "<span class='$numberClass'>$count</span>";
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_MemberListPostCount', $out, $a);
 
 	if ($echo) {
@@ -345,7 +345,7 @@ function sp_MemberListLastVisit($args = '', $label = '') {
 	$out = "<div id='$tagId' class='$tagClass'>";
 	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>";
 	$out .= "<span class='$dateClass'>".SP()->dateTime->format_date('d', SP()->forum->view->thisMember->lastvisit).$att.SP()->dateTime->format_date('t', SP()->forum->view->thisMember->lastvisit).'</span>';
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_MemberListLastVisit', $out, $a);
 
 	if ($echo) {
@@ -394,7 +394,7 @@ function sp_MemberListRegistered($args = '', $label = '') {
 	$out = "<div id='$tagId' class='$tagClass'>";
 	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>";
 	$out .= "<span class='$dateClass'>".SP()->dateTime->format_date('d', SP()->forum->view->thisMember->user_registered).'<br />'.SP()->dateTime->format_date('t', SP()->forum->view->thisMember->user_registered).'</span>';
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_MemberListRegistered', $out, $a);
 
 	if ($echo) {
@@ -456,11 +456,11 @@ function sp_MemberListUrl($args = '', $label = '') {
 		$follow = ($noFollow) ? ' rel="nofollow"' : '';
 		$out .= "<a id='$tagId' class='$textClass' href='".SP()->forum->view->thisMember->user_url."' title=''$target$follow>";
 		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	} else {
 		$out .= "<span class='$textClass'>".make_clickable(SP()->forum->view->thisMember->user_url).'</span>';
 	}
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_MemberListUrl', $out, $a);
 
 	if ($echo) {
@@ -572,7 +572,7 @@ function sp_MemberListRank($args = '', $label = '') {
 		if ($badge && !empty($thisRank['badge'])) $out .= "<img class='$badgeClass' src='".$thisRank['badge']."' alt='' />$att";
 		if ($rank && $title) $out .= "<span class='$rankClass'>".$thisRank['name']."</span>$att";
 	}
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_MemberListRank', $out, $a);
 
 	if ($echo) {
@@ -585,7 +585,7 @@ function sp_MemberListRank($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 #
 #	sp_MemberListActions()
-#	Display user actions for memebers list
+#	Display user actions for members list
 #	Scope:	Members List Loop
 #	Version: 5.0
 #
@@ -643,7 +643,7 @@ function sp_MemberListActions($args = '', $label = '', $startedToolTip = '', $po
 		$url             = SP()->filters->ampersand($url);
 		$out .= "<a href='".esc_url($url)."'>";
 		$out .= $startedIcon;
-		$out .= $att."</a>\n";
+		$out .= $att."</a>";
 	}
 
 	if ($posted) {
@@ -655,14 +655,14 @@ function sp_MemberListActions($args = '', $label = '', $startedToolTip = '', $po
 		$url             = SP()->filters->ampersand($url);
 		$out .= "<a href='".esc_url($url)."'>";
 		$out .= $postedIcon;
-		$out .= $att."</a>\n";
+		$out .= $att."</a>";
 	}
 
 	if ($profile) {
 		$link = $profileIcon.$att;
 		$out .= sp_attach_user_profile_link(SP()->forum->view->thisMember->user_id, $link);
 	}
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_MemberListActions', $out, $a);
 
 	if ($echo) {
@@ -742,7 +742,7 @@ function sp_MemberListSearchForm($args = '') {
 	$out .= "<div class='$classWildcard'>$labelWildcard<br />$labelWildcardAny<br />$labelWildcardChar</div>";
 	$out .= '</fieldset>';
 	$out .= '</form>';
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_MemberListSearchForm', $out, $a);
 
 	if ($echo) {
@@ -827,7 +827,7 @@ function sp_MemberListPageLinks($args = '', $label = '', $toolTip = '') {
 	$out .= "<a href='$url' class='$pageLinkClass $curPageClass' title='$curToolTip'>".SP()->rewrites->pageData['page'].'</a>';
 
 	$out .= sp_page_next(SP()->rewrites->pageData['page'], $totalPages, $showLinks, SPMEMBERLIST, $pageLinkClass, $iconClass, $prevIcon, $nextIcon, $toolTip, $search, $ug);
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_MemberListPageLinks', $out, $a);
 
 	if ($echo) {
@@ -879,7 +879,7 @@ function sp_MemberListUsergroupSelect($args = '') {
 	}
 	if (!empty($ug)) $out .= "<option value='".SP()->spPermalinks->get_query_url(SP()->spPermalinks->get_url('members')).$search."'>".SP()->primitives->front_text('Reset to Default Usergroups')."</option>";
 	$out .= '</select>';
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_MemberListUsergroupSelect', $out, $a);
 
 	if ($echo) {

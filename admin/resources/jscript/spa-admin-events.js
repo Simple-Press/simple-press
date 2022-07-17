@@ -43,7 +43,7 @@
 		}
 	};*/
 
-	deleteRow = {
+	spj.deleteRow = {
 		init: function() {
 			$('#sfmaincontainer').off('click', '.spDeleteRow');
 			$('#sfmaincontainer').on('click', '.spDeleteRow', function() {
@@ -52,7 +52,7 @@
 					spj.delRow(mydata.url, mydata.target);
 				}
 			});
-		}
+		},
 	};
 
 	deleteRowReload = {
@@ -596,7 +596,7 @@
 			tableCheckUncheckCb.init();
 			toggleLayer.init();
 			//toggleRow.init();
-			deleteRow.init();
+			spj.deleteRow.init();
 			deleteRowReload.init();
 			hideRow.init();
 			loadForm.init();

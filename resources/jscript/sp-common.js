@@ -13,6 +13,7 @@
 		// calc the available height
 		var winH = window.innerHeight;
 		winH = (winH - sp_platform_vars.headpadding - 60);
+
 		if (height > winH)
 			height = winH;
 

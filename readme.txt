@@ -4,9 +4,9 @@ Plugin Name: Simple:Press Forums
 Contributors: simplepress, elindydotcom, usermrpapa, yellowswordfish, tahir1235
 Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.0
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 6.6.6
+Stable tag: 6.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -324,6 +324,25 @@ The editor in the free version is a pure text editor.  However, the premium vers
 19. The front-end admin options for a post (uses our Modern 2020 forum theme along with the WordPress 2020 Theme)
 
 == Changelog ==
+
+= 6.7.0 =
+* New
+	* G00122: Add option to sort by the membership column in the FORUM->USERS->MEMBER INFORMATION list.	
+
+* Tweak
+	* G00126: Tools popup on desktop makes better use of horizontal space.
+	
+* Fix
+	* G00121: Fix an issue with deleting subsites rendering all user posts as guests in any other site that has the forum in use.
+	* G00116: When sorting the user list under FORUM->USERS->MEMBER INFORMATION, the list would be unstyled.
+	* G00117: Custom icons not rendering in drop-down properly.
+	* G00123: Large custom icon images need to be resized when viewing the forum list in admin.
+	* G00098: Fix admin screen issue where the Bulk Actions Arrow in MEMBER INFORMATION is too close to text.
+	* G00022: Deleting a topic from the FORUM TOOLS popup did not refresh the screen.
+	* G00100: Moving users not belonging to any user group did not refresh the section after the users were moved.
+	* G00000: Multiple issues with caching icon files when a filename is reused.  Added cache-busting querystrings in the admin area to force cdns and page caches to re-request the file.
+	* G00000: Multiple issues with caching featured images files when a filename is reused.  Added cache-busting querystrings in the admin area to force cdns and page caches to re-request the file.
+	* G00000: Multiple tweaks related to extra line breaks showing up in SP themes when the WP 59 FSE theme was in use.
 
 = 6.6.6 =
 * Fix

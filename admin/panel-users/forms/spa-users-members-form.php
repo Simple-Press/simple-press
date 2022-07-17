@@ -64,6 +64,7 @@ function spa_users_members_form() {
 				'user_registered' => array( 'user_registered', false ),
 				'lastvisit'       => array( 'lastvisit', false ),
 				'posts'           => array( 'posts', false ),
+				'memberships'     => array( 'memberships', false ),
 			);
 
 			return $sortable_columns;
@@ -511,6 +512,27 @@ function spa_users_members_form() {
 		
 		(function($) {
 			$(function() {
+
+				var location_url = $('#members-filter').attr('action') + '&' + $('#members-filter').find('[name=s]').serialize() + '&';
+				
+				// Update url of each column header with correct link
+				$('#members-filter > .sf-plugin-hide-users table thead th.sortable a').each( function() {
+
+					var href = $(this).attr('href');
+					var order_params = [];
+
+					var url_params = href.split('?')[1].split('&');
+					
+					$.each( url_params, function() {	
+					var name = this.split('=')[0];
+						if( name == 'orderby' || name == 'order' ) {
+							order_params.push(this);
+						}
+					});
+
+					href = location_url + order_params.join('&');
+					$(this).attr('href', href);
+				});
 				
 				$('.search-box input[type="search"]').keyup( function(e) {
 			

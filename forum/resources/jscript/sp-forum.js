@@ -499,10 +499,12 @@
 				url: url + '&count=' + count,
 				cache: false,
 				success: function(html) {
-					$('#topic' + tid).slideUp(function() {
+
+					$('#eachTopic' + tid).slideUp(function() {
 						spj.displayNotification(0, sp_forum_vars.topicdeleted);
-						if (html != '')
-							window.location = html;
+						var url = html != '' ? html : window.location.href;
+						window.location.href = url;
+						
 					});
 				}
 			});
