@@ -325,6 +325,11 @@ The editor in the free version is a pure text editor.  However, the premium vers
 
 == Changelog ==
 
+= 6.7.1 =
+* Tweak
+	* G00000: Show error code when there's an error with the license process.	
+
+
 = 6.7.0 =
 * New
 	* G00122: Add option to sort by the membership column in the FORUM->USERS->MEMBER INFORMATION list.	
