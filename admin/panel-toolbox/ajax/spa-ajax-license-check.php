@@ -182,9 +182,18 @@ if(isset($_POST['sp_action'])){
 						$message = SP()->primitives->admin_text('This license has been disabled.' );
 						break;						
 						
+					case 'invalid_item_id':
+		
+						$message = SP()->primitives->admin_text('An invalid item id was sent in the request.' );
+						break;							
+						
 					default :
 		
 						$message = SP()->primitives->admin_text('An error occurred, please try again.' );
+						if ( ! is_array( $license_data->error ) ) {
+							$addl_error = sanitize_text_field( $license_data->error );
+							$message .= ' ' . $addl_error;
+						}
 						break;
 				}
 			}

@@ -104,7 +104,7 @@ function sp_GroupHeaderName($args = '') {
 	if (!empty(SP()->forum->view->thisGroup->group_name)) {
 		$out .= "<div id='$tagId' class='$tagClass spGroupHeaderOpen' data-id='$toggleTagId' data-collapse='$collapse'";
 		if ($collapse) $out .= " style='cursor: pointer;'";
-		$out .= ">".SP()->primitives->truncate_name(SP()->forum->view->thisGroup->group_name, $truncate)."</div>\n";
+		$out .= ">".SP()->primitives->truncate_name(SP()->forum->view->thisGroup->group_name, $truncate)."</div>";
 	}
 
 	$out = apply_filters('sph_GroupHeaderName', $out, $a);
@@ -143,7 +143,7 @@ function sp_GroupHeaderDescription($args = '') {
 
 	if ($get) return SP()->forum->view->thisGroup->group_desc;
 
-	$out = (empty(SP()->forum->view->thisGroup->group_desc)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->forum->view->thisGroup->group_desc."</div>\n";
+	$out = (empty(SP()->forum->view->thisGroup->group_desc)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->forum->view->thisGroup->group_desc."</div>";
 	$out = apply_filters('sph_GroupHeaderDescription', $out, $a);
 
 	if ($echo) {
@@ -196,7 +196,7 @@ function sp_GroupOpenClose($args = '', $toolTipOpen = '', $toolTipClose = '') {
 		echo '<style>#'.$div.' {display:none;}</style>';
 	}
 
-	$out = "<span id='$tagId' class='spOpenCloseGroup' data-target='$div' data-tag='$tagId' data-tclass='$tagClass' data-open='$openIcon' data-close='$closeIcon' data-toolopen='$toolTipOpen' data-toolclose='$toolTipClose'><img class='$tagClass' title='$tooltip' src='$icon' alt='' /></span>\n";
+	$out = "<span id='$tagId' class='spOpenCloseGroup' data-target='$div' data-tag='$tagId' data-tclass='$tagClass' data-open='$openIcon' data-close='$closeIcon' data-toolopen='$toolTipOpen' data-toolclose='$toolTipClose'><img class='$tagClass' title='$tooltip' src='$icon' alt='' /></span>";
 	$out = apply_filters('sph_GroupOpenClose', $out, $a);
 
 	if ($echo) {
@@ -235,7 +235,7 @@ function sp_GroupHeaderMessage($args = '') {
 
 	if ($get) return SP()->forum->view->thisGroup->group_message;
 
-	$out = (empty(SP()->forum->view->thisGroup->group_message)) ? '' : "<div id='$tagId' class='$tagClass'><span class='$fontClass'>".SP()->forum->view->thisGroup->group_message."</span></div>\n";
+	$out = (empty(SP()->forum->view->thisGroup->group_message)) ? '' : "<div id='$tagId' class='$tagClass'><span class='$fontClass'>".SP()->forum->view->thisGroup->group_message."</span></div>";
 	$out = apply_filters('sph_GroupHeaderMessage', $out, $a);
 
 	if ($echo) {
@@ -295,7 +295,7 @@ function sp_GroupHeaderRSSButton($args = '', $label = '', $toolTip = '') {
 	$out = "<a class='$tagClass' id='$tagId' title='$toolTip' rel='nofollow' href='$rssUrl'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 	$out = apply_filters('sph_GroupHeaderRSSButton', $out, $a);
 
 	if ($echo) {
@@ -339,7 +339,7 @@ function sp_NoGroupMessage($args = '', $deniedMessage = '', $definedMessage = ''
 
 	if ($get) return $m;
 
-	$out = "<div id='$tagId' class='$tagClass'>".$m."</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>".$m."</div>";
 	$out = apply_filters('sph_NoGroupMessage', $out, $a);
 
 	if ($echo) {
@@ -482,7 +482,7 @@ function sp_ForumIndexLink($args = '', $toolTip = '') {
 
 	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisForum->forum_name, $truncate);
 
-	$out = "<a href='".SP()->forum->view->thisForum->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>".$label."</a>\n";
+	$out = "<a href='".SP()->forum->view->thisForum->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>".$label."</a>";
 	$out = apply_filters('sph_ForumIndexLink', $out, $a);
 
 	if ($echo) {
@@ -523,7 +523,7 @@ function sp_ForumIndexName($args = '', $toolTip = '') {
 
 	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisForum->forum_name, $truncate);
 
-	$out = "<a href='".SP()->forum->view->thisForum->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>".SP()->primitives->truncate_name(SP()->forum->view->thisForum->forum_name, $truncate)."</a>\n";
+	$out = "<a href='".SP()->forum->view->thisForum->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>".SP()->primitives->truncate_name(SP()->forum->view->thisForum->forum_name, $truncate)."</a>";
 	$out = apply_filters('sph_ForumIndexName', $out, $a);
 
 	if ($echo) {
@@ -560,7 +560,7 @@ function sp_ForumIndexDescription($args = '') {
 
 	if ($get) return SP()->forum->view->thisForum->forum_desc;
 
-	$out = (empty(SP()->forum->view->thisForum->forum_desc)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->forum->view->thisForum->forum_desc."</div>\n";
+	$out = (empty(SP()->forum->view->thisForum->forum_desc)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->forum->view->thisForum->forum_desc."</div>";
 	$out = apply_filters('sph_ForumIndexDescription', $out, $a);
 
 	if ($echo) {
@@ -605,18 +605,18 @@ function sp_ForumIndexPageLinks($args = '', $toolTip = '') {
 
 	$tagId = str_ireplace('%ID%', SP()->forum->view->thisForum->forum_id, $tagId);
 
-	$out         = "<div id='$tagId' class='$tagClass'>\n";
+	$out         = "<div id='$tagId' class='$tagClass'>";
 	$total_pages = (SP()->forum->view->thisForum->topic_count / $topics_per_page);
 	if (!is_int($total_pages)) $total_pages = intval($total_pages) + 1;
 	($total_pages > $showLinks ? $max_count = $showLinks : $max_count = $total_pages);
 	for ($x = 1; $x <= $max_count; $x++) {
-		$out .= "<a class='$pageLinkClass' href='".SP()->spPermalinks->build_url(SP()->forum->view->thisForum->forum_slug, '', $x, 0)."' title='".str_ireplace('%PAGE%', $x, $toolTip)."'>$x</a>\n";
+		$out .= "<a class='$pageLinkClass' href='".SP()->spPermalinks->build_url(SP()->forum->view->thisForum->forum_slug, '', $x, 0)."' title='".str_ireplace('%PAGE%', $x, $toolTip)."'>$x</a>";
 	}
 	if ($total_pages > $showLinks) {
 		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out .= "<a class='$pageLinkClass' href='".SP()->spPermalinks->build_url(SP()->forum->view->thisForum->forum_slug, '', $total_pages, 0)."' title='".str_ireplace('%PAGE%', $total_pages, $toolTip)."'>$total_pages</a>\n";
+		$out .= "<a class='$pageLinkClass' href='".SP()->spPermalinks->build_url(SP()->forum->view->thisForum->forum_slug, '', $total_pages, 0)."' title='".str_ireplace('%PAGE%', $total_pages, $toolTip)."'>$total_pages</a>";
 	}
-	$out .= "</div>\n";
+	$out .= "</div>";
 
 	$out = apply_filters('sph_ForumIndexPageLinks', $out, $a);
 
@@ -677,7 +677,7 @@ function sp_ForumIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPost = 
 
 	if ($get) return SP()->forum->view->thisForum->forum_status;
 
-	$out = "<div id='$tagId' class='$tagClass'>\n";
+	$out = "<div id='$tagId' class='$tagClass'>";
 
 	# Dislay if global lock down or forum locked
 	if ($showLock && !empty($iconLock)) {
@@ -694,7 +694,7 @@ function sp_ForumIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPost = 
 			$linkId      = 'spNewPostPopup'.SP()->forum->view->thisForum->forum_id;
 			$out .= "<a rel='nofollow' id='$linkId' class='spUnreadPostsPopup' data-popup='1' data-site='$site' data-label='$toolTipPost' data-width='600' data-height='0' data-align='0'>";
 			$out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, sanitize_file_name($iconPost), $toolTipPost);
-			$out .= "</a>\n";
+			$out .= "</a>";
 		}
 	}
 
@@ -702,9 +702,9 @@ function sp_ForumIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPost = 
 	if ($showAddTopic && !empty($iconAdd)) {
 		if (SP()->auths->get('start_topics', SP()->forum->view->thisForum->forum_id) && ((!SP()->forum->view->thisForum->forum_status && !SP()->core->forumData['lockdown']) || SP()->user->thisUser->admin)) {
 			$url = SP()->spPermalinks->build_url(SP()->forum->view->thisForum->forum_slug, '', 1, 0).SP()->spPermalinks->get_query_char().'new=topic';
-			$out .= "<a href='$url' title='$toolTipAdd'>\n";
+			$out .= "<a href='$url' title='$toolTipAdd'>";
 			$out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, sanitize_file_name($iconAdd));
-			$out .= "</a>\n";
+			$out .= "</a>";
 		}
 	}
 
@@ -715,7 +715,7 @@ function sp_ForumIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPost = 
 
 	$out = apply_filters('sph_ForumIndexStatusIconsLast', $out, $a);
 
-	$out .= "</div>\n";
+	$out .= "</div>";
 
 	$out = apply_filters('sph_ForumIndexStatusIcons', $out, $a);
 
@@ -762,10 +762,10 @@ function sp_ForumIndexLockIcon($args = '', $toolTip = '') {
 	$out = '';
 
 	if (SP()->core->forumData['lockdown'] || SP()->forum->view->thisForum->forum_status) {
-		$out = "<div id='$tagId' class='$tagClass $statusClass' title='$toolTip' >\n";
+		$out = "<div id='$tagId' class='$tagClass $statusClass' title='$toolTip' >";
 		# Dislay if global lock down or forum locked
 		if (!empty($icon)) $out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, $icon);
-		$out .= "</div>\n";
+		$out .= "</div>";
 		$out = apply_filters('sph_ForumIndexLockIcon', $out, $a);
 	}
 
@@ -811,9 +811,9 @@ function sp_ForumIndexDeniedIcon($args = '', $toolTip = '') {
 	$out = '';
 
 	if (!SP()->forum->view->thisForum->start_topics) {
-		$out = "<div id='$tagId' class='$tagClass $statusClass' title='$toolTip' >\n";
+		$out = "<div id='$tagId' class='$tagClass $statusClass' title='$toolTip' >";
 		if (!empty($icon)) $out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, $icon);
-		$out .= "</div>\n";
+		$out .= "</div>";
 		$out = apply_filters('sph_ForumIndexDeniedIcon', $out, $a);
 	}
 
@@ -854,7 +854,7 @@ function sp_ForumIndexAddIcon($args = '', $toolTip = '', $label = '') {
 	# add new topic icon
 	if (SP()->auths->get('start_topics', SP()->forum->view->thisForum->forum_id) && ((!SP()->forum->view->thisForum->forum_status && !SP()->core->forumData['lockdown']) || SP()->user->thisUser->admin)) {
 		$url = SP()->spPermalinks->build_url(SP()->forum->view->thisForum->forum_slug, '', 1, 0).SP()->spPermalinks->get_query_char().'new=topic';
-		$out.= "<a id ='$tagId' class='$tagClass' title='$toolTip' href='$url'>\n";
+		$out.= "<a id ='$tagId' class='$tagClass' title='$toolTip' href='$url'>";
 		if (!empty($icon)) $out .= SP()->theme->paint_icon('', SPTHEMEICONSURL, "$icon");
 		if (!empty($label)) $out .= SP()->displayFilters->title($label);
 		$out.= "</a>";
@@ -920,7 +920,7 @@ function sp_ForumIndexPostsIcon($args = '', $toolTip = '') {
 			$out .= "<a id='$tagId' class='$tagClass spUnreadPostsPopup' title='$toolTip' rel='nofollow' id='$linkId' data-popup='0' data-site='$site' data-target='$target' data-spinner='$spinner' data-id='$tagId' data-open='$openIcon' data-close='$closeIcon'>";
 			$out .= "<img src='$openIcon' alt=''>";
 		}
-		$out .= "</a>\n";
+		$out .= "</a>";
 		$out = apply_filters('sph_ForumIndexPostsIcon', $out, $a);
 	}
 
@@ -989,10 +989,10 @@ function sp_ForumIndexPostCount($args = '', $label = '', $rtlLabel = '', $labelA
 	if (is_rtl() && $data == 1) $label = $rtlLabel;
 	if (is_rtl() && $data == 1) $labelAfter = $rtlLabelAfter;
 
-	$out = "<div id='$tagId' class='$tagClass'>\n";
-	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>\n";
-	$out .= "<span class='$numberClass'>$data $labelAfter</span>\n";
-	$out .= "</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>";
+	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>";
+	$out .= "<span class='$numberClass'>$data $labelAfter</span>";
+	$out .= "</div>";
 	$out = apply_filters('sph_ForumIndexPostCount', $out, $a);
 
 	if ($echo) {
@@ -1049,10 +1049,10 @@ function sp_ForumIndexTopicCount($args = '', $label = '', $rtlLabel = '', $label
 	if (is_rtl() && $data == 1) $label = $rtlLabel;
 	if (is_rtl() && $data == 1) $labelAfter = $rtlLabelAfter;
 
-	$out = "<div id='$tagId' class='$tagClass'>\n";
-	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>\n";
-	$out .= "<span class='$numberClass'>$data $labelAfter</span>\n";
-	$out .= "</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>";
+	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>";
+	$out .= "<span class='$numberClass'>$data $labelAfter</span>";
+	$out .= "</div>";
 	$out = apply_filters('sph_ForumIndexTopicCount', $out, $a);
 
 	if ($echo) {
@@ -1175,12 +1175,12 @@ function sp_ForumIndexLastPost($args = '', $lastPostLabel = '', $noTopicsLabel =
 		}
 	}
 
-	$out = "<div id='$tagId' class='$tagClass'>\n";
+	$out = "<div id='$tagId' class='$tagClass'>";
 	if ($postCount) {
-		$out .= "<span class='$labelClass'>".SP()->displayFilters->title($lastPostLabel)." \n";
-		$out .= "<a class='$linkClass' $title href='$permalink'>\n";
+		$out .= "<span class='$labelClass'>".SP()->displayFilters->title($lastPostLabel)." ";
+		$out .= "<a class='$linkClass' $title href='$permalink'>";
 		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out .= "</a>\n";
+		$out .= "</a>";
 
 		for ($x = 0; $x < strlen($order); $x++) {
 			$i = substr($order, $x, 1);
@@ -1188,7 +1188,7 @@ function sp_ForumIndexLastPost($args = '', $lastPostLabel = '', $noTopicsLabel =
 				case 'U':
 					if ($user) {
 						if ($x != 0) $out .= "<span class='$labelClass'>";
-						$out .= $U."</span>\n";
+						$out .= $U."</span>";
 					}
 					if ($x != (strlen($order) - 1)) {
 						if (substr($order, $x + 1, 1) != 'L') {
@@ -1200,7 +1200,7 @@ function sp_ForumIndexLastPost($args = '', $lastPostLabel = '', $noTopicsLabel =
 					if ($x == 0) $out .= $itemBreak."</span>";
 					$out .= "<span class='$linkClass'>";
 
-					$out .= $T."</span>\n";
+					$out .= $T."</span>";
 					if ($x != (strlen($order) - 1)) {
 						if (substr($order, $x + 1, 1) != 'L') {
 							$out .= "<span class='$labelClass'>$itemBreak</span>";
@@ -1209,7 +1209,7 @@ function sp_ForumIndexLastPost($args = '', $lastPostLabel = '', $noTopicsLabel =
 					break;
 				case 'D':
 					if ($x != 0) $out .= "<span class='$labelClass'>";
-					$out .= $D."</span>\n";
+					$out .= $D."</span>";
 					if ($x != (strlen($order) - 1)) {
 						if (substr($order, $x + 1, 1) != 'L') {
 							$out .= "<span class='$labelClass'>$itemBreak</span>";
@@ -1222,11 +1222,11 @@ function sp_ForumIndexLastPost($args = '', $lastPostLabel = '', $noTopicsLabel =
 			}
 		}
 	} else {
-		$out .= "<span class='$labelClass'>".SP()->displayFilters->title($noTopicsLabel)." \n";
-		$out .= "</span>\n";
+		$out .= "<span class='$labelClass'>".SP()->displayFilters->title($noTopicsLabel)." ";
+		$out .= "</span>";
 	}
 
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_ForumIndexLastPost', $out, $a);
 
 	if ($echo) {
@@ -1287,10 +1287,10 @@ function sp_ForumIndexModerators($args = '', $label = '') {
 		return '';
 	}
 
-	$out = "<div id='$tagId' class='$tagClass'>\n";
-	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."</span>\n";
-	$out .= "<span class='$listClass'>$modList</span>\n";
-	$out .= "</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>";
+	$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."</span>";
+	$out .= "<span class='$listClass'>$modList</span>";
+	$out .= "</div>";
 	$out = apply_filters('sph_ForumIndexModerators', $out, $a);
 
 	if ($echo) {
@@ -1357,11 +1357,11 @@ function sp_ForumIndexSubForums($args = '', $label = '', $toolTip = '') {
 
 	$out = '';
 	if ($rule) $out.= '<hr />';
-	$out.= "<div id='$thisTagId' class='$tagClass'>\n";
+	$out.= "<div id='$thisTagId' class='$tagClass'>";
 	if ($stack) {
 		$out .= "<ul class='$labelClass'><li>".SP()->displayFilters->title($label)."<ul>";
 	} else {
-		$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."</span>\n";
+		$out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."</span>";
 	}
 	foreach (SP()->forum->view->thisForumSubs as $sub) {
 
@@ -1414,16 +1414,17 @@ function sp_ForumIndexSubForums($args = '', $label = '', $toolTip = '') {
 			if ($stack) $out .= "<li>";
 
 			$out .= str_replace("<img ", "<img width='".$iconWidth."' ", $fIcon);
+			$out = str_replace(array("\n", "\t", "\r"), '', $out);  // Get rid of carriage returns, line feeds etc.
 
 			$thisTagId = str_ireplace('%ID%', $sub->forum_id, $tagId);
-			$out .= "<a href='$sub->forum_permalink' id='$thisTagId' class='$linkClass' title='$thisToolTip'>".SP()->primitives->truncate_name($sub->forum_name, $truncate)."</a>\n";
-			if ($topicCount) $out .= " ($sub->topic_count)\n";
+			$out .= "<a href='$sub->forum_permalink' id='$thisTagId' class='$linkClass' title='$thisToolTip'>".SP()->primitives->truncate_name($sub->forum_name, $truncate)."</a>";
+			if ($topicCount) $out .= " ($sub->topic_count)";
 			if ($stack) $out .= "</li>";
 		}
 	}
 	if ($stack) $out .= "</ul></li></ul>";
 
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_ForumIndexSubForums', $out, $a);
 
 	if ($echo) {
@@ -1458,7 +1459,7 @@ function sp_NoForumsInGroupMessage($args = '', $definedMessage = '') {
 
 	if ($get) return SP()->displayFilters->title($definedMessage);
 
-	$out = "<div id='$tagId' class='$tagClass'>".SP()->displayFilters->title($definedMessage)."</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>".SP()->displayFilters->title($definedMessage)."</div>";
 	$out = apply_filters('sph_NoForumsInGroupMessage', $out, $a);
 
 	if ($echo) {

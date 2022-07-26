@@ -42,7 +42,7 @@ function sp_TopicForumName($args = '') {
 
 	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisTopic->forum_name, $truncate);
 
-	$out = (empty(SP()->forum->view->thisTopic->forum_name)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->primitives->truncate_name(SP()->forum->view->thisTopic->forum_name, $truncate)."</div>\n";
+	$out = (empty(SP()->forum->view->thisTopic->forum_name)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->primitives->truncate_name(SP()->forum->view->thisTopic->forum_name, $truncate)."</div>";
 	$out = apply_filters('sph_TopicForumName', $out, $a);
 
 	if ($echo) {
@@ -132,7 +132,7 @@ function sp_TopicHeaderName($args = '') {
 
 	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisTopic->topic_name, $truncate);
 
-	$out = (empty(SP()->forum->view->thisTopic->topic_name)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->primitives->truncate_name(SP()->forum->view->thisTopic->topic_name, $truncate)."</div>\n";
+	$out = (empty(SP()->forum->view->thisTopic->topic_name)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->primitives->truncate_name(SP()->forum->view->thisTopic->topic_name, $truncate)."</div>";
 	$out = apply_filters('sph_TopicHeaderName', $out, $a);
 
 	if ($echo) {
@@ -185,7 +185,7 @@ function sp_TopicHeaderRSSButton($args = '', $label = '', $toolTip = '') {
 	$out = "<a class='$tagClass' id='$tagId' title='$toolTip' rel='nofollow' href='$rssUrl'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 	$out = apply_filters('sph_TopicHeaderRSSButton', $out, $a);
 
 	if ($echo) {
@@ -237,7 +237,7 @@ function sp_NoTopicMessage($args = '', $deniedMessage = '', $definedMessage = ''
 
 	if ($get) return $m;
 
-	$out = "<div id='$tagId' class='$tagClass'>$m</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>$m</div>";
 	$out = apply_filters('sph_NoTopicMessage', $out, $a);
 
 	if ($echo) {
@@ -298,7 +298,7 @@ function sp_PostNewButton($args = '', $label = '', $toolTip = '', $toolTipLock =
 	$lock = false;
 	if (SP()->core->forumData['lockdown'] || SP()->forum->view->thisTopic->forum_status || SP()->forum->view->thisTopic->topic_status) {
 		if (!empty($iconLock)) {
-			$out .= "<a class='$tagClass spLockIconWrap' title='$toolTipDenied'>\n";
+			$out .= "<a class='$tagClass spLockIconWrap' title='$toolTipDenied'>";
 			$iconLock = SP()->theme->paint_icon($iconClass.' '.$iconStatusClass.' spIconLockLink', SPTHEMEICONSURL, sanitize_file_name($iconLock), $toolTipLock);
 			$out .= SP()->theme->paint_icon_id($iconLock, $tagId);
 			$out.= "</a>";
@@ -307,18 +307,18 @@ function sp_PostNewButton($args = '', $label = '', $toolTip = '', $toolTipLock =
 	}
 
 	if (!$lock && $allowed) {
-		$out .= "<a class='$tagClass spNewPostButton' title='$toolTip' data-form='spPostForm' data-type='post'>\n";
+		$out .= "<a class='$tagClass spNewPostButton' title='$toolTip' data-form='spPostForm' data-type='post'>";
 		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 		if (!empty($label)) $out .= SP()->displayFilters->title($label);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 
 	# Display if user not allowed to start topics
 	if (!$allowed && !empty($toolTipDenied)) {
 		if (!empty($iconDenied)) {
-			$out .= "<a class='$tagClass spDeniedIconWrap' title='$toolTipDenied'>\n";
+			$out .= "<a class='$tagClass spDeniedIconWrap' title='$toolTipDenied'>";
 			$out .= SP()->theme->paint_icon($iconStatusClass.' spIconDeniedLink', SPTHEMEICONSURL, sanitize_file_name($iconDenied), $toolTipDenied);
-			$out .= "</a>\n";
+			$out .= "</a>";
 		}
 	}
 	
@@ -382,10 +382,10 @@ function sp_PostNewTopicButton($args = '', $label = '', $toolTip = '', $toolTipL
 	}
 	if (!$lock && SP()->auths->get('start_topics', SP()->forum->view->thisTopic->forum_id)) {
 		$url = SP()->spPermalinks->build_url(SP()->forum->view->thisTopic->forum_slug, '', 1, 0).SP()->spPermalinks->get_query_char().'new=topic';
-		$out .= "<a href='$url' class='$tagClass' id='$tagId' title='$toolTip'>\n";
+		$out .= "<a href='$url' class='$tagClass' id='$tagId' title='$toolTip'>";
 		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 		if (!empty($label)) $out .= SP()->displayFilters->title($label);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 
 	$out = apply_filters('sph_PostNewTopicButton', $out, $a);
@@ -479,7 +479,7 @@ function sp_PostIndexPageLinks($args = '', $label = '', $toolTip = '', $jumpTool
 		$out .= '</span>';
 	}
 
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexPageLinks', $out, $a);
 
 	if ($echo) {
@@ -506,7 +506,7 @@ function sp_PostIndexPageLinks($args = '', $label = '', $toolTip = '', $jumpTool
 # --------------------------------------------------------------------------------------
 function sp_PostIndexAnchor() {
 	# Define the post anchor here
-	echo "<a id='p".SP()->forum->view->thisPost->post_id."'></a>\n";
+	echo "<a id='p".SP()->forum->view->thisPost->post_id."'></a>";
 }
 
 # --------------------------------------------------------------------------------------
@@ -561,7 +561,7 @@ function sp_PostIndexUserDate($args = '') {
 			}
 		}
 	}
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexUserDate', $out, $a);
 
 	if ($echo) {
@@ -608,7 +608,7 @@ function sp_PostIndexUserName($args = '') {
 
 	if ($get) return $name;
 
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexUserName', $out, $a);
 
 	if ($echo) {
@@ -650,7 +650,7 @@ function sp_PostIndexUserPosts($args = '', $label = '') {
 
 	$out = "<div id='$tagId' class='$tagClass'>";
 	$out .= $text;
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexUserPosts', $out, $a);
 
 	if ($echo) {
@@ -694,7 +694,7 @@ function sp_PostIndexUserRegistered($args = '', $label = '') {
 
 	$out = "<div id='$tagId' class='$tagClass'>";
 	$out .= $text;
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexUserRegistered', $out, $a);
 
 	if ($echo) {
@@ -797,7 +797,7 @@ function sp_PostIndexUserBadges($args = '', $label = '') {
 		}
 		if ($rank) $out .= "<span class='$rankClass'>".$thisRank['name']."</span>$att";
 	}
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexUserBadges', $out, $a);
 
 	if ($echo) {
@@ -852,7 +852,7 @@ function sp_PostIndexUserRank($args = '') {
 		if( is_array( SP()->forum->view->thisPostUser->rank[0]['badge'] ) ) {
 			$tout .= SP()->theme->sp_paint_iconset_icon( SP()->forum->view->thisPostUser->rank[0]['badge'], $imgClass );
 		} else {
-			$tout .= "<img class='$imgClass' src='".SP()->forum->view->thisPostUser->rank[0]['badge']."' alt='' />\n";
+			$tout .= "<img class='$imgClass' src='".SP()->forum->view->thisPostUser->rank[0]['badge']."' alt='' />";
 		}
 		
 		$tout .= "<br />";
@@ -861,7 +861,7 @@ function sp_PostIndexUserRank($args = '') {
 		$show = true;
 		$tout .= '<span class="spRank-'.sp_create_slug(SP()->forum->view->thisPost->postUser->rank[0]['name'], false).'">'.SP()->forum->view->thisPostUser->rank[0]['name'].'</span>';
 	}
-	$tout .= "</div>\n";
+	$tout .= "</div>";
 
 	$out = ($show) ? $tout : '';
 	$out = apply_filters('sph_PostIndexUserRank', $out, $a);
@@ -922,7 +922,7 @@ function sp_PostIndexUserSpecialRank($args = '') {
 				if( is_array( $rank['badge'] ) ) {
 					$tout .= SP()->theme->sp_paint_iconset_icon( $rank['badge'], $imgClass );
 				} else {
-					$tout .= "<img class='$imgClass' src='".$rank['badge']."' alt='' />\n";
+					$tout .= "<img class='$imgClass' src='".$rank['badge']."' alt='' />";
 				}
 				
 				$tout .= ($stacked) ? '<br />' : ' ';
@@ -934,7 +934,7 @@ function sp_PostIndexUserSpecialRank($args = '') {
 			}
 		}
 	}
-	$tout .= "</div>\n";
+	$tout .= "</div>";
 
 	$out = ($show) ? $tout : '';
 	$out = apply_filters('sph_PostIndexUserSpecialRank', $out, $a);
@@ -1008,7 +1008,7 @@ function sp_PostIndexUserMemberships($args = '', $noMembershipLabel = '', $admin
 			$tout .= SP()->displayFilters->title($noMembershipLabel);
 		}
 	}
-	$tout .= "</div>\n";
+	$tout .= "</div>";
 
 	$out = ($show) ? $tout : '';
 	$out = apply_filters('sph_PostIndexUserMemberships', $out, $a);
@@ -1198,9 +1198,9 @@ function sp_PostIndexEditHistory($args = '', $label = '', $legend = '', $toolTip
 		$out = "<a class='$tagClass spEditPostHistory' id='$tagId' title='$toolTip' rel='nofollow' data-html='".esc_attr($history)."' data-label='$toolTip' data-width='400' data-height='0' data-align='0'>";
 		if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 		if (!empty($label)) $out .= SP()->displayFilters->title($label);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	} else {
-		$out .= "<div id='$tagId' class='$tagClass'>$history</div>\n";
+		$out .= "<div id='$tagId' class='$tagClass'>$history</div>";
 	}
 	$out = apply_filters('sph_PostIndexEditHistory', $out, $a);
 
@@ -1246,7 +1246,7 @@ function sp_PostIndexPermalink($args = '', $label = '', $toolTip = '') {
 	$out = "<a class='$tagClass' id='$tagId' title='$toolTip' rel='nofollow' href='".SP()->forum->view->thisPost->post_permalink."'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 	$out = apply_filters('sph_PostIndexPermalink', $out, $a);
 
 	if ($echo) {
@@ -1288,7 +1288,7 @@ function sp_PostIndexPrint($args = '', $label = '', $toolTip = '') {
 	$out   = "<a class='$tagClass spPrintThisPost' id='$tagId' title='$toolTip' rel='nofollow' data-postid='spPostIndexContent".SP()->forum->view->thisPost->post_id."'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 	$out = apply_filters('sph_PostIndexPrint', $out, $a);
 
 	if ($echo) {
@@ -1344,7 +1344,7 @@ function sp_PostIndexQuote($args = '', $label = '', $toolTip = '') {
 	$out   = "<a class='$tagClass spQuotePost' id='$tagId' title='$toolTip' rel='nofollow' data-postid='".SP()->forum->view->thisPost->post_id."' data-intro='$intro' data-forumid='".SP()->forum->view->thisTopic->forum_id."' data-url='$quoteUrl'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 	$out = apply_filters('sph_PostIndexQuote', $out, $a);
 
 	if ($echo) {
@@ -1402,13 +1402,13 @@ function sp_PostIndexEdit($args = '', $label = '', $toolTip = '') {
 
 	$action = SP()->forum->view->thisTopic->topic_permalink;
 	if (SP()->forum->view->thisTopic->display_page > 1) $action = user_trailingslashit(trailingslashit($action).'page-'.SP()->forum->view->thisTopic->display_page);
-	$out = "<form class='spButtonForm' action='$action' method='post' name='usereditpost".SP()->forum->view->thisPost->post_id."'>\n";
-	$out .= "<input type='hidden' name='postedit' value='".SP()->forum->view->thisPost->post_id."' />\n";
+	$out = "<form class='spButtonForm' action='$action' method='post' name='usereditpost".SP()->forum->view->thisPost->post_id."'>";
+	$out .= "<input type='hidden' name='postedit' value='".SP()->forum->view->thisPost->post_id."' />";
 	$out .= "<a class='$tagClass' id='$tagId' title='$toolTip' rel='nofollow' href='javascript:document.usereditpost".SP()->forum->view->thisPost->post_id.".submit();'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
-	$out .= '</form>'."\n";
+	$out .= "</a>";
+	$out .= '</form>';
 
 	$out = apply_filters('sph_PostIndexEdit', $out, $a);
 
@@ -1458,7 +1458,7 @@ function sp_PostIndexDelete($args = '', $label = '', $toolTip = '') {
 	$out .= "<a class='$tagClass spDeletePost' id='$tagId' title='$toolTip' rel='nofollow' data-url='$ajaxUrl' data-postid='".SP()->forum->view->thisPost->post_id."' data-topicid='".SP()->forum->view->thisTopic->topic_id."'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
-	$out .= "</a>\n";
+	$out .= "</a>";
 
 	$out = apply_filters('sph_PostIndexDelete', $out, $a);
 
@@ -1499,13 +1499,13 @@ function sp_PostIndexContent($args = '', $label = '') {
 
 	if ($get) return SP()->forum->view->thisPost->post_content;
 
-	$out = "<div id='$tagId' class='$tagClass'>\n";
+	$out = "<div id='$tagId' class='$tagClass'>";
 
 	# Check moderation status
 	if (SP()->forum->view->thisPost->post_status == false) {
 		$post_content = SP()->forum->view->thisPost->post_content;
 	} else {
-		$modLabel = "<div class='$modClass'>$label</div>\n";
+		$modLabel = "<div class='$modClass'>$label</div>";
 		if (SP()->auths->get('moderate_posts', SP()->forum->view->thisTopic->forum_id) || (SP()->user->thisUser->member && SP()->user->thisUser->ID == SP()->forum->view->thisPostUser->ID) || (SP()->user->thisUser->guest && !empty(SP()->user->guest_cookie->email) && SP()->user->guest_cookie->email == SP()->forum->view->thisPost->guest_email)) {
 			$post_content = $modLabel.'<hr />'.SP()->forum->view->thisPost->post_content;
 		} else {
@@ -1529,7 +1529,7 @@ function sp_PostIndexContent($args = '', $label = '') {
 		$out .= $post_content;
 	}
 
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexContent', $out, $a);
 
 	if ($echo) {
@@ -1578,11 +1578,11 @@ function sp_PostIndexUserSignature($args = '') {
 
 	$containerStyle = (empty($maxHeightBottom)) ? '' : ' style="width:inherit; margin-top:'.($maxHeightBottom + 25).'px"';
 	$tagStyle       = (empty($maxHeightBottom)) ? '' : ' style="max-height:'.$maxHeightBottom.'px; position:absolute; bottom: 0; width:inherit;"';
-	$out            = "<div class='$containerClass'$containerStyle>\n";
-	$out .= "<div id='$tagId' class='$tagClass'$tagStyle>\n";
-	$out .= $sig."\n";
-	$out .= "</div>\n";
-	$out .= "</div>\n";
+	$out            = "<div class='$containerClass'$containerStyle>";
+	$out .= "<div id='$tagId' class='$tagClass'$tagStyle>";
+	$out .= $sig."";
+	$out .= "</div>";
+	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexUserSignature', $out, $a);
 
 	if ($echo) {
@@ -1633,9 +1633,9 @@ function sp_PostIndexUserFlexSignature($args = '') {
 
 	$out = '';
 	if ($rule) $out.= '<hr />';
-	$out .= "<div id='$tagId' class='$tagClass'>\n";
-	$out .= $sig."\n";
-	$out .= "</div>\n";
+	$out .= "<div id='$tagId' class='$tagClass'>";
+	$out .= $sig."";
+	$out .= "</div>";
 
 	$out = apply_filters('sph_PostIndexUserFlexSignature', $out, $a);
 
@@ -1696,7 +1696,7 @@ function sp_PostIndexUserTwitter($args = '', $toolTip = '') {
 	if (!empty($icon)) {
 		$out = "<a id='$tagId' class='$tagClass' href='$url' title='$toolTip'$target$follow>";
 		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 	$out = apply_filters('sph_PostIndexUserTwitter', $out, $a);
 
@@ -1757,7 +1757,7 @@ function sp_PostIndexUserFacebook($args = '', $toolTip = '') {
 	if (!empty($icon)) {
 		$out = "<a id='$tagId' class='$tagClass' href='$url' title='$toolTip'$target$follow>";
 		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 	$out = apply_filters('sph_PostIndexUserFacebook', $out, $a);
 
@@ -1818,7 +1818,7 @@ function sp_PostIndexUserMySpace($args = '', $toolTip = '') {
 	if (!empty($icon)) {
 		$out = "<a id='$tagId' class='$tagClass' href='$url' title='$toolTip'$target$follow>";
 		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 	$out = apply_filters('sph_PostIndexUserMySpace', $out, $a);
 
@@ -1879,7 +1879,7 @@ function sp_PostIndexUserLinkedIn($args = '', $toolTip = '') {
 	if (!empty($icon)) {
 		$out = "<a id='$tagId' class='$tagClass' href='$url' title='$toolTip'$target$follow>";
 		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 	$out = apply_filters('sph_PostIndexUserLinkedIn', $out, $a);
 
@@ -1940,7 +1940,7 @@ function sp_PostIndexUserYouTube($args = '', $toolTip = '') {
 	if (!empty($icon)) {
 		$out = "<a id='$tagId' class='$tagClass' href='$url' title='$toolTip'$target$follow>";
 		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 	$out = apply_filters('sph_PostIndexUserYouTube', $out, $a);
 
@@ -2001,7 +2001,7 @@ function sp_PostIndexUserGooglePlus($args = '', $toolTip = '') {
 	if (!empty($icon)) {
 		$out = "<a id='$tagId' class='$tagClass' href='$url' title='$toolTip'$target$follow>";
 		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 	$out = apply_filters('sph_PostIndexUserGooglePlus', $out, $a);
 
@@ -2062,7 +2062,7 @@ function sp_PostIndexUserInstagram($args = '', $toolTip = '') {
 	if (!empty($icon)) {
 		$out = "<a id='$tagId' class='$tagClass' href='$url' title='$toolTip'$target$follow>";
 		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 	$out = apply_filters('sph_PostIndexUserInstagram', $out, $a);
 
@@ -2117,7 +2117,7 @@ function sp_PostIndexUserWebsite($args = '', $toolTip = '') {
 	if (!empty($icon)) {
 		$out = "<a id='$tagId' class='$tagClass' href='".SP()->forum->view->thisPostUser->user_url."' title='$toolTip'$target$follow>";
 		$out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
-		$out .= "</a>\n";
+		$out .= "</a>";
 	}
 	$out = apply_filters('sph_PostIndexUserWebsite', $out, $a);
 
@@ -2183,10 +2183,10 @@ function sp_PostIndexUserStatus($args = '', $onlineLabel = '', $offlineLabel = '
 
 	if ($get) return $status;
 
-	$out = "<div id='$tagId' class='$tagClass'><span class='$labelClass'>\n";
+	$out = "<div id='$tagId' class='$tagClass'><span class='$labelClass'>";
 	if (!empty($icon)) $out .= $icon;
 	$out .= $label;
-	$out .= "</span></div>\n";
+	$out .= "</span></div>";
 
 	$out = apply_filters('sph_PostIndexUserStatus', $out, $a);
 
@@ -2230,7 +2230,7 @@ function sp_PostIndexUserLocation($args = '', $label = '') {
 
 	$out = "<div id='$tagId' class='$tagClass'>";
 	$out .= $label.SP()->forum->view->thisPostUser->location;
-	$out .= "</div>\n";
+	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexUserLocation', $out, $a);
 
 	if ($echo) {
@@ -2266,7 +2266,7 @@ function sp_NoPostsInTopicMessage($args = '', $definedMessage = '') {
 
 	if ($get) return $definedMessage;
 
-	$out = "<div id='$tagId' class='$tagClass'>".SP()->displayFilters->title($definedMessage)."</div>\n";
+	$out = "<div id='$tagId' class='$tagClass'>".SP()->displayFilters->title($definedMessage)."</div>";
 	$out = apply_filters('sph_NoPostsInTopicMessage', $out, $a);
 
 	if ($echo) {
@@ -2361,7 +2361,7 @@ function sp_PostForumToolButton($args = '', $label = '', $toolTip = '') {
 
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= $label;
-	$out .= "</a>\n";
+	$out .= "</a>";
 	$out = apply_filters('sph_PostForumToolButton', $out, $a);
 
 	echo $out;
@@ -2481,7 +2481,7 @@ function sp_PostEditorWindow($addPostForm, $editPostForm) {
 	# Are we editing a current post?
 	if (SP()->forum->view->thisTopic->editmode) {
 		# Go into edit mode
-		$out = '<a id="spEditFormAnchor"></a>'."\n";
+		$out = '<a id="spEditFormAnchor"></a>'."";
 		$out .= sp_edit_post($editPostForm, SP()->forum->view->thisTopic->editpost_id, SP()->forum->view->thisTopic->editpost_content);
 		echo $out;
 
@@ -2493,7 +2493,7 @@ function sp_PostEditorWindow($addPostForm, $editPostForm) {
 		if (SP()->forum->view->thisTopic->reply_topics) $allowed = true;
 		# New post form
 		if ($allowed) {
-			$out = '<a id="spEditFormAnchor"></a>'."\n";
+			$out = '<a id="spEditFormAnchor"></a>'."";
 			$out .= sp_add_post($addPostForm);
 			echo $out;
 		}
