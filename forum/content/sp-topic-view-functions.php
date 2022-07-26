@@ -1515,9 +1515,16 @@ function sp_PostIndexContent($args = '', $label = '') {
 
 	$ob = SP()->options->get('sfuseob');
 	if (!$ob) {
+		if( class_exists('FLBuilder') ) {
+			remove_filter( 'the_content',  'FLBuilder::render_content' );
+		}
 		remove_filter('the_content', 'sp_render_forum', 1);
 		$out .= apply_filters('the_content', $post_content);
 		add_filter('the_content', 'sp_render_forum', 1);
+
+		if( class_exists('FLBuilder') ) {
+			add_filter( 'the_content',  'FLBuilder::render_content' );
+		}
 	} else {
 		$out .= $post_content;
 	}
