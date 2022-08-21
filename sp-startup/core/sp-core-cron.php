@@ -35,11 +35,14 @@ function sp_cron_scheduler() {
 	}
 
 	$sfuser = SP()->options->get('sfuserremoval');
-	if ($sfuser['sfuserremove'] && !wp_next_scheduled('sph_cron_user')) {
-		wp_schedule_event(time(), 'daily', 'sph_cron_user');
-	} else {
-		wp_clear_scheduled_hook('sph_cron_user');
+	if($sfuser){
+		if ($sfuser['sfuserremove'] && !wp_next_scheduled('sph_cron_user')) {
+			wp_schedule_event(time(), 'daily', 'sph_cron_user');
+		} else {
+			wp_clear_scheduled_hook('sph_cron_user');
+		}
 	}
+
 
 	do_action('sph_stats_scheduler');
 }
