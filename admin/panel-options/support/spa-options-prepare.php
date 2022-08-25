@@ -27,7 +27,7 @@ function spa_get_global_data() {
 	$sfoptions['blockadmin'] = $sfblock['blockadmin'];
 	$sfoptions['blockredirect'] = SP()->displayFilters->url($sfblock['blockredirect']);
 	$sfoptions['blockprofile'] = $sfblock['blockprofile'];
-    $sfoptions['blockroles'] = $sfblock['blockroles'];
+    $sfoptions['blockroles'] = $sfblock['blockroles'] ?? null;
 
 	$sfoptions['defeditor'] = SP()->options->get('speditor');
 	if (!isset($sfoptions['defeditor']) || empty($sfoptions['defeditor'])) $sfoptions['defeditor'] = 4;
@@ -113,18 +113,25 @@ function spa_get_members_data() {
 	$sfoptions = array();
 
 	$sfmemberopts = SP()->options->get('sfmemberopts');
-	$sfoptions['sfcheckformember'] = $sfmemberopts['sfcheckformember'];
-	$sfoptions['sfhidestatus'] = $sfmemberopts['sfhidestatus'];
+	if($sfmemberopts){
+		$sfoptions['sfcheckformember'] = $sfmemberopts['sfcheckformember'];
+		$sfoptions['sfhidestatus'] = $sfmemberopts['sfhidestatus'];
+	}
+	
 
 	$sfguests = SP()->options->get('sfguests');
-	$sfoptions['reqemail'] = $sfguests['reqemail'];
-	$sfoptions['storecookie'] = $sfguests['storecookie'];
+	if($sfguests) {
+		$sfoptions['reqemail'] = $sfguests['reqemail'];
+		$sfoptions['storecookie'] = $sfguests['storecookie'];
+	}
 
 	$sfuser = SP()->options->get('sfuserremoval');
-	$sfoptions['sfuserremove'] = $sfuser['sfuserremove'];
-	$sfoptions['sfuserperiod'] = $sfuser['sfuserperiod'];
-	$sfoptions['sfuserinactive'] = $sfuser['sfuserinactive'];
-	$sfoptions['sfusernoposts'] = $sfuser['sfusernoposts'];
+	if($sfuser) {
+		$sfoptions['sfuserremove'] = $sfuser['sfuserremove'];
+		$sfoptions['sfuserperiod'] = $sfuser['sfuserperiod'];
+		$sfoptions['sfuserinactive'] = $sfuser['sfuserinactive'];
+		$sfoptions['sfusernoposts'] = $sfuser['sfusernoposts'];
+	}
 
 	$sfoptions['account-name'] = SP()->options->get('account-name');
 	$sfoptions['display-name'] = SP()->options->get('display-name');
