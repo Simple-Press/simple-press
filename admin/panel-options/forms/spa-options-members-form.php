@@ -52,10 +52,10 @@ function spa_options_members_form() {
 				echo '<div class="sf-alert-block sf-info">';
 				SP()->primitives->admin_etext('Remember - users are members of your WordPress site NOT members of Simple:Press. WordPress performs the actual user deletion which will include any components (like blog posts for example) that the user may have contributed. Use with care!');
 				echo '</div>';
-				spa_paint_checkbox(SP()->primitives->admin_text('Enable auto removal of member accounts'), 'sfuserremove', $sfoptions['sfuserremove']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Remove inactive members (if auto removal enabled)'), 'sfuserinactive', $sfoptions['sfuserinactive']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Remove members who have not posted  (if auto removal enabled)'), 'sfusernoposts', $sfoptions['sfusernoposts']);
-				spa_paint_input(SP()->primitives->admin_text('Number of days back to remove inactive members and/or members with no forum posts (if auto removal enabled)'), 'sfuserperiod', $sfoptions['sfuserperiod']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Enable auto removal of member accounts'), 'sfuserremove', $sfoptions['sfuserremove'] ?? null);
+				spa_paint_checkbox(SP()->primitives->admin_text('Remove inactive members (if auto removal enabled)'), 'sfuserinactive', $sfoptions['sfuserinactive'] ?? null );
+				spa_paint_checkbox(SP()->primitives->admin_text('Remove members who have not posted  (if auto removal enabled)'), 'sfusernoposts', $sfoptions['sfusernoposts'] ?? null);
+				spa_paint_input(SP()->primitives->admin_text('Number of days back to remove inactive members and/or members with no forum posts (if auto removal enabled)'), 'sfuserperiod', $sfoptions['sfuserperiod'] ?? null);
 				if ($sfoptions['sched']) {
 					$msg = SP()->primitives->admin_text('Users auto removal cron job is scheduled to run daily');
 					echo '<tr><td class="message" colspan="2" class="sf-line-h-2-em">&nbsp;<u>'.$msg.'</u></td></tr>';

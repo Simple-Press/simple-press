@@ -465,7 +465,7 @@ function spa_setup_admin_menu() {
 			SP()->primitives->admin_text('Promotions'),
 			'SPF Manage Promotions',
 			SP_FOLDER_NAME.'/admin/panel-promotions/spa-promotions.php',
-			$sfatooltips['promotions'],
+			$sfatooltips['promotions'] ?? null,
 			'go',
 			wp_nonce_url(SPAJAXURL.'promotions-loader', 'promotions-loader'),
 			$forms,
