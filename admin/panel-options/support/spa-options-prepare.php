@@ -24,10 +24,13 @@ function spa_get_global_data() {
 	$sfoptions['sfrsstopicname'] = $sfrss['sfrsstopicname'];
 
 	$sfblock = SP()->options->get('sfblockadmin');
-	$sfoptions['blockadmin'] = $sfblock['blockadmin'];
-	$sfoptions['blockredirect'] = SP()->displayFilters->url($sfblock['blockredirect']);
-	$sfoptions['blockprofile'] = $sfblock['blockprofile'];
-    $sfoptions['blockroles'] = $sfblock['blockroles'] ?? null;
+	if(!empty($sfblock)){
+		$sfoptions['blockadmin'] = isset($sfblock['blockadmin']) ? $sfblock['blockadmin'] : false;
+		$sfoptions['blockredirect'] = SP()->displayFilters->url(isset($sfblock['blockredirect']) ? $sfblock['blockredirect'] : "");
+		$sfoptions['blockprofile'] = isset($sfblock['blockprofile']) ? $sfblock['blockprofile'] : false;
+		$sfoptions['blockroles'] = isset($sfblock['blockroles']) ? $sfblock['blockroles'] : null;
+	}
+	
 
 	$sfoptions['defeditor'] = SP()->options->get('speditor');
 	if (!isset($sfoptions['defeditor']) || empty($sfoptions['defeditor'])) $sfoptions['defeditor'] = 4;
