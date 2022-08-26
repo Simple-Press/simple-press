@@ -125,6 +125,8 @@ class spcCoreLoader {
 	 * @return void
 	 */
 	private function includes() {
+		# Include db statistics
+		require_once SP_PLUGIN_DIR.'/forum/database/sp-db-statistics.php';
 		# Include core decprecated function list
 		include_once SPBOOT.'core/sp-core-deprecated.php';
 
