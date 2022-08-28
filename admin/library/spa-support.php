@@ -324,11 +324,11 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 		echo '</div>';
 	}
 	
-	$color_field = sprintf( '<input type="text" class="wp-core-ui font-style-color" value="%s" id="%s" />', $selected_icon['color'], $icon_color_id );
+	$color_field = sprintf( '<input type="text" class="wp-core-ui font-style-color" value="%s" id="%s" />', isset($selected_icon['color'])? $selected_icon['color'] : '', $icon_color_id );
 	
-	$size_input_field = sprintf( '<input type="number" placeholder="Size" class="wp-core-ui font-style-size" value="%s" id="%s" />', $selected_icon['size'], $icon_size_id );
+	$size_input_field = sprintf( '<input type="number" placeholder="Size" class="wp-core-ui font-style-size" value="%s" id="%s" />', isset($selected_icon['size']) ? $selected_icon['size'] : '', $icon_size_id );
 	
-	$size_type_dropdown = spa_iconset_size_type_field( $selected_icon['size_type'] );
+	$size_type_dropdown = spa_iconset_size_type_field( isset($selected_icon['size_type']) ? $selected_icon['size_type'] : '' );
 	
 	
 	
