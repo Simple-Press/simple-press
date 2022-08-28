@@ -26,9 +26,11 @@ function spa_get_login_data() {
 	$sfcomps['spaltregisterurl'] = SP()->displayFilters->url($sflogin['spaltregisterurl']);
 
 	$sfrpx = SP()->options->get('sfrpx');
-	$sfcomps['sfrpxenable'] = $sfrpx['sfrpxenable'];
-	$sfcomps['sfrpxkey'] = $sfrpx['sfrpxkey'];
-	$sfcomps['sfrpxredirect'] = SP()->displayFilters->url($sfrpx['sfrpxredirect']);
+	if(!empty($sfrpx)){
+		$sfcomps['sfrpxenable'] = isset($sfrpx['sfrpxenable']) ? $sfrpx['sfrpxenable'] : false;
+		$sfcomps['sfrpxkey'] = isset($sfrpx['sfrpxkey']) ? $sfrpx['sfrpxkey'] : "";
+		$sfcomps['sfrpxredirect'] = SP()->displayFilters->url(isset($sfrpx['sfrpxredirect']) ? $sfrpx['sfrpxredirect'] : "");
+	}
 
 	return $sfcomps;
 }
@@ -38,19 +40,20 @@ function spa_get_seo_data() {
 
 	# browser title
 	$sfseo = SP()->options->get('sfseo');
-	$sfcomps['sfseo_overwrite'] = $sfseo['sfseo_overwrite'];
-	$sfcomps['sfseo_blogname'] = $sfseo['sfseo_blogname'];
-	$sfcomps['sfseo_pagename'] = $sfseo['sfseo_pagename'];
-	$sfcomps['sfseo_homepage'] = $sfseo['sfseo_homepage'];
-	$sfcomps['sfseo_topic'] = $sfseo['sfseo_topic'];
-	$sfcomps['sfseo_forum'] = $sfseo['sfseo_forum'];
-	$sfcomps['sfseo_noforum'] = $sfseo['sfseo_noforum'];
-	$sfcomps['sfseo_page'] = $sfseo['sfseo_page'];
-	$sfcomps['sfseo_sep'] = $sfseo['sfseo_sep'];
-	$sfcomps['sfseo_og'] = $sfseo['sfseo_og'];
-	$sfcomps['seo_og_attachment'] = $sfseo['seo_og_attachment'];
-	$sfcomps['seo_og_type'] = empty($sfseo['seo_og_type']) ? 'website' : $sfseo['seo_og_type'];
-
+    if(!empty($sfseo)){
+		$sfcomps['sfseo_overwrite'] = isset($sfseo['sfseo_overwrite']) ? $sfseo['sfseo_overwrite']: false;
+		$sfcomps['sfseo_blogname'] = isset($sfseo['sfseo_blogname']) ? $sfseo['sfseo_blogname']: false;
+		$sfcomps['sfseo_pagename'] = isset($sfseo['sfseo_pagename']) ? $sfseo['sfseo_pagename']: false;
+		$sfcomps['sfseo_homepage'] = isset($sfseo['sfseo_homepage']) ? $sfseo['sfseo_homepage']: false;
+		$sfcomps['sfseo_topic'] = isset($sfseo['sfseo_topic']) ? $sfseo['sfseo_topic']: false;
+		$sfcomps['sfseo_forum'] = isset($sfseo['sfseo_forum']) ? $sfseo['sfseo_forum']: false;
+		$sfcomps['sfseo_noforum'] = isset($sfseo['sfseo_noforum']) ? $sfseo['sfseo_noforum']: false;
+		$sfcomps['sfseo_page'] = isset($sfseo['sfseo_page']) ? $sfseo['sfseo_page']: false;
+		$sfcomps['sfseo_sep'] = isset($sfseo['sfseo_sep']) ? $sfseo['sfseo_sep']: "";
+		$sfcomps['sfseo_og'] = isset($sfseo['sfseo_og']) ? $sfseo['sfseo_og']: false;
+		$sfcomps['seo_og_attachment'] = isset($sfseo['seo_og_attachment']) ? $sfseo['seo_og_attachment']: false;
+		$sfcomps['seo_og_type'] = isset($sfseo['seo_og_type']) ? $sfseo['seo_og_type'] : "website";
+	}
 	# meta tags
 	$sfmetatags = array();
 	$sfmetatags = SP()->options->get('sfmetatags');
