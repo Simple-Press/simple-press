@@ -82,17 +82,19 @@ function spa_get_messages_data() {
 
 	# custom message for posts
 	$sfpostmsg = array();
-	$sfpostmsg = SP()->options->get('sfpostmsg');
 	$sflogin = array();
 	$sflogin = SP()->options->get('sflogin');
+	$sfpostmsg = SP()->options->get('sfpostmsg');
 
-	$sfcomps['sfpostmsgtext'] = SP()->editFilters->text($sfpostmsg['sfpostmsgtext']);
-	$sfcomps['sfpostmsgtopic'] = $sfpostmsg['sfpostmsgtopic'];
-	$sfcomps['sfpostmsgpost'] = $sfpostmsg['sfpostmsgpost'];
+	if(!empty($sfpostmsg)){
+		$sfcomps['sfpostmsgtext'] = SP()->editFilters->text( isset($sfpostmsg['sfpostmsgtext']) ? $sfpostmsg['sfpostmsgtext'] : '' );
+		$sfcomps['sfpostmsgtopic'] = isset($sfpostmsg['sfpostmsgtext']) ? $sfpostmsg['sfpostmsgtext'] : false;
+		$sfcomps['sfpostmsgpost'] =  isset($sfpostmsg['sfpostmsgpost']) ? $sfpostmsg['sfpostmsgpost'] : false;
 
-	$sfcomps['sfpostmsgtext2'] = SP()->editFilters->text($sfpostmsg['sfpostmsgtext2']);
-	$sfcomps['sfpostmsgtopic2'] = $sfpostmsg['sfpostmsgtopic2'];
-	$sfcomps['sfpostmsgpost2'] = $sfpostmsg['sfpostmsgpost2'];	
+		$sfcomps['sfpostmsgtext2'] = SP()->editFilters->text(isset($sfpostmsg['sfpostmsgtext2']) ? $sfpostmsg['sfpostmsgtext2'] : '' );
+		$sfcomps['sfpostmsgtopic2'] = isset($sfpostmsg['sfpostmsgtopic2']) ? $sfpostmsg['sfpostmsgtopic2'] : false;
+		$sfcomps['sfpostmsgpost2'] = isset($sfpostmsg['sfpostmsgpost2']) ? $sfpostmsg['sfpostmsgpost2'] : false;
+	}
 
 	# custom editor message
 	$sfcomps['sfeditormsg'] = SP()->editFilters->text(SP()->options->get('sfeditormsg'));
@@ -107,7 +109,7 @@ function spa_get_messages_data() {
 	if (!empty($sneakpeek[0])) $sfcomps['sfsneakpeek'] = SP()->editFilters->text($sneakpeek[0]['meta_value']);
 	if (!empty($adminview[0])) $sfcomps['sfadminview'] = SP()->editFilters->text($adminview[0]['meta_value']);
 	if (!empty($userview[0])) $sfcomps['sfuserview'] = SP()->editFilters->text($userview[0]['meta_value']);
-	$sfcomps['sfsneakredirect'] = SP()->displayFilters->url($sflogin['sfsneakredirect']);
+	$sfcomps['sfsneakredirect'] = SP()->displayFilters->url( isset($sflogin['sfsneakredirect']) ? $sflogin['sfsneakredirect'] : '');
 
 	return $sfcomps;
 }
