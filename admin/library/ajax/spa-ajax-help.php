@@ -28,6 +28,7 @@ echo '<fieldset>';
 echo $helptext;
 echo '</fieldset>';
 echo '<div class="sfhelptextlogo">';
+$uid = isset($uid) ? $uid : '';
 if (!spa_white_label_check($uid)) {
 	echo '<img src="'.SPCOMMONIMAGES.'sp-mini-logo.png" alt="" title="" />';
 } else {
