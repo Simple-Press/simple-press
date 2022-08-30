@@ -1022,7 +1022,7 @@ function sph_check_for_addons_updates() {
 			$sp_plugin_updater = sp_plugin_updater_object($plugin_file, $plugin_data);
 			
 			$check_for_addon_update = $sp_plugin_updater->check_for_addon_update();
-			
+			$check_for_addon_update = (object) $check_for_addon_update;
 			if ((version_compare($check_for_addon_update->new_version, $plugin_data['Version'], '>') == 1)) {
 				
 				$data = new stdClass;
@@ -1058,6 +1058,8 @@ function sph_check_for_addons_updates() {
 			$sp_theme_updater = sp_theme_updater_object($theme_file, $theme_data);
 			
 			$check_for_addon_update = $sp_theme_updater->check_for_addon_update();
+
+			$check_for_addon_update = (object) $check_for_addon_update;
 			
 			if ((version_compare($check_for_addon_update->new_version, $theme_data['Version'], '>') == 1)) {
 				
