@@ -83,9 +83,9 @@ function sp_cron_remove_users() {
 
 	# make sure auto removal is enabled
 	$sfuser = SP()->options->get('sfuserremoval');
-	if ($sfuser['sfuserremove']) {
+	if ($sfuser['sfuserremove'] ?? false) {
 		# see if removing users with no posts
-		if ($sfuser['sfusernoposts']) {
+		if ($sfuser['sfusernoposts'] ?? false) {
 			$users = SP()->DB->select('SELECT '.SPUSERS.'.ID FROM '.SPUSERS.'
 										JOIN '.SPMEMBERS.' on '.SPUSERS.'.ID = '.SPMEMBERS.'.user_id
 										LEFT JOIN '.SPWPPOSTS.' ON '.SPUSERS.'.ID = '.SPWPPOSTS.'.post_author
@@ -102,7 +102,7 @@ function sp_cron_remove_users() {
 		}
 
 		# see if removing inactive users
-		if ($sfuser['sfuserinactive']) {
+		if ($sfuser['sfuserinactive'] ?? false) {
 			$users = SP()->DB->table(SPMEMBERS, 'lastvisit < DATE_SUB(NOW(), INTERVAL '.$sfuser['sfuserperiod'].' DAY)');
 			if ($users) {
 				foreach ($users as $user) {
@@ -149,7 +149,7 @@ function sp_cron_generate_stats() {
 	SP()->options->update('spMembershipStats', $stats);
 
 	$spControls = SP()->options->get('sfcontrols');
-	$topPosters = sp_get_top_poster_stats((int) $spControls['showtopcount']);
+	if($spControls) $topPosters = sp_get_top_poster_stats((int) isset($spControls['showtopcount']) ? $spControls['showtopcount'] : null);
 	SP()->options->update('spPosterStats', $topPosters);
 
 	$mods = sp_get_moderator_stats();
