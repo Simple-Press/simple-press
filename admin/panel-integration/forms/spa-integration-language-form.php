@@ -164,6 +164,7 @@ function spa_integration_language_form() {
 					}
 
 					$data = sp_get_xml_theme_entry($list, $theme);
+					$data = (object) $data;
 					$name = (isset($data->name)) ? $data->name : $theme;
 					echo '<tr><td class="sf-width-50-per"><b>'.$name.'</b>';
 					if ($child) echo '&nbsp;('.SP()->primitives->admin_text('Child Theme Parent').')';
@@ -201,6 +202,7 @@ function spa_integration_language_form() {
 							}
 
 							$data = sp_get_xml_theme_entry($list, $theme);
+							$data = (object) $data;
 							$name = (isset($data->name)) ? $data->name : $theme;
 							echo '<tr><td class="sf-width-50-per"><b>'.$name.'</b></td>';
 							echo '<tr><td class="sf-width-50-per"><b>'.$name.'</b>';
@@ -241,6 +243,7 @@ function spa_integration_language_form() {
 							}
 
 							$data = sp_get_xml_theme_entry($list, $theme);
+							$data = (object) $data;
 							$name = (isset($data->name)) ? $data->name : $theme;
 							echo '<tr><td class="sf-width-50-per"><b>'.$name.'</b>';
 							if ($child) echo '&nbsp;('.SP()->primitives->admin_text('Child Theme Parent').')';
@@ -276,6 +279,7 @@ function spa_integration_language_form() {
 						foreach($plugins as $plugin) {
 							$name = explode('/', $plugin);
 							$data = sp_get_xml_plugin_entry($list, $name[0]);
+							$data = (object) $data;
 							$plugname = (isset($data->name)) ? $data->name : $name[0];
 							echo '<tr><td class="sf-width-50-per"><b>'.$plugname.'</b></td>';
 							if (isset($data->name)) {

@@ -25,11 +25,11 @@ function spa_admins_global_options_form() {
 	spa_paint_open_tab(/*SP()->primitives->admin_text('Admins')." - ".*/SP()->primitives->admin_text('Global Admin Options'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Admin Options'), 'true', 'global-options');
-				spa_paint_checkbox(SP()->primitives->admin_text('Display forum statistics in the dashboard'), 'sfdashboardstats', $sfoptions['sfdashboardstats']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Approve all posts in topic in moderation when an admin posts to the topic'), 'sfadminapprove', $sfoptions['sfadminapprove']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Approve all posts in topic in moderation when a moderator posts to the topic'), 'sfmoderapprove', $sfoptions['sfmoderapprove']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Display post/topic edit notices to users'), 'editnotice', $sfoptions['editnotice']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Display post/topic move notices to users'), 'movenotice', $sfoptions['movenotice']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Display forum statistics in the dashboard'), 'sfdashboardstats', $sfoptions['sfdashboardstats'] ?? false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Approve all posts in topic in moderation when an admin posts to the topic'), 'sfadminapprove', $sfoptions['sfadminapprove'] ?? false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Approve all posts in topic in moderation when a moderator posts to the topic'), 'sfmoderapprove', $sfoptions['sfmoderapprove'] ?? false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Display post/topic edit notices to users'), 'editnotice', $sfoptions['editnotice'] ?? false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Display post/topic move notices to users'), 'movenotice', $sfoptions['movenotice'] ?? false);
 			spa_paint_close_fieldset();
 
 		spa_paint_close_panel();

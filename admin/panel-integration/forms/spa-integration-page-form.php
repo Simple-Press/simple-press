@@ -86,10 +86,10 @@ function spa_integration_page_form() {
         spa_paint_open_nohead_tab(false);
                     spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Integration Options'), true, 'integration-options');
-				spa_paint_checkbox(SP()->primitives->admin_text('Filter WP list pages'), 'sfwplistpages', $sfoptions['sfwplistpages']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Load javascript in footer'), 'sfscriptfoot', $sfoptions['sfscriptfoot']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Force the strict use of the WP API'), 'sfuseob', $sfoptions['sfuseob']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Run the wptexturize formatting on post content'), 'spwptexturize', $sfoptions['spwptexturize']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Filter WP list pages'), 'sfwplistpages', $sfoptions['sfwplistpages'] ?? false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Load javascript in footer'), 'sfscriptfoot', $sfoptions['sfscriptfoot'] ?? false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Force the strict use of the WP API'), 'sfuseob', $sfoptions['sfuseob'] ?? false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Run the wptexturize formatting on post content'), 'spwptexturize', $sfoptions['spwptexturize'] ?? false);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
@@ -97,10 +97,10 @@ function spa_integration_page_form() {
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Theme Display Options'), true, 'theme-options');
-				spa_paint_checkbox(SP()->primitives->admin_text('Limit forum display to within WP loop'), 'sfinloop', $sfoptions['sfinloop']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Allow multiple loading of forum content'), 'sfmultiplecontent', $sfoptions['sfmultiplecontent']);
-				spa_paint_input(SP()->primitives->admin_text('Compensate (in pixels) for fixed WP theme header'), 'spheaderspace', $sfoptions['spheaderspace'], false, false);
-				spa_paint_checkbox(SP()->primitives->admin_text('Bypass wp_head action complete requirement'), 'sfwpheadbypass', $sfoptions['sfwpheadbypass']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Limit forum display to within WP loop'), 'sfinloop', $sfoptions['sfinloop'] ?? false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Allow multiple loading of forum content'), 'sfmultiplecontent', $sfoptions['sfmultiplecontent'] ?? false);
+				spa_paint_input(SP()->primitives->admin_text('Compensate (in pixels) for fixed WP theme header'), 'spheaderspace', $sfoptions['spheaderspace'] ?? 0, false, false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Bypass wp_head action complete requirement'), 'sfwpheadbypass', $sfoptions['sfwpheadbypass'] ?? false);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
@@ -119,10 +119,10 @@ function spa_integration_page_form() {
 
 function spa_create_page_select($currentpageid) {
 	$pages = SP()->DB->table(SPWPPOSTS, "post_type='page' && post_status!='trash'", '', 'menu_order');
-
+	$out = '';
 	if ($pages) {
 		$default = '';
-		$out = '';
+		//$out = '';
 		$spacer = '&nbsp;&nbsp;&nbsp;&nbsp;';
 		$out.= '<optgroup label="'.SP()->primitives->admin_text('Select the WP page').':">'."\n";
 		foreach ($pages as $page) {
