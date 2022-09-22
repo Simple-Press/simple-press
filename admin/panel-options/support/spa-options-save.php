@@ -34,7 +34,7 @@ function spa_save_global_data()
 	$sfblock = array();
     $sfblock['blockadmin'] = isset($_POST['blockadmin']);
     $sfblock['blockprofile'] = isset($_POST['blockprofile']);
-	$sfblock['blockredirect'] = SP()->saveFilters->cleanurl($_POST['blockredirect']);
+	$sfblock['blockredirect'] = SP()->saveFilters->cleanurl(isset($_POST['blockredirect']));
     if ($sfblock['blockadmin']) {
         $sfblock['blockroles'] = array();
 		$roles = array_keys($wp_roles->role_names);

@@ -216,6 +216,11 @@ function sp_enqueue_iconsets() {
 function spa_get_saved_icon( $icon ) {
 	
 	$icon_args = array();
+
+	$icon_args['icon'] = $icon;
+	$icon_args['color'] = '';
+	$icon_args['size']		= '';
+	$icon_args['size_type'] = '';
 	
 	if( !empty( $icon ) && is_array( json_decode( $icon, true ) ) && ( json_last_error() == JSON_ERROR_NONE ) ) {
 		
@@ -230,12 +235,13 @@ function spa_get_saved_icon( $icon ) {
 			$icon_args['size_type'] = isset( $size_ar['size_type'] ) ? $size_ar['size_type'] : '';
 		}
 		
-	} else {
-		$icon_args['icon'] = $icon;
-		$icon_args['color'] = '';
-		$icon_args['size']		= '';
-		$icon_args['size_type'] = '';
-	}
+	} 
+	// else {
+	// 	$icon_args['icon'] = $icon;
+	// 	$icon_args['color'] = '';
+	// 	$icon_args['size']		= '';
+	// 	$icon_args['size_type'] = '';
+	// }
 	
 	
 	if( $icon_args['size'] ) {

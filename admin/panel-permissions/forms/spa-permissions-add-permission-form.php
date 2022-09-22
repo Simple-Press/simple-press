@@ -8,8 +8,6 @@
 
 if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
     die('Access denied - you cannot directly call this file');
-define('SP_PLUGIN_ICONS', SPADMINIMAGES . '../icons/');
-
 function spa_permissions_add_permission_form() {
     ?>
     <script>

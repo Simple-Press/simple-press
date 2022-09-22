@@ -14,20 +14,28 @@ function spa_get_global_data() {
 
 	# auto update
 	$sfauto = SP()->options->get('sfauto');
-	$sfoptions['sfautoupdate'] = $sfauto['sfautoupdate'];
-	$sfoptions['sfautotime'] = $sfauto['sfautotime'];
-
+	if($sfauto){
+		$sfoptions['sfautoupdate'] = isset($sfauto['sfautoupdate']) ? $sfauto['sfautoupdate'] : false;
+		$sfoptions['sfautotime'] = isset($sfauto['sfautotime']) ? $sfauto['sfautotime'] : '' ;
+	}
+	
 	$sfrss = SP()->options->get('sfrss');
-	$sfoptions['sfrsscount'] = $sfrss['sfrsscount'];
-	$sfoptions['sfrsswords'] = $sfrss['sfrsswords'];
-	$sfoptions['sfrssfeedkey'] = $sfrss['sfrssfeedkey'];
-	$sfoptions['sfrsstopicname'] = $sfrss['sfrsstopicname'];
+	if($sfrss){
+		$sfoptions['sfrsscount'] = isset($sfrss['sfrsscount']) ? $sfrss['sfrsscount'] : null ;
+		$sfoptions['sfrsswords'] = isset($sfrss['sfrsswords']) ? $sfrss['sfrsswords'] : null;
+		$sfoptions['sfrssfeedkey'] = isset($sfrss['sfrssfeedkey']) ? $sfrss['sfrssfeedkey'] : false;
+		$sfoptions['sfrsstopicname'] = isset($sfrss['sfrsstopicname']) ? $sfrss['sfrsstopicname'] : false;
+	}
+	
 
 	$sfblock = SP()->options->get('sfblockadmin');
-	$sfoptions['blockadmin'] = $sfblock['blockadmin'];
-	$sfoptions['blockredirect'] = SP()->displayFilters->url($sfblock['blockredirect']);
-	$sfoptions['blockprofile'] = $sfblock['blockprofile'];
-    $sfoptions['blockroles'] = $sfblock['blockroles'];
+	if(!empty($sfblock)){
+		$sfoptions['blockadmin'] = isset($sfblock['blockadmin']) ? $sfblock['blockadmin'] : false;
+		$sfoptions['blockredirect'] = SP()->displayFilters->url(isset($sfblock['blockredirect']) ? $sfblock['blockredirect'] : "");
+		$sfoptions['blockprofile'] = isset($sfblock['blockprofile']) ? $sfblock['blockprofile'] : false;
+		$sfoptions['blockroles'] = isset($sfblock['blockroles']) ? $sfblock['blockroles'] : null;
+	}
+	
 
 	$sfoptions['defeditor'] = SP()->options->get('speditor');
 	if (!isset($sfoptions['defeditor']) || empty($sfoptions['defeditor'])) $sfoptions['defeditor'] = 4;
@@ -37,8 +45,10 @@ function spa_get_global_data() {
 	$sfoptions['combinejs'] = SP()->options->get('combinejs');
 
 	$spError = SP()->options->get('spErrorOptions');
-	$sfoptions['errorlog'] = $spError['spErrorLogOff'];
-	$sfoptions['notices']  = $spError['spNoticesOff'];
+	if($spError){
+		$sfoptions['errorlog'] = isset($spError['spErrorLogOff']) ? $spError['spErrorLogOff'] : false;
+		$sfoptions['notices']  = isset($spError['spNoticesOff']) ? $spError['spNoticesOff'] : false;
+	}
 
 	$sfoptions['floodcontrol'] = SP()->options->get('floodcontrol');
 
@@ -50,24 +60,31 @@ function spa_get_display_data() {
 	$sfcontrols = SP()->options->get('sfcontrols');
 
 	# Page title
-	$sfoptions['sfnotitle'] = $sfdisplay['pagetitle']['notitle'];
-	$sfoptions['sfbanner']  = SP()->displayFilters->url($sfdisplay['pagetitle']['banner']);
+	$sfoptions['sfnotitle'] = isset($sfdisplay['pagetitle']['notitle']) ? $sfdisplay['pagetitle']['notitle'] : false;
+	$sfoptions['sfbanner']  = SP()->displayFilters->url(isset($sfdisplay['pagetitle']['banner']) ? $sfdisplay['pagetitle']['banner']: '');
 
 	# Stats
-	$sfoptions['showtopcount']	= $sfcontrols['showtopcount'];
-	$sfoptions['shownewcount']	= $sfcontrols['shownewcount'];
-	$sfoptions['hidemembers']	= $sfcontrols['hidemembers'];
+	if(!empty($sfcontrols)){
+		$sfoptions['showtopcount']	= isset($sfcontrols['showtopcount']) ? $sfcontrols['showtopcount'] : null;
+		$sfoptions['shownewcount']	= isset($sfcontrols['shownewcount']) ? $sfcontrols['shownewcount'] : null;
+		$sfoptions['hidemembers']	= isset($sfcontrols['hidemembers']) ? $sfcontrols['hidemembers'] : false;
+	}
+	
 	$sfoptions['statsinterval']	= SP()->options->get('sp_stats_interval') / 3600; # display in hours
 
-	$sfoptions['sfsingleforum'] = $sfdisplay['forums']['singleforum'];
-
-	$sfoptions['sfpagedtopics'] = $sfdisplay['topics']['perpage'];
-	$sfoptions['sftopicsort'] 	= $sfdisplay['topics']['sortnewtop'];
-
-	$sfoptions['sfpagedposts'] 	= $sfdisplay['posts']['perpage'];
-	$sfoptions['sfsortdesc'] 	= $sfdisplay['posts']['sortdesc'];
-
-	$sfoptions['sftoolbar']		= $sfdisplay['editor']['toolbar'];
+	
+	if($sfdisplay){
+		$sfoptions['sfsingleforum'] = isset($sfdisplay['forums']['singleforum']) ? $sfdisplay['forums']['singleforum'] : false ;
+		
+		$sfoptions['sfpagedtopics'] = isset($sfdisplay['topics']['perpage']) ? $sfdisplay['topics']['perpage'] : '';
+		$sfoptions['sftopicsort'] 	= isset($sfdisplay['topics']['sortnewtop']) ? $sfdisplay['topics']['sortnewtop'] : false;
+	
+		$sfoptions['sfpagedposts'] 	= isset($sfdisplay['posts']['perpage']) ? $sfdisplay['posts']['perpage'] : '';
+		$sfoptions['sfsortdesc'] 	= isset($sfdisplay['posts']['sortdesc']) ? $sfdisplay['posts']['sortdesc'] : false;
+	
+		$sfoptions['sftoolbar']		= isset($sfdisplay['editor']['toolbar']) ? $sfdisplay['editor']['toolbar'] : false;
+	}
+	
 
 	return $sfoptions;
 }
@@ -77,12 +94,15 @@ function spa_get_content_data() {
 
 	# image resizing
 	$sfimage = SP()->options->get('sfimage');
-	$sfoptions['sfimgenlarge'] = $sfimage['enlarge'];
-	$sfoptions['sfthumbsize'] = $sfimage['thumbsize'];
-	$sfoptions['style'] = $sfimage['style'];
-	$sfoptions['process'] = $sfimage['process'];
-	$sfoptions['constrain'] = $sfimage['constrain'];
-	$sfoptions['forceclear'] = $sfimage['forceclear'];
+	if($sfimage){
+		$sfoptions['sfimgenlarge'] = isset($sfimage['enlarge']) ? $sfimage['enlarge'] : false;
+		$sfoptions['sfthumbsize'] = isset($sfimage['thumbsize']) ? $sfimage['thumbsize'] : '';
+		$sfoptions['style'] = $sfimage['style'];
+		$sfoptions['process'] = isset($sfimage['process']) ? $sfimage['process'] : false;
+		$sfoptions['constrain'] = isset($sfimage['constrain']) ? $sfimage['constrain'] : false;
+		$sfoptions['forceclear'] = isset($sfimage['forceclear']) ? $sfimage['forceclear'] : false;
+	}
+	
 
 	$sfoptions['sfdates'] = SP()->options->get('sfdates');
 	$sfoptions['sftimes'] = SP()->options->get('sftimes');
@@ -92,16 +112,19 @@ function spa_get_content_data() {
 
 	# link filters
 	$sffilters = SP()->options->get('sffilters');
-	$sfoptions['sfnofollow'] = $sffilters['sfnofollow'];
-	$sfoptions['sftarget'] = $sffilters['sftarget'];
-	$sfoptions['sfurlchars'] = $sffilters['sfurlchars'];
-	$sfoptions['sffilterpre'] = $sffilters['sffilterpre'];
-	$sfoptions['sfmaxlinks'] = $sffilters['sfmaxlinks'];
-	$sfoptions['sfnolinksmsg'] = SP()->editFilters->text($sffilters['sfnolinksmsg']);
-	$sfoptions['sfdupemember'] = $sffilters['sfdupemember'];
-	$sfoptions['sfdupeguest'] = $sffilters['sfdupeguest'];
-	$sfoptions['sfmaxsmileys'] = $sffilters['sfmaxsmileys'];
-
+	if($sffilters){
+		$sfoptions['sfnofollow'] = isset($sffilters['sfnofollow']) ? $sffilters['sfnofollow'] : false;
+		$sfoptions['sftarget'] = isset($sffilters['sftarget']) ? $sffilters['sftarget'] : false;
+		$sfoptions['sfurlchars'] = isset($sffilters['sfurlchars']) ? $sffilters['sfurlchars'] : '';
+		$sfoptions['sffilterpre'] = isset($sffilters['sffilterpre']) ? $sffilters['sffilterpre'] : false;
+		$sfoptions['sfmaxlinks'] = isset($sffilters['sfmaxlinks']) ? $sffilters['sfmaxlinks'] : '';
+		$sfoptions['sfnolinksmsg'] = SP()->editFilters->text(isset($sffilters['sfnolinksmsg']) ? $sffilters['sfnolinksmsg']:'');
+		$sfoptions['sfdupemember'] = isset($sffilters['sfdupemember']) ? $sffilters['sfdupemember'] : false;
+		$sfoptions['sfdupeguest'] = isset($sffilters['sfdupeguest']) ? $sffilters['sfdupeguest'] : false;
+		$sfoptions['sfmaxsmileys'] = isset($sffilters['sfmaxsmileys']) ? $sffilters['sfmaxsmileys'] : '';
+	
+	}
+	
 	# shortcode filtering
 	$sfoptions['sffiltershortcodes'] = SP()->options->get('sffiltershortcodes');
 	$sfoptions['sfshortcodes'] = SP()->editFilters->text(SP()->options->get('sfshortcodes'));
@@ -113,18 +136,25 @@ function spa_get_members_data() {
 	$sfoptions = array();
 
 	$sfmemberopts = SP()->options->get('sfmemberopts');
-	$sfoptions['sfcheckformember'] = $sfmemberopts['sfcheckformember'];
-	$sfoptions['sfhidestatus'] = $sfmemberopts['sfhidestatus'];
+	if($sfmemberopts){
+		$sfoptions['sfcheckformember'] = isset($sfmemberopts['sfcheckformember']) ? $sfmemberopts['sfcheckformember'] : false;
+		$sfoptions['sfhidestatus'] = isset($sfmemberopts['sfhidestatus']) ? $sfmemberopts['sfhidestatus'] : false;
+	}
+	
 
 	$sfguests = SP()->options->get('sfguests');
-	$sfoptions['reqemail'] = $sfguests['reqemail'];
-	$sfoptions['storecookie'] = $sfguests['storecookie'];
+	if($sfguests) {
+		$sfoptions['reqemail'] = isset($sfguests['reqemail']) ? $sfguests['reqemail'] : false;
+		$sfoptions['storecookie'] = isset($sfguests['storecookie']) ? $sfguests['storecookie'] : false;
+	}
 
 	$sfuser = SP()->options->get('sfuserremoval');
-	$sfoptions['sfuserremove'] = $sfuser['sfuserremove'];
-	$sfoptions['sfuserperiod'] = $sfuser['sfuserperiod'];
-	$sfoptions['sfuserinactive'] = $sfuser['sfuserinactive'];
-	$sfoptions['sfusernoposts'] = $sfuser['sfusernoposts'];
+	if($sfuser) {
+		$sfoptions['sfuserremove'] = isset($sfuser['sfuserremove']) ? $sfuser['sfuserremove'] : false;
+		$sfoptions['sfuserperiod'] = isset($sfuser['sfuserperiod']) ? $sfuser['sfuserperiod'] : null;
+		$sfoptions['sfuserinactive'] = isset($sfuser['sfuserinactive']) ? $sfuser['sfuserinactive'] : false;
+		$sfoptions['sfusernoposts'] = isset($sfuser['sfusernoposts']) ? $sfuser['sfusernoposts'] : false;
+	}
 
 	$sfoptions['account-name'] = SP()->options->get('account-name');
 	$sfoptions['display-name'] = SP()->options->get('display-name');
@@ -141,10 +171,13 @@ function spa_get_members_data() {
 	$sfoptions['namelink'] = $sfprofile['namelink'];
 	
 	$sfPrivacy = SP()->options->get('spPrivacy');
-	$sfoptions['posts'] = $sfPrivacy['posts'];
-	$sfoptions['number'] = $sfPrivacy['number'];
-	$sfoptions['erase'] = $sfPrivacy['erase'];
-	$sfoptions['mess'] = $sfPrivacy['mess'];
+	if($sfPrivacy){
+		$sfoptions['posts'] = isset($sfPrivacy['posts']) ? $sfPrivacy['posts'] : false;
+		$sfoptions['number'] = isset($sfPrivacy['number']) ? $sfPrivacy['number'] : '';
+		$sfoptions['erase'] = $sfPrivacy['erase'];
+		$sfoptions['mess'] = isset($sfPrivacy['mess']) ? $sfPrivacy['mess'] : '';
+	}
+	
 
 	return $sfoptions;
 }
@@ -154,31 +187,36 @@ function spa_get_email_data() {
 
 	# Load New User Email details
 	$sfmail = SP()->options->get('sfnewusermail');
-	$sfoptions['sfusespfreg'] = $sfmail['sfusespfreg'];
-	$sfoptions['sfnewusersubject'] = SP()->displayFilters->title($sfmail['sfnewusersubject']);
-	$sfoptions['sfnewusertext'] = SP()->displayFilters->title($sfmail['sfnewusertext']);
+	if($sfmail){
+		$sfoptions['sfusespfreg'] = isset($sfmail['sfusespfreg']) ? $sfmail['sfusespfreg']:false;
+		$sfoptions['sfnewusersubject'] = SP()->displayFilters->title(isset($sfmail['sfnewusersubject'])?$sfmail['sfnewusersubject']:'');
+		$sfoptions['sfnewusertext'] = SP()->displayFilters->title(isset($sfmail['sfnewusertext'])? $sfmail['sfnewusertext'] :'');
+	}
 
 	# Load Email Filter Options
 	$sfmail = SP()->options->get('sfmail');
-	$sfoptions['sfmailsender'] = $sfmail['sfmailsender'];
-	$sfoptions['sfmailfrom'] = $sfmail['sfmailfrom'];
-	$sfoptions['sfmaildomain'] = $sfmail['sfmaildomain'];
-	$sfoptions['sfmailuse'] = $sfmail['sfmailuse'];
+	if($sfmail){
+		$sfoptions['sfmailsender'] = isset($sfmail['sfmailsender']) ? $sfmail['sfmailsender'] : '';
+		$sfoptions['sfmailfrom'] = isset($sfmail['sfmailfrom']) ? $sfmail['sfmailfrom'] : '';
+		$sfoptions['sfmaildomain'] = isset($sfmail['sfmaildomain']) ? $sfmail['sfmaildomain'] : '';
+		$sfoptions['sfmailuse'] = isset($sfmail['sfmailuse']) ? $sfmail['sfmailuse']:false;
+	}
 
 	return $sfoptions;
 }
 
 function spa_get_newposts_data() {
 	$sfcontrols = SP()->options->get('sfcontrols');
+	if($sfcontrols){
+		$sfoptions['sfdefunreadposts'] = $sfcontrols['sfdefunreadposts']; // 50 default
+		$sfoptions['sfusersunread'] = isset($sfcontrols['sfusersunread']) ? $sfcontrols['sfusersunread'] : false;
+		$sfoptions['sfmaxunreadposts'] = $sfcontrols['sfmaxunreadposts']; 
 
-	$sfoptions['sfdefunreadposts'] = $sfcontrols['sfdefunreadposts'];
-	$sfoptions['sfusersunread'] = $sfcontrols['sfusersunread'];
-	$sfoptions['sfmaxunreadposts'] = $sfcontrols['sfmaxunreadposts'];
-
-	$sfoptions['flagsuse'] = $sfcontrols['flagsuse'];
-	$sfoptions['flagstext'] = $sfcontrols['flagstext'];
-	$sfoptions['flagsbground'] = $sfcontrols['flagsbground'];
-	$sfoptions['flagscolor'] = $sfcontrols['flagscolor'];
+		$sfoptions['flagsuse'] = isset($sfcontrols['flagsuse']) ? $sfcontrols['flagsuse'] : false;
+		$sfoptions['flagstext'] = isset($sfcontrols['flagstext']) ? $sfcontrols['flagstext'] : '';
+		$sfoptions['flagsbground'] = $sfcontrols['flagsbground'];
+		$sfoptions['flagscolor'] = $sfcontrols['flagscolor'];
+	}
 
 	$sfoptions['topiccache'] = SP()->options->get('topic_cache');
 

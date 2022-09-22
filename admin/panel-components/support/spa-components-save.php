@@ -107,10 +107,12 @@ function spa_save_login_data() {
 
 	# RPX support
 	$sfrpx = SP()->options->get('sfrpx');
-	$oldrpx = $sfrpx['sfrpxenable'];
-	$sfrpx['sfrpxenable'] = isset($_POST['sfrpxenable']);
-	$sfrpx['sfrpxkey'] = SP()->filters->str($_POST['sfrpxkey']);
-	$sfrpx['sfrpxredirect'] = SP()->saveFilters->cleanurl($_POST['sfrpxredirect']);
+	if(!empty($sfrpx)){
+		$oldrpx  = isset($sfrpx['sfrpxenable']) ? $sfrpx['sfrpxenable'] : false;
+		$sfrpx['sfrpxenable'] = isset($_POST['sfrpxenable']);
+		$sfrpx['sfrpxkey'] = SP()->filters->str($_POST['sfrpxkey']);
+		$sfrpx['sfrpxredirect'] = SP()->saveFilters->cleanurl(isset($_POST['sfrpxredirect']) ? $_POST['sfrpxredirect'] : "" );
+	}
 
 	# change in RPX support?
 	if (!$oldrpx && $sfrpx['sfrpxenable']) {

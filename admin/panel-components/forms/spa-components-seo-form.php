@@ -28,15 +28,15 @@ function spa_components_seo_form() {
 	spa_paint_open_tab(/*SP()->primitives->admin_text('Components').' - '.*/SP()->primitives->admin_text('SEO'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Page/Browser Title (SEO)'), true, 'seo-plugin-integration');
-				spa_paint_checkbox(SP()->primitives->admin_text('Overwrite page/browser title with ours'), 'sfseo_overwrite', $sfcomps['sfseo_overwrite']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Include blog name in page/browser title'), 'sfseo_blogname', $sfcomps['sfseo_blogname']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Include page name in page/browser title'), 'sfseo_pagename', $sfcomps['sfseo_pagename']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Display page name on forum home page (Group View) only'), 'sfseo_homepage', $sfcomps['sfseo_homepage']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Include forum name in page/browser title'), 'sfseo_forum', $sfcomps['sfseo_forum']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Include topic name in page/browser title'), 'sfseo_topic', $sfcomps['sfseo_topic']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Exclude forum name in page/browser title on topic views only'), 'sfseo_noforum', $sfcomps['sfseo_noforum']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Include non-forum page view names (ie profile, member list, etc) in page/browser title'), 'sfseo_page', $sfcomps['sfseo_page']);
-				spa_paint_input(SP()->primitives->admin_text('Title separator'), 'sfseo_sep', $sfcomps['sfseo_sep']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Overwrite page/browser title with ours'), 'sfseo_overwrite', isset($sfcomps['sfseo_overwrite']) ? $sfcomps['sfseo_overwrite'] : false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Include blog name in page/browser title'), 'sfseo_blogname', isset($sfcomps['sfseo_blogname']) ? $sfcomps['sfseo_blogname'] : false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Include page name in page/browser title'), 'sfseo_pagename', isset($sfcomps['sfseo_pagename']) ? $sfcomps['sfseo_pagename'] : false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Display page name on forum home page (Group View) only'), 'sfseo_homepage',isset($sfcomps['sfseo_homepage']) ? $sfcomps['sfseo_homepage'] : false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Include forum name in page/browser title'), 'sfseo_forum', isset($sfcomps['sfseo_forum']) ? $sfcomps['sfseo_forum'] : false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Include topic name in page/browser title'), 'sfseo_topic', isset($sfcomps['sfseo_topic']) ? $sfcomps['sfseo_topic'] : false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Exclude forum name in page/browser title on topic views only'), 'sfseo_noforum',  isset($sfcomps['sfseo_noforum']) ? $sfcomps['sfseo_noforum'] : false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Include non-forum page view names (ie profile, member list, etc) in page/browser title'), 'sfseo_page', isset($sfcomps['sfseo_page']) ? $sfcomps['sfseo_page'] : false);
+				spa_paint_input(SP()->primitives->admin_text('Title separator'), 'sfseo_sep', isset($sfcomps['sfseo_sep']) ? $sfcomps['sfseo_sep'] : "");
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
@@ -70,9 +70,9 @@ function spa_components_seo_form() {
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Open Graph'), true, 'seo-open-graph');
-				spa_paint_checkbox(SP()->primitives->admin_text('Output Open Graph meta tags on forum views'), 'sfseo_og', $sfcomps['sfseo_og']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Use Image Attachment on Topic View if available'), 'seo_og_attachment', $sfcomps['seo_og_attachment']);
-				spa_paint_input(SP()->primitives->admin_text('Specify Open Graph type (default is website)'), 'seo_og_type', $sfcomps['seo_og_type']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Output Open Graph meta tags on forum views'), 'sfseo_og', isset($sfcomps['sfseo_og']) ? $sfcomps['sfseo_og'] : false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Use Image Attachment on Topic View if available'), 'seo_og_attachment', isset($sfcomps['seo_og_attachment']) ? $sfcomps['seo_og_attachment'] : false);
+				spa_paint_input(SP()->primitives->admin_text('Specify Open Graph type (default is website)'), 'seo_og_type', isset($sfcomps['seo_og_type']) ? $sfcomps['seo_og_type'] : "");
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 

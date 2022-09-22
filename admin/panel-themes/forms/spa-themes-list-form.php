@@ -11,6 +11,9 @@ if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 }
 
 function spa_themes_list_form() {
+	global $adminhelpfile;
+	//$adminhelpfile = 'admin-admins';
+
 	// get current theme
 	$curTheme = SP()->options->get( 'sp_current_theme' );
 

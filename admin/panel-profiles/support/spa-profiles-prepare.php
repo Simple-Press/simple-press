@@ -11,8 +11,11 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function spa_get_options_data() {
 	$sfprofile = SP()->options->get('sfprofile');
 	$sfsigimagesize = SP()->options->get('sfsigimagesize');
-	$sfprofile['sfsigwidth'] = $sfsigimagesize['sfsigwidth'];
-	$sfprofile['sfsigheight'] = $sfsigimagesize['sfsigheight'];
+	if($sfsigimagesize){
+		$sfprofile['sfsigwidth'] = isset($sfsigimagesize['sfsigwidth']) ? $sfsigimagesize['sfsigwidth'] : null;
+		$sfprofile['sfsigheight'] = isset($sfsigimagesize['sfsigheight']) ? $sfsigimagesize['sfsigheight'] : null;
+	}
+	
 	return $sfprofile;
 }
 

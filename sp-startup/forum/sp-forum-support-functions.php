@@ -332,7 +332,9 @@ function sp_setup_page_title($title, $id) {
 		if (!empty(SP()->core->forumData['display']['pagetitle']['banner']) || (SP()->core->forumData['display']['pagetitle']['notitle'])) return '';
 
 		$seo   = SP()->options->get('sfseo');
-		$title = sp_setup_title($title, ' '.$seo['sfseo_sep'].' ');
+		if(!empty($seo)){
+			$title = sp_setup_title($title, ' '.isset($seo['sfseo_sep']) ? $seo['sfseo_sep']:''.' ');
+		}
 	}
 
 	return $title;
@@ -379,13 +381,13 @@ function sp_title_hook_add($nav_menu) {
 function sp_setup_title($title, $sep) {
 	$pTitle = $title;
 	$sfseo  = SP()->options->get('sfseo');
+	if(!empty($sfseo)){
+		if (isset($sfseo['sfseo_overwrite'])) $title = '';
 
-	if ($sfseo['sfseo_overwrite']) $title = '';
+		if (isset($sfseo['sfseo_blogname'])) $title = get_bloginfo('name').$sep.$title;
 
-	if ($sfseo['sfseo_blogname']) $title = get_bloginfo('name').$sep.$title;
-
-	if ($sfseo['sfseo_pagename']) $title = single_post_title('', false).$sep.$title;
-
+		if (isset($sfseo['sfseo_pagename'])) $title = single_post_title('', false).$sep.$title;
+	}
 	$page      = (!empty(SP()->rewrites->pageData['page']) && SP()->rewrites->pageData['page'] > 1) ? $sep.SP()->primitives->front_text('Page').' '.SP()->rewrites->pageData['page'] : '';
 	$forumslug = (!empty(SP()->rewrites->pageData['forumslug'])) ? SP()->rewrites->pageData['forumslug'] : '';
 	$topicslug = (!empty(SP()->rewrites->pageData['topicslug'])) ? SP()->rewrites->pageData['topicslug'] : '';
@@ -400,7 +402,7 @@ function sp_setup_title($title, $sep) {
 
 	if (!empty($topicslug) && !empty(SP()->rewrites->pageData['topicname']) && $sfseo['sfseo_topic']) $title = SP()->displayFilters->title(SP()->rewrites->pageData['topicname']).$page.$sep.$title;
 
-	if ($sfseo['sfseo_page']) {
+	if (isset($sfseo['sfseo_page'])) {
 		$profile = (!empty(SP()->rewrites->pageData['profile'])) ? SP()->rewrites->pageData['profile'] : '';
 		if (!empty($profile) && $profile == 'edit') $title = SP()->primitives->front_text('Edit Member Profile').$sep.$title;
 		if (!empty($profile) && $profile == 'show') $title = SP()->primitives->front_text('Member Profile').$sep.$title;
