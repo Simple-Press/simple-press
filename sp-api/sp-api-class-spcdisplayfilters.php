@@ -472,7 +472,7 @@ class spcDisplayFilters {
 		}
 
 		# let plugins play with the adjusted image elements
-		$image_array = compact($thissrc.$thiswidth.$thisformat.$thistitle.$thisalt);
+		$image_array = compact('thissrc', 'thiswidth', 'thisformat', 'thistitle', 'thisalt' );
 		$image_array = apply_filters('sph_display_image_data', $image_array, $src, $width, $height, $title, $alt, $style, $class);
 		extract($image_array);
 
