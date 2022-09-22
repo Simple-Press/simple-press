@@ -37,6 +37,10 @@ add_filter('sph_editor_textarea', 'sp_plain_textarea', 1, 5);
 # Load the qt html filter file
 # ----------------------------------------------
 function sp_plain_load_filters($editor) {
+	# set default editor if $editor parameter is empty
+	if (true === empty($editor)) {
+		$editor = PLAINTEXT;
+	}
 	if ($editor == PLAINTEXT) require_once SPPTDIR.'/sp-text-editor-filters.php';
 }
 
@@ -44,6 +48,10 @@ function sp_plain_load_filters($editor) {
 # Load and Initialise this Editor if needed
 # ----------------------------------------------
 function sp_plain_load($editor) {
+	# set default editor if $editor parameter is empty
+	if (true === empty($editor)) {
+		$editor = PLAINTEXT;
+	}
 	if ($editor == PLAINTEXT) {
 		$script = (defined('SP_SCRIPTS_DEBUG') && SP_SCRIPTS_DEBUG) ? SP_PLUGIN_URL.'/forum/editor/sp-text-editor.js' : SP_PLUGIN_URL.'/forum/editor/sp-text-editor.min.js';
 		wp_enqueue_script('speditor', $script, array('jquery'), SP_SCRIPTS_VERSION, true);
@@ -54,6 +62,10 @@ function sp_plain_load($editor) {
 # Display Textarea Input control
 # ----------------------------------------------
 function sp_plain_textarea($out, $areaid, $content, $editor, $tab) {
+	# set default editor if $editor parameter is empty
+	if (true === empty($editor)) {
+		$editor = PLAINTEXT;
+	}	
 	if ($editor == PLAINTEXT) $out .= '<textarea  tabindex="'.$tab.'" class="spControl spPtEditor" name="'.$areaid.'" id="'.$areaid.'" cols="80" rows="15">'.$content.'</textarea>';
 
 	return $out;
