@@ -32,9 +32,10 @@ will attempt to filter it correctly.<br /><br />
 This option will set Simple:Press to load most of its scripts into the footer. This should give a better level of performance of page
 loading. If you encounter any script errors or problems try turning this option off before seeking support.<br /><br />
 <b>Force the strict use of the WordPress API</b><br />
-To aid the perception that content is loading, Simple:Press does not adhere strictly to the WordPress API when displaying content. In some cases this
-can be undesirable. Using this option will ensure the API is used in full but we would recommend only turning this on if necessary.<br />
-Note: This MUST be enabled if a WP Full Site Editing Theme is used.
+To aid the perception that content is loading, Simple:Press does not adhere strictly to the WordPress API when displaying content. <br /><br />
+In some cases this can be undesirable. Using this option will ensure the API is used in full but we would recommend only turning this on if necessary.<br /><br />
+This MUST be enabled if a WP Full Site Editing Theme is used.<br /><br />
+This must not be enabled for certain page builders such as Beaver Builder (which means that Beaver Builder combined with an FSE theme cannot be used with Simple:Press).
 [end]
 
 [theme-options]

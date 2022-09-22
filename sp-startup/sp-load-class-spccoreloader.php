@@ -105,6 +105,9 @@ class spcCoreLoader {
 	private function setup_constants() {
 		# Include core support functions early
 		require_once SPBOOT.'core/sp-core-support-functions.php';
+		
+		# Include 3rd party compatibility files
+		require_once SPBOOT.'core/sp-core-compatibility.php';
 
 		# set up paths data
 		SP()->plugin->storage = SP()->options->get('sfconfig');
