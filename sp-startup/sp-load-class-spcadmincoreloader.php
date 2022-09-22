@@ -163,18 +163,13 @@ class spcAdminCoreLoader {
 		# spa_check_wp_plugin_page()
 		# Used to load jquery dialog on the wp plugin page for out uninstall dialog
 		# ------------------------------------------------------------------
-		add_action('admin_enqueue_scripts', array($this,
-		                                          'check_wp_plugin_page'));
+		add_action('admin_enqueue_scripts', array($this, 'check_wp_plugin_page'));
 
 		# fire action to indicate hooks complete
 		do_action('sph_admin_core_hooks_complete');
 		
 		# action for edd update and license check function
-		
-		add_action('wp_dashboard_setup', 'spa_dashboard_addon_news_setup', 1);
-		
 		add_action('core_upgrade_preamble', 'spa_check_plugin_addon_update' );
-		
 		add_action('core_upgrade_preamble', 'spa_check_theme_addon_update' );
 		
 		#filter for changelog of plugins and themes
@@ -182,6 +177,11 @@ class spcAdminCoreLoader {
 		
 	}
 
+	/**
+	 * Load jquery dialog on the wp plugin page for out uninstall dialog.
+	 *
+	 * Action Hook: admin_enqueue_scripts
+	 */
 	public function check_wp_plugin_page() {
 		
 		$screen = get_current_screen();
@@ -189,7 +189,6 @@ class spcAdminCoreLoader {
 			wp_enqueue_script('jquery-ui-core');
 			wp_enqueue_script('jquery-ui-widget');
 			wp_enqueue_script('jquery-ui-dialog');
-
 			wp_enqueue_style('wp-jquery-ui-dialog');
 		}
 	}
