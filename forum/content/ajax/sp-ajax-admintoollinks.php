@@ -342,7 +342,7 @@ function sp_render_topic_tools($topic, $forum, $page) {
 	return $tout;
 }
 
-function sp_render_common_tools($forum, $topic, $post=0, $page=0, $br) {
+function sp_render_common_tools($forum, $topic, $post=0, $page=0, $br='') {
 	$out = '';
 	$tout = '';
 
