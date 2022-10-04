@@ -242,7 +242,7 @@ function sp_get_membership_stats() {
 	$query         = new stdClass;
 	$query->table  = SPMEMBERS;
 	$query->fields = 'count(*) as count';
-	if ($opts['hidemembers']) {
+	if (isset($opts['hidemembers']) && $opts['hidemembers'] != false) {
 		$query->join  = array(SPMEMBERSHIPS.' ON '.SPMEMBERS.'.user_id = '.SPMEMBERSHIPS.'.user_id', SPUSERGROUPS.' ON '.SPMEMBERSHIPS.'.usergroup_id = '.SPUSERGROUPS.'.usergroup_id');
 		$query->where = 'hide_stats = 0';
 	}

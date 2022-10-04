@@ -345,7 +345,7 @@ function sp_UserAvatar($args = '', $contextData = '') {
 #
 # --------------------------------------------------------------------------------------
 
-function sp_UserForumRank($args = '', $ranks) {
+function sp_UserForumRank($args = '', $ranks = null) {
 	$defs = array('titleClass' => 'spForumRank',
 	              'badgeClass' => 'spForumRank',
 	              'showTitle'  => 1,
@@ -398,7 +398,7 @@ function sp_UserForumRank($args = '', $ranks) {
 #
 # --------------------------------------------------------------------------------------
 
-function sp_UserSpecialRank($args = '', $ranks) {
+function sp_UserSpecialRank($args = '', $ranks = null) {
 	$defs = array('titleClass' => 'spSpecialRank',
 	              'badgeClass' => 'spSpecialRank',
 	              'showTitle'  => 1,
@@ -453,7 +453,7 @@ function sp_UserSpecialRank($args = '', $ranks) {
 #
 # --------------------------------------------------------------------------------------
 
-function sp_UserMembership($args = '', $memberships) {
+function sp_UserMembership($args = '', $memberships = null) {
 	$defs = array('titleClass' => 'spUserMemberships',
 	              'badgeClass' => 'spUserMemberships',
 	              'showTitle'  => 1,
@@ -3287,7 +3287,7 @@ function sp_Signature($args, $sig) {
 #
 # --------------------------------------------------------------------------------------
 
-function sp_OnlineStatus($args = '', $user, $userProfile = '') {
+function sp_OnlineStatus($args = '', $user = null, $userProfile = '') {
 	$defs = array('tagClass'    => 'spOnlineStatus',
 	              'onlineIcon'  => 'sp_UserOnline.png',
 	              'offlineIcon' => 'sp_UserOffline.png',

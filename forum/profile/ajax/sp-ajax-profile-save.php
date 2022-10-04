@@ -258,31 +258,46 @@ function sp_UpdateProfile() {
 		case 'edit-identities': # update identity settings
 			# update the user identities
 			$update = apply_filters('sph_ProfileUserAIMUpdate', true);
-			if ($update) update_user_meta($thisUser, 'aim', SP()->saveFilters->title(trim($_POST['aim'])));
+			
+			$aim        = sanitize_text_field(filter_input(INPUT_POST, 'aim', FILTER_UNSAFE_RAW));
+			$yim        = sanitize_text_field(filter_input(INPUT_POST, 'yim', FILTER_UNSAFE_RAW));
+			$jabber     = sanitize_text_field(filter_input(INPUT_POST, 'jabber', FILTER_UNSAFE_RAW));
+			$msn        = sanitize_text_field(filter_input(INPUT_POST, 'msn', FILTER_UNSAFE_RAW));
+			$icq        = sanitize_text_field(filter_input(INPUT_POST, 'icq', FILTER_UNSAFE_RAW));
+			$skype      = sanitize_text_field(filter_input(INPUT_POST, 'skype', FILTER_UNSAFE_RAW));
+			$facebook   = sanitize_text_field(filter_input(INPUT_POST, 'facebook', FILTER_UNSAFE_RAW));
+			$myspace    = sanitize_text_field(filter_input(INPUT_POST, 'myspace', FILTER_UNSAFE_RAW));
+			$twitter    = sanitize_text_field(filter_input(INPUT_POST, 'twitter', FILTER_UNSAFE_RAW));
+			$linkedin   = sanitize_text_field(filter_input(INPUT_POST, 'linkedin', FILTER_UNSAFE_RAW));
+			$youtube    = sanitize_text_field(filter_input(INPUT_POST, 'youtube', FILTER_UNSAFE_RAW));
+			$googleplus = sanitize_text_field(filter_input(INPUT_POST, 'googleplus', FILTER_UNSAFE_RAW));
+			$instagram  = sanitize_text_field(filter_input(INPUT_POST, 'instagram', FILTER_UNSAFE_RAW));
+			
+			if ($update) update_user_meta($thisUser, 'aim', SP()->saveFilters->title(trim($aim)));
 			$update = apply_filters('sph_ProfileUserYahooUpdate', true);
-			if ($update) update_user_meta($thisUser, 'yim', SP()->saveFilters->title(trim($_POST['yim'])));
+			if ($update) update_user_meta($thisUser, 'yim', SP()->saveFilters->title(trim($yim)));
 			$update = apply_filters('sph_ProfileUserGoogleUpdate', true);
-			if ($update) update_user_meta($thisUser, 'jabber', SP()->saveFilters->title(trim($_POST['jabber'])));
+			if ($update) update_user_meta($thisUser, 'jabber', SP()->saveFilters->title(trim($jabber)));
 			$update = apply_filters('sph_ProfileUserMSNUpdate', true);
-			if ($update) update_user_meta($thisUser, 'msn', SP()->saveFilters->title(trim($_POST['msn'])));
+			if ($update) update_user_meta($thisUser, 'msn', SP()->saveFilters->title(trim($msn)));
 			$update = apply_filters('sph_ProfileUserICQUpdate', true);
-			if ($update) update_user_meta($thisUser, 'icq', SP()->saveFilters->title(trim($_POST['icq'])));
+			if ($update) update_user_meta($thisUser, 'icq', SP()->saveFilters->title(trim($icq)));
 			$update = apply_filters('sph_ProfileUserSkypeUpdate', true);
-			if ($update) update_user_meta($thisUser, 'skype', SP()->saveFilters->title(trim($_POST['skype'])));
+			if ($update) update_user_meta($thisUser, 'skype', SP()->saveFilters->title(trim($skype)));
 			$update = apply_filters('sph_ProfileUserFacebookUpdate', true);
-			if ($update) update_user_meta($thisUser, 'facebook', SP()->saveFilters->title(trim($_POST['facebook'])));
+			if ($update) update_user_meta($thisUser, 'facebook', SP()->saveFilters->title(trim($facebook)));
 			$update = apply_filters('sph_ProfileUserMySpaceUpdate', true);
-			if ($update) update_user_meta($thisUser, 'myspace', SP()->saveFilters->title(trim($_POST['myspace'])));
+			if ($update) update_user_meta($thisUser, 'myspace', SP()->saveFilters->title(trim($myspace)));
 			$update = apply_filters('sph_ProfileUserTwitterUpdate', true);
-			if ($update) update_user_meta($thisUser, 'twitter', SP()->saveFilters->title(trim($_POST['twitter'])));
+			if ($update) update_user_meta($thisUser, 'twitter', SP()->saveFilters->title(trim($twitter)));
 			$update = apply_filters('sph_ProfileUserLinkedInUpdate', true);
-			if ($update) update_user_meta($thisUser, 'linkedin', SP()->saveFilters->title(trim($_POST['linkedin'])));
+			if ($update) update_user_meta($thisUser, 'linkedin', SP()->saveFilters->title(trim($linkedin)));
 			$update = apply_filters('sph_ProfileUserYouTubeUpdate', true);
-			if ($update) update_user_meta($thisUser, 'youtube', SP()->saveFilters->title(trim($_POST['youtube'])));
+			if ($update) update_user_meta($thisUser, 'youtube', SP()->saveFilters->title(trim($youtube)));
 			$update = apply_filters('sph_ProfileUserGooglePlusUpdate', true);
-			if ($update) update_user_meta($thisUser, 'googleplus', SP()->saveFilters->title(trim($_POST['googleplus'])));
+			if ($update) update_user_meta($thisUser, 'googleplus', SP()->saveFilters->title(trim($googleplus)));
 			$update = apply_filters('sph_ProfileUserInstagramUpdate', true);		
-			if ($update) update_user_meta($thisUser, 'instagram', SP()->saveFilters->title(trim($_POST['instagram'])));
+			if ($update) update_user_meta($thisUser, 'instagram', SP()->saveFilters->title(trim($instagram)));
 			
 			# fire action for plugins
 			$message = apply_filters('sph_UpdateProfileIdentities', $message, $thisUser);

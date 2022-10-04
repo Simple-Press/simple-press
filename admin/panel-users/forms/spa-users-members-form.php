@@ -49,7 +49,7 @@ function spa_users_members_form() {
 				'rank'            => SP()->primitives->admin_text( 'Forum Rank' ),
 				'user_registered' => SP()->primitives->admin_text( 'Registered On' ),
 				'lastvisit'       => SP()->primitives->admin_text( 'Last Visit' ),
-				'more'            => SP()->primitives->admin_text( '' ),
+				'more'            => SP()->primitives->admin_text( 'More' ),
 			);
 
 			return $columns;
@@ -150,7 +150,8 @@ function spa_users_members_form() {
 										echo sp_UserAvatar( "tagClass=$avatarClass&size=$avatarSize&imgClass=$imgClass&link=none&context=user&echo=0", $rec['user_id'] );
 										break;
 									default:
-										echo $rec[ $column_name ];
+										if(isset($rec[ $column_name ]))
+											echo $rec[ $column_name ];
 								}
 								echo '</td>';
 						}

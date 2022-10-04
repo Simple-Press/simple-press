@@ -212,7 +212,10 @@ function spa_activate_plugin() {
 		# set up user auto removal cron job
 		wp_clear_scheduled_hook('sph_cron_user');
 		$sfuser = SP()->options->get('sfuserremoval');
-		if ($sfuser['sfuserremove']) wp_schedule_event(time(), 'daily', 'sph_cron_user');
+		if($sfuser){
+			if ($sfuser['sfuserremove']) wp_schedule_event(time(), 'daily', 'sph_cron_user');
+		}
+		
 		
 		# set up daily sp_check_addons_status clean up cron
 		wp_clear_scheduled_hook('sph_check_addons_status_interval');

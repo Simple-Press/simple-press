@@ -49,7 +49,6 @@ class spcFilters {
 	}
 
 	public function str($string) {
-		if (get_magic_quotes_gpc()) $string = stripslashes($string);
 		$string = $this->esc_sql($string);
 		$string = wp_kses($string, array());
 

@@ -1513,15 +1513,23 @@ function sp_PostIndexContent($args = '', $label = '') {
 		}
 	}
 
+	# Hook: Used in sp-startup/core/sp-core-compatibility.php
+	do_action( 'sph_before_PostIndexContent' );
+
 	$ob = SP()->options->get('sfuseob');
 	if (!$ob) {
+		# strict use of the wp api is NOT enabled.
 		remove_filter('the_content', 'sp_render_forum', 1);
 		$out .= apply_filters('the_content', $post_content);
 		add_filter('the_content', 'sp_render_forum', 1);
 	} else {
+		# strict use of the wp api is enabled.
 		$out .= $post_content;
 	}
 
+	# Hook: Used in sp-startup/core/sp-core-compatibility.php	
+	do_action( 'sph_after_PostIndexContent' );
+	
 	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexContent', $out, $a);
 

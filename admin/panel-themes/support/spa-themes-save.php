@@ -37,7 +37,8 @@ function spa_save_theme_data() {
             } else {
                 $f = SPTHEMEBASEDIR.$theme.'/styles/overlays/'.$color.'.php';
             }
-			$icons = SP()->filters->str(SP()->theme->get_overlay_icons($f));
+			//$icons = SP()->filters->str(SP()->theme->get_overlay_icons($f));
+			$icons = SP()->theme->get_overlay_icons($f);
 		}
 		$current['icons'] = $icons;
 

@@ -20,7 +20,7 @@ function spa_save_usergroups_new_usergroup() {
     }
 
     $usergroupdesc = SP()->saveFilters->title(trim($_POST['usergroup_desc']));
-    $usergroupbadge = SP()->saveFilters->filename(trim($_POST['usergroup_badge']));
+    $usergroupbadge = SP()->saveFilters->filename(trim(isset($_POST['usergroup_badge']) ? $_POST['usergroup_badge'] : null));
 
     if (isset($_POST['usergroup_join'])) {
 		$usergroupjoin = 1;
@@ -64,7 +64,7 @@ function spa_save_usergroups_edit_usergroup() {
     $usergroup_id = SP()->filters->integer($_POST['usergroup_id']);
     $usergroupdata['usergroup_name'] = SP()->saveFilters->title(trim($_POST['usergroup_name']));
     $usergroupdata['usergroup_desc'] = SP()->saveFilters->title(trim($_POST['usergroup_desc']));
-    $usergroupdata['usergroup_badge'] = SP()->saveFilters->filename(trim($_POST['usergroup_badge']));
+    $usergroupdata['usergroup_badge'] = SP()->saveFilters->filename(trim(isset($_POST['usergroup_badge']) ? $_POST['usergroup_badge'] : null));
     if (isset($_POST['usergroup_join'])) { $usergroupdata['usergroup_join'] = 1; } else { $usergroupdata['usergroup_join'] = 0; }
     if (isset($_POST['hide_stats'])) { $usergroupdata['hide_stats'] = 1; } else { $usergroupdata['hide_stats'] = 0; }
     if (isset($_POST['usergroup_is_moderator'])) { $usergroupdata['usergroup_is_moderator'] = 1; } else { $usergroupdata['usergroup_is_moderator'] = 0; }
@@ -101,10 +101,13 @@ function spa_save_usergroups_delete_usergroup() {
 
     # dont allow updates to the default user groups
     $usergroup = spa_get_usergroups_row($usergroup_id);
-    if ($usergroup->usergroup_locked) {
-        $mess = SP()->primitives->admin_text('Sorry, the default User Groups cannot be deleted');
-        return $mess;
-    }
+
+    // Undefined property: stdClass::$usergroup_locked 
+    // There is no field "usergroup_locked" in usergroups.
+    // if ($usergroup->usergroup_locked) {
+    //     $mess = SP()->primitives->admin_text('Sorry, the default User Groups cannot be deleted');
+    //     return $mess;
+    // }
 
     # remove all memberships for this user group
     SP()->DB->execute("DELETE FROM ".SPMEMBERSHIPS." WHERE usergroup_id=".$usergroup_id);

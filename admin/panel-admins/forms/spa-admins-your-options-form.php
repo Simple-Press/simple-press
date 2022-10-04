@@ -35,9 +35,9 @@ function spa_admins_your_options_form() {
 					echo '</div>';
 				}
 
-				spa_paint_checkbox(SP()->primitives->admin_text('Receive email notification on new topic/post'), 'sfnotify', $sfadminsettings['sfnotify']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Receive notification (within forum - not email) on topic/post edits'), 'notify-edited', $sfadminsettings['notify-edited']);
-				spa_paint_checkbox(SP()->primitives->admin_text('Bypass the Simple:Press logout redirect'), 'bypasslogout', $sfadminsettings['bypasslogout']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Receive email notification on new topic/post'), 'sfnotify', $sfadminsettings['sfnotify'] ?? false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Receive notification (within forum - not email) on topic/post edits'), 'notify-edited', $sfadminsettings['notify-edited'] ?? false);
+				spa_paint_checkbox(SP()->primitives->admin_text('Bypass the Simple:Press logout redirect'), 'bypasslogout', $sfadminsettings['bypasslogout'] ?? false);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();		
 		
@@ -46,7 +46,7 @@ function spa_admins_your_options_form() {
 		if (SP()->user->thisUser->admin) {
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Set Your Moderator Options'), 'true', 'set-moderator-options');
-					spa_paint_checkbox(SP()->primitives->admin_text('Grant all moderators the same option settings as above'), 'setmods', $sfadminsettings['setmods']);
+					spa_paint_checkbox(SP()->primitives->admin_text('Grant all moderators the same option settings as above'), 'setmods', $sfadminsettings['setmods'] ?? false);
 
 					echo '<div class="sf-alert-block sf-info"><strong>';
 					SP()->primitives->admin_etext('If you check this option so that all your moderators inherit the settings above - note that after you update this panel this checkbox will return to an unchecked state');

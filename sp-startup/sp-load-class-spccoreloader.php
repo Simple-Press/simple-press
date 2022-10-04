@@ -105,6 +105,9 @@ class spcCoreLoader {
 	private function setup_constants() {
 		# Include core support functions early
 		require_once SPBOOT.'core/sp-core-support-functions.php';
+		
+		# Include 3rd party compatibility files
+		require_once SPBOOT.'core/sp-core-compatibility.php';
 
 		# set up paths data
 		SP()->plugin->storage = SP()->options->get('sfconfig');
@@ -125,6 +128,8 @@ class spcCoreLoader {
 	 * @return void
 	 */
 	private function includes() {
+		# Include DB statistics
+		require_once SP_PLUGIN_DIR.'/forum/database/sp-db-statistics.php';
 		# Include core decprecated function list
 		include_once SPBOOT.'core/sp-core-deprecated.php';
 
@@ -260,11 +265,13 @@ class spcCoreLoader {
 
 		# RPX Support
 		$sfrpx = SP()->options->get('sfrpx');
-		if ($sfrpx['sfrpxenable']) {
-			add_action('parse_request', 'sp_rpx_process_token');
-			add_action('sph_login_head', 'sp_rpx_login_head');
-			add_action('show_user_profile', 'sp_rpx_edit_user_page');
-		}
+		if($sfrpx){
+			if ($sfrpx['sfrpxenable']) {
+				add_action('parse_request', 'sp_rpx_process_token');
+				add_action('sph_login_head', 'sp_rpx_login_head');
+				add_action('show_user_profile', 'sp_rpx_edit_user_page');
+			}
+}
 
 		# Cron hooks
 		if (SP()->core->status != 'Install') {

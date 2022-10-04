@@ -49,8 +49,5 @@ function spa_promotions_1_form() {
 			<div class="spa-promo-button"><a href="https://wpclouddeploy.com/"><?php echo SP()->primitives->admin_text('View all features');?></a></div>
 		</div>
 	</div>
-	<div class="spa-promo-row spa-promo-row3">
-		<h2><?php echo sprintf(SP()->primitives->admin_text_noesc('Get a complete pre-built membership system that includes Simple:Press, a page builder and more <a href="%1s">EasyMembershipSites.io</a>'),'https://www.easymembershipsites.io/?utm_source=simple-press-plugin-promotions-page');?></h2>
-	</div>		
 <?php
 }

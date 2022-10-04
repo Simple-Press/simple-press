@@ -29,7 +29,7 @@ function spa_profiles_options_form() {
 	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Profile Options'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Display Name Format'), true, 'display-name-format');
-				spa_paint_checkbox(SP()->primitives->admin_text('Let member choose display name'), 'nameformat', $sfoptions['nameformat']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Let member choose display name'), 'nameformat', $sfoptions['nameformat'] ?? false);
 				spa_paint_select_start(SP()->primitives->admin_text('Display name format if member cannot choose').'<br />'.SP()->primitives->admin_text('(ignored if member allowed to choose)'), 'fixeddisplayformat', 'fixeddisplayformat');
 				echo spa_display_name_format_options($sfoptions['fixeddisplayformat']);
 				spa_paint_select_end();
@@ -41,24 +41,24 @@ function spa_profiles_options_form() {
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Personal Photos'), true, 'personal-photos');
-				spa_paint_input(SP()->primitives->admin_text('Maximum number of photos allowed'), 'photosmax', $sfoptions['photosmax'], false, false);
-				spa_paint_input(SP()->primitives->admin_text('Number of columns for photo display'), 'photoscols', $sfoptions['photoscols'], false, false);
+				spa_paint_input(SP()->primitives->admin_text('Maximum number of photos allowed'), 'photosmax', $sfoptions['photosmax'] ?? null, false, false);
+				spa_paint_input(SP()->primitives->admin_text('Number of columns for photo display'), 'photoscols', $sfoptions['photoscols'] ?? null, false, false);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Signature Image Size'), true, 'sig-images');
 				echo '<u>'.SP()->primitives->admin_text('If you are allowing signature images (zero = not limited)').':</u>';
-				spa_paint_input(SP()->primitives->admin_text('Maximum signature width (pixels)'), 'sfsigwidth', $sfoptions['sfsigwidth']);
-				spa_paint_input(SP()->primitives->admin_text('Maximum signature height (pixels)'), 'sfsigheight', $sfoptions['sfsigheight']);
+				spa_paint_input(SP()->primitives->admin_text('Maximum signature width (pixels)'), 'sfsigwidth', $sfoptions['sfsigwidth'] ?? 0);
+				spa_paint_input(SP()->primitives->admin_text('Maximum signature height (pixels)'), 'sfsigheight', $sfoptions['sfsigheight'] ?? 0);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('First Forum Visit'), true, 'first-forum-visit');
-				spa_paint_checkbox(SP()->primitives->admin_text('Display profile form on login'), 'firstvisit', $sfoptions['firstvisit']);
+				spa_paint_checkbox(SP()->primitives->admin_text('Display profile form on login'), 'firstvisit', $sfoptions['firstvisit'] ?? false);
             	$show_password_fields = apply_filters('show_password_fields', true);
-        		if ($show_password_fields) spa_paint_checkbox(SP()->primitives->admin_text('Force password change'), 'forcepw', $sfoptions['forcepw']);
+        		if ($show_password_fields) spa_paint_checkbox(SP()->primitives->admin_text('Force password change'), 'forcepw', $sfoptions['forcepw'] ?? false);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
@@ -76,8 +76,8 @@ function spa_profiles_options_form() {
                 if (!is_plugin_active('buddypress/bp-loader.php')) unset($values[2]); # dont show BP option if not active
                 if (!is_plugin_active('mingle/mingle.php')) unset($values[5]); # dont show Mingle option if not active
 				spa_paint_radiogroup(SP()->primitives->admin_text('Display profile information in'), 'displaymode', $values, $sfoptions['displaymode'], false, true);
-				spa_paint_input(SP()->primitives->admin_text('URL for Other page'), 'displaypage', SP()->displayFilters->url($sfoptions['displaypage']), false, true);
-				spa_paint_input(SP()->primitives->admin_text('Query String Variable Name'), 'displayquery', SP()->displayFilters->title($sfoptions['displayquery']), false, true);
+				spa_paint_input(SP()->primitives->admin_text('URL for Other page'), 'displaypage', SP()->displayFilters->url($sfoptions['displaypage'] ?? ''), false, true);
+				spa_paint_input(SP()->primitives->admin_text('Query String Variable Name'), 'displayquery', SP()->displayFilters->title($sfoptions['displayquery'] ?? ''), false, true);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
@@ -87,15 +87,15 @@ function spa_profiles_options_form() {
                 if (!is_plugin_active('buddypress/bp-loader.php')) unset($values[2]); # dont show BP option if not active
                 if (!is_plugin_active('mingle/mingle.php')) unset($values[4]); # dont show Mingle option if not active
 				spa_paint_radiogroup(SP()->primitives->admin_text('Enter profile information In'), 'formmode', $values, $sfoptions['formmode'], false, true);
-				spa_paint_input(SP()->primitives->admin_text('URL for Other page'), 'formpage', SP()->displayFilters->url($sfoptions['formpage']), false, true);
-				spa_paint_input(SP()->primitives->admin_text('Query string variable name'), 'formquery', SP()->displayFilters->title($sfoptions['formquery']), false, true);
+				spa_paint_input(SP()->primitives->admin_text('URL for Other page'), 'formpage', SP()->displayFilters->url($sfoptions['formpage'] ?? ''), false, true);
+				spa_paint_input(SP()->primitives->admin_text('Query string variable name'), 'formquery', SP()->displayFilters->title($sfoptions['formquery'] ?? ''), false, true);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Profile Overview Message'), true, 'profile-message');
 				$submessage = SP()->primitives->admin_text('Text you enter here will be displayed to the User on their profile overview page');
-				spa_paint_wide_textarea(SP()->primitives->admin_text('Profile overview message'), 'sfprofiletext', SP()->editFilters->text($sfoptions['sfprofiletext']), $submessage);
+				spa_paint_wide_textarea(SP()->primitives->admin_text('Profile overview message'), 'sfprofiletext', SP()->editFilters->text($sfoptions['sfprofiletext'] ?? ''), $submessage);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 

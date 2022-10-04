@@ -3,10 +3,10 @@
 Plugin Name: Simple:Press Forums
 Contributors: simplepress, elindydotcom, usermrpapa, yellowswordfish, tahir1235
 Tags: forum, wordpress forum, discussion forum, community forum, forums
-Requires at least: 5.0
-Tested up to: 6.0
-Requires PHP: 7.0
-Stable tag: 6.7.0
+Requires at least: 5.7
+Tested up to: 6.1
+Requires PHP: 7.4
+Stable tag: 6.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,8 +31,6 @@ From multi-level forum structures to post threading and private messages, chance
 Import data into our forum from other forums including bbPress, Asgaros and others.  Get the importer [here](https://simple-press.com/downloads/simple-press-importer-plugin/).
 
 > Go [premium](https://simple-press.com/features/)! Our premium extension will super-charge your forum! [View Simple-Press Forum Premium Pricing Options](https://simple-press.com/simple-press-forums/sp-forums-pricing/)!
-
-And, if you need to build a member focused site with forums and with or without paid subscriptions?  We have you covered there too with our SaaS [EasyMembershipSites.io](https://easymembershipsites.io).
 
 == What does the Simple:Press Forums plugin do? ==
 
@@ -208,7 +206,6 @@ Below is a list of some of the functionality you will find in the premium versio
 
 **Premium Options**
 Purchase one of our premium bundles to get premium support directly from us. [View Pricing Options](https://simple-press.com/simple-press-forums/sp-forums-pricing/)
-Or, use our SaaS version at [Easy Membership Sites](https://easymembershipsites.io/)
 
 **Compatibility**
 Simple:Press was built to be compatible with most themes, both free and commercial. 
@@ -325,6 +322,13 @@ The editor in the free version is a pure text editor.  However, the premium vers
 
 == Changelog ==
 
+= 6.8.0 =
+* New
+	* G00000: Compatibility with PHP 8.x.  If using premium add-ons, new versions will be required.
+	
+* Tweak
+	* G00000: Show error code when there's an error with the license process.
+
 = 6.7.0 =
 * New
 	* G00122: Add option to sort by the membership column in the FORUM->USERS->MEMBER INFORMATION list.	
@@ -376,7 +380,7 @@ The editor in the free version is a pure text editor.  However, the premium vers
 
 = 6.6.0 =
 * New
-	* G00000: Introduction of a "white label" mode that removes most references to Simple:Press.  This is being used and battle-tested in production on easymembershipsites.io.
+	* G00000: Introduction of a "white label" mode that removes most references to Simple:Press.
 
 * Improved
 	* G00000: Updated the Modern2020 theme to the latest version.
