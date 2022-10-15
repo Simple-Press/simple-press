@@ -56,7 +56,7 @@ function sp_get_system_status() {
 
 		# first check that an uograde is actually necessary or whether we can do it silently
 		if (SP()->options->get('sfforceupgrade') == false && $current_build >= SPSILENT) {
-			# we can do it sliently...
+			# we can do it silently...
 			require_once SP_PLUGIN_DIR.'/sp-startup/install/sp-upgrade-support.php';
 			require_once SP_PLUGIN_DIR.'/sp-startup/install/sp-install-support.php';
 			sp_silent_upgrade();

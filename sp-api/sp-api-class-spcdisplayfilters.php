@@ -111,8 +111,11 @@ class spcDisplayFilters {
 		# 1: Convert Chars
 		$content = $this->chars($content);
 
-		# 2: remove escape slashes
+		# 2: Remove escape slashes
 		$content = $this->stripslashes($content);
+		
+		# 3: Run it through the wp_kses_post function.
+		$content = wp_kses_post($content);
 
 		$content = apply_filters('sph_display_title_filter', $content, $original);
 
@@ -126,8 +129,11 @@ class spcDisplayFilters {
 		# 1: Convert Chars
 		$content = $this->chars($content);
 
-		# 2: remove escape slashes
+		# 2: Remove escape slashes
 		$content = $this->stripslashes($content);
+		
+		# 3: Sanitize text field.
+		$content = sanitize_text_field($content);
 
 		$content = apply_filters('sph_display_name_filter', $content, $original);
 
@@ -141,8 +147,12 @@ class spcDisplayFilters {
 		# 1: Convert Chars
 		$email = $this->chars($email);
 
-		# 2: remove escape slashes
+		# 2: Remove escape slashes
 		$email = $this->stripslashes($email);
+		
+		# 3: Run it through the native WP sanitize_email function.
+		# Warning: This function uses a smaller allowable character set than the set defined by RFC 5322. Some legal email addresses may be changed.
+		$email = sanitize_email($email);
 
 		$email = apply_filters('sph_display_email_filter', $email, $original);
 

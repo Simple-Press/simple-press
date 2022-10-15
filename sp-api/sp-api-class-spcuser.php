@@ -407,9 +407,8 @@ class spcUser {
 		if (is_user_logged_in() == true) return '';
 		$sfmemberopts = SP()->options->get('sfmemberopts');
 		if (isset($_COOKIE['sforum_'.COOKIEHASH]) && $sfmemberopts['sfcheckformember']) {
-			# Yes it is - a user not logged in
-			$username = $_COOKIE['sforum_'.COOKIEHASH];
-
+			# Yes it is - a user not logged in.  So grab the user name but sanitize it in case its used for anything other than a display.
+			$username = SP()->displayFilters->name($_COOKIE['sforum_'.COOKIEHASH]);
 			return $username;
 		}
 
