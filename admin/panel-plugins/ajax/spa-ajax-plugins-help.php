@@ -14,7 +14,7 @@ if (!sp_nonce('plugin-tip')) die();
 
 if (!isset($_GET['file'])) die();
 
-$file = SP()->filters->str($_GET['file']);
+$file = SP()->filters->filename($_GET['file']);
 
 # Formatting and Display of Help Panel
 $helptext = wpautop(sp_retrieve_plugin_help($file), false);

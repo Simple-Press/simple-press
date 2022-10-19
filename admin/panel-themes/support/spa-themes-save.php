@@ -233,7 +233,7 @@ function spa_save_theme_tablet_data() {
 function spa_save_editor_data() {
 	check_admin_referer('forum-adminform_theme-editor', 'forum-adminform_theme-editor');
 
-	$file = SP()->filters->str($_POST['file']);
+	$file = SP()->filters->filename($_POST['file']);
 	$newcontent = stripslashes($_POST['spnewcontent']);
 	if (is_writeable($file)) {
 		$f = fopen($file, 'w+');

@@ -18,14 +18,14 @@ if (!SP()->auths->current_user_can('SPF Manage Profiles')) die();
 $action = SP()->filters->str($_GET['targetaction']);
 
 if ($action == 'delavatar') {
-	$file = SP()->filters->str($_GET['file']);
+	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/'.$file;
 	@unlink($path);
 	echo '1';
 }
 
 if ($action == 'deldefault') {
-	$file = SP()->filters->str($_GET['file']);
+	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['avatars'].'/defaults/'.$file;
 	@unlink($path);
 	echo '1';

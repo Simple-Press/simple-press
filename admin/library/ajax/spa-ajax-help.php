@@ -14,7 +14,10 @@ if (!sp_nonce('help')) die();
 
 if (!isset($_GET['file'])) die();
 
-$file = SP()->filters->str($_GET['file']);
+$file = SP()->filters->filename($_GET['file']);
+
+if (empty($file)) die();
+
 $tag = SP()->filters->str($_GET['item']);
 $tag = '['.$tag.']';
 $folder = 'panels/';

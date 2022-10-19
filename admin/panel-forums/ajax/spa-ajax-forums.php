@@ -32,13 +32,13 @@ if ($action == 'slug') {
 }
 
 if ($action == 'delicon') {
-	$file = SP()->filters->str($_GET['file']);
+	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/'.$file;
 	@unlink($path);
 }
 
 if ($action == 'delimage') {
-	$file = SP()->filters->str($_GET['file']);
+	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/'.$file;
 	@unlink($path);
 }

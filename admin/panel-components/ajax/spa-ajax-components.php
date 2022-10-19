@@ -61,7 +61,7 @@ if ($action == 'show') {
 }
 
 if ($action == 'delsmiley') {
-	$file = SP()->filters->str($_GET['file']);
+	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/'.$file;
 	@unlink($path);
 
@@ -87,7 +87,7 @@ if ($action == 'delsmiley') {
 }
 
 if ($action == 'delbadge') {
-	$file = SP()->filters->str($_GET['file']);
+	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$file;
 	@unlink($path);
 	echo '1';

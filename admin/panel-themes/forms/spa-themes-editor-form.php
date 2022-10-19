@@ -13,7 +13,7 @@ function spa_themes_editor_form() {
 	$curTheme = SP()->options->get('sp_current_theme');
 
 	$themedir = SPTHEMEBASEDIR.$curTheme['theme'];
-	$file = (isset($_GET['file'])) ? SP()->filters->str($_GET['file']) : '';
+	$file = (isset($_GET['file'])) ? SP()->filters->filename($_GET['file']) : '';
 	$type = (isset($_GET['type'])) ? SP()->filters->str($_GET['type']) : 'style';
 	if (empty($file)) {
 	    $file = $themedir.'/styles/'.$curTheme['style'];
