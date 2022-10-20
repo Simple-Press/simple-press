@@ -373,8 +373,13 @@ function spa_setup_admin_menu() {
 		SP()->primitives->admin_text('Mobile Tablet Theme')	 => array(
 			'tablet' => 'sfreloadtablist'));
 	if (!is_multisite() || is_super_admin()) {
-		$forms[SP()->primitives->admin_text('Theme Editor')] = array(
-			'editor' => 'sfreloadttedit');
+		# Only allow the theme editor if defined in the wp-config.php file.
+		# Note that allowing this option allows the admin to write to ANY file in the wp installation folder.
+		# And, if the web server or php configuration is insecure, potentially write to any file on the server.
+		if (defined('SP_ALLOW_THEME_EDITOR') && SP_ALLOW_THEME_EDITOR) {
+			$forms[SP()->primitives->admin_text('Theme Editor')] = array(
+				'editor' => 'sfreloadttedit');
+		}
 		$forms[SP()->primitives->admin_text('Custom CSS')] = array(
 			'css' => 'sfreloadcss');
 		$forms[SP()->primitives->admin_text('Theme Uploader')] = array(
@@ -389,7 +394,10 @@ function spa_setup_admin_menu() {
 		unset($forms[SP()->primitives->admin_text('Mobile Tablet Theme')]);
 	}	
 	if (spa_saas_check()) {
-		unset($forms[SP()->primitives->admin_text('Theme Editor')]);
+		# The theme editor menu option is only allowed sometimes so check to make sure it's even in the array before attempting to unset it.
+		if (isset($forms[SP()->primitives->admin_text('Theme Editor')])) {
+			unset($forms[SP()->primitives->admin_text('Theme Editor')]);
+		}
 	}
 	if (spa_saas_check()) {
 		unset($forms[SP()->primitives->admin_text('Theme Uploader')]);
