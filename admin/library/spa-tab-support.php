@@ -439,7 +439,6 @@ function spa_cache_ajax_editor_settings( $mceInit, $editor_id ) {
  */
 function spa_paint_css_editor($label, $name, $value, $submessage='', $rows=10) {
 	if(floatval(get_bloginfo('version')) >= 4.9) {
-error_log( 'blog version passed ok');		
 		spa_paint_code_editor('text/css', $label, $name, $value, $submessage, $rows);
 	} else {
 		spa_paint_wide_textarea($label, $name, $value, $submessage, $rows);

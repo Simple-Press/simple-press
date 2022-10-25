@@ -122,7 +122,7 @@ function sp_silent_upgrade() {
 
 	sp_log_event(SPRELEASE, SPVERSION, SPBUILD, 0);
 
-	# and some final cleanuop tasks
+	# and some final cleanup tasks
 	SP()->auths->reset_cache();
 
 	SP()->plugin->clear_css_cache('all');

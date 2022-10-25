@@ -231,9 +231,17 @@ function spa_save_theme_tablet_data() {
 }
 
 function spa_save_editor_data() {
+	
+	# This function should only be called if a wp-config.php constant is defined.
+	# if it's not defined, bail immediately with an error.
+	if ( ( ! defined('SP_ALLOW_THEME_EDITOR') ) || (defined('SP_ALLOW_THEME_EDITOR') && ! SP_ALLOW_THEME_EDITOR)) {
+		$msg = SP()->primitives->admin_text('Security warning - you do not have permission to edit themes.');
+		return $msg;
+	}
+	
 	check_admin_referer('forum-adminform_theme-editor', 'forum-adminform_theme-editor');
 
-	$file = SP()->filters->str($_POST['file']);
+	$file = SP()->filters->filename($_POST['file']);
 	$newcontent = stripslashes($_POST['spnewcontent']);
 	if (is_writeable($file)) {
 		$f = fopen($file, 'w+');

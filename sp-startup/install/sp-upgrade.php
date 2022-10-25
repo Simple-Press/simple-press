@@ -485,6 +485,15 @@ if ($build < $section) {
 	sp_response($section);
 }
 
+# Start of Upgrade Routines - 6.8.1 ============================================================
+$section = 15878;
+if ($build < $section) {
+	
+	// Add new AUTHS.
+	SP()->auths->add('can_use_object_tag', SP()->filters->esc_sql(SP()->primitives->admin_text_noesc('Can use OBJECT and EMBED tags in posts')), 1, 1, 0, 0, 3, SP()->primitives->admin_text('*** WARNING *** The use of the OBJECT and EMBEG tags is dangerous. Allowing users to embed objects enables them to launch a potential security threat against your website. Enabling the OBJECT and EMBED tags requires your trust in your users. Turn on with care.'));
+	sp_response($section);
+}
+
 # ****** IMPORTANT: THE FINAL $section values MUST be the same as the SPBUILD constant
 # ******			for the Upgrade to complete correctly
 

@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name: 		Simple:Press
  * Plugin URI: 			https://simple-press.com
- * Version: 			6.8.0
+ * Version: 			6.8.1
  * Description: 		The most versatile and feature-rich forums plugin for WordPress
  * Author: 				The Simple:Press Team
  * Author URI: 			https://simple-press.com/about
@@ -340,7 +340,7 @@ if (!class_exists('spcSimplePress')) {
 
 			# version and system control constants
 			define('SPPLUGNAME', 'Simple:Press');
-			define('SPVERSION', '6.8.0');
+			define('SPVERSION', '6.8.1');
                         
 			# Define a variable that can be used for versioning scripts - required to force multisite to use different version numbers for each site.
 			if ( is_multisite() ) {
@@ -357,8 +357,8 @@ if (!class_exists('spcSimplePress')) {
 				}
 			}			
                         
-			define('SPBUILD', 15877);
-			define('SPSILENT', 15865);
+			define('SPBUILD', 15878);
+			define('SPSILENT', 15878);
 			define('SPRELEASE', 'Release');
 
 			define('SPPLUGHOME', '<a class="spLink" href="https://simple-press.com" target="_blank">Simple:Press</a>');

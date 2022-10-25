@@ -19,7 +19,7 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
  */
 function sp_load_forum_scripts() {
 	# Older themes (Unified) define a constant SP_MOBILE_THEME now being deprecated.
-	# if this constant exists (custom Unfied theme) swap for theme cap registration
+	# if this constant exists (custom Unified theme) swap for theme cap registration
 	if (defined('SP_MOBILE_THEME') && SP_MOBILE_THEME) add_theme_support('sp-theme-responsive');
 
 	# some definitions
@@ -61,6 +61,8 @@ function sp_load_forum_scripts() {
 		'nocontent'		 => SP()->primitives->front_text('No post content entered'),
 		'rejected'		 => SP()->primitives->front_text('This post is rejected because it contains embedded formatting, probably pasted in form MS Word or other WYSIWYG editor'),
 		'iframe'		 => SP()->primitives->front_text('This post contains an iframe which are disallowed'),
+		'object_tag'	 => SP()->primitives->front_text('This post contains an OBJECT tag which are disallowed'),
+		'embed_tag'		 => SP()->primitives->front_text('This post contains an EMBED tag which are disallowed'),
 		'savingpost'	 => SP()->primitives->front_text('Saving post'),
 		'nosearch'		 => SP()->primitives->front_text('No search text entered'),
 		'allwordmin'	 => SP()->primitives->front_text('Minimum number of characters that can be used for a search word is'),
@@ -106,7 +108,7 @@ function sp_load_forum_scripts() {
 	# tell plugins to enqueue their scripts
 	do_action('sph_print_plugin_scripts', $footer);
 
-	# either enqueue the combines js script cache (checks for udpates first) )or enqueue individual scripts
+	# either enqueue the combines js script cache (checks for updates first) )or enqueue individual scripts
 	$combine_js = SP()->options->get('combinejs');
 	if ($combine_js) { # use compressed scripts
 		SP()->plugin->combine_scripts();

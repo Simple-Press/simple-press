@@ -61,6 +61,12 @@
 		if (thisPost.match('<iframe') && sp_platform_vars.checkiframe == 'yes') {
 			reason += "<strong>" + sp_forum_vars.iframe + "</strong><br />";
 		}
+		if (thisPost.match('<object') && sp_platform_vars.checkiframe == 'yes') {
+			reason += "<strong>" + sp_forum_vars.object_tag + "</strong><br />";
+		}
+		if (thisPost.match('<embed') && sp_platform_vars.checkiframe == 'yes') {
+			reason += "<strong>" + sp_forum_vars.embed_tag + "</strong><br />";
+		}			
 
 		if (sp_platform_vars.postvalue != undefined) {
 			if (document.getElementById('spPostValue') == undefined)

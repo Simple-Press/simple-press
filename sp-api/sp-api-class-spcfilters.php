@@ -54,6 +54,20 @@ class spcFilters {
 
 		return $string;
 	}
+	
+	public function filename($string) {
+		
+		# 1. Remove slashes.
+		$string = str_replace ( '/' , "", $string);
+		
+		#2. Remove backslashes (note use of double back-slash - str_replace needs it as an escape mechanism since back-slash has special meaning for it.)
+		$string = str_replace ( '\\' , "", $string);
+		
+		#3. Run it through the wp file sanitization function to remove everything else
+		$string = sanitize_file_name($string);
+	
+		return $string;
+	}
 
 	public function esc_sql($string) {
 		if (is_array($string)) {

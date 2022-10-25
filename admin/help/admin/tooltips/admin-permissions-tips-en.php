@@ -42,6 +42,7 @@ $tooltips['view_links'] = $t.'Can view links within post content';
 $tooltips['use_spoilers'] = $t.'Can use spoilers in posts to hide content requiring action to view';
 $tooltips['can_use_smileys'] = $t.'Can use smileys in posts';
 $tooltips['can_use_iframes'] = $t.'Can use iframes in posts';
+$tooltips['can_use_object_tag'] = $t.'Can use the OBJECT and EMBED tags in posts';
 $tooltips['view_own_admin_posts'] = $t.'Can view only own posts and admin/mod posts';
 $tooltips['create_links'] = $t.'Can create links in posts';
 $tooltips['can_view_images'] = $t.'Can view images a user has posted';
