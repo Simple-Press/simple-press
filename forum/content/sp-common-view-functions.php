@@ -2890,10 +2890,10 @@ function sp_MembershipStats($args = '', $titleLabel = '', $membersLabel = '', $g
 
 	if ($get) return $stats;
 
-	if (!empty($guestsLabel)) $guestsLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['guests'], $guestsLabel));
-	if (!empty($membersLabel)) $membersLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['members'], $membersLabel));
-	if (!empty($modsLabel)) $modsLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['mods'], $modsLabel));
-	if (!empty($adminsLabel)) $adminsLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['admins'], $adminsLabel));
+	if (!empty($guestsLabel)) $guestsLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['guests'] ?? '', $guestsLabel));
+	if (!empty($membersLabel)) $membersLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['members'] ?? 0, $membersLabel));
+	if (!empty($modsLabel)) $modsLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['mods'] ?? '', $modsLabel));
+	if (!empty($adminsLabel)) $adminsLabel = SP()->displayFilters->title(str_replace('%COUNT%', $stats['admins'] ?? '', $adminsLabel));
 
 	# render the forum stats
 	$out = "<div class='$pTitleClass'>$titleLabel</div>";
