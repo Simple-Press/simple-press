@@ -322,6 +322,10 @@ The editor in the free version is a pure text editor.  However, the premium vers
 
 == Changelog ==
 
+= 6.8.2 =
+* Fix
+	* G00000: A couple of PHP 8.1 compatibility fixes.
+
 = 6.8.1 =
 * Fix
 	* G00000: Various security related fixes.

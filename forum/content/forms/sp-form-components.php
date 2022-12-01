@@ -463,17 +463,17 @@ function sp_topic_editor_smileys_options($out, $spThisForum, $a, $toolbar) {
 		$optionsBox = apply_filters('sph_topic_options_header_add', $optionsBox, $spThisForum, $a);
 		$optionsBox.= '</div>';
 		if (SP()->auths->get('lock_topics', $spThisForum->forum_id)) {
-			$optionsBox.= "<input type='checkbox' tabindex='".$tab++."' class='$controlInput' name='topiclock' id='sftopiclock' />\n";
+			$optionsBox.= "<input type='checkbox' tabindex='".$tab++."' class='$controlInput' name='topiclock' id='sftopiclock' />";
 			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sftopiclock'>$labelOptionLock</label>\n";
 			$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
 		}
 		if (SP()->auths->get('pin_topics', $spThisForum->forum_id)) {
-			$optionsBox.= "<input type='checkbox' tabindex='".$tab++."' class='$controlInput' name='topicpin' id='sftopicpin' />\n";
+			$optionsBox.= "<input type='checkbox' tabindex='".$tab++."' class='$controlInput' name='topicpin' id='sftopicpin' />";
 			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sftopicpin'>$labelOptionPin</label>\n";
 			$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
 		}
 		if (SP()->user->thisUser->admin) {
-			$optionsBox.= "<input type='checkbox' class='$controlInput' tabindex='".$tab++."' id='sfeditTimestamp' name='editTimestamp' />\n";
+			$optionsBox.= "<input type='checkbox' class='$controlInput' tabindex='".$tab++."' id='sfeditTimestamp' name='editTimestamp' />";
 			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sfeditTimestamp'>$labelOptionTime</label>\n";
 			$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
 		}
@@ -656,19 +656,19 @@ function sp_post_editor_smileys_options($out, $spThisTopic, $a, $toolbar) {
         	$labelOptionLock = SP()->displayFilters->title($labelOptionLock);
             $labelOptionPin	= SP()->displayFilters->title($labelOptionPin);
     		if (SP()->auths->get('lock_topics', $spThisTopic->forum_id)) {
-    			$optionsBox.= "<input type='checkbox' class='$controlInput' name='topiclock' id='sftopiclock' tabindex='110' />\n";
+    			$optionsBox.= "<input type='checkbox' class='$controlInput' name='topiclock' id='sftopiclock' tabindex='110' />";
     			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sftopiclock'>$labelOptionLock</label>\n";
 				$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
     		}
     		if (SP()->auths->get('pin_topics', $spThisTopic->forum_id)) {
-    			$optionsBox.= "<input type='checkbox' class='$controlInput' name='postpin' id='sfpostpin' tabindex='111' />\n";
+    			$optionsBox.= "<input type='checkbox' class='$controlInput' name='postpin' id='sfpostpin' tabindex='111' />";
     			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sfpostpin'>$labelOptionPin</label>\n";
 				$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
     		}
         }
 
 		if (SP()->user->thisUser->admin) {
-			$optionsBox.= "<input type='checkbox' class='$controlInput' tabindex='112' id='sfeditTimestamp' name='editTimestamp' />\n";
+			$optionsBox.= "<input type='checkbox' class='$controlInput' tabindex='112' id='sfeditTimestamp' name='editTimestamp' />";
 			$optionsBox.= "<label class='$optionLabel spCheckbox' for='sfeditTimestamp'>$labelOptionTime</label>\n";
 			$optionsBox.= sp_InsertBreak('echo=0&spacer=0px');
 		}
