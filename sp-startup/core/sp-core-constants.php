@@ -32,11 +32,13 @@ if (!defined('SP_STORE_RELATIVE_BASE')) define('SP_STORE_RELATIVE_BASE', str_rep
 # Location of uploaded Avatars, Smileys and Ranks
 if (!defined('SPAVATARURL')) define('SPAVATARURL', SP_STORE_URL.'/'.SP()->plugin->storage['avatars'].'/');
 if (!defined('SPAVATARDIR')) define('SPAVATARDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['avatars'].'/');
-if (!defined('SPAVATARDIR')) define('SPAVATARDIR', SP_STORE_URL.'/'.SP()->plugin->storage['avatar-pool'].'/');
+if (!defined('SPAVATARDIR')) define('SPAVATARDIR', SP_STORE_URL.'/'.SP()->plugin->storage['avatar-pool'].'/');  //@TODO: This seems wrong.
 if (!defined('SPAVATARPOOLDIR')) define('SPAVATARPOOLDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/');
 if (!defined('SPAVATARPOOLURL')) define('SPAVATARPOOLURL', SP_STORE_URL.'/'.SP()->plugin->storage['avatar-pool'].'/');
 if (!defined('SPSMILEYS')) define('SPSMILEYS', SP_STORE_URL.'/'.SP()->plugin->storage['smileys'].'/');
-if (!defined('SPRANKS')) define('SPRANKS', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'].'/');
+if (!defined('SPRANKSURL')) define('SPRANKSURL', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'].'/');
+if (!defined('SPRANKS')) define('SPRANKS', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'].'/');  // We should deprecate this because the name doesn't follow the standard.
+if (!defined('SPRANKSDIR')) define('SPRANKSDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/');
 
 # Location of plugins
 if (!defined('SPPLUGINURL')) define('SPPLUGINURL', SP_STORE_URL.'/'.SP()->plugin->storage['plugins'].'/');

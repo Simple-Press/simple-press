@@ -445,10 +445,10 @@ class spcPlugin {
 		# fix up the subpanels formids from user names
 		$forms = array();
 		foreach ($subpanels as $index => $subpanel) {
-			$forms[$index] = array('plugin' => $subpanel['id'],
-			                       'admin'  => $subpanel['admin'],
-			                       'save'   => $subpanel['save'],
-			                       'form'   => $subpanel['form']);
+			$forms[$index] = array('plugin' => ! empty($subpanel['id']) ? $subpanel['id'] : '',
+			                       'admin'  => ! empty($subpanel['admin']) ? $subpanel['admin'] : '',
+			                       'save'   => ! empty($subpanel['save']) ? $subpanel['save'] : '',
+			                       'form'   => ! empty($subpanel['form']) ? $subpanel['form'] : '');
 		}
 
 		$num_panels = count($sfactivepanels);

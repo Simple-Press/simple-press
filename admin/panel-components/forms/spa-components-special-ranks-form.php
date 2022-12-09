@@ -88,7 +88,7 @@ function spa_special_rankings_form($rankings) {
                                             <?php echo $rank['meta_key'] ?>
                                         </td>
                                         <td width="20%">
-                                            <?php echo spa_get_saved_icon_html($rank['meta_value']['badge']) ?>
+                                            <?php echo spa_get_saved_icon_html($rank['meta_value']['badge'], 'ranks') ?>
                                         </td>
                                         <td width="35%">
                                             <?php $loc = '#sfrankshow-' . $rank['meta_id']; ?>
