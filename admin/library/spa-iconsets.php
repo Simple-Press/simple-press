@@ -288,8 +288,8 @@ function spa_get_saved_icon_html($jsonIcon, $location = 'forum', $title = '', $d
 			$imgurl = SPCUSTOMURL;
 			break;
 		case 'ranks':
-			$imgdir = SPRANKSDIR;
-			$imgurl = SPRANKSURL;	
+			$imgdir = SPRANKSIMGDIR;
+			$imgurl = SPRANKSIMGURL;
 			break;
 	}
 	

@@ -36,9 +36,9 @@ if (!defined('SPAVATARDIR')) define('SPAVATARDIR', SP_STORE_URL.'/'.SP()->plugin
 if (!defined('SPAVATARPOOLDIR')) define('SPAVATARPOOLDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/');
 if (!defined('SPAVATARPOOLURL')) define('SPAVATARPOOLURL', SP_STORE_URL.'/'.SP()->plugin->storage['avatar-pool'].'/');
 if (!defined('SPSMILEYS')) define('SPSMILEYS', SP_STORE_URL.'/'.SP()->plugin->storage['smileys'].'/');
-if (!defined('SPRANKSURL')) define('SPRANKSURL', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'].'/');
+if (!defined('SPRANKSIMGURL')) define('SPRANKSIMGURL', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'].'/');
 if (!defined('SPRANKS')) define('SPRANKS', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'].'/');  // We should deprecate this because the name doesn't follow the standard.
-if (!defined('SPRANKSDIR')) define('SPRANKSDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/');
+if (!defined('SPRANKSIMGDIR')) define('SPRANKSIMGDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/');
 
 # Location of plugins
 if (!defined('SPPLUGINURL')) define('SPPLUGINURL', SP_STORE_URL.'/'.SP()->plugin->storage['plugins'].'/');
