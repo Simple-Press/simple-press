@@ -322,6 +322,10 @@ The editor in the free version is a pure text editor.  However, the premium vers
 
 == Changelog ==
 
+= 6.8.3 =
+* Fix
+	* G00000: Special rank badges were not displaying in admin or front-end.
+
 = 6.8.2 =
 * Fix
 	* G00000: A couple of PHP 8.1 compatibility fixes.
