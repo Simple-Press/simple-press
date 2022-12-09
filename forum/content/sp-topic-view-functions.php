@@ -789,9 +789,36 @@ function sp_PostIndexUserBadges($args = '', $label = '') {
 	if (!empty($label)) $out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>";
 	foreach ($ranks as $thisRank) {
 		if ($badge && !empty($thisRank['badge'])) {
-			if(is_array( $thisRank['badge'] ) ) {
-				$out .= SP()->theme->sp_paint_iconset_icon( $thisRank['badge'], $badgeClass );
+			if(is_array($thisRank['badge'])) {
+				# Array structure looks something like this:
+				# [badge] => Array
+				#	(
+				#		[icon] => fa-glass
+				#		[color] => #8224e3
+				#		[size] => 
+				#		[size_type] => 
+				#		[type] => font
+				#	)	
+				#
+				# or, for a file
+				#
+				# [badge] => Array
+				#	(
+				#		[icon] => icons8-o-512.png
+				#		[color] => 
+				#		[size] => 
+				#		[size_type] => 
+				#		[type] => file
+				#	)				
+				if (!empty( $thisRank['badge']['type'] && 'font' === $thisRank['badge']['type'])) {
+					# Looks like image is an icon so paint it.
+					$out .= SP()->theme->sp_paint_iconset_icon($thisRank['badge'], $badgeClass);
+				} else {
+					# Looks like image is a file so grab it from the sp-resources/forum-badges folder
+					$out .= "<img class='$badgeClass aa' src='".esc_url(SPRANKSIMGURL . $thisRank['badge']['icon'])."' alt='' />$att";
+				}
 			} else {
+				# We likely only have a single string that is the url to a file.
 				$out .= "<img class='$badgeClass aa' src='".$thisRank['badge']."' alt='' />$att";
 			}
 		}
