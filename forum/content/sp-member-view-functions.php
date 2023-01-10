@@ -568,9 +568,20 @@ function sp_MemberListRank($args = '', $label = '') {
 	# now render it
 	$out = "<div id='$tagId' class='$tagClass'>";
 	if (!empty($label)) $out .= "<span class='$labelClass'>".SP()->displayFilters->title($label)."$att</span>";
-	foreach ($ranks as $thisRank) {
-		if ($badge && !empty($thisRank['badge'])) $out .= "<img class='$badgeClass' src='".$thisRank['badge']."' alt='' />$att";
-		if ($rank && $title) $out .= "<span class='$rankClass'>".$thisRank['name']."</span>$att";
+	if ( is_array($ranks) ) {
+		foreach ($ranks as $thisRank) {
+			if (!empty($thisRank['badge']) && !empty($thisRank['badge']['type']) && 'font' === $thisRank['badge']['type']) {
+				# Looks like image is an icon so paint it.
+				$out .= SP()->theme->sp_paint_iconset_icon($thisRank['badge'], $badgeClass);
+			} else {
+				# Looks like image is a file so grab it from the sp-resources/forum-badges folder
+				if (!empty($thisRank['badge']['icon'])) {
+					$out .= "<img class='$badgeClass aa' src='".esc_url(SPRANKSIMGURL . $thisRank['badge']['icon'])."' alt='' />$att";
+				}
+			}				
+			// if ($badge && !empty($thisRank['badge'])) $out .= "<img class='$badgeClass' src='".$thisRank['badge']."' alt='' />$att";
+			if ($rank && $title) $out .= "<span class='$rankClass'>".$thisRank['name']."</span>$att";
+		}
 	}
 	$out .= "</div>";
 	$out = apply_filters('sph_MemberListRank', $out, $a);
