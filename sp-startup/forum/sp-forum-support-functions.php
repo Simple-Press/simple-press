@@ -546,7 +546,7 @@ function sp_og_meta() {
 function sp_load_editor($override = 0, $supportOnly = 0) {
 	# load editor if required
 
-	if ($override != 0) SP()->core->forumData['editor'] = $override;
+	if ($override != 0 && $override != '') SP()->core->forumData['editor'] = $override;
 
 	# allow plugins to control editor choice
 	SP()->core->forumData['editor'] = apply_filters('sph_this_editor', SP()->core->forumData['editor'], $override, $supportOnly);
