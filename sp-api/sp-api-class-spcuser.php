@@ -1336,9 +1336,9 @@ class spcUser {
 				
 				if( $rank['badge'] ) {
 						$badge_icon = spa_get_saved_icon( $rank['badge'] );
-						
-						if( 'file' === $badge_icon['type'] && file_exists(SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$rank['badge']) ) {
-							$userRanks[$count]['badge'] = esc_url(SPRANKS.$rank['badge']);
+						if( 'file' === $badge_icon['type'] && file_exists(SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$badge_icon['icon']) ) {
+							// $userRanks[$count]['badge'] = esc_url(SPRANKS.$rank['badge']);
+							$userRanks[$count]['badge'] = $badge_icon;
 						} elseif( 'font' === $badge_icon['type'] ) {
 							$userRanks[$count]['badge'] = $badge_icon;
 						}
@@ -1396,8 +1396,8 @@ class spcUser {
 					if( $rankdata['badge'][$x] ) {
 						$badge_icon = spa_get_saved_icon( $rankdata['badge'][ $x ] );
 						
-						if( 'file' === $badge_icon['type'] && file_exists(SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$rankdata['badge'][$x]) ) {
-							$forumRank[0]['badge'] = esc_url(SPRANKS.$rankdata['badge'][$x]);
+						if( 'file' === $badge_icon['type'] && file_exists(SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$badge_icon['icon']) ) {
+							$forumRank[0]['badge'] = $badge_icon;
 						} elseif( 'font' === $badge_icon['type'] ) {
 							$forumRank[0]['badge'] = $badge_icon;
 						}

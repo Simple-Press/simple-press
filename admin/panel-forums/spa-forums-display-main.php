@@ -63,7 +63,7 @@ function spa_forums_forums_main() {
                             <td class="sf-v-a-middle">
                                 <div class="sf-v-a-middle sf-pull-left" >
                                   <div  class="sf-icon-midle">
-                                    <?php echo spa_get_saved_icon_html(!empty($group->group_icon) ? $group->group_icon : '', SP()->primitives->admin_text('Current group icon'), SPTHEMEICONSURL . 'sp_GroupIcon.png') ?>
+                                    <?php echo spa_get_saved_icon_html(!empty($group->group_icon) ? $group->group_icon : '', 'forum', SP()->primitives->admin_text('Current group icon'), SPTHEMEICONSURL . 'sp_GroupIcon.png') ?>
                                   </div>
                                 </div>
                                 <div class="sf-title-block sf-pull-left">

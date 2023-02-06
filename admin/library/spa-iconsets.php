@@ -271,12 +271,28 @@ function spa_get_saved_icon( $icon ) {
  * Get saved icon and type
  * 
  * @param string $jsonIcon
+ * @param string $location - 'forum' for forum icons/images located in the sp-resources/forum-custom-icons folder, 'ranks' for badges/images located in the sp-resources/forum-badges folder.
  * @param string $title [optional]
  * @param string $defaultFileUrl [optional]
  * 
  * @return string html of icon
  */
-function spa_get_saved_icon_html($jsonIcon, $title = '', $defaultFileUrl = '') {
+function spa_get_saved_icon_html($jsonIcon, $location = 'forum', $title = '', $defaultFileUrl = '') {
+	
+	# Set url and file location vars based on the $location parameter.
+	$imgdir = '';
+	$imgurl = '';
+	switch ($location) {
+		case 'forum':
+			$imgdir = SPCUSTOMDIR;
+			$imgurl = SPCUSTOMURL;
+			break;
+		case 'ranks':
+			$imgdir = SPRANKSIMGDIR;
+			$imgurl = SPRANKSIMGURL;
+			break;
+	}
+	
     $out = '';
     if ($jsonIcon) {
         $arr_icon = spa_get_saved_icon($jsonIcon);
@@ -290,10 +306,10 @@ function spa_get_saved_icon_html($jsonIcon, $title = '', $defaultFileUrl = '') {
         return $out;
     }
     if ('file' === $arr_icon['type']) {
-        if (empty($arr_icon['icon']) || !file_exists(SPCUSTOMDIR . $arr_icon['icon'])) {
+        if (empty($arr_icon['icon']) || !file_exists($imgdir . $arr_icon['icon'])) {
             $arr_icon['icon'] = $defaultFileUrl;
         } else {
-            $arr_icon['icon'] = esc_url(SPCUSTOMURL . $arr_icon['icon']);
+            $arr_icon['icon'] = esc_url($imgurl . $arr_icon['icon']);
         }
     }
     if ('file' === $arr_icon['type']) {

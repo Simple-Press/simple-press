@@ -6,7 +6,7 @@ Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
 Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 6.8.2
+Stable tag: 6.8.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -321,6 +321,14 @@ The editor in the free version is a pure text editor.  However, the premium vers
 19. The front-end admin options for a post (uses our Modern 2020 forum theme along with the WordPress 2020 Theme)
 
 == Changelog ==
+
+= 6.8.4 =
+* Fix
+    * G00000: Fix: TinyMCE editor not working
+
+= 6.8.3 =
+* Fix
+	* G00000: Special rank badges were not displaying in admin or front-end.
 
 = 6.8.2 =
 * Fix

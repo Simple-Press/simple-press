@@ -269,7 +269,7 @@ function spa_paint_rankings_table($rankings) {
                         ?>
                     </td>
                     <td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>' class="sf-Left">
-                        <?php echo spa_get_saved_icon_html($ranks['badge'][$x]) ?>
+                        <?php echo spa_get_saved_icon_html($ranks['badge'][$x], 'ranks') ?>
                     </td>
                     <td data-label='' class="sf-Left">
                         <span class="sf-item-controls">
