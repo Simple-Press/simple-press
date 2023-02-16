@@ -340,7 +340,7 @@ if (!class_exists('spcSimplePress')) {
 
 			# version and system control constants
 			define('SPPLUGNAME', 'Simple:Press');
-			define('SPVERSION', '6.8.4');
+			define('SPVERSION', '6.8.5');
                         
 			# Define a variable that can be used for versioning scripts - required to force multisite to use different version numbers for each site.
 			if ( is_multisite() ) {
@@ -357,8 +357,8 @@ if (!class_exists('spcSimplePress')) {
 				}
 			}			
                         
-			define('SPBUILD', 15881);
-			define('SPSILENT', 15879);
+			define('SPBUILD', 15882);
+			define('SPSILENT', 15882);
 			define('SPRELEASE', 'Release');
 
 			define('SPPLUGHOME', '<a class="spLink" href="https://simple-press.com" target="_blank">Simple:Press</a>');
