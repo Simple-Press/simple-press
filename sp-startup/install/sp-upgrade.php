@@ -509,7 +509,13 @@ if ($build < $section) {
 # Start of Upgrade Routines - 6.8.4 ============================================================
 $section = 15881;
 if ($build < $section) {
-    sp_response($secion);
+    sp_response($section);
+}
+
+# Start of Upgrade Routines - 6.8.5 ============================================================
+$section = 15882;
+if ($build < $section) {
+    sp_response($section);
 }
 
 # ****** IMPORTANT: THE FINAL $section values MUST be the same as the SPBUILD constant
