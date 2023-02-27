@@ -6,7 +6,7 @@ Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
 Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 6.8.8
+Stable tag: 6.8.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -321,6 +321,10 @@ The editor in the free version is a pure text editor.  However, the premium vers
 19. The front-end admin options for a post (uses our Modern 2020 forum theme along with the WordPress 2020 Theme)
 
 == Changelog ==
+
+= 6.8.9 =
+* Fix
+    * G00000: Fixes issue in `spa-admin-notice.php` that causes upgrades to fail
 
 = 6.8.8 =
 * Fix
