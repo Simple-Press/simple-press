@@ -13,7 +13,7 @@ if (!current_user_can('administrator')) die();
 include_once SP_PLUGIN_DIR.'/admin/library/spa-tab-support.php';
 include_once SP_PLUGIN_DIR.'/admin/panel-admins/support/spa-admins-prepare.php';
 
-if (SP()->SP()->core->forumData != 'ok') {
+if (SP()->core->forumData != 'ok') {
 	require_once SPLOADINSTALL;
 	die();
 }
