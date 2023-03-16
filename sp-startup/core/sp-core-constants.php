@@ -24,8 +24,17 @@ if (is_multisite() && !get_site_option('ms_files_rewriting')) {
 		if (!defined('SP_STORE_URL')) define('SP_STORE_URL', $uploads['baseurl']);
 	}
 } else {
-	if (!defined('SP_STORE_DIR')) define('SP_STORE_DIR', WP_CONTENT_DIR);
-	if (!defined('SP_STORE_URL')) define('SP_STORE_URL', content_url());
+    # Initial update to make use of wp uploads to enable s3 usage
+    # If not defined fall back to old config
+    if (!defined('SP_USE_UPLOAD_DIR')) define('SP_USE_UPLOAD_DIR', false);
+    if (defined('SP_USE_UPLOAD_DIR') && SP_USE_UPLOAD_DIR){
+        $uploads = wp_get_upload_dir();
+        if (!defined('SP_STORE_DIR')) define('SP_STORE_DIR', $uploads['basedir']);
+        if (!defined('SP_STORE_URL')) define('SP_STORE_URL', $uploads['baseurl']);
+    } else {
+        if (!defined('SP_STORE_DIR')) define('SP_STORE_DIR', WP_CONTENT_DIR);
+        if (!defined('SP_STORE_URL')) define('SP_STORE_URL', content_url());
+    }
 }
 if (!defined('SP_STORE_RELATIVE_BASE')) define('SP_STORE_RELATIVE_BASE', str_replace(ABSPATH, '', SP_STORE_DIR).'/');
 

@@ -40,13 +40,21 @@ die();
 function sp_perform_install($phase, $subphase = 0) {
 	global $current_user;
 
-	# install picks up wrong SF STORE DIR so lets recalculate it for installs
-	if (is_multisite() && !get_site_option('ms_files_rewriting')) {
-		$uploads = wp_get_upload_dir();
-		if (!defined('INSTALL_STORE_DIR')) define('INSTALL_STORE_DIR', $uploads['basedir']);
-	} else {
-		if (!defined('INSTALL_STORE_DIR')) define('INSTALL_STORE_DIR', WP_CONTENT_DIR);
-	}
+    # Initial update to make use of wp uploads to enable s3 usage
+    # If not defined fall back to old config
+    if (!defined('SP_USE_UPLOAD_DIR')) define('SP_USE_UPLOAD_DIR', false);
+    if (defined('SP_USE_UPLOAD_DIR') && SP_USE_UPLOAD_DIR){
+        $uploads = wp_get_upload_dir();
+        if (!defined('INSTALL_STORE_DIR')) define('INSTALL_STORE_DIR', $uploads['basedir']);
+    } else {
+        # install picks up wrong SF STORE DIR so lets recalculate it for installs
+        if (is_multisite() && !get_site_option('ms_files_rewriting')) {
+            $uploads = wp_get_upload_dir();
+            if (!defined('INSTALL_STORE_DIR')) define('INSTALL_STORE_DIR', $uploads['basedir']);
+        } else {
+            if (!defined('INSTALL_STORE_DIR')) define('INSTALL_STORE_DIR', WP_CONTENT_DIR);
+        }
+    }
 
 	switch ($phase) {
 		case 1:
