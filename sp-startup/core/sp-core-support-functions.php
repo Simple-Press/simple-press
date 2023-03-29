@@ -28,7 +28,7 @@ function sp_get_system_status() {
 	SP()->error->setRecording(false);
 
 	$spError = SP()->options->get('spErrorOptions');
-	SP()->error->setNotices($spError['spNoticesOff']);
+	SP()->error->setNotices($spError['spNoticesOff'] ?? false);
 
 	# Is Simple:Press actually installed yet?
 	if (empty($current_version) || $current_build == false) {
@@ -128,7 +128,7 @@ function sp_localisation() {
 		$mofile = apply_filters('sph_localization_mo', $mofile);
 		load_textdomain('sp', $mofile);
 	} else if (is_admin() || SP()->primitives->strpos_array($_SERVER['QUERY_STRING'], $adminSpecial) !== false) {
-		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
+		$mofile = SP_STORE_DIR.'/'.empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
 		load_textdomain('spa', $mofile);
 	} else {
 		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/sp-'.$locale.'.mo';

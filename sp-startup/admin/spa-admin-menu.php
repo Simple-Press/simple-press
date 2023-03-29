@@ -48,7 +48,10 @@ function spa_admin_menu() {
 			add_submenu_page($adminparent, SP()->primitives->admin_text('WP Admin Notice'), SP()->primitives->admin_text('WP Admin Notice'), 'read', $adminparent);
 
 			# hack for wp stubborness of not wanting singular submenu under a menu item
-			if (strpos($plugin_page, SP_FOLDER_NAME) !== false) add_submenu_page($adminparent, '', '', 'read', $adminparent);
+			if($plugin_page){
+				if (strpos($plugin_page, SP_FOLDER_NAME) !== false) add_submenu_page($adminparent, '', '', 'read', $adminparent);
+			}
+			
 			$submenu[$adminparent][1] = null;
 		}
 	} else {
