@@ -88,7 +88,9 @@ function spa_admin_menu() {
 		}
 
 		# hack for wp stubborness of not wanting singular submenu under a menu item
-		if (strpos($plugin_page, SP_FOLDER_NAME) !== false) add_submenu_page($adminparent, '', '', 'read', $adminparent);
+		if($plugin_page){
+			if (strpos($plugin_page, SP_FOLDER_NAME) !== false) add_submenu_page($adminparent, '', '', 'read', $adminparent);
+		}
 		$submenu[$adminparent][1] = null;
 	}
 

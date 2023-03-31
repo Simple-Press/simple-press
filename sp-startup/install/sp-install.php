@@ -919,7 +919,7 @@ function sp_perform_install($phase, $subphase = 0) {
 
 		case 6:
 			# Create sp-resources folder for the current install - does not include themes, plugins or languages
-			
+			$success = true;
 			$sfconfig = apply_filters( 'sp_default_storage_paths_data', array(), true );
 
 			SP()->options->add('sfconfig', $sfconfig);
