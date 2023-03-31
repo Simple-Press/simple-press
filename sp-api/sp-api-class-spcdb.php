@@ -46,7 +46,14 @@ class spcDB {
 	 * @param string	$wpType		format of data to return - default OBJECT
 	 * @return mixed	db query data
 	 * -----------------------------------------------------------------
-	 */
+	 *
+	 * * Various information about argument.
+     *
+     * @since 3.1.0
+     * @var array
+     */
+    public $args;
+
 	public function select($query, $wpCommand = 'set', $wpType = OBJECT) {
 		# if a complete SELECT statement then send it for execution
 		if (!is_object($query) && substr(trim($query), 0, 6) == 'SELECT') {

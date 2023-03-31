@@ -28,7 +28,7 @@ global $spThisPostList;
 $spDevice = SP()->core->device;
 $spVars['pageview'] = SP()->rewrites->pageData['pageview'];
 $spVars['profile']	= SP()->rewrites->pageData['profile'];
-$spVars['thread']	= SP()->rewrites->pageData['thread'];
+$spVars['thread']	= isset(SP()->rewrites->pageData['thread']) ? SP()->rewrites->pageData['thread'] : "" ;
 
 if ($spVars['pageview'] == 'newposts' || $spVars['pageview'] == 'pmthread') {
 	$spThisUser = new stdClass();

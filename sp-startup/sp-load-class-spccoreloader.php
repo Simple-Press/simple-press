@@ -103,6 +103,9 @@ class spcCoreLoader {
 	 * @return void
 	 */
 	private function setup_constants() {
+
+		add_filter( 'sp_default_storage_paths_data', [ $this, 'sp_default_storage_paths_data'], 10, 2 );
+
 		# Include core support functions early
 		require_once SPBOOT.'core/sp-core-support-functions.php';
 		
@@ -110,13 +113,181 @@ class spcCoreLoader {
 		require_once SPBOOT.'core/sp-core-compatibility.php';
 
 		# set up paths data
-		SP()->plugin->storage = SP()->options->get('sfconfig');
+		$storage = SP()->options->get('sfconfig');
+
+		if( empty( $storage ) || !is_array( $storage ) ) {
+			$storage = apply_filters( 'sp_default_storage_paths_data', array() );
+		}
+		SP()->plugin->storage = $storage;
 
 		require_once SPBOOT.'core/sp-core-constants.php';
 
 		# fire action to indicate constants complete
 		do_action('sph_core_constants_complete');
 	}
+
+	function sp_default_storage_paths_data( $sfconfig, $is_install = false ) {
+	
+		SP()->define_install_path_constants();
+		$perms		 = fileperms(INSTALL_STORE_DIR);
+		$owners		 = stat(INSTALL_STORE_DIR);
+		if ($perms === false) $perms		 = 0755;
+	
+		$basepath	 = 'sp-resources';
+	
+		# makes sure storage exists
+		if (!file_exists(INSTALL_STORE_DIR.'/'.$basepath) && $is_install ) @mkdir(INSTALL_STORE_DIR.'/'.$basepath, $perms);
+	
+		# for multisite, make sure main site storage exists
+		if (is_multisite() && SPBLOGID != 1) {
+			if (!file_exists(SP_STORE_DIR.'/uploads') && $is_install ) @mkdir(SP_STORE_DIR.'/uploads', $perms);
+		}
+	
+		if( $is_install ) {
+			# hive off the basepath for later use - use wp options
+			add_option('sp_storage1', INSTALL_STORE_DIR.'/'.$basepath);
+		}
+	
+		# Did it get created?
+		$success = true;
+		if( $is_install ) {
+			if (!file_exists(INSTALL_STORE_DIR.'/'.$basepath)) $success = false;
+			SP()->options->add('spStorageInstall1', $success);
+		}
+	
+		# Is the ownership correct?
+		if( $is_install ) {
+			$ownersgood = false;
+			if ($success) {
+				$newowners = stat(INSTALL_STORE_DIR.'/'.$basepath);
+				if ($newowners['uid'] == $owners['uid'] && $newowners['gid'] == $owners['gid']) {
+					$ownersgood = true;
+				} else {
+					@chown(INSTALL_STORE_DIR.'/'.$basepath, $owners['uid']);
+					@chgrp(INSTALL_STORE_DIR.'/'.$basepath, $owners['gid']);
+					$newowners	 = stat(INSTALL_STORE_DIR.'/'.$basepath);
+					if ($newowners['uid'] == $owners['uid'] && $newowners['gid'] == $owners['gid']) $ownersgood	 = true;
+				}
+			}
+			SP()->options->add('spOwnersInstall1', $ownersgood);
+		}
+		$basepath .= '/';
+	
+		if (is_multisite()) {
+			# multisite install - default paths are under the storage folder.
+			# To set these we need to manipulate the INSTALL_STORE_DIR a bit to get the exact string we need.
+			# The INSTALL_STORE_DIR looks like this: /var/www/simple-press.com/html/wp-content/uploads/sites/5.
+			# We just want the /uploads/sites/5 portion of it.
+			$wpc_position = strpos(INSTALL_STORE_DIR, 'wp-content');
+			$wpc_portion = substr(INSTALL_STORE_DIR, $wpc_position);
+			$wpc_portion = str_replace('wp-content', '', $wpc_portion);
+			
+			$sfconfig['avatars']		 = $wpc_portion.'/'.$basepath.'forum-avatars';
+			$sfconfig['avatar-pool']	 = $wpc_portion.'/'.$basepath.'forum-avatar-pool';
+			$sfconfig['smileys']		 = $wpc_portion.'/'.$basepath.'forum-smileys';
+			$sfconfig['ranks']			 = $wpc_portion.'/'.$basepath.'forum-badges';
+			$sfconfig['custom-icons']	 = $wpc_portion.'/'.$basepath.'forum-custom-icons';
+			$sfconfig['cache']			 = $wpc_portion.'/'.$basepath.'forum-cache';
+			$sfconfig['forum-images']	 = $wpc_portion.'/'.$basepath.'forum-feature-images';
+			$sfconfig['iconsets']		 = $wpc_portion.'/'.$basepath.'forum-iconsets';				
+		} else {
+			# standard install - default paths are under wp-content/sp-resources
+			$sfconfig['avatars']		 = $basepath.'forum-avatars';
+			$sfconfig['avatar-pool']	 = $basepath.'forum-avatar-pool';
+			$sfconfig['smileys']		 = $basepath.'forum-smileys';
+			$sfconfig['ranks']			 = $basepath.'forum-badges';
+			$sfconfig['custom-icons']	 = $basepath.'forum-custom-icons';
+			$sfconfig['cache']			 = $basepath.'forum-cache';
+			$sfconfig['forum-images']	 = $basepath.'forum-feature-images';
+			$sfconfig['iconsets']		 = $basepath.'forum-iconsets';
+		}
+	
+		if (is_multisite()) {
+			if (SPBLOGID != 1) {
+				switch_to_blog(1);
+				$uploads		 = wp_get_upload_dir();
+				$basepath		 = 'sp-resources';
+				$already_created = (file_exists($uploads['basedir'].'/'.$basepath)) ? true : false;
+	
+				# if main site storage does not exist, try creating it
+				# @TODO - not sure why we're doing this again - we already did it in the multsite section above.
+				# The only difference in this code is that we're creating the folder using $uploads['basedir'].
+				# But, the constant INSTALL_STORE_DIR used above is the same as $uploads['basedir'] in most cases.
+				# So this is just duplicate work.
+				# The only reason this duplicated code should exist is if the INSTALL_STORE_DIR constant is set in 
+				# wp-config to something different than the $uploads['basedir'] value.
+				if (!$already_created && $is_install ) {
+					@mkdir($uploads['basedir'].'/'.$basepath, $perms);
+					$success = (file_exists($uploads['basedir'].'/'.$basepath)) ? true : false;
+				}
+	
+				# Is the ownership correct?
+				$ownersgood = false;
+				if ($already_created || $success) {
+	
+					if( $is_install ) {
+						# @TODO: The folder check and creation in this block is also duplicated work.
+						$newowners = stat($uploads['basedir'].'/'.$basepath);
+						if ($newowners['uid'] == $owners['uid'] && $newowners['gid'] == $owners['gid']) {
+							$ownersgood = true;
+						} else {
+							@chown($uploads['basedir'].'/'.$basepath, $owners['uid']);
+							@chgrp($uploads['basedir'].'/'.$basepath, $owners['gid']);
+							$newowners	 = stat($uploads['basedir'].'/'.$basepath);
+							if ($newowners['uid'] == $owners['uid'] && $newowners['gid'] == $owners['gid']) $ownersgood	 = true;
+						}
+					}
+	
+					# the plugins, themes and language file are stored in /wp-content/uploads/sp-resources/ for a multisite installation.
+					# @TODO - the weird thing here is that the folders being specified below are NOT the ones being tested for and created above.
+					# So, the duplicated tests and folder creation in the section above needs to be fixed to match these folders.
+					$basepath						 .= '/';
+					$sfconfig['language-sp']		 = '/uploads'.'/'.$basepath.'forum-language/simple-press';
+					$sfconfig['language-sp-plugins'] = '/uploads'.'/'.$basepath.'forum-language/sp-plugins';
+					$sfconfig['language-sp-themes']	 = '/uploads'.'/'.$basepath.'forum-language/sp-themes';
+					$sfconfig['plugins']			 = '/uploads'.'/'.$basepath.'forum-plugins';
+					$sfconfig['themes']				 = '/uploads'.'/'.$basepath.'forum-themes';
+				}
+	
+				restore_current_blog();
+	
+				if( $is_install ) {
+					add_option('sp_storage2', ($already_created) ? 'multisite already done' : untrailingslashit($uploads['basedir'].'/'.$basepath));
+					SP()->options->add('spStorageInstall2', $already_created || $success);
+					SP()->options->add('spOwnersInstall2', $ownersgood);
+				}
+			} else {
+				# the plugins, themes and language file are stored in /wp-content/sp-resources/ for site #1.
+				$basepath						 = 'sp-resources/';
+				$sfconfig['language-sp']		 = $basepath.'forum-language/simple-press';
+				$sfconfig['language-sp-plugins'] = $basepath.'forum-language/sp-plugins';
+				$sfconfig['language-sp-themes']	 = $basepath.'forum-language/sp-themes';
+				$sfconfig['plugins']			 = $basepath.'forum-plugins';
+				$sfconfig['themes']				 = $basepath.'forum-themes';
+				if( $is_install ) {
+					add_option('sp_storage2', get_option('sp_storage1'));
+					SP()->options->add('spOwnersInstall2', true);
+					SP()->options->add('spStorageInstall2', true);
+				}
+			}
+		} else {
+			if( $is_install ) {
+				add_option('sp_storage2', get_option('sp_storage1'));
+				SP()->options->add('spStorageInstall2', true);
+				SP()->options->add('spOwnersInstall2', true);
+			}
+			
+			# the plugins, themes and language file are stored in /wp-content/sp-resources/ for single site installation
+			$sfconfig['language-sp']		 = $basepath.'forum-language/simple-press';
+			$sfconfig['language-sp-plugins'] = $basepath.'forum-language/sp-plugins';
+			$sfconfig['language-sp-themes']	 = $basepath.'forum-language/sp-themes';
+			$sfconfig['plugins']			 = $basepath.'forum-plugins';
+			$sfconfig['themes']				 = $basepath.'forum-themes';
+		}
+	
+		return $sfconfig;
+	}
+
 
 	/**
 	 * This method the required core files needed on all page loads.

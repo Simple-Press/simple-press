@@ -39,25 +39,24 @@ if (is_multisite() && !get_site_option('ms_files_rewriting')) {
 if (!defined('SP_STORE_RELATIVE_BASE')) define('SP_STORE_RELATIVE_BASE', str_replace(ABSPATH, '', SP_STORE_DIR).'/');
 
 # Location of uploaded Avatars, Smileys and Ranks
-if (!defined('SPAVATARURL')) define('SPAVATARURL', SP_STORE_URL.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['avatars'].'/');
-if (!defined('SPAVATARDIR')) define('SPAVATARDIR', SP_STORE_DIR.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['avatars'].'/');
-if (!defined('SPAVATARDIR')) define('SPAVATARDIR', SP_STORE_URL.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['avatar-pool'].'/');  //@TODO: This seems wrong.
-if (!defined('SPAVATARPOOLDIR')) define('SPAVATARPOOLDIR', SP_STORE_DIR.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['avatar-pool'].'/');
-if (!defined('SPAVATARPOOLURL')) define('SPAVATARPOOLURL', SP_STORE_URL.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['avatar-pool'].'/');
-if (!defined('SPSMILEYS')) define('SPSMILEYS', SP_STORE_URL.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['smileys'].'/');
-if (!defined('SPRANKSIMGURL')) define('SPRANKSIMGURL', SP_STORE_URL.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['ranks'].'/');
-if (!defined('SPRANKS')) define('SPRANKS', SP_STORE_URL.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['ranks'].'/');  // We should deprecate this because the name doesn't follow the standard.
-if (!defined('SPRANKSIMGDIR')) define('SPRANKSIMGDIR', SP_STORE_DIR.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['ranks'].'/');
+if (!defined('SPAVATARURL')) define('SPAVATARURL', SP_STORE_URL.'/'.SP()->plugin->storage['avatars'].'/');
+if (!defined('SPAVATARDIR')) define('SPAVATARDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['avatars'].'/');
+if (!defined('SPAVATARDIR')) define('SPAVATARDIR', SP_STORE_URL.'/'.SP()->plugin->storage['avatar-pool'].'/');  //@TODO: This seems wrong.
+if (!defined('SPAVATARPOOLDIR')) define('SPAVATARPOOLDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/');
+if (!defined('SPAVATARPOOLURL')) define('SPAVATARPOOLURL', SP_STORE_URL.'/'.SP()->plugin->storage['avatar-pool'].'/');
+if (!defined('SPSMILEYS')) define('SPSMILEYS', SP_STORE_URL.'/'.SP()->plugin->storage['smileys'].'/');
+if (!defined('SPRANKSIMGURL')) define('SPRANKSIMGURL', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'].'/');
+if (!defined('SPRANKS')) define('SPRANKS', SP_STORE_URL.'/'.SP()->plugin->storage['ranks'].'/');  // We should deprecate this because the name doesn't follow the standard.
+if (!defined('SPRANKSIMGDIR')) define('SPRANKSIMGDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/');
 
 # Location of plugins
-if (!defined('SPPLUGINURL')) define('SPPLUGINURL', SP_STORE_URL.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['plugins'].'/');
-if (!defined('SPPLUGINDIR')) define('SPPLUGINDIR', SP_STORE_DIR.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['plugins'].'/');
-
+if (!defined('SPPLUGINURL')) define('SPPLUGINURL', SP_STORE_URL.'/'.SP()->plugin->storage['plugins'].'/');
+if (!defined('SPPLUGINDIR')) define('SPPLUGINDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['plugins'].'/');
 # Location of custom icons and featured images
-if (!defined('SPCUSTOMDIR')) define('SPCUSTOMDIR', SP_STORE_DIR.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['custom-icons'].'/');
-if (!defined('SPCUSTOMURL')) define('SPCUSTOMURL', SP_STORE_URL.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['custom-icons'].'/');
-if (!defined('SPOGIMAGEDIR')) define('SPOGIMAGEDIR', SP_STORE_DIR.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['forum-images'].'/');
-if (!defined('SPOGIMAGEURL')) define('SPOGIMAGEURL', SP_STORE_URL.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['forum-images'].'/');
+if (!defined('SPCUSTOMDIR')) define('SPCUSTOMDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/');
+if (!defined('SPCUSTOMURL')) define('SPCUSTOMURL', SP_STORE_URL.'/'.SP()->plugin->storage['custom-icons'].'/');
+if (!defined('SPOGIMAGEDIR')) define('SPOGIMAGEDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/');
+if (!defined('SPOGIMAGEURL')) define('SPOGIMAGEURL', SP_STORE_URL.'/'.SP()->plugin->storage['forum-images'].'/');
 
 # Location of scripts
 if (!defined('SPJSCRIPT')) define('SPJSCRIPT', SP_PLUGIN_URL.'/forum/resources/jscript/');
@@ -99,8 +98,8 @@ $urlfrag = (defined('SP_DEVFLAG') && SP_DEVFLAG) ? '?XDEBUG_SESSION_START=netbea
 if (!defined('SPAJAXURL')) define('SPAJAXURL', admin_url("admin-ajax.php$urlfrag"));
 
 # Location of themes
-if (!defined('SPTHEMEBASEURL')) define('SPTHEMEBASEURL', SP_STORE_URL.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['themes'].'/');
-if (!defined('SPTHEMEBASEDIR')) define('SPTHEMEBASEDIR', SP_STORE_DIR.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['themes'].'/');
+if (!defined('SPTHEMEBASEURL')) define('SPTHEMEBASEURL', SP_STORE_URL.'/'.SP()->plugin->storage['themes'].'/');
+if (!defined('SPTHEMEBASEDIR')) define('SPTHEMEBASEDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['themes'].'/');
 
 $curTheme = SP()->theme->get_current();
 
@@ -143,8 +142,8 @@ if (!defined('SP_PLUGIN_ICONS')) define('SP_PLUGIN_ICONS', SPADMINIMAGES.'../ico
 if (!defined('SPADMINUPGRADE')) define('SPADMINUPGRADE', admin_url('admin.php?page='.SP_FOLDER_NAME.'/sp-startup/sp-load-install.php'));
 
 # Combined CSS/JS cache file
-if (!defined('SP_COMBINED_CACHE_URL')) define('SP_COMBINED_CACHE_URL', SP_STORE_URL.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['cache'].'/');
-if (!defined('SP_COMBINED_CACHE_DIR')) define('SP_COMBINED_CACHE_DIR', SP_STORE_DIR.'/'. empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['cache'].'/');
+if (!defined('SP_COMBINED_CACHE_URL')) define('SP_COMBINED_CACHE_URL', SP_STORE_URL.'/'.SP()->plugin->storage['cache'].'/');
+if (!defined('SP_COMBINED_CACHE_DIR')) define('SP_COMBINED_CACHE_DIR', SP_STORE_DIR.'/'.SP()->plugin->storage['cache'].'/');
 if (!defined('SP_COMBINED_CSS_BASE_NAME')) define('SP_COMBINED_CSS_BASE_NAME', 'sp-plugin-styles-');
 if (!defined('SP_COMBINED_SCRIPTS_BASE_NAME')) define('SP_COMBINED_SCRIPTS_BASE_NAME', 'sp-plugin-scripts-');
 
