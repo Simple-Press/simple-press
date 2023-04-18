@@ -27,38 +27,6 @@ function spa_paint_tab_head( $tabname, $buttons = true ) {
 	echo "<div class='sf-panel-head'>";
 	
 	if( $buttons ) {
-	
-		echo "<div class='sf-buttons'>";
-
-			echo '<a class="sf-button" href="'.SP()->spPermalinks->get_url().'"><span class="sf-icon sf-go"></span>'.SP()->primitives->admin_text('Go To Forum').'</a>';
-
-			// if (!spa_saas_check() && !spa_white_label_check()) {
-			// 	echo '<a class="sf-button" target="_blank" href="https://wordpress.org/support/plugin/simplepress/reviews/#new-post">'.SP()->primitives->admin_text('Review Simple:Press').'</a>';
-			// }
-	
-			// $site = wp_nonce_url(SPAJAXURL.'spAckPopup', 'spAckPopup');
-			
-			// if (!spa_saas_check() && !spa_white_label_check()) {
-			// 	$title = SP()->primitives->admin_text('About');
-			// 	echo '<a class="sf-button spOpenDialog" data-site="'.$site.'" data-label="'.$title.'" data-width="600" data-height="0" data-align="center">'.$title.'</a>';
-			// }
-	
-			if (!spa_saas_check() && !spa_white_label_check()) {
-				echo '<a class="sf-button" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Documentation').'</a>';
-			}		
-		
-			// $site = wp_nonce_url(SPAJAXURL.'adminsearch', 'adminsearch');			
-			// $target = 'sfmaincontainer';
-			// echo '<input type="button" id="spSearch" class="sf-button spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Glossary').'" data-url="'.$site.'" data-target="'.$target.'" />';				
-			
-			// $site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'troubleshooting', 'troubleshooting'));			
-			// $target = 'sfmaincontainer';
-			// if (!spa_saas_check() && !spa_white_label_check()) {
-			// 	echo '<input type="button" id="spHelp" class="sf-button spLeft spTroubleshoot" value="'.SP()->primitives->admin_text('Help').'" data-url="'.$site.'" data-target="'.$target.'" />';
-			// }
-	
-		echo "</div>";
-	
 	}
 	
 	echo "<h3>$tabname</h3>";
@@ -234,11 +202,11 @@ function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1) {
 	echo "<div class='sf-form-row'>\n";
 	echo "<label class='sp-label-50'>\n";
 	echo "$label";
-	if (!empty($submessage)) echo "<br /><small><strong>".esc_html($submessage)."</strong></small>\n";
 	echo '</label>';
 	echo "<textarea rows='$rows' cols='80' class='wp-core-ui sp-textarea-50' tabindex='$tab' name='$name'>".esc_html($value)."</textarea>\n";
-	//echo '<div class="clearboth"></div>';
+    if (!empty($submessage)) echo "<br /><small><strong>".esc_html($submessage)."</strong></small>\n";
 	echo '</div>';
+
 
 	$tab++;
 }
@@ -249,10 +217,9 @@ function spa_paint_wide_textarea($label, $name, $value, $submessage='', $xrows=1
 	echo "<div class='sf-form-row'>\n";
 	echo "<label class='sp-label'>\n";
 	echo "$label";
-	if (!empty($submessage)) echo "<br /><small><strong>$submessage</strong></small>\n";
 	echo '</label>';
 	echo "<textarea placeholder='$placeholder' rows='$xrows' cols='80' class='wp-core-ui sp-textarea' tabindex='$tab' name='$name'>".esc_attr($value)."</textarea>\n";
-	//echo '<div class="clearboth"></div>';
+    if (!empty($submessage)) echo "<br /><small><strong>$submessage</strong></small>\n";
 	echo '</div>';
 
 	$tab++;
@@ -267,7 +234,6 @@ function spa_paint_thin_textarea($label, $name, $value, $submessage='', $xrows=1
 	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
 	echo '</label>';
 	echo "<textarea rows='$xrows' cols='80' class='wp-core-ui sp-textarea-33' tabindex='$tab' name='$name'>".esc_attr($value)."</textarea>\n";
-	//echo '<div class="clearboth"></div>';
 	echo '</div>';
 
 	$tab++;
@@ -548,14 +514,12 @@ function spa_paint_select_start($label, $name, $helpname) {
 
 	echo "<div class='sf-form-row'>\n";
 	echo "<label class='sp-label-40'>$label</label>\n";
-	echo "<div class='sf-select-wrap'>\n";
 	echo "<select class='wp-core-ui  sp-input-60' tabindex='$tab' name='$name'>";
 	$tab++;
 }
 
 function spa_paint_select_end($msg='') {
 	echo "</select>\n";
-	echo '</div>';
 	//echo '<div class="clearboth"></div>';
 	if ($msg) echo $msg;
 	echo '</div>';

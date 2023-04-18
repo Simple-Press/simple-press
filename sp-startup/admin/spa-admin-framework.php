@@ -187,17 +187,23 @@ function spa_panel_header() {
 	global $spNews;
 
 	echo '<!-- Common wrapper and header -->';
-	echo '<div class="wrap nosubsub">';
-	echo '<div class="mainicon icon-forums"></div>';
-	if (!spa_saas_check() && !spa_white_label_check()) {	
-		echo '<h1>'.SP()->primitives->admin_text('Simple:Press Administration').'</h1>';
-	} else {
-		echo '<h1>'.SP()->primitives->admin_text('Forum Administration').'</h1>';
-	}
-	echo '<div class="clearboth"></div>';
+	echo '<div class="spAdminHeader">';
+        if (!spa_saas_check() && !spa_white_label_check()) {
+            echo '<img src="https://simple-press.com/app/themes/simplepress-cabb/assets/gfx/simple-press-logo.svg">';
+        } else {
+            echo '<h1>'.SP()->primitives->admin_text('Forum Administration').'</h1>';
+        }
 
-	
-	echo '</div><div class="clearboth"></div>';
+        echo "<div style='float: right;'>";
+
+            echo '<a class="sf-button-secondary" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
+
+            if (!spa_saas_check() && !spa_white_label_check()) {
+                echo '<a class="sf-button-secondary" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Documentation').'</a>';
+            }
+
+        echo "</div>";
+    echo '</div>';
 
 	# define container for the dialog box popup
 	echo '<div id="dialogcontainer" style="display:none;"></div>';
@@ -343,9 +349,6 @@ function spa_render_sidemenu() {
 		echo '</div>'."\n";
 	} else {
 		
-		echo '<div style="clear: both;float: none;"></div>';
-		
-		
 		echo '<div id="sfsidepanel">'."\n";
                 
                 echo '<span class="sf-tooggle-admin-menu">'."\n";
@@ -358,37 +361,66 @@ function spa_render_sidemenu() {
                 echo '</span>'."\n";
                 
 		echo '<div id="sfadminmenu">'."\n";
-		foreach ($sfadminpanels as $index => $panel) {
-			if (SP()->auths->current_user_can($panel[1]) || ($panel[0] == 'Admins' && (SP()->user->thisUser->admin || SP()->user->thisUser->moderator))) {
-				$pName = str_replace(' ', '', $panel[0]);
-				echo '<div class="sfsidebutton" id="sfacc'.$pName.'">'."\n";
-				echo '<div class="" title="'.esc_attr($panel[3]).'"><span class="sf-icon sf-'.$panel[4].' spa'.$panel[4].'"></span><a href="#">'.$panel[0].'</a></div>'."\n";
-				echo '</div>'."\n";
-				echo '<div class="sfmenublock">'."\n";
+        /*
+         *
+         * $sfadminpanels[] = array(
+		0'panel_name'      => SP()->primitives->admin_text('Options'),
+		1w'spf_capability'  => 'SPF Manage Options',
+		2'admin_file'      => SP_FOLDER_NAME.'/admin/panel-options/spa-options.php',
+		3'rwtool_tip'        => $sfatooltips['options'],
+		4'icon'            => 'options',
+		5'loader_function' => wp_nonce_url(SPAJAXURL.'options-loader', 'options-loader'),
+		6'subpanels'       => $forms,
+		7'show_in_wp_menu' => true,
+        8'addon'           => false,
+    );
+         */
+        $coreMenus = '';
+        $addonMenus = '';
 
-				foreach ($panel[6] as $label => $data) {
-					foreach ($data as $formid => $reload) {
+		foreach ($sfadminpanels as $index => $panel) {
+            $html = '';
+			if (SP()->auths->current_user_can($panel['spf_capability']) || ($panel['panel_name'] == 'Admins' && (SP()->user->thisUser->admin || SP()->user->thisUser->moderator))) {
+				$pName = str_replace(' ', '', $panel['panel_name']);
+				$html .= '<div class="sfsidebutton  spPanelType' . (array_key_exists('core', $panel) && $panel['core'] ? 'Core': 'Addon') . '" id="sfacc'.$pName.'">';
+                $html .= '<div class="" title="'.esc_attr($panel['tool_tip']).'"><span class="sf-icon sf-'.$panel['icon'].' spa'.$panel['icon'].'"></span><a href="#">'.$panel['panel_name'].'</a></div>';
+                $html .= '</div>';
+                $html .= '<div class="sfmenublock">';
+
+				foreach ($panel['subpanels'] as $label => $data) {
+					foreach ($data as $form_id => $reload) {
 						# ignore user plugin data for menu
-						if ($formid == 'admin' || $formid == 'save' || $formid == 'form') continue;
-						echo '<div class="sfsideitem">'."\n";
+						if ($form_id === 'admin' || $form_id === 'save' || $form_id === 'form') continue;
+
+                        $html .=  '<div class="sfsideitem">'."\n";
 						if ($reload != '') {
 							$id = ' id="'.esc_attr($reload).'"';
 						} else {
-							$id = ' id="acc'.esc_attr($formid).'"';
+							$id = ' id="acc'.esc_attr($form_id).'"';
 						}
-						$base = esc_attr($panel[5]);
+						$base = esc_attr($panel['loader_function']);
 						$admin = (!empty($data['admin']) ? $data['admin'] : '');
 						$save = (!empty($data['save']) ? $data['save'] : '');
 						$form = (!empty($data['form']) ? $data['form'] : '');
-						?>
-						<a<?php echo $id; ?> href="javascript:void(0);" class="spAccordionLoadForm" data-form="<?php echo $formid; ?>" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="" data-open="open" data-upgrade="<?php echo $upgrade; ?>" data-admin="<?php echo $admin; ?>" data-save="<?php echo $save; ?>" data-sform="<?php echo $form; ?>" data-reload="<?php echo $reload; ?>"><?php echo $label; ?></a><?php echo "\n"; ?>
-						<?php
+						
+                        $html .= '<a' . $id . ' href="javascript:void(0);" class="spAccordionLoadForm" data-form="' . $form_id . '" data-url="' . $base . '" data-target="' . $target . '" data-img="' . $image . '" data-id="" data-open="open" data-upgrade="' . $upgrade . '" data-admin="' . $admin . '" data-save="' . $save . '" data-sform="' . $form . '" data-reload="' . $reload . '">' . $label . '</a>';
 					}
-					echo '</div>'."\n";
+                    $html .=  '</div>'."\n";
 				}
-				echo '</div>'."\n";
+                $html .=  '</div>'."\n";
 			}
+
+            if (array_key_exists('core', $panel) && $panel['core']) {
+                $coreMenus .= $html;
+            } else {
+                $addonMenus .= $html;
+            }
+
 		}
+
+        echo $coreMenus;
+        echo $addonMenus;
+
 		echo '</div>'."\n";
 
 		echo '</div>'."\n";

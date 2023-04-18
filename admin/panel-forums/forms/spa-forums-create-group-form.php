@@ -23,11 +23,7 @@ function spa_forums_create_group_form() {
 <?php
 		echo sp_create_nonce('forum-adminform_groupnew');
 		
-		$info = '<div class="sf-alert-block sf-info">' .
-			sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the Order Groups and Forums option from the Forums Menu'), '<b>', '</b>') .
-			'</div>';
-		
-		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Create New Group'), false, $info);
+		spa_paint_open_tab(SP()->primitives->admin_text('Create New Group'));
 
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Group Details'), 'true', 'create-new-forum-group');

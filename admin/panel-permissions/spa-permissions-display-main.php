@@ -33,9 +33,9 @@ function spa_permissions_permission_main() {
                         $title = esc_js(SP()->displayFilters->title($role->role_name));
                         ?>
                         <div class="sf-panel-body-top-right sf-mobile-btns sf-mobile-no-vertical-margin">
-                            <input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit Permission'); ?>" data-form="editperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $role->role_id; ?>" data-open="" />
-                            <input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete Permission'); ?>" data-form="delperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $role->role_id; ?>" data-open="" />
-                            <input type='button' class='sf-button-secondary spOpenDialog' value='<?php echo SP()->primitives->admin_text('Permission Usage'); ?>' data-site='<?php echo $site ?>' data-label='<?php echo $title ?>' data-width='600' data-height='0' data-align='center' />
+                            <input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit'); ?>" data-form="editperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $role->role_id; ?>" data-open="" />
+                            <input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete'); ?>" data-form="delperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $role->role_id; ?>" data-open="" />
+                            <input type='button' class='sf-button-secondary spOpenDialog' value='<?php echo SP()->primitives->admin_text('Usage'); ?>' data-site='<?php echo $site ?>' data-label='<?php echo $title ?>' data-width='600' data-height='0' data-align='center' />
                         </div>
                     </td>
                 </tr>

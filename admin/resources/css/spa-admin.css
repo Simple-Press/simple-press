@@ -17,6 +17,11 @@ $Rev:2099 $
     font-style: normal;
 }
 
+:root {
+    --sp-primary-color: #D14B4B;
+    --sp-secondary-button-color: #a1a0a0;
+}
+
 /* 
  Set the H2 font used throughout the admin area.
  Applicable as long as its inside the SF container with the #sfmaincontainer css ID...
@@ -92,7 +97,7 @@ $Rev:2099 $
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
-    font-size: 20px;
+    font-size: 18px;
     text-transform: none;
     margin: 0 0 0 8px;
     float: left;
@@ -237,9 +242,9 @@ $Rev:2099 $
     margin: 0 8px 4px 8px;
     padding: 5px 15px 5px 15px;
     border: 1px solid #dddddd;
-    -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
+    overflow: hidden;
 }
 .sfhelptext .sfhelptag p {
     font-weight: 600;
@@ -555,7 +560,7 @@ $Rev:2099 $
 #sf-root-wrap textarea,
 #sf-root-wrap .sf-select-wrap {
     margin: 0;
-    padding: 16px 16px 15px;
+    padding: 5px;
     width: 100%;
     color: #47484A;
     -khtml-border-radius: 3px;
@@ -582,7 +587,6 @@ $Rev:2099 $
 #sf-root-wrap input[type=number],
 #sf-root-wrap select,
 #sf-root-wrap .sf-select-wrap {
-    height: 50px;
 }
 #sf-root-wrap input[type=text].sf-input-small,
 #sf-root-wrap input[type=search].sf-input-small,
@@ -605,47 +609,15 @@ $Rev:2099 $
 #sf-root-wrap .sf-input-group.sf-input-small .sf-select-wrap,
 #sf-root-wrap .sf-input-group.sf-input-small select,
 #sf-root-wrap .sf-input-group.sf-input-small input /* ... */ {
-    height: 40px;
-    /*padding: 12px 30px 12px 20px;*/
     padding: 12px 25px 12px 20px;
 }
-#sf-root-wrap select {
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 17px;
-    color: #006992;
-}
+
 #sf-root-wrap .sf-select-wrap {
     float: left;
     width: 100%;
     position: relative;
     background-color: #FFF;
     cursor: pointer;
-}
-#sf-root-wrap .sf-select-wrap select {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border: none;
-    padding: 16px 40px 17px 16px;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 17px;
-    color: #006992;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    background: transparent;
-    max-width: 100%;
-}
-#sf-root-wrap .sf-select-wrap:before {
-    content: '\2335';
-    position: absolute;
-    top: 14px;
-    right: 16px;
-    color: rgba(0, 105, 146, .75);
-    font-size: 13px;
-    font-weight: bold;
 }
 
 #sf-root-wrap .sf-select-wrap.sf-input-small:before,
@@ -654,36 +626,11 @@ $Rev:2099 $
     right: 12px;
 }
 
+
 #sf-root-wrap label {
     display: block;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 17px;
-    text-transform: uppercase;
-    white-space: normal;
-    color: #27476E;
 }
-#sf-root-wrap label input[type=text],
-#sf-root-wrap label input[type=search],
-#sf-root-wrap label input[type=radio],
-#sf-root-wrap label input[type=tel],
-#sf-root-wrap label input[type=time],
-#sf-root-wrap label input[type=url],
-#sf-root-wrap label input[type=week],
-#sf-root-wrap label input[type=password],
-#sf-root-wrap label input[type=checkbox],
-#sf-root-wrap label input[type=color],
-#sf-root-wrap label input[type=date],
-#sf-root-wrap label input[type=datetime],
-#sf-root-wrap label input[type=datetime-local],
-#sf-root-wrap label input[type=email],
-#sf-root-wrap label input[type=month],
-#sf-root-wrap label input[type=number],
-#sf-root-wrap label select,
-#sf-root-wrap label textarea,
-#sf-root-wrap label .sf-select-wrap {
-    margin-top: 13px;
-}
+
 #sf-root-wrap label+input[type=text],
 #sf-root-wrap label+input[type=search],
 #sf-root-wrap label+input[type=radio],
@@ -704,7 +651,7 @@ $Rev:2099 $
 #sf-root-wrap label+textarea,
 #sf-root-wrap label+.sf-select-wrap,
 #sf-root-wrap label+.sf-after-label {
-    margin-top: 13px;
+    margin-top: 5px;
 }
 #sf-root-wrap .sf-after-label {
     display: inline-block;
@@ -806,139 +753,25 @@ $Rev:2099 $
     color: #FFF;
 }
 
-#sf-root-wrap button {
-    cursor: pointer;
-}
-#sf-root-wrap .sf-button,
-#sf-root-wrap .sf-button-primary,
-#sf-root-wrap .sf-button-secondary {
-    display: inline-block;
-    float: left;
-    width: auto;
-    height: 40px;
-    /*margin: 0 5px 5px;*/
+.sf-button,
+.sf-button-primary,
+.sf-button-secondary {
     margin: 1px 5px;
     padding: 12px 21px 11px 20px;
-    line-height: 17px;
-    background: #006992;
-    box-shadow: 0 3px 6px rgba(0, 105, 146, .1);
-    border: none;
-    -khtml-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+    background: var(--sp-primary-color);
+    border-radius: 50px;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 14px;
     color: #FFF;
-    text-shadow: none;
-    text-align: center;
+    border:none;
     text-decoration: none;
-    outline: none;
-    white-space: nowrap;
-    vertical-align: top;
-    cursor: pointer;
-    -webkit-user-select: none; /* Safari 3.1+ */
-    -moz-user-select: none; /* Firefox 2+ */
-    -ms-user-select: none; /* IE 10+ */
-    user-select: none; /* Standard syntax */
 }
-#sf-root-wrap .sf-button[disabled],
-#sf-root-wrap .sf-button-primary[disabled],
-#sf-root-wrap .sf-button-secondary[disabled] {
-    background-color: #00B9D0 !important;
-    box-shadow: 0 5px 10px rgba(0, 185, 208, .1) !important;
-    color: #FFF !important;
-    opacity: .5;
-}
-#sf-root-wrap .sf-button.sf-focus
-#sf-root-wrap .sf-button.sf-hover,
-#sf-root-wrap .sf-button:focus,
-#sf-root-wrap .sf-button:hover {
-    background: rgba(0, 105, 146, .9);
-    box-shadow: 0 3px 6px rgba(0, 105, 146, .1);
-    border-color: inherit;
-    color: #FFF;
-}
-#sf-root-wrap .sf-button.sf-active,
-#sf-root-wrap .sf-button.sf-active:focus,
-#sf-root-wrap .sf-button.sf-active:hover,
-#sf-root-wrap .sf-button:active {
-    background: rgba(0, 105, 146, .8);
-    box-shadow: 0 3px 6px rgba(0, 105, 146, .1);
-    border-color: inherit;
-    color: #FFF;
-    -webkit-transform: translateY(1px);
-    transform: translateY(1px);
-}
-#sf-root-wrap .sf-button-primary {
-    height: 50px;
-    padding: 16px 34px 15px 35px;
-    line-height: 19px;
-    font-size: 14px;
-    background: #00B9D0;
-    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
-    color: #FFF;
-    text-transform: inherit;
-}
-#sf-root-wrap .sf-button-primary.sf-focus,
-#sf-root-wrap .sf-button-primary.sf-hover,
-#sf-root-wrap .sf-button-primary:focus,
-#sf-root-wrap .sf-button-primary:hover {
-    background: rgba(0, 185, 208, .9);
-    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
-    border-color: inherit;
-    color: #FFF;
-}
-#sf-root-wrap .sf-button-primary.sf-active,
-#sf-root-wrap .sf-button-primary.sf-active:focus,
-#sf-root-wrap .sf-button-primary.sf-active:hover,
-#sf-root-wrap .sf-button-primary:active {
-    background: rgba(0, 185, 208, .8);
-    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
-    border-color: inherit;
-    color: #FFF;
-    -webkit-transform: translateY(1px);
-    transform: translateY(1px);
-}
-#sf-root-wrap .sf-button-secondary {
-    height: 50px;
-    padding: 16px 34px 15px 35px;
-    line-height: 19px;
-    font-size: 14px;
-    background: rgba(0, 105, 146, .1);
-    box-shadow: none;
-    color: #006992;
-}
-#sf-root-wrap .sf-button-secondary.sf-focus,
-#sf-root-wrap .sf-button-secondary.sf-hover,
-#sf-root-wrap .sf-button-secondary:focus,
-#sf-root-wrap .sf-button-secondary:hover {
-    background-color: rgba(0, 105, 146, .2);
-}
-#sf-root-wrap .sf-button-secondary.sf-active,
-#sf-root-wrap .sf-button-secondary.sf-active:focus,
-#sf-root-wrap .sf-button-secondary.sf-active:hover,
-#sf-root-wrap .sf-button-secondary:active {
-    background: rgba(0, 185, 208, .8);
-    box-shadow: 0 3px 6px rgba(0, 185, 208, .1);
-    border-color: inherit;
-    color: #FFF;
-    -webkit-transform: translateY(1px);
-    transform: translateY(1px);
-}
-#sf-root-wrap [class*=sf-button].sf-btn-small {
-    height: 40px;
-    padding: 12px 21px 11px;
-    font-size: 12px;
-}
-/*#sf-root-wrap [class*=sf-button]+[class*=sf-button] {
-    margin-left: 10px;
-}*/
 
-#sf-root-wrap .sf-button-small {
-    height: 40px;
-    padding: 11px 17px;
-    min-width: 80px;
+.sf-button-secondary {
     font-size: 12px;
+    background: var(--sp-secondary-button-color);
+    padding: 6px 15px;
+    font-weight: normal;
 }
 
 #sf-root-wrap .sf-full-form .sf-icon-button {
@@ -1299,6 +1132,7 @@ img.sf-iconset-icon-img{
 #sfsidepanel .sf-tooggle-admin-menu {
     display: none;
 }
+
 /**
 * #sfadminmenu >
 */
@@ -1306,22 +1140,23 @@ img.sf-iconset-icon-img{
     margin: -4px 14px 0 20px;
 }
 #sfadminmenu .sf-icon:not([class*=spaicon-]) {
-    background-color: #006992;
+    background-color: var(--sp-primary-color);
 }
 #sfadminmenu [class*=spaicon-] {
-    color: #006992;
+    color: var(--sp-primary-color);
+    margin-top: 0px;
 }
 
 #sfadminmenu .sfsidebutton,
 #sfadminmenu .sfsidebutton a {
     position: relative;
     text-align: left;
-    line-height: 50px;
+    line-height: 40px;
     outline: none;
     cursor: pointer;
 }
 #sfadminmenu .sfsidebutton {
-    height: 50px;
+    height: 40px;
     border-bottom: 1px solid #F1F1F1;
     background-color: #F9F9F9;
 }
@@ -1332,23 +1167,22 @@ img.sf-iconset-icon-img{
     color: #d54e21 !important;
 }
 #sfadminmenu .sfsidebutton:after {
-    content: '\2335';
+    content: '\2303';
     position: absolute;
     top: -2px;
     right: 20px;
     color: #DADADC;
     font-weight: bold;
+    transform: rotate(180deg);
 }
 #sfadminmenu .sfsidebutton.ui-state-active:after {
-    transform: rotate(180deg);
-    top: 3px;
-    color: #006992;
+    color: var(--sp-primary-color);
 }
 #sfadminmenu .sfsidebutton a {
     display: inline-block;
     font-weight: 600;
-    font-size: 14px;
-    color: #006992;
+    font-size: 12px;
+    color: #000000;
 }
 #sfadminmenu .sfsidebutton .ui-icon {
     position: absolute;
@@ -1366,8 +1200,9 @@ img.sf-iconset-icon-img{
 }
 #sfadminmenu .sfmenublock a {
     text-align: left;
-    color: #27476E;
-    font-size: 13px;
+    color: #4f4f4f;
+    font-size: 12px;
+    font-family: "Open Sans";
 }
 #sfadminmenu .sfmenublock .sfsideitem {
     position: relative;
@@ -1382,7 +1217,7 @@ img.sf-iconset-icon-img{
     font-weight: 600;
 }
 #sfadminmenu .sfmenublock .sfsideitem a:focus {
-    color: #27476E;
+    color: #252525;
 }
 #sfadminmenu .sfmenublock .sfsideitem a:hover {
     background-color: #F9F9F9;
@@ -1394,7 +1229,13 @@ img.sf-iconset-icon-img{
     left: 0;
     width: 3px;
     height: 20px;
-    background-color: #00B9D0;
+    background-color: var(--sp-primary-color);
+}
+#sfadminmenu > .spPanelTypeAddon { /* is used to separate addons from core settings */
+    margin-top: 20px;
+}
+#sfadminmenu > .spPanelTypeAddon ~ .spPanelTypeAddon {
+    margin-top: 0;
 }
 /**
 * < #sfadminmenu
@@ -1405,31 +1246,13 @@ img.sf-iconset-icon-img{
     padding: 0;
 }
 
-
 #sfmaincontainer .sf-panel-head {
-    float: left;
-    width: 100%;
-    position: relative;
-    padding: 0;
     margin: 0 0 30px 0;
-    border: none;
-    background: transparent;
-    box-shadow: none;
 }
-#sfmaincontainer .sf-panel-head .sf-buttons {
-    float: right;
-}
-#sfmaincontainer .sf-panel-head .sf-buttons [class*=sf-button] {
-    float: right;
-    margin: 5px 0 5px 10px;
-}
+
 #sfmaincontainer .sf-panel-head h3 {
-    float: left;
-    margin: 7px 0;
     font-size: 24px;
-    line-height: 36px;
     font-weight: normal;
-    color: #27476E;
 }
 #sfmaincontainer .sf-panel-body {
     float: left;
@@ -1437,11 +1260,8 @@ img.sf-iconset-icon-img{
     position: relative;
     padding: 30px;
     background-color: #F9F9F9;
-    -khtml-border-radius: 4px;
-    -webkit-border-radius: 4px;
     border-radius: 4px;
     margin-bottom: 20px;
-    /*overflow: hidden;*/
 }
 #sfmaincontainer .sf-panel-body.sfform-panel-nohead {
     margin-top: 40px;
@@ -1454,6 +1274,7 @@ img.sf-iconset-icon-img{
 }
 #sfmaincontainer .sf-panel-body .sf-panel-head .sf-buttons {
     display: none;
+    border: 1px solid red;
 }
 
 #sfmaincontainer .sf-grid-4 {
@@ -1690,8 +1511,6 @@ img.sf-iconset-icon-img{
     margin-bottom: 30px;
     padding: 20px;
     background-color: #FFF;
-    -khtml-border-radius: 4px;
-    -webkit-border-radius: 4px;
     border-radius: 4px;
 }
 #sfmaincontainer .sf-panel-body .sf-half-form .sf-fieldset .sf-alert-block {
@@ -2925,6 +2744,7 @@ body .spMobileTableData .row-actions > span {
     #sf-root-wrap .sf-button,
     #sf-root-wrap .sf-button-primary,
     #sf-root-wrap .sf-button-secondary {
+        border: 1px solid red;
         height: 50px;
         font-size: 14px;
         line-height: 19px;
@@ -3912,7 +3732,6 @@ spProfileShowInfoSection.spLeft {
         padding-left: 0;
 }
 
-
 .spUsergroupsList li {
         border-top: #f1f1f1 solid 1px;
         padding: 6px;
@@ -3925,4 +3744,15 @@ body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-st
         This is not supported by WP by default.
      */
     display: none;
+}
+/**
+
+
+
+ */
+
+.spAdminHeader {
+    padding: 20px;
+    margin: 0 0 0 -20px;
+    background: white;
 }

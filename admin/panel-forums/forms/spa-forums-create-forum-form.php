@@ -63,9 +63,9 @@ function spa_forums_create_forum_form() {
 					echo '<div id="groupselect" class="sf-dis-block">';
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Select group new forum will belong to')."</label>\n";
-					echo '<div class="sf-select-wrap"><select class="spForumSetSequence" tabindex="'.$tab.'" name="group_id">';
+					echo '<select class="spForumSetSequence" tabindex="'.$tab.'" name="group_id">';
 					echo spa_create_group_select(0, 1);
-					echo "</select></div>\n";
+					echo "</select>\n";
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
 					$tab++;
@@ -74,9 +74,9 @@ function spa_forums_create_forum_form() {
 					echo '<div id="forumselect" class="sf-dis-block">';
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Select forum new subforum will belong to').":</label>\n";
-					echo '<div class="sf-select-wrap"><select class="spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';
+					echo '<select class="spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';
 					echo sp_render_group_forum_select(false, false, false, true);
-					echo "</select></div>\n";
+					echo "</select>\n";
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
 					$tab++;
