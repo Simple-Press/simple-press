@@ -469,22 +469,6 @@ function spa_setup_admin_menu() {
 	$sfadminpanels = apply_filters('sf_admin_panels', $sfadminpanels);
 	$sfactivepanels = apply_filters('sf_admin_activepanels', $sfactivepanels);
 	
-	# Add promotions menu to the bottom of the list
-	if (!spa_saas_check()) {		
-		$forms = array(
-			SP()->primitives->admin_text('Promotions') => array(
-				'promotions-1' => ''));
-		$sfadminpanels[] = array(
-			SP()->primitives->admin_text('Promotions'),
-			'SPF Manage Promotions',
-			SP_FOLDER_NAME.'/admin/panel-promotions/spa-promotions.php',
-			$sfatooltips['promotions'] ?? null,
-			'go',
-			wp_nonce_url(SPAJAXURL.'promotions-loader', 'promotions-loader'),
-			$forms,
-			true);
-		$sfactivepanels['promotions'] = 999;
-	}
 
 	# allow plugins to alter the admin menus after promotions item if they really really want to do so!
 	$sfadminpanels = apply_filters('sf_admin_panels_after_promo', $sfadminpanels);

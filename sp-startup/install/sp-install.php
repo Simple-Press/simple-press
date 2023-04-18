@@ -1046,7 +1046,6 @@ function sp_perform_install($phase, $subphase = 0) {
 				$user->add_cap('SPF Manage Plugins');
 				$user->add_cap('SPF Manage Themes');
 				$user->add_cap('SPF Manage Integration');
-				$user->add_cap('SPF Manage Promotions');
 				SP()->memberData->update($user_id, 'admin', 1);
 
 				# admin your option defaults
