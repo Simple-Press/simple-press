@@ -7,42 +7,6 @@ $Rev:2099 $
 /* Some overrides of WP Admin to fit our panels */
 
 @font-face {
-    font-display: swap;
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 400;
-    src: url('./fonts/open-sans-v34-latin-regular.woff2') format('woff2'),
-    url('./fonts/open-sans-v34-latin-regular.woff') format('woff');
-}
-
-@font-face {
-    font-display: swap;
-    font-family: 'Open Sans';
-    font-style: italic;
-    font-weight: 400;
-    src: url('./fonts/open-sans-v34-latin-italic.woff2') format('woff2'),
-    url('./fonts/open-sans-v34-latin-italic.woff') format('woff');
-}
-
-@font-face {
-    font-display: swap;
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 600;
-    src: url('./fonts/open-sans-v34-latin-600.woff2') format('woff2'),
-    url('./fonts/open-sans-v34-latin-600.woff') format('woff');
-}
-
-@font-face {
-    font-display: swap;
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 800;
-    src: url('./fonts/open-sans-v34-latin-800.woff2') format('woff2'),
-    url('./fonts/open-sans-v34-latin-800.woff') format('woff');
-}
-
-@font-face {
     font-family: 'sp-admin';
     src: url('fonts/sp-admin.eot?-1norbm');
     src: url('fonts/sp-admin.eot?#iefix-1norbm') format('embedded-opentype'),
@@ -58,7 +22,6 @@ $Rev:2099 $
  Applicable as long as its inside the SF container with the #sfmaincontainer css ID...
 */
 #sfmaincontainer h2 {
-	font-family: 'Open Sans';
 	font-size: 1.3em;
 	font-weight: normal;
 }
@@ -321,7 +284,6 @@ $Rev:2099 $
 
 /* TOOLTIPS =========================================================================================*/
 .ttip {
-    font-family: "Open Sans";
     font-style: normal;
     border: none;
     -khtml-border-radius: 3px;
@@ -383,7 +345,6 @@ $Rev:2099 $
 
 #sf-root-wrap {
     margin-top: 30px;
-    font-family: "Open Sans";
     font-style: normal;
     /*overflow: hidden;*/
 }
@@ -416,14 +377,12 @@ $Rev:2099 $
 }
 #sf-root-wrap .sf-number {
     margin: 0 0 7px 0;
-    font-family: "Open Sans";
     font-size: 16px;
     line-height: 22px;
     color: #27476E;
 }
 #sf-root-wrap h4 {
     margin: 0 0 10px 0;
-    font-family: "Open Sans";
     font-size: 13px;
     line-height: 22px;
     font-weight: 400;
@@ -514,7 +473,6 @@ $Rev:2099 $
     padding: 20px 0;
 }
 #sf-root-wrap .sfinline-form .sf-panel-body .sf-full-form .sf-panel-body-top .sf-panel-body-top-left h4 {
-    font-family: "Open Sans Regular";
     font-size: 14px;
     line-height: 19px;
 }
@@ -652,7 +610,6 @@ $Rev:2099 $
     padding: 12px 25px 12px 20px;
 }
 #sf-root-wrap select {
-    font-family: "Open Sans";
     font-weight: 600;
     font-size: 12px;
     line-height: 17px;
@@ -671,7 +628,6 @@ $Rev:2099 $
     left: 0;
     border: none;
     padding: 16px 40px 17px 16px;
-    font-family: "Open Sans";
     font-weight: 600;
     font-size: 12px;
     line-height: 17px;
@@ -700,7 +656,6 @@ $Rev:2099 $
 
 #sf-root-wrap label {
     display: block;
-    font-family: "Open Sans";
     font-weight: 600;
     font-size: 12px;
     line-height: 17px;
@@ -757,7 +712,6 @@ $Rev:2099 $
 #sf-root-wrap input[type=radio]+label,
 #sf-root-wrap input[type=checkbox]+label {
     margin-left: 40px;
-    font-family: "Open Sans";
     font-size: 14px;
     line-height: 19px;
     text-transform: none;
@@ -815,11 +769,9 @@ $Rev:2099 $
 }
 
 #sf-root-wrap strong {
-    font-family: "Open Sans";
     font-weight: 600;
 }
 #sf-root-wrap label strong {
-    font-family: "Open Sans";
     font-weight: 600;
 }
 
@@ -836,7 +788,6 @@ $Rev:2099 $
     color: #85A2BC;
     font-size: 12px;
     line-height: 18px;
-    font-family: "Open Sans Regular";
 }
 #sf-root-wrap .sf-sublabel {
     display: block;
@@ -875,7 +826,6 @@ $Rev:2099 $
     -khtml-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
-    font-family: "Open Sans";
     font-weight: 600;
     font-size: 12px;
     color: #FFF;
@@ -1396,7 +1346,6 @@ img.sf-iconset-icon-img{
 }
 #sfadminmenu .sfsidebutton a {
     display: inline-block;
-    font-family: "Open Sans";
     font-weight: 600;
     font-size: 14px;
     color: #006992;
@@ -1419,7 +1368,6 @@ img.sf-iconset-icon-img{
     text-align: left;
     color: #27476E;
     font-size: 13px;
-    font-family: "Open Sans";
 }
 #sfadminmenu .sfmenublock .sfsideitem {
     position: relative;
@@ -1431,7 +1379,6 @@ img.sf-iconset-icon-img{
     margin: 0;
 }
 #sfadminmenu .sfmenublock .sfsideitem.sf-active a {
-    font-family: "Open Sans";
     font-weight: 600;
 }
 #sfadminmenu .sfmenublock .sfsideitem a:focus {
@@ -1583,10 +1530,8 @@ img.sf-iconset-icon-img{
     background-color: rgba(148, 217, 226, 0.1);
     border-color: rgba(0, 185, 208, .5);
     color: #006992;
-    font-family: "Open Sans Regular";
 }
 #sfmaincontainer p.sf-description {
-    font-family: "Open Sans Regular";
     font-style: normal;
     font-size: 13px;
     line-height: 24px;
@@ -1724,7 +1669,6 @@ img.sf-iconset-icon-img{
     -khtml-border-radius: 4px 4px 0px 0px;
     -webkit-border-radius: 4px 4px 0px 0px;
     border-radius: 4px 4px 0px 0px;
-    font-family: "Open Sans";
     font-weight: 600;
     font-size: 14px;
     color: #27476E;
@@ -1888,7 +1832,6 @@ img.sf-iconset-icon-img{
 
 #sfmaincontainer .sf-link {
     display: inline-block;
-    font-family: "Open Sans";
     font-weight: 600;
     font-size: 12px;
     color: #006992;
@@ -2002,7 +1945,6 @@ img.sf-iconset-icon-img{
     width: 100%;
     margin: 0;
     line-height: 17px;
-    font-family: "Open Sans";
     font-weight: 600;
     font-size: 12px;
     line-height: 17px;
@@ -2200,7 +2142,6 @@ img.sf-iconset-icon-img{
     border-bottom: 1px solid #F0F0F0;
 }
 #sfmaincontainer ul.sf-list.sf-list-v2 li.sf-open>.sf-list-item .sf-item-name {
-    font-family: "Open Sans";
     font-weight: 600;
 }
 #sfmaincontainer ul.sf-list.sf-list-v2 li.sf-open>.sf-inline-edit {
@@ -2258,7 +2199,6 @@ img.sf-iconset-icon-img{
 #sfmaincontainer table.widefat thead tr th,
 #sfmaincontainer table.widefat thead tr td a,
 #sfmaincontainer table.widefat thead tr th a {
-    font-family: "Open Sans";
     font-weight: 600;
     font-size: 12px;
     line-height: 18px;
@@ -2344,7 +2284,6 @@ img.sf-iconset-icon-img{
 #sfmaincontainer table .sf-user-name {
     display: inline-block;
     margin-top: 11px;
-    font-family: "Open Sans";
     font-weight: 600;
 }
 
@@ -2360,9 +2299,7 @@ img.sf-iconset-icon-img{
 #sfmaincontainer.sf-installation input[type=checkbox]:checked:before {
     color: #006992;
 }
-#sfmaincontainer.sf-installation .sf-panel-head .sf-button {
-    font-family: "Open Sans";
-}
+
 #sfmaincontainer.sf-installation .ui-progressbar {
     margin-bottom: 22px;
 }
@@ -2387,7 +2324,6 @@ img.sf-iconset-icon-img{
     color: #9D9EA0;
 }
 #sfmaincontainer.sf-installation .sf-zmessage.sf-processing {
-    font-family: "Open Sans";
     font-weight: 600;
     color: #006992;
 }
@@ -2552,9 +2488,6 @@ div[class^="collapsible-"] {
         border-radius: 5px;
 }
 
-.spThemeContainer a {
-    font-family: "Open Sans Regular";
-}
 .spThemeContainer .action-links form {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2604,7 +2537,6 @@ div[class^="collapsible-"] {
     background-color: #EAF0F4;
     color: #27476E;
     font-size: 13px;
-    font-family: "Open Sans";
     font-weight: 600;
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
@@ -2645,7 +2577,6 @@ div[class^="collapsible-"] {
     min-width: 50%;
     float: left;
     max-width: 50%;
-    font-family: "Open Sans";
     font-weight: 600;
     font-size: 14px;
     color: #006992;
@@ -2685,7 +2616,6 @@ div[class^="collapsible-"] {
     border: 1px solid #B8EBF1;
     margin-top: 10px;
     padding: 15px;
-    font-family: "Open Sans Regular";
 }
 .sf-half-panel input[type=checkbox]+label {
     margin-left: 10px!important;
@@ -2778,7 +2708,6 @@ div[class^="collapsible-"] {
 }
 
 .text-small {
-    font-family: "Open Sans Regular";
     color: #85A2BC;
     margin-top: 5px;
     display: inline-block;
@@ -2805,7 +2734,6 @@ div[class^="collapsible-"] {
 
 #sfmaincontainer .sf-title {
     margin: 0 0 13px;
-    font-family: "Open Sans";
     font-weight: 600;
     font-size: 12px;
     line-height: 17px;
@@ -2870,7 +2798,6 @@ div[class^="collapsible-"] {
     width: 100%;
     grid-template-columns: 1fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr 3fr 3fr 1fr;*/
     color: #27476E;
-    font-family: "Open Sans";
     background-color: white;
     padding: 25px 20px;
     align-items: center;
@@ -2891,7 +2818,6 @@ body .spMobileTableData .row-actions > span {
 [class$="text-lable"] {
     color: #85A2BC;
     font-size: 12px;
-    font-family: "Open Sans";
     font-weight: 600;
     text-transform: uppercase;
 }
@@ -2913,7 +2839,6 @@ body .spMobileTableData .row-actions > span {
 .sf-dropdown-cur {
     background-color: #EAF0F4;
     padding: 15px;
-    font-family: "Open Sans";
     font-weight: 600;
 }
 .sf-hide-full{
@@ -3361,7 +3286,6 @@ body .spMobileTableData .row-actions > span {
         background-color: #F9F9F9;
     }
     #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-users-list .sf-grid-item .sf-user-name {
-        font-family: "Open Sans Regular";
         color: #27476E;
     }
     #sf-tab-usergroup-main #sf-usergroup-table .sfinline-form form .sf-users-list .sf-grid-item .sf-avatar {
@@ -3753,7 +3677,6 @@ body .spMobileTableData .row-actions > span {
     width: 100%;
     grid-template-columns: 1fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr 3fr 3fr 1fr;
     color: #27476E;
-    font-family: "Open Sans Regular";
     background-color: white;
     padding: 25px 20px;
     align-items: center;
@@ -3931,7 +3854,6 @@ input.spSpecialRankShow, input.spSpecialRankForm {
 
 .spColumnSection.spProfileLeftCol p {
         display: block;
-        font-family: "Open Sans";
         font-weight: 600;
         font-size: 12px;
         line-height: 17px;

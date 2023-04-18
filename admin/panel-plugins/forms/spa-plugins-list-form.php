@@ -191,7 +191,6 @@ function spa_plugins_list_form() {
 			background: #00B9D0;
 			box-shadow: 0 3px 6px rgba(0, 105, 146, .1);
 			border: none;
-			font-family: "Open Sans Semibold";
 			font-size: 12px;
 			color: #FFF;
 			text-shadow: none;
