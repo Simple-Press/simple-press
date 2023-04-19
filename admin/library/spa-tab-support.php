@@ -107,12 +107,11 @@ function spa_paint_open_fieldset($legend, $displayhelp = false, $helpname = '', 
     }
 	echo "<fieldset class='sf-fieldset'>\n";
 	if($displaylegend) {
-		echo "<div class='sf-panel-body-top'><div class='sf-panel-body-top-left'><h4>$legend</h4>";
+		echo "<div class='sf-panel-body-top'><h4>$legend</h4>";
 		if($subTitle) {
 			echo "<span>$subTitle</span>";
 		}
-		echo "</div>";
-		if ($displayhelp) echo "<div class='sf-panel-body-top-right'>".spa_paint_help($helpname, $adminhelpfile)."</div>";
+		if ($displayhelp) echo spa_paint_help($helpname, $adminhelpfile);
 		echo "</div>\n";
 	} else {
 		if ($displayhelp) echo spa_paint_help($helpname, $adminhelpfile);
@@ -196,47 +195,23 @@ function spa_paint_number($label, $name, $value, $disabled=false, $large=false) 
 	$tab++;
 }
 
-function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1) {
-	global $tab;
-
+function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1, $placeholder=''): void
+{
 	echo "<div class='sf-form-row'>\n";
-	echo "<label class='sp-label-50'>\n";
+	echo "<label>\n";
 	echo "$label";
 	echo '</label>';
-	echo "<textarea rows='$rows' cols='80' class='wp-core-ui sp-textarea-50' tabindex='$tab' name='$name'>".esc_html($value)."</textarea>\n";
+	echo "<textarea rows='$rows' class='wp-core-ui' tabindex='$tab' name='$name'>".esc_html($value)."</textarea>\n";
     if (!empty($submessage)) echo "<br /><small><strong>".esc_html($submessage)."</strong></small>\n";
 	echo '</div>';
-
-
-	$tab++;
 }
 
-function spa_paint_wide_textarea($label, $name, $value, $submessage='', $xrows=1, $placeholder='') {
-	global $tab;
-
-	echo "<div class='sf-form-row'>\n";
-	echo "<label class='sp-label'>\n";
-	echo "$label";
-	echo '</label>';
-	echo "<textarea placeholder='$placeholder' rows='$xrows' cols='80' class='wp-core-ui sp-textarea' tabindex='$tab' name='$name'>".esc_attr($value)."</textarea>\n";
-    if (!empty($submessage)) echo "<br /><small><strong>$submessage</strong></small>\n";
-	echo '</div>';
-
-	$tab++;
+function spa_paint_wide_textarea($label, $name, $value, $submessage='', $rows=1, $placeholder='') {
+    spa_paint_textarea($label, $name, $value, $submessage, $rows, $placeholder);
 }
 
-function spa_paint_thin_textarea($label, $name, $value, $submessage='', $xrows=1) {
-	global $tab;
-
-	echo "<div class='sf-form-row'>\n";
-	echo "<label class='sp-label-66'>\n";
-	echo "$label";
-	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
-	echo '</label>';
-	echo "<textarea rows='$xrows' cols='80' class='wp-core-ui sp-textarea-33' tabindex='$tab' name='$name'>".esc_attr($value)."</textarea>\n";
-	echo '</div>';
-
-	$tab++;
+function spa_paint_thin_textarea($label, $name, $value, $submessage='', $rows=1) {
+    spa_paint_textarea($label, $name, $value, $submessage, $rows, '');
 }
 
 /**

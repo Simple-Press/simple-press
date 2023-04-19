@@ -67,14 +67,13 @@ function spa_forums_ordering_form($groupId=0) {
 		echo sp_create_nonce('forum-adminform_forumorder');
 		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Group and Forum Ordering'), true);
 		?>
-            <div class="sf-panel-body-top">
-                <div class="sf-panel-body-top-left">
+            <fieldset class="sf-fieldset">
+
+                <div class="sf-panel-body-top">
                     <h4><?php echo SP()->primitives->admin_text('Order Groups and Forums') ?></h4>
-                </div>
-                <div class="sf-panel-body-top-right">
                     <?php echo spa_paint_help('order-forums') ?>
                 </div>
-            </div>
+
                 <?php
 			//spa_paint_open_panel();
 			//	spa_paint_open_fieldset(SP()->primitives->admin_text('Order Groups and Forums'), 'true', 'order-forums');
@@ -109,6 +108,7 @@ function spa_forums_ordering_form($groupId=0) {
 					echo '</ul>';
 				}
 				echo '<input type="hidden" id="spForumsOrder" name="spForumsOrder" />';
+                echo '</fieldset>';
 			//	spa_paint_close_fieldset();
 			//spa_paint_close_panel();
 		spa_paint_close_container();

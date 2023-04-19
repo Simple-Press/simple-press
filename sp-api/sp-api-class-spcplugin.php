@@ -446,7 +446,7 @@ class spcPlugin {
 		if (!SP()->auths->current_user_can($capability)) return false;
 
 		# make sure the panel doesnt already exist
-		if (array_key_exists($name, $sfadminpanels)) return false;
+		#if (array_key_exists($name, $sfadminpanels)) return false;
 
 		# fix up the subpanels formids from user names
 		$forms = array();
