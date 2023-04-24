@@ -6,11 +6,13 @@
  * $LastChangedDate: 2018-11-13 22:52:58 -0600 (Tue, 13 Nov 2018) $
  * $Rev: 15821 $
  */
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
+    die('Access denied - you cannot directly call this file');
+}
 
 
-function spa_enqueue_datepicker() {
-	
+function spa_enqueue_datepicker(): void
+{
 	$spAdminUIStyleUrl = SPADMINCSS.'jquery-ui.css';
 	wp_register_style('spAdminUIStyle', $spAdminUIStyleUrl, array(), SP_SCRIPTS_VERSION);
 	wp_enqueue_style('spAdminUIStyle');
@@ -19,7 +21,8 @@ function spa_enqueue_datepicker() {
 }
 
 
-function spa_enqueue_font_icon_picker() {
+function spa_enqueue_font_icon_picker(): void
+{
 	
 	$script = SPAJSCRIPT.'jquery.fonticonpicker.js';
 	
@@ -189,7 +192,7 @@ function spa_panel_header() {
 	echo '<!-- Common wrapper and header -->';
 	echo '<div class="spAdminHeader">';
         if (!spa_saas_check() && !spa_white_label_check()) {
-            echo '<img src="https://simple-press.com/app/themes/simplepress-cabb/assets/gfx/simple-press-logo.svg">';
+            echo '<img src="' . SPADMINIMAGES . 'sp-logo-horizontal.svg" height="30">';
         } else {
             echo '<h1>'.SP()->primitives->admin_text('Forum Administration').'</h1>';
         }
@@ -351,78 +354,58 @@ function spa_render_sidemenu() {
 		
 		echo '<div id="sfsidepanel">'."\n";
                 
-                echo '<span class="sf-tooggle-admin-menu">'."\n";
-                echo '<span class="sf-button sf-hide">'."\n";
-                echo __('Hide Admin Menu', 'sp');
-                echo '</span>'."\n";
-                echo '<span class="sf-button sf-show">'."\n";
-                echo __('Show Admin Menu', 'sp');
-                echo '</span>'."\n";
-                echo '</span>'."\n";
+            echo '<span class="sf-tooggle-admin-menu">' ."\n";
+                echo '<span class="sf-button sf-hide">' . __('Hide Admin Menu', 'sp') . '</span>';
+                echo '<span class="sf-button sf-show">' . __('Show Admin Menu', 'sp') . '</span>';
+            echo '</span>'."\n";
                 
-		echo '<div id="sfadminmenu">'."\n";
-        /*
-         *
-         * $sfadminpanels[] = array(
-		0'panel_name'      => SP()->primitives->admin_text('Options'),
-		1w'spf_capability'  => 'SPF Manage Options',
-		2'admin_file'      => SP_FOLDER_NAME.'/admin/panel-options/spa-options.php',
-		3'rwtool_tip'        => $sfatooltips['options'],
-		4'icon'            => 'options',
-		5'loader_function' => wp_nonce_url(SPAJAXURL.'options-loader', 'options-loader'),
-		6'subpanels'       => $forms,
-		7'show_in_wp_menu' => true,
-        8'addon'           => false,
-    );
-         */
-        $coreMenus = '';
-        $addonMenus = '';
+            echo '<div id="sfadminmenu">'."\n";
+       
+                $coreMenus = '';
+                $addonMenus = '';
 
-		foreach ($sfadminpanels as $index => $panel) {
-            $html = '';
-			if (SP()->auths->current_user_can($panel['spf_capability']) || ($panel['panel_name'] == 'Admins' && (SP()->user->thisUser->admin || SP()->user->thisUser->moderator))) {
-				$pName = str_replace(' ', '', $panel['panel_name']);
-				$html .= '<div class="sfsidebutton  spPanelType' . (array_key_exists('core', $panel) && $panel['core'] ? 'Core': 'Addon') . '" id="sfacc'.$pName.'">';
-                $html .= '<div class="" title="'.esc_attr($panel['tool_tip']).'"><span class="sf-icon sf-'.$panel['icon'].' spa'.$panel['icon'].'"></span><a href="#">'.$panel['panel_name'].'</a></div>';
-                $html .= '</div>';
-                $html .= '<div class="sfmenublock">';
+                foreach ($sfadminpanels as $index => $panel) {
+                    $html = '';
+                    if (SP()->auths->current_user_can($panel['spf_capability']) || ($panel['panel_name'] == 'Admins' && (SP()->user->thisUser->admin || SP()->user->thisUser->moderator))) {
+                        $pName = str_replace(' ', '', $panel['panel_name']);
+                        $html .= '<div class="sfsidebutton spPanelType' . (array_key_exists('core', $panel) && $panel['core'] ? 'Core': 'Addon') . '" id="sfacc'.$pName.'">';
+                        $html .= '<span class="sf-icon sf-'.$panel['icon'].' spa'.$panel['icon'].'"></span><a href="#">'.$panel['panel_name'].'</a>';
+                        $html .= '</div>';
+                        $html .= '<div class="sfmenublock">';
 
-				foreach ($panel['subpanels'] as $label => $data) {
-					foreach ($data as $form_id => $reload) {
-						# ignore user plugin data for menu
-						if ($form_id === 'admin' || $form_id === 'save' || $form_id === 'form') continue;
+                        foreach ($panel['subpanels'] as $label => $data) {
+                            foreach ($data as $form_id => $reload) {
+                                # ignore user plugin data for menu
+                                if ($form_id === 'admin' || $form_id === 'save' || $form_id === 'form') continue;
 
-                        $html .=  '<div class="sfsideitem">'."\n";
-						if ($reload != '') {
-							$id = ' id="'.esc_attr($reload).'"';
-						} else {
-							$id = ' id="acc'.esc_attr($form_id).'"';
-						}
-						$base = esc_attr($panel['loader_function']);
-						$admin = (!empty($data['admin']) ? $data['admin'] : '');
-						$save = (!empty($data['save']) ? $data['save'] : '');
-						$form = (!empty($data['form']) ? $data['form'] : '');
-						
-                        $html .= '<a' . $id . ' href="javascript:void(0);" class="spAccordionLoadForm" data-form="' . $form_id . '" data-url="' . $base . '" data-target="' . $target . '" data-img="' . $image . '" data-id="" data-open="open" data-upgrade="' . $upgrade . '" data-admin="' . $admin . '" data-save="' . $save . '" data-sform="' . $form . '" data-reload="' . $reload . '">' . $label . '</a>';
-					}
-                    $html .=  '</div>'."\n";
-				}
-                $html .=  '</div>'."\n";
-			}
+                                $html .=  '<div class="sfsideitem">'."\n";
+                                if ($reload != '') {
+                                    $id = ' id="'.esc_attr($reload).'"';
+                                } else {
+                                    $id = ' id="acc'.esc_attr($form_id).'"';
+                                }
+                                $base = esc_attr($panel['loader_function']);
+                                $admin = (!empty($data['admin']) ? $data['admin'] : '');
+                                $save = (!empty($data['save']) ? $data['save'] : '');
+                                $form = (!empty($data['form']) ? $data['form'] : '');
 
-            if (array_key_exists('core', $panel) && $panel['core']) {
-                $coreMenus .= $html;
-            } else {
-                $addonMenus .= $html;
-            }
+                                $html .= '<a' . $id . ' href="javascript:void(0);" class="spAccordionLoadForm" data-form="' . $form_id . '" data-url="' . $base . '" data-target="' . $target . '" data-img="' . $image . '" data-id="" data-open="open" data-upgrade="' . $upgrade . '" data-admin="' . $admin . '" data-save="' . $save . '" data-sform="' . $form . '" data-reload="' . $reload . '">' . $label . '</a>';
+                            }
+                            $html .=  '</div>'."\n";
+                        }
+                        $html .=  '</div>'."\n";
+                    }
 
-		}
+                    if (array_key_exists('core', $panel) && $panel['core']) {
+                        $coreMenus .= $html;
+                    } else {
+                        $addonMenus .= $html;
+                    }
+                }
 
-        echo $coreMenus;
-        echo $addonMenus;
-
-		echo '</div>'."\n";
-
+                echo $coreMenus;
+                echo $addonMenus;
+            echo '</div>'."\n";
 		echo '</div>'."\n";
 	}
 }
@@ -455,6 +438,7 @@ function spa_check_warnings() {
 	}
 
 	# check for themes with updates
+
 	$up = get_site_transient('sp_update_themes');
 	if (!empty($up)) {
 		$msg = apply_filters('sph_themes_update_notice', SP()->primitives->admin_text('There are one or more Simple:Press theme updates available'));

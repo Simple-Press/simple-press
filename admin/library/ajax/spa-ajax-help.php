@@ -6,17 +6,25 @@ $LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
 $Rev: 15187 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
+    die('Access denied - you cannot directly call this file');
+}
 
 spa_admin_ajax_support();
 
-if (!sp_nonce('help')) die();
+if (!sp_nonce('help')) {
+    die();
+}
 
-if (!isset($_GET['file'])) die();
+if (!isset($_GET['file'])) {
+    die();
+}
 
 $file = SP()->filters->filename($_GET['file']);
 
-if (empty($file)) die();
+if (empty($file)) {
+    die();
+}
 
 $tag = SP()->filters->str($_GET['item']);
 $tag = '['.$tag.']';
@@ -26,18 +34,16 @@ $folder = 'panels/';
 $helptext = wpautop(sp_retrieve_help($file, $tag, $folder), false);
 
 echo '<div class="sfhelptext">';
-echo '<div class="sfhelptag"><p>'.sp_convert_tag($tag).'</p></div>';
-echo '<fieldset>';
-echo $helptext;
-echo '</fieldset>';
-echo '<div class="sfhelptextlogo">';
-$uid = isset($uid) ? $uid : '';
-if (!spa_white_label_check($uid)) {
-	echo '<img src="'.SPCOMMONIMAGES.'sp-mini-logo.png" alt="" title="" />';
-} else {
-	# do nothing - do not show logo for white label situations.
-}
-echo '</div></div>';
+    echo '<fieldset>';
+        echo $helptext;
+    echo '</fieldset>';
+    $uid = $uid ?? '';
+    if (!spa_white_label_check($uid)) {
+        echo '<div class="sfhelptextlogo">';
+        echo '<img src="'.SPCOMMONIMAGES.'sp-mini-logo.png" alt="" title="" />';
+        echo '</div>';
+    }
+echo '</div>';
 
 die();
 

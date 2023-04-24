@@ -22,9 +22,21 @@ $Rev:2099 $
     --sp-secondary-button-color: #a1a0a0;
     --sp-primary-background-color: #F9F9F9;
     --sp-primary-border-color: #F1F1F1;
+    --sp-table-head-background: #797878;
+    --sp-table-border-color: #c0c0c0;
 }
 
-/* 
+#sfmaincontainer > img {
+    padding: 20px;
+    background-color: white;
+    border-radius: 15px;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 80px;
+}
+
+/*
  Set the H2 font used throughout the admin area.
  Applicable as long as its inside the SF container with the #sfmaincontainer css ID...
 */
@@ -61,7 +73,7 @@ $Rev:2099 $
     background: #F7E5FF;
     border-bottom: 5px solid #FFFFFF;
 }
-
+/* used to style the icon in wp admin menu */
 #toplevel_page_simplepress-admin-panel-forums-spa-forums .wp-menu-image:before,
 #toplevel_page_simplepress-admin-panel-options-spa-options .wp-menu-image:before,
 #toplevel_page_simplepress-admin-panel-components-spa-components .wp-menu-image:before,
@@ -116,41 +128,24 @@ $Rev:2099 $
     padding: .2em;
     width: 300px;
     background-color: #ffffff;
-    border: 1px solid #888888;
+    border: 1px solid black;
+    border-radius: 3px;
+    box-shadow: 1px 1px 125px 0px rgba(0,0,0,0.25);
 }
 .ui-dialog .ui-dialog-titlebar {
-    padding: .2em 1em .2em;
-    position: relative;
-    height: 22px;
-    box-sizing: content-box !important;
+    display: flex;
+    padding: 10px;
 }
 .ui-dialog .ui-dialog-title {
-    float: left;
-    margin: .1em 16px .2em 0;
+    flex-basis: 100%;
+    font-weight: 600;
 }
 .ui-dialog .ui-dialog-titlebar-close {
-    position: absolute;
-    right: 12px;
-    top: 12px;
     width: 22px;
-    margin: -10px 0 0 0;
-    padding: 0;
     height: 22px;
-    background-image: url(images/close.gif);
-}
-.ui-dialog .ui-dialog-titlebar-close span {
-    display: block;
-    margin: 1px;
-}
-.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus {
-    padding: 0;
-}
-.ui-dialog .ui-dialog-content, .ui-dialog .ui-dialog-content p {
-    border: 0;
-    padding: .5em .5em;
-    background: none;
-    overflow: auto;
-    zoom: 1;
+    mask-image: url('../icons/Cross.svg');
+    background-color: var(--sp-primary-color);
+    cursor: pointer;
 }
 .ui-dialog .ui-dialog-buttonpane {
     text-align: left;
@@ -180,43 +175,27 @@ $Rev:2099 $
     cursor: move;
 }
 .ui-widget-header {
-    background-color: #DDDDDD;
-    color: #1C6280;
+    background-color: var(--sp-primary-background-color);
+    color: #000000;
 }
 
 /* POPUP HELP================================================================================*/
 
 .sfhelptext {
     margin: 0;
-    padding: 0;
-    width: auto;
+    padding: 10px;
 }
-.sfhelptext fieldset {
-    margin: 0 8px;
-    padding: 0 15px 10px 15px;
-    border: 1px solid #dddddd;
-    border-radius: 8px;
-}
-.sfhelptext p {
-    font-size: 13px;
-    line-height: 1.1em;
-    padding: 0 0 6px 0;
-}
-.sfhelptext ul, .sfhelptext ol {
-    font-size: 13px;
-    padding: 0;
-    margin: 3px 0 0 25px;
-}
-.sfhelptext ul {
+
+.sfhelptext ul,
+.sfhelptext ol {
     list-style-type: disc;
+    margin: 3px 0 0 25px;
 }
 .sfhelptext ol {
     list-style-type: decimal;
 }
-.sfhelptext ul li, .sfhelptext ol li {
-    font-size: 13px;
-    padding: 0;
-    margin: 0;
+.sfhelptext fieldset p:first-child {
+    margin-top: 0;
 }
 .sfhelptext table {
     border-collapse: separate;
@@ -237,20 +216,6 @@ $Rev:2099 $
 .sfhelptext .sfhelptextlogo {
     margin: 10px auto 0 auto;
     text-align: center;
-}
-.sfhelptext .sfhelptag {
-    margin: 0 8px 4px 8px;
-    padding: 5px 15px 5px 15px;
-    border: 1px solid #dddddd;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    overflow: hidden;
-}
-.sfhelptext .sfhelptag p {
-    font-weight: 600;
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
 }
 .spItemStat {
     font-size: 12px;
@@ -380,11 +345,6 @@ $Rev:2099 $
 #sf-root-wrap h4 {
     margin: 0;
     font-weight: 600;
-}
-#sf-root-wrap ul {
-    float: left;
-    width: 100%;
-    margin: 0;
 }
 #sf-root-wrap .sfhidden {
     display: none;
@@ -548,13 +508,14 @@ $Rev:2099 $
     right: 12px;
 }
 
-
 #sf-root-wrap label {
     display: block;
+    font-weight: 600;
 }
 #sf-root-wrap input[type=checkbox]+label,
 #sf-root-wrap input[type=radio]+label {
     display: inline-block;
+    font-weight: normal;
 }
 
 #sf-root-wrap label+input[type=text],
@@ -590,22 +551,13 @@ $Rev:2099 $
     font-weight: 600;
 }
 
-#sf-root-wrap .sf-subhead,
-#sf-root-wrap .sf-sublabel {
-    float: left;
-    width: 100%;
-    margin: 10px 0 0 0;
-    font-size: 14px;
-    line-height: 24px;
-    color: #27476E;
-}
-#sf-root-wrap .sf-sublabel-small{
-    color: #85A2BC;
-    font-size: 12px;
-    line-height: 18px;
-}
 #sf-root-wrap .sf-sublabel {
     display: block;
+    font-size: 14px;
+    color: #828282;
+}
+#sf-root-wrap .sf-sublabel-small{
+    font-size: 12px;
 }
 
 #sf-root-wrap .sf-badge {
@@ -669,8 +621,6 @@ $Rev:2099 $
     height: 20px;
     width: 20px;
     padding: 0;
-    -khtml-border-radius: 0;
-    -webkit-border-radius: 0;
     border-radius: 0;
     vertical-align: middle;
     background-color: white;
@@ -1149,7 +1099,6 @@ img.sf-iconset-icon-img{
 
 #sfmaincontainer .sf-fieldset {
     margin-bottom: 20px;
-    border: 1px solid var(--sp-primary-border-color);
 }
 #sfmaincontainer .sf-fieldset>.sf-fieldset {
     margin: 0;
@@ -1165,6 +1114,7 @@ img.sf-iconset-icon-img{
 #sfmaincontainer .sf-fieldset .sf-panel-body-top h4 {
     flex-basis: 100%;
     margin: 0;
+    font-size: 16px;
 }
 /* Sorting boxes */
 #sfmaincontainer li {
@@ -1306,18 +1256,15 @@ img.sf-iconset-icon-img{
 #sfmaincontainer .sf-upload label {
     display: none;
 }
-#sfmaincontainer .sf-upload #sf-upload-button {
-}
 #sfmaincontainer .sf-upload #sf-upload-status {
     position: absolute;
-    background: rgba(0, 185, 208, .7);
+    background: #8e8c8c;
     padding: 0 10px;
     right: 0;
     color: white;
     top: 30px;
-    -khtml-border-radius: 4px;
-    -webkit-border-radius: 4px;
     border-radius: 4px;
+    width: 150px;
     z-index: 999;
 }
 #sfmaincontainer .sf-fieldset .subsubsub-desk,
@@ -1512,6 +1459,7 @@ img.sf-iconset-icon-img{
 */
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap {
     padding: 0;
+    border: 1px solid black;
 }
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .icons-selector {
     width: 100%;
@@ -1526,7 +1474,6 @@ img.sf-iconset-icon-img{
     border: none;
     width: 100%;
     height: 100%;
-    padding-top: 5px;
     background: transparent;
 }
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selected-icon i.fip-icon-block {
@@ -1541,9 +1488,10 @@ img.sf-iconset-icon-img{
     margin: 0;
     line-height: 17px;
     font-weight: 600;
+    font-family: unset;
     font-size: 12px;
     text-align: left;
-    color: #006992;
+    color: black;
 }
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-button {
     position: absolute;
@@ -1564,28 +1512,7 @@ img.sf-iconset-icon-img{
     min-width: 285px;
     margin: 0;
 }
-#sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-popup .selector-category {
-    position: relative;
-    margin: 0;
-    padding: 16px 16px 15px;
-    width: 100%;
-    height: 50px;
-    color: #47484A;
-    -khtml-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    box-shadow: none;
-    border: 1px solid #F0F0F0;
-}
-#sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-popup .selector-category:before {
-    content: '\2335';
-    position: absolute;
-    top: 14px;
-    right: 16px;
-    color: rgba(0, 105, 146, .75);
-    font-size: 13px;
-    font-weight: bold;
-}
+
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-popup .wp-color-result-text {
     display: inline-block;
     height: 100%;
@@ -1594,10 +1521,12 @@ img.sf-iconset-icon-img{
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-popup .wp-picker-holder * {
     box-sizing: content-box;
 }
-
-#sfmaincontainer .sf-icon-picker-row .font-color-container {
-        margin-top: 10px;
-        margin-bottom: 10px;
+#sfmaincontainer .font-size-container{
+    margin-bottom: 3px;
+    display: flex;
+}
+#sfmaincontainer .font-size-container input{
+    width: 100px;
 }
 
 /**
@@ -1742,101 +1671,24 @@ img.sf-iconset-icon-img{
  < sf-list-v2
 */
 
-#sfmaincontainer table,
-#sfmaincontainer tbody,
-#sfmaincontainer tfoot,
-#sfmaincontainer thead,
-#sfmaincontainer tr,
-#sfmaincontainer th,
-#sfmaincontainer td {
-    vertical-align: top
-}
+#sfmaincontainer table.widefat,
 #sfmaincontainer table {
-    width: 100%;
-}
-#sfmaincontainer table tr.sf-border-none>td {
-    border: none !important;
-}
-#sfmaincontainer table .sf-img-wrap {
-    float: left;
-}
-
-
-#sfmaincontainer table.widefat {
-    position: relative;
-    border: none;
-    background: transparent;
-    box-shadow: none;
     clear: none;
-}
-#sfmaincontainer table.widefat thead tr {
-    background-color: #EAF0F4;
+    border: 1px solid var(--sp-table-border-color);
 }
 #sfmaincontainer table.widefat thead tr td,
 #sfmaincontainer table.widefat thead tr th {
+    color: white;
     border: none;
-    padding-top: 22px;
-    padding-bottom: 21px;
-}
-#sfmaincontainer table.widefat thead tr td a,
-#sfmaincontainer table.widefat thead tr th a {
-    padding: 0;
-}
-#sfmaincontainer table.widefat thead tr td,
-#sfmaincontainer table.widefat thead tr th,
-#sfmaincontainer table.widefat thead tr td a,
-#sfmaincontainer table.widefat thead tr th a {
+    background-color: var(--sp-table-head-background);
     font-weight: 600;
-    font-size: 12px;
-    line-height: 18px;
-    color: #27476E;
-    text-transform: uppercase;
-}
-#sfmaincontainer table.widefat thead tr td:first-child,
-#sfmaincontainer table.widefat thead tr th:first-child {
-    -khtml-border-radius: 4px 0 0 0;
-    -webkit-border-radius: 4px 0 0 0;
-    border-radius: 4px 0 0 0;
-}
-#sfmaincontainer table.widefat thead tr td:last-child,
-#sfmaincontainer table.widefat thead tr th:last-child {
-    -khtml-border-radius: 0 4px 0 0;
-    -webkit-border-radius: 0 4px 0 0;
-    border-radius: 0 4px 0 0;
-}
-#sfmaincontainer table.widefat:not(.striped) tbody tr {
-    background-color: #FFF;
-}
 
-#sfmaincontainer table.widefat:not(.striped) tbody tr td, 
-#sfmaincontainer table.widefat tbody tr th {
-        background-color: #FFF;
 }
 
 #sfmaincontainer table.widefat tbody tr td,
 #sfmaincontainer table.widefat tbody tr th {
     border-bottom: 1px solid #F0F0F0;
-    padding-top: 31px;
-    padding-bottom: 30px;
-    font-size: 14px;
-    line-height: 19px;
-    color: #27476E;
     vertical-align: middle;
-}
-#sfmaincontainer table.widefat tbody tr:last-of-type td,
-#sfmaincontainer table.widefat tbody tr:last-of-type th {
-    border: none;
-}
-#sfmaincontainer table.widefat tr td:first-of-type,
-#sfmaincontainer table.widefat tr th:first-of-type {
-    padding-left: 20px;
-}
-#sfmaincontainer table.widefat tr td:last-of-type,
-#sfmaincontainer table.widefat tr th:last-of-type {
-    padding-right: 20px;
-}
-#sfmaincontainer table.widefat tfoot {
-    display: none;
 }
 
 #sfmaincontainer table.widefat .sfcustomicon,
@@ -1849,28 +1701,11 @@ img.sf-iconset-icon-img{
     max-height: 20px;
 }
 
-#sfmaincontainer table.sf-table-small {
-    width: 100%;
-}
-#sfmaincontainer table.sf-table-small tbody tr td,
-#sfmaincontainer table.sf-table-small tbody tr th {
-    padding: 20px 10px;
-}
-#sfmaincontainer table.sf-table-small tr td:first-of-type,
-#sfmaincontainer table.sf-table-small tr th:first-of-type {
-    padding-left: 20px;
-}
-#sfmaincontainer table.sf-table-small tr td:last-of-type,
-#sfmaincontainer table.sf-table-small tr th:last-of-type {
-    padding-right: 20px;
-}
-
 #sfmaincontainer table .sf-avatar {
     margin-right: 20px;
 }
 #sfmaincontainer table .sf-user-name {
     display: inline-block;
-    margin-top: 11px;
     font-weight: 600;
 }
 
@@ -1924,12 +1759,7 @@ img.sf-iconset-icon-img{
 * < Installation
 */
 
-#sfgroupnew .sf-panel-body .sf-half-form:nth-child(2n){
-    width: 60%;
-}
-#sfgroupnew .sf-panel-body .sf-half-form:nth-child(2n-1){
-    width: 40%;
-}
+
 #forumRanksTable {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -2192,7 +2022,7 @@ div[class^="collapsible-"] {
     padding: 15px;
     background-color: #F9F9F9;
     width: 100%;
-    margin-top: 0px;
+    margin-top: 0;
 }
 #sfmaincontainer .sp-permition-body label{
     display: inline!important;
@@ -2244,9 +2074,6 @@ div[class^="collapsible-"] {
 }
 #sfmaincontainer .sf-farbtastic>div {
     position: absolute;
-    width: 100%;
-    -khtml-border-radius: 4px;
-    -webkit-border-radius: 4px;
     border-radius: 4px;
     background-color: #FFF;
     border: 1px solid #F9F9F9;
@@ -2415,11 +2242,9 @@ body .spMobileTableData .row-actions > span {
 @media screen and ( max-width: 1350px ) {
     #sfmaincontainer .sf-panel-body .sf-half {
         width: 100%!important;
-        padding: 0!important;
     }
     #sfgroupnew .sf-panel-body .sf-half-form {
         width: 100%!important;
-        padding: 0!important;
     }
     .spThemeContainer .spTheme {
         width: 49%;
@@ -2489,7 +2314,6 @@ body .spMobileTableData .row-actions > span {
     #sf-root-wrap .sf-button,
     #sf-root-wrap .sf-button-primary,
     #sf-root-wrap .sf-button-secondary {
-        border: 1px solid red;
         height: 50px;
         font-size: 14px;
         line-height: 19px;
@@ -3294,19 +3118,12 @@ body .spMobileTableDataUsers .row-actions a {
 
 /*Users => Member Information end*/
 
-.sf-icon-midle{
-  padding: 0px 30px 0px 20px;
-  margin-bottom: 25%;
-  margin-top: 25%;
-}
-
 input.spSpecialRankShow, input.spSpecialRankForm {
         height: 36px !important;
         padding: 10px 20px !important;
         line-height: 16px !important;
         font-size: 13px !important;
 }
-
 
 @media screen and (max-width: 782px) {
         
@@ -3492,12 +3309,31 @@ body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-st
 }
 /**
 
-
-
  */
 
 .spAdminHeader {
     padding: 20px;
     margin: 0 0 0 -20px;
     background: white;
+}
+.spGroupRow > div:first-child {
+    display: flex;
+}
+#sf-root-wrap .spGroupRow .sf-icon {
+    background-color: var(--sp-primary-color);
+}
+.spGroupRow button {
+    border: none;
+    background: none;
+}
+
+
+.wp-picker-container .wp-color-result.button {
+    font-size: 12px;
+}
+.wp-picker-container .font-size-container {
+    display: flex;
+}
+#sf-root-wrap .wp-picker-container label {
+    display: inline-block;
 }

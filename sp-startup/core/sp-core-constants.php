@@ -8,21 +8,32 @@
  */
 
 # Charset
-if (!defined('SPCHARSET')) define('SPCHARSET', get_bloginfo('charset'));
+if (!defined('SPCHARSET')) {
+    define('SPCHARSET', get_bloginfo('charset'));
+}
+
+function formatUploadsForS3 (string $input = ''): string
+{
+    if (getenv('S3_UPLOADS_USE_LOCAL') === 'true') {
+        return str_replace('/app/', '/', $input);
+    }
+
+    return $input;
+}
 
 # Storage Locations
 if (is_multisite() && !get_site_option('ms_files_rewriting')) {
-	$sp_install_version = '';
-	/* removing line below and added the one above.  This is because it causes an error when activating on multisite - table SPLOG/sflog doesn't exist yet!*/
-	// $sp_install_version = SP()->DB->select('SELECT version FROM '.SPLOG.' LIMIT 1', 'var');
-	if (empty($sp_install_version) || $sp_install_version < 5.6) {
-		if (!defined('SP_STORE_DIR')) define('SP_STORE_DIR', WP_CONTENT_DIR);
-		if (!defined('SP_STORE_URL')) define('SP_STORE_URL', content_url());
-	} else {
-		$uploads = wp_get_upload_dir();
-		if (!defined('SP_STORE_DIR')) define('SP_STORE_DIR', $uploads['basedir']);
-		if (!defined('SP_STORE_URL')) define('SP_STORE_URL', $uploads['baseurl']);
-	}
+    $sp_install_version = '';
+    /* removing line below and added the one above.  This is because it causes an error when activating on multisite - table SPLOG/sflog doesn't exist yet!*/
+    // $sp_install_version = SP()->DB->select('SELECT version FROM '.SPLOG.' LIMIT 1', 'var');
+    if (empty($sp_install_version) || $sp_install_version < 5.6) {
+        if (!defined('SP_STORE_DIR')) define('SP_STORE_DIR', WP_CONTENT_DIR);
+        if (!defined('SP_STORE_URL')) define('SP_STORE_URL', content_url());
+    } else {
+        $uploads = wp_get_upload_dir();
+        if (!defined('SP_STORE_DIR')) define('SP_STORE_DIR', $uploads['basedir']);
+        if (!defined('SP_STORE_URL')) define('SP_STORE_URL', formatUploadsForS3($uploads['baseurl']));
+    }
 } else {
     # Initial update to make use of wp uploads to enable s3 usage
     # If not defined fall back to old config
@@ -30,7 +41,7 @@ if (is_multisite() && !get_site_option('ms_files_rewriting')) {
     if (defined('SP_USE_UPLOAD_DIR') && SP_USE_UPLOAD_DIR){
         $uploads = wp_get_upload_dir();
         if (!defined('SP_STORE_DIR')) define('SP_STORE_DIR', $uploads['basedir']);
-        if (!defined('SP_STORE_URL')) define('SP_STORE_URL', $uploads['baseurl']);
+        if (!defined('SP_STORE_URL')) define('SP_STORE_URL', formatUploadsForS3($uploads['baseurl']));
     } else {
         if (!defined('SP_STORE_DIR')) define('SP_STORE_DIR', WP_CONTENT_DIR);
         if (!defined('SP_STORE_URL')) define('SP_STORE_URL', content_url());
@@ -77,14 +88,14 @@ if (!defined('SPWPPOSTMETA')) define('SPWPPOSTMETA', $wpdb->postmeta);
 if (!defined('SPWPCOMMENTS')) define('SPWPCOMMENTS', $wpdb->comments);
 
 if (defined('CUSTOM_USER_TABLE')) {
-	if (!defined('SPUSERS')) define('SPUSERS', CUSTOM_USER_TABLE);
+    if (!defined('SPUSERS')) define('SPUSERS', CUSTOM_USER_TABLE);
 } else {
-	if (!defined('SPUSERS')) define('SPUSERS', $wpdb->users);
+    if (!defined('SPUSERS')) define('SPUSERS', $wpdb->users);
 }
 if (defined('CUSTOM_USER_META_TABLE')) {
-	if (!defined('SPUSERMETA')) define('SPUSERMETA', CUSTOM_USER_META_TABLE);
+    if (!defined('SPUSERMETA')) define('SPUSERMETA', CUSTOM_USER_META_TABLE);
 } else {
-	if (!defined('SPUSERMETA')) define('SPUSERMETA', $wpdb->usermeta);
+    if (!defined('SPUSERMETA')) define('SPUSERMETA', $wpdb->usermeta);
 }
 
 if (!defined('SPLOADINSTALL')) define('SPLOADINSTALL', SPBOOT.'sp-load-install.php');
@@ -167,7 +178,6 @@ if (!defined('SPADMININTEGRATION')) define('SPADMININTEGRATION', admin_url('admi
 $sp_addon_store_url = SP()->options->get( 'sp_addon_store_url');
 
 if($sp_addon_store_url == ''){
-	
 	$sp_addon_store_url = 'https://simple-press.com/';
 }
 

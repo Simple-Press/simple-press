@@ -325,15 +325,20 @@ function spa_setup_admin_menu() {
     ];
 	$sfactivepanels['integration'] = 5;
 
-	$forms = array(
-		SP()->primitives->admin_text('Profile Options')		 => array(
-			'options' => ''),
-		SP()->primitives->admin_text('Profile Tabs & Menus') => array(
-			'tabsmenus' => 'sfreloadptm'),
-		SP()->primitives->admin_text('Avatar Options')		 => array(
-			'avatars' => 'sfreloadav'),
-		SP()->primitives->admin_text('Avatar Pool')			 => array(
-			'pool' => 'sfreloadpool'));
+	$forms = [
+		SP()->primitives->admin_text('Profile Options')		 => [
+			'options' => ''
+        ],
+		SP()->primitives->admin_text('Profile Tabs & Menus') => [
+			'tabsmenus' => 'sfreloadptm'
+        ],
+		SP()->primitives->admin_text('Avatar Options')		 => [
+			'avatars' => 'sfreloadav'
+        ],
+		SP()->primitives->admin_text('Avatar Pool')			 => [
+			'pool' => 'sfreloadpool'
+        ]
+    ];
 	$sfadminpanels[] = [
 		'panel_name'      => SP()->primitives->admin_text('Profiles'),
 		'spf_capability'  => 'SPF Manage Profiles',
@@ -433,14 +438,14 @@ function spa_setup_admin_menu() {
 		$forms[SP()->primitives->admin_text('Theme Uploader')] = array(
 			'theme-upload' => '');
 	}
-	
+
 	# Remove some items not needed when running as an saas
 	if (spa_saas_check()) {
 		unset($forms[SP()->primitives->admin_text('Mobile Phone Theme')]);
 	}
 	if (spa_saas_check()) {
 		unset($forms[SP()->primitives->admin_text('Mobile Tablet Theme')]);
-	}	
+	}
 	if (spa_saas_check()) {
 		# The theme editor menu option is only allowed sometimes so check to make sure it's even in the array before attempting to unset it.
 		if (isset($forms[SP()->primitives->admin_text('Theme Editor')])) {
@@ -485,12 +490,12 @@ function spa_setup_admin_menu() {
 			'changelog' => ''),
 		SP()->primitives->admin_text('Uninstall')		 => array(
 			'uninstall' => ''));
-		
+
 		# Remove some items not needed when running as an saas
 		if (spa_saas_check()) {
 			unset($forms[SP()->primitives->admin_text('Toolbox')]);
 			unset($forms[SP()->primitives->admin_text('Licensing')]);
-			unset($forms[SP()->primitives->admin_text('Data Inspector')]);			
+			unset($forms[SP()->primitives->admin_text('Data Inspector')]);
 			unset($forms[SP()->primitives->admin_text('CRON Inspector')]);
 			unset($forms[SP()->primitives->admin_text('Error Log')]);
 			unset($forms[SP()->primitives->admin_text('Environment')]);

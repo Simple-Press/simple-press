@@ -55,19 +55,18 @@ function spa_options_newposts_form() {
 
     #== GLOBAL Tab ============================================================
 
-	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('New Posts Handling'));
-
+	spa_paint_open_tab(SP()->primitives->admin_text('New Posts Handling'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Post Caching'), true, 'topic-cache');
-				spa_paint_input(SP()->primitives->admin_text('cache limit'), 'topiccache', $sfoptions['topiccache'], false, false, '', SP()->primitives->admin_text('Number of new posts to keep in cache list'));
-                                spa_paint_close_fieldset();
+				spa_paint_input(SP()->primitives->admin_text('Cache limit'), 'topiccache', $sfoptions['topiccache'], false, false, '', SP()->primitives->admin_text('Number of new posts to keep in cache list'));
+            spa_paint_close_fieldset();
 		spa_paint_close_panel();
-
 		spa_paint_open_panel();
+
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Unread Posts'), true, 'unread-posts');
 				spa_paint_input(SP()->primitives->admin_text('Default'), 'sfdefunreadposts', $sfoptions['sfdefunreadposts'], false, false, '', SP()->primitives->admin_text('Default number of unread posts for users'));
 				spa_paint_input(SP()->primitives->admin_text('Maximum'), 'sfmaxunreadposts', $sfoptions['sfmaxunreadposts'], false, false, '', SP()->primitives->admin_text('Maximum number of unread posts allowed to be set by users'));
-                                spa_paint_checkbox(SP()->primitives->admin_text('Allow users to set number of unread posts in profile'), 'sfusersunread', $sfoptions['sfusersunread']);
+                spa_paint_checkbox(SP()->primitives->admin_text('Allow users to set number of unread posts in profile'), 'sfusersunread', $sfoptions['sfusersunread']);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 		do_action('sph_options_newposts_left_panel');
@@ -83,18 +82,16 @@ function spa_options_newposts_form() {
             <?php spa_paint_input(SP()->primitives->admin_text('Flag Text'), 'flagstext', $sfoptions['flagstext'], false, false, '', SP()->primitives->admin_text('Text to use in flags')) ?>
             <div class="sf-form-row sf-half sf-wrap-farbtastic">
                 <div class="sf-input-group sf-input-icon">
-                    <label for="flag-color"><?php echo SP()->primitives->admin_text('text color') ?></label>
+                    <label for="flag-color"><?php echo SP()->primitives->admin_text('Text color') ?></label>
                     <input id="flag-color" type="text" value="#<?php echo $sfoptions['flagscolor']; ?>" name="flagscolor" />
-                    <span class="sf-icon sf-themes"></span>
                 </div>
                 <div class="sf-farbtastic"><div id="color-text"></div></div>
                 <span class="sf-sublabel sf-sublabel-small"><?php echo SP()->primitives->admin_text('New Post Flag text color') ?></span>
             </div>
             <div class="sf-form-row sf-half sf-wrap-farbtastic">
                 <div class="sf-input-group sf-input-icon">
-                    <label for="flag-background"><?php echo SP()->primitives->admin_text('background color') ?></label>
+                    <label for="flag-background"><?php echo SP()->primitives->admin_text('Background color') ?></label>
                     <input id="flag-background" type="text" value="#<?php echo $sfoptions['flagsbground']; ?>" name="flagsbground" />
-                    <span class="sf-icon sf-themes"></span>
                 </div>
                 <div class="sf-farbtastic"><div id="color-background"></div></div>
                 <span class="sf-sublabel sf-sublabel-small"><?php echo SP()->primitives->admin_text('New Post Flag background color') ?></span>

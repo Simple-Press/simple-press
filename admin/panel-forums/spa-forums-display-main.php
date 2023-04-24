@@ -6,8 +6,9 @@
   $Rev: 15601 $
  */
 
-if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
+if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
     die('Access denied - you cannot directly call this file');
+}
 
 function spa_forums_forums_main() {
     ?><div id="sf-tab-forums-main"><?php
@@ -42,60 +43,36 @@ function spa_forums_forums_main() {
 
         $groups = SP()->DB->table(SPGROUPS, '', '', 'group_seq');
         if ($groups) {
-            //if (SP()->options->get('spSample')) {
-            //    echo '<form action="' . SPADMINFORUM . '" method="post" id="spSampleDel" name="spSampleDel">';
-            //    echo sp_create_nonce('forum-adminform_groupdelete');
-            //    echo '<input type="submit" class="sf-button-primary" name="spSampleDelDo" id="spSampleDelDo" value="Delete Sample Data" />';
-            //    echo '</form>';
-            //}
 
             foreach ($groups as $group) {
                 spa_paint_open_nohead_tab(true, '');
                 # Group
                 ?>
-                <div id="grouprow-<?php echo $group->group_id; ?>" class="sf-panel-body-top sf-mobile-no-horizontal-padding">
-                    <table class="sf-full-width sf-table-mobile">
-                        <tr>
-                            <td class="sf-v-a-middle">
-                                
-                                <!--<a title="<?php SP()->primitives->admin_etext('Collapse/expand forum listing'); ?>" class="spExpandCollapseGroup" data-target="forum-group-<?php echo $group->group_id; ?>">&ndash;</a>-->
-                            </td>
-                            <td class="sf-v-a-middle">
-                                <div class="sf-v-a-middle sf-pull-left" >
-                                  <div  class="sf-icon-midle">
-                                    <?php echo spa_get_saved_icon_html(!empty($group->group_icon) ? $group->group_icon : '', 'forum', SP()->primitives->admin_text('Current group icon'), SPTHEMEICONSURL . 'sp_GroupIcon.png') ?>
-                                  </div>
-                                </div>
-                                <div class="sf-title-block sf-pull-left">
-                                    <h4><?php echo SP()->displayFilters->title($group->group_name); ?></h4>
-                                    <?php echo SP()->displayFilters->text($group->group_desc); ?>
-                                    <?php
-                                    //sp_display_item_stats(SPFORUMS, 'group_id', $group->group_id, SP()->primitives->admin_text('Forums'));
-                                    ?>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="sf-panel-body-top-right sf-mobile-btns sf-mobile-stack-btns">
-                                    <?php
-                                    $base = wp_nonce_url(SPAJAXURL . 'forums-loader&amp;id=' . $group->group_id, 'forums-loader');
-                                    $target = "group-$group->group_id";
-                                    $image = SPADMINIMAGES;
-                                    ?>
-                                    <button class="sf-icon-button spLoadForm" title="<?php echo SP()->primitives->admin_text('Add Permission'); ?>" data-form="groupperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""><span class="sf-icon sf-blue sf-permissions"></span></button>
-                                    <button class="sf-icon-button spLoadForm" title="<?php echo SP()->primitives->admin_text('Order Forums'); ?>" data-form="ordering" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php $group->group_id; ?>" data-open=""><span class="sf-icon sf-blue sf-order"></span></button>
-                                    <button class="sf-icon-button spLoadForm" title="<?php echo SP()->primitives->admin_text('Edit This Group'); ?>" data-form="editgroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""><span class="sf-icon sf-blue sf-edit"></span></button>
-                                    <button class="sf-icon-button spLoadForm" title="<?php echo SP()->primitives->admin_text('Delete Group'); ?>" data-form="deletegroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""><span class="sf-icon sf-blue sf-delete"></span></button>
-                                </div>
-                            </td>
-                        </tr>
+                <div id="grouprow-<?php echo $group->group_id; ?>" class="spGroupRow">
+                    <div>
+                        <div>
+                            <?php echo spa_get_saved_icon_html(!empty($group->group_icon) ? $group->group_icon : '', 'forum', SP()->primitives->admin_text('Current group icon'), SPTHEMEICONSURL . 'sp_GroupIcon.png') ?>
+                        </div>
+                        <div>
+                            <h4><?php echo SP()->displayFilters->title($group->group_name); ?></h4>
+                            <?php echo SP()->displayFilters->text($group->group_desc); ?>
+                        </div>
+                        <div>
+                            <?php
+                            $base = wp_nonce_url(SPAJAXURL . 'forums-loader&amp;id=' . $group->group_id, 'forums-loader');
+                            $target = "group-$group->group_id";
+                            $image = SPADMINIMAGES;
+                            ?>
+                            <button class="sf-icon-button spLoadForm" title="<?php echo SP()->primitives->admin_text('Add Permission'); ?>" data-form="groupperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""><span class="sf-icon sf-permissions"></span></button>
+                            <button class="sf-icon-button spLoadForm" title="<?php echo SP()->primitives->admin_text('Order Forums'); ?>" data-form="ordering" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php $group->group_id; ?>" data-open=""><span class="sf-icon sf-order"></span></button>
+                            <button class="sf-icon-button spLoadForm" title="<?php echo SP()->primitives->admin_text('Edit This Group'); ?>" data-form="editgroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""><span class="sf-icon sf-edit"></span></button>
 
-                        <tr class="sfinline-form">  <!-- This row will hold ajax forms for the current group -->
-                            <td colspan="3" class="sf-padding-none">
-                                <div id="group-<?php echo $group->group_id; ?>">
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                            <button class="sf-icon-button spLoadForm" title="<?php echo SP()->primitives->admin_text('Delete Group'); ?>" data-form="deletegroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""><span class="sf-icon sf-delete"></span></button>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="group-<?php echo $group->group_id; ?>"></div>
+                    </div>
                 </div>
                 <?php
                 # Forums in group

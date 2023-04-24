@@ -48,7 +48,9 @@ function spa_profiles_options_form() {
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Signature Image Size'), true, 'sig-images');
-				echo '<u>'.SP()->primitives->admin_text('If you are allowing signature images (zero = not limited)').':</u>';
+                echo '<div class="sf-form-row">';
+                    echo SP()->primitives->admin_text('If you are allowing signature images (zero = not limited)');
+                echo '</div>';
 				spa_paint_input(SP()->primitives->admin_text('Maximum signature width (pixels)'), 'sfsigwidth', $sfoptions['sfsigwidth'] ?? 0);
 				spa_paint_input(SP()->primitives->admin_text('Maximum signature height (pixels)'), 'sfsigheight', $sfoptions['sfsigheight'] ?? 0);
 			spa_paint_close_fieldset();
@@ -70,7 +72,7 @@ function spa_profiles_options_form() {
 
     			echo '<div class="sf-alert-block sf-info">';
     			SP()->primitives->admin_etext('Note - if Popup Window is selected the option will be automatically switched to Forum Profile Page when viewed on a mobile phone device');
-    			echo '</div><br />';
+    			echo '</div>';
 
 				$values = array(SP()->primitives->admin_text('Popup window'), SP()->primitives->admin_text('Forum profile page'), SP()->primitives->admin_text('BuddyPress profile'), SP()->primitives->admin_text('WordPress author page'), SP()->primitives->admin_text('Other page'), SP()->primitives->admin_text('Mingle profile'));
                 if (!is_plugin_active('buddypress/bp-loader.php')) unset($values[2]); # dont show BP option if not active

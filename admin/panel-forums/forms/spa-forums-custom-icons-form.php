@@ -6,9 +6,12 @@ $LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
 $Rev: 15601 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
+    die('Access denied - you cannot directly call this file');
+}
 
-function spa_forums_custom_icons_form() {
+function spa_forums_custom_icons_form(): void
+{
 	$ajaxurl = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'uploader', 'uploader'));
 ?>
 <script>
@@ -83,40 +86,25 @@ function spa_forums_custom_icons_form() {
 </script>
 <?php
 	spa_paint_options_init();
-
-	spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Custom Icons'), true);
+	spa_paint_open_tab(SP()->primitives->admin_text('Custom Icons'), true);
 		?>
-            <div class="sf-panel-body-top">
-                <div class="sf-panel-body-top-left">
-                    <h4><?php echo SP()->primitives->admin_text('Group/Forum Custom Icons Upload') ?></h4>
-                </div>
-                <div class="sf-panel-body-top-right sf-mobile-btns">
-                    <?php echo spa_paint_help('custom-icon-upload') ?>
-                    <?php
-                    $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/';
-					spa_paint_file(SP()->primitives->admin_text('Select custom icon file to upload'), 'newiconfile', false, true, $loc);
-                    ?>
-                </div>
+            <div class="sf-panel">
+                <fieldset class="sf-fieldset">
+
+                    <div class="sf-panel-body-top">
+                        <h4><?php echo SP()->primitives->admin_text('Group/Forum Custom Icons Upload') ?></h4>
+                        <?php
+                        $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/';
+                        spa_paint_file(SP()->primitives->admin_text('Select custom icon file to upload'), 'newiconfile', false, true, $loc);
+                        ?>
+                        <?php echo spa_paint_help('custom-icon-upload') ?>
+                    </div>
+
+                    <?php spa_paint_custom_icons(); ?>
+                </fieldset>
             </div>
-                <?php
-	
-		//spa_paint_open_panel();
-		//	spa_paint_open_fieldset(SP()->primitives->admin_text('Group/Forum Custom Icons Upload'), true, 'custom-icon-upload');
-		//		$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/';
-		//		spa_paint_file(SP()->primitives->admin_text('Select custom icon file to upload'), 'newiconfile', false, true, $loc);
-		//	spa_paint_close_fieldset();
-		//spa_paint_close_panel();
 
-		//spa_paint_open_panel();
-		//	spa_paint_open_fieldset(SP()->primitives->admin_text('Group/Forum Custom Icons'), true, 'custom-icons');
-			spa_paint_custom_icons();
-		//	spa_paint_close_fieldset();
-		//spa_paint_close_panel();
-
-		do_action('sph_forum_icons_right_panel');
-
-		spa_paint_close_container();
-
-		echo '<div class="sfform-panel-spacer"></div>';
+    <?php
+	do_action('sph_forum_icons_right_panel');
 	spa_paint_close_tab();
 }

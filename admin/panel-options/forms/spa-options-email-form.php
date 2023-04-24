@@ -29,7 +29,10 @@ function spa_options_email_form() {
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('New User Email'), true, 'new-user-email');
 				spa_paint_checkbox(SP()->primitives->admin_text('Use the Simple:Press new user email version'), 'sfusespfreg', $sfoptions['sfusespfreg']);
-				echo '<p><strong>'.SP()->primitives->admin_text('The following placeholders are available: %USERNAME%, %BLOGNAME%, %SITEURL%, %LOGINURL%, %PWURL%').'</strong></p>';
+                echo '<div class="sf-form-row">';
+				echo SP()->primitives->admin_text('The following placeholders are available: ') ;
+                echo '<code>%USERNAME%</code>,<code>%BLOGNAME%</code>,<code>%SITEURL%</code>,<code>%LOGINURL%</code>,<code>%PWURL%</code>';
+                echo '</div>';
 				spa_paint_input(SP()->primitives->admin_text('Email subject line'), 'sfnewusersubject', $sfoptions['sfnewusersubject'], false, true);
 				spa_paint_wide_textarea(SP()->primitives->admin_text('Email message (no html)'), 'sfnewusertext', $sfoptions['sfnewusertext'], $submessage = '', 4);
 			spa_paint_close_fieldset();
