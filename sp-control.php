@@ -523,6 +523,8 @@ if (!class_exists('spcSimplePress')) {
 		public function check_is_forum_page() {
 			global $wp_query;
 			if ((is_page()) && ($wp_query->post->ID == $this->options->get('sfpage'))) {
+				
+				do_action( 'init_public_forum_load' );
 				$this->isForum = true;
 				SP()->user->get_current_user();
 

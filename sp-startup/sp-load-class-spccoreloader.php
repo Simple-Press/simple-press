@@ -85,12 +85,20 @@ class spcCoreLoader {
 		$this->includes();
 
 		# run core startup code
-		$this->startup();
+		add_action('init_public_forum_load', [ $this, 'public_load'], 10, 0 );
 
+		if( is_admin() ) {
+			$this->startup();
+		}
+	
 		# run core hooks
 		$this->hooks();
 
 		do_action('sph_core_load_complete');
+	}
+
+	public function public_load() {
+		$this->startup();
 	}
 
 	/**
