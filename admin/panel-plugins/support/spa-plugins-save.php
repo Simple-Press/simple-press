@@ -20,12 +20,23 @@ function spa_save_plugin_activation() {
 
     if ($action == 'activate') {
     	# activate the plugin
-        SP()->plugin->activate($plugin);
+		SP()->plugin->activate($plugin);
+		?>
+			<div id = "sf-activate-loader" >
+				<img src="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>" alt="Loading" />
+			</div>
+		<?php
+
         # reset all users plugin data in case new plugin adds elements to user object
         SP()->memberData->reset_plugin_data();
     } else if ($action == 'deactivate') {
     	# deactivate the plugin
         SP()->plugin->deactivate($plugin);
+		?>
+			<div id = "sf-deactivate-loader" >
+				<img src="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>" alt="Loading" />
+			</div>
+		<?php
     } else if ($action == 'uninstall_confirmed') {
     	# fire uninstall action
     	do_action('sph_uninstall_plugin', trim($plugin));
