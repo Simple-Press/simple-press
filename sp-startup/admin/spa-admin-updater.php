@@ -246,6 +246,23 @@ function sp_do_plugin_upload() {
 		'package' => $file_upload->id), 'update.php?action=upload-sp-plugin');
 	$type = 'upload';
 	$upgrader = new spcPluginUpgrader(new spcPluginInstallerSkin(compact('type', 'title', 'nonce', 'url')));
+	// Plugin uploading indicator
+	?>
+		<div id = "sf-plugin-loader" >
+			<img src="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>" alt="Loading" />
+		</div>
+
+		<script>
+			(function($) {
+				$(function(){
+					setTimeout(function() { 
+					$('#sf-plugin-loader').hide();
+					}, 1000);
+				});
+				}(jQuery));
+		</script>
+	<?php
+
 	$result = $upgrader->install($file_upload->package);
 
 	if ($result || is_wp_error($result)) $file_upload->cleanup();
@@ -278,6 +295,24 @@ function sp_do_theme_upload() {
 		'package' => $file_upload->id), 'update.php?action=upload-sp-theme');
 	$type = 'upload';
 	$upgrader = new spcThemeUpgrader(new spcThemeInstallerSkin(compact('type', 'title', 'nonce', 'url')));
+	
+	// Theme Uploading indicator
+	?>
+		<div id = "sf-theme-loader" >
+			<img src="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>" alt="Loading" />
+		</div>
+
+		<script>
+			(function($) {
+				$(function(){
+					setTimeout(function() { 
+					$('#sf-theme-loader').hide();
+					}, 1000);
+				});
+				}(jQuery));
+		</script>
+	<?php
+
 	$result = $upgrader->install($file_upload->package);
 
 	if ($result || is_wp_error($result)) $file_upload->cleanup();
