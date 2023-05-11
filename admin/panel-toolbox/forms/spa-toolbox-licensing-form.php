@@ -17,9 +17,9 @@ function spa_toolbox_licensing_form() {
 		
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Licensing Instructions'), true, 'licensing-instructions');
-				echo "<div class='sp-licensing-instructions-tab sf-pull-left'>";
+                echo '<div class="sf-form-row">';
 					spa_toolbox_licensing_form_paint_instructions();
-				echo"</div>";
+                echo '</div>';
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 		
@@ -28,7 +28,9 @@ function spa_toolbox_licensing_form() {
 		/* Plugins Licensing Section */	
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Premium Plugins Licensing'), true, 'plugins-licensing');
+            echo '<div class="sf-form-row">';
 				spa_toolbox_licensing_form_paint_plugin_licenses();
+            echo '</div>';
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 		/* End Plugins Licensing Section */
@@ -36,7 +38,9 @@ function spa_toolbox_licensing_form() {
 		/* Theme Licensing Section */	
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Premium Themes Licensing'), true, 'themes-licensing');
-				spa_toolbox_licensing_form_paint_theme_licenses();	
+                echo '<div class="sf-form-row">';
+                    spa_toolbox_licensing_form_paint_theme_licenses();
+                echo '</div>';
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 		/* End Theme Licensing Section */
@@ -48,6 +52,7 @@ function spa_toolbox_licensing_form() {
 		/****************************************************/
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Force an Update Check'), true, 'force-update-check');
+            echo '<div class="sf-form-row">';
 			echo '<div class="sf-alert-block sf-info">';
 			echo SP()->primitives->admin_text('Simple:Press checks for updates once every day.');
 			echo '<br />';
@@ -56,7 +61,7 @@ function spa_toolbox_licensing_form() {
 			echo '<div class="sf-form-submit-bar">';
 			echo '<input type="button" class="sf-button-primary" id="force_update_check" name="force_update_check" value="'.SP()->primitives->admin_text('Check For Updates Now').'">';
 			echo '</div>';
-		
+            echo '</div>';
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 		/* End Paint section for forcing update checks manually */
@@ -66,8 +71,9 @@ function spa_toolbox_licensing_form() {
 		/*******************************************************/		
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Licensing Server'), true, 'licensing-server');
+                echo '<div class="sf-form-row">';
 				$sp_addon_store_url = SP()->options->get( 'sp_addon_store_url');
-				echo '<div class="sf-alert-block sf-info">';
+				echo '<div class="sf-alert-block sf-caution">';
 				echo SP()->primitives->admin_text('This field is usually blank which defaults the licensing server to simple-press.com.');
 				echo('<br />');
 				echo SP()->primitives->admin_text('But upon instruction by Simple:Press support staff you can use it to enter an alternative licensing server.');
@@ -85,6 +91,7 @@ function spa_toolbox_licensing_form() {
 				echo '<input type="submit" class="sf-button-primary" id="saveit" name="save_store_url" value="'.SP()->primitives->admin_text('Update Licensing Server').'">';
 				echo '</div>';
 				echo '</form>';
+                echo '</div>';
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 		/* End paint field for alternate license server url */		

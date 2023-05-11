@@ -43,7 +43,6 @@ function spa_forums_create_forum_form() {
 
 					# Select the forum type first
 					echo "<div class='sf-form-row'>\n";
-					echo "<div class='sf-alert-block sf-info'>".SP()->primitives->admin_text('What type of forum are you creating')."</div>\n";
 					echo "<div class='wp-core-ui sp-radio'>";
 					echo '<input type="radio" name="forumtype" id="sfradio1" tabindex="'.$tab.'" value="1" checked="checked" class="spForumSetOptions" data-target="forum" />'."\n";
 					echo '<label for="sfradio1" class="wp-core-ui">'.SP()->primitives->admin_text('Standard Forum').'</label><br>'."\n";
@@ -71,7 +70,7 @@ function spa_forums_create_forum_form() {
 					$tab++;
 					echo '</div>';
 
-					echo '<div id="forumselect" class="sf-dis-block">';
+					echo '<div id="forumselect" class="sf-dis-block" style="display:none;">';
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Select forum new subforum will belong to').":</label>\n";
 					echo '<select class="spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';
@@ -185,10 +184,6 @@ function spa_forums_create_forum_form() {
 					spa_paint_input(SP()->primitives->admin_text('Custom meta keywords (SEO option must be enabled)'), 'forum_keywords', '', false, true);
 					spa_paint_wide_textarea('Special forum message to be displayed above forums', 'forum_message', '');
 				spa_paint_close_fieldset();
-
-			echo '<div class="sf-alert-block sf-info">';
-			echo sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the %s Order Groups and Forums %s option from the Forums Menu'), '<b>', '</b>');
-			echo '</div>';
 
 			spa_paint_close_panel();
 

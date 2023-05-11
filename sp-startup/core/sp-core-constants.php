@@ -14,9 +14,7 @@ if (!defined('SPCHARSET')) {
 
 function formatUploadsForS3 (string $input = ''): string
 {
-    if (getenv('S3_UPLOADS_USE_LOCAL') === 'true') {
-        return str_replace('/app/', '/', $input);
-    }
+
 
     return $input;
 }

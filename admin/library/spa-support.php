@@ -644,7 +644,7 @@ function sp_display_item_stats($table, $key, $value, $label) {
 	$c = SP()->DB->count($table, "$key = $value");
         ?>
         <div>
-            <div class="sf-item-type"><?php echo $label ?></div>
+            <span class="sf-item-type"><?php echo $label ?></span>
             <span class="sf-number"><?php echo $c ?></span>
         </div>
         <?php

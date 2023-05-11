@@ -25,11 +25,7 @@ function spa_paint_tab_head( $tabname, $buttons = true ) {
 	$target = 'sfmaincontainer';
 	
 	echo "<div class='sf-panel-head'>";
-	
-	if( $buttons ) {
-	}
-	
-	echo "<h3>$tabname</h3>";
+        echo "<h3>$tabname</h3>";
 	echo "</div>\n";
 }
 
@@ -81,11 +77,6 @@ function spa_paint_close_tab() {
 # ------------------------------------------------------------------
 function spa_paint_open_nohead_tab($full=false, $class="sfform-panel-nohead") {
         spa_paint_open_panel_body($class);
-        if ($full) {
-            spa_paint_open_full_form();
-	} else {
-            spa_paint_open_half_form();
-	}
 }
 
 function spa_paint_tab_right_cell() {

@@ -23,16 +23,15 @@ function spa_permissions_reset_perms_form() {
 		echo sp_create_nonce('forum-adminform_resetpermissions');
 		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Reset All Permission'), true);
 			spa_paint_open_panel();
+
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Reset all permissions back to initial state.'), 'true', 'reset-permissions');
-					echo '<div class="sf-alert-block sf-info">';
+					echo '<div class="sf-alert-block sf-warning">';
 					echo '<p>';
 					SP()->primitives->admin_etext('Warning! You are about to reset your permissions back to the install state.');
                     echo '<br><br>';
 					SP()->primitives->admin_etext('This will delete all roles and permissions for your forums. You will have to give your users access to your forums again.');
                     echo '<br><br>';
 					echo sprintf(SP()->primitives->admin_text('Please note that this action %s can NOT be reversed %s'), '<strong>', '</strong>');
-                    echo '<br><br>';
-					SP()->primitives->admin_etext('Click on the reset permissions button below to proceed');
 					echo '</p>';
 					echo '</div>';
 				spa_paint_close_fieldset();

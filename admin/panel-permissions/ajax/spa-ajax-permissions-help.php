@@ -32,7 +32,7 @@ if(empty($list)) {
 	echo '</div>';
 } else {
 ?>
-	<table class='form-table tipTable'>
+	<table class='form-table '>
 		<tr>
 			<th><b><?php SP()->primitives->admin_etext('Used for Forum'); ?></b></th>
 			<th><b><?php SP()->primitives->admin_etext('With User Group'); ?></b></th>

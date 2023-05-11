@@ -74,6 +74,7 @@ function spa_forums_edit_forum_form($forum_id) {
 
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Forum slug').'</label>';
+
 					echo '<input type="text" class="wp-core-ui sp-input-60" tabindex="'.$tab.'" name="cforum_slug" id="cforum_slug" value="'.esc_attr($forum->forum_slug).'" />';
 					echo '<div class="clearboth"></div>';
 					echo '</div>';

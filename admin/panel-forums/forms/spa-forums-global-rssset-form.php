@@ -26,7 +26,7 @@ function spa_forums_global_rssset_form($id) {
 			spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Globally Enable/Disable RSS Feeds'), false);
 				echo '<tr><td colspan="2"><br />';
-				echo '<div class="sf-alert-block sf-info">';
+				echo '<div class="sf-alert-block sf-caution">';
 				SP()->primitives->admin_etext('Warning: Enabling or disabling RSS feeds from this form will apply that setting to ALL forums and overwrite any existing RSS feed settings. If you wish to individually enable/disable RSS feeds for a single forum, please visit the manage forums admin panel - edit the forum and set the RSS feed status there');
 				echo '<br /><br />';
 				if ($id == 1) SP()->primitives->admin_etext('Please press the confirm button below to disable RSS feeds for all forums');

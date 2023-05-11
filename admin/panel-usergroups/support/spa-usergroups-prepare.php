@@ -38,6 +38,7 @@ function spa_members_not_belonging_to_any_usergroup($pageNum = 1, $filter = '', 
         LEFT JOIN ' . SPMEMBERSHIPS . ' ON ' . SPMEMBERS . '.user_id = ' . SPMEMBERSHIPS . '.user_id
         WHERE ' . SPMEMBERSHIPS . '.usergroup_id IS NULL AND admin=0';
 
+
     $countTotal = SP()->DB->select($sql, 'var');
 
     $offset = $maxItemsOnPage * ($pageNum - 1);

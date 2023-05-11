@@ -26,27 +26,26 @@ function spa_integration_storage_form() {
 
 		<?php echo sp_create_nonce('forum-adminform_storage');
 
-	    $info = '<div class="sf-alert-block sf-info">' .
-	            sprintf(SP()->primitives->front_text('BEWARE: Please read the help before making any changes to these locations. Incorrect changes may cause Simple:Press to stop functioning'), '<b>', '</b>') .
+	    $info = '<div class="sf-alert-block sf-caution">' .
+	            SP()->primitives->front_text('BEWARE: Please read the help before making any changes to these locations. Incorrect changes may cause Simple:Press to stop functioning')  .
 	            '</div>';
 
 	    spa_paint_open_tab(SP()->primitives->admin_text('Storage Locations'), true, $info);
 
 	    spa_paint_open_panel();
 		    spa_paint_open_fieldset(SP()->primitives->admin_text('Set Storage Locations'), 'true', 'storage-locations', 'true');
-		echo '<div class="collapsible-closed">';
-                echo '<table><tr>';
-                echo '<td><span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Location found').'"></span>'
-                     .SP()->primitives->admin_text('Location found').'</td>';
-                echo '<td><span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Location not found').'"></span>'
-                     .SP()->primitives->admin_text('Location not found').'</td></tr><tr>';
-                echo '<td><span class="sf-icon sf-requires-enable" title="'.SP()->primitives->admin_text('Write - OK').'"></span>'
-                     .SP()->primitives->admin_text('Write - OK').'</td>';
-                echo '<td><span class="sf-icon sf-warning" title="'.SP()->primitives->admin_text('Write - denied').'"></span>'
-                     .SP()->primitives->admin_text('Write - denied').'</td></tr><tr>';
-                echo '</tr></table>';
-            echo '</div>';
-		echo '<br>';
+                echo '<div >';
+                    echo '<table><tr>';
+                    echo '<td><span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Location found').'"></span>'
+                         .SP()->primitives->admin_text('Location found').'</td>';
+                    echo '<td><span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Location not found').'"></span>'
+                         .SP()->primitives->admin_text('Location not found').'</td></tr><tr>';
+                    echo '<td><span class="sf-icon sf-requires-enable" title="'.SP()->primitives->admin_text('Write - OK').'"></span>'
+                         .SP()->primitives->admin_text('Write - OK').'</td>';
+                    echo '<td><span class="sf-icon sf-warning" title="'.SP()->primitives->admin_text('Write - denied').'"></span>'
+                         .SP()->primitives->admin_text('Write - denied').'</td></tr><tr>';
+                    echo '</tr></table>';
+                echo '</div>';
 	        spa_paint_close_fieldset();
 	    spa_paint_close_panel();
 

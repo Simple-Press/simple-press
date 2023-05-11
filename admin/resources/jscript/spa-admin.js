@@ -75,15 +75,26 @@
 		});
 	};
 
-        spj.loadForm = function(formID, baseURL, targetDiv, imagePath, id, open, upgradeUrl, admin, save, sform, reload) {
+    spj.loadForm = function(formID, baseURL, targetDiv, imagePath, id, open, upgradeUrl, admin, save, sform, reload) {
 		/* close a dialog (popup help) if one is open */
 		if ($().dialog("isOpen")) {
 			$().dialog('destroy');
 		}
 
-                var $target = $(/^\s*[a-z]/i.test(targetDiv) ? '#' + targetDiv : targetDiv);
+		var $target = $(/^\s*[a-z]/i.test(targetDiv) ? '#' + targetDiv : targetDiv);
 
-		/* remove any current form unless instructed to leave open */
+		if ($target.hasClass('isOpen')) {
+			$target.removeClass('isOpen');
+			if (open !== 'open') {
+				$target.html('');
+				return;
+			}
+		} else {
+			$target.addClass('isOpen');
+		}
+
+
+		/* remove any current form unless instructed to leave open *
 		if (open === null || open == undefined) {
 			$target.html('');
 		}
@@ -137,12 +148,11 @@
 		$(document).ready(function() {
 			$('#' + aForm).ajaxForm({
 				target: '#sfmsgspot',
-                                
-                                beforeSerialize : function() {
-                                        if( typeof tinymce !== 'undefined' ) {
-                                                tinymce.triggerSave();
-                                        }
-                                },
+				beforeSerialize : function() {
+					if( typeof tinymce !== 'undefined' ) {
+						tinymce.triggerSave();
+					}
+				},
 				beforeSubmit: function() {
 					$('#sfmsgspot').show();
 					$('#sfmsgspot').html(sp_platform_vars.pWait);
@@ -221,15 +231,15 @@
 			document.getElementById(target).innerHTML = '';
 		}
 	};
-        
-        spj.showMemberList = function(url, imageFile, groupID, target) {
+
+	spj.showMemberList = function(url, imageFile, groupID, target) {
 		var $el = target ? $(target) : $('#members-' + groupID);
-                if (imageFile) {
-                    $el.html('<img src="' + imageFile + '" />');
-                } else {
-                    $el.html('');
-                }
-                $el.load(url);
+		if (imageFile) {
+			$el.html('<img src="' + imageFile + '" />');
+		} else {
+			$el.html('');
+		}
+		$el.load(url);
 	};
 
 	spj.updateMultiSelectList = function(url, uid) {
@@ -334,7 +344,6 @@
 				groupid = $( '#' + thisFormID + ' input[name=usergroup_id]').val();
 		}
 
-		
 		var btn = $('input#'+type+groupid);
 
 		var image = btn.data('img');
@@ -353,7 +362,6 @@
 		
 		spj[thisFormID+'_Def'] = $.Deferred();
 		
-		
 		$.when( spj[thisFormID+'_Def'] )
 		.then( function(a, b) {
 				
@@ -368,8 +376,7 @@
 				});
 			}
     	} );
-                
-      
+
 		spj.batch(thisFormID, url, target, startMessage, endMessage, startNum, batchNum, totalNum);
                 
 		$(source + ' option').remove();
@@ -403,70 +410,70 @@
 			control.text = String.fromCharCode(8211);
 		}
 	};
-        
-        
-        spj.prepareAjaxEditor = function( editor ) {
-                
-                var id = editor.find('textarea.wp-editor-area').attr('id');
-                
-                if( tinyMCE.get( id ) ) {
-                        tinyMCE.get( id ).destroy();
-                }
-                
-                
-                var init = null;
-
-                if( tinyMCEPreInit.mceInit.hasOwnProperty( id ) ) {
-                        init = tinyMCEPreInit.mceInit[ id ];
-                } else {
-
-                        var mce_init = tinyMCEPreInit.mceInit[Object.keys(tinyMCEPreInit.mceInit)[0]];
-                        init = $.extend({}, mce_init, { selector : "#" + id });
-                        tinyMCEPreInit.mceInit[ id ] = init;
-                }
-                
-                var $wrap = tinymce.$( '#wp-' + id + '-wrap' );
-                var is_mce = $wrap.hasClass( 'tmce-active' ) ? true : false;
 
 
-                new QTags( id );
-                QTags._buttonsInit();
-                switchEditors.go( id, 'html' );
+	spj.prepareAjaxEditor = function( editor ) {
 
-                if( is_mce ) {
+		var id = editor.find('textarea.wp-editor-area').attr('id');
 
-                        setTimeout( function(){
-                                switchEditors.go( id, 'tmce' );
-                        }, 200 );
+		if( tinyMCE.get( id ) ) {
+			tinyMCE.get( id ).destroy();
+		}
 
-                }
-                
-        }
-        
-        
-        spj.UpdateFontIcon = function( id, clear_color ) {
-                
-                var color = '';
-                
-                if( !clear_color ) {
-                        $.each( $('#'+id).closest('.sf-icon-picker-row').find('.font-color-container .font-style-color').data(), function() {
-                                if( this.hasOwnProperty('_color') ) {
-                                        color = this._color.toString();
-                                }
-                        });
-                }
-                        
-                var val = {
-                        icon : $('#'+id).val(),
-                        color : color,
-                        size : $('#'+id).closest('.sf-icon-picker-row').find('.font-style-size').val(),
-                        size_type : $('#'+id).closest('.sf-icon-picker-row').find('.font-style-size_type').val()
+
+		var init = null;
+
+		if( tinyMCEPreInit.mceInit.hasOwnProperty( id ) ) {
+			init = tinyMCEPreInit.mceInit[ id ];
+		} else {
+
+			var mce_init = tinyMCEPreInit.mceInit[Object.keys(tinyMCEPreInit.mceInit)[0]];
+			init = $.extend({}, mce_init, { selector : "#" + id });
+			tinyMCEPreInit.mceInit[ id ] = init;
+		}
+
+		var $wrap = tinymce.$( '#wp-' + id + '-wrap' );
+		var is_mce = $wrap.hasClass( 'tmce-active' ) ? true : false;
+
+
+		new QTags( id );
+		QTags._buttonsInit();
+		switchEditors.go( id, 'html' );
+
+		if( is_mce ) {
+
+			setTimeout( function(){
+				switchEditors.go( id, 'tmce' );
+			}, 200 );
+
+		}
+
+	}
+
+
+	spj.UpdateFontIcon = function( id, clear_color ) {
+
+		var color = '';
+
+		if( !clear_color ) {
+			$.each( $('#'+id).closest('.sf-icon-picker-row').find('.font-color-container .font-style-color').data(), function() {
+				if( this.hasOwnProperty('_color') ) {
+					color = this._color.toString();
+				}
+			});
+		}
+
+		var val = {
+			icon : $('#'+id).val(),
+			color : color,
+			size : $('#'+id).closest('.sf-icon-picker-row').find('.font-style-size').val(),
+			size_type : $('#'+id).closest('.sf-icon-picker-row').find('.font-style-size_type').val()
 		};
-                
-                $('#'+id).closest('.sf-icon-picker-row').find('.icon_value').val( JSON.stringify( val ) );
-                
-                $('#'+id).closest('.sf-icon-picker-row').find('.selected-icon i').css({color: color});
-        };
+
+		$('#'+id).closest('.sf-icon-picker-row').find('.icon_value').val( JSON.stringify( val ) );
+
+		$('#'+id).closest('.sf-icon-picker-row').find('.selected-icon i').css({color: color});
+	};
         
 
 	// private methods

@@ -6,7 +6,9 @@ $LastChangedDate: 2014-09-16 03:29:25 +0100 (Tue, 16 Sep 2014) $
 $Rev: 11975 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
+    die('Access denied - you cannot directly call this file');
+}
 
 function spa_forums_featured_image_form() {
 	$ajaxurl = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'uploader', 'uploader'));
@@ -52,8 +54,6 @@ function spa_forums_featured_image_form() {
 					this.enable();
 					/* add file to the list */
 					if (response==="success"){
-
-
 						// A random number that will be used to break caching.
 						break_cache = Math.random();
 						break_cache = break_cache.toString();
@@ -78,42 +78,28 @@ function spa_forums_featured_image_form() {
 		});/*]]>*/
 	}(window.spj = window.spj || {}, jQuery));
 </script>
-<?php
-	spa_paint_options_init();
-
-	spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Featured Images'), true);
-	?>
-            <div class="sf-panel-body-top">
-                <div class="sf-panel-body-top-left">
+    <?php spa_paint_open_tab(SP()->primitives->admin_text('Featured Images'), true); ?>
+        <div class="sf-panel">
+            <fieldset class="sf-fieldset">
+                <div class="sf-panel-body-top">
                     <h4><?php echo SP()->primitives->admin_text('Forum Featured Image Upload')?></h4>
                     <span><?php echo SP()->primitives->admin_text('')?></span>
-                </div>
-                <div class="sf-panel-body-top-right sf-mobile-btns">
-                    <?php echo spa_paint_help('featured-image-upload') ?>
                     <?php
-                    $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/';
-					spa_paint_file(SP()->primitives->admin_text('Select image file to upload'), 'newimagefile', false, true, $loc);
+                        $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/';
+                        spa_paint_file(SP()->primitives->admin_text('Select image file to upload'), 'newimagefile', false, true, $loc);
                     ?>
+                    <?php echo spa_paint_help('featured-image-upload') ?>
                 </div>
-            </div>
-                <?php
-		//spa_paint_open_panel();
-		//	spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Featured Image Upload'), true, 'featured-image-upload');
-		//		$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/';
-		//		spa_paint_file(SP()->primitives->admin_text('Select image file to upload'), 'newimagefile', false, true, $loc);
-		//	spa_paint_close_fieldset();
-		//spa_paint_close_panel();
-
-		//spa_paint_open_panel();
-		//	spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Featured Images'), true, 'featured-images');
-			spa_paint_featured_images();
-		//	spa_paint_close_fieldset();
-		//spa_paint_close_panel();
-
-		do_action('sph_forum_images_right_panel');
-
-		spa_paint_close_container();
-
-		echo '<div class="sfform-panel-spacer"></div>';
-	spa_paint_close_tab();
+                <div class="sf-alert-block sf-info">
+                    <strong>Notice:</strong> Currently, featured images, if one exists, may be used for the Open Graph meta tag and, for this use, images are recommended to be 200px x 200px.
+                </div>
+                <div class="sf-form-row">
+                    <?php spa_paint_featured_images(); ?>
+                </div>
+            </fieldset>
+        </div>
+	<?php spa_paint_close_container(); ?>
+	<?php spa_paint_close_tab(); ?>
+    <?php do_action('sph_forum_images_right_panel'); ?>
+<?php
 }

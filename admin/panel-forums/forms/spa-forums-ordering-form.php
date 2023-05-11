@@ -47,8 +47,8 @@ function spa_forums_ordering_form($groupId=0) {
 					<?php } else { ?>
 					$('#sfreloadfb').click();
 					<?php } ?>
-					$('#sfmsgspot').fadeIn();
-					$('#sfmsgspot').fadeOut(6000);
+					$('#sfmsgspot').show();
+					$('#sfmsgspot').delay(3000).slideUp(500);
 				},
 				beforeSerialize: function() {
 					$("input#spForumsOrder").val($("#groupList").nestedSortable('serialize'));
@@ -65,10 +65,14 @@ function spa_forums_ordering_form($groupId=0) {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumorder" name="sfforumorder">
 <?php
 		echo sp_create_nonce('forum-adminform_forumorder');
-		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Group and Forum Ordering'), true);
+        if ($groupId === 0) {
+            spa_paint_open_tab(
+                SP()->primitives->admin_text('Group and Forum Ordering'),
+                true
+            );
+        }
 		?>
             <fieldset class="sf-fieldset">
-
                 <div class="sf-panel-body-top">
                     <h4><?php echo SP()->primitives->admin_text('Order Groups and Forums') ?></h4>
                     <?php echo spa_paint_help('order-forums') ?>

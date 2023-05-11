@@ -39,7 +39,7 @@ function spa_permissions_add_permission_form() {
         spa_paint_wide_textarea('Set Description', 'role_desc', '', '', 4);
         spa_paint_select_start(SP()->primitives->admin_text('Clone Existing'), 'role', 'role');
         spa_display_permission_select('', false);
-        spa_paint_select_end('<div class="text-small"><small>' . SP()->primitives->admin_text('Select an existing Permission Set to Clone') . '</small></div>');
+        spa_paint_select_end('<span class="sf-sublabel sf-sublabel-small">' . SP()->primitives->admin_text('Select an existing Permission Set to Clone') . '</span>');
         spa_paint_close_fieldset();
         ?>
         <div class="_sf-form-submit-bar sf-mobile-hide">
@@ -56,6 +56,7 @@ function spa_permissions_add_permission_form() {
                 <small class="sf-mobile-show"><?php echo SP()->primitives->admin_text('Ignored for Guest Users') ?></small>
             </div>
             <div class="sf-alert-block sf-info">
+
                 <span class="sf-icon sf-requires-enable sf-green sf-small"></span>
                 <small class="sf-mobile-hide"><?php echo SP()->primitives->admin_text('Action settings displaying this icon require enabling to use') ?></small>
                 <small class="sf-mobile-show"><?php echo SP()->primitives->admin_text('Require enabling to use') ?></small>
