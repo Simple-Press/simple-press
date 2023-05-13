@@ -559,6 +559,14 @@ function spa_save_forums_disable_forum() {
 
 	$sql     = 'UPDATE '.SPFORUMS." SET forum_disabled=1 WHERE forum_id=$forum_id";
 	$success = SP()->DB->execute($sql);
+	// if disable parent forum, disable child. 
+	$children = SP()->DB->table(SPFORUMS, "forum_id=$forum_id", 'children');
+	if($children){
+		$children = unserialize($children);
+		$sql     = 'UPDATE '.SPFORUMS." SET forum_disabled=1 WHERE forum_id=$children[0]";
+		$success = SP()->DB->execute($sql);
+	}
+
 	if ($success) {
 		$mess = SP()->primitives->admin_text('Forum disabled');
 		do_action('sph_forum_forum_disable', $forum_id);
@@ -579,6 +587,14 @@ function spa_save_forums_enable_forum() {
 
 	$sql     = 'UPDATE '.SPFORUMS." SET forum_disabled=0 WHERE forum_id=$forum_id";
 	$success = SP()->DB->execute($sql);
+
+	// if enable child, enable parent as well
+	$parent = SP()->DB->table(SPFORUMS, "forum_id=$forum_id", 'parent');
+	if($parent){
+		$sql     = 'UPDATE '.SPFORUMS." SET forum_disabled=0 WHERE forum_id=$parent";
+		$success = SP()->DB->execute($sql);
+	}
+
 	if ($success) {
 		$mess = SP()->primitives->admin_text('Forum enabled');
 		do_action('sph_forum_forum_enable', $forum_id);
