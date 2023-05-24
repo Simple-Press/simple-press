@@ -446,7 +446,7 @@ class spcPlugin {
 		if (!SP()->auths->current_user_can($capability)) return false;
 
 		# make sure the panel doesnt already exist
-		#if (array_key_exists($name, $sfadminpanels)) return false;
+		if (array_key_exists($name, $sfadminpanels)) return false;
 
 		# fix up the subpanels formids from user names
 		$forms = array();
@@ -474,9 +474,9 @@ class spcPlugin {
 		array_splice($sfadminpanels, $position, 0, array($panel_data));
 
 		# and update the active panels list
-		#$new = array_keys($sfactivepanels);
-		#array_splice($new, $position, 0, $name);
-		#$sfactivepanels = array_flip($new);
+		$new = array_keys($sfactivepanels);
+		array_splice($new, $position, 0, $name);
+		$sfactivepanels = array_flip($new);
 
 		return true;
 	}
@@ -492,8 +492,14 @@ class spcPlugin {
 	 *
 	 * @returns    string    basename
 	 */
-	public function add_admin_subpanel($panel, $subpanels) {
+	public function add_admin_subpanel($panel, $subpanels): bool
+    {
 		global $sfadminpanels, $sfactivepanels;
+
+        # if no subpanel is supplied, do not continue
+        if (empty($subpanels)) {
+            return false;
+        }
 
 		# make sure the panel exists
 		if (!array_key_exists($panel, $sfactivepanels)) return false;
