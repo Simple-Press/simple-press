@@ -37,39 +37,9 @@ function spa_plugins_list_form() {
 						$('#sppluginssearchform').submit();
 					}
 				});
-				
+
 				spj.loadAjaxForm('sppluginsform', 'sfreloadpl');
-				/* wp check all logic */
-				$('thead, tfoot').find('.check-column :checkbox').click(function (e) {
 
-					var c = $(this).prop('checked'),
-						kbtoggle = 'undefined' == typeof toggleWithKeyboard ? false : toggleWithKeyboard,
-						toggle = e.shiftKey || kbtoggle;
-
-					$(this).closest('table').children('tbody').filter(':visible')
-						.children().children('.check-column').find(':checkbox')
-						.prop('checked', function () {
-							if ($(this).is(':hidden'))
-								return false;
-							if (toggle)
-								return $(this).prop('checked');
-							else if (c)
-								return true;
-							return false;
-						});
-
-					$(this).closest('table').children('thead,  tfoot').filter(':visible')
-						.children().children('.check-column').find(':checkbox')
-						.prop('checked', function () {
-							if (toggle)
-								return false;
-							else if (c)
-								return true;
-							return false;
-						});
-				});
-				
-				
 				$('.column-more img').click(function (e) {
 					if ($(this).parent().find('.sp-plugin-more').css('display') === 'none') {
 						$(this).parent().find('.sp-plugin-more').css('display', 'block');
@@ -77,10 +47,8 @@ function spa_plugins_list_form() {
 						$(this).parent().find('.sp-plugin-more').css('display', 'none');
 					}
 				});
-				
-			});
 
-			
+			});
 
 			function display_filtr() {
 				if ($('#sf-plugins-flt-b').css('display') === 'none') {
@@ -249,40 +217,11 @@ function spa_plugins_list_form() {
 					?>
 				</div>
 
-				<div class="sf-panel-body-top-right sf-plugin-hide">
-					<p class="search-box">
-						<input type="search" id="<?php echo esc_attr( 'search_id-search-input' ); ?>" name="s" value="<?php _admin_search_query(); ?>" form="plugin-filter"
-							   placeholder="<?php echo SP()->primitives->admin_text( 'Search plugins' ); ?>"/>
-					</p>
-					<?php echo spa_paint_help( 'plugins' ); ?>
-				</div>
-
-				<div class="sf-panel-body-top-left-midle sf-plugin-hide">
-					<div class="sf-actions-in">
-						<div class="sf-actions">
-							<select id="ActionType" name="action1">
-								<option selected="selected" value="-1"><?php echo SP()->primitives->admin_text( 'Bulk Actions' ); ?></option>
-								<option value="activate-selected"><?php echo SP()->primitives->admin_text( 'Activate' ); ?></option>
-								<option value="deactivate-selected"><?php echo SP()->primitives->admin_text( 'Deactivate' ); ?></option>
-								<?php if ( ! is_multisite() || is_super_admin() ) { ?>
-									<option value="delete-selected"><?php echo SP()->primitives->admin_text( 'Uninstall' ); ?></option><?php } ?>
-							</select>
-						</div>
-						<span class="sf-action-button"><input id="doaction1" class="sf-action-button-b" type="submit" value="-&#8250;"/></span>
-					</div>
-				</div>
-
-				<div class="sf-panel-body-top-right sf-showm sf-width-100-per">
 					<p class="search-box">
 						<input type="search" style="width:100%" id="<?php echo esc_attr( 'search_id-search-input' ); ?>" name="s" value="<?php _admin_search_query(); ?>" form="plugin-filter"
 							   placeholder="<?php echo SP()->primitives->admin_text( 'Search plugins' ); ?>"/>
 					</p>
-					<div class="sf-pt-15">
-						<?php
-						echo spa_paint_help( 'plugins' );
-						?>
-					</div>
-				</div>
+						<?php echo spa_paint_help( 'plugins' ); ?>
 
 			</div>
 		</fieldset>
@@ -296,10 +235,6 @@ function spa_plugins_list_form() {
 			<table class="wp-list-table widefat plugins">
 				<thead>
 				<tr class="sf-plugin-hide">
-					<td id='cb' class='manage-column column-cb check-column'>
-						&nbsp;&nbsp;&nbsp;<input type="checkbox" name="cbhead" id="cbhead"/>
-						<label class="wp-core-ui" for='cbhead'>&nbsp;</label>
-					</td>
 					<th class='manage-column check-column'></th>
 					<th class='manage-column column-name column-primary'>
 						<?php SP()->primitives->admin_etext( 'Plugin' ); ?>
@@ -307,11 +242,6 @@ function spa_plugins_list_form() {
 					<th class='manage-column column-description'>
 						<?php SP()->primitives->admin_etext( 'Description' ); ?>
 					</th>
-					<th class='manage-column column-vertion'>
-						<?php SP()->primitives->admin_etext( 'Version' ); ?>
-					</th>
-					<th class='manage-column column-act'></th>
-					<th class='manage-column column-more'></th>
 				</tr>
 				</thead>
 				<tbody class="the-list">
@@ -380,101 +310,40 @@ function spa_plugins_list_form() {
 					$plugin_name = $plugin_data['Name'];
 					?>
 					<tr class='<?php echo $rowClass; ?>'>
-						<th class='manage-column column-cb check-column' scope='row'>
-							<?php
-							$thisId = 'checkbox_' . rand();
-							?>
-							&nbsp;&nbsp;&nbsp;
-							<?php
-							$checkbox                      = '<input type="checkbox" value="' . $plugin_file . '" name="checked[]" ' . $disabled . '/>';
-							$mobile[ $thisId ]['checkbox'] = $checkbox;
-							?>
-							<?php echo $checkbox; ?>
-						</th>
 						<td class='manage-column check-column'>
-							<?php $mobile[ $thisId ]['icon'] = $icon; ?>
 							<?php echo $icon; ?>
 						</td>
 						<td class='manage-column column-name column-primary'>
 							<strong>
-								<?php $mobile[ $thisId ]['plugin_name'] = esc_html( $plugin_name ); ?>
 								<?php echo esc_html( $plugin_name ); ?>
 							</strong>
-							<!--<div class="row-actions-visible">
-						   <span><?php echo str_replace( '&nbsp;&nbsp;', '  |  ', $actionlink ); ?></span>
-					</div>-->
+							<div class="row-actions-visible">
+                                <span><?php echo str_replace( '&nbsp;&nbsp;', '  |  ', $actionlink ); ?></span>
+                                <?php
+                                 echo implode('', sp_active_plugin_options( $plugin_file ));
+                                ?>
+                            </div>
 						</td>
 						<td class='manage-column column-description'>
 							<div class='manage-column column-description'>
 								<?php
-								$mobile[ $thisId ]['description'] = $description;
 								// Remove any "simple:press" or "simplepress" references from the description if running a white label installation.
 								if ( spa_white_label_check() ) {
-									$description = str_replace( 'Simple:Press', SP()->primitives->admin_text( 'Forum' ), $description );
-								}
-								// Now show the description
-								echo $description;
-								?>
-									
-								<?php
-								if ( ! empty( $plugin_data['Author'] ) ) {
-									$author = $plugin_data['Author'];
-
-									if ( ! empty( $plugin_data['AuthorURI'] ) ) {
-										$author = '<a href="' . esc_url( $plugin_data['AuthorURI'] ) . '" title="' . SP()->primitives->admin_text( 'Visit author homepage' ) . '">' . esc_html( $plugin_data['Author'] ) . '</a>';
-									}
-
-									if ( ! spa_white_label_check() && ! spa_saas_check() ) {
-										echo '<div class="plugin-description-author">' . sprintf( SP()->primitives->admin_text( 'By %s' ), $author ) . '</div>';
-									}
-								}
-
-								?>
-									
-									
-									
-							</div>
-							<div class='<?php echo $rowClass; ?> second plugin-version-author-uri'>
-
-								<?php
-								$plugin_meta = array();
-
-								if ( $is_active ) {
-									$plugin_meta[] = sp_paint_plugin_tip( $plugin_data['Name'], $plugin_file );
-
-									$plugin_meta = array_merge( $plugin_meta, sp_active_plugin_options( $plugin_file ) );
-
-								}
-
-								if ( ! empty( $plugin_data['Version'] ) ) {
-									$plugin_version = sprintf( SP()->primitives->admin_text( '%s' ), $plugin_data['Version'] );
-								}
-
-								if ( ! empty( $plugin_data['PluginURI'] ) ) {
-									$plugin_meta[] = '<a href="' . esc_url( $plugin_data['PluginURI'] ) . '" title="' . SP()->primitives->admin_text( 'Visit plugin site' ) . '">' . esc_html( SP()->primitives->admin_text( 'Visit plugin site' ) ) . '</a>';
-								}
-								if ( ! is_multisite() || is_super_admin() ) {
-
-									$uninstall = '<a href="javascript: if (confirm(\'' . $msg . '\')) {window.location=\'' . $url . '\';}" title="' . SP()->primitives->admin_text( 'Uninstall this Plugin' ) . '">' . SP()->primitives->admin_text( 'Uninstall' ) . '</a>';
-
-									$plugin_meta[]                  = $uninstall;
-									$mobile[ $thisId ]['uninstall'] = $uninstall;
+									$description = str_replace( 'Simple:Press', '', $description );
 								}
 								?>
+                                <p>
+                                    <?php echo $description; ?>
+                                </p>
+                                <div>
+                                    <?php if ( ! empty( $plugin_data['Version'] ) ) { echo sprintf( SP()->primitives->admin_text( 'Version: %s |' ), $plugin_data['Version'] ); } ?>
+                                    <?php if ( ! empty( $plugin_data['PluginURI'] ) ) { echo '<a href="' . esc_url( $plugin_data['PluginURI'] ) . '" title="' . SP()->primitives->admin_text( 'Visit plugin site' ) . '">' . esc_html( SP()->primitives->admin_text( 'Visit plugin site' ) ) . '</a>'; } ?>
+                                    <?php // Only show install on plugins that are not active
+                                        if ( (! is_multisite() || is_super_admin()) && !$is_active ) { echo ' | <a href="javascript: if (confirm(\'' . $msg . '\')) {window.location=\'' . $url . '\';}" title="' . SP()->primitives->admin_text( 'Uninstall this Plugin' ) . '">' . SP()->primitives->admin_text( 'Uninstall' ) . '</a>'; } ?>
+                                </div>
 							</div>
 						</td>
-						<td class='manage-column column-vertion'>
-							<?php $mobile[ $thisId ]['plugin_version'] = $plugin_version; ?>
-							<?php echo $plugin_version; ?>
-						</td>
-						<td class='manage-column column-act'>
-							<?php $mobile[ $thisId ]['actionlink'] = $actionlink_mob; ?>
-							<?php echo $actionlink; ?>
-						</td>
-						<td class='manage-column column-more'>
-							<img src="<?php echo SP_PLUGIN_ICONS; ?>More.svg" alt=""/>
-							<div class="sp-plugin-more"><?php echo implode( ' | ', $plugin_meta ); ?></div>
-						</td>
+
 					</tr>
 					<?php
 					// is it bad?
@@ -580,78 +449,8 @@ function spa_plugins_list_form() {
 				}
 				do_action( 'sph_plugins_list_panel' );
 				?>
-				</tbody>
 
-				<tfoot>
-				<tr>
-					<td class='manage-column column-cb check-column'>
-						&nbsp;&nbsp;&nbsp;<input type="checkbox" name="cbfoot" id="cbfoot"/>
-						<label class="wp-core-ui" for='cbfoot'>&nbsp;</label>
-					</td>
-					<th class='manage-column check-column'></th>
-					<th class='manage-column column-name column-primary'>
-						<?php SP()->primitives->admin_etext( 'Plugin' ); ?>
-					</th>
-					<th class='manage-column column-description'>
-						<?php SP()->primitives->admin_etext( 'Description' ); ?>
-					</th>
-				</tr>
-				</tfoot>
 			</table>
-		</div>
-
-		<div class="sf-showm">
-			<input type="checkbox" name="cbhead" id="cbhead_mob"/>
-			<label class="wp-core-ui sf-label-select-all" for='cbhead_mob'>SELECT ALL</label>
-
-			<?php if ( isset( $mobile ) && is_array( $mobile ) ) : ?>
-				<?php foreach ( $mobile as $item ) : ?>
-					<table class="sf-plugin-list-mob">
-						<tr>
-							<td><?php echo $item['checkbox']; ?></td>
-							<td align="right"><?php echo $item['icon']; ?></td>
-						</tr>
-						<tr>
-							<td><span class="sf-title-uppercase-blue">PLUGIN</span></td>
-							<td><span class="sf-title-uppercase-blue">VERSION</span></td>
-						</tr>
-						<tr>
-							<td><?php echo $item['plugin_name']; ?></td>
-							<td><?php echo $item['plugin_version']; ?></td>
-						</tr>
-						<tr>
-							<td colspan="2"><span class="sf-title-uppercase-blue">DESCRIPTION</span></td>
-						</tr>
-						<tr>
-							<td colspan="2"><?php echo $item['description']; ?></td>
-						</tr>
-						<tr>
-							<td>
-								<div class="sf-plugins-uninstall">
-									<div class="sf-plugins-uninstall-child">
-										<?php
-										if ( $item['uninstall'] ) {
-											echo $item['uninstall'];
-										}
-										?>
-									</div>
-								</div>
-							</td>
-
-							<td>
-							<span class="sf-button-primary">
-								<?php
-								if ( $item['actionlink'] ) {
-									echo $item['actionlink'];
-								}
-								?>
-							</span>
-							</td>
-						</tr>
-					</table>
-					<hr>
-				<?php endforeach; ?>
-			<?php endif; ?>
 		</div>
 
 		<?php
