@@ -248,7 +248,7 @@ function spa_plugins_list_form() {
 
 				<?php
 				if ( empty( $plugins ) ) {
-					echo '<tr><td colspan="7">' . SP()->primitives->admin_text( 'No plugins found.' ) . '</td></tr>';
+					echo '<tr><td colspan="3">' . SP()->primitives->admin_text( 'No plugins found.' ) . '</td></tr>';
 				}
 
 				$disabled = '';
@@ -318,9 +318,8 @@ function spa_plugins_list_form() {
 								<?php echo esc_html( $plugin_name ); ?>
 							</strong>
 							<div class="row-actions-visible">
-                                <span><?php echo str_replace( '&nbsp;&nbsp;', '  |  ', $actionlink ); ?></span>
                                 <?php
-                                 echo implode('', sp_active_plugin_options( $plugin_file ));
+                                 echo implode(' | ', array_merge([$actionlink], sp_active_plugin_options( $plugin_file )));
                                 ?>
                             </div>
 						</td>

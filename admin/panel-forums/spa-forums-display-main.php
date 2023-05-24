@@ -10,24 +10,8 @@ if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
     die('Access denied - you cannot directly call this file');
 }
 
-function spa_forums_forums_main() {
-    ?><div id="sf-tab-forums-main"><?php
-    spa_paint_tab_head(SP()->primitives->admin_text('Manage Groups And Forums'));
-    # has SP just been installed?
-    if (isset($_POST['install'])) {
-        $site = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL . 'troubleshooting&install=1', 'troubleshooting'));
-        $target = 'sfmaincontainer';
-        ?>
-            <script>
-                (function (spj, $, undefined) {
-                    $(document).ready(function () {
-                        spj.troubleshooting("<?php echo($site); ?>", "<?php echo($target); ?>");
-                    });
-                }(window.spj = window.spj || {}, jQuery));
-            </script>
-            <?php
-        }
-
+function spa_forums_forums_main() { ?>
+    <?php
         # check if sample data is to be removed
         if (isset($_POST['spSampleDelDo'])) {
             # delete sample data
@@ -41,12 +25,14 @@ function spa_forums_forums_main() {
             }
         }
 
+        # Fetch all groups
         $groups = SP()->DB->table(SPGROUPS, '', '', 'group_seq');
-        if ($groups) {
-            foreach ($groups as $group) {
-                spa_paint_open_nohead_tab(true, '');
-                # Group
-                ?>
+    ?>
+    <div id="sf-tab-forums-main">
+        <?php spa_paint_tab_head(SP()->primitives->admin_text('Manage Groups And Forums')); ?>
+        <?php if ($groups) : ?>
+            <?php foreach ($groups as $group) : ?>
+                <?php spa_paint_open_nohead_tab(true, ''); ?>
                 <div id="grouprow-<?php echo $group->group_id; ?>" class="spGroupRow">
                     <div class="spGroupRow--container">
                         <div class="spGroupRow--tools">
@@ -61,9 +47,6 @@ function spa_forums_forums_main() {
                             <button class="sf-icon-button spLoadForm" title="<?php echo SP()->primitives->admin_text('Delete Group'); ?>" data-form="deletegroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""><span class="sf-icon sf-delete"></span></button>
                         </div>
                         <div class="spGroupRow--information">
-                            <div class="spGroupRow--information--icon">
-                                <?php echo spa_get_saved_icon_html(!empty($group->group_icon) ? $group->group_icon : '', 'forum', SP()->primitives->admin_text('Current group icon'), SPTHEMEICONSURL . 'sp_GroupIcon.png') ?>
-                            </div>
                             <div>
                                 <h4><?php echo SP()->displayFilters->title($group->group_name); ?></h4>
                                 <?php echo SP()->displayFilters->text($group->group_desc); ?>
@@ -90,13 +73,16 @@ function spa_forums_forums_main() {
                 } else {
                     echo '<div class="sf-alert-block sf-info">' . SP()->primitives->admin_text('There are no forums defined in this group') . '</div>';
                 }
-                spa_paint_close_tab();
-            }
-        } else {
-            echo '<div class="sfempty">' . SP()->primitives->admin_text('There are no groups defined') . '<br />';
-            echo SP()->primitives->admin_text('Select') . ' <b>' . SP()->primitives->admin_text('Create New Group') . '</b> ' . SP()->primitives->admin_text('from the menu on the left to get started') . '</div>';
-        }
-        ?></div><?php
+                spa_paint_close_tab(); ?>
+            <?php endforeach; ?>
+        <?php else : ?>
+            <div class="sfempty">
+                <?php echo SP()->primitives->admin_text('There are no groups defined') ?> <br />
+                <?php echo SP()->primitives->admin_text('Select') . ' <b>' . SP()->primitives->admin_text('Create New Group') . '</b> ' . SP()->primitives->admin_text('from the menu on the left to get started'); ?>
+            </div>
+        <?php endif; ?>
+        </div>
+    <?php
 }
 
 function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
@@ -115,23 +101,28 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                     $haschild = $childlist;
             }
 
+
+            # Set default icon and icon type
+            $icon = SPTHEMEICONSURL . 'sp_ForumIcon.png';
             $forum_icon_type = 'file';
 
-            if (empty($forum->forum_icon)) {
-                $icon = SPTHEMEICONSURL . 'sp_ForumIcon.png';
-            } else {
-                $forum_icon = spa_get_saved_icon($forum->forum_icon);
+            # Check if any icons are set
+            $forum_icon = spa_get_saved_icon($forum->forum_icon);
 
-                if ('file' === $forum_icon['type']) {
-                    $icon = esc_url(SPCUSTOMURL . $forum_icon['icon']);
-                    if (!file_exists(SPCUSTOMDIR . $forum_icon['icon'])) {
-                        $icon = SPTHEMEICONSURL . 'sp_ForumIcon.png';
-                    }
-                } else {
-                    $forum_icon_type = 'font';
-                    $icon = $forum_icon['icon'];
+            // Filebased icons
+            if ('file' === $forum_icon['type'] && $forum_icon['icon'] !== '') {
+                $icon = esc_url(SPCUSTOMURL . $forum_icon['icon']);
+                if (!file_exists(SPCUSTOMDIR . $forum_icon['icon'])) {
+                    $icon = SPTHEMEICONSURL . 'sp_ForumIcon.png';
                 }
             }
+
+            // Font awesome and such
+            if ('font' === $forum_icon['type']) {
+                $forum_icon_type = 'font';
+                $icon = $forum_icon['icon'];
+            }
+
             $rowClasses = ['currentLevel' . $level, 'spForumRow'];
             if (in_array($forum->forum_id, $noMembers)) {
                 $rowClasses[] = 'spWarningBG';
@@ -155,17 +146,19 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                         <button class="sf-icon-button sf-small spLoadForm" title="<?php echo SP()->primitives->admin_text('Delete Forum'); ?>" data-form="deleteforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open=""><span class="sf-icon sf-blue sf-delete"></span></button>
                     </div>
                     <div class="spForumRow--information">
-                        <div class="spForumRow--information--icon">
-                            <?php
+                        <?php
+                           $iconData = '';
                             if ('file' === $forum_icon_type) {
-                                echo '<img src="' . $icon . '" alt="" title="' . SP()->primitives->admin_text('Current forum icon') . '" />';
+                                $iconData = '<img src="' . $icon . '" alt="" title="' . SP()->primitives->admin_text('Current forum icon') . '" />';
                             } else {
-                                echo '<i class="' . $icon . '"></i>';
+                                $iconData = '<i class="' . $icon . '"></i>';
                             }
-                            ?>
-
-
-                        </div>
+                        ?>
+                        <?php if ($iconData !== '') : ?>
+                            <div class="spForumRow--information--icon">
+                                <?php echo $iconData; ?>
+                            </div>
+                        <?php endif; ?>
                         <div>
 
                             <h4>
@@ -179,15 +172,13 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                                     )->primitives->admin_text('Forum is disabled') . '" /> ';
                             } ?>
                             <?php echo SP()->displayFilters->title($forum->forum_name); ?></h4>
-                            <?php echo SP()->displayFilters->text($forum->forum_desc); ?>
                             <?php
                             if (in_array($forum->forum_id, $noMembers)) {
                                 echo '<div class="sf-alert-block sf-warning">' . SP()->primitives->admin_text('Warning - There are no usergroups with members that have permission to use this forum') . '</div>';
                             }
                             ?>
                             <div class="spForumRow--stats">
-                                <?php sp_display_item_stats(SPTOPICS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Topics:')) ?>
-                                <?php sp_display_item_stats(SPPOSTS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Posts:')) ?>
+                                <?php sp_display_item_stats(SPTOPICS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Topics:')) ?><?php sp_display_item_stats(SPPOSTS, 'forum_id', $forum->forum_id, SP()->primitives->admin_text('Posts:')) ?>
                             </div>
 
                         </div>

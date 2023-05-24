@@ -29,7 +29,6 @@
     // private methods
     function initAdminMenu() {
         var dirName = typeof( sp_platform_vars.dirName ) !== 'undefined' ? sp_platform_vars.dirName : 'simple-press';
-        
         var wp_submenu = $('li#toplevel_page_'+dirName+'-admin-panel-forums-spa-forums ul.wp-submenu li.current a').html();
         var num = $('li#toplevel_page_'+dirName+'-admin-panel-forums-spa-forums ul.wp-submenu li.current').index() - 1;
         

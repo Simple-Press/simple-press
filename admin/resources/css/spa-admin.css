@@ -3231,7 +3231,7 @@ body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-st
 }
 .spGroupRow--container {
     position: relative;
-    padding: 20px;
+    padding: 10px;
     background-color: var(--sp-primary-background-color);
 }
 .spGroupRow--tools,
@@ -3284,17 +3284,23 @@ body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-st
 
 .spForumRow--container{
     position: relative;
-    padding: 20px;
+    padding: 10px;
 }
 
 .spForumRow--stats div,
 .spForumRow--stats span {
+    color: var(--sp-secondary-button-color);
     display: inline-block;
+}
+
+.spForumRow--stats span.stats--value {
+    margin-right: 10px;
 }
 
 .spForumRow {
     border: 1px solid var(--sp-primary-border-color);
     margin-top: 5px;
+    border-radius: 5px;
 }
 
 .spForumRow--information {

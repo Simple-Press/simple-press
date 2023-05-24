@@ -643,10 +643,8 @@ function sp_add_caps() {
 function sp_display_item_stats($table, $key, $value, $label) {
 	$c = SP()->DB->count($table, "$key = $value");
         ?>
-        <div>
-            <span class="sf-item-type"><?php echo $label ?></span>
-            <span class="sf-number"><?php echo $c ?></span>
-        </div>
+    <span class="stats--key"><?php echo $label ?></span>
+    <span class="stats--value"><?php echo $c ?></span>
         <?php
 }
 
