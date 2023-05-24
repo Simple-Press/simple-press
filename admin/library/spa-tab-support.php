@@ -117,7 +117,7 @@ function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $
 	echo sprintf("<div class='sf-form-row %s'>\n", $css_classes);
 
 	echo sprintf("<label>%s</label>", $label);
-	echo "<input type='text' class='wp-core-ui' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	echo "<input type='text' class='wp-core-ui' name='$name' value='".esc_attr($value)."' ";
 	if ($disabled) {
         echo "disabled='disabled' ";
     }
@@ -184,7 +184,7 @@ function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1, $pla
 	echo "<label>\n";
 	echo "$label";
 	echo '</label>';
-	echo "<textarea rows='$rows' class='wp-core-ui' tabindex='$tab' name='$name'>".esc_html($value)."</textarea>\n";
+	echo "<textarea rows='$rows' class='wp-core-ui' name='$name'>".esc_html($value)."</textarea>\n";
     if (!empty($submessage)) {
         echo '<span class="sf-sublabel sf-sublabel-small">' . esc_html($submessage) . '</span>';
     }
