@@ -16,8 +16,6 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 # Initializes the tab index sequence starting with 100
 # ------------------------------------------------------------------
 function spa_paint_options_init() {
-	global $tab;
-	$tab = 100;
 }
 
 function spa_paint_tab_head( $tabname, $buttons = true ) {
@@ -129,18 +127,13 @@ function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $
 }
 
 function spa_paint_single_input($name, $value, $disabled=false, $css_classes = '' ) {
-	global $tab;
-	
 	$field_classes = "{$css_classes}";
-	echo "<input type='text' class='wp-core-ui $field_classes' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	echo "<input type='text' class='wp-core-ui $field_classes' name='$name' value='".esc_attr($value)."' ";
 	if ($disabled == true) echo "disabled='disabled' ";
 	echo "/>";
-	$tab++;
 }
 
 function spa_paint_date($label, $name, $value, $disabled=false, $large=false) {
-	global $tab;
-
 	echo "<div class='sf-form-row'>\n";
 	if ($large) {
 		echo "<label class='sp-label-40'>\n";
@@ -150,17 +143,14 @@ function spa_paint_date($label, $name, $value, $disabled=false, $large=false) {
 	echo "$label</label>";
 	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
 
-	echo "<input type='date' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	echo "<input type='date' class='wp-core-ui $c' name='$name' value='".esc_attr($value)."' ";
 	if ($disabled == true) echo "disabled='disabled' ";
 	echo "/>\n";
 	//echo '<div class="clearboth"></div>';
 	echo '</div>';
-	$tab++;
 }
 
 function spa_paint_number($label, $name, $value, $disabled=false, $large=false) {
-	global $tab;
-
 	echo "<div class='sf-form-row'>\n";
 	if ($large) {
 		echo "<label class='sp-label-40'>\n";
@@ -170,12 +160,11 @@ function spa_paint_number($label, $name, $value, $disabled=false, $large=false) 
 	echo "$label</label>";
 	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
 
-	echo "<input type='number' class='wp-core-ui $c' tabindex='$tab' name='$name' value='".esc_attr($value)."' ";
+	echo "<input type='number' class='wp-core-ui $c' name='$name' value='".esc_attr($value)."' ";
 	if ($disabled == true) echo "disabled='disabled' ";
 	echo "/>\n";
 	//echo '<div class="clearboth"></div>';
 	echo '</div>';
-	$tab++;
 }
 
 function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1, $placeholder=''): void
@@ -202,8 +191,6 @@ function spa_paint_thin_textarea($label, $name, $value, $submessage='', $rows=1)
 /**
  * Print wp editor
  * 
- * @global int $tab
- * 
  * @param string $label
  * @param string $name
  * @param string $value
@@ -211,8 +198,6 @@ function spa_paint_thin_textarea($label, $name, $value, $submessage='', $rows=1)
  * @param int $xrows
  */
 function spa_paint_editor($label, $name, $value, $submessage='', $xrows=1) {
-	global $tab;
-
 	echo "<div class='sf-form-row'>\n";
 	echo "<label class='sp-label-50'>\n";
 	echo "$label";
@@ -226,14 +211,10 @@ function spa_paint_editor($label, $name, $value, $submessage='', $xrows=1) {
 				));
 	//echo '<div class="clearboth"></div>';
 	echo '</div>';
-
-	$tab++;
 }
 
 /**
  * Print wide wp editor
- * 
- * @global int $tab
  * 
  * @param string $label
  * @param string $name
@@ -243,8 +224,6 @@ function spa_paint_editor($label, $name, $value, $submessage='', $xrows=1) {
  * @param boolean $mediaButtons [optional]
  */
 function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, $mediaButtons = false) {
-	global $tab;
-
 	add_filter( 'tiny_mce_before_init', 'spa_cache_ajax_editor_settings', 11, 2 );
 	
 	echo "<div class='sf-form-row'>\n";
@@ -261,14 +240,10 @@ function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, 
 	
 	//echo '<div class="clearboth"></div>';
 	echo '</div>';
-
-	$tab++;
 }
 
 /**
  * Print thin wp editor
- * 
- * @global int $tab
  * 
  * @param string $label
  * @param string $name
@@ -277,8 +252,6 @@ function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, 
  * @param int $rows
  */
 function spa_paint_thin_editor($label, $name, $value, $submessage='', $xrows=1) {
-	global $tab;
-
 	echo "<div class='sf-form-row'>\n";
 	echo "<label class='sp-label-66'>\n";
 	echo "$label";
@@ -292,8 +265,6 @@ function spa_paint_thin_editor($label, $name, $value, $submessage='', $xrows=1) 
 				));
 	//echo '<div class="clearboth"></div>';
 	echo '</div>';
-
-	$tab++;
 }
 
 /**
@@ -408,8 +379,6 @@ function spa_paint_html_editor($label, $name, $value, $submessage='', $rows=10) 
 /**
  * Print thin WP Code Editor
  * 
- * @global int $tab
- * 
  * @param string $type CodeMirror type: "text/html", "text/css", "text/javascript"
  * @param string $label
  * @param string $name
@@ -418,9 +387,7 @@ function spa_paint_html_editor($label, $name, $value, $submessage='', $rows=10) 
  * @param int $rows [optional]
  */
 function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $rows=10) {
-    
-	global $tab;
-	
+
 	// Make sure that the codeditor scripts are enqueued.
 	// @TODO: However, because this is being called via ajax, this functiona actually does nothing.  
 	//        Leaving it here though to note that something like this is needed.
@@ -435,10 +402,10 @@ function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $ro
     if (mb_strlen($submessage)) {
         echo "<small><br /><strong>$submessage</strong><br /><br /></small>\n";
     }
-    $id = sprintf("sp-%s-editor-%d", str_replace('/', '-', $type), $tab);
+    $id = sprintf("sp-%s-editor-%d", str_replace('/', '-', $type), 0);
     echo '</label>';
     //echo '<div class="clearboth"></div>';
-    echo "<textarea id=\"$id\" class=\"wp-core-ui sp-textarea\" rows=\"{$rows}\" name=\"{$name}\" tabindex=\"{$tab}\">{$value}</textarea>";
+    echo "<textarea id=\"$id\" class=\"wp-core-ui sp-textarea\" rows=\"{$rows}\" name=\"{$name}\">{$value}</textarea>";
     if(floatval(get_bloginfo('version')) >= 4.9) {
         echo "<script>";
         echo sprintf( "jQuery( function() { 
@@ -447,35 +414,26 @@ function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $ro
                     });", wp_json_encode(wp_enqueue_code_editor(array('type' => $type))) ) ;
         echo "</script>";
     }
-    //echo '<div class="clearboth"></div>';
     echo '</div>';
-    $tab++;
 }
 
 
 function spa_paint_checkbox($label, $name, $value, $disabled=false, $large=false, $displayhelp=true, $msg='', $indent=false) {
-	global $tab;
-
 	echo "<div class='sf-form-row'>\n";
 	if ($indent) echo str_repeat('&nbsp;', 7);
-	echo "<input type='checkbox' tabindex='$tab' name='$name' id='sf-$name' ";
+	echo "<input type='checkbox' 'name='$name' id='sf-$name' ";
 	if ($value == true) echo "checked='checked' ";
 	if ($disabled == true) echo "disabled='disabled' ";
 	echo "/>\n";
 	echo "<label for='sf-$name' class='wp-core-ui'>$label</label>\n";
-	//echo '<div class="clearboth"></div>';
 	if ($msg) echo $msg;
 	echo '</div>';
-	$tab++;
 }
 
 function spa_paint_select_start($label, $name, $helpname) {
-	global $tab;
-
 	echo "<div class='sf-form-row'>\n";
 	echo "<label class='sp-label-40'>$label</label>\n";
-	echo "<select class='wp-core-ui' tabindex='$tab' name='$name'>";
-	$tab++;
+	echo "<select class='wp-core-ui' name='$name'>";
 }
 
 function spa_paint_select_end($msg='') {
@@ -485,8 +443,6 @@ function spa_paint_select_end($msg='') {
 }
 
 function spa_paint_file($label, $name, $disabled, $large, $path) {
-	global $tab;
-
 	echo "<div class='sf-upload sf-icon-button'>\n";
 	if ($large) {
 		echo "<label class='sp-label-40'>\n";
@@ -503,7 +459,6 @@ function spa_paint_file($label, $name, $disabled, $large, $path) {
 	echo '</div>';
 	//echo '<div class="clearboth"></div>';
 	echo '</div>';
-	$tab++;
 }
 
 function spa_paint_hidden_input($name, $value) {
@@ -521,8 +476,7 @@ function spa_paint_link($link, $label) {
 }
 
 function spa_paint_radiogroup($label, $name, $values, $current, $large=false, $displayhelp=true, $class='') {
-	global $tab;
-
+    $tab = 0;
 	if ($class != '') $class=' class="'.$class.'" ';
 
 	echo "<div class='sf-form-row'>\n";
@@ -540,7 +494,6 @@ function spa_paint_radiogroup($label, $name, $values, $current, $large=false, $d
 	echo '</div>';
 	//echo '<div class="clearboth"></div>';
 	echo '</div>';
-	$tab++;
 }
 
 function spa_paint_spacer() { // @TODO admin design
