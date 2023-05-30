@@ -883,9 +883,9 @@ function sp_perform_install($phase, $subphase = 0) {
 			wp_schedule_event(time(), 'daily', 'sph_check_addons_status_interval');
 			
 			# and initial item
-			SP()->DB->execute("INSERT INTO `spf_sfmeta` (`meta_type`, `meta_key`, `meta_value`)
-						 VALUES
-						 ('news', 'news', 'a:3:{s:2:\"id\";s:1:\"1\";s:4:\"show\";i:1;s:4:\"news\";s:487:\"<h4><b>Thank you for trying out Simple:Press - we need your feedback</b></h4><p>We continually strive to improve and enhance Simple:Press to meet our users requirements</p><p>If - after trying it - you decide not to adopt this plugin for your website, we would very much appreciate your comments to help us shape the project into the future.</p><p><b>Please do send us an <a href=\'mailto:support@simple-press.com?subject=Trying%20out%20Simple:Press\'>email with your comments</a>.</b></p>\";}');");
+			#SP()->DB->execute("INSERT INTO `spf_sfmeta` (`meta_type`, `meta_key`, `meta_value`)
+		    #				 VALUES
+		    #				 ('news', 'news', 'a:3:{s:2:\"id\";s:1:\"1\";s:4:\"show\";i:1;s:4:\"news\";s:487:\"<h4><b>Thank you for trying out Simple:Press - we need your feedback</b></h4><p>We continually strive to improve and enhance Simple:Press to meet our users requirements</p><p>If - after trying it - you decide not to adopt this plugin for your website, we would very much appreciate your comments to help us shape the project into the future.</p><p><b>Please do send us an <a href=\'mailto:support@simple-press.com?subject=Trying%20out%20Simple:Press\'>email with your comments</a>.</b></p>\";}');");
 
 			# create initial last post time stamp
 			SP()->options->add('poststamp', current_time('mysql'));

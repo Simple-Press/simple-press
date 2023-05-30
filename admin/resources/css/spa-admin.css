@@ -3918,3 +3918,11 @@ spProfileShowInfoSection.spLeft {
         padding: 6px;
         font-weight: 600;
 }
+
+body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-startup-sp-load-install .wp-submenu li:last-child {
+    /*
+        Hack to not show second menu item that is needed. We need to be able to show submenu with only one item.
+        This is not supported by WP by default.
+     */
+    display: none;
+}

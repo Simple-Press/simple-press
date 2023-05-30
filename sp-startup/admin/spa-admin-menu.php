@@ -89,9 +89,10 @@ function spa_admin_menu() {
 
 		# hack for wp stubborness of not wanting singular submenu under a menu item
 		if($plugin_page){
-			if (strpos($plugin_page, SP_FOLDER_NAME) !== false) add_submenu_page($adminparent, '', '', 'read', $adminparent);
+			if (strpos($plugin_page, SP_FOLDER_NAME) !== false) {
+                add_submenu_page($adminparent, '', '', 'read', 'hidden-menu');
+            }
 		}
-		$submenu[$adminparent][1] = null;
 	}
 
 	# let plugins add new wp admin nav panels
