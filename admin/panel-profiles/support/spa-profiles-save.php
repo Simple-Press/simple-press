@@ -1,12 +1,8 @@
 <?php
-/*
-Simple:Press
-Admin Profile Update Support Functions
-$LastChangedDate: 2018-11-02 12:21:09 -0500 (Fri, 02 Nov 2018) $
-$Rev: 15791 $
-*/
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
+    die('Access denied - you cannot directly call this file');
+}
 
 #= Save Options Data ===============================
 function spa_save_options_data() {
@@ -26,7 +22,7 @@ function spa_save_options_data() {
 	$sfprofile['photosmax'] = SP()->filters->integer($_POST['photosmax']);
 	$sfprofile['photoscols'] = SP()->filters->integer($_POST['photoscols']);
 
-	$sfsigimagesize = array();
+	$sfsigimagesize = [];
 	$sfsigimagesize['sfsigwidth'] = SP()->filters->integer($_POST['sfsigwidth']);
 	$sfsigimagesize['sfsigheight'] = SP()->filters->integer($_POST['sfsigheight']);
 	SP()->options->update('sfsigimagesize', $sfsigimagesize);
@@ -61,14 +57,14 @@ function spa_save_options_data() {
 		# -----------------------------------------------------------------------------
 		$num_records = SP()->DB->count(SPMEMBERS,'');
 		$passes = ceil($num_records / 100);
-		$dupes = array();
+		$dupes = [];
 
 		for ($i = 0; $i <= $passes; $i++) {
 			$limit = 100;
 			$offset = $i * $limit;
 
 			$fields = SPMEMBERS.'.user_id, '.SPUSERS.'.user_login, '.SPUSERS.'.display_name, a.meta_value as first_name, b.meta_value as last_name';
-			$join = array($user_join, $first_name_join, $last_name_join);
+			$join = [$user_join, $first_name_join, $last_name_join];
 
 			$query = new stdClass();
 			$query->table		= SPMEMBERS;
@@ -159,7 +155,7 @@ function spa_save_tabs_menus_data() {
 
 	if (!empty($_POST['spTabsOrder'])) {
 		# grab the current tabs/menus and init new tabs array
-		$newTabs = array();
+		$newTabs = [];
 
 		# need to cycle through all the tabs
 		$tabList = explode('&', sanitize_text_field($_POST['spTabsOrder']));
@@ -196,7 +192,7 @@ function spa_save_tabs_menus_data() {
 					$newTabs[$curTab]['menus'][$curMenu]['form'] = SP()->filters->str($form);
 				}
 			} else {
-				$newTabs[$curTab]['menus'] = array();
+				$newTabs[$curTab]['menus'] = [];
 			}
 		}
 		$mess = SP()->primitives->admin_text('Profile Tabs and Menus Updated!');
@@ -213,15 +209,19 @@ function spa_save_avatars_data() {
 	check_admin_referer('forum-adminform_avatars', 'forum-adminform_avatars');
 	$mess = '';
 
-	$sfavatars = array();
+	$sfavatars = [];
     $sfavatars['sfshowavatars'] = isset($_POST['sfshowavatars']);
     $sfavatars['sfavataruploads'] = isset($_POST['sfavataruploads']);
     $sfavatars['sfavatarpool'] = isset($_POST['sfavatarpool']);
     $sfavatars['sfavatarremote'] = isset($_POST['sfavatarremote']);
     $sfavatars['sfavatarreplace'] = isset($_POST['sfavatarreplace']);
     $sfavatars['sfavatarresize'] = isset($_POST['sfavatarresize']);
-	if (empty($sfavatars['sfavatarsize']) || $sfavatars['sfavatarsize'] == 0) $sfavatars['sfavatarsize'] = 50;
-	if (empty($sfavatars['sfavatarfilesize']) || $sfavatars['sfavatarfilesize'] == 0) $sfavatars['sfavatarfilesize'] = 10240;
+	if (empty($sfavatars['sfavatarsize']) || $sfavatars['sfavatarsize'] == 0) {
+        $sfavatars['sfavatarsize'] = 50;
+    }
+	if (empty($sfavatars['sfavatarfilesize']) || $sfavatars['sfavatarfilesize'] == 0) {
+        $sfavatars['sfavatarfilesize'] = 10240;
+    }
 
 	if (!isset($_POST['sfgmaxrating'])) {
 		$sfavatars['sfgmaxrating'] = 1;
@@ -234,13 +234,13 @@ function spa_save_avatars_data() {
 	$sfavatars['sfavatarfilesize'] = (empty($_POST['sfavatarfilesize'])) ? 10240 : SP()->filters->integer($_POST['sfavatarfilesize']);
 
 
-	$current = array();
+	$current = [];
 	$current = SP()->options->get('sfavatars');
 
 	if (!empty($_POST['sfavataropts']) && $_POST['sfavataropts']) {
 
 		$list = explode('&', sanitize_text_field($_POST['sfavataropts']));
-		$newarray = array();
+		$newarray = [];
 		foreach ($list as $item) {
 			$thisone = explode('=', $item);
 			$add = true;
@@ -285,11 +285,9 @@ function spa_save_avatars_data() {
 			if ($file != "." && $file != "..") {
 				$thisFile = str_replace('.', 'z1z2z3', $file);
 				$index = SP()->filters->str($_POST[$thisFile]);
-				if (isset($index)) {
-					if ($index != 'none') {
-						$defs[$index] = $file;
-					}
-				}
+				if (isset($index) && $index != 'none') {
+                    $defs[$index] = $file;
+                }
 			}
 		}
 	}

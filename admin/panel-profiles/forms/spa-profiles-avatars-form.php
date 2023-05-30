@@ -30,10 +30,10 @@ function spa_profiles_avatars_form() {
 			});
 
 			/* hide initially unavailable priorities */
-			if (<?php echo(isset($sfoptions['sfavataruploads']) ? '1' : '0'); ?> == false) $('#aitem_2').hide();
-			if (<?php echo(isset($sfoptions['sfavatarpool']) ? '1' : '0'); ?> == false) $('#aitem_4').hide();
-			if (<?php echo(isset($sfoptions['sfavatarremote']) ? '1' : '0	'); ?> == false) $('#aitem_5').hide();
-			if (<?php echo(isset($sfoptions['sfavatarreplace']) ? '0' : '1'); ?> == false) $('#aitem_1').hide();
+			if (<?php echo(isset($sfoptions['sfavataruploads']) && $sfoptions['sfavataruploads'] === true  ? '1' : '0'); ?> == false) $('#aitem_2').hide();
+			if (<?php echo(isset($sfoptions['sfavatarpool']) && $sfoptions['sfavatarpool'] === true   ? '1' : '0'); ?> == false) $('#aitem_4').hide();
+			if (<?php echo(isset($sfoptions['sfavatarremote'])  && $sfoptions['sfavatarremote'] === true  ? '1' : '0	'); ?> == false) $('#aitem_5').hide();
+			if (<?php echo(isset($sfoptions['sfavatarreplace']) && $sfoptions['sfavatarreplace'] === true   ? '0' : '1'); ?> == false) $('#aitem_1').hide();
 
 			var button = $('#sf-upload-button'), interval;
 			new AjaxUpload(button,{
@@ -109,7 +109,7 @@ function spa_profiles_avatars_form() {
 
 					spa_paint_input(SP()->primitives->admin_text('Maximum avatar display width (pixels)'), 'sfavatarsize', $sfoptions['sfavatarsize'], false, false);
 
-					$checked = isset($sfoptions['sfavataruploads']) ? ' checked="checked"' : '';
+					$checked = isset($sfoptions['sfavataruploads']) && $sfoptions['sfavataruploads'] === true ? ' checked="checked"' : '';
 					?>
 					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavataruploads" name="sfavataruploads" tabindex="102" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_2" />
@@ -121,7 +121,7 @@ function spa_profiles_avatars_form() {
 					spa_paint_checkbox(SP()->primitives->admin_text('Auo resize avatar uploads'), 'sfavatarresize', $sfoptions['sfavatarresize']);
 					spa_paint_input(SP()->primitives->admin_text('Uploaded avatar resize quality (if resizing)'), 'sfavatarresizequality', $sfoptions['sfavatarresizequality'], false, false);
 
-					$checked = isset($sfoptions['sfavatarpool']) ? ' checked="checked"' : '';
+					$checked = isset($sfoptions['sfavatarpool']) && $sfoptions['sfavatarpool'] === true ? ' checked="checked"' : '';
 					?>
 					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavatarpool" name="sfavatarpool" tabindex="106" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_4" />
@@ -129,7 +129,8 @@ function spa_profiles_avatars_form() {
 					<div class="clearboth"></div></div>
 					<?php
 
-					$checked = isset($sfoptions['sfavatarremote']) ? ' checked="checked"' : '';
+
+					$checked = isset($sfoptions['sfavatarremote']) && $sfoptions['sfavatarremote'] === true ? ' checked="checked"' : '';
 					?>
 					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavatarremote" name="sfavatarremote" tabindex="105" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_5" />
@@ -140,7 +141,7 @@ function spa_profiles_avatars_form() {
 					$values = array(SP()->primitives->admin_text('G - Suitable for all'), SP()->primitives->admin_text('PG- Suitable for 13 and above'), SP()->primitives->admin_text('R - Suitable for 17 and above'), SP()->primitives->admin_text('X - Suitable for all adults'));
 					spa_paint_radiogroup(SP()->primitives->admin_text('Gravatar max rating'), 'sfgmaxrating', $values, $sfoptions['sfgmaxrating'], false, true);
 
-					$checked = isset($sfoptions['sfavatarreplace']) ? ' checked="checked"' : '';
+					$checked = isset($sfoptions['sfavatarreplace']) && $sfoptions['sfavatarreplace'] === true ? ' checked="checked"' : '';
 					?>
 					<div class="sf-form-row">
 					<input type="checkbox" id="sf-sfavatarreplace" name="sfavatarreplace" tabindex="111" <?php echo($checked); ?> class="spProfileAvatarUpdate" data-target="#aitem_1" />

@@ -27,7 +27,7 @@ function spa_get_tabsmenus_data() {
 function spa_get_avatars_data() {
 	$sfavatars = SP()->options->get('sfavatars');
 	if(empty($sfavatars['sfavatarpriority'])) {
-		$sfavatars['sfavatarpriority'] = array(0, 2, 3, 1, 4, 5);
+		$sfavatars['sfavatarpriority'] = [0, 2, 3, 1, 4, 5];
 	}
 	return $sfavatars;
 }
