@@ -387,13 +387,11 @@ $section = 15865;
 if ($build < $section) {	
 	# Add a role to the system...
 	$administrator_role = get_role('administrator');
-	$administrator_role->add_cap('SPF Manage Promotions');
 
 	# Add the new role to users tagged as simple:press admins (some users may not be wp admins!)
 	$users = sp_get_admins();
 	foreach ($users as $user_id => $display_name) {
 		$user = get_user_by('ID', $user_id);
-		$user->add_cap('SPF Manage Promotions');
 	}
 	
 	sp_response($section);

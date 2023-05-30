@@ -52,7 +52,6 @@ if (!defined('SPRANKSIMGDIR')) define('SPRANKSIMGDIR', SP_STORE_DIR.'/'.SP()->pl
 # Location of plugins
 if (!defined('SPPLUGINURL')) define('SPPLUGINURL', SP_STORE_URL.'/'.SP()->plugin->storage['plugins'].'/');
 if (!defined('SPPLUGINDIR')) define('SPPLUGINDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['plugins'].'/');
-
 # Location of custom icons and featured images
 if (!defined('SPCUSTOMDIR')) define('SPCUSTOMDIR', SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/');
 if (!defined('SPCUSTOMURL')) define('SPCUSTOMURL', SP_STORE_URL.'/'.SP()->plugin->storage['custom-icons'].'/');
@@ -105,18 +104,23 @@ if (!defined('SPTHEMEBASEDIR')) define('SPTHEMEBASEDIR', SP_STORE_DIR.'/'.SP()->
 $curTheme = SP()->theme->get_current();
 
 if (!defined('SPTHEMEICONSURL')) {
-	$i = (!isset($curTheme['icons']) || empty($curTheme['icons'])) ? '/images/' : '/images/'.$curTheme['icons'].'/';
-	$p = (SP()->core->device == 'mobile' && file_exists(SPTHEMEBASEDIR.$curTheme['theme'].$i.'mobile/')) ? $curTheme['theme'].$i.'mobile/' : $curTheme['theme'].$i;
-	define('SPTHEMEICONSURL', SPTHEMEBASEURL.$p);
-	define('SPTHEMEICONSDIR', SPTHEMEBASEDIR.$p);
+	if($curTheme){
+		$i = (!isset($curTheme['icons']) || empty($curTheme['icons'])) ? '/images/' : '/images/'.$curTheme['icons'].'/';
+		$p = (SP()->core->device == 'mobile' && file_exists(SPTHEMEBASEDIR.$curTheme['theme'].$i.'mobile/')) ? $curTheme['theme'].$i.'mobile/' : $curTheme['theme'].$i;
+		define('SPTHEMEICONSURL', SPTHEMEBASEURL.$p);
+		define('SPTHEMEICONSDIR', SPTHEMEBASEDIR.$p);
+	}
 }
 
 # Dir of templates, Dir of images and url of CSS file
-if (!defined('SPTEMPLATES')) define('SPTEMPLATES', SPTHEMEBASEDIR.$curTheme['theme'].'/templates/');
-if (!defined('SPTHEMEURL')) define('SPTHEMEURL', SPTHEMEBASEURL.$curTheme['theme'].'/styles/');
-if (!defined('SPTHEMEDIR')) define('SPTHEMEDIR', SPTHEMEBASEDIR.$curTheme['theme'].'/styles/');
-if (!defined('SPTHEMECSS')) define('SPTHEMECSS', SPTHEMEBASEURL.$curTheme['theme'].'/styles/'.$curTheme['style']);
-if (!defined('SPTHEMECSSEXTRA')) define('SPTHEMECSSEXTRA', SPTHEMEBASEURL.$curTheme['theme'].'/styles/');
+if($curTheme){
+	if (!defined('SPTEMPLATES')) define('SPTEMPLATES', SPTHEMEBASEDIR.$curTheme['theme'].'/templates/');
+	if (!defined('SPTHEMEURL')) define('SPTHEMEURL', SPTHEMEBASEURL.$curTheme['theme'].'/styles/');
+	if (!defined('SPTHEMEDIR')) define('SPTHEMEDIR', SPTHEMEBASEDIR.$curTheme['theme'].'/styles/');
+	if (!defined('SPTHEMECSS')) define('SPTHEMECSS', SPTHEMEBASEURL.$curTheme['theme'].'/styles/'.$curTheme['style']);
+	if (!defined('SPTHEMECSSEXTRA')) define('SPTHEMECSSEXTRA', SPTHEMEBASEURL.$curTheme['theme'].'/styles/');
+}
+
 
 /**
  * Editor Constants

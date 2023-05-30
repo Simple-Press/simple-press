@@ -22,7 +22,7 @@ function spa_themes_upload_form() {
                 <p><?php echo SP()->primitives->admin_text('If you have a theme in a .zip format, you may upload it here') ?></p>
             </div>
             <form method="post" enctype="multipart/form-data" action="<?php echo self_admin_url('update.php?action=upload-sp-theme'); ?>" id="sfthemeuploadform" name="sfthemeuploadform">
-            <?php echo sp_create_nonce('forum-theme_upload'); ?>
+                <?php echo sp_create_nonce('forum-theme_upload'); ?>
 				<div class="clear"></div>
 				<div class="sf-upload-file-name"><label class="sp-label"></label></div>
 				<div class="clear"></div>			
@@ -31,8 +31,17 @@ function spa_themes_upload_form() {
                     <span class="sf-icon sf-icon-button sf-white sf-upload"></span>
                     <?php echo SP()->primitives->admin_text('Select file') ?>
                 </label>
-                <input type="button" class="sf-button-primary spThemeUpload" id="saveupload" name="sa sf-uppercaseveupload" value="<?php SP()->primitives->admin_etext('Upload Now'); ?>" data-target="#saveupload" />
+                <input type="button" class="sf-button-primary spThemeUpload" id="saveupload" name="sa sf-uppercaseveupload" value="<?php SP()->primitives->admin_etext('Upload Now'); ?>" onclick="sfloader()" data-target="#saveupload" />
+                
+                <div id="sf-loader-gif" style="display: none;">
+                    <img src="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>" alt="loading" />
+                </div>
             </form>
+            <script>
+                function sfloader(){
+                    document.getElementById("sf-loader-gif").style.display = "block";
+                }
+            </script>
 <?php
 		spa_paint_close_fieldset();
 

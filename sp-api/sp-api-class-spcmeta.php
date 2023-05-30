@@ -37,6 +37,15 @@ class spcMeta {
 	 * Constructor
 	 */
 	public function __construct() {
+
+		add_action('init_public_forum_load', [ $this, 'public_load'], 10, 0 );
+
+		if( is_admin() ) {
+			$this->load();
+		}
+	}
+
+	public function public_load() {
 		$this->load();
 	}
 

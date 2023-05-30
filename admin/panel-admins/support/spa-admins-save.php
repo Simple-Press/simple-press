@@ -76,7 +76,6 @@ function spa_save_admins_caps_data() {
     if (isset($_POST['manage-plugins'])) { $manage_plugins = array_map('sanitize_text_field', $_POST['manage-plugins']); } else { $manage_plugins = ''; }
     if (isset($_POST['manage-themes'])) { $manage_themes = array_map('sanitize_text_field', $_POST['manage-themes']); } else { $manage_themes = ''; }
     if (isset($_POST['manage-integration'])) { $manage_integration = array_map('sanitize_text_field', $_POST['manage-integration']); } else { $manage_integration = ''; }
-    if (isset($_POST['manage-promotions'])) { $manage_promotions = array_map('sanitize_text_field', $_POST['manage-promotions']); } else { $manage_promotions = ''; }
 
     if (isset($_POST['old-opts'])) { $old_opts = array_map('sanitize_text_field', $_POST['old-opts']); } else { $old_opts = ''; }
     if (isset($_POST['old-forums'])) { $old_forums = array_map('sanitize_text_field', $_POST['old-forums']); } else { $old_forums = ''; }
@@ -110,7 +109,6 @@ function spa_save_admins_caps_data() {
             unset($manage_plugins[$uid]);
             unset($manage_themes[$uid]);
             unset($manage_integration[$uid]);
-            unset($manage_promotions[$uid]);
         }
 		
 		# in an saas situation we don't want any super user capabilities removed
@@ -128,7 +126,6 @@ function spa_save_admins_caps_data() {
             $manage_plugins[$uid]='on';
             $manage_themes[$uid]='on';
             $manage_integration[$uid]='on';
-            $manage_promotions[$uid]='on';			
 		}
 
 		# Is user still an admin?
@@ -143,8 +140,8 @@ function spa_save_admins_caps_data() {
 		    			isset($manage_tools[$uid]) ||
 		    			isset($manage_plugins[$uid]) ||
 		    			isset($manage_themes[$uid]) ||
-		    			isset($manage_integration[$uid]) ||
-		    			isset($manage_promotions[$uid]));
+		    			isset($manage_integration[$uid])); 
+
 		$still_admin = apply_filters('sph_admin_caps_update', $still_admin, $remove_admin, $user);
 		if (empty($still_admin)) SP()->memberData->update($uid, 'admin', 0);
 
@@ -220,11 +217,6 @@ function spa_save_admins_caps_data() {
 			$user->remove_cap('SPF Manage Integration');
 		}
 
-		if (isset($manage_promotions[$uid])) {
-			$user->add_cap('SPF Manage Promotions');
-		} else {
-			$user->remove_cap('SPF Manage Promotions');
-		}
 
         # reset auths and memberships for updated admins
         SP()->user->reset_memberships($uid);
@@ -259,7 +251,6 @@ function spa_save_admins_newadmin_data() {
     if (isset($_POST['add-plugins'])) { $plugins = sanitize_text_field($_POST['add-plugins']); } else { $plugins = ''; }
     if (isset($_POST['add-themes'])) { $themes = sanitize_text_field($_POST['add-themes']); } else { $themes = ''; }
     if (isset($_POST['add-integration'])) { $integration = sanitize_text_field($_POST['add-integration']); } else { $integration = ''; }
-    if (isset($_POST['add-promotions'])) { $promotions = sanitize_text_field($_POST['add-promotions']); } else { $promotions = ''; }
 
 	$added = false;
     for ($index = 0; $index < count($newadmins); $index++) {
@@ -279,9 +270,8 @@ function spa_save_admins_newadmin_data() {
 		if ($plugins == 'on') $user->add_cap('SPF Manage Plugins');
 		if ($themes == 'on') $user->add_cap('SPF Manage Themes');
 		if ($integration == 'on') $user->add_cap('SPF Manage Integration');
-		if ($promotions == 'on') $user->add_cap('SPF Manage Promotions');
 
-		$newadmin = $opts == 'on' || $forums == 'on' || $ugs == 'on' || $perms == 'on' || $comps == 'on' || $users == 'on' || $profiles == 'on' || $admins == 'on' || $tools == 'on' || $plugins == 'on' || $themes == 'on' || $integration == 'on' || $promotions == 'on';
+		$newadmin = $opts == 'on' || $forums == 'on' || $ugs == 'on' || $perms == 'on' || $comps == 'on' || $users == 'on' || $profiles == 'on' || $admins == 'on' || $tools == 'on' || $plugins == 'on' || $themes == 'on' || $integration == 'on' ;
 		$newadmin = apply_filters('sph_admin_caps_new', $newadmin, $user);
 		if ($newadmin) {
 			$added = true;

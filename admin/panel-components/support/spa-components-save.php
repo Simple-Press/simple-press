@@ -107,29 +107,32 @@ function spa_save_login_data() {
 
 	# RPX support
 	$sfrpx = SP()->options->get('sfrpx');
+	$oldrpx = false;
 	if(!empty($sfrpx)){
-		$oldrpx  = isset($sfrpx['sfrpxenable']) ? $sfrpx['sfrpxenable'] : false;
+		$oldrpx  = $sfrpx['sfrpxenable'];
 		$sfrpx['sfrpxenable'] = isset($_POST['sfrpxenable']);
 		$sfrpx['sfrpxkey'] = SP()->filters->str($_POST['sfrpxkey']);
 		$sfrpx['sfrpxredirect'] = SP()->saveFilters->cleanurl(isset($_POST['sfrpxredirect']) ? $_POST['sfrpxredirect'] : "" );
 	}
 
 	# change in RPX support?
-	if (!$oldrpx && $sfrpx['sfrpxenable']) {
-		require_once SPBOOT.'core/credentials/sp-rpx.php';
-
-		$post_data = array(
-			'apiKey' => SP()->filters->str($_POST['sfrpxkey']),
-			'format' => 'json');
-		$raw = sp_rpx_http_post('https://rpxnow.com/plugin/lookup_rp', $post_data);
-		$r = sp_rpx_parse_lookup_rp($raw);
-		if ($r) {
-			$sfrpx['sfrpxrealm'] = $r['realm'];
-		} else {
-			$mess = SP()->primitives->admin_text('Error in RPX API data!');
-			return $mess;
-		}
+	if($sfrpx){
+		if (!$oldrpx && $sfrpx['sfrpxenable']) {
+			require_once SPBOOT.'core/credentials/sp-rpx.php';
+	
+			$post_data = array(
+				'apiKey' => SP()->filters->str($_POST['sfrpxkey']),
+				'format' => 'json');
+			$raw = sp_rpx_http_post('https://rpxnow.com/plugin/lookup_rp', $post_data);
+			$r = sp_rpx_parse_lookup_rp($raw);
+			if ($r) {
+				$sfrpx['sfrpxrealm'] = $r['realm'];
+			} else {
+				$mess = SP()->primitives->admin_text('Error in RPX API data!');
+				return $mess;
+			}
 	}
+}
 
 	SP()->options->update('sfrpx', $sfrpx);
 

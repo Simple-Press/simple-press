@@ -95,6 +95,14 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
+		 * @var object spPermalinks class object
+		 *
+		 * @since 6.0
+		 */
+		public $spPermalinks;
+
+		/**
+		 *
 		 * @var object spOptions class object
 		 *
 		 * @since 6.0
@@ -515,12 +523,32 @@ if (!class_exists('spcSimplePress')) {
 		public function check_is_forum_page() {
 			global $wp_query;
 			if ((is_page()) && ($wp_query->post->ID == $this->options->get('sfpage'))) {
+				
+				do_action( 'init_public_forum_load' );
 				$this->isForum = true;
 				SP()->user->get_current_user();
 
 				# Fire up forum loader
 				$this->forum = new spcForumLoader();
 				$this->forum->load();
+			}
+		}
+
+		public function define_install_path_constants() {
+			# Initial update to make use of wp uploads to enable s3 usage
+			# If not defined fall back to old config
+			if (!defined('SP_USE_UPLOAD_DIR')) define('SP_USE_UPLOAD_DIR', false);
+			if (defined('SP_USE_UPLOAD_DIR') && SP_USE_UPLOAD_DIR){
+				$uploads = wp_get_upload_dir();
+				if (!defined('INSTALL_STORE_DIR')) define('INSTALL_STORE_DIR', $uploads['basedir']);
+			} else {
+				# install picks up wrong SF STORE DIR so lets recalculate it for installs
+				if (is_multisite() && !get_site_option('ms_files_rewriting')) {
+					$uploads = wp_get_upload_dir();
+					if (!defined('INSTALL_STORE_DIR')) define('INSTALL_STORE_DIR', $uploads['basedir']);
+				} else {
+					if (!defined('INSTALL_STORE_DIR')) define('INSTALL_STORE_DIR', WP_CONTENT_DIR);
+				}
 			}
 		}
 	}

@@ -96,7 +96,8 @@ class spcError {
 		# only interested in SP errors
 		$errfile = str_replace('\\', '/', $errfile); # sanitize for Win32 installs
 		$posCore = strpos($errfile, '/plugins/'.SP_FOLDER_NAME.'/');
-		$posPlug = strpos($errfile, SP()->plugin->storage['plugins']);
+		$storage_plugin = isset(SP()->plugin->storage['plugins']) ? SP()->plugin->storage['plugins'] : "";
+		$posPlug = strpos($errfile, $storage_plugin);
 		if ($posCore === false && $posPlug === false) return;
 
 		# Do not record notices if turned off
