@@ -10,9 +10,9 @@ $Rev:2099 $
     font-family: 'sp-admin';
     src: url('fonts/sp-admin.eot?-1norbm');
     src: url('fonts/sp-admin.eot?#iefix-1norbm') format('embedded-opentype'),
-        url('fonts/sp-admin.woff?-1norbm') format('woff'),
-        url('fonts/sp-admin.ttf?-1norbm') format('truetype'),
-        url('fonts/sp-admin.svg?-1norbm#sp-admin') format('svg');
+    url('fonts/sp-admin.woff?-1norbm') format('woff'),
+    url('fonts/sp-admin.ttf?-1norbm') format('truetype'),
+    url('fonts/sp-admin.svg?-1norbm#sp-admin') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -44,8 +44,8 @@ $Rev:2099 $
  Applicable as long as its inside the SF container with the #sfmaincontainer css ID...
 */
 #sfmaincontainer h2 {
-	font-size: 1.3em;
-	font-weight: normal;
+    font-size: 1.3em;
+    font-weight: normal;
 }
 
 .sfhelptext td.spaErrCell {
@@ -288,7 +288,7 @@ $Rev:2099 $
     display: none;
     top: 50px;
     position: fixed;
-	text-align: center;
+    text-align: center;
     z-index: 1000000;
     font-size: 125%;
     font-weight: normal;
@@ -299,9 +299,9 @@ $Rev:2099 $
 }
 
 #sfmsgspot img {
-	/* This will cause the 'working' image, if its present, to not be so close to the text being displayed in the sfmsgspot div/bubble */
-	padding-right: 10px;
-	vertical-align: middle;
+    /* This will cause the 'working' image, if its present, to not be so close to the text being displayed in the sfmsgspot div/bubble */
+    padding-right: 10px;
+    vertical-align: middle;
 }
 
 #sf-root-wrap {
@@ -522,6 +522,8 @@ $Rev:2099 $
 #sf-root-wrap .sf-after-label {
     display: inline-block;
 }
+
+
 
 #sf-root-wrap strong {
     font-weight: 600;
@@ -819,9 +821,9 @@ $Rev:2099 $
 
 /* Make sure that custom icons can fit inside the icon picker box. */
 img.sf-iconset-icon-img{
-	max-width: 50px;
-	max-height: 35px;
-	padding: 5px;
+    max-width: 50px;
+    max-height: 35px;
+    padding: 5px;
 }
 
 /**
@@ -1259,48 +1261,48 @@ img.sf-iconset-icon-img{
 
 
 #sfmaincontainer .sf-fieldset .tablenav {
-        height: auto;
+    height: auto;
 }
 
 
 
 #sfmaincontainer .sf-tablenav {
-        display: grid;
-        grid-column-gap: 20px;
-        grid-template-columns : 1fr 1fr 1fr;
-        margin-bottom: 20px;
+    display: grid;
+    grid-column-gap: 20px;
+    grid-template-columns : 1fr 1fr 1fr;
+    margin-bottom: 20px;
 }
 
 
 #sfmaincontainer .sf-tablenav .sf-form-row-search {
-        grid-column : 1 / span 2;
-        margin-bottom: 0;
+    grid-column : 1 / span 2;
+    margin-bottom: 0;
 }
 
 
 #sfmaincontainer .sf-tablenav .sf-pagination {
-        grid-column : 1 / span 2;
-        margin-bottom: 10px;
+    grid-column : 1 / span 2;
+    margin-bottom: 10px;
 }
 
 #sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav {
-        display: initial;
+    display: initial;
 }
 
 
 #sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .tablenav-pages {
-        display: none;
+    display: none;
 }
 
 
 #sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions select {
-		min-width: 150px;
-        width: auto;
-        margin: 0;
+    min-width: 150px;
+    width: auto;
+    margin: 0;
 }
 
 #sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions {
-        margin: 13px 0;
+    margin: 13px 0;
 }
 
 
@@ -1661,7 +1663,6 @@ img.sf-iconset-icon-img{
 #sfmaincontainer.sf-installation input[type=checkbox]:checked:before {
     color: #006992;
 }
-
 #sfmaincontainer.sf-installation .ui-progressbar {
     margin-bottom: 22px;
 }
@@ -1766,10 +1767,10 @@ div[class^="collapsible-"] {
 }
 
 .spThemeContainer {
-/*    display: grid;
-    grid-gap: 20px;
-    grid-auto-rows: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));*/
+    /*    display: grid;
+        grid-gap: 20px;
+        grid-auto-rows: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(250px,1fr));*/
 }
 
 .spThemeContainer .spTheme {
@@ -1783,12 +1784,12 @@ div[class^="collapsible-"] {
 }
 
 .spThemeContainer .spThemeMobile form input[type=submit], .spThemeContainer .spThemeTablet form input[type=submit] {
-        grid-column : 1 / span 2;
+    grid-column : 1 / span 2;
 }
 
 
 .spThemeContainer .spTheme:nth-child(3n+1) {
-        clear:both;
+    clear:both;
 }
 
 
@@ -1809,7 +1810,7 @@ div[class^="collapsible-"] {
 }
 
 .spThemeContainer .spTheme .action-links input[type=submit] {
-        margin: 0 !important;
+    margin: 0 !important;
 }
 
 .spThemeContainer .spTheme .plugin-update-tr {
@@ -1817,7 +1818,7 @@ div[class^="collapsible-"] {
 }
 
 .spThemeContainer .spTheme .plugin-update-tr .update-message {
-        padding-left: 12px;
+    padding-left: 12px;
 }
 
 .spThemeContainer .spTheme:nth-child(3n-2){
@@ -1829,9 +1830,9 @@ div[class^="collapsible-"] {
 }
 
 .spThemeContainer .spTheme .spThemeInner img {
-        width: 100%;
-        margin-top: 10px;
-        border-radius: 5px;
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 5px;
 }
 
 .spThemeContainer .action-links form {
@@ -1842,7 +1843,7 @@ div[class^="collapsible-"] {
 }
 
 .spThemeContainer .action-links form label {
-        margin-top: 28px;
+    margin-top: 28px;
 }
 
 .spThemeContainer .action-links form .action-links-buttons input {
@@ -1900,9 +1901,9 @@ div[class^="collapsible-"] {
     background-color: #0E7198;
     float: right;
 }.sf-permition-panel-expand{
-    background-color: #0E7198;
-    float: right;
-}
+     background-color: #0E7198;
+     float: right;
+ }
 #sf-root-wrap .view-mobile {
     display: none;
 }
@@ -2099,7 +2100,7 @@ div[class^="collapsible-"] {
     margin-left: 32px;
 }
 /**
- < 
+ <
 */
 #sfmaincontainer .sf-msbox-list {
 
@@ -2113,21 +2114,21 @@ div[class^="collapsible-"] {
 
 /* Some styles on the help screens...*/
 #sfmaincontainer .codex-head{
-	/* Mostly used on the first screen that the user sees after installation*/
-	font-weight: bold;
-	font-size: 22px;
+    /* Mostly used on the first screen that the user sees after installation*/
+    font-weight: bold;
+    font-size: 22px;
 }
 #sfmaincontainer .codex-sub{
-	/* Mostly used on the first screen that the user sees after installation*/
-	font-weight: bold;
-	font-size: 18px;
+    /* Mostly used on the first screen that the user sees after installation*/
+    font-weight: bold;
+    font-size: 18px;
 }
 /* End Some styles on the help screens...*/
 
 .spMobileTableData {
-/*    display: grid;
-    width: 100%;
-    grid-template-columns: 1fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr 3fr 3fr 1fr;*/
+    /*    display: grid;
+        width: 100%;
+        grid-template-columns: 1fr 1fr 2fr 2fr 2fr 2fr 2fr 2fr 3fr 3fr 1fr;*/
     color: #27476E;
     background-color: white;
     padding: 25px 20px;
@@ -2191,20 +2192,20 @@ body .spMobileTableData .row-actions > span {
         margin-left: 2%;
         margin-bottom: 15px;
     }
-    
-    
+
+
     .spThemeContainer .spTheme:nth-child(odd) {
         clear:both;
     }
-    
+
     .spThemeContainer .spTheme:nth-child(3n+1) {
         clear:none;
     }
-    
+
     .spThemeContainer .spTheme:nth-child(3n-2){
         margin-left:2%;
-        }
-    
+    }
+
     .spThemeContainer .spTheme:nth-child(2n-1) {
         margin-left: 0%;
     }
@@ -2489,21 +2490,21 @@ body .spMobileTableData .row-actions > span {
     #sfmaincontainer table.sf-table-small tbody tr th {
         padding: 20px;
     }
-    
+
     #sfmaincontainer table.widefat thead tr {
-            display: none;
+        display: none;
     }
-    
+
     #sfmaincontainer table.widefat tbody tr {
         position: relative;
-/*        float: left;*/
+        /*        float: left;*/
         width: 100%;
     }
-    
+
     #sfmaincontainer table.widefat tbody td {
-            width: 100%;
+        width: 100%;
     }
-    
+
     #sfmaincontainer .sf-full-form .sf-icon-button.sf-small {
         background-color: #F9F9F9;
     }
@@ -2663,12 +2664,12 @@ body .spMobileTableData .row-actions > span {
         position: absolute;
         left: 0;
     }
-	
-	/* Message bubble at the top of the screen */
-	#sfmsgspot {
-		left:0px;
-		width:99%;
-	}		
+
+    /* Message bubble at the top of the screen */
+    #sfmsgspot {
+        left:0px;
+        width:99%;
+    }
 }
 /* Available Plugins */
 .sf-panel-body-top-left-midle{
@@ -2692,8 +2693,8 @@ body .spMobileTableData .row-actions > span {
 
 /* Forum Row */
 #sfmaincontainer .sf-full-form .sf-icon-midle img {
-	max-width: 60px;
-	max-height: 40px;
+    max-width: 60px;
+    max-height: 40px;
 }
 
 /*To remove button from IE11, thank you Matt */
@@ -2784,17 +2785,17 @@ body .spMobileTableData .row-actions > span {
 }
 .sp-plugin-more{
     display: none;
-/*    max-width: 300px;*/
+    /*    max-width: 300px;*/
     position: absolute;
     width: 100%;
     right: 26px;
     margin-top: 10px;
     text-align: right;
-    
+
 }
 
 .plugin-description-author {
-        margin-top: 10px;
+    margin-top: 10px;
 }
 
 .sf-plugins-flt{
@@ -2846,11 +2847,11 @@ body .spMobileTableData .row-actions > span {
     .sf-showm{
         display: table-row;
     }
-    
+
     #members-filter .mobile_rows_container.sf-showm {
-            display: block;
+        display: block;
     }
-    
+
     .sf-panel-body-top-left-midle{
         float: left;
         padding: 10px 10px 0 10px;
@@ -3036,51 +3037,51 @@ body .spMobileTableDataUsers .row-actions a {
 /*Users => Member Information end*/
 
 @media screen and (max-width: 782px) {
-        
-        
-        .sf-table-mobile tr:not(.inline-edit-row):not(.no-items) td:not(.column-primary)::before {
-                position: initial;
-                left: 10px;
-                display: block;
-                overflow: hidden;
-                width: 32%;
-                content: attr(data-label);
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                color: #85A2BC;
-                font-size: 13px;
-                line-height: 14px;
-                text-transform: uppercase;
-                margin-bottom: 12px;
-        }
-        
-        #sfmaincontainer table.widefat thead tr {
-                display: none;
-        }
-        
-        #sfmaincontainer table.widefat tbody tr:after {
-                content: " ";
-                display: block;
-                border-bottom: 1px solid #F0F0F0
-        }
-        
-        #sfmaincontainer table.widefat tbody td {
-                padding-top: 15px !important;
-                padding-bottom: 14px !important;
-                border-bottom: none !important;
-        }
-        
-        
+
+
+    .sf-table-mobile tr:not(.inline-edit-row):not(.no-items) td:not(.column-primary)::before {
+        position: initial;
+        left: 10px;
+        display: block;
+        overflow: hidden;
+        width: 32%;
+        content: attr(data-label);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: #85A2BC;
+        font-size: 13px;
+        line-height: 14px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+    }
+
+    #sfmaincontainer table.widefat thead tr {
+        display: none;
+    }
+
+    #sfmaincontainer table.widefat tbody tr:after {
+        content: " ";
+        display: block;
+        border-bottom: 1px solid #F0F0F0
+    }
+
+    #sfmaincontainer table.widefat tbody td {
+        padding-top: 15px !important;
+        padding-bottom: 14px !important;
+        border-bottom: none !important;
+    }
+
+
 }
 
 #sf-root-wrap .search-box {
-        margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 #sf-root-wrap input[type=search] {
-        width: auto;
-        margin-top: 0 !important;
-        margin-right: 6px;
+    width: auto;
+    margin-top: 0 !important;
+    margin-right: 6px;
 }
 
 
@@ -3088,135 +3089,128 @@ body .spMobileTableDataUsers .row-actions a {
 
 /* promotions */
 .spa-promo-row {
-	width: 100%;
-	margin-top: 2em;
+    width: 100%;
+    margin-top: 2em;
 }
 
 .sfsidebutton#sfaccPromotions a {
-	color: #4BB6A2;
+    color: #4BB6A2;
 }
 
 .spa-promo-row:not(.spa-promo-row1) {
-	display: flex;
-	justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
 }
 
 .spa-promo-col {
-	float: left;
-	max-width: 50%;	
+    float: left;
+    max-width: 50%;
 }
 
 .spa-promo-button {
-	border: solid;
-	border-width: 1px;
-	padding: 1em;
-	text-align: center;	
-	border-color:#00a0d2; 
-	font-size: 1.25em;
-	max-width: 40%;
+    border: solid;
+    border-width: 1px;
+    padding: 1em;
+    text-align: center;
+    border-color:#00a0d2;
+    font-size: 1.25em;
+    max-width: 40%;
 }
 
 .spa-promo-box {
-	background-color: white;
-	border-radius: 5px;
-	padding: 1em;
-	margin-right: 1em;
-	border:solid;
-	border-width:1px;
-	border-color: white;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1em;
+    margin-right: 1em;
+    border:solid;
+    border-width:1px;
+    border-color: white;
 }
 
 @media only screen and (max-width: 600px) {
-	.spa-promo-row {
-	}
+    .spa-promo-row {
+    }
 }
 /* End promotions */
 
 /* Handle the upload file name in the themes and plugins uploader */
 .sf-upload-file-name {
-        margin: 0 0 10px 6px;
+    margin: 0 0 10px 6px;
 }
 /* End Handle the upload file name in the themes and plugins uploader */
 
 
 /* Style for user profile popup */
 .spColumnSection.spProfileRightCol {
-        margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .spColumnSection.spProfileLeftCol p {
-        display: block;
-        font-weight: 600;
-        font-size: 12px;
-        line-height: 17px;
-        text-transform: uppercase;
-        white-space: normal;
-        color: #27476E;
-        margin-bottom: 0;
+    display: block;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 17px;
+    text-transform: uppercase;
+    white-space: normal;
+    color: #27476E;
+    margin-bottom: 0;
 }
 
 .spColumnSection.spProfileRightCol p {
-        height: 50px;
-        margin: 0;
-        padding: 15px 16px 14px;
-        width: 100%;
-        color: #47484A;
-        -khtml-border-radius: 3px;
-        -webkit-border-radius: 3px;
-        border-radius: 3px;
-        box-shadow: none;
-        border: 1px solid #F0F0F0;
+    height: 50px;
+    margin: 0;
+    padding: 15px 16px 14px;
+    width: 100%;
+    color: #47484A;
+    -khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: none;
+    border: 1px solid #F0F0F0;
 }
 
 .spProfileShowInfoSection.spLeft {
-        float: right;
-                
+    float: right;
+
 }
 
 .spProfileShowInfoSection .spForumRank, .spProfileShowInfoSection .spSpecialRank {
-        margin: 0 10px 0 0;
-        font-size: 12px;
-        display: inline-block;
-        padding: 4px 10px !important;
-        background: #eaf0f4 !important;
-        border-radius: 5px;
+    margin: 0 10px 0 0;
+    font-size: 12px;
+    display: inline-block;
+    padding: 4px 10px !important;
+    background: #eaf0f4 !important;
+    border-radius: 5px;
 }
 
 .spPlainSection.avatarSection {
-        float:left;
+    float:left;
 }
 
 .spProfileShowLinksSection {
-        float: right;
+    float: right;
 }
 
 .spUsergroupEmpty {
-        text-align: center;
+    text-align: center;
 }
 
 .spUsergroupEmpty, .spUsergroupListMsg {
-        padding: 20px 10px;
-        font-size: 14px;
-        font-weight: 600;
+    padding: 20px 10px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .spUsergroupListMsg {
-        padding-left: 0;
+    padding-left: 0;
 }
 
 .spUsergroupsList li {
-        border-top: #f1f1f1 solid 1px;
-        padding: 6px;
-        font-weight: 600;
+    border-top: #f1f1f1 solid 1px;
+    padding: 6px;
+    font-weight: 600;
 }
 
-body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-startup-sp-load-install .wp-submenu li:last-child {
-    /*
-        Hack to not show second menu item that is needed. We need to be able to show submenu with only one item.
-        This is not supported by WP by default.
-     */
-    display: none;
-}
 /**
 
  */
@@ -3351,4 +3345,14 @@ button.sf-icon-button {
 
 .spHelpLink {
     margin-left: 10px;
+}
+
+
+
+body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-startup-sp-load-install .wp-submenu li:last-child {
+    /*
+        Hack to not show second menu item that is needed. We need to be able to show submenu with only one item.
+        This is not supported by WP by default.
+     */
+    display: none;
 }
