@@ -1163,6 +1163,12 @@ img.sf-iconset-icon-img{
 #sfmaincontainer .sf-upload label {
     display: none;
 }
+#sfmaincontainer .sp-radio {
+    margin-top: 8px;
+}
+#sfmaincontainer .sp-radio input {
+    margin-left: 8px;
+}
 #sfmaincontainer .sf-upload #sf-upload-status {
     position: absolute;
     background: #8e8c8c;
