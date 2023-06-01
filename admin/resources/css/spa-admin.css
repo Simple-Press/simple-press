@@ -613,9 +613,6 @@ $Rev:2099 $
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
-    -webkit-mask-size: 100%;
-    -webkit-mask-position: center;
-    -webkit-mask-repeat: no-repeat;
     mask-size: 100%;
     mask-position: center;
     mask-repeat: no-repeat;
@@ -632,159 +629,121 @@ $Rev:2099 $
     margin-right: 10px;
 }
 #sf-root-wrap .sf-icon.sf-more{
-    -webkit-mask-image: url("../icons/More.svg");
     mask-image: url("../icons/More.svg");
 }
 #sf-root-wrap .sf-icon.sf-about {
-    -webkit-mask-image: url("../icons/About.svg");
     mask-image: url("../icons/About.svg");
 }
 #sf-root-wrap .sf-icon.sf-install {
-    -webkit-mask-image: url("../icons/Install.svg");
     mask-image: url("../icons/Install.svg");
 }
 #sf-root-wrap .sf-icon.sf-help {
-    -webkit-mask-image: url("../icons/Help.svg");
     mask-image: url("../icons/Help.svg");
 }
 #sf-root-wrap .sf-icon.sf-go {
-    -webkit-mask-image: url("../icons/Go.svg");
     mask-image: url("../icons/Go.svg");
 }
 #sf-root-wrap .sf-icon.sf-waiting {
     background-color: #AAABAD;
-    -webkit-mask-image: url("../icons/Waiting.svg");
     mask-image: url("../icons/Waiting.svg");
 }
 #sf-root-wrap .sf-icon.sf-delete {
     background-color: #408EAD;
-    -webkit-mask-image: url("../icons/Delete.svg");
     mask-image: url("../icons/Delete.svg");
 }
 #sf-root-wrap .sf-icon.sf-requires-enable {
     background-color: #408EAD;
-    -webkit-mask-image: url("../icons/Requires Enable.svg");
     mask-image: url("../icons/Requires Enable.svg");
 }
 #sf-root-wrap .sf-icon.sf-warning {
     background-color: #C3282C;
-    -webkit-mask-image: url("../icons/Warning.svg");
     mask-image: url("../icons/Warning.svg");
 }
 #sf-root-wrap .sf-icon.sf-disable-forum {
     background-color: #408EAD;
-    -webkit-mask-image: url("../icons/Disable Forum.svg");
     mask-image: url("../icons/Disable Forum.svg");
 }
 #sf-root-wrap .sf-icon.sf-check {
     background-color: #32AA63;
-    -webkit-mask-image: url("../icons/Check.svg");
     mask-image: url("../icons/Check.svg");
 }
 #sf-root-wrap .sf-icon.sf-no-check {
     background-color: #C3282C;
-    -webkit-mask-image: url("../icons/Expand.svg");
     mask-image: url("../icons/Expand.svg");
     transform: rotate(45deg);
 }
 #sf-root-wrap .sf-icon.sf-upload {
     background-color: #0E7198;
-    -webkit-mask-image: url("../icons/Upload.svg");
     mask-image: url("../icons/Upload.svg");
 }
 #sf-root-wrap .sf-icon.sf-add {
     background-color: #0E7198;
-    -webkit-mask-image: url("../icons/Add.svg");
     mask-image: url("../icons/Add.svg");
 }
 #sf-root-wrap .sf-icon.sf-cancel {
     background-color: #0E7198;
-    -webkit-mask-image: url("../icons/Cancel.svg");
     mask-image: url("../icons/Cancel.svg");
 }
 #sf-root-wrap .sf-icon.sf-edit {
     background-color: #0E7198;
-    -webkit-mask-image: url("../icons/Edit.svg");
     mask-image: url("../icons/Edit.svg");
 }
 #sf-root-wrap .sf-icon.sf-forums {
-    -webkit-mask-image: url("../icons/Forums.svg");
     mask-image: url("../icons/Forums.svg");
 }
 #sf-root-wrap .sf-icon.sf-options {
-    -webkit-mask-image: url("../icons/Options.svg");
     mask-image: url("../icons/Options.svg");
 }
 #sf-root-wrap .sf-icon.sf-order {
-    -webkit-mask-image: url("../icons/Order.svg");
     mask-image: url("../icons/Order.svg");
 }
 #sf-root-wrap .sf-icon.sf-components {
-    -webkit-mask-image: url("../icons/Components.svg");
     mask-image: url("../icons/Components.svg");
 }
 #sf-root-wrap .sf-icon.sf-user-groups {
-    -webkit-mask-image: url("../icons/User Groups.svg");
     mask-image: url("../icons/User Groups.svg");
 }
 #sf-root-wrap .sf-icon.sf-permissions {
-    -webkit-mask-image: url("../icons/Permissions.svg");
     mask-image: url("../icons/Permissions.svg");
 }
 #sf-root-wrap .sf-icon.sf-ignore-guest {
-    -webkit-mask-image: url("../icons/Ignore Guest.svg");
     mask-image: url("../icons/Ignore Guest.svg");
 }
-
 #sf-root-wrap .sf-icon.sf-integration {
-    -webkit-mask-image: url("../icons/Integration.svg");
     mask-image: url("../icons/Integration.svg");
 }
 #sf-root-wrap .sf-icon.sf-profiles {
-    -webkit-mask-image: url("../icons/Profiles.svg");
     mask-image: url("../icons/Profiles.svg");
 }
 #sf-root-wrap .sf-icon.sf-admins {
-    -webkit-mask-image: url("../icons/Admins.svg");
     mask-image: url("../icons/Admins.svg");
 }
 #sf-root-wrap .sf-icon.sf-users {
-    -webkit-mask-image: url("../icons/Users.svg");
     mask-image: url("../icons/Users.svg");
 }
 #sf-root-wrap .sf-icon.sf-plugins {
-    -webkit-mask-image: url("../icons/Plugin.svg");
     mask-image: url("../icons/Plugin.svg");
 }
 #sf-root-wrap .sf-icon.sf-themes {
-    -webkit-mask-image: url("../icons/Theme.svg");
     mask-image: url("../icons/Theme.svg");
 }
 #sf-root-wrap .sf-icon.sf-toolbox {
-    -webkit-mask-image: url("../icons/Toolbox.svg");
     mask-image: url("../icons/Toolbox.svg");
 }
 #sfmaincontainer ul.sf-list li .sf-list-item .sf-item-controls .sf-item-edit,
 #sf-root-wrap .sf-icon.sf-expand {
     background-color: #4390AE;
-    -webkit-mask-image: url("../icons/Expand.svg");
     mask-image: url("../icons/Expand.svg");
 }
 #sfmaincontainer ul.sf-list li.sf-open>.sf-list-item .sf-item-controls .sf-item-edit,
 #sf-root-wrap .sf-icon.sf-collapse {
     background-color: #4390AE;
-    -webkit-mask-image: url("../icons/Collapse.svg");
     mask-image: url("../icons/Collapse.svg");
 }
 #sf-root-wrap .sf-icon.sf-working {
     background-color: transparent;
     background-size: 16px;
     background-image: url("../icons/working.gif");
-    /*background-color: #0E7198;
-    -webkit-mask-size: 16px;
-    mask-size: 16px;
-    -webkit-mask-image: url("../icons/working.gif");
-    mask-image: url("../icons/working.gif");*/
 }
 #sf-root-wrap .sf-icon.sf-blue {
     background-color: #0E7198;
@@ -1745,12 +1704,10 @@ div[class^="collapsible-"] {
 }
 #sf-root-wrap .sf-icon.sf-collapsed{
     background-color: #0E7198;
-    -webkit-mask-image: url(../icons/Collapse.svg);
     mask-image: url(../icons/Collapse.svg);
 }
 #sf-root-wrap .sf-icon.sf-expanded {
     background-color: #0E7198;
-    -webkit-mask-image: url(../icons/Expand.svg);
     mask-image: url(../icons/Expand.svg);
 }
 #sfhousekeepingformblock .sf-button-primary {
