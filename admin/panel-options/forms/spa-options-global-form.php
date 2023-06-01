@@ -101,7 +101,6 @@ function spa_options_global_form() {
         </style>
         <div class="sf-form-row">
                 <label><?php SP()->primitives->admin_etext( 'Select Default Editor' ); ?></label>
-            <br>
             <ul>
 			<?php
 			if ( defined( 'RICHTEXT' ) ) {
