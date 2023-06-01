@@ -1142,10 +1142,6 @@ img.sf-iconset-icon-img{
     margin: 5px -10px 0 0;
     padding: 0;
 }
-#sfmaincontainer .sf-panel-body .sf-full-form+.sf-form-submit-bar {
-    /*margin: 30px 0 0 0;*/
-}
-
 #sfmaincontainer .sf-panel-body .sf-half-form .sf-panel-body-top-right {
     float: right;
 }
@@ -1220,8 +1216,6 @@ img.sf-iconset-icon-img{
     height: auto;
 }
 
-
-
 #sfmaincontainer .sf-tablenav {
     display: grid;
     grid-column-gap: 20px;
@@ -1229,12 +1223,10 @@ img.sf-iconset-icon-img{
     margin-bottom: 20px;
 }
 
-
 #sfmaincontainer .sf-tablenav .sf-form-row-search {
     grid-column : 1 / span 2;
     margin-bottom: 0;
 }
-
 
 #sfmaincontainer .sf-tablenav .sf-pagination {
     grid-column : 1 / span 2;
@@ -1245,11 +1237,9 @@ img.sf-iconset-icon-img{
     display: initial;
 }
 
-
 #sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .tablenav-pages {
     display: none;
 }
-
 
 #sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions select {
     min-width: 150px;
@@ -1260,7 +1250,6 @@ img.sf-iconset-icon-img{
 #sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions {
     margin: 13px 0;
 }
-
 
 #sfmaincontainer .sf-panel-body-top-right .sf-input-group,
 #sfmaincontainer .sf-panel-body-top-right .search-box {
