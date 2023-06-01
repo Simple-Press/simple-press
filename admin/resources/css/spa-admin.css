@@ -846,7 +846,6 @@ img.sf-iconset-icon-img{
     display: table-cell;
 }
 #sf-root-wrap .sf-input-group .sf-form-control {
-    -khtml-border-radius: 3px 0 0 3px;
     -webkit-border-radius: 3px 0 0 3px;
     border-radius: 3px 0 0 3px;
     border-right: none;
@@ -855,7 +854,6 @@ img.sf-iconset-icon-img{
     height: 50px;
     margin: 0;
     padding: 16px 26px;
-    -khtml-border-radius: 0 3px 3px 0;
     -webkit-border-radius: 0 3px 3px 0;
     border-radius: 0 3px 3px 0;
 }
@@ -866,7 +864,6 @@ img.sf-iconset-icon-img{
     line-height: 15px;
 }
 #sf-root-wrap .sf-input-group.sf-input-small.sf-input-rounded .sf-form-control {
-    -khtml-border-radius: 20px 0 0 20px;
     -webkit-border-radius: 20px 0 0 20px;
     border-radius: 20px 0 0 20px;
 }
@@ -875,7 +872,6 @@ img.sf-iconset-icon-img{
     padding-right: 3px;
     border: 1px solid #F0F0F0;
     border-left: none;
-    -khtml-border-radius: 0 20px 20px 0;
     -webkit-border-radius: 0 20px 20px 0;
     border-radius: 0 20px 20px 0;
 }
@@ -883,7 +879,6 @@ img.sf-iconset-icon-img{
     height: 32px;
     padding: 7px 15px;
     box-shadow: none;
-    -khtml-border-radius: 16px;
     -webkit-border-radius: 16px;
     border-radius: 16px;
 }
@@ -1321,7 +1316,6 @@ img.sf-iconset-icon-img{
 #sfmaincontainer .sf-panel-body-top-right .search-box input[type="search"] {
     height: 40px;
     margin: 0;
-    -khtml-border-radius: 20px;
     -webkit-border-radius: 20px;
     border-radius: 20px;
 }
@@ -1578,7 +1572,6 @@ img.sf-iconset-icon-img{
 */
 #sfmaincontainer ul.sf-list.sf-list-v2 {
     border: 1px solid #F0F0F0;
-    -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
     overflow: hidden;
@@ -1592,7 +1585,6 @@ img.sf-iconset-icon-img{
     border-bottom: none;
 }
 #sfmaincontainer ul.sf-list.sf-list-v2 .sf-list-item {
-    -khtml-border-radius: 0;
     -webkit-border-radius: 0;
     border-radius: 0;
     background-color: #F9F9F9;
@@ -1673,7 +1665,6 @@ img.sf-iconset-icon-img{
 #sfmaincontainer.sf-installation .ui-progressbar,
 #sfmaincontainer.sf-installation .ui-progressbar .ui-progressbar-value {
     height: 8px;
-    -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
     background-color: #F0F0F0;
@@ -2053,7 +2044,6 @@ div[class^="collapsible-"] {
     background: transparent;
     border: none;
     box-shadow: none;
-    -khtml-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
     text-transform: uppercase;
@@ -3162,7 +3152,6 @@ body .spMobileTableDataUsers .row-actions a {
     padding: 15px 16px 14px;
     width: 100%;
     color: #47484A;
-    -khtml-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
     box-shadow: none;
