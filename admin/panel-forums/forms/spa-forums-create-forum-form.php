@@ -114,20 +114,22 @@ function spa_forums_create_forum_form() {
 					spa_paint_checkbox(SP()->primitives->admin_text('Locked'), 'forum_status', 0);
 					spa_paint_checkbox(SP()->primitives->admin_text('Disable forum RSS feed so feed will not be generated'), 'forum_private', 0);
 
-					spa_paint_select_start(sprintf(SP()->primitives->admin_text('Featured Image for this forum %s(200px x 200px recommended)'), '<br>'), 'feature_image', '');
-					spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', '', false);
-					spa_paint_select_end();
+                    spa_paint_select_start(SP()->primitives->admin_text('Featured Image'), 'feature_image', '');
+                    spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', $forum->feature_image, false);
+                        spa_paint_select_end('<span class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Featured images are shown when sharing links on social media. Recommended size 200x200px').'</span>');
 
-					echo '<div class="sf-alert-block sf-info">';
-					echo '<p><b>'.SP()->primitives->front_text('Custom Icon Ordering').'</b></br>';
-					echo SP()->primitives->front_text('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
-                    echo SP()->primitives->front_text('Locked').'<br />';
-                    echo SP()->primitives->front_text('Pinned and Unread').'<br />';
-                    echo SP()->primitives->front_text('Pinned').'<br />';
-                    echo SP()->primitives->front_text('Unread').'<br />';
-                    echo SP()->primitives->front_text('Custom').'<br />';
-                    echo SP()->primitives->front_text('Theme Default').'<br />';
-					echo '</div>';
+                    echo '<div class="sf-alert-block sf-info">';
+                        echo '<p><b>'.SP()->primitives->front_text('Custom Icon Ordering').'</b></br>';
+                        echo SP()->primitives->front_text('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
+                        echo '<ul>';
+                            echo '<li>'. SP()->primitives->front_text('Locked').'</li>';
+                            echo '<li>'. SP()->primitives->front_text('Pinned and Unread').'</li>';
+                            echo '<li>'. SP()->primitives->front_text('Pinned').'</li>';
+                            echo '<li>'. SP()->primitives->front_text('Unread').'</li>';
+                            echo '<li>'. SP()->primitives->front_text('Custom').'</li>';
+                            echo '<li>'. SP()->primitives->front_text('Theme Default').'</li>';
+                        echo '</ul>';
+                    echo '</div>';
 
 					
 					$custom_icons =  spa_get_custom_icons();
