@@ -606,7 +606,7 @@ $Rev:2099 $
     padding: 0;
     border-radius: 0;
     vertical-align: middle;
-    background-color: white;
+    background-color: var(--sp-primary-color);
     color: transparent;
     box-shadow: none;
     border: none;
@@ -673,19 +673,15 @@ $Rev:2099 $
     transform: rotate(45deg);
 }
 #sf-root-wrap .sf-icon.sf-upload {
-    background-color: #0E7198;
     mask-image: url("../icons/Upload.svg");
 }
 #sf-root-wrap .sf-icon.sf-add {
-    background-color: #0E7198;
     mask-image: url("../icons/Add.svg");
 }
 #sf-root-wrap .sf-icon.sf-cancel {
-    background-color: #0E7198;
     mask-image: url("../icons/Cancel.svg");
 }
 #sf-root-wrap .sf-icon.sf-edit {
-    background-color: #0E7198;
     mask-image: url("../icons/Edit.svg");
 }
 #sf-root-wrap .sf-icon.sf-forums {
