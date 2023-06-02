@@ -196,30 +196,22 @@ function spa_render_msbox_list($msbox, $uid, $name, $from, $num, $records, $offs
     $site = wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=filter&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=0&amp;max=$max&amp;ug=$ug", 'multiselect');
 
     $out .= '<div class="sf-panel-body-top">';
-    $out .= '   <div class="sf-panel-body-top-left sf-mobile-full-width">';
     $out .= '       <h4>' . $from . '</h4>';
-    $out .= '   </div>';
-    $out .= '   <div class="sf-panel-body-top-right sf-mobile-full-width">';
-    $out .= '       <p class="search-box-v2 sf-input-group sf-filter-auto">';
-    $out .= '           <input type="search" placeholder="Search" id="list-filter' . $name . $uid . '" name="list-filter' . $name . $uid . '" value="' . $filter . '" class="sfacontrol" size="10">';
-    $out .= '           <input type="button" id="filter' . $uid . '" class="spFilterList sf-hidden-important" value="' . SP()->primitives->admin_text('Filter') . '" data-url="' . $site . '" data-uid="' . $name . $uid . '" data-image="' . $gif . '">';
-    $out .= '       </p>';
+    #$out .= '       <p class="search-box-v2 sf-input-group sf-filter-auto">';
+    #$out .= '           <input type="search" placeholder="Search" id="list-filter' . $name . $uid . '" name="list-filter' . $name . $uid . '" value="' . $filter . '" class="sfacontrol" size="10">';
+    #$out .= '           <input type="button" id="filter' . $uid . '" class="spFilterList sf-hidden-important" value="' . SP()->primitives->admin_text('Filter') . '" data-url="' . $site . '" data-uid="' . $name . $uid . '" data-image="' . $gif . '">';
+    #$out .= '       </p>';
     if ($ug) {
-        $out .= '       <div class="sf-input-group select-user-group">';
-        $out .= '           <div class="sf-form-control sf-select-wrap">';
+        $out .= '           <div style="flex-basis: 80%;">';
         $out .= '               <select name="usergroup_id">';
         $out .= '                   <option value="">' . SP()->primitives->admin_text('Select User Group') . '</option>';
         foreach (spa_get_usergroups_all(null) as $usergroup) {
             $out .= '               <option value="' . $usergroup->usergroup_id . '"' . (!empty($_POST['usergroup_id']) && $usergroup->usergroup_id == $_POST['usergroup_id'] ? ' checked="checked"' : '') . '>' . SP()->displayFilters->title($usergroup->usergroup_name) . '</option>';
         }
         $out .= '               </select>';
+        $out .= '         <button class="sf-button-primary">' . SP()->primitives->admin_text('Move to group') . '</button>';
         $out .= '           </div>';
-        $out .= '           <div class="sf-input-group-addon">';
-        $out .= '               <button class="sf-input-group-btn sf-button-primary">' . SP()->primitives->admin_text('Move') . '</button>';
-        $out .= '           </div>';
-        $out .= '       </div>';
     }
-    $out .= '   </div>';
     $out .= '</div>';
     $out .= '<div class="sf-grid-4 sf-users-list">';
     if ($records) {
