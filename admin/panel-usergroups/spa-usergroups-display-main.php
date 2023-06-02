@@ -21,7 +21,7 @@ function spa_usergroups_usergroup_main() {
                 <table id="sf-usergroup-table" class="widefat sf-table-small sf-table-mobile">
                     <thead>
                     <tr>
-                        <th><?php echo SP()->primitives->admin_text('Group name') ?></th>
+                        <th><?php echo SP()->primitives->admin_text('Name') ?></th>
                         <th><?php echo SP()->primitives->admin_text('Default for') ?></th>
                         <th><?php echo SP()->primitives->admin_text('Moderator') ?></th>
                         <th class="_sf-narrow"><?php echo SP()->primitives->admin_text('Members') ?></th>
@@ -192,7 +192,7 @@ function spa_usergroups_usergroup_main() {
                                 </div>
                             </td>
                             <td class="sf-mobile-top">
-                                <div class="sf-item-controls sf-mobile-btns" _style="min-width:150px;">
+                                <div class="sf-item-controls sf-mobile-btns">
                                     <button class="sf-icon-button sf-small spOpenDialog"
                                             title='<?php echo SP()->primitives->admin_text('User Group Usage') ?>'
                                             data-site='<?php echo wp_nonce_url(SPAJAXURL . "usergroup-tip&amp;group={$usergroup->usergroup_id}", 'usergroup-tip') ?>'
@@ -201,7 +201,7 @@ function spa_usergroups_usergroup_main() {
                                             data-height='0'
                                             data-align='center'
                                     >
-                                        <span class="sf-icon sf-about sf-blue"></span>
+                                        <span class="sf-icon sf-about"></span>
                                     </button>
                                     <button class="sf-icon-button sf-small spLoadForm"
                                             title="<?php echo SP()->primitives->admin_text('Edit User Group'); ?>"
@@ -212,7 +212,7 @@ function spa_usergroups_usergroup_main() {
                                             data-id="<?php echo $usergroup->usergroup_id; ?>"
                                             data-open=""
                                     >
-                                        <span class="sf-icon sf-edit sf-blue"></span>
+                                        <span class="sf-icon sf-edit"></span>
                                     </button>
                                     <button class="sf-icon-button sf-small spLoadForm"
                                             title="<?php echo SP()->primitives->admin_text('Delete User Group'); ?>"
@@ -223,7 +223,7 @@ function spa_usergroups_usergroup_main() {
                                             data-id="<?php echo $usergroup->usergroup_id; ?>"
                                             data-open=""
                                     >
-                                        <span class="sf-icon sf-delete sf-blue"></span>
+                                        <span class="sf-icon sf-delete"></span>
                                     </button>
                                 </div>
                             </td>

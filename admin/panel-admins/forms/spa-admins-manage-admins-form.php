@@ -6,8 +6,9 @@
   $Rev: 15601 $
  */
 
-if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
+if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
     die('Access denied - you cannot directly call this file');
+}
 
 function spa_admins_manage_admins_form() {
     ?>
@@ -32,19 +33,20 @@ function spa_admins_manage_admins_form() {
 
     if ($adminrecords || $modrecords) {
         $adminsexist = true;
-        spa_paint_open_tab(/* SP()->primitives->admin_text('Admins')." - ". */SP()->primitives->admin_text('Manage Admins and Moderators'), true);
+        spa_paint_open_tab(SP()->primitives->admin_text('Manage Admins and Moderators'), true);
 
         $ajaxURL = wp_nonce_url(SPAJAXURL . 'admins-loader&amp;saveform=manageadmin', 'admins-loader');
         ?>
         <form action="<?php echo $ajaxURL; ?>" method="post" id="sfupdatecaps" name="sfupdatecaps">
             <?php echo sp_create_nonce('forum-adminform_sfupdatecaps'); ?>
             <?php
-            //spa_paint_open_panel();
+
             spa_paint_open_fieldset(SP()->primitives->admin_text('Current Admins and Moderators'), 'true', 'manage-admins');
             for ($x = 1; $x < 3; $x++) {
-                $records = ($x == 1) ? $adminrecords : $modrecords;
-                if (empty($records))
+                $records = ($x === 1) ? $adminrecords : $modrecords;
+                if (empty($records)) {
                     continue;
+                }
 
                 foreach ($records as $adminId => $adminName) {
                     $user = new WP_User($adminId);
