@@ -287,25 +287,26 @@ function spa_members_not_belonging_to_any_usergroup_tab() {
                     Select users using the checkboxes, choose User Group from the dropdown and click the Move button to move users to that group.
                 </div>
             </fieldset>
-            <div class="sf-input-group">
-                <div class="sf-form-control sf-select-wrap">
+            <div style="display: flex;">
+                <div style="flex-basis: 50%">
                     <select name="usergroup_id">
                         <option value=""><?php echo SP()->primitives->admin_text('Select User Group') ?></option>
                         <?php foreach (spa_get_usergroups_all(null) as $usergroup) : ?>
                             <option value="<?php echo $usergroup->usergroup_id ?>"><?php echo SP()->displayFilters->title($usergroup->usergroup_name); ?></option>
                         <?php endforeach ?>
                     </select>
-                </div>
-                <div class="sf-input-group-addon">
                     <button class="sf-button-primary"><?php echo SP()->primitives->admin_text('Move selected users') ?></button>
                 </div>
-                <p class="search-box">
-                    <input type="search" placeholder="<?php echo SP()->primitives->admin_text('Search members') ?>"
-                           data-target=".sf-not-belonging-to-any-usergroup"
-                           data-filter-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1", 'usergroups') ?>"
-                    >
-                    <button class="sf-button-secondary"><?php echo SP()->primitives->admin_text('Search') ?></button>
-                </p>
+                <div style="flex-basis: 50%">
+                    <p class="search-box" style="">
+                        <input type="search" placeholder="<?php echo SP()->primitives->admin_text('Search members') ?>"
+                               data-target=".sf-not-belonging-to-any-usergroup"
+                               data-filter-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1", 'usergroups') ?>"
+                        >
+                        <button class="sf-button-secondary"><?php echo SP()->primitives->admin_text('Search') ?></button>
+                    </p>
+
+                </div>
             </div>
         </div>
         <div class="sf-not-belonging-to-any-usergroup">
