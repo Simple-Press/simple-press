@@ -6,8 +6,9 @@
   $Rev: 15488 $
  */
 
-if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
+if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
     die('Access denied - you cannot directly call this file');
+}
 
 function spa_permissions_permission_main() {
     spa_paint_open_tab(SP()->primitives->admin_text('Manage Permissions Sets'), true);
@@ -24,7 +25,7 @@ function spa_permissions_permission_main() {
                             <p><?php echo SP()->displayFilters->title($role->role_desc); ?></p>
                         </div>
                     </td>
-                    <td>
+                    <td style="width: 250px;">
                         <?php
                         $base = wp_nonce_url(SPAJAXURL . 'permissions-loader', 'permissions-loader');
                         $target = 'perm-' . $role->role_id;
@@ -55,9 +56,3 @@ function spa_permissions_permission_main() {
     spa_paint_close_container();
     spa_paint_close_tab();
 }
-
-//function sp_paint_permission_tip($roleid, $rolename) {
-//    $site = wp_nonce_url(SPAJAXURL . "permission-tip&amp;role=$roleid", 'permission-tip');
-//    $title = esc_js($rolename);
-//    echo "<input type='button' class='sf-button-secondary spOpenDialog' value='" . SP()->primitives->admin_text('Permission Usage') . "' data-site='$site' data-label='$title' data-width='600' data-height='0' data-align='center' />";
-//}
