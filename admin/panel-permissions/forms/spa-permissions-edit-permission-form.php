@@ -39,14 +39,19 @@ function spa_permissions_edit_permission_form($role_id) {
 					spa_paint_input(SP()->primitives->admin_text('Permission Set Name'), 'role_name', SP()->displayFilters->title($role->role_name), false, true);
 					spa_paint_input(SP()->primitives->admin_text('Permission Set Description'), 'role_desc', SP()->displayFilters->title($role->role_desc), false, true);
 ?>
-					<br /><p><strong><?php SP()->primitives->admin_etext("Permission Set Actions") ?>:</strong></p>
+					<br /><h4><?php SP()->primitives->admin_etext("Permission Set Actions") ?>:</h4>
+
 <?php
-					echo '<p><img src="'.SPADMINIMAGES.'sp_GuestPerm.png" alt="" class="sf-vert-align-top sf-perm-edit-img" />';
-					echo '<small>&nbsp;'.SP()->primitives->admin_text('Note: Action settings displaying this icon will be ignored for Guest Users').'</small><br />';
-					echo '<img src="'.SPADMINIMAGES.'sp_GlobalPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" />';
-					echo '<small>&nbsp;'.SP()->primitives->admin_text('Note: Action settings displaying this icon require enabling to use').'</small><br />';
-					echo '<img src="'.SPADMINIMAGES.'sp_Warning.png" alt="" style="width:16px;height:16px;vertical-align:top" />';
-					echo '<small>&nbsp;'.SP()->primitives->admin_text('Note: Action settings displaying this icon should be used with great care').'</small></p>';
+                    echo '<div class="sf-alert-block sf-notice">';
+                    echo '<ul>';
+					echo '<li><img src="'.SPADMINIMAGES.'sp_GuestPerm.png" alt="" class="sf-vert-align-top sf-perm-edit-img" /> ';
+					echo SP()->primitives->admin_text('Will be ignored for Guest Users').'</li>';
+					echo '<li><img src="'.SPADMINIMAGES.'sp_GlobalPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" /> ';
+					echo SP()->primitives->admin_text('Require enabling to use').'</li>';
+					echo '<li><img src="'.SPADMINIMAGES.'sp_Warning.png" alt="" style="width:16px;height:16px;vertical-align:top" /> ';
+					echo SP()->primitives->admin_text('Should be used with great care').'</li>';
+                    echo '</ul>';
+                    echo '</div>';
 
 					sp_build_site_auths_cache();
 
@@ -62,7 +67,7 @@ function spa_permissions_edit_permission_form($role_id) {
 					$category = '';
 ?>
        				<!-- OPEN OUTER CONTAINER DIV -->
-					<div class="outershell" style="width: 100%;">
+					<div class="outershell">
 <?php
 					foreach ($authlist as $a) {
 						if ($category != $a->authcat_name) {
@@ -70,15 +75,14 @@ function spa_permissions_edit_permission_form($role_id) {
 							if (!$firstitem) {
 ?>
 								<!-- CLOSE DOWN THE ENDS -->
-								</table></div>
+								</div>
 <?php
 							}
 ?>
 							<!-- OPEN NEW INNER DIV -->
 							<div class="innershell">
 							<!-- NEW INNER DETAIL TABLE -->
-							<table style="width:100%;border:0">
-							<tr><td colspan="2" class="permhead"><?php SP()->primitives->admin_etext($category); ?></td></tr>
+							<h4 class="sf-mt-15 sf-mb-15"><?php SP()->primitives->admin_etext($category); ?></h4>
 <?php
 							$firstitem = false;
 						}
@@ -86,31 +90,21 @@ function spa_permissions_edit_permission_form($role_id) {
 						$auth_id = $a->auth_id;
 						$auth_name = $a->auth_name;
 						$authWarn = (empty($a->warning)) ? false : true;
-						$warn = ($authWarn) ? ' permwarning' : '';
 						$tip = ($authWarn) ? " class='permwarning' title='".esc_js(SP()->primitives->admin_text($a->warning))."'" : '';
-						$tooltip = (isset($tooltips[$auth_name])) ? $tooltips[$auth_name] : '';
+						$tooltip = $tooltips[$auth_name] ?? '';
 
 						$button = 'b-'.$auth_id;
-						$checked = '';
-						if (isset($role_auths[$auth_id]) && $role_auths[$auth_id]) $checked = ' checked="checked"';
-						if (SP()->core->forumData['auths'][$auth_id]->ignored || SP()->core->forumData['auths'][$auth_id]->enabling || $authWarn) {
-							$span = '';
-						} else {
-							$span = ' colspan="2" ';
-						}
-?>
-						<tr<?php echo $tip; ?>>
-							<td class="permentry<?php echo $warn; ?>">
+                        $checked = (isset($role_auths[$auth_id]) && $role_auths[$auth_id]) ? ' checked="checked"' : '' ;
 
+?>
+						<div <?php echo $tip; ?>>
+							<div class="permentry">
 								<input type="checkbox" name="<?php echo $button; ?>" id="sfR<?php echo $role->role_id.$button; ?>"<?php echo $checked; ?>  />
 								<label for="sfR<?php echo $role->role_id.$button; ?>" class="sflabel">
-								<img style="vertical-align:top;float: right; border: 0 none ; margin: -4px 5px 0 3px; padding: 0;" class="" title="<?php echo $tooltip; ?>" src="<?php echo SPADMINIMAGES; ?>sp_Information.png" alt="" />
-								<?php SP()->primitives->admin_etext(SP()->core->forumData['auths'][$auth_id]->auth_desc); ?></label>
-								<?php if ($span == '') { ?>
-									<td style="text-align:center;width:32px" class="permentry">
+                                    <img style="float: right; margin-left: 10px; margin-right: 10px; width: 20px;" title="<?php echo $tooltip; ?>" src="<?php echo SPADMINIMAGES; ?>sp_Information.png" />
+                                    <?php SP()->primitives->admin_etext(SP()->core->forumData['auths'][$auth_id]->auth_desc); ?>
+                                </label>
 <?php
-                                }
-								if ($span == '') {
 									if (SP()->core->forumData['auths'][$auth_id]->enabling) {
 										echo '<img src="'.SPADMINIMAGES.'sp_GlobalPerm.png" alt="" style="width:16px;height:16px" title="'.SP()->primitives->admin_text('Requires Enabling').'" />';
 									}
@@ -120,19 +114,13 @@ function spa_permissions_edit_permission_form($role_id) {
 									if ($authWarn) {
 										echo '<img src="'.SPADMINIMAGES.'sp_Warning.png" alt="" style="width:16px;height:16px" title="'.SP()->primitives->admin_text('Use with Caution').'" />';
 									}
-									echo '</td>';
-								} else {
 ?>
-									</td><td class="permentry" style="width:32px"></td>
-<?php
-								}
-?>
-						</tr>
+                            </div>
+                        </div>
 <?php
 					}
 ?>
 					<!-- END CONTAINER DIV -->
-					</table></div><div class="clearboth"></div>
 					</div>
 <?php
 				spa_paint_close_fieldset();

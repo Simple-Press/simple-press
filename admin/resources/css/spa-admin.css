@@ -1942,6 +1942,9 @@ div[class^="collapsible-"] {
     padding-top: 0;
     margin-left: 14px;
 }
+#sfmaincontainer .permentry {
+    margin-left: 10px;
+}
 #sfmaincontainer .sf-farbtastic {
     position: relative;
     z-index: 999;
@@ -2885,11 +2888,14 @@ body .spMobileTableData .row-actions > span {
 .sf-float-l{
     float: left;
 }
-.sf-mt-15{
+#sf-root-wrap .sf-mb-15{
+    margin-bottom: 15px;
+}
+#sf-root-wrap .sf-mt-15{
     margin-top: 15px;
 }
 .sf-ml-10{
-    margin-top: 10px;
+    margin-left: 10px;
 }
 .sf-mr-5{
     margin-right: 5px;
