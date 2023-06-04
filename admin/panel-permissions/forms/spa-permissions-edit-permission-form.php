@@ -26,6 +26,7 @@ function spa_permissions_edit_permission_form($role_id) {
 
 	spa_paint_options_init();
     $ajaxURL = wp_nonce_url(SPAJAXURL.'permissions-loader&amp;saveform=editperm', 'permissions-loader');
+
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfroleedit<?php echo $role->role_id; ?>" name="sfroleedit<?php echo $role->role_id; ?>">
 <?php
@@ -41,17 +42,16 @@ function spa_permissions_edit_permission_form($role_id) {
 ?>
 					<br /><h4><?php SP()->primitives->admin_etext("Permission Set Actions") ?>:</h4>
 
+                    <div class="sf-alert-block sf-info">
+                        <p><span class="sf-icon sf-ignore-guest sf-red sf-small"></span>
+                            <?php echo SP()->primitives->admin_text('Ignored for Guest Users') ?></p>
+                        <p><span class="sf-icon sf-requires-enable sf-green sf-small"></span>
+                            <?php echo SP()->primitives->admin_text('Require enabling to use') ?></p>
+                        <p><span class="sf-icon sf-warning sf-yellow sf-small"></span>
+                            <?php echo SP()->primitives->admin_text('Use with great care') ?></p>
+                    </div>
 <?php
-                    echo '<div class="sf-alert-block sf-notice">';
-                    echo '<ul>';
-					echo '<li><img src="'.SPADMINIMAGES.'sp_GuestPerm.png" alt="" class="sf-vert-align-top sf-perm-edit-img" /> ';
-					echo SP()->primitives->admin_text('Will be ignored for Guest Users').'</li>';
-					echo '<li><img src="'.SPADMINIMAGES.'sp_GlobalPerm.png" alt="" style="width:16px;height:16px;vertical-align:top" /> ';
-					echo SP()->primitives->admin_text('Require enabling to use').'</li>';
-					echo '<li><img src="'.SPADMINIMAGES.'sp_Warning.png" alt="" style="width:16px;height:16px;vertical-align:top" /> ';
-					echo SP()->primitives->admin_text('Should be used with great care').'</li>';
-                    echo '</ul>';
-                    echo '</div>';
+
 
 					sp_build_site_auths_cache();
 
@@ -86,6 +86,7 @@ function spa_permissions_edit_permission_form($role_id) {
 <?php
 							$firstitem = false;
 						}
+
 
 						$auth_id = $a->auth_id;
 						$auth_name = $a->auth_name;

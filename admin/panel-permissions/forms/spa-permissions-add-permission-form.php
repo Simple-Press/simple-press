@@ -6,8 +6,9 @@
   $Rev: 15601 $
  */
 
-if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
+if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
     die('Access denied - you cannot directly call this file');
+}
 function spa_permissions_add_permission_form() {
     ?>
     <script>
@@ -42,31 +43,21 @@ function spa_permissions_add_permission_form() {
         spa_paint_select_end('<span class="sf-sublabel sf-sublabel-small">' . SP()->primitives->admin_text('Select an existing Permission Set to Clone') . '</span>');
         spa_paint_close_fieldset();
         ?>
-        <div class="_sf-form-submit-bar sf-mobile-hide">
+        <div class="_sf-form-submit-bar sf-mb-15">
             <input type="submit" class="sf-button-primary" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" />
         </div>
+
         <?php
-        spa_paint_tab_right_cell();
         spa_paint_open_fieldset(SP()->primitives->admin_text('Permission Set Actions'), 'true', 'create-new-permission-set');
         ?>
-        <div class="sf-group-alert-blocks">
             <div class="sf-alert-block sf-info">
-                <span class="sf-icon sf-ignore-guest sf-red sf-small"></span>
-                <small class="sf-mobile-hide"><?php echo SP()->primitives->admin_text('Action settings displaying this icon will be ignored for Guest Users') ?></small>
-                <small class="sf-mobile-show"><?php echo SP()->primitives->admin_text('Ignored for Guest Users') ?></small>
+                <p><span class="sf-icon sf-ignore-guest sf-red sf-small"></span>
+                    <?php echo SP()->primitives->admin_text('Ignored for Guest Users') ?></p>
+                <p><span class="sf-icon sf-requires-enable sf-green sf-small"></span>
+                    <?php echo SP()->primitives->admin_text('Require enabling to use') ?></p>
+                <p><span class="sf-icon sf-warning sf-yellow sf-small"></span>
+                    <?php echo SP()->primitives->admin_text('Use with great care') ?></p>
             </div>
-            <div class="sf-alert-block sf-info">
-
-                <span class="sf-icon sf-requires-enable sf-green sf-small"></span>
-                <small class="sf-mobile-hide"><?php echo SP()->primitives->admin_text('Action settings displaying this icon require enabling to use') ?></small>
-                <small class="sf-mobile-show"><?php echo SP()->primitives->admin_text('Require enabling to use') ?></small>
-            </div>
-            <div class="sf-alert-block sf-info">
-                <span class="sf-icon sf-warning sf-yellow sf-small"></span>
-                <small class="sf-mobile-hide"><?php echo SP()->primitives->admin_text('Action settings displaying this icon should be used with great care') ?></small>
-                <small class="sf-mobile-show"><?php echo SP()->primitives->admin_text('Use with great care') ?></small>
-            </div>
-        </div>
         <?php
         sp_build_site_auths_cache();
 
@@ -84,17 +75,14 @@ function spa_permissions_add_permission_form() {
             array_push($tmp[$a->authcat_name], $a);
         }
         ?>
-
-        <ul class="sf-list sf-list-v2">
+        <div class="sf-form-row">
+        <ul>
             <?php foreach ($tmp as $name => $arr): ?>
                 <li class="">
-                    <div class="sf-list-item spLayerToggle">
-                        <span class="sf-item-name"><?php SP()->primitives->admin_etext($name) ?></span>
-                        <span class="sf-item-controls">
-                            <a class="sf-item-edit _spLayerToggle"></a>
-                        </span>
-                    </div>
-                    <div class="sf-inline-edit sfinline-form sp-permition-body">
+                    <h4 class="sf-mt-15 sf-mb-15">
+                        <?php SP()->primitives->admin_etext($name) ?></span>
+                    </h4>
+                    <div class="sp-permission-body">
                         <?php foreach ($arr as $a): ?>
                             <?php
                             $auth_id = $a->auth_id;
@@ -110,7 +98,7 @@ function spa_permissions_add_permission_form() {
                                 $span = ' colspan="2" ';
                             }
                             ?>
-                            <div<?php //echo $tip;             ?> class="sp-permition-item">
+                            <div<?php //echo $tip;             ?> class="sp-permission-item">
                                 <div class="permentry<?php echo $warn; ?>" >
                                     <input type="checkbox" name="<?php echo $button; ?>" id="sf<?php echo $button; ?>"  />
                                     <label for="sf<?php echo $button; ?>" class="sflabel">
@@ -137,6 +125,7 @@ function spa_permissions_add_permission_form() {
                 </li>
             <?php endforeach ?>
         </ul>
+        </div>
         <?php
         spa_paint_close_fieldset();
         spa_paint_close_panel();
@@ -148,7 +137,6 @@ function spa_permissions_add_permission_form() {
         <?php
         spa_paint_close_tab();
         ?>
-            <!-- <input type="submit" class="sf-button-primary view-mobile" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" /> -->
     </form>
     <?php
 }

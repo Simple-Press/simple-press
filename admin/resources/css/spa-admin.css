@@ -1891,54 +1891,43 @@ div[class^="collapsible-"] {
     margin-left: 10px!important;
     font-size: 12px!important;
 }
-#sfmaincontainer .sp-permition-cat-title{
-    height: 50px;
-    border-top: 0.5px solid #F0F0F0;
-    border-bottom: 0.5px solid #F0F0F0;
-    padding: 15px;
-    background-color: #F9F9F9;
-    width: 100%;
-    margin-top: 0;
-}
-#sfmaincontainer .sp-permition-body label{
+#sfmaincontainer .sp-permission-body label{
     display: inline!important;
 }
-#sfmaincontainer .sp-permition-body{
+#sfmaincontainer .sp-permission-body{
     margin: 0;
 }
-#sfmaincontainer .sp-permition-body .sp-permition-item{
+#sfmaincontainer .sp-permission-body .sp-permission-item{
     display: flex;
     margin: 0;
-    min-height: 50px;
+    min-height: 25px;
     vertical-align: middle!important;
-    padding: 15px;
-    background-color: #F9F9F9;
     align-items: center;
 }
-#sfmaincontainer .sp-permition-body .sp-permition-item+.sp-permition-item {
+#sfmaincontainer .sp-permission-body .sp-permission-item+.sp-permition-item {
     margin-top: 6px;
 }
-#sfmaincontainer .sp-permition-body .sp-permition-item .permentry {
+#sfmaincontainer .sp-permission-body .sp-permission-item .permentry {
     width: 100%;
     /*display: flex;
     flex-direction: row;
     align-items: center;*/
 }
-#sfmaincontainer .sp-permition-body .sp-permition-item .permentry .sf-icons {
+#sfmaincontainer .sp-permission-body .sp-permission-item .permentry .sf-icons {
     float: right;
     padding-top: 3px;
 }
-#sfmaincontainer .sp-permition-body .sp-permition-item .permentry .sf-icons .sf-icon {
+#sfmaincontainer .sp-permission-body .sp-permission-item .permentry .sf-icons .sf-icon {
     float: left;
     margin: 0 14px 0 0;
 }
-#sfmaincontainer .sp-permition-body .sp-permition-item .permentry .sf-icons .sf-ignore-guest {
+#sfmaincontainer .sp-permission-body .sp-permission-item .permentry .sf-icons .sf-ignore-guest {
     margin-top: -2px;
 }
-#sfmaincontainer .sp-permition-body .sp-permition-item .permentry .sf-icons .sf-about {
+#sfmaincontainer .sp-permission-body .sp-permission-item .permentry .sf-icons .sf-about {
     margin: 0 0 0 6px;
 }
-#sfmaincontainer .sp-permition-body .sp-permition-item .permentry label{
+#sfmaincontainer .sp-permission-body .sp-permission-item .permentry label{
     padding-top: 0;
     margin-left: 14px;
 }
