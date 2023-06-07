@@ -51,16 +51,6 @@ class spcActivity {
 	 * Constructor
 	 */
 	public function __construct() {
-
-		add_action('init_public_forum_load', [ $this, 'public_load'], 10, 0 );
-
-		if( is_admin() ) {
-			$this->load();
-		}
-		
-	}
-
-	public function public_load() {
 		$this->load();
 	}
 
@@ -429,17 +419,16 @@ class spcActivity {
 	 * @return void
 	 */
 	private function load() {
-			# make sure the activity type table exists
-			$exist = SP()->DB->tableExists(SPUSERACTIVITYTYPE);
-			if (!$exist) return;
+		# make sure the activity type table exists
+		$exist = SP()->DB->tableExists(SPUSERACTIVITYTYPE);
+		if (!$exist) return;
 
-			# grab the activity_type from the database
-			$query                = new stdClass();
-			$query->resultType    = OBJECT_K;
-			$query->type          = 'set';
-			$query->table         = SPUSERACTIVITYTYPE;
-			$query->fields        = 'activity_name, activity_id';
-			$this->activity_types = SP()->DB->select($query);
-
+		# grab the activity_type from the database
+		$query                = new stdClass();
+		$query->resultType    = OBJECT_K;
+		$query->type          = 'set';
+		$query->table         = SPUSERACTIVITYTYPE;
+		$query->fields        = 'activity_name, activity_id';
+		$this->activity_types = SP()->DB->select($query);
 	}
 }
