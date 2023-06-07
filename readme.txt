@@ -6,7 +6,7 @@ Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
 Tested up to: 6.2
 Requires PHP: 7.0
-Stable tag: 6.9.0
+Stable tag: 6.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -152,9 +152,14 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 
 == Latest Updates ==
 
+= 6.9.1 =
+
+* Reverted: Only allow Simple:Press to run queries on Simple:Press pages
+
 = 6.9.0 =
 
 * Resolve PHP8.2 issues
+* Fix avatar options not saved
 * Fix installation warnings when activating and installing Simple:Press
 * Only allow Simple:Press to run queries on Simple:Press pages
 * Minor admin cleanup, remove buttons, missing font-fix
