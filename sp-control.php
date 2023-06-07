@@ -11,7 +11,7 @@
  * Plugin URI: 			https://simple-press.com
  * Version: 			6.9.0
  * Description: 		The most versatile and feature-rich forums plugin for WordPress
- * Author: 				The Simple:Press Team
+ * Author: 				The Simple:Press Forum Team
  * Author URI: 			https://simple-press.com/about
  * Text Domain: 		sp
  * License:				GPL-2.0+

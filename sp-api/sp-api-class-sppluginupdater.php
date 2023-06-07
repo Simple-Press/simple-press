@@ -91,74 +91,82 @@ class SPPluginUpdater {
 	}
 	
 	/*function for check current plugins status and update to database */
-	
-	public function check_addons_status($data = array())
+
+    /**
+     * @param $data Contains EDD information with EDD id among other data
+     * @return false|mixed|void
+     */
+    public function check_addons_status($data = [])
 	{
+        // Get saved addon licensing information
 		$this->api_data['edd_action'] = $data['edd_action'];
-		
-		$response = wp_remote_post( $this->api_url, array( 'timeout' => 15, 'sslverify' => true, 'body' => $this->api_data ) );
-		
+
+        // Get licensing data from simple-press.com
+		$response = wp_remote_post(
+            $this->api_url,
+            [
+                'timeout' => 15,
+                'sslverify' => true,
+                'body' => $this->api_data
+            ]
+        );
+
 		// make sure the response came back okay
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-		
 			return false;
 		}
-		
+
+        // Get license information from previous response (ie response body)
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
-		
-		if(isset($data['status']) && $data['status'] != ''){
-			
+
+		if (isset($data['status']) && $data['status'] !== ''){
+
 			return $license_data;
-			
-		}else{
-			
-			$addon_info = json_decode(wp_remote_retrieve_body( $response ));
-			
-			$addon_info->item_name = sanitize_title_with_dashes($addon_info->item_name);
-			
-			$update_info_option = json_encode($addon_info);
-			
-			$check_version = $this->check_for_addon_update();
 
-			if(isset($license_data->license)) {
-
-				if($license_data->license != 'expired'){
-
-					$download_link = isset( $check_version->download_link ) ? $check_version->download_link : '';
-				}else{
-
-					$download_link = '';
-				}
-			
-				$update_version_option = array(
-					
-					'new_version'=> isset( $check_version->new_version ) ? $check_version->new_version : '',
-					'stable_version'=> isset( $check_version->stable_version ) ? $check_version->stable_version : '',
-					'name'=>isset( $check_version->name ) ? sanitize_title_with_dashes($check_version->name) : '',
-					'slug'=>isset( $check_version->slug ) ? $check_version->slug : '',
-					'url'=>isset( $check_version->url ) ? $check_version->url : '',
-					'homepage'=>isset( $check_version->homepage ) ? $check_version->homepage : '',
-					'last_updated'=>isset( $check_version->last_updated ) ? $check_version->last_updated : '',
-					'download_link'=> $download_link,
-					'package' => isset( $check_version->package ) ? $check_version->package : '',
-					'icons'=>isset( $check_version->icons ) ? wp_json_encode($check_version->icons) : '',
-					'banners'=>isset( $check_version->banners ) ? wp_json_encode($check_version->banners) : '',
-					'sections'=>isset( $check_version->sections ) ? wp_json_encode($check_version->sections) : ''
-				);
-			
-				// save status to option table
-				SP()->options->update( $data['update_status_option'], $license_data->license );
-				
-				// save info to option table
-				SP()->options->update( $data['update_info_option'], isset( $update_info_option ) ? $update_info_option : '');
-				
-				// save update_version_option to option table
-				SP()->options->update( $data['update_version_option'], json_encode($update_version_option) );
-
-				return $license_data;
-			}
 		}
-	}
+
+        $addon_info = json_decode(wp_remote_retrieve_body( $response ));
+
+        $addon_info->item_name = sanitize_title_with_dashes($addon_info->item_name);
+
+        $update_info_option = json_encode($addon_info);
+
+        // Fetch latest data from Simple:Press EDD
+        $check_version = $this->check_for_addon_update();
+
+        if (isset($license_data->license)) {
+
+            $download_link = ($license_data->license != 'expired') ? $check_version->download_link ?? '' : '';
+
+            // Generate data to save
+            $update_version_option = [
+                'new_version'=> isset( $check_version->new_version ) ? $check_version->new_version : '',
+                'stable_version'=> isset( $check_version->stable_version ) ? $check_version->stable_version : '',
+                'name'=>isset( $check_version->name ) ? sanitize_title_with_dashes($check_version->name) : '',
+                'slug'=>isset( $check_version->slug ) ? $check_version->slug : '',
+                'url'=>isset( $check_version->url ) ? $check_version->url : '',
+                'homepage'=>isset( $check_version->homepage ) ? $check_version->homepage : '',
+                'last_updated'=>isset( $check_version->last_updated ) ? $check_version->last_updated : '',
+                'download_link'=> $download_link,
+                'package' => isset( $check_version->package ) ? $check_version->package : '',
+                'icons'=>isset( $check_version->icons ) ? wp_json_encode($check_version->icons) : '',
+                'banners'=>isset( $check_version->banners ) ? wp_json_encode($check_version->banners) : '',
+                // Todo: The section data must not contain "'" single quotes
+                'sections'=>isset( $check_version->sections ) ? wp_json_encode($check_version->sections) : ''
+            ];
+
+            // save status to option table
+            SP()->options->update( $data['update_status_option'], $license_data->license );
+
+            // save info to option table
+            SP()->options->update( $data['update_info_option'], isset( $update_info_option ) ? $update_info_option : '');
+
+            // save update_version_option to option table
+            SP()->options->update( $data['update_version_option'], json_encode($update_version_option) );
+
+            return $license_data;
+        }
+    }
 
 	/**
 	 * Disable SSL verification in order to prevent download update failures

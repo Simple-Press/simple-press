@@ -132,10 +132,14 @@ class spcOptions {
 		# bail if the old value of option is same as new update value
 		$oldvalue = $this->get($option);
 
-		if ($value === maybe_unserialize($oldvalue)) return false;
+		if ($value === maybe_unserialize($oldvalue)) {
+            return false;
+        }
 
 		# if the option doesnt exist, add instead of update
-		if (!isset($this->options[$option])) return $this->add($option, $value);
+		if (!isset($this->options[$option])) {
+            return $this->add($option, $value);
+        }
 
 		# udpate the option in the db
 		$value = maybe_serialize($value);

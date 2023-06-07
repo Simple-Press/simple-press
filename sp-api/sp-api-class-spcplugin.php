@@ -119,14 +119,20 @@ class spcPlugin {
 
 		if ($plugins_dir) @closedir($plugins_dir);
 
-		if (empty($plugin_files)) return array();
+		if (empty($plugin_files)) {
+            return [];
+        }
 
 		$plugins = array();
 		foreach ($plugin_files as $plugin_file) {
 			
-			if (!is_readable("$plugin_root/$plugin_file")) continue;
+			if (!is_readable("$plugin_root/$plugin_file")) {
+                continue;
+            }
 			$plugin_data = SP()->plugin->get_data("$plugin_root/$plugin_file", false, false); # Do not apply markup/translate as it'll be cached.
-			if (empty($plugin_data['Name'])) continue;
+			if (empty($plugin_data['Name'])) {
+                continue;
+            }
 			$plugins[plugin_basename($plugin_file)] = $plugin_data;
 		}
 		uasort($plugins, array($this, 'sort_plugins'));
