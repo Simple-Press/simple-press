@@ -570,4 +570,7 @@ function SP() {
 }
 
 # Get the SimplePress instance Running
-SP();
+//SP();
+
+// Initiate Simple:Press after plugins are loaded. Priority is set to load early
+add_action('plugins_loaded', 'SP', 1);
