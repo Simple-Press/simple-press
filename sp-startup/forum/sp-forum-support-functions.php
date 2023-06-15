@@ -154,22 +154,34 @@ function sp_aioseo_homepage($title) {
 function sp_wp_seo_hooks($url) {
 	if (!defined('SP_USE_WPSEO_HEAD') || 'SP_USE_WPSEO_HEAD' != true) {
 		if (defined('WPSEO_VERSION')) {
-			if ( ! is_callable( array( 'WPSEO_Frontend', 'get_instance' ) ) ) {
+			if ( ! is_callable( ['WPSEO_Frontend', 'get_instance']) ) {
 				return;
 			}
 			$instance = WPSEO_Frontend::get_instance();
-			remove_action('wpseo_head', array($instance,
-			                                  'canonical'), 20);
-			remove_action('wpseo_head', array($instance,
-			                                  'metadesc'), 6);
-			remove_action('wpseo_head', array($instance,
-			                                  'metakeywords'), 11);
-			remove_action('wpseo_head', array($instance,
-			                                  'publisher'), 22);
-			remove_action('wpseo_head', array($GLOBALS['wpseo_og'],
-			                                  'opengraph'), 30);
-			remove_action('wpseo_head', array('WPSEO_Twitter',
-			                                  'get_instance'), 40);
+			remove_action('wpseo_head', [
+                $instance,
+                'canonical'
+            ], 20);
+			remove_action('wpseo_head', [
+                $instance,
+                'metadesc'
+            ], 6);
+			remove_action('wpseo_head', [
+                $instance,
+                'metakeywords'
+            ], 11);
+			remove_action('wpseo_head', [
+                $instance,
+                'publisher'
+            ], 22);
+			remove_action('wpseo_head', [
+                (array_key_exists('wpseo_og', $GLOBALS) && $GLOBALS['wpseo_og'] !== '' ? $GLOBALS['wpseo_og'] : ''),
+                'opengraph'
+            ], 30);
+			remove_action('wpseo_head', [
+                'WPSEO_Twitter',
+                'get_instance'
+            ], 40);
 		}
 	}
 }
