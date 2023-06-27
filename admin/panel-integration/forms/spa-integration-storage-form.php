@@ -103,11 +103,11 @@ function spa_integration_storage_form() { ?>
  */
 function spa_paint_storage_input($label, $name, $value, $na = false) {
 	$adminhelpfile = 'admin-integration-storage-tips';
-
 	$path = SP_STORE_DIR . '/' . $value;
-
 	$found = false;
 	$ok = false;
+
+    // Check if dir exists
 	if (file_exists($path)) {
 		$found = true;
 		$ok = true;
