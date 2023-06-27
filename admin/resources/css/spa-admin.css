@@ -1004,29 +1004,6 @@ img.sf-iconset-icon-img{
     border: 1px solid red;
 }
 
-#sfmaincontainer .sf-grid-4 {
-    float: left;
-    width: calc(100% + 10px);
-    margin: -5px;
-}
-#sfmaincontainer .sf-grid-4 .sf-grid-item {
-    float: left;
-    width: calc(25% - 10px);
-    margin: 5px;
-    padding: 20px;
-    background-color: #FFF;
-}
-#sfmaincontainer .sf-grid-4 .sf-grid-item [type="checkbox"] {
-    margin: 5px 20px 5px 0;
-}
-#sfmaincontainer .sf-grid-4 .sf-grid-item .sf-avatar {
-    width: 30px;
-    height: 30px;
-    margin-right: 16px;
-}
-#sfmaincontainer .sf-grid-4 .sf-grid-item .sf-user-name {
-    margin-top: 6px;
-}
 
 #sfmaincontainer .sf-fieldset {
     margin-bottom: 20px;
@@ -1287,61 +1264,8 @@ img.sf-iconset-icon-img{
     margin-right: 10px;
 }
 
-#sfmaincontainer .sf-pagination, #sfmaincontainer .tablenav .tablenav-pages {
-    float: left;
-    width: 100%;
-    margin-top: 20px;
-}
-
-#sfmaincontainer .sf-pagination a, #sfmaincontainer .tablenav .tablenav-pages a {
-    position: relative;
-    float: left;
-    min-width: 30px;
-    min-height: 30px;
-    margin: 5px 0;
-    font-size: 16px;
-    line-height: 22px;
-    color: #006992;
-    padding: 4px;
-    text-align: center;
-    background: none;
-    border: 0;
-}
-
-#sfmaincontainer .sf-pagination a:hover, #sfmaincontainer .tablenav .tablenav-pages a:hover {
-    background-color: rgba(0, 105, 146, .05);
-}
-
-#sfmaincontainer .sf-pagination .sf-first-page:after,
-#sfmaincontainer .sf-pagination .sf-last-page:after,
-#sfmaincontainer .tablenav .tablenav-pages a.sf-first-page:after,
-#sfmaincontainer .tablenav .tablenav-pages a.sf-last-page:after
-{
-    content: '\2335';
-    position: absolute;
-    top: 4px;
-    left: 12px;
-    font-weight: bold;
-    transform: rotate(90deg);
-}
-#sfmaincontainer .sf-pagination .sf-last-page:after,
-#sfmaincontainer .tablenav .tablenav-pages a.sf-last-page:after
-{
-    top: 6px;
-    left: 8px;
-    transform: rotate(270deg);
-}
-#sfmaincontainer .sf-pagination .sf-current-page,
-#sfmaincontainer .tablenav .tablenav-pages a.sf-current-page
-{
-    padding: 9px;
-    min-width: 40px;
-    margin: 0 5px;
-    background-color: rgba(0, 105, 146, .05);
-    border-radius: 40px;
-}
-#sfmaincontainer table+.sf-pagination {
-    margin: 41px 0 10px;
+#sfmaincontainer .sf-pagination-links a {
+    padding: 5px;
 }
 
 /**
@@ -1999,40 +1923,7 @@ div[class^="collapsible-"] {
     color: #85A2BC;
 }
 
-/**
- >
-*/
-#sfmaincontainer .sf-float-list li {
-    float: left;
-    width: 23%;
-    margin: 0 0 5px 12px;
-}
-@media screen and (max-width: 1300px) {
-    #sfmaincontainer .sf-float-list li {
-        width: 30%;
-    }
-}
-@media screen and (max-width: 1100px) {
-    #sfmaincontainer .sf-float-list li {
-        width: 45%;
-    }
-}
-@media screen and (max-width: 550px) {
-    #sfmaincontainer .sf-float-list li {
-        width: 95%;
-    }
-}
-#sfmaincontainer .sf-float-list-label {
-    margin-left: 32px;
-}
-/**
- <
-*/
-#sfmaincontainer .sf-msbox-list {
-
-}
 #sfmaincontainer .sf-msbox-list .msAddControl {
-    width: 140px;
     font-size: 12px;
     width: 100%;
     height: auto;
@@ -3273,6 +3164,15 @@ button.sf-icon-button {
 
 .spHelpLink {
     margin-left: 10px;
+}
+
+
+.list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(160px, 1fr));
+}
+
+.list-grid li {
 }
 
 
