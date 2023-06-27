@@ -121,13 +121,13 @@ function sp_localisation() {
 	                                                                 'action=help',
 	                                                                 'action=multiselect'));
 
-	if (SP()->primitives->strpos_array($_SERVER['QUERY_STRING'], $bothSpecial) !== false || wp_doing_ajax()) {
+	if (SP()->primitives->strpos_array(array_key_exists('QUERY_STRING', $_SERVER) ? $_SERVER['QUERY_STRING'] : '', $bothSpecial) !== false || wp_doing_ajax()) {
 		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
 		load_textdomain('spa', $mofile);
 		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/sp-'.$locale.'.mo';
 		$mofile = apply_filters('sph_localization_mo', $mofile);
 		load_textdomain('sp', $mofile);
-	} else if (is_admin() || SP()->primitives->strpos_array($_SERVER['QUERY_STRING'], $adminSpecial) !== false) {
+	} else if (is_admin() || SP()->primitives->strpos_array(array_key_exists('QUERY_STRING', $_SERVER) ? $_SERVER['QUERY_STRING'] : '', $adminSpecial) !== false) {
 		$mofile = SP_STORE_DIR.'/'.empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
 		load_textdomain('spa', $mofile);
 	} else {
