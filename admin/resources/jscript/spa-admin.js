@@ -128,9 +128,6 @@
 			/* fade out the msg area */
 			$('#sfmsgspot').fadeOut();
 
-			/* load the busy graphic */
-			$target.html('<img src="' + imagePath + 'sp_WaitBox.gif' + '" />');
-
 			/*  now load the form */
 			$target.load(ajaxURL, function(a, b) {
 				if (a == 'Upgrade') {
