@@ -29,8 +29,6 @@ function spa_admins_manage_admins_form() {
         }
     }
 
-    spa_paint_options_init();
-
     if ($adminrecords || $modrecords) {
         $adminsexist = true;
         spa_paint_open_tab(SP()->primitives->admin_text('Manage Admins and Moderators'), true);
