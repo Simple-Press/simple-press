@@ -1,10 +1,4 @@
 <?php
-/*
-Simple:Press
-Admin themes desktop
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
-*/
 
 if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 	die( 'Access denied - you cannot directly call this file' );
@@ -34,9 +28,6 @@ function spa_themes_list_form() {
 	spa_paint_open_panel();
 
 	spa_paint_spacer();
-	echo '<div class="sf-alert-block sf-info">';
-	echo SP()->primitives->admin_text( 'Themes Folder' ) . ': <b>' . realpath( SP_STORE_DIR . '/' . SP()->plugin->storage['themes'] ) . '</b>';
-	echo '</div>';
 	$strspace   = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	$stroutname = SP()->primitives->admin_text( 'All' ) . '(' . $numThemes . ')';
 	$strout     = "<a href='" . esc_url( add_query_arg( 'themegroup', 'all', SPADMINTHEMES ) ) . "'>$stroutname</a>" . $strspace;
@@ -48,29 +39,26 @@ function spa_themes_list_form() {
 	?>
 
   <fieldset class="sf-fieldset">
-  <form id="theme-filter" method="get" action="<?php echo SPADMINTHEMES; ?>">
-					<input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME . '/admin/panel-themes/spa-themes.php'; ?>" />
-					<div class="sf-panel-body-top">
-					  <div class="sf-panel-body-top-left">
-						<?php
-						// display view links
-						echo $strout;
-						?>
-					  </div>
-						<div class="sf-panel-body-top-right">
-						  <p class="search-box">
-							<label class="screen-reader-text" for="<?php echo esc_attr( 'search_id-search-input' ); ?>">Search Themes:</label>
-							<input type="search" id="<?php echo esc_attr( 'search_id-search-input' ); ?>" name="s" value="<?php _admin_search_query(); ?>" />
-							<?php submit_button( 'Search Themes', '', '', false, array( 'id' => 'search-submit' ) ); ?>
-						  </p>
+      <form id="theme-filter" method="get" action="<?php echo SPADMINTHEMES; ?>">
+          <input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME . '/admin/panel-themes/spa-themes.php'; ?>" />
+          <div class="flex">
+              <div class="maxWidth">
+                  <?php echo $strout;	?>
+              </div>
+              <div>
+                  <p class="search-box">
+                      <label class="screen-reader-text" for="<?php echo esc_attr( 'search_id-search-input' ); ?>">Search Themes:</label>
+                      <input type="search" id="<?php echo esc_attr( 'search_id-search-input' ); ?>" name="s" value="<?php _admin_search_query(); ?>" />
+                  </p>
+              </div>
+              <div>
+                  <?php
+                  echo spa_paint_help( 'themes', $adminhelpfile );
+                  ?>
+              </div>
+          </div>
 
-							<?php
-							echo spa_paint_help( 'themes', $adminhelpfile );
-							?>
-						</div>
-					</div>
-					
-  </form>
+      </form>
   </fieldset>
 	<?php
 	spa_paint_close_panel();
@@ -360,29 +348,6 @@ function spa_themes_list_form() {
 		}
 		echo '</div>';
 		echo '</div>';
-		?>
-		
-		<script>
-			
-			(function($) {
-				$(function() {
-					
-					
-					//$('#sfmaincontainer').off('adminformloaded');
-//					$('#sfmaincontainer').on('adminformloaded', function() {
-//						
-//						
-//					});
-				});
-			
-			}(jQuery))
-			
-			
-		
-		</script>
-					
-		
-		<?php
 
 	} else {
 		echo SP()->primitives->admin_text( 'No other available themes found' );

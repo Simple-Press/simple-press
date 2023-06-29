@@ -201,28 +201,21 @@ function spa_plugins_list_form() {
 		?>
 
 		<fieldset class="sf-fieldset">
-			<div class="sf-show sf-plugins-flt">
-				<div id="sf-plugins-flt-t"><?php echo $stroutname0; ?></div>
-				<div id="sf-plugins-flt-b">
-					<div><?php echo $strout0; ?></div>
-					<div><?php echo $strout1; ?></div>
-					<div><?php echo $strout2; ?></div>
-				</div>
-			</div>
-			<div class="sf-panel-body-top">
-				<div class="sf-panel-body-top-left sf-plugin-hide">
-					<?php
-					// display view links
-					echo $strout;
-					?>
-				</div>
-
-					<p class="search-box">
-						<input type="search" style="width:100%" id="<?php echo esc_attr( 'search_id-search-input' ); ?>" name="s" value="<?php _admin_search_query(); ?>" form="plugin-filter"
-							   placeholder="<?php echo SP()->primitives->admin_text( 'Search plugins' ); ?>"/>
-					</p>
-						<?php echo spa_paint_help( 'plugins' ); ?>
-
+			<div>
+                <div class="flex">
+                    <div class="maxWidth">
+                        <?php echo $strout; ?>
+                    </div>
+                    <div>
+                        <p class="search-box">
+                            <input type="search" style="width:100%" id="<?php echo esc_attr( 'search_id-search-input' ); ?>" name="s" value="<?php _admin_search_query(); ?>" form="plugin-filter"
+                                   placeholder="<?php echo SP()->primitives->admin_text( 'Search plugins' ); ?>"/>
+                        </p>
+                    </div>
+                    <div>
+                        <?php echo spa_paint_help( 'plugins' ); ?>
+                    </div>
+                </div>
 			</div>
 		</fieldset>
 		<?php
@@ -230,9 +223,8 @@ function spa_plugins_list_form() {
 		spa_paint_close_panel();
 		?>
 
-		<div class="sf-plugin-hide">
-
-			<table class="wp-list-table widefat plugins">
+		<div class="">
+            <table class="wp-list-table widefat plugins">
 				<thead>
 				<tr class="sf-plugin-hide">
 					<th class='manage-column check-column'></th>

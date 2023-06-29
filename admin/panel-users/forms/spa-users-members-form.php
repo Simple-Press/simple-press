@@ -503,7 +503,7 @@ function spa_users_members_form() {
 					var order_params = [];
 
 					var url_params = href.split('?')[1].split('&');
-					
+
 					$.each( url_params, function() {	
 					var name = this.split('=')[0];
 						if( name == 'orderby' || name == 'order' ) {

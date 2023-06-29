@@ -432,25 +432,6 @@
 		}
 	};
         
-        themesGrid = {
-                init: function() {
-                        var _this = this;
-                        setTimeout( function() {
-                                _this.setup();
-                        }, 100 )
-                },
-                
-                setup : function() {
-                        if( $('.spThemeContainer').length > 0 ) {
-                                spj.resizeThemeItems();
-                                
-                                window.addEventListener( 'resize', spj.resizeThemeItems );
-                        } else {
-                                window.removeEventListener( 'resize', spj.resizeThemeItems )
-                        }
-                }
-        };
-
 	/*****************************
 	 admin usegroups event handlers
 	 *****************************/
@@ -637,7 +618,6 @@
 			profileAvatarUpdatePriorities.init();
 			themesDeleteConfirm.init();
 			themesUpload.init();
-			themesGrid.init();
 			ugShowMembers.init();
 			setForumOptions.init();
 			setForumSequence.init();
