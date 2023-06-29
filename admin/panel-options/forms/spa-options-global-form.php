@@ -24,11 +24,9 @@ function spa_options_global_form() {
     <form action="<?php echo $ajaxURL; ?>" method="post" id="sfglobalform" name="sfglobal">
 		<?php echo sp_create_nonce( 'forum-adminform_global' ); ?>
 		<?php
-		spa_paint_options_init();
-
 		#== GLOBAL Tab ============================================================
 
-		spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/ SP()->primitives->admin_text( 'Global Settings' ) );
+		spa_paint_open_tab(SP()->primitives->admin_text( 'Global Settings' ) );
 
 		spa_paint_open_panel();
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'Lock Down Forum' ), true, 'lock-down-forum' );

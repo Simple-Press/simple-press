@@ -17,7 +17,7 @@ function spa_users_members_form() {
 
 	spa_paint_options_init();
 
-	spa_paint_open_tab(/*SP()->primitives->admin_text('Users').' - '.*/ SP()->primitives->admin_text( 'Member Information' ), true );
+	spa_paint_open_tab(SP()->primitives->admin_text( 'Member Information' ), true );
 	spa_paint_open_panel();
 	spa_paint_open_fieldset( SP()->primitives->admin_text( 'Member Information' ), false, '', false );
 	if ( ! class_exists( 'SP_List_Table' ) ) {
@@ -39,17 +39,13 @@ function spa_users_members_form() {
 
 		function get_columns() {
 			$columns = array(
-				'cb'              => '<input type="checkbox" />',
-				'avatar'          => SP()->primitives->admin_text( 'Avatar' ),
 				'user_id'         => SP()->primitives->admin_text( 'ID' ),
-				'display_name'    => SP()->primitives->admin_text( 'Display Name' ),
-				'user_login'      => SP()->primitives->admin_text( 'Login' ),
+				'display_name'    => SP()->primitives->admin_text( 'User' ),
 				'posts'           => SP()->primitives->admin_text( 'Posts' ),
 				'memberships'     => SP()->primitives->admin_text( 'Memberships' ),
 				'rank'            => SP()->primitives->admin_text( 'Forum Rank' ),
-				'user_registered' => SP()->primitives->admin_text( 'Registered On' ),
+				'user_registered' => SP()->primitives->admin_text( 'Registered' ),
 				'lastvisit'       => SP()->primitives->admin_text( 'Last Visit' ),
-				'more'            => SP()->primitives->admin_text( 'More' ),
 			);
 
 			return $columns;
@@ -58,13 +54,11 @@ function spa_users_members_form() {
 		public function get_sortable_columns() {
 			$sortable_columns = array(
 				'user_id'         => array( 'user_id', true ),
-				'avatar'          => array( 'avatar', false ),
 				'user_login'      => array( 'user_login', false ),
 				'display_name'    => array( 'display_name', false ),
 				'user_registered' => array( 'user_registered', false ),
 				'lastvisit'       => array( 'lastvisit', false ),
 				'posts'           => array( 'posts', false ),
-				'memberships'     => array( 'memberships', false ),
 			);
 
 			return $sortable_columns;
@@ -72,7 +66,7 @@ function spa_users_members_form() {
 
 		function get_bulk_actions() {
 			$actions = array(
-				'delete' => SP()->primitives->admin_text( 'Delete' )
+				// 'delete' => SP()->primitives->admin_text( 'Delete' )
 			);
 
 			return $actions;
@@ -83,7 +77,7 @@ function spa_users_members_form() {
 		}
 
 		function get_table_classes() {
-			return array( 'widefat', 'fixed', 'striped', $this->_args['plural'], 'spMobileTable1280' );
+			return array( 'widefat', 'striped', $this->_args['plural'], 'spMobileTable1280' );
 		}
 
 		function display_rows() {
@@ -100,36 +94,37 @@ function spa_users_members_form() {
 						$attributes = "class='$classes' $data";
 
 						switch ( $column_name ) {
-							case 'cb':
-								echo '<td scope="row" class="check-column">' . sprintf( '<input style="left:0; position:relative" type="checkbox" name="users[]" value="%s" />', $rec['user_id'] ) . '</td>';
-								break;
 
 							default;
 								echo "<td $attributes>";
 								switch ( $column_name ) {
 									case 'user_id':
 										echo $rec['user_id'];
-
-										$nonce       = wp_create_nonce( 'bulk-users' );
-										$site        = wp_nonce_url( SPAJAXURL . 'profile&amp;targetaction=spa_popup&amp;user=' . $rec['user_id'], 'profile' );
-										$title       = SP()->primitives->admin_text( 'Member Profile' );
-										$user_action = ( is_multisite() ) ? 'remove' : 'delete';
-										
-										$site_groups        = wp_nonce_url( SPAJAXURL . 'membergroup&amp;user=' . $rec['user_id'], 'users-loader' );
-										$title_group       = SP()->primitives->admin_text( 'Member Groups' );
-										
-										$actions     = array(
-											'edit'    => '<a href="' . admin_url( 'user-edit.php?user_id=' . $rec['user_id'] ) . '&amp;wp_http_referer=admin.php?page=' . SP_FOLDER_NAME . '/admin/panel-users/spa-users.php"><span class="sf-icon sf-blue sf-edit"></span></a>',
-											'delete'  => '<a href="' . admin_url( 'users.php?action=' . $user_action . '&amp;user=' . $rec['user_id'] . "&amp;_wpnonce=$nonce&amp;wp_http_referer=admin.php?page=" . SP_FOLDER_NAME . "/admin/panel-users/spa-users.php" ) . '"><span class="sf-icon sf-blue sf-delete"></span></a>',
-											'profile' => '<a id="memberprofile' . $rec['user_id'] . '" class="spOpenDialog" data-site="' . $site . '" data-label="' . $title . '" data-width="750" data-height="0" data-align="center"><span class="sf-icon sf-blue sf-profiles"></span></a>',
-											'groups' => '<a id="membergroup' . $rec['user_id'] . '" class="spOpenDialog" data-site="' . $site_groups . '" data-label="' . $title_group . '" data-width="750" data-height="0" data-align="center"><span class="sf-icon sf-user-groups sf-blue"></span></a>'
-										);
-
-										echo $this->row_actions( $actions );
 										break;
 
 									case 'display_name':
-										echo SP()->displayFilters->name( $rec['display_name'] );
+                                        echo '<div style="display: flex;">';
+                                            echo '<div style="margin-right: 20px;">';
+                                                echo sp_UserAvatar( "link=none&context=user&echo=0", $rec['user_id'] );
+                                            echo '</div>';
+                                            echo '<div>';
+                                                $nonce       = wp_create_nonce( 'bulk-users' );
+                                                $user_action = ( is_multisite() ) ? 'remove' : 'delete';
+
+
+                                                $actions  = [
+                                                    //'edit'    => '<a href="' . admin_url( 'user-edit.php?user_id=' . $rec['user_id'] ) . '&amp;wp_http_referer=admin.php?page=' . SP_FOLDER_NAME . '/admin/panel-users/spa-users.php"><span class="sf-icon sf-blue sf-edit"></span></a>',
+                                                    'delete'  => '<a href="' . admin_url( 'users.php?action=' . $user_action . '&amp;user=' . $rec['user_id'] . "&amp;_wpnonce=$nonce&amp;wp_http_referer=admin.php?page=" . SP_FOLDER_NAME . "/admin/panel-users/spa-users.php" ) . '"><span class="sf-icon sf-blue sf-delete"></span></a>',
+                                                ];
+                                                echo '<a href="' . admin_url( 'user-edit.php?user_id=' . $rec['user_id'] ) . '&amp;wp_http_referer=admin.php?page=' . SP_FOLDER_NAME . '/admin/panel-users/spa-users.php">';
+                                                    echo SP()->displayFilters->name( $rec['display_name'] ) . '<br>';
+                                                echo '</a>';
+                                                echo $rec['user_login'];
+                                            echo '</div>';
+                                            echo '<div>';
+                                                echo $this->row_actions( $actions );
+                                            echo '</div>';
+                                        echo '</div>';
 										break;
 
 									case 'user_registered':
@@ -140,14 +135,6 @@ function spa_users_members_form() {
 
 									case 'posts':
 										echo max( $rec['posts'], 0 );
-										break;
-									case 'avatar':
-										//echo "<div style='max-width:16px;'>".get_avatar($rec['user_id'],  16)."</div>";
-										$avatarClass = "sf-Avatar";
-										$imgClass    = "sf-imgClass";
-										$avatarSize  = 40;
-										echo "<style>.sf-Avatar,.sf-imgClass{border-radius: 50%;}</style>";
-										echo sp_UserAvatar( "tagClass=$avatarClass&size=$avatarSize&imgClass=$imgClass&link=none&context=user&echo=0", $rec['user_id'] );
 										break;
 									default:
 										if(isset($rec[ $column_name ]))
@@ -254,11 +241,11 @@ function spa_users_members_form() {
 
 			$class           = empty( $usergroup ) ? ' class="current"' : '';
 			$ug_links        = array();
-			$ug_links['all'] = "<a href='" . SPADMINUSER . "'$class>" . SP()->primitives->admin_text( 'All Members' ) . " <span class='count'>($members)</span></a>";
+			$ug_links['all'] = "<a href='" . SPADMINUSER . "'$class>" . SP()->primitives->admin_text( 'All Members' ) . " ($members)</a>";
 			foreach ( $usergroups as $ug ) {
 				$class                           = ( $ug->usergroup_id == $usergroup ) ? ' class="current"' : '';
 				$count                           = SP()->DB->count( SPMEMBERSHIPS, "usergroup_id = $ug->usergroup_id" );
-				$name                            = $ug->usergroup_name . ' <span class="count">(' . $count . ')</span>';
+				$name                            = $ug->usergroup_name . ' (' . $count . ')';
 				$ug_links[ $ug->usergroup_name ] = "<a href='" . esc_url( add_query_arg( 'usergroup', $ug->usergroup_id, SPADMINUSER ) ) . "'$class>$name</a>";
 			}
 
@@ -266,12 +253,13 @@ function spa_users_members_form() {
                             FROM ' . SPMEMBERS . '
                     		WHERE user_id NOT IN (SELECT user_id FROM ' . SPMEMBERSHIPS . ') AND admin=0', 'var' );
 			$class                     = ( $usergroup === - 1 ) ? ' class="current"' : '';
-			$ug_links['No Membership'] = "<a href='" . esc_url( add_query_arg( 'usergroup', - 1, SPADMINUSER ) ) . "'$class>" . SP()->primitives->admin_text( 'No Membership' ) . " <span class='count'>($nomembership)</span></a>";
+			$ug_links['No Membership'] = "<a href='" . esc_url( add_query_arg( 'usergroup', - 1, SPADMINUSER ) ) . "'$class>" . SP()->primitives->admin_text( 'No Membership' ) . " ($nomembership)</a>";
 
 			return $ug_links;
 		}
 
 		function prepare_items() {
+
 			# init the class
 			$columns               = $this->get_columns();
 			$hidden                = array();
@@ -395,85 +383,78 @@ function spa_users_members_form() {
 			# fill class items
 			$this->items = $members;
 		}
-	}
+
+        function pagination($which)
+        {
+            return null;
+        }
+
+        function views()
+        {
+            $views = $this->get_views();
+            /**
+             * Filters the list of available list table views.
+             *
+             * The dynamic portion of the hook name, `$this->screen->id`, refers
+             * to the ID of the current screen, usually a string.
+             *
+             * @since 3.5.0
+             *
+             * @param array $views An array of available list table views.
+             */
+            $views = apply_filters("views_{$this->screen->id}", $views);
+
+            if (empty($views))
+                return;
+
+            $this->screen->render_screen_reader_content('heading_views');
+
+            echo "<div class='spGroupList'>\n";
+            foreach ($views as $class => $view) {
+                echo $view;
+            }
+            echo "</div>";
+        }
+    }
 
 	# build the class
 	$membersTable = new SP_Members_Table();
-
-	# any actions to process?
-	switch ( $membersTable->current_action() ) {
-		case 'delete':
-			$userids = array_map( 'intval', (array) $_REQUEST['users'] );
-			$url     = self_admin_url( 'users.php?action=delete&users[]=' . implode( '&users[]=', $userids ) . '&wp_http_referer=admin.php?page=' . SP_FOLDER_NAME . '/admin/panel-users/spa-users.php' );
-			$url     = str_replace( '&amp;', '&', wp_nonce_url( $url, 'bulk-users' ) );
-			SP()->primitives->redirect( $url );
-			exit();
-	}
 
 	# going to display, lets prep items
 	$membersTable->prepare_items();
 	?>
     <form id="members-filter" method="get" action="<?php echo SPADMINUSER; ?>">
         <input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME . '/admin/panel-users/spa-users.php'; ?>"/>
-        <div class="sf-panel-body-top">
+        <div class="">
+            <div style="display: flex">
+                <div style="width: 90%">
+                    <?php
+                    $views = $membersTable->get_views();
+                    $views = apply_filters("views_{$membersTable->screen->id}", $views);
+                    if (empty($views))
+                        return;
+                    $membersTable->screen->render_screen_reader_content('heading_views');
 
-			<?php
-            $views = $membersTable->get_views();
-			$views = apply_filters("views_{$membersTable->screen->id}", $views);
-			if (empty($views))
-				return;
-			$membersTable->screen->render_screen_reader_content('heading_views');
-
-			echo '<div class="sf-plugin-hide">';
-                echo "<ul class='subsubsub-desk'>\n";
-
-                foreach ($views as $class => $view) {
-                    $view = str_replace('All Members','All', $view);
-                    $views[$class] = "\t<li class='$class'>$view";
-                }
-                echo implode(" </li>\n", $views) . "</li>\n";
-
-			    echo "</ul>";
-			echo '</div>';
-
-			# display view links
-			$membersTable->views();
-			?>
-            <div class="sf-panel-body-top-right sf-plugin-hide">
-                <p class="search-box">
-                    <input type="search" id="<?php echo esc_attr( 'search_id' ); ?>" value="<?php _admin_search_query(); ?>" form="plugin-filter"
-                           placeholder="<?php echo SP()->primitives->admin_text( 'Search members' ) ?>"/>
-                </p>
-				<?php echo spa_paint_help( 'users-info', $adminhelpfile ); ?>
-            </div>
-
-            <div class="sf-panel-body-top-right sf-showm sf-width-100-per">
-                <p class="search-box">
-                    <input type="search" class="" id="<?php echo esc_attr( 'search_id_mobile' ); ?>" value="<?php _admin_search_query(); ?>" form="plugin-filter"
-                           placeholder="<?php echo SP()->primitives->admin_text( 'Search members' ) ?>"/>
-                </p>
-                <div class="sf-pt-15">
-					<?php echo spa_paint_help( 'users-info', $adminhelpfile ); ?>
+                    # display view links
+                    $membersTable->views();
+                    ?>
                 </div>
-            </div>
-				
-				
+                <div>
+                    <input type="search" id="<?php echo esc_attr( 'search_id' ); ?>" value="<?php _admin_search_query(); ?>" form="plugin-filter"
+                               placeholder="<?php echo SP()->primitives->admin_text( 'Search members' ) ?>"/>
+                </div>
+                <div>
+                    <?php echo spa_paint_help( 'users-info', $adminhelpfile ); ?>
+                </div>
+            </divdisp>
 			<input type="hidden" name="s" value="<?php _admin_search_query(); ?>" />
         </div>
-        <div class="sf-plugin-hide sf-plugin-hide-users">
+
+        <div class="">
             <?php
             # display the members list table for desktop
             $membersTable->display();
             ?>
-        </div>
-
-        <div class="sf-showm mobile_rows_container">
-            <input type="checkbox" name="cbhead" id="cbhead_mob"/>
-            <label class="wp-core-ui sf-label-select-all" for='cbhead_mob'>SELECT ALL</label>
-                <?php
-                # display the members list table for mobile
-                $membersTable->display_mobile_rows();
-                ?>
         </div>
     </form>
 	<?php
@@ -481,43 +462,42 @@ function spa_users_members_form() {
 	$maxItemsOnPage = $membersTable->per_page;
 	$countPages     = ceil( $countItems / $maxItemsOnPage );
 	$pageNum        = $membersTable->get_pagenum();
-	$pagination     = spa_pagination( $countPages, $pageNum, 8, 2 ); ?>
+	$pagination     = spa_pagination( $countPages, $pageNum, 8, 2 );
+    $userGroupId    = array_key_exists('usergroup', $_GET) ? $_GET['usergroup'] : 1; ?>
 	<?php if ( $pagination ): ?>
         <div class="sf-pagination">
             <span class="sf-pagination-links">
                 <a class="sf-first-page spLoadAjax" href="javascript:void(0);"
-                   data-target=".sf-full-form" 
+                   data-target="#sfmaincontainer"
 				   data-after_cb="after_users_listing" 
 				   data-img="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>"
-                   data-url="<?php echo wp_nonce_url( SPAJAXURL . "users-loader&amp;loadform=member-info&amp;ug_no=1&amp;paged=1&amp;filter={$filter}", 'users-loader' ) ?>"
+                   data-url="<?php echo wp_nonce_url( SPAJAXURL . "users-loader&amp;loadform=member-info&amp;usergroup=".$userGroupId."&amp;paged=1&amp;", 'users-loader' ) ?>"
                 ></a>
                    <?php foreach ( $pagination as $n => $v ): ?>
                        <a class="spLoadAjax<?php echo $pageNum == $n ? ' sf-current-page' : '' ?>" href="javascript:void(0);"
-                          data-target=".sf-full-form" 
+                          data-target="#sfmaincontainer"
 						  data-after_cb="after_users_listing" 
 						  data-img="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>"
-                          data-url="<?php echo wp_nonce_url( SPAJAXURL . "users-loader&amp;loadform=member-info&amp;ug_no=1&amp;paged={$n}&amp;filter={$filter}", 'users-loader' ) ?>"
+                          data-url="<?php echo wp_nonce_url( SPAJAXURL . "users-loader&amp;loadform=member-info&amp;usergroup=".$userGroupId."&amp;paged={$n}&amp;", 'users-loader' ) ?>"
                        ><?php echo $v ?></a>
                    <?php endforeach ?>
                 <a class="sf-last-page spLoadAjax" href="javascript:void(0);"
-                   data-target=".sf-full-form" 
+                   data-target="#sfmaincontainer"
 				   data-after_cb="after_users_listing" 
 				   data-img="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>"
-                   data-url="<?php echo wp_nonce_url( SPAJAXURL . "users-loader&amp;loadform=member-info&amp;ug_no=1&amp;paged={$countPages}&amp;filter={$filter}", 'users-loader' ) ?>"
+                   data-url="<?php echo wp_nonce_url( SPAJAXURL . "users-loader&amp;loadform=member-info&amp;usergroup=".$userGroupId."&amp;paged={$countPages}&amp;", 'users-loader' ) ?>"
                 ></a>
             </span>
         </div>
 	<?php endif ?>
 
     <script>
-		
 		(function($) {
 			$(function() {
-
 				var location_url = $('#members-filter').attr('action') + '&' + $('#members-filter').find('[name=s]').serialize() + '&';
 				
 				// Update url of each column header with correct link
-				$('#members-filter > .sf-plugin-hide-users table thead th.sortable a').each( function() {
+				$('#members-filter table thead th.sortable a').each( function() {
 
 					var href = $(this).attr('href');
 					var order_params = [];
@@ -534,188 +514,20 @@ function spa_users_members_form() {
 					href = location_url + order_params.join('&');
 					$(this).attr('href', href);
 				});
-				
-				$('.search-box input[type="search"]').keyup( function(e) {
-			
-					if( e.which == 13 ) {
-						$('select[name^="action"]').val('-1');
 
+                // Listen for key "enter" in search form
+				$('#search_id').keyup( function(e) {
+					if( e.which == 13 ) {
 						$('input[type=hidden][name=s]').val($(this).val());
 						$(this).closest('form').submit();
 					}
-
-				});
-				
-				
-				
-				$('#cbhead_mob').on('change', function() {
-					if( $(this).prop('checked') ) {
-						$('.spMobileTableDataUsers .check-column input[type=checkbox]').prop('checked', true );
-					} else {
-						$('.spMobileTableDataUsers .check-column input[type=checkbox]').prop('checked', false );
-					}
-				});
-				
-				
-				$('.spMobileTableDataUsers .check-column input[type=checkbox]').on('change', function() {
-					if( !$(this).prop('checked') ) {
-						$('#cbhead_mob').prop( 'checked', false );
-					}
-					
-					
-					if( $(this).prop('checked') ) {
-						
-						if( $('.spMobileTableDataUsers .check-column input[type=checkbox]:not(:checked)').length === 0 ) {
-							$('#cbhead_mob').prop( 'checked', true );
-						}
-						
-					}
-					
 				});
 			});
-				
-			
 }(jQuery))
-		
-		
-		
 		spj.after_users_listing();
-
-        ///////////////////////////////////////////////////////////////////////////////
-        // More Column
-        if (jQuery(window).width() < 768) putDiv();
-        var $action = jQuery('.row-actions');
-        jQuery('.spMobileTableDataUsers .column-more').each(function (index) {
-            jQuery(this).addClass('sf-hide-mobile');
-            jQuery(this).append($action[index]);
-            jQuery(this).append("<div class=\"drop-down\"><span class=\"sf-icon sf-gray sf-more\"></div>");
-        });
-
-        jQuery('.column-more .row-actions').toggleClass('hide');
-
-        jQuery('.drop-down').on('click', function () {
-            jQuery(this).parent().find('.row-actions').toggleClass('hide');
-        });
-        var paggs = '<div class="pagginator"><ul></ul></div>';
-        ////////////////////////////////////////////////////////////////////////////////
-        // DropdownMenu
-        jQuery('#members-filter > table').insertAfter("#members-filter > .sf-panel-body-top");
-
-
-
-        jQuery('<div class="sf-showm sf-actions sf-width-100-per sf-dropdown"></div>').insertBefore('#members-filter .sf-panel-body-top .subsubsub');
-        jQuery('#members-filter .sf-panel-body-top .subsubsub').appendTo('#members-filter .sf-panel-body-top .sf-dropdown');
-
-        jQuery('<div class="sf-dropdown-cur">'+ jQuery('#members-filter .subsubsub .current').text()  +'</div>').insertBefore('#members-filter .sf-panel-body-top .sf-dropdown .subsubsub');
-
-
-
-
-        jQuery('#members-filter .sf-panel-body-top .sf-dropdown .sf-dropdown-cur').on('click',function(){
-            jQuery('#members-filter .sf-panel-body-top .subsubsub').toggleClass('sf-hide-full');
-        });
-
-        if (jQuery(window).width() < 768) {
-            jQuery('.sf-dropdown .subsubsub').addClass('sf-hide-full');
-        } else {
-            jQuery('.sf-dropdown .subsubsub').removeClass('sf-hide-full');
-        }
-        ;
-        jQuery('#cb-select-all-1').on('change', function (event) {
-            if (jQuery(this)[0]["checked"]) {
-                jQuery('.spMobileTableDataUsers .check-column input').each(function (index) {
-                    jQuery(this)[0]["checked"] = true;
-                })
-            } else {
-                jQuery('.spMobileTableDataUsers .check-column input').each(function (index) {
-                    jQuery(this)[0]["checked"] = false;
-                })
-            }
-            ;
-        });
-        jQuery(window).on('resize', function () {
-            if (jQuery(window).width() < 768) {
-                putDiv();
-            } else {
-                delDiv()
-            }
-            ;
-        });
-
-        function delDiv() {
-            if (jQuery(".avatar-text-lable").length != 0) {
-                jQuery(".avatar-text-lable").remove();
-            }
-            ;
-            if (jQuery(".login-text-lable").length != 0) {
-                jQuery(".login-text-lable").remove();
-            }
-            ;
-            if (jQuery(".name-text-lable").length != 0) {
-                jQuery(".name-text-lable").remove();
-            }
-            ;
-            if (jQuery(".reg-text-lable").length != 0) {
-                jQuery(".reg-text-lable").remove();
-            }
-            ;
-            if (jQuery(".visit-text-lable").length != 0) {
-                jQuery(".visit-text-lable").remove();
-            }
-            ;
-            if (jQuery(".posts-text-lable").length != 0) {
-                jQuery(".posts-text-lable").remove();
-            }
-            ;
-            if (jQuery(".member-text-lable").length != 0) {
-                jQuery(".member-text-lable").remove();
-            }
-            ;
-            if (jQuery(".rank-text-lable").length != 0) {
-                jQuery(".rank-text-lable").remove();
-            }
-            ;
-
-        }
-
-        function putDiv() {
-            if (jQuery(".avatar-text-lable").length == 0) {
-                jQuery("<div class=\"avatar-text-lable\">Avatar</div>").insertBefore(".spMobileTableDataUsers [data-label=\"Avatar\"]");
-            }
-            ;
-            if (jQuery(".name-text-lable").length == 0) {
-                jQuery("<div class=\"name-text-lable\">Display Name</div>").insertAfter(".spMobileTableDataUsers .avatar-text-lable");
-            }
-            ;
-            if (jQuery(".login-text-lable").length == 0) {
-                jQuery("<div class=\"login-text-lable\">User Login</div>").insertBefore(".spMobileTableDataUsers [data-label=\"Login\"]");
-            }
-            ;
-            if (jQuery(".posts-text-lable").length == 0) {
-                jQuery("<div class=\"posts-text-lable\">Posts</div>").insertAfter(".spMobileTableDataUsers .login-text-lable");
-            }
-            ;
-            if (jQuery(".member-text-lable").length == 0) {
-                jQuery("<div class=\"member-text-lable\">Memberships</div>").insertBefore(".spMobileTableDataUsers [data-label=\"Memberships\"]");
-            }
-            ;
-            if (jQuery(".rank-text-lable").length == 0) {
-                jQuery("<div class=\"rank-text-lable\">Forum Rank</div>").insertAfter(".spMobileTableDataUsers .member-text-lable");
-            }
-            ;
-            if (jQuery(".reg-text-lable").length == 0) {
-                jQuery("<div class=\"reg-text-lable\">Registered</div>").insertBefore(".spMobileTableDataUsers [data-label=\"Registered On\"]");
-            }
-            ;
-            if (jQuery(".visit-text-lable").length == 0) {
-                jQuery("<div class=\"visit-text-lable\">Last Visit</div>").insertAfter(".spMobileTableDataUsers .reg-text-lable");
-            }
-            ;
-        };
     </script>
 	<?php
 	spa_paint_close_fieldset();
-	echo '<div class="sfform-panel-spacer"></div>';
 	spa_paint_close_panel();
 
 	do_action( 'sph_users_members_panel' );

@@ -1149,36 +1149,6 @@ img.sf-iconset-icon-img{
     width: 150px;
     z-index: 999;
 }
-#sfmaincontainer .sf-fieldset .subsubsub-desk,
-#sfmaincontainer .sf-fieldset .subsubsub {
-    width: auto;
-    margin: 17px 0 0 0;
-    font-size: 14px;
-}
-#sfmaincontainer .sf-fieldset .subsubsub-desk li,
-#sfmaincontainer .sf-fieldset .subsubsub li {
-    float: left;
-    width: auto;
-    margin-right: 20px;
-}
-#sfmaincontainer .sf-fieldset .subsubsub-desk a,
-#sfmaincontainer .sf-fieldset .subsubsub a {
-    line-height: 19px;
-    margin: 0;
-    padding: 0;
-    color: #9D9EA0;
-}
-#sfmaincontainer .sf-fieldset .subsubsub-desk a.current,
-#sfmaincontainer .sf-fieldset .subsubsub a.current {
-    color: #257EA1;
-}
-#sfmaincontainer .sf-fieldset .subsubsub-desk a .count,
-#sfmaincontainer .sf-fieldset .subsubsub-desk a.current .count,
-#sfmaincontainer .sf-fieldset .subsubsub a .count,
-#sfmaincontainer .sf-fieldset .subsubsub a.current .count {
-    font-weight: inherit;
-    color: inherit;
-}
 
 /*#sfmaincontainer .sf-fieldset .tablenav {
     display: none;
@@ -1206,26 +1176,7 @@ img.sf-iconset-icon-img{
     margin-bottom: 10px;
 }
 
-#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav {
-    display: initial;
-}
-
-#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .tablenav-pages {
-    display: none;
-}
-
-#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions select {
-    min-width: 150px;
-    width: auto;
-    margin: 0;
-}
-
-#sfmaincontainer .sf-fieldset .sf-plugin-hide-users .tablenav .actions.bulkactions {
-    margin: 13px 0;
-}
-
-#sfmaincontainer .sf-panel-body-top-right .sf-input-group,
-#sfmaincontainer .sf-panel-body-top-right .search-box {
+#sfmaincontainer .sf-panel-body-top-right .sf-input-group {
     float: left;
     width: 200px;
     margin: 5px 20px 5px 0;
@@ -1235,15 +1186,6 @@ img.sf-iconset-icon-img{
 }
 #sfmaincontainer .sf-panel-body-top-right .sf-input-group.sf-input-small {
     width: 220px;
-}
-#sfmaincontainer .sf-panel-body-top-right .search-box input[type="search"] {
-    height: 40px;
-    margin: 0;
-    -webkit-border-radius: 20px;
-    border-radius: 20px;
-}
-#sfmaincontainer .sf-panel-body-top-right .search-box #search-submit {
-    display: none;
 }
 
 #sfmaincontainer .sf-link {
@@ -1981,10 +1923,6 @@ body .spMobileTableData .row-actions > span {
     left: 25px;
     top: -20px;
 }
-#sfmaincontainer .sf-fieldset #members-filter .subsubsub-desk li,
-#sfmaincontainer .sf-fieldset #members-filter .subsubsub li {
-    width: auto;
-}
 .sf-dropdown-cur {
     background-color: #EAF0F4;
     padding: 15px;
@@ -2041,12 +1979,6 @@ body .spMobileTableData .row-actions > span {
     } */
     .sf-hide-mobile{
         display: none!important;
-    }
-    #sfmaincontainer .sf-fieldset #members-filter .subsubsub-desk li,
-    #sfmaincontainer .sf-fieldset #members-filter .subsubsub li {
-        width: 100%;
-        text-align: left;
-        padding: 5px 15px;
     }
     .spMobileTableData {
         grid-template-columns: 1fr 1fr;
@@ -2167,14 +2099,6 @@ body .spMobileTableData .row-actions > span {
     }
     #sfmaincontainer .sf-panel-body+.sf-panel-body {
         margin-top: -20px;
-    }
-    #sfmaincontainer .sf-panel-body-top-right .search-box {
-        position: relative;
-        width: calc(100% - 40px);
-        height: auto;
-    }
-    #sfmaincontainer .sf-panel-body-top-right .search-box input[type="search"] {
-        border-radius: 3px;
     }
     #sfmaincontainer ul.sf-list {
         overflow: hidden;
@@ -2894,64 +2818,11 @@ body .spMobileTableDataUsers .row-actions a {
 
 }
 
-#sf-root-wrap .search-box {
-    margin-bottom: 20px;
-}
-
 #sf-root-wrap input[type=search] {
     width: auto;
     margin-top: 0 !important;
     margin-right: 6px;
 }
-
-
-
-
-/* promotions */
-.spa-promo-row {
-    width: 100%;
-    margin-top: 2em;
-}
-
-.sfsidebutton#sfaccPromotions a {
-    color: #4BB6A2;
-}
-
-.spa-promo-row:not(.spa-promo-row1) {
-    display: flex;
-    justify-content: space-around;
-}
-
-.spa-promo-col {
-    float: left;
-    max-width: 50%;
-}
-
-.spa-promo-button {
-    border: solid;
-    border-width: 1px;
-    padding: 1em;
-    text-align: center;
-    border-color:#00a0d2;
-    font-size: 1.25em;
-    max-width: 40%;
-}
-
-.spa-promo-box {
-    background-color: white;
-    border-radius: 5px;
-    padding: 1em;
-    margin-right: 1em;
-    border:solid;
-    border-width:1px;
-    border-color: white;
-}
-
-@media only screen and (max-width: 600px) {
-    .spa-promo-row {
-    }
-}
-/* End promotions */
 
 /* Handle the upload file name in the themes and plugins uploader */
 .sf-upload-file-name {
@@ -3183,4 +3054,13 @@ body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-st
         This is not supported by WP by default.
      */
     display: none;
+}
+
+.spGroupList a {
+    margin-right: 10px;
+}
+.spGroupList a.current,
+.spGroupList a:hover.current {
+    font-weight: bold;
+    color: black;
 }
