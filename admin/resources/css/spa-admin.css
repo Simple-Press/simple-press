@@ -582,11 +582,6 @@ $Rev:2099 $
     color: black;
 }
 
-
-#sf-root-wrap .sf-full-form .sf-panel+.sf-panel {
-    margin-top: 60px;
-}
-
 #sf-root-wrap #sfmaincontainer #sfstorageform .sf-panel+.sf-panel {
     margin: 0;
 }
