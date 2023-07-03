@@ -83,7 +83,6 @@ function spa_forums_featured_image_form() {
             <fieldset class="sf-fieldset">
                 <div class="sf-panel-body-top">
                     <h4><?php echo SP()->primitives->admin_text('Forum Featured Image Upload')?></h4>
-                    <span><?php echo SP()->primitives->admin_text('')?></span>
                     <?php
                         $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/';
                         spa_paint_file(SP()->primitives->admin_text('Select image file to upload'), 'newimagefile', false, true, $loc);
