@@ -746,7 +746,7 @@ $Rev:2099 $
 }
 #sf-root-wrap .sf-icon.sf-toolbox {
     mask-image: url("../icons/Toolbox.svg");
-    -webkit-ask-image: url("../icons/Toolbox.svg");
+    -webkit-mask-image: url("../icons/Toolbox.svg");
 }
 #sfmaincontainer ul.sf-list li .sf-list-item .sf-item-controls .sf-item-edit,
 #sf-root-wrap .sf-icon.sf-expand {
