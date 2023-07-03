@@ -126,9 +126,12 @@ function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $
 	echo '</div>';
 }
 
-function spa_paint_single_input($name, $value, $disabled=false, $css_classes = '' ) {
+function spa_paint_single_input($name, $value, $disabled=false, $css_classes = '', $place_holder = false ) {
 	$field_classes = "{$css_classes}";
 	echo "<input type='text' class='wp-core-ui $field_classes' name='$name' value='".esc_attr($value)."' ";
+    if ($place_holder !== false) {
+        echo 'placeholder="' . $place_holder . '" ';
+    }
 	if ($disabled == true) echo "disabled='disabled' ";
 	echo "/>";
 }
