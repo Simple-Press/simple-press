@@ -170,7 +170,7 @@ function spa_paint_number($label, $name, $value, $disabled=false, $large=false) 
 	echo '</div>';
 }
 
-function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1, $placeholder=''): void
+function spa_paint_textarea($label, $name, $value, $submessage='', $rows=5, $placeholder=''): void
 {
 	echo "<div class='sf-form-row'>\n";
 	echo "<label>\n";
@@ -183,7 +183,7 @@ function spa_paint_textarea($label, $name, $value, $submessage='', $rows=1, $pla
 	echo '</div>';
 }
 
-function spa_paint_wide_textarea($label, $name, $value, $submessage='', $rows=1, $placeholder='') {
+function spa_paint_wide_textarea($label, $name, $value, $submessage='', $rows=5, $placeholder='') {
     spa_paint_textarea($label, $name, $value, $submessage, $rows, $placeholder);
 }
 

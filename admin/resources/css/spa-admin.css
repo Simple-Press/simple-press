@@ -495,6 +495,13 @@ $Rev:2099 $
     font-weight: normal;
 }
 
+#sf-root-wrap .sf-form-row input[type=text] {
+    width: 300px;
+}
+#sf-root-wrap .sf-form-row textarea {
+    width: 500px;
+}
+
 #sf-root-wrap label+input[type=text],
 #sf-root-wrap label+input[type=search],
 #sf-root-wrap label+input[type=radio],
@@ -520,8 +527,6 @@ $Rev:2099 $
 #sf-root-wrap .sf-after-label {
     display: inline-block;
 }
-
-
 
 #sf-root-wrap strong {
     font-weight: 600;
