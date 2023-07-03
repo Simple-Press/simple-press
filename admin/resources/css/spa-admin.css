@@ -3061,3 +3061,10 @@ body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-st
 #sf-root-wrap .flex .maxWidth {
    width: 100%;
 }
+
+#sf-root-wrap .sf-licensing-instructions-wrap ul {
+    padding-left: 20px;
+}
+#sf-root-wrap .sf-licensing-instructions-wrap ul li {
+    list-style: disc;
+}
