@@ -560,7 +560,7 @@ $Rev:2099 $
     margin: 1px 5px;
     padding: 12px 21px 11px 20px;
     background: var(--sp-primary-color);
-    border-radius: 50px;
+    border-radius: 6px;
     font-weight: 600;
     font-size: 14px;
     color: #FFF;
