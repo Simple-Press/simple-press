@@ -147,6 +147,7 @@ $Rev:2099 $
     width: 22px;
     height: 22px;
     mask-image: url('../icons/Cross.svg');
+    -webkit-mask-image: url('../icons/Cross.svg');
     background-color: var(--sp-primary-color);
     cursor: pointer;
 }
@@ -622,110 +623,142 @@ $Rev:2099 $
 }
 #sf-root-wrap .sf-icon.sf-more{
     mask-image: url("../icons/More.svg");
+    -webkit-mask-image: url("../icons/More.svg");
 }
 #sf-root-wrap .sf-icon.sf-about {
     mask-image: url("../icons/About.svg");
+    -webkit-mask-image: url("../icons/About.svg");
 }
 #sf-root-wrap .sf-icon.sf-install {
     mask-image: url("../icons/Install.svg");
+    -webkit-mask-image: url("../icons/Install.svg");
 }
 #sf-root-wrap .sf-icon.sf-help {
     mask-image: url("../icons/Help.svg");
+    -webkit-mask-image: url("../icons/Help.svg");
 }
 #sf-root-wrap .sf-icon.sf-go {
     mask-image: url("../icons/Go.svg");
+    -webkit-mask-image: url("../icons/Go.svg");
 }
 #sf-root-wrap .sf-icon.sf-waiting {
     background-color: #AAABAD;
     mask-image: url("../icons/Waiting.svg");
+    -webkit-mask-image: url("../icons/Waiting.svg");
 }
 #sf-root-wrap .sf-icon.sf-delete {
     mask-image: url("../icons/Delete.svg");
+    -webkit-mask-image: url("../icons/Delete.svg");
 }
 #sf-root-wrap .sf-icon.sf-requires-enable {
     background-color: #408EAD;
     mask-image: url("../icons/Requires Enable.svg");
+    -webkit-mask-image: url("../icons/Requires Enable.svg");
 }
 #sf-root-wrap .sf-icon.sf-warning {
     background-color: #C3282C;
     mask-image: url("../icons/Warning.svg");
+    -webkit-mask-image: url("../icons/Warning.svg");
 }
 #sf-root-wrap .sf-icon.sf-disable-forum {
     background-color: #408EAD;
     mask-image: url("../icons/Disable Forum.svg");
+    -webkit-mask-image: url("../icons/Disable Forum.svg");
 }
 #sf-root-wrap .sf-icon.sf-check {
     background-color: #32AA63;
     mask-image: url("../icons/Check.svg");
+    -webkit-mask-image: url("../icons/Check.svg");
 }
 #sf-root-wrap .sf-icon.sf-no-check {
     background-color: #C3282C;
     mask-image: url("../icons/Expand.svg");
+    -webkit-mask-image: url("../icons/Expand.svg");
     transform: rotate(45deg);
 }
 #sf-root-wrap .sf-icon.sf-upload {
     mask-image: url("../icons/Upload.svg");
+    -webkit-mask-image: url("../icons/Upload.svg");
 }
 #sf-root-wrap .sf-icon.sf-add {
     mask-image: url("../icons/Add.svg");
+    -webkit-mask-image: url("../icons/Add.svg");
 }
 #sf-root-wrap .sf-icon.sf-cancel {
     mask-image: url("../icons/Cancel.svg");
+    -webkit-mask-image: url("../icons/Cancel.svg");
 }
 #sf-root-wrap .sf-icon.sf-edit {
     mask-image: url("../icons/Edit.svg");
+    -webkit-mask-image: url("../icons/Edit.svg");
 }
 #sf-root-wrap .sf-icon.sf-forums {
     mask-image: url("../icons/Forums.svg");
+    -webkit-mask-image: url("../icons/Forums.svg");
 }
 #sf-root-wrap .sf-icon.sf-options {
     mask-image: url("../icons/Options.svg");
+    -webkit-mask-image: url("../icons/Options.svg");
 }
 #sf-root-wrap .sf-icon.sf-order {
     mask-image: url("../icons/Order.svg");
+    -webkit-mask-image: url("../icons/Order.svg");
 }
 #sf-root-wrap .sf-icon.sf-components {
     mask-image: url("../icons/Components.svg");
+    -webkit-mask-image: url("../icons/Components.svg");
 }
 #sf-root-wrap .sf-icon.sf-user-groups {
     mask-image: url("../icons/User Groups.svg");
+    -webkit-mask-image: url("../icons/User Groups.svg");
 }
 #sf-root-wrap .sf-icon.sf-permissions {
     mask-image: url("../icons/Permissions.svg");
+    -webkit-mask-image: url("../icons/Permissions.svg");
 }
 #sf-root-wrap .sf-icon.sf-ignore-guest {
     mask-image: url("../icons/Ignore Guest.svg");
+    -webkit-mask-image: url("../icons/Ignore Guest.svg");
 }
 #sf-root-wrap .sf-icon.sf-integration {
     mask-image: url("../icons/Integration.svg");
+    -webkit-mask-image: url("../icons/Integration.svg");
 }
 #sf-root-wrap .sf-icon.sf-profiles {
     mask-image: url("../icons/Profiles.svg");
+    -webkit-mask-image: url("../icons/Profiles.svg");
 }
 #sf-root-wrap .sf-icon.sf-admins {
     mask-image: url("../icons/Admins.svg");
+    -webkit-mask-image: url("../icons/Admins.svg");
 }
 #sf-root-wrap .sf-icon.sf-users {
     mask-image: url("../icons/Users.svg");
+    -webkit-mask-image: url("../icons/Users.svg");
 }
 #sf-root-wrap .sf-icon.sf-plugins {
     mask-image: url("../icons/Plugin.svg");
+    -webkit-mask-image: url("../icons/Plugin.svg");
 }
 #sf-root-wrap .sf-icon.sf-themes {
     mask-image: url("../icons/Theme.svg");
+    -webkit-mask-image: url("../icons/Theme.svg");
 }
 #sf-root-wrap .sf-icon.sf-toolbox {
     mask-image: url("../icons/Toolbox.svg");
+    -webkit-ask-image: url("../icons/Toolbox.svg");
 }
 #sfmaincontainer ul.sf-list li .sf-list-item .sf-item-controls .sf-item-edit,
 #sf-root-wrap .sf-icon.sf-expand {
     background-color: #4390AE;
     mask-image: url("../icons/Expand.svg");
+    -webkit-mask-image: url("../icons/Expand.svg");
 }
 #sfmaincontainer ul.sf-list li.sf-open>.sf-list-item .sf-item-controls .sf-item-edit,
 #sf-root-wrap .sf-icon.sf-collapse {
     background-color: #4390AE;
     mask-image: url("../icons/Collapse.svg");
+    -webkit-mask-image: url("../icons/Collapse.svg");
 }
 #sf-root-wrap .sf-icon.sf-working {
     background-color: transparent;
@@ -1542,10 +1575,12 @@ div[class^="collapsible-"] {
 #sf-root-wrap .sf-icon.sf-collapsed{
     background-color: #0E7198;
     mask-image: url(../icons/Collapse.svg);
+    -webkit-mask-image: url(../icons/Collapse.svg);
 }
 #sf-root-wrap .sf-icon.sf-expanded {
     background-color: #0E7198;
     mask-image: url(../icons/Expand.svg);
+    -webkit-mask-image: url(../icons/Expand.svg);
 }
 #sfhousekeepingformblock .sf-button-primary {
     margin-top: 10px;
