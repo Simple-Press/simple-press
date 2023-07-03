@@ -1638,12 +1638,9 @@ div[class^="collapsible-"] {
     grid-gap: 6px;
 }
 
-.spThemeContainer .action-links form label {
-    margin-top: 28px;
-}
-
 .spThemeContainer .action-links form .action-links-buttons input {
     margin: 0 !important;
+
 }
 
 .spThemeContainer #current-theme .action-links form .currentTheme {
@@ -1666,17 +1663,10 @@ div[class^="collapsible-"] {
 #sf-root-wrap .spThemeContainer [class*=sf-button]+[class*=sf-button] {
     margin-left: 0;
 }
-#sf-root-wrap .spThemeContainer .sf-button-secondary {
-    padding: 0;
-}
-#sf-root-wrap [id^="activate-"].sf-button-secondary {
-    background-color: #00B9D0;
-    color: white;
-}
 
 .spThemeContainer .spTheme .theme-name{
     margin: 0;
-    padding: 20px 15px;
+    padding: 10px;
     background-color: #EAF0F4;
     color: #27476E;
     font-size: 13px;
