@@ -1527,9 +1527,6 @@ img.sf-iconset-icon-img{
 #sfhousekeepingformblock .sf-panel-body .sf-full-form div:nth-child(1) fieldset {
     border-top: 1px solid #F0F0F0;
 }
-#sfhousekeepingformblock .sf-panel-body .sf-full-form fieldset div[class^="collapsible-"] {
-    margin: 15px 0;
-}
 #sfhousekeepingformblock .sf-panel-body .sf-full-form .sf-panel+.sf-panel {
     margin: 0;
 }
@@ -1540,19 +1537,11 @@ div[class^="collapsible-"] {
     background-color: #EAF0F4;
 }
 .collapsible-closed {
-    width: 100%!important;
     display: none;
-    -webkit-transition: top 1s ease-out 0.5s;
-    -moz-transition: top 1s ease-out 0.5s;
-    -o-transition: top 1s ease-out 0.5s;
-    transition: top 1s ease-out 0.5s;
 }
 .collapsible-open{
     width: 100%!important;
     display: inline-block!important;
-    -webkit-transition: top 1s ease-out 0.5s;
-    -moz-transition: top 1s ease-out 0.5s;
-    -o-transition: top 1s ease-out 0.5s;
     transition: top 1s ease-out 0.5s;
 }
 #sf-root-wrap .sf-icon.sf-collapsed{
@@ -3067,4 +3056,20 @@ body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-st
 }
 #sf-root-wrap .sf-licensing-instructions-wrap ul li {
     list-style: disc;
+}
+
+#sf-root-wrap .licensing-wrapper {
+    margin: 10px;
+}
+
+#sf-root-wrap .licensing-wrapper .sp_addon_license_key {
+    font-family: monospace;
+}
+#sf-root-wrap .licensing-wrapper .licensing-wrapper-tools {
+    display: flex;
+    margin-bottom: 10px;
+}
+#sf-root-wrap .licensing-wrapper .license-info {
+    margin-top: 5px;
+    margin-bottom: 10px;
 }

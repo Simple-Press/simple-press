@@ -29,7 +29,7 @@ function spa_toolbox_uninstall_form() {
 	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Uninstall'), true);
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Removing Simple:Press'), true, 'uninstall');
-				echo '<div class="sf-alert-block sf-info">';
+				echo '<div class="sf-alert-block sf-warning">';
 				SP()->primitives->admin_etext('Should you, at any time, decide to remove Simple:Press, check the uninstall option below and then deactivate the Simple Press plugin in the standard WP fashion');
 				echo '.<br />';
 				SP()->primitives->admin_etext('If you have initiated uninstall, but changed your mind prior to Simple Press plugin deactivation, you can uncheck the uninstall option and it will be reversed');

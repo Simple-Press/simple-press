@@ -1,17 +1,13 @@
 <?php
-/*
-Simple:Press
-Admin Toolbox Licensing Form
-$LastChangedDate: 2019-01-30 16:40:00 -0600 (Wed, 30 Jan 2019) $
-$Rev: 15601 $
-*/
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
+    die('Access denied - you cannot directly call this file');
+}
 
 function spa_toolbox_licensing_form() {
 	
 	spa_paint_options_init();
-	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('Licensing'), false);
+	spa_paint_open_tab(SP()->primitives->admin_text('Licensing'), false);
 	
 		/* Paint Instructions...*/
 		
@@ -116,7 +112,6 @@ function spa_toolbox_licensing_form_paint_instructions() {
 		echo SP()->primitives->admin_text('A license to one of our ') . '<a href="https://simple-press.com/pricing"> '.SP()->primitives->admin_text('plugin and theme bundles').'</a> ' . SP()->primitives->admin_text('grants you up-to-date access to more than 70 premium Simple:Press plugins and themes!');	
 		spa_paint_hidden_input('ajax_error_message', SP()->primitives->admin_text('Something Went Wrong Please Try Again!'));
 	echo '</div>';
-	spa_paint_spacer();
 }
 
 /*
@@ -147,7 +142,6 @@ function spa_toolbox_calculating_expiration_date($license_info){
 function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_days, $license_status, $license_info, $sp_addon_name){
 	
 	if($type == 'plugins'){
-		
 		$ajaxURL = wp_nonce_url(SPAJAXURL.'toolbox-loader&amp;saveform=licensing', 'toolbox-loader');
 		$classname = 'plugins_check';
 		$form_name = 'plugins';
@@ -155,7 +149,6 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 		$sp_item_name = $addon_data['Name'];
 		$sp_item_id = $addon_data['ItemId'];
 	}else{
-		
 		$ajaxURL = wp_nonce_url(SPAJAXURL.'license-check&amp;saveform=licence_them', 'license-check');
 		$classname = 'themes_check';
 		$form_name = 'themes';
@@ -166,106 +159,77 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 	
 	$button_id 	= $sp_addon_name;
 ?>	
-		<div class="plugin_title sp_addon_title">
-				<label class="sp-label-60"><?php echo $sp_item_name; ?></label>
-		</div>
-		
-		<form method="post" action="<?php echo $ajaxURL; ?>" class="<?php echo $classname; ?>" name="<?php echo $form_name; ?>">
-			
-			<?php
-			
-				spa_paint_hidden_input('sp_item', $sp_item);
-				spa_paint_hidden_input('sp_item_name', $sp_item_name);
-				spa_paint_hidden_input('sp_item_id', $sp_item_id);
-				
-				echo sp_create_nonce('forum-adminform_licensing');
-			?>
-			
-			<table class="form-table">
-				<tbody>
-					<tr valign="top">
-						<td valign="top" class="sp_td_left">
-							<?php echo SP()->primitives->admin_text('License Key'); ?>
-						</td>
-						<td>
-							<?php
-							
-							$css_classes = "regular-text sp_addon_license_key";
-							spa_paint_single_input('sp_addon_license_key', ($get_key && $get_key != '') ? $get_key : '', false, $css_classes);
+    <h3><?php echo $sp_item_name; ?></h3>
 
-							if( $get_key && $license_status !== false && ($license_status == 'valid' || $license_status == 'expired') ) {
-								
-								if($license_status == 'expired'){
-									
-									echo ' <span class="sp-licensing-key-error">'. SP()->primitives->admin_text('Your License is expired please renew your license now.'). '</span>';
-									
-								}else{
+    <form method="post" action="<?php echo $ajaxURL; ?>" class="<?php echo $classname; ?>" name="<?php echo $form_name; ?>">
 
-									if($total_days >= 0){
-										
-										echo '<span class="sp-licensing-key-active">';
-										echo SP()->primitives->admin_text('License key is active.');
-										echo '</span>';
-										echo '<span class="sp-licensing-key-error">';
-										echo SP()->primitives->admin_text('Your License will expire in '.$total_days.' days. Please renew your license now.');
-										echo '</span>';
+        <?php
+        spa_paint_hidden_input('sp_item', $sp_item);
+        spa_paint_hidden_input('sp_item_name', $sp_item_name);
+        spa_paint_hidden_input('sp_item_id', $sp_item_id);
+        echo sp_create_nonce('forum-adminform_licensing');
+        ?>
 
-									}else{
-										
-										echo '<br /><span class="sp-licensing-key-active">'. SP()->primitives->admin_text('License key is active') .'</span>';
-									}
-								}
-							
-							}else {
-								echo '<label class="sf-sublabel sf-sublabel-small" for="sp_addon_license_key">'. SP()->primitives->admin_text('Your license key seems to be inactive or invalid.  Please enter your license key above and click the Activate button below.').'</label>';
-							} ?>
-						</td>
-					</tr>
-					<?php if( $license_status !== false && $license_status == 'valid' && !empty($license_info) ) { ?>
-					<tr>
-						<td valign="top" class="sp_td_left"><?php echo SP()->primitives->admin_text('License Information'); ?></td>
-						<td class="sp_td_licence_info">
-						<?php 
-							echo SP()->primitives->admin_text('License Limit:'); 
+        <div class="licensing-wrapper">
+            <div class="licensing-wrapper-tools">
+                <div>
+                    <?php
+                        $css_classes = "regular-text sp_addon_license_key";
+                        spa_paint_single_input('sp_addon_license_key', ($get_key && $get_key != '') ? $get_key : '', false, $css_classes, $sp_item_name . ' ' .SP()->primitives->admin_text('License Key') );
+                    ?>
+                </div>
+                <div>
+                    <?php if( $license_status !== false && $license_status == 'valid' ) { ?>
+                        <input type="submit" class="sf-button-secondary" id="<?php echo $button_id; ?>" name="SP_license_deactivate" value="<?php echo SP()->primitives->admin_text('Deactivate License'); ?>"/>
+                    <?php } else { ?>
+                        <input type="submit" class="sf-button-secondary" id="<?php echo $button_id; ?>" name="SP_license_activate" value="<?php echo SP()->primitives->admin_text('Activate License'); ?>"/>
+                    <?php } ?>
+
+                    <?php if($license_status != 'valid' && $get_key != '') {
+                        echo '<input type="submit" class="sf-button-secondary '.$button_id.'" name="SP_license_remove" value="'.SP()->primitives->admin_text('Delete License Key').'"/>';
+                    } ?>
+                </div>
+            </div>
+
+
+            <?php if ( $get_key === false || $get_key === '' ) {
+                # Don't show error messages if the user has not entered anything
+            } else if ( $get_key && $license_status !== false && ($license_status == 'valid' || $license_status == 'expired') ) {
+                if($license_status == 'expired'){
+                    echo '<div class="license-info"><span class="sf-icon sf-no-check" title="' . SP()->primitives->admin_text('License expired') . '"></span> ' . SP()->primitives->admin_text('Your License is expired please renew your license now.') . '</div>' ;
+                }else{
+                    echo '<div class="license-info"><span class="sf-icon sf-check" title="' . SP()->primitives->admin_text('License active') . '"></span> ' . SP()->primitives->admin_text('License active') . '</div>';
+                }
+            } else {
+                echo '<div  class="license-info"><span class="sf-icon sf-no-check" title="' . SP()->primitives->admin_text('License invalid') . '"></span> ' . SP()->primitives->admin_text('Your license key seems to be inactive or invalid. Please enter your license key above and click the Activate button below.') . '</div>';
+            } ?>
+
+            <?php if( $license_status !== false && $license_status == 'valid' && !empty($license_info) ) { ?>
+                <div>
+                    <h4><?php echo SP()->primitives->admin_text('License Information'); ?></h4>
+                    <div class="sf-ml-10">
+                        <?php
+							echo SP()->primitives->admin_text('License Limit:') . ' ';
 							echo (isset($license_info->license_limit) && $license_info->license_limit == 0) ? SP()->primitives->admin_text('Unlimited') : $license_info->license_limit.' '.SP()->primitives->admin_text('Site(s)');
 							echo '<br/>';
 							echo SP()->primitives->admin_text('Active Site(s): ');
 							echo isset($license_info->site_count) ? $license_info->site_count : 'N/A';
 							echo '<br/>';
-							echo SP()->primitives->admin_text('Site Activations Remaining : '); 
-							echo isset($license_info->activations_left) ? ucfirst($license_info->activations_left) : 'N/A'; 
+							echo SP()->primitives->admin_text('Site Activations Remaining : ');
+							echo isset($license_info->activations_left) ? ucfirst($license_info->activations_left) : 'N/A';
 							echo '<br/>';
-							echo SP()->primitives->admin_text('Valid Until: '); 
-							echo (isset($license_info->expires) && $license_info->expires == 'lifetime') ? SP()->primitives->admin_text('Lifetime') : date('d M, Y', strtotime($license_info->expires)); 
+							echo SP()->primitives->admin_text('Valid Until: ');
+							echo (isset($license_info->expires) && $license_info->expires == 'lifetime') ? SP()->primitives->admin_text('Lifetime') : date('d M, Y', strtotime($license_info->expires));
 						?>
-						</td>
-					</tr>
-					<?php } ?>
-					<tr valign="top">
-						<td valign="top" class="sp_td_left">
-							<?php if( $license_status !== false && $license_status == 'valid' ) { ?>
-								<?php echo SP()->primitives->admin_text('Deactivate License'); ?>
-							<?php } else { ?>
-								<?php echo SP()->primitives->admin_text('Activate License'); ?>
-							<?php } ?>
-						</td>
-						<td>
-							<?php if( $license_status !== false && $license_status == 'valid' ) { ?>
-								<span class="sp-licensing-key-active"><?php echo SP()->primitives->admin_text('Active'); ?></span>
-								<input type="submit" class="sf-button-secondary" id="<?php echo $button_id; ?>" name="SP_license_deactivate" value="<?php echo SP()->primitives->admin_text('Deactivate License'); ?>"/>
-							<?php } else {
-								?>
-								<input type="submit" class="sf-button-secondary" id="<?php echo $button_id; ?>" name="SP_license_activate" value="<?php echo SP()->primitives->admin_text('Activate License'); ?>"/>
-							<?php } 
-								
-								if($license_status != 'valid' && $get_key != ''){
-									echo '<input type="submit" class="sf-button-secondary '.$button_id.'" name="SP_license_remove" value="'.SP()->primitives->admin_text('Delete License Key').'"/>';
-								}
-							?>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+                    </div>
+                </div>
+            <?php } ?>
+
+
+
+
+
+			</div>
 		</form>
 
 <?php	
