@@ -586,15 +586,15 @@ function spa_check_warnings() {
 	}
 
 	# check for server-side UTC timezone
-	$tz = get_option('timezone_string');
-	if (empty($tz)) {
-		$tz = 'UTC '.get_option('gmt_offset');
-		$string = SP()->primitives->admin_text('You have set your server to use a UTC timezone setting');
-		$string .= ':</p><p><em>'.$tz.'</em></p><p>';
-		$string .= SP()->primitives->admin_text('UTC can give unpredictable results on forum post time stamps. Please select the city setting nearest to you in the WordPress - Settings - General admin page');
-		$string .= ':</p><p><em>'.SP()->primitives->admin_text('For more information please see this').' <a href="https://simple-press.com/documentation/faq/troubleshooting/why-do-my-new-posts-show-as-posted-minus-seconds-ago/" target="_blank">'.SP()->primitives->admin_text('FAQ').'</a></p><p>';
-		$mess .= spa_message($string, 'error');
-	}
+	#$tz = get_option('timezone_string');
+	#if (empty($tz)) {
+	#	$tz = 'UTC '.get_option('gmt_offset');
+	#	$string = SP()->primitives->admin_text('You have set your server to use a UTC timezone setting');
+	#	$string .= ':</p><p><em>'.$tz.'</em></p><p>';
+	#	$string .= SP()->primitives->admin_text('UTC can give unpredictable results on forum post time stamps. Please select the city setting nearest to you in the WordPress - Settings - General admin page');
+	#	$string .= ':</p><p><em>'.SP()->primitives->admin_text('For more information please see this').' <a href="https://simple-press.com/documentation/faq/troubleshooting/why-do-my-new-posts-show-as-posted-minus-seconds-ago/" target="_blank">'.SP()->primitives->admin_text('FAQ').'</a></p><p>';
+	#	$mess .= spa_message($string, 'error');
+	#}
 
 	return $mess;
 }
