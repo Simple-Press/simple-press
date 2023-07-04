@@ -2053,9 +2053,6 @@ body .spMobileTableData .row-actions > span {
     #sfmaincontainer .sf-panel-body {
         padding: 10px;
     }
-    #sfmaincontainer .sf-panel-body+.sf-panel-body {
-        margin-top: -20px;
-    }
     #sfmaincontainer ul.sf-list {
         overflow: hidden;
     }
@@ -2881,7 +2878,7 @@ body .spMobileTableDataUsers .row-actions a {
 .spGroupRow--information p,
 .spForumRow--information p{
     color: gray;
-    margin: 5px 200px 0 0;
+    margin: 5px 90px 0 0;
     line-height: 1.3em;
 }
 
