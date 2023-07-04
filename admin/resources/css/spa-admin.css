@@ -186,9 +186,6 @@ $Rev:2099 $
     padding: 10px;
 }
 
-.ui-widget-content table {
-
-}
 
 /* POPUP HELP================================================================================*/
 
@@ -312,6 +309,13 @@ $Rev:2099 $
     display: flex;
     margin-top: 20px;
 }
+
+@media screen and ( max-width: 768px ) {
+    #sf-root-wrap {
+        flex-direction: column;
+    }
+}
+
 #sf-root-wrap .CodeMirror-scroll {
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
@@ -496,10 +500,10 @@ $Rev:2099 $
 }
 
 #sf-root-wrap .sf-form-row input[type=text] {
-    width: 300px;
+    width: 60%;
 }
 #sf-root-wrap .sf-form-row textarea {
-    width: 500px;
+    width: 90%;
 }
 
 #sf-root-wrap label+input[type=text],
@@ -896,13 +900,14 @@ img.sf-iconset-icon-img{
     padding: 0;
     outline: none;
 }
-#sfsidepanel .sf-tooggle-admin-menu {
+
+#sfsidepanel .sf-toggle-admin-menu {
     display: none;
 }
 
-/**
-* #sfadminmenu >
-*/
+/*************************************
+* sfadminmenu
+**************************************/
 #sfadminmenu .sf-icon {
     margin: -4px 14px 0 20px;
 }
@@ -1003,9 +1008,9 @@ img.sf-iconset-icon-img{
 #sfadminmenu > .spPanelTypeAddon ~ .spPanelTypeAddon {
     margin-top: 0;
 }
-/**
-* < #sfadminmenu
-*/
+/*************************************
+* /sfadminmenu
+**************************************/
 
 #sfmaincontainer {
     margin:0 0 0 20px;
@@ -1656,15 +1661,10 @@ div[class^="collapsible-"] {
 }
 
 .spThemeContainer .action-links form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-    grid-gap: 6px;
 }
 
 .spThemeContainer .action-links form .action-links-buttons input {
     margin: 0 !important;
-
 }
 
 .spThemeContainer #current-theme .action-links form .currentTheme {
@@ -1944,18 +1944,9 @@ body .spMobileTableData .row-actions > span {
     float: none;
     margin-top: 0;
 }
-@media screen and ( max-width: 1110px ) {
-    #sfrolenew .sf-half-panel {
-        min-width: 100%!important;
-    }
-}
+
 @media screen and ( max-width: 768px ) {
-    /*#sf-root-wrap [class*=sf-button]+[class*=sf-button] {
-        margin-left: 0;
-    }*/
-    /* .sf-hide-full {
-        display: block;
-    } */
+
     .sf-hide-mobile{
         display: none!important;
     }
@@ -1980,17 +1971,11 @@ body .spMobileTableData .row-actions > span {
         margin: 30px 30px 0 20px;
         padding: 0;
     }
-    #sf-root-wrap .sf-button,
-    #sf-root-wrap .sf-button-primary,
-    #sf-root-wrap .sf-button-secondary {
-        height: 50px;
-        font-size: 14px;
-        line-height: 19px;
-        padding-top: 16px;
-        padding-bottom: 15px;
-        margin: 0 0 10px 0;
-        width: 100%;
+
+    .spAdminHeader .spAdminHeaderLinks {
+        display: none;
     }
+
     #sf-root-wrap .sf-mobile-no-horizontal-padding {
         padding-left: 0 !important;
         padding-right: 0 !important;
@@ -2020,46 +2005,38 @@ body .spMobileTableData .row-actions > span {
     #sfsidepanel {
         width: 100%;
     }
-    #sfsidepanel .sf-tooggle-admin-menu {
+    #sfsidepanel .sf-toggle-admin-menu {
         display: block;
+        margin-bottom: 20px;
     }
-    #sfsidepanel .sf-tooggle-admin-menu .sf-button {
-        font-size: 12px;
-        text-transform: uppercase;
+
+    #sfsidepanel .sf-toggle-admin-menu .sf-button-secondary.sf-hide {
+        display: none;
+    }
+    #sfsidepanel .sf-toggle-admin-menu .sf-button-secondary.sf-show {
+        cursor: pointer;
         margin: 0;
-        background-color: #85A2BC;
-        color: #FFF;
-        border-radius: 3px 3px 0 0;
     }
-    #sfsidepanel .sf-tooggle-admin-menu .sf-button.sf-hide {
+    #sfsidepanel.sf-admin-menu-mobile-show .sf-toggle-admin-menu .sf-button-secondary.sf-show {
         display: none;
     }
-    #sfsidepanel .sf-tooggle-admin-menu .sf-button.sf-show {
-        display: block;
-        background-color: #F9F9F9;
-        color: #006992;
-        border-radius: 3px;
-        margin-bottom: 10px;
-        box-shadow: 0 3px 6px rgba(157, 158, 160, .05);
+    #sfsidepanel.sf-admin-menu-mobile-show .sf-toggle-admin-menu .sf-button-secondary.sf-hide {
+        cursor: pointer;
+        margin: 0;
+        display: inline-block;
     }
-    #sfsidepanel.sf-admin-menu-mobile-show .sf-tooggle-admin-menu .sf-button.sf-show {
-        display: none;
-    }
-    #sfsidepanel.sf-admin-menu-mobile-show #sfadminmenu,
-    #sfsidepanel.sf-admin-menu-mobile-show .sf-tooggle-admin-menu .sf-button.sf-hide {
-        display: block;
-        width: 100%;
-    }
+
     #sfadminmenu {
         display: none;
         border-radius: 0 0 3px 3px;
         overflow: hidden;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
+    .sf-admin-menu-mobile-show #sfadminmenu {
+        display: block;
+    }
+
     #sfmaincontainer {
-        margin: 0;
-    }
-    #sfmaincontainer .sf-panel-head h3 {
         margin: 0;
     }
     #sfmaincontainer .sf-panel-head [class*=sf-button] .sf-icon {
@@ -2074,7 +2051,7 @@ body .spMobileTableData .row-actions > span {
         margin: 10px 0 0 0;
     }
     #sfmaincontainer .sf-panel-body {
-        padding: 20px;
+        padding: 10px;
     }
     #sfmaincontainer .sf-panel-body+.sf-panel-body {
         margin-top: -20px;
@@ -2088,11 +2065,6 @@ body .spMobileTableData .row-actions > span {
     }
     #sfmaincontainer .sf-panel-body .sf-panel-body-top-left span {
         opacity: .75;
-    }
-    #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top {
-        top: 0;
-        margin: -20px 0 20px 0;
-        padding: 20px 0;
     }
     #sfmaincontainer .sf-panel-body .sf-full-form .sf-panel-body-top-left {
         margin: 0;
@@ -2761,7 +2733,6 @@ body .spMobileTableDataUsers .row-actions a {
 
 @media screen and (max-width: 782px) {
 
-
     .sf-table-mobile tr:not(.inline-edit-row):not(.no-items) td:not(.column-primary)::before {
         position: initial;
         left: 10px;
@@ -2889,6 +2860,7 @@ body .spMobileTableDataUsers .row-actions a {
     margin: 0 0 0 -20px;
     background: white;
 }
+
 .spGroupRow {
     border: 1px solid var(--sp-primary-border-color);
 }

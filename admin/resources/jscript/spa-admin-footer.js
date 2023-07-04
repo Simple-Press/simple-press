@@ -46,7 +46,7 @@
             active: num
         });
         
-        $(document).on('click', '#sfsidepanel .sf-tooggle-admin-menu', function() {
+        $(document).on('click', '#sfsidepanel .sf-toggle-admin-menu', function() {
             $('#sfsidepanel').toggleClass('sf-admin-menu-mobile-show');
         });
     

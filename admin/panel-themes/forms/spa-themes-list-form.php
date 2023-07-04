@@ -236,17 +236,14 @@ function spa_themes_list_form() {
 				if ( $theme_overlays ) {
 					// only show if more than one overlay
 					if ( count( $theme_overlays ) > 1 ) {
-						// echo '<div class="sf-form-row">';
 						echo '<label>' . SP()->primitives->admin_text( 'Select Overlay' ) . ': ' . '</label>';
-						echo ' <select name="color-' . esc_attr( $theme_file ) . '" style="margin-bottom:5px;">';
+						echo ' <select name="color-' . esc_attr( $theme_file ) . '">';
 						foreach ( $theme_overlays as $theme_overlay ) {
 							$theme_overlay = trim( $theme_overlay );
 							$selected      = ( $theme_overlays[0] == $theme_overlay ) ? ' selected="selected" ' : '';
 							echo '<option' . $selected . ' value="' . esc_attr( $theme_overlay ) . '">' . esc_html( $theme_overlay ) . '</option>';
 						}
 						echo '</select> ';
-						// echo '</div>';
-						// echo '<div class="clearboth"></div>';
 					}
 				}
 				?>

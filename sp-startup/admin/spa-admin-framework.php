@@ -197,7 +197,7 @@ function spa_panel_header() {
             echo '<h1>'.SP()->primitives->admin_text('Forum Administration').'</h1>';
         }
 
-        echo "<div style='float: right;'>";
+        echo "<div class='spAdminHeaderLinks' style='float: right;'>";
 
             echo '<a class="sf-button-secondary" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
 
@@ -354,9 +354,9 @@ function spa_render_sidemenu() {
 		
 		echo '<div id="sfsidepanel">'."\n";
                 
-            echo '<span class="sf-tooggle-admin-menu">' ."\n";
-                echo '<span class="sf-button sf-hide">' . __('Hide Admin Menu', 'sp') . '</span>';
-                echo '<span class="sf-button sf-show">' . __('Show Admin Menu', 'sp') . '</span>';
+            echo '<span class="sf-toggle-admin-menu">' ."\n";
+                echo '<span class="sf-button-secondary sf-hide">' . __('Hide Admin Menu', 'sp') . '</span>';
+                echo '<span class="sf-button-secondary sf-show">' . __('Show Admin Menu', 'sp') . '</span>';
             echo '</span>'."\n";
                 
             echo '<div id="sfadminmenu">'."\n";
