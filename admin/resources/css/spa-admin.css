@@ -1944,36 +1944,6 @@ body .spMobileTableData .row-actions > span {
     float: none;
     margin-top: 0;
 }
-@media screen and ( max-width: 1350px ) {
-    #sfmaincontainer .sf-panel-body .sf-half {
-        width: 100%!important;
-    }
-    #sfgroupnew .sf-panel-body .sf-half-form {
-        width: 100%!important;
-    }
-    .spThemeContainer .spTheme {
-        width: 49%;
-        margin-left: 2%;
-        margin-bottom: 15px;
-    }
-
-
-    .spThemeContainer .spTheme:nth-child(odd) {
-        clear:both;
-    }
-
-    .spThemeContainer .spTheme:nth-child(3n+1) {
-        clear:none;
-    }
-
-    .spThemeContainer .spTheme:nth-child(3n-2){
-        margin-left:2%;
-    }
-
-    .spThemeContainer .spTheme:nth-child(2n-1) {
-        margin-left: 0%;
-    }
-}
 @media screen and ( max-width: 1110px ) {
     #sfrolenew .sf-half-panel {
         min-width: 100%!important;
