@@ -90,7 +90,7 @@ function spa_forums_featured_image_form() {
                     <?php echo spa_paint_help('featured-image-upload') ?>
                 </div>
                 <div class="sf-alert-block sf-info">
-                    <?php echo SP()->primitives->admin_text('<strong>Notice:</strong> Currently, featured images, if one exists, may be used for the Open Graph meta tag and, for this use, images are recommended to be 200px x 200px.' ); ?>
+                    <?php echo SP()->primitives->admin_text('Notice: Currently, featured images, if one exists, may be used for the Open Graph meta tag and, for this use, images are recommended to be 200px x 200px.' ); ?>
                 </div>
                 <div class="sf-form-row">
                     <?php spa_paint_featured_images(); ?>
