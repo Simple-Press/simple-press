@@ -135,9 +135,11 @@ function sp_install_required() {
                         </span>
                     </label>
                 </div>
-                <button type="submit" class="sf-button-primary" id="sbutton" name="goinstall">
-                    <span class="sf-icon sf-install"></span><?php SP()->primitives->admin_etext('Perform Installation'); ?>
-                </button>
+                <div class="sf-form-row">
+                    <button type="submit" class="sf-button-primary" id="sbutton" name="goinstall">
+                        <span class="sf-icon sf-install"></span><?php SP()->primitives->admin_etext('Perform Installation'); ?>
+                    </button>
+                </div>
             </form>
         </div>
     </div>
@@ -212,25 +214,30 @@ function sp_go_install() {
                 <h3><?php SP()->primitives->admin_etext('Simple:Press is being installed'); ?></h3>
             </div>
             <div class="sf-panel-body">
-                <div class="pbar" id="progressbar"></div>
-                <table id="SPLOADINSTALLtable">
-                    <tr style="display:none"><td><div class="sf-zmessage" id="zone0"></div></td></tr>
-                    <tr><td><div class="sf-zmessage" id="zone1"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Tables created') ?></div></td></tr>
-                    <tr><td><div class="sf-zmessage" id="zone2"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Permission data built') ?></div></td></tr>
-                    <tr><td><div class="sf-zmessage" id="zone3"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Usergroup data built') ?></div></td></tr>
-                    <tr><td><div class="sf-zmessage" id="zone4"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Creating forum pages') ?></div></td></tr>
-                    <tr><td><div class="sf-zmessage" id="zone5"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create default forum options') ?></div></td></tr>
-                    <tr><td><div class="sf-zmessage" id="zone6"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create storage location') ?></div></td></tr>
-                    <tr><td><div class="sf-zmessage" id="zone7"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create resources') ?></div></td></tr>
-                    <tr><td><div class="sf-zmessage" id="zone8"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create members data') ?></div></td></tr>
-                    <tr><td><div class="sf-zmessage" id="zone9"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create admin permissions') ?></div></td></tr>
-                    <tr><td><div class="sf-zmessage" id="zone10"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Complete Installation') ?></div></td></tr>
-                </table>
-                <div class="sf-zmessage" id="errorzone"></div>
-                <form name="sfinstalldone" method="post" action="admin.php?page=<?php echo SP_FOLDER_NAME ?>/admin/panel-forums/spa-forums.php">
-                    <input type="hidden" name="install" value="1" />
-                    <button type="submit" class="sf-button-primary" disabled name="goforuminstall"><span class="sf-icon sf-admins"></span><?php echo SP()->primitives->admin_text('Go to Forum Admin') ?></button>
-                </form>
+                <div class="sf-form-row">
+                    <div>
+                        <h1 id="installation-header"><?php echo SP()->primitives->admin_text('Installation is in progress - please wait'); ?></h1i>
+                    </div>
+                    <div class="pbar" id="progressbar"></div>
+                    <table id="SPLOADINSTALLtable">
+                        <tr style="display:none"><td><div class="sf-zmessage" id="zone0"></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone1"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Tables created') ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone2"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Permission data built') ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone3"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Usergroup data built') ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone4"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Creating forum pages') ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone5"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create default forum options') ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone6"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create storage location') ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone7"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create resources') ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone8"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create members data') ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone9"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create admin permissions') ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone10"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Complete Installation') ?></div></td></tr>
+                    </table>
+                    <div class="sf-zmessage" id="errorzone"></div>
+                    <form name="sfinstalldone" method="post" action="admin.php?page=<?php echo SP_FOLDER_NAME ?>/admin/panel-forums/spa-forums.php">
+                        <input type="hidden" name="install" value="1" />
+                        <button id="installation-finished" type="submit" class="sf-button-primary sfhidden" disabled name="goforuminstall" ><span class="sf-icon sf-admins"></span><?php echo SP()->primitives->admin_text('Go to Forum Admin') ?></button>
+                    </form>
+                </div>
             </div>
             <?php
             $pass = 11;

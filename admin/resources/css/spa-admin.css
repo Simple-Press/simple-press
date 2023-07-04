@@ -1499,26 +1499,34 @@ img.sf-iconset-icon-img{
 #sfmaincontainer.sf-installation {
     margin: 0;
 }
+#sfmaincontainer.sf-installation .sf-panel-head .sf-buttons {
+    float: right;
+}
 #sfmaincontainer.sf-installation input[type=radio]:checked:before {
     background-color: #006992;
 }
-#sfmaincontainer.sf-installation input[type=checkbox]:checked:before {
-    color: #006992;
-}
 #sfmaincontainer.sf-installation .ui-progressbar {
     margin-bottom: 22px;
+    margin-top: 22px;
 }
 #sfmaincontainer.sf-installation .sf-form-row {
     padding: 0;
-    margin: 0 0 35px 0;
+    margin: 25px;
 }
 #sfmaincontainer.sf-installation .ui-progressbar,
 #sfmaincontainer.sf-installation .ui-progressbar .ui-progressbar-value {
     height: 8px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
-    background-color: #F0F0F0;
 }
+#sfmaincontainer.sf-installation button[disabled],
+#sfmaincontainer.sf-installation button:disabled {
+    background: var(--sp-secondary-button-color);
+}
+#sfmaincontainer.sf-installation button .sf-icon {
+    background: white;
+}
+
 #sfmaincontainer.sf-installation .ui-progressbar .ui-progressbar-value {
     background-color: #85A2BC;
 }
@@ -1536,6 +1544,9 @@ img.sf-iconset-icon-img{
 }
 #sfmaincontainer.sf-installation .sf-zmessage .sf-icon {
     margin-right: 10px;
+}
+#sfmaincontainer.sf-installation .ui-widget-content {
+    padding: 0;
 }
 /**
 * < Installation
