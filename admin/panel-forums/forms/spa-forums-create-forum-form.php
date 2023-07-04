@@ -115,7 +115,7 @@ function spa_forums_create_forum_form() {
 					spa_paint_checkbox(SP()->primitives->admin_text('Disable forum RSS feed so feed will not be generated'), 'forum_private', 0);
 
                     spa_paint_select_start(SP()->primitives->admin_text('Featured Image'), 'feature_image', '');
-                    spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', $forum->feature_image, false);
+                    spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', '', false);
                         spa_paint_select_end('<span class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Featured images are shown when sharing links on social media. Recommended size 200x200px').'</span>');
 
                     echo '<div class="sf-alert-block sf-info">';
