@@ -503,6 +503,9 @@ class spcCoreLoader {
 		add_action('wp_head', 'spdebug_styles');
 		add_action('wp_footer', 'spdebug_stats');
 
+        # Add Simple:Press admin bar
+        add_action( 'admin_bar_menu', 'simple_press_admin_bar', 9999 );
+
 		# fire action to indicate hooks complete
 		do_action('sph_core_hooks_complete');
 	}

@@ -1081,3 +1081,20 @@ function sph_check_for_addons_updates() {
 	}
 	
 }
+function simple_press_admin_bar( $wp_admin_bar ) {
+
+    // Bail if no admin bar.
+    if ( empty( $wp_admin_bar ) ) {
+        return;
+    }
+
+    // Add the menu
+    $wp_admin_bar->add_menu(
+        array(
+            'id'    => 'simplepress-admin-bar',
+            'title' => SP()->primitives->admin_text('Simple:Press'),
+            'href'  => SPADMINFORUM
+        )
+    );
+
+}
