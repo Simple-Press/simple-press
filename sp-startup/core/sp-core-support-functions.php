@@ -1081,6 +1081,10 @@ function sph_check_for_addons_updates() {
 	}
 	
 }
+
+/*
+ * Adds a Simple:Press link to the WP admin bar
+ */
 function simple_press_admin_bar( $wp_admin_bar ) {
 
     // Bail if no admin bar.
@@ -1092,7 +1096,7 @@ function simple_press_admin_bar( $wp_admin_bar ) {
     $wp_admin_bar->add_menu(
         array(
             'id'    => 'simplepress-admin-bar',
-            'title' => SP()->primitives->admin_text('Simple:Press'),
+            'title' => SP()->primitives->admin_text('Forum'),
             'href'  => SPADMINFORUM
         )
     );
