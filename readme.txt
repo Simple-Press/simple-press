@@ -6,7 +6,7 @@ Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
 Tested up to: 6.2
 Requires PHP: 7.0
-Stable tag: 6.9.1
+Stable tag: 6.10.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,8 @@ The most versatile and feature-rich forum plugin for WordPress. Create unlimited
 == Description ==
 Simple:Press is an all-in-one, feature-rich forum plugin designed to seamlessly integrate with your WordPress site.
 With a focus on performance and user experience, it offers an extensive range of free and premium features to meet all your forum needs.
+
+The plugin has undergone rigorous testing and offers complete support for PHP7.4 up to PHP8.2.
 
 = Key Features =
 * Enterprise-grade performance, scalable for thousands of users
@@ -152,154 +154,109 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 
 == Latest Updates ==
 
-= 6.9.1 =
+= 6.10.0 - July 2023 =
+* Full PHP8.2 support, this ensures that all features and functionalities provided by the plugin work smoothly and efficiently in PHP 8.2 environments
+* New and improved admin interface with less clutter
+* Manage Groups and Forums has been refactored to better visualise forum structure and make administration more intuitive
+* Addons that have their own menu get grouped at the bottom to make it easier to find specific settings for installed addons
+* Error messages, caution notices and information notices are visually separated to better aid users to know what and what not to change
+* Permission view has been made more compact to improve readability and permission overview
+* Storage location administration has been restructured to simplify folder management and give the user a better overview
+* A multitude of PHP-warnings have been silenced
+* Plugin administration has been improved and made more compact to give a better overview of installed and activated plugins and their options
+* Activating and handling themes has been improved and simplified
+* Licensing UI redesign to better aid users in understanding the licensing process
+* Admin stylesheet has been updated and obsolete CSS-syntax's has been removed
+* Modern theme have had an update to help partially hidden search inputs on mobile view
 
+= 6.9.1 - June 2023 =
 * Reverted: Only allow Simple:Press to run queries on Simple:Press pages
 
-= 6.9.0 =
-
+= 6.9.0 - June 2023 =
 * Resolve PHP8.2 issues
 * Fix avatar options not saved
-* Fix installation warnings when activating and installing Simple:Press
+* Fixed installation warnings when activating and installing Simple:Press for a more seamless installation
 * Only allow Simple:Press to run queries on Simple:Press pages
 * Minor admin cleanup, remove buttons, missing font-fix
-* Added progress indicator when uploading theme or add-ons
-* Added indicator when activating/deactivating add-ons
-* Fix backend and frontend issue with disabled forums
+* Added progress indicator when uploading theme or add-ons to help users better understand what is happening
+* Indicator added when activating/deactivating add-ons, aiming to assist administrators
+* Fix backend and frontend issue with disabled forums to avoid confusion
 * Fixed SQL-error on install
 
-= 6.8.10 =
-* Fix
-    * G00000: Added new optional constant to allow sp-resources to live in uploads folder
-    * G00000: Fixed CSS font issue in admin
+= 6.8.10 - March 2023 =
+* Added new optional constant to allow sp-resources to live in uploads folder
+* Fixed CSS font issue in admin to improve readability and user experience
 
-= 6.8.9 =
-* Fix
-    * G00000: Fixes issue in `spa-admin-notice.php` that causes upgrades to fail
+= 6.8.9 - March 2023 =
+* Fixes issue in `spa-admin-notice.php` that causes upgrades to fail
 
-= 6.8.8 =
-* Fix
-    * G00000: Added correct version number
+= 6.8.8 - February 2023 =
+* Added correct version number
 
-= 6.8.7 =
-* Fix
-    * G00000: Fixed alignment issue in modern theme
+= 6.8.7 - February 2023 =
+* Fixed alignment issue in modern theme
 
-= 6.8.6 =
-* Fix
-    * G00000: Added missing version number for WP.org
+= 6.8.6 - February 2023 =
+* Added missing version number for WP.org
 
-= 6.8.5 =
-* Fix
-    * G00000: Fix issue with upgrading
+= 6.8.5 - February 2023 =
+* Fix issue with upgrading
 
-= 6.8.4 =
-* Fix
-    * G00000: Fix: TinyMCE editor not working
+= 6.8.4 - February 2023 =
+* Fixed issues with TinyMCE editor not working properly
 
-= 6.8.3 =
-* Fix
-	* G00000: Special rank badges were not displaying in admin or front-end.
+= 6.8.3 - January 2023 =
+* Special rank badges were not displaying in admin or front-end.
 
-= 6.8.2 =
-* Fix
-	* G00000: A couple of PHP 8.1 compatibility fixes.
+= 6.8.2 - December 2022 =
+* A couple of PHP 8.1 compatibility fixes.
 
 = 6.8.1 =
-* Fix
-	* G00000: Various security related fixes.
+* Various security related fixes.
 
 = 6.8.0 =
-* New
-	* G00000: Compatibility with PHP 8.x.  If using premium add-ons, new versions will be required.
-	
-* Tweak
-	* G00000: Show error code when there's an error with the license process.
+* Compatibility with PHP 8.x.  If using premium add-ons, new versions will be required.
+* Show error code when there's an error with the license process.
 
 = 6.7.0 =
-* New
-	* G00122: Add option to sort by the membership column in the FORUM->USERS->MEMBER INFORMATION list.	
-
-* Tweak
-	* G00126: Tools popup on desktop makes better use of horizontal space.
-	
-* Fix
-	* G00121: Fix an issue with deleting subsites rendering all user posts as guests in any other site that has the forum in use.
-	* G00116: When sorting the user list under FORUM->USERS->MEMBER INFORMATION, the list would be unstyled.
-	* G00117: Custom icons not rendering in drop-down properly.
-	* G00123: Large custom icon images need to be resized when viewing the forum list in admin.
-	* G00098: Fix admin screen issue where the Bulk Actions Arrow in MEMBER INFORMATION is too close to text.
-	* G00022: Deleting a topic from the FORUM TOOLS popup did not refresh the screen.
-	* G00100: Moving users not belonging to any user group did not refresh the section after the users were moved.
-	* G00000: Multiple issues with caching icon files when a filename is reused.  Added cache-busting querystrings in the admin area to force cdns and page caches to re-request the file.
-	* G00000: Multiple issues with caching featured images files when a filename is reused.  Added cache-busting querystrings in the admin area to force cdns and page caches to re-request the file.
-	* G00000: Multiple tweaks related to extra line breaks showing up in SP themes when the WP 59 FSE theme was in use.
+* Add option to sort by the membership column in the FORUM->USERS->MEMBER INFORMATION list.
+* Tools popup on desktop makes better use of horizontal space.
+* G00121: Fix an issue with deleting subsites rendering all user posts as guests in any other site that has the forum in use.
+* G00116: When sorting the user list under FORUM->USERS->MEMBER INFORMATION, the list would be unstyled.
+* G00117: Custom icons not rendering in drop-down properly.
+* G00123: Large custom icon images need to be resized when viewing the forum list in admin.
+* G00098: Fix admin screen issue where the Bulk Actions Arrow in MEMBER INFORMATION is too close to text.
+* G00022: Deleting a topic from the FORUM TOOLS popup did not refresh the screen.
+* G00100: Moving users not belonging to any user group did not refresh the section after the users were moved.
+* G00000: Multiple issues with caching icon files when a filename is reused.  Added cache-busting querystrings in the admin area to force cdns and page caches to re-request the file.
+* G00000: Multiple issues with caching featured images files when a filename is reused.  Added cache-busting querystrings in the admin area to force cdns and page caches to re-request the file.
+* G00000: Multiple tweaks related to extra line breaks showing up in SP themes when the WP 59 FSE theme was in use.
 
 = 6.6.6 =
-* Fix
-	* G00000: Fix a drag-n-drop issue introduced by WP 5.9.
+* G00000: Fix a drag-n-drop issue introduced by WP 5.9.
 	
 = 6.6.5 =
-* Fix
-	* G00000: Add support for FSE themes introduced in WP 5.9.
+* G00000: Add support for FSE themes introduced in WP 5.9.
 
 = 6.6.4 =
-* Fix
-	* G00000: Check to make sure a YOAST class is callable before attempting to use it. Compatibility fix for Yoast 17.8.0
-* Dev
-	* G00000: Add a filter in sp-api-class-spcauths.php to support future functionality.
+* G00000: Check to make sure a YOAST class is callable before attempting to use it. Compatibility fix for Yoast 17.8.0
+* G00000: Add a filter in sp-api-class-spcauths.php to support future functionality.
 
 = 6.6.3 =
-* Tweak
-	* G00000: Add a new overlay to the default 2020 theme to match the WP 2021 theme.  The new overlay is the default on all new installs.
-
-* Fix
-	* G00110: Could not reorder profile tabs and menus in admin screen.
+* G00000: Add a new overlay to the default 2020 theme to match the WP 2021 theme.  The new overlay is the default on all new installs.
+* G00110: Could not reorder profile tabs and menus in admin screen.
 
 = 6.6.2 =
-* Fix
-	* G00000: Page number overlap on certain admin screens when the page numbers get to 3 digits.
-	* G00000: When deleting users and choosing the option to delete the user, they now get deleted instead of being set to "guest".
+* G00000: Page number overlap on certain admin screens when the page numbers get to 3 digits.
+* G00000: When deleting users and choosing the option to delete the user, they now get deleted instead of being set to "guest".
 
 = 6.6.1 =
-* Fix
-	* G00000: (Security) Verify a nonce & user capability before allowing certain file-related operations.
+* G00000: (Security) Verify a nonce & user capability before allowing certain file-related operations.
 
 = 6.6.0 =
-* New
-	* G00000: Introduction of a "white label" mode that removes most references to Simple:Press.
-
-* Improved
-	* G00000: Updated the Modern2020 theme to the latest version.
-	* G00000: Much better support for WordPress Multisite with numerous multi-site related fixes and improvements.
-	
-* Fix
-	* G00000: Fix a compatibility issue with PHP 7.4.0
-	* G00000: Fix a string that needed to be in double-quotes instead of single quotes in order to de-reference an embedded variable.
-	* G00000: Fix an issue in the sp_ColumnEnd function where the class and tag names were not being assigned properly in the generated html for the column.
-
-= 6.5.1 =
-* Fix
-	* G00000: Sometimes new installs would require a CTRL-F5 to refresh the screen before being able to add forums or upload plugin files.
-
-= 6.5.0 =
-* New
-	* G00000: The default theme for new installations is now Modern-2020
-	* G00000: Added a number of template tags to support new themes.
-	* G00000: updated some existing template tags with new options to support new themes.
-	
-* Fix
-	* G00103: Reverse sorting of topics and forums resulted in a 500 error on the front-end and errors in the WP error log
-
-= 6.4.0 =
-* New
-	* G00000: Add new popup to show user groups a member belongs to under FORUM->USERS->MEMBER INFORMATION
-
-* Fix
-	* G00090: Issue with using the help buttons and icons - they only worked on the first click until the full screen was refreshed.
-	* G00000: Iconsets were duplicated in drop-downs
-	* G00000: Member popup was unformatted in admin area
-	* G00000: Remove black dots from radio buttons in admin area
-	* G00000: Clicking the SHOW button under USER GROUPS->MANAGER USER GROUPS sometimes did nothing
-	* G00000: Clicking the SHOW button under COMPONENTS->FORUM RANKS->SPECIAL RANKS sometimes did nothing
-	* G00094: WordPress menus do not sync with Simple:Press menus
+* G00000: Introduction of a "white label" mode that removes most references to Simple:Press.
+* G00000: Updated the Modern2020 theme to the latest version.
+* G00000: Much better support for WordPress Multisite with numerous multi-site related fixes and improvements.
+* G00000: Fix a compatibility issue with PHP 7.4.0
+* G00000: Fix a string that needed to be in double-quotes instead of single quotes in order to de-reference an embedded variable.
+* G00000: Fix an issue in the sp_ColumnEnd function where the class and tag names were not being assigned properly in the generated html for the column.
