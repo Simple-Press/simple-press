@@ -21,7 +21,7 @@ function spa_forums_edit_group_form($group_id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=editgroup', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfgroupedit<?php echo $group->group_id; ?>" name="sfgroupedit<?php echo $group->group_id; ?>">
+	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfgroupedit<?php echo $group->group_id; ?>" name="sfgroupedit<?php echo $group->group_id; ?>" class="sfinline-form">
 <?php
 		echo sp_create_nonce('forum-adminform_groupedit');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), false);
@@ -54,9 +54,6 @@ function spa_forums_edit_group_form($group_id) {
 
 				spa_paint_close_fieldset();
 
-			echo '<div class="sf-alert-block sf-info">';
-			echo sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the %s Order Groups and Forums %s option from the Forums Menu'), '<b>', '</b>');
-			echo '</div>';
 
 			spa_paint_close_panel();
 

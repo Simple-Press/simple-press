@@ -471,22 +471,15 @@ class SP_List_Table {
      */
     protected function row_actions($actions, $always_visible = false) {
         $action_count = count($actions);
-        $i = 0;
 
         if (!$action_count)
             return '';
 
         $out = '<div class="' . ( $always_visible ? 'row-actions visible' : 'row-actions' ) . '">';
         foreach ($actions as $action => $link) {
-            ++$i;
-            // ( $i == $action_count ) ? $sep = '' : $sep = ' | ';
-            $sep = '';
-            $out .= "<span class='$action'>$link$sep</span>";
+            $out .= "<span class='$action'>$link</span>";
         }
         $out .= '</div>';
-
-        // $out .= '<button type="button" class="toggle-row"><span class="screen-reader-text">' . __('Show more details') . '</span></button>';
-
         return $out;
     }
 
@@ -1027,7 +1020,7 @@ class SP_List_Table {
             $id = $with_id ? "id='$column_key'" : '';
 
             if (!empty($class))
-                $class = "class='" . join(' ', $class) . "'";
+                $class = "class='" . implode(' ', $class) . "'";
 
             echo "<$tag $scope $id $class>$column_display_name</$tag>";
         }

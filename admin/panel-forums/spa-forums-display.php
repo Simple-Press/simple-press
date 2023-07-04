@@ -13,10 +13,11 @@ function spa_render_forums_panel($formid) {
 	<div class="clearboth"></div>
 
 	<div id="sf-root-wrap" class="wrap">
+        <div id='sfmsgspot'></div>
 		<?php
 			spa_render_sidemenu();
 		?>
-		<div id='sfmsgspot'></div>
+
 		<div id="sfmaincontainer">
 			<?php spa_render_forums_container($formid); ?>
 		</div>

@@ -121,13 +121,13 @@ function sp_localisation() {
 	                                                                 'action=help',
 	                                                                 'action=multiselect'));
 
-	if (SP()->primitives->strpos_array($_SERVER['QUERY_STRING'], $bothSpecial) !== false || wp_doing_ajax()) {
+	if (SP()->primitives->strpos_array(array_key_exists('QUERY_STRING', $_SERVER) ? $_SERVER['QUERY_STRING'] : '', $bothSpecial) !== false || wp_doing_ajax()) {
 		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
 		load_textdomain('spa', $mofile);
 		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/sp-'.$locale.'.mo';
 		$mofile = apply_filters('sph_localization_mo', $mofile);
 		load_textdomain('sp', $mofile);
-	} else if (is_admin() || SP()->primitives->strpos_array($_SERVER['QUERY_STRING'], $adminSpecial) !== false) {
+	} else if (is_admin() || SP()->primitives->strpos_array(array_key_exists('QUERY_STRING', $_SERVER) ? $_SERVER['QUERY_STRING'] : '', $adminSpecial) !== false) {
 		$mofile = SP_STORE_DIR.'/'.empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
 		load_textdomain('spa', $mofile);
 	} else {
@@ -1080,4 +1080,25 @@ function sph_check_for_addons_updates() {
 		delete_site_transient('sp_update_themes');
 	}
 	
+}
+
+/*
+ * Adds a Simple:Press link to the WP admin bar
+ */
+function simple_press_admin_bar( $wp_admin_bar ) {
+
+    // Bail if no admin bar.
+    if ( empty( $wp_admin_bar ) ) {
+        return;
+    }
+
+    // Add the menu
+    $wp_admin_bar->add_menu(
+        array(
+            'id'    => 'simplepress-admin-bar',
+            'title' => SP()->primitives->admin_text('Forum'),
+            'href'  => SPADMINFORUM
+        )
+    );
+
 }

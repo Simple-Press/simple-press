@@ -30,7 +30,7 @@ function spa_usergroups_delete_usergroup_form($usergroup_id) {
 ?>
 					<input type="hidden" name="usergroup_id" value="<?php echo $usergroup->usergroup_id; ?>" />
 <?php
-					echo '<div class="sf-alert-block sf-info"><p>';
+					echo '<div class="sf-alert-block sf-warning"><p>';
 					SP()->primitives->admin_etext("Warning! You are about to delete a User Group!");
 					echo '</p>';
 					echo '<p>';

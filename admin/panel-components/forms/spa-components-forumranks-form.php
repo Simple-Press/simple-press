@@ -6,8 +6,9 @@
   $Rev: 15601 $
  */
 
-if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
+if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
     die('Access denied - you cannot directly call this file');
+}
 
 require_once SP_PLUGIN_DIR . '/admin/panel-components/forms/spa-components-special-ranks-form.php';
 
@@ -94,81 +95,49 @@ function spa_components_forumranks_form() {
 
     <?php
     $rankings = spa_get_forumranks_data();
-
     $ajaxURL = wp_nonce_url(SPAJAXURL . 'components-loader&amp;saveform=forumranks', 'components-loader');
     ?>
-    <form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumranksform" name="sfforumranks" class="sf-opener">
-        <?php echo sp_create_nonce('forum-adminform_forumranks'); ?>
-        <?php
-        spa_paint_options_init();
+        <?php spa_paint_options_init(); ?>
+        <?php spa_paint_open_tab(SP()->primitives->admin_text('Forum Ranks'), true); ?>
 
-#== FORUM RANKS Tab ============================================================
-
-        spa_paint_open_tab(/* SP()->primitives->admin_text('Components').' - '. */SP()->primitives->admin_text('Forum Ranks'), true);
-        ?>
-        <div class="sf-panel-body-top">
-            <div class="sf-panel-body-top-left">
-                <h4><?php echo SP()->primitives->admin_text('Standard Forum Ranks') ?></h4>
+            <div class="sf-panel">
+                <form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumranksform" name="sfforumranks" class="sf-opener">
+                <?php echo sp_create_nonce('forum-adminform_forumranks'); ?>
+                <fieldset class="sf-fieldset">
+                    <div class="sf-panel-body-top">
+                        <h4><?php echo SP()->primitives->admin_text('Standard Forum Ranks') ?></h4>
+                        <span class="sf-icon-button sf-opener-button-open"><span class="sf-icon sf-add"></span></span>
+                        <?php echo spa_paint_help('forum-ranks') ?>
+                    </div>
+                    <div class="sf-form-row">
+                        <?php spa_paint_rankings_table($rankings); ?>
+                    </div>
+                </fieldset>
+                </form>
             </div>
-            <div class="sf-panel-body-top-right sf-mobile-btns">
-                <?php echo spa_paint_help('forum-ranks') ?>
-                <span class="sf-icon-button sf-opener-button-open"><span class="sf-icon sf-add"></span></span>
+
+
+            <div class="sf-panel">
+                <?php $special_rankings = spa_get_specialranks_data(); ?>
+                <?php spa_special_rankings_form($special_rankings); ?>
             </div>
+
+            <div class="sf-panel">
+                <fieldset class="sf-fieldset">
+                    <div class="sf-panel-body-top">
+                        <h4><?php echo SP()->primitives->admin_text('Forum Rank Badges') ?></h4>
+                        <?php $loc = SP_STORE_DIR . '/' . SP()->plugin->storage['ranks'] . '/'; ?>
+                        <?php spa_paint_file(SP()->primitives->admin_text('Select rank badge to upload'), 'newrankfile', false, true, $loc); ?>
+                        <?php echo spa_paint_help('badges-upload') ?>
+                    </div>
+                    <div class="sf-form-row">
+                        <?php spa_paint_rank_images(); ?>
+                    </div>
+                </fieldset>
+            </div>
+        <?php spa_paint_close_tab(); ?>
         </div>
-        <?php
-        //spa_paint_open_panel();
-        //	spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Ranks'), true, 'forum-ranks');
-        spa_paint_rankings_table($rankings);
-        //	spa_paint_close_fieldset();
-        //spa_paint_close_panel();
-
-        spa_paint_close_container();
-        ?>
-        <!--<div class="sf-form-submit-bar">
-        <input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Forum Ranks Components'); ?>" />
-        </div>-->
-        <?php
-        spa_paint_close_tab();
-        ?>
-    </form>
-    <div class="sfform-panel-spacer"></div>
-    <?php
-    $special_rankings = spa_get_specialranks_data();
-    spa_special_rankings_form($special_rankings);
-
-    //spa_paint_open_tab(SP()->primitives->admin_text('Components').' - '.SP()->primitives->admin_text('Forum Rank Badges'), true);
-    spa_paint_open_nohead_tab(true);
-    ?>
-    <div class="sf-panel-body-top">
-        <div class="sf-panel-body-top-left">
-            <h4><?php echo SP()->primitives->admin_text('Forum Rank Badges') ?></h4>
-        </div>
-        <div class="sf-panel-body-top-right sf-mobile-btns">
-            <?php echo spa_paint_help('badges-upload') ?>
-            <?php
-            $loc = SP_STORE_DIR . '/' . SP()->plugin->storage['ranks'] . '/';
-            spa_paint_file(SP()->primitives->admin_text('Select rank badge to upload'), 'newrankfile', false, true, $loc);
-            ?>
-        </div>
-    </div>
-    <?php
-    //spa_paint_open_panel();
-    //	spa_paint_open_fieldset(SP()->primitives->admin_text('Custom rank badge upload'), true, 'badges-upload');
-    //		$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/';
-    //		spa_paint_file(SP()->primitives->admin_text('Select rank badge to upload'), 'newrankfile', false, true, $loc);
-    //	spa_paint_close_fieldset();
-    //spa_paint_close_panel();
-    //spa_paint_open_panel();
-    //	spa_paint_open_fieldset(SP()->primitives->admin_text('Custom Rank Badges'), true, 'rank-badges');
-    spa_paint_rank_images();
-    //	spa_paint_close_fieldset();
-    //spa_paint_close_panel();
-
-    spa_paint_close_container();
-
-    do_action('sph_components_ranks_panel');
-    spa_paint_close_tab();
-    //echo '<div class="sfform-panel-spacer"></div>';
+    <?php do_action('sph_components_ranks_panel');
 }
 
 function spa_paint_rankings_table($rankings) {
@@ -192,8 +161,8 @@ function spa_paint_rankings_table($rankings) {
         <thead>
             <tr>
                 <th class='sf-text-al-center'><?php SP()->primitives->admin_etext('Rank Name'); ?></th>
-                <th class='sf-text-al-center'><?php SP()->primitives->admin_etext('NUMBER OF POSTS'); ?></th>
-                <th class='sf-text-al-center'><?php SP()->primitives->admin_etext('MEMBERSHIP GROUP'); ?></th>
+                <th class='sf-text-al-center'><?php SP()->primitives->admin_etext('Posts'); ?></th>
+                <th class='sf-text-al-center'><?php SP()->primitives->admin_etext('Group'); ?></th>
                 <th class='sf-text-al-center'><?php SP()->primitives->admin_etext('Badge'); ?></th>
                 <th class='sf-text-al-center'><?php //SP()->primitives->admin_etext('Remove');         ?></th>
             </tr>

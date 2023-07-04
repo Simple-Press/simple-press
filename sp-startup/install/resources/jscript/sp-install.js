@@ -54,8 +54,6 @@
 				/* check for errors first */
 				var retVal = a.substr(0, 13);
 
-				//$(target).fadeIn('slow');
-
 				if (retVal == 'Install Error') {
 					$('#errorzone').html('<p>' + messageStrings[3] + '</p>');
 					return;
@@ -76,9 +74,10 @@
 				/* are we finished yet */
 				if (currentPhase > phaseCount) {
 					$("#progressbar").progressbar('option', 'value', 100);
-                                        $("#sfmaincontainer [type=submit]").removeAttr('disabled');
-					//$('#finishzone').html('<p>' + endInstall(messageStrings[0], folder) + '</p>');
-					//$('#imagezone').html('<p>' + messageStrings[2] + '</p>');
+					$("#sfmaincontainer [type=submit]").removeAttr('disabled');
+
+					$("#installation-finished").toggleClass('sfhidden');
+					$("#installation-header").html(messageStrings[2])
 					return;
 				} else {
 					spj.performInstall(phpUrl, phaseCount, currentPhase, subPhaseCount, currentSubPhase, image, messages, folder);

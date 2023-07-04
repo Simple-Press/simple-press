@@ -6,11 +6,13 @@
  * $LastChangedDate: 2018-11-13 22:52:58 -0600 (Tue, 13 Nov 2018) $
  * $Rev: 15821 $
  */
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
+    die('Access denied - you cannot directly call this file');
+}
 
 
-function spa_enqueue_datepicker() {
-	
+function spa_enqueue_datepicker(): void
+{
 	$spAdminUIStyleUrl = SPADMINCSS.'jquery-ui.css';
 	wp_register_style('spAdminUIStyle', $spAdminUIStyleUrl, array(), SP_SCRIPTS_VERSION);
 	wp_enqueue_style('spAdminUIStyle');
@@ -19,7 +21,8 @@ function spa_enqueue_datepicker() {
 }
 
 
-function spa_enqueue_font_icon_picker() {
+function spa_enqueue_font_icon_picker(): void
+{
 	
 	$script = SPAJSCRIPT.'jquery.fonticonpicker.js';
 	
@@ -187,17 +190,23 @@ function spa_panel_header() {
 	global $spNews;
 
 	echo '<!-- Common wrapper and header -->';
-	echo '<div class="wrap nosubsub">';
-	echo '<div class="mainicon icon-forums"></div>';
-	if (!spa_saas_check() && !spa_white_label_check()) {	
-		echo '<h1>'.SP()->primitives->admin_text('Simple:Press Administration').'</h1>';
-	} else {
-		echo '<h1>'.SP()->primitives->admin_text('Forum Administration').'</h1>';
-	}
-	echo '<div class="clearboth"></div>';
+	echo '<div class="spAdminHeader">';
+        if (!spa_saas_check() && !spa_white_label_check()) {
+            echo '<img src="' . SPADMINIMAGES . 'sp-logo-horizontal.svg" height="30">';
+        } else {
+            echo '<h1>'.SP()->primitives->admin_text('Forum Administration').'</h1>';
+        }
 
-	
-	echo '</div><div class="clearboth"></div>';
+        echo "<div class='spAdminHeaderLinks' style='float: right;'>";
+
+            echo '<a class="sf-button-secondary" href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a>';
+
+            if (!spa_saas_check() && !spa_white_label_check()) {
+                echo '<a class="sf-button-secondary" target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Documentation').'</a>';
+            }
+
+        echo "</div>";
+    echo '</div>';
 
 	# define container for the dialog box popup
 	echo '<div id="dialogcontainer" style="display:none;"></div>';
@@ -343,54 +352,60 @@ function spa_render_sidemenu() {
 		echo '</div>'."\n";
 	} else {
 		
-		echo '<div style="clear: both;float: none;"></div>';
-		
-		
 		echo '<div id="sfsidepanel">'."\n";
                 
-                echo '<span class="sf-tooggle-admin-menu">'."\n";
-                echo '<span class="sf-button sf-hide">'."\n";
-                echo __('Hide Admin Menu', 'sp');
-                echo '</span>'."\n";
-                echo '<span class="sf-button sf-show">'."\n";
-                echo __('Show Admin Menu', 'sp');
-                echo '</span>'."\n";
-                echo '</span>'."\n";
+            echo '<span class="sf-toggle-admin-menu">' ."\n";
+                echo '<span class="sf-button-secondary sf-hide">' . __('Hide Admin Menu', 'sp') . '</span>';
+                echo '<span class="sf-button-secondary sf-show">' . __('Show Admin Menu', 'sp') . '</span>';
+            echo '</span>'."\n";
                 
-		echo '<div id="sfadminmenu">'."\n";
-		foreach ($sfadminpanels as $index => $panel) {
-			if (SP()->auths->current_user_can($panel[1]) || ($panel[0] == 'Admins' && (SP()->user->thisUser->admin || SP()->user->thisUser->moderator))) {
-				$pName = str_replace(' ', '', $panel[0]);
-				echo '<div class="sfsidebutton" id="sfacc'.$pName.'">'."\n";
-				echo '<div class="" title="'.esc_attr($panel[3]).'"><span class="sf-icon sf-'.$panel[4].' spa'.$panel[4].'"></span><a href="#">'.$panel[0].'</a></div>'."\n";
-				echo '</div>'."\n";
-				echo '<div class="sfmenublock">'."\n";
+            echo '<div id="sfadminmenu">'."\n";
+       
+                $coreMenus = '';
+                $addonMenus = '';
 
-				foreach ($panel[6] as $label => $data) {
-					foreach ($data as $formid => $reload) {
-						# ignore user plugin data for menu
-						if ($formid == 'admin' || $formid == 'save' || $formid == 'form') continue;
-						echo '<div class="sfsideitem">'."\n";
-						if ($reload != '') {
-							$id = ' id="'.esc_attr($reload).'"';
-						} else {
-							$id = ' id="acc'.esc_attr($formid).'"';
-						}
-						$base = esc_attr($panel[5]);
-						$admin = (!empty($data['admin']) ? $data['admin'] : '');
-						$save = (!empty($data['save']) ? $data['save'] : '');
-						$form = (!empty($data['form']) ? $data['form'] : '');
-						?>
-						<a<?php echo $id; ?> href="javascript:void(0);" class="spAccordionLoadForm" data-form="<?php echo $formid; ?>" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="" data-open="open" data-upgrade="<?php echo $upgrade; ?>" data-admin="<?php echo $admin; ?>" data-save="<?php echo $save; ?>" data-sform="<?php echo $form; ?>" data-reload="<?php echo $reload; ?>"><?php echo $label; ?></a><?php echo "\n"; ?>
-						<?php
-					}
-					echo '</div>'."\n";
-				}
-				echo '</div>'."\n";
-			}
-		}
-		echo '</div>'."\n";
+                foreach ($sfadminpanels as $index => $panel) {
+                    $html = '';
+                    if (SP()->auths->current_user_can($panel['spf_capability']) || ($panel['panel_name'] == 'Admins' && (SP()->user->thisUser->admin || SP()->user->thisUser->moderator))) {
+                        $pName = str_replace(' ', '', $panel['panel_name']);
+                        $html .= '<div class="sfsidebutton spPanelType' . (array_key_exists('core', $panel) && $panel['core'] ? 'Core': 'Addon') . '" id="sfacc'.$pName.'">';
+                        $html .= '<span class="sf-icon sf-'.$panel['icon'].' spa'.$panel['icon'].'"></span><a href="#">'.$panel['panel_name'].'</a>';
+                        $html .= '</div>';
+                        $html .= '<div class="sfmenublock">';
 
+                        foreach ($panel['subpanels'] as $label => $data) {
+                            foreach ($data as $form_id => $reload) {
+                                # ignore user plugin data for menu
+                                if ($form_id === 'admin' || $form_id === 'save' || $form_id === 'form') continue;
+
+                                $html .=  '<div class="sfsideitem">'."\n";
+                                if ($reload != '') {
+                                    $id = ' id="'.esc_attr($reload).'"';
+                                } else {
+                                    $id = ' id="acc'.esc_attr($form_id).'"';
+                                }
+                                $base = esc_attr($panel['loader_function']);
+                                $admin = (!empty($data['admin']) ? $data['admin'] : '');
+                                $save = (!empty($data['save']) ? $data['save'] : '');
+                                $form = (!empty($data['form']) ? $data['form'] : '');
+
+                                $html .= '<a' . $id . ' href="javascript:void(0);" class="spAccordionLoadForm" data-form="' . $form_id . '" data-url="' . $base . '" data-target="' . $target . '" data-img="' . $image . '" data-id="" data-open="open" data-upgrade="' . $upgrade . '" data-admin="' . $admin . '" data-save="' . $save . '" data-sform="' . $form . '" data-reload="' . $reload . '">' . $label . '</a>';
+                            }
+                            $html .=  '</div>'."\n";
+                        }
+                        $html .=  '</div>'."\n";
+                    }
+
+                    if (array_key_exists('core', $panel) && $panel['core']) {
+                        $coreMenus .= $html;
+                    } else {
+                        $addonMenus .= $html;
+                    }
+                }
+
+                echo $coreMenus;
+                echo $addonMenus;
+            echo '</div>'."\n";
 		echo '</div>'."\n";
 	}
 }
@@ -423,6 +438,7 @@ function spa_check_warnings() {
 	}
 
 	# check for themes with updates
+
 	$up = get_site_transient('sp_update_themes');
 	if (!empty($up)) {
 		$msg = apply_filters('sph_themes_update_notice', SP()->primitives->admin_text('There are one or more Simple:Press theme updates available'));
@@ -570,15 +586,15 @@ function spa_check_warnings() {
 	}
 
 	# check for server-side UTC timezone
-	$tz = get_option('timezone_string');
-	if (empty($tz)) {
-		$tz = 'UTC '.get_option('gmt_offset');
-		$string = SP()->primitives->admin_text('You have set your server to use a UTC timezone setting');
-		$string .= ':</p><p><em>'.$tz.'</em></p><p>';
-		$string .= SP()->primitives->admin_text('UTC can give unpredictable results on forum post time stamps. Please select the city setting nearest to you in the WordPress - Settings - General admin page');
-		$string .= ':</p><p><em>'.SP()->primitives->admin_text('For more information please see this').' <a href="https://simple-press.com/documentation/faq/troubleshooting/why-do-my-new-posts-show-as-posted-minus-seconds-ago/" target="_blank">'.SP()->primitives->admin_text('FAQ').'</a></p><p>';
-		$mess .= spa_message($string, 'error');
-	}
+	#$tz = get_option('timezone_string');
+	#if (empty($tz)) {
+	#	$tz = 'UTC '.get_option('gmt_offset');
+	#	$string = SP()->primitives->admin_text('You have set your server to use a UTC timezone setting');
+	#	$string .= ':</p><p><em>'.$tz.'</em></p><p>';
+	#	$string .= SP()->primitives->admin_text('UTC can give unpredictable results on forum post time stamps. Please select the city setting nearest to you in the WordPress - Settings - General admin page');
+	#	$string .= ':</p><p><em>'.SP()->primitives->admin_text('For more information please see this').' <a href="https://simple-press.com/documentation/faq/troubleshooting/why-do-my-new-posts-show-as-posted-minus-seconds-ago/" target="_blank">'.SP()->primitives->admin_text('FAQ').'</a></p><p>';
+	#	$mess .= spa_message($string, 'error');
+	#}
 
 	return $mess;
 }

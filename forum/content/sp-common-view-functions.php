@@ -1370,8 +1370,8 @@ function sp_BreadCrumbs($args = '', $homeLabel = '') {
 
 	# forum link (parent or child forum)
 	if (!empty(SP()->rewrites->pageData['forumslug']) && (SP()->rewrites->pageData['forumslug'] != 'all') && (!empty(SP()->rewrites->pageData['forumname']))) {
-		# if showing a topic then check the return page of forum in transient store
-		$returnPage = (empty(SP()->rewrites->pageData['topicslug'])) ? 1 : sp_pop_topic_page(SP()->rewrites->pageData['forumid']);
+		# Always show page 1 on traversing
+		$returnPage =  1 ;
 		$breadCrumbs .= $crumbEnd.str_repeat($crumbSpace, $treeCount).$icon."<a class='$linkClass' href='".SP()->spPermalinks->build_url(SP()->rewrites->pageData['forumslug'], '', $returnPage, 0)."'>".SP()->primitives->truncate_name(SP()->displayFilters->title(SP()->rewrites->pageData['forumname']), $truncate).'</a>';
 		$treeCount++;
 	}

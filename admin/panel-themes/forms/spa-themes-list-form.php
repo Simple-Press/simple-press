@@ -1,10 +1,4 @@
 <?php
-/*
-Simple:Press
-Admin themes desktop
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
-*/
 
 if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 	die( 'Access denied - you cannot directly call this file' );
@@ -34,9 +28,6 @@ function spa_themes_list_form() {
 	spa_paint_open_panel();
 
 	spa_paint_spacer();
-	echo '<div class="sf-alert-block sf-info">';
-	echo SP()->primitives->admin_text( 'Themes Folder' ) . ': <b>' . realpath( SP_STORE_DIR . '/' . SP()->plugin->storage['themes'] ) . '</b>';
-	echo '</div>';
 	$strspace   = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	$stroutname = SP()->primitives->admin_text( 'All' ) . '(' . $numThemes . ')';
 	$strout     = "<a href='" . esc_url( add_query_arg( 'themegroup', 'all', SPADMINTHEMES ) ) . "'>$stroutname</a>" . $strspace;
@@ -48,29 +39,26 @@ function spa_themes_list_form() {
 	?>
 
   <fieldset class="sf-fieldset">
-  <form id="theme-filter" method="get" action="<?php echo SPADMINTHEMES; ?>">
-					<input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME . '/admin/panel-themes/spa-themes.php'; ?>" />
-					<div class="sf-panel-body-top">
-					  <div class="sf-panel-body-top-left">
-						<?php
-						// display view links
-						echo $strout;
-						?>
-					  </div>
-						<div class="sf-panel-body-top-right">
-						  <p class="search-box">
-							<label class="screen-reader-text" for="<?php echo esc_attr( 'search_id-search-input' ); ?>">Search Themes:</label>
-							<input type="search" id="<?php echo esc_attr( 'search_id-search-input' ); ?>" name="s" value="<?php _admin_search_query(); ?>" />
-							<?php submit_button( 'Search Themes', '', '', false, array( 'id' => 'search-submit' ) ); ?>
-						  </p>
+      <form id="theme-filter" method="get" action="<?php echo SPADMINTHEMES; ?>">
+          <input type="hidden" name="page" value="<?php echo SP_FOLDER_NAME . '/admin/panel-themes/spa-themes.php'; ?>" />
+          <div class="flex">
+              <div class="maxWidth">
+                  <?php echo $strout;	?>
+              </div>
+              <div>
+                  <p class="search-box">
+                      <label class="screen-reader-text" for="<?php echo esc_attr( 'search_id-search-input' ); ?>">Search Themes:</label>
+                      <input type="search" id="<?php echo esc_attr( 'search_id-search-input' ); ?>" name="s" value="<?php _admin_search_query(); ?>" />
+                  </p>
+              </div>
+              <div>
+                  <?php
+                  echo spa_paint_help( 'themes', $adminhelpfile );
+                  ?>
+              </div>
+          </div>
 
-							<?php
-							echo spa_paint_help( 'themes', $adminhelpfile );
-							?>
-						</div>
-					</div>
-					
-  </form>
+      </form>
   </fieldset>
 	<?php
 	spa_paint_close_panel();
@@ -94,25 +82,17 @@ function spa_themes_list_form() {
 			<h3 class="theme-name"><?php echo $themes[ $curTheme['theme'] ]['Name'] . ' ' . $themes[ $curTheme['theme'] ]['Version']; ?></h3>
 
 			<div><img src="<?php echo SPTHEMEBASEURL . $curTheme['theme'] . '/' . $themes[ $curTheme['theme'] ]['Screenshot']; ?>" alt="" /></div>
-			<h4>
-				<?php
-				if ( ! spa_white_label_check() ) {
-					// Show author (and associated hyperlink)
-					echo SP()->primitives->admin_text( 'By' ) . ' <a href="' . $themes[ $curTheme['theme'] ]['AuthorURI'] . '" title="' . SP()->primitives->admin_text( 'Visit author homepage' ) . '">' . $themes[ $curTheme['theme'] ]['Author'] . '</a>';
-				}
-				?>
-			</h4>
-			
+
 			<?php
 			if ( ! empty( $curTheme['parent'] ) ) {
 				if ( file_exists( SPTHEMEBASEDIR . $curTheme['parent'] ) ) {
-					echo '<p class="theme-parent">';
-					echo SP()->primitives->admin_text( 'This theme is a child theme of ' ) . '<b>' . $curTheme['parent'] . '</b>';
-					echo '</p>';
+                    echo '<div class="sf-alert-block sf-info">';
+                        echo SP()->primitives->admin_text( 'This theme is a child theme of ' ) . '<b>' . $curTheme['parent'] . '</b>';
+					echo '</div>';
 				} else {
-					echo '<p class="theme-parent">';
-					echo '<b>' . SP()->primitives->admin_text( 'The specified parent theme' ) . " '" . $curTheme['parent'] . "' " . SP()->primitives->admin_text( 'does not exist' ) . '</b> ';
-					echo '</p>';
+                    echo '<div class="sf-alert-block sf-caution">';
+                        echo '<b>' . SP()->primitives->admin_text( 'The specified parent theme' ) . " '" . $curTheme['parent'] . "' " . SP()->primitives->admin_text( 'does not exist' ) . '</b> ';
+					echo '</div>';
 				}
 			}
 			?>
@@ -220,25 +200,17 @@ function spa_themes_list_form() {
 			<div class="spThemeInner">
 			<h3 class="theme-name"><?php echo $theme_name . ' ' . $theme_version; ?></h3>
 			<div><img alt="" src="<?php echo $theme_image; ?>" /></div>
-			<h4>
-				<?php
-				if ( ! spa_white_label_check() ) {
-					// Show author (and associated hyperlink)
-					echo SP()->primitives->admin_text( 'By' ) . ' <a href="' . $theme_uri . '" title="' . SP()->primitives->admin_text( 'Visit author homepage' ) . '">' . $theme_author . '</a>';
-				}
-				?>
-			</h4>
 
 			<?php
 			if ( ! empty( $theme_data['Parent'] ) ) {
 				if ( file_exists( SPTHEMEBASEDIR . $theme_data['Parent'] ) ) {
-					echo '<p class="theme-parent">';
-					echo SP()->primitives->admin_text( 'This theme is a child theme of ' ) . '<b>' . $theme_data['Parent'] . '</b>';
-					echo '</p>';
+                    echo '<div class="sf-alert-block sf-info">';
+                        echo SP()->primitives->admin_text( 'This theme is a child theme of ' ) . '<b>' . $theme_data['Parent'] . '</b>';
+                    echo '</div>';
 				} else {
-					echo '<p class="theme-parent">';
-					echo '<b>' . SP()->primitives->admin_text( 'The specified parent theme' ) . " '" . $theme_data['Parent'] . "' " . SP()->primitives->admin_text( 'does not exist' ) . '</b> ';
-					echo '</p>';
+                    echo '<div class="sf-alert-block sf-caution">';
+                        echo '<b>' . SP()->primitives->admin_text( 'The specified parent theme' ) . " '" . $theme_data['Parent'] . "' " . SP()->primitives->admin_text( 'does not exist' ) . '</b> ';
+					echo '</div>';
 				}
 			}
 			?>
@@ -264,26 +236,23 @@ function spa_themes_list_form() {
 				if ( $theme_overlays ) {
 					// only show if more than one overlay
 					if ( count( $theme_overlays ) > 1 ) {
-						// echo '<div class="sf-form-row">';
 						echo '<label>' . SP()->primitives->admin_text( 'Select Overlay' ) . ': ' . '</label>';
-						echo ' <select name="color-' . esc_attr( $theme_file ) . '" style="margin-bottom:5px;">';
+						echo ' <select name="color-' . esc_attr( $theme_file ) . '">';
 						foreach ( $theme_overlays as $theme_overlay ) {
 							$theme_overlay = trim( $theme_overlay );
 							$selected      = ( $theme_overlays[0] == $theme_overlay ) ? ' selected="selected" ' : '';
 							echo '<option' . $selected . ' value="' . esc_attr( $theme_overlay ) . '">' . esc_html( $theme_overlay ) . '</option>';
 						}
 						echo '</select> ';
-						// echo '</div>';
-						// echo '<div class="clearboth"></div>';
 					}
 				}
 				?>
 				
 				<?php
-				if ( ! is_multisite() || is_super_admin() ) {
-					?>
-					<input type="submit" class="sf-button-secondary action spThemeDeleteConfirm" id="delete-<?php echo esc_attr( $theme_file ); ?>" name="delete" value="<?php echo SP()->primitives->admin_etext( 'Delete' ); ?>" data-msg="<?php echo $msg; ?>" /><?php } ?>
-				<input type="submit" class="sf-button-secondary action" id="activate-<?php echo esc_attr( $theme_file ); ?>" name="activate" value="<?php echo SP()->primitives->admin_etext( 'Activate' ); ?>" />
+				if ( ! is_multisite() || is_super_admin() ) { ?>
+                    <input type="submit" class="sf-button-secondary action" id="activate-<?php echo esc_attr( $theme_file ); ?>" name="activate" value="<?php echo SP()->primitives->admin_etext( 'Activate' ); ?>" />
+                    <input type="submit" class="sf-button-secondary action spThemeDeleteConfirm" id="delete-<?php echo esc_attr( $theme_file ); ?>" name="delete" value="<?php echo SP()->primitives->admin_etext( 'Delete' ); ?>" data-msg="<?php echo $msg; ?>" />
+                <?php } ?>
 			</form>
 		</div>
 
@@ -360,29 +329,6 @@ function spa_themes_list_form() {
 		}
 		echo '</div>';
 		echo '</div>';
-		?>
-		
-		<script>
-			
-			(function($) {
-				$(function() {
-					
-					
-					//$('#sfmaincontainer').off('adminformloaded');
-//					$('#sfmaincontainer').on('adminformloaded', function() {
-//						
-//						
-//					});
-				});
-			
-			}(jQuery))
-			
-			
-		
-		</script>
-					
-		
-		<?php
 
 	} else {
 		echo SP()->primitives->admin_text( 'No other available themes found' );

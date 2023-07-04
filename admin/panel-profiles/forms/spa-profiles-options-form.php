@@ -29,13 +29,13 @@ function spa_profiles_options_form() {
 	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Profile Options'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Display Name Format'), true, 'display-name-format');
+                echo '<div class="sf-alert-block sf-caution">';
+                SP()->primitives->admin_etext('Warning: If you change the display name format, it may take some time on a large number of users to update them to the new format. Please be patient.');
+                echo '</div>';
 				spa_paint_checkbox(SP()->primitives->admin_text('Let member choose display name'), 'nameformat', $sfoptions['nameformat'] ?? false);
 				spa_paint_select_start(SP()->primitives->admin_text('Display name format if member cannot choose').'<br />'.SP()->primitives->admin_text('(ignored if member allowed to choose)'), 'fixeddisplayformat', 'fixeddisplayformat');
 				echo spa_display_name_format_options($sfoptions['fixeddisplayformat']);
 				spa_paint_select_end();
-    			echo '<div class="sf-alert-block sf-info">';
-    			SP()->primitives->admin_etext('Warning: If you change the display name format, it may take some time on a large number of users to update them to the new format. Please be patient.');
-    			echo '</div>';
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
@@ -48,7 +48,9 @@ function spa_profiles_options_form() {
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Signature Image Size'), true, 'sig-images');
-				echo '<u>'.SP()->primitives->admin_text('If you are allowing signature images (zero = not limited)').':</u>';
+                echo '<div class="sf-form-row">';
+                    echo SP()->primitives->admin_text('If you are allowing signature images (zero = not limited)');
+                echo '</div>';
 				spa_paint_input(SP()->primitives->admin_text('Maximum signature width (pixels)'), 'sfsigwidth', $sfoptions['sfsigwidth'] ?? 0);
 				spa_paint_input(SP()->primitives->admin_text('Maximum signature height (pixels)'), 'sfsigheight', $sfoptions['sfsigheight'] ?? 0);
 			spa_paint_close_fieldset();
@@ -70,7 +72,7 @@ function spa_profiles_options_form() {
 
     			echo '<div class="sf-alert-block sf-info">';
     			SP()->primitives->admin_etext('Note - if Popup Window is selected the option will be automatically switched to Forum Profile Page when viewed on a mobile phone device');
-    			echo '</div><br />';
+    			echo '</div>';
 
 				$values = array(SP()->primitives->admin_text('Popup window'), SP()->primitives->admin_text('Forum profile page'), SP()->primitives->admin_text('BuddyPress profile'), SP()->primitives->admin_text('WordPress author page'), SP()->primitives->admin_text('Other page'), SP()->primitives->admin_text('Mingle profile'));
                 if (!is_plugin_active('buddypress/bp-loader.php')) unset($values[2]); # dont show BP option if not active

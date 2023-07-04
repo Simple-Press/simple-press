@@ -6,9 +6,12 @@ $LastChangedDate: 2018-11-03 11:12:02 -0500 (Sat, 03 Nov 2018) $
 $Rev: 15799 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
+    die('Access denied - you cannot directly call this file');
+}
 
-function spa_profiles_avatars_pool_form() {
+function spa_profiles_avatars_pool_form(): void
+{
 	$ajaxurl = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'uploader', 'uploader'));
 ?>
 <script>
@@ -77,18 +80,22 @@ function spa_profiles_avatars_pool_form() {
 
     #== PROFILE OPTIONS Tab ============================================================
 
-	spa_paint_open_tab(/*SP()->primitives->admin_text('Profiles').' - '.*/SP()->primitives->admin_text('Avatar Pool'));
-		spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('Avatar Pool Upload'), true, 'avatar-pool-upload');
-				echo '<div class="sf-form-row">';
-				$loc = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/';
-				spa_paint_file(SP()->primitives->admin_text('Select avatar to upload'), 'newavatar', false, true, $loc);
-				echo '</div>';
-				echo '<div class="sf-alert-block sf-info">';
-				SP()->primitives->admin_etext('Please be advised that Admin uploaded avatars for the avatar pool are NOT subject to the user uploaded avatar size limits.  So use caution when picking avatars for your avatar pool');
-				echo '</div>';
-			spa_paint_close_fieldset();
-		spa_paint_close_panel();
+	spa_paint_open_tab(SP()->primitives->admin_text('Avatar Pool'));
+		spa_paint_open_panel(); ?>
+			<fieldset class="sf-fieldset">
+                <div class="sf-panel-body-top">
+                <h4><?php echo SP()->primitives->admin_text('Avatar Pool Upload'); ?></h4>
+                <?php echo spa_paint_help('avatar-pool-upload') ?>
+
+                <?php $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/'; ?>
+				<?php spa_paint_file(SP()->primitives->admin_text('Select avatar to upload'), 'newavatar', false, true, $loc); ?>
+                </div>
+				<div class="sf-alert-block sf-info">
+                    <?php SP()->primitives->admin_etext('Please be advised that Admin uploaded avatars for the avatar pool are NOT subject to the user uploaded avatar size limits.  So use caution when picking avatars for your avatar pool'); ?>
+                </div>
+            </fieldset>
+
+		<?php spa_paint_close_panel();
 
 		spa_paint_tab_right_cell();
 

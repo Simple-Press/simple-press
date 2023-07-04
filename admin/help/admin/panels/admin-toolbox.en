@@ -12,9 +12,10 @@ you have you as well as othr uploaded storage (ie avatars).
 
 [modify-build-number]
 <strong>Modify Build Number</strong><br /><br />
-<b>WARNING - Change this only if you know what you are doing!</b><br /><br />
-This option update allows admins to change the current Simple:Press build number.  <b>WARNING - Change this only if you know what you
-are doing!  Changing the build number should only be done in rare cases when there were issues during an upgrade or installation.</b><br /><br />
+This option update allows admins to change the current Simple:Press build number. <br><br>
+<b>WARNING - Change this only if you know what you
+are doing!  Changing the build number should only be done in rare cases when there were issues during an upgrade or installation.</b>
+<br /><br />
 By manually changing the build number AND checking the Force Upgrade box, you can force the upgrade/install procedure to run once again.
 Normally, you should only change this when recommended by the Simple:Press team in the support forum.
 [end]

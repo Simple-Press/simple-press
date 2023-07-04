@@ -1,10 +1,4 @@
 <?php
-/*
-Simple:Press
-Admin Toolbox Uninstall Form
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
-*/
 
 if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 	die( 'Access denied - you cannot directly call this file' );
@@ -32,41 +26,37 @@ function spa_toolbox_housekeeping_form() {
     <div id="sfhousekeepingformblock">
 		<?php
 		spa_paint_options_init();
-		spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/ SP()->primitives->admin_text( 'House Keeping' ), true );
+		spa_paint_open_tab(SP()->primitives->admin_text( 'House Keeping' ), true );
 		spa_paint_open_panel();
+                echo '<div class="sf-alert-block sf-warning">' . SP()->primitives->admin_text( "Use options below with great caution." ) . '</div>';
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'Rebuild Indexes' ), true, 'rebuild-indexes' );
 		?>
         <div class="collapsible-closed">
-			<?php
-			echo '<p class="sf-sublabel">' . SP()->primitives->admin_text( "You shouldn't need to rebuild your indexes unless asked to by Simple:Press Support." ) . '</p>';
-			?>
+            <div class="sf-form-row">
             <form action="<?php echo $ajaxURL; ?>" method="post" id="sfindexes" name="sfindexes">
 
 				<?php echo sp_create_nonce( 'forum-adminform_housekeeping' ); ?>
-                <div class="sf-form-row sf-sublabel">
-                    <div class="sf-select-wrap">
                         <select class="wp-core-ui sp-input-60" name="forum_id">
 							<?php echo sp_render_group_forum_select( false, false, false, true, '', '', 'wp-core-ui', 20 ); ?>
                         </select>
-                    </div>
-                </div>
 				<?php
-				echo '<p class="sf-sublabel sf-sublabel-small">' . SP()->primitives->admin_text( 'Rebuilding the forum indexes may take some time if you have a large number of topics or posts.' ) . '</p>';
+				echo '<span class="sf-sublabel sf-sublabel-small">' . SP()->primitives->admin_text( 'Rebuilding the forum indexes may take some time if you have a large number of topics or posts.' ) . '</span>';
 				?>
                 <input type="submit" class="sf-button-primary spShowElement" id="saveit1" name="rebuild-fidx" value="<?php SP()->primitives->admin_etext( 'Rebuild Forum Indexes' ); ?>"
                        data-target="#riimg"/>
                 <img class="sfhidden" id="riimg" src="<?php echo SPCOMMONIMAGES . 'working.gif'; ?>" alt=""/>
             </form>
         </div>
+        </div>
 		<?php
 		spa_paint_close_fieldset();
 		spa_paint_close_panel();
-		echo '<span></span>';
 
 		spa_paint_open_panel();
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'New Post Cleanup' ), true, 'newpost-cleanup' );
 		?>
         <div class="collapsible-closed">
+            <div class="sf-form-row">
 			<?php
 			echo '<p class="sf-sublabel">' . SP()->primitives->admin_text( 'This will reset the New Posts list for users who haven not visited the forum in the specified number of days.' ) . '</p>';
 			?>
@@ -83,42 +73,39 @@ function spa_toolbox_housekeeping_form() {
 
                 <img class="sfhidden" id="npcimg" src="<?php echo SPCOMMONIMAGES . 'working.gif'; ?>" alt=""/>
             </form>
-			<?php
-
-			?>
+            </div>
         </div>
 		<?php
 		spa_paint_close_fieldset();
 		spa_paint_close_panel();
-		echo '<span></span>';
 
 		spa_paint_open_panel();
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'User Post Count Cleanup' ), true, 'post-count-cleanup' );
 		?>
         <div class="collapsible-closed">
-			<?php
-			echo '<p class="sf-sublabel">' . SP()->primitives->admin_text( 'This will go through the users and posts database tables and recalculate post counts for all users based on existing posts.' ) . '</p>';
-			?>
             <form action="<?php echo $ajaxURL; ?>" method="post" id="sfpostcountcleanup" name="sfpostcountcleanup">
-				<?php echo sp_create_nonce( 'forum-adminform_housekeeping' ); ?><br/>
+            <div class="sf-form-row">
+			<?php echo '<p class="sf-sublabel">' . SP()->primitives->admin_text( 'This will go through the users and posts database tables and recalculate post counts for all users based on existing posts.' ) . '</p>'; 	?>
+				<?php echo sp_create_nonce( 'forum-adminform_housekeeping' ); ?>
                 <p class="sf-sublabel .sf-sublabel-small">
 					<?php echo '' . SP()->primitives->admin_text( 'Recalculating user post counts may take some time if you have a large number of users and cannot be reversed.' ) . ''; ?>
                 </p>
                 <input type="submit" class="sf-button-primary spShowElement" id="saveit3" name="postcount-cleanup" value="<?php SP()->primitives->admin_etext( 'Clean Up Post Counts' ); ?>"
                        data-target="#pcimg"/>
                 <img class="sfhidden" id="pcimg" src="<?php echo SPCOMMONIMAGES . 'working.gif'; ?>" alt=""/>
-            </form>
 
+            </div>
+            </form>
         </div>
 		<?php
 		spa_paint_close_fieldset();
 		spa_paint_close_panel();
-		echo '<span></span>';
 
 		spa_paint_open_panel();
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'Transient Cleanup' ), true, 'transient-cleanup' );
 		?>
         <div class="collapsible-closed">
+            <div class="sf-form-row">
 			<?php
 			echo '<p class="sf-sublabel">' . SP()->primitives->admin_text( 'This will clean up expired WP Transients from the WP options table and any expired SP user notices.' ) . '</p>';
 			?>
@@ -129,6 +116,7 @@ function spa_toolbox_housekeeping_form() {
                 <img class="sfhidden" id="tcimg" src="<?php echo SPCOMMONIMAGES . 'working.gif'; ?>" alt=""/>
             </form>
         </div>
+        </div>
 		<?php
 		spa_paint_close_fieldset();
 		spa_paint_close_panel();
@@ -138,6 +126,7 @@ function spa_toolbox_housekeeping_form() {
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'Rebuild Default Profile Tabs' ), true, 'reset-tabs' );
 		?>
         <div class="collapsible-closed">
+            <div class="sf-form-row">
 			<?php
 			echo '<p class="sf-sublabel">' . SP()->primitives->admin_text( 'This will remove all Profile Tabs and restore to default state.' ) . '</p>';
 			?>
@@ -148,15 +137,16 @@ function spa_toolbox_housekeeping_form() {
                 <img class="sfhidden" id="rdptimg" src="<?php echo SPCOMMONIMAGES . 'working.gif'; ?>" alt=""/>
             </form>
         </div>
+        </div>
 		<?php
 		spa_paint_close_fieldset();
 		spa_paint_close_panel();
-		echo '<span></span>';
 
 		spa_paint_open_panel();
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'Reset the Auths Cache' ), true, 'reset-auths' );
 		?>
         <div class="collapsible-closed">
+            <div class="sf-form-row">
 			<?php
 			echo '<p class="sf-sublabel">' . SP()->primitives->admin_text( "This will force a rebuild of each user's auth cache. It does not change any permissions." ) . '</p>';
 			?>
@@ -167,6 +157,7 @@ function spa_toolbox_housekeeping_form() {
                 <img class="sfhidden" id="rtacimg" src="<?php echo SPCOMMONIMAGES . 'working.gif'; ?>" alt=""/>
             </form>
         </div>
+        </div>
 		<?php
 		spa_paint_close_fieldset();
 		spa_paint_close_panel();
@@ -176,6 +167,7 @@ function spa_toolbox_housekeeping_form() {
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'Reset Users Plugin Data Cache' ), true, 'reset-plugin-data' );
 		?>
         <div class="collapsible-closed">
+            <div class="sf-form-row">
 			<?php
 			echo '<p class="sf-sublabel">' . SP()->primitives->admin_text( "This will force each user's plugin data cache to be cleared." ) . '</p>';
 			?>
@@ -185,16 +177,17 @@ function spa_toolbox_housekeeping_form() {
                        data-target="#rrpdimg"/>
                 <img class="sfhidden" id="rrpdimg" src="<?php echo SPCOMMONIMAGES . 'working.gif'; ?>" alt=""/>
             </form>
+            </div>
         </div>
 		<?php
 		spa_paint_close_fieldset();
 		spa_paint_close_panel();
-		echo '<span></span>';
 
 		spa_paint_open_panel();
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'Reset combined CSS/JS' ), true, 'reset-combined' );
 		?>
         <div class="collapsible-closed">
+            <div class="sf-form-row">
 			<?php
 			echo '<p class="sf-sublabel">' . SP()->primitives->admin_text( "This will force a rebuild of the combined CSS and JS cache files." ) . '</p>';
 			?>
@@ -204,16 +197,17 @@ function spa_toolbox_housekeeping_form() {
                 <input type="submit" class="sf-button-primary spShowElement" id="saveit8" name="reset-combinedjs" value="<?php SP()->primitives->admin_etext( 'Reset Combined Script' ); ?>" data-target="#rtccimg"/>
                 <img class="sfhidden" id="rtccimg" src="<?php echo SPCOMMONIMAGES . 'working.gif'; ?>" alt=""/>
             </form>
+            </div>
         </div>
 		<?php
 		spa_paint_close_fieldset();
 		spa_paint_close_panel();
-		echo '<span></span>';
 
 		spa_paint_open_panel();
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'Flush general cache' ), true, 'flush-cache' );
 		?>
         <div class="collapsible-closed">
+            <div class="sf-form-row">
 			<?php
 			echo '<p class="sf-sublabel">' . SP()->primitives->admin_text( "This will force a flushing of the general cache." ) . '</p>';
 			?>
@@ -223,6 +217,7 @@ function spa_toolbox_housekeeping_form() {
                        data-target="#fcacheimg"/>
                 <img class="sfhidden" id="fcacheimg" src="<?php echo SPCOMMONIMAGES . 'working.gif'; ?>" alt=""/>
             </form>
+            </div>
         </div>
 		<?php
 		spa_paint_close_fieldset();
@@ -233,6 +228,7 @@ function spa_toolbox_housekeeping_form() {
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'Flush XML cache' ), true, 'flush-xml' );
 		?>
         <div class="collapsible-closed">
+            <div class="sf-form-row">
 			<?php
 			echo '<p class="sf-sublabel">' . SP()->primitives->admin_text( "This will force a flushing of the xml api cache." ) . '</p>';
 			?>
@@ -242,15 +238,13 @@ function spa_toolbox_housekeeping_form() {
                        data-target="#fcachexml"/>
                 <img class="sfhidden" id="fcachexml" src="<?php echo SPCOMMONIMAGES . 'working.gif'; ?>" alt=""/>
             </form>
+            </div>
         </div>
 		<?php
 		spa_paint_close_fieldset();
 		spa_paint_close_panel();
-		echo '<span></span>';
-		// do_action('sph_toolbox_housekeeping_right_panel');
 
 		spa_paint_close_container();
-		//echo '<div class="sfform-panel-spacer"></div>';
 		spa_paint_close_tab();
 		?>
     </div>

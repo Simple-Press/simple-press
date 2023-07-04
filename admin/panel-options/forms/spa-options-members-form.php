@@ -96,15 +96,16 @@ function spa_options_members_form() {
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Privacy Data Export'), true, 'privacy-export');
 				spa_paint_checkbox(SP()->primitives->admin_text('Include Forum Posts in Data Export'), 'posts', $sfoptions['posts']);
 				do_action('sph_options_members_privacy_export');
-				spa_paint_input(SP()->primitives->admin_text('Number of posts to batch process - Please note that users with a large number of posts may cause the exporter to run out of available resources'), 'number', $sfoptions['number']);				
+				spa_paint_input(SP()->primitives->admin_text('Number of posts to batch process'), 'number', $sfoptions['number'], false, false, null, SP()->primitives->admin_text('Please note that users with a large number of posts may cause the exporter to run out of available resources') );
+                ///function spa_paint_input($label, $name, $value, $disabled=false, $large=false, $css_classes='', $sublabel =null,  $sublabel_class='sf-sublabel sf-sublabel-small') {
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Privacy Data Erasure'), true, 'privacy-erasure');
-				$values = array(SP()->primitives->admin_text('Anonymise user in forum posts as guest'), SP()->primitives->admin_text("Erase forum posts completely"));
+				$values = array(SP()->primitives->admin_text('Anonymize user in forum posts as guest'), SP()->primitives->admin_text("Erase forum posts completely"));
 				spa_paint_radiogroup(SP()->primitives->admin_text("Select forum posts erasure method"), 'erase', $values, $sfoptions['erase'], false, true);
-				spa_paint_wide_textarea(SP()->primitives->admin_text('Message to display in anonymised forum posts'), 'mess', $sfoptions['mess']);
+				spa_paint_wide_textarea(SP()->primitives->admin_text('Message to display in anonymized forum posts'), 'mess', $sfoptions['mess']);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 

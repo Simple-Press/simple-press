@@ -461,14 +461,16 @@ class spcPlugin {
 		if (empty($position) || ($position < 0 || $position > $num_panels)) $position = $num_panels;
 
 		# okay, lets add the new panel
-		$panel_data = array($name,
-		                    $capability,
-		                    SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins.php',
-		                    $tooltop,
-		                    $icon,
-		                    wp_nonce_url(SPAJAXURL.'plugins-loader', 'plugins-loader'),
-		                    $forms,
-		                    false);
+		$panel_data = [
+            'panel_name'      => $name,
+            'spf_capability'  => $capability,
+            'admin_file'      => SP_FOLDER_NAME.'/admin/panel-plugins/spa-plugins.php',
+            'tool_tip'        => $tooltop,
+            'icon'            => $icon,
+            'loader_function' => wp_nonce_url(SPAJAXURL.'plugins-loader', 'plugins-loader'),
+            'subpanels'       => $forms,
+            'show_in_wp_menu' => false
+        ];
 		array_splice($sfadminpanels, $position, 0, array($panel_data));
 
 		# and update the active panels list
@@ -490,14 +492,20 @@ class spcPlugin {
 	 *
 	 * @returns    string    basename
 	 */
-	public function add_admin_subpanel($panel, $subpanels) {
+	public function add_admin_subpanel($panel, $subpanels): bool
+    {
 		global $sfadminpanels, $sfactivepanels;
+
+        # if no subpanel is supplied, do not continue
+        if (empty($subpanels)) {
+            return false;
+        }
 
 		# make sure the panel exists
 		if (!array_key_exists($panel, $sfactivepanels)) return false;
 
 		# fix up the subpanels formids from user names
-		$forms = $sfadminpanels[$sfactivepanels[$panel]][6];
+		$forms = $sfadminpanels[$sfactivepanels[$panel]]['subpanels'];
 		foreach ($subpanels as $index => $subpanel) {
 			$forms[$index] = array('plugin' => $subpanel['id'],
 			                       'admin'  => $subpanel['admin'],
@@ -506,7 +514,7 @@ class spcPlugin {
 		}
 
 		# okay, lets add the new subpanel
-		$sfadminpanels[$sfactivepanels[$panel]][6] = $forms;
+		$sfadminpanels[$sfactivepanels[$panel]]['subpanels'] = $forms;
 
 		return true;
 	}

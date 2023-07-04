@@ -18,7 +18,10 @@ if (!SP()->auths->current_user_can('SPF Manage User Groups')) die();
 include_once SP_PLUGIN_DIR.'/admin/panel-usergroups/support/spa-usergroups-prepare.php';
 
 if(isset($_GET['ug_no'])) {
-    spa_members_not_belonging_to_any_usergroup((int) $_GET['page'], $_GET['filter']);
+    spa_members_not_belonging_to_any_usergroup(
+        array_key_exists('page', $_GET) ? (int) $_GET['page'] : 0,
+        array_key_exists('filter', $_GET) ? (int) $_GET['filter'] : null
+    );
     die();
 }
 

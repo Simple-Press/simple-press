@@ -28,13 +28,7 @@
 
     // private methods
     function initAdminMenu() {
-        
-        // Highlight Menu
-        //$('.wp-submenu li').removeClass('current');
-        //$('.wp-submenu li').find('a:contains(' + sp_admin_footer_vars.panel_name + ')').parent().addClass('current');
-        
         var dirName = typeof( sp_platform_vars.dirName ) !== 'undefined' ? sp_platform_vars.dirName : 'simple-press';
-        
         var wp_submenu = $('li#toplevel_page_'+dirName+'-admin-panel-forums-spa-forums ul.wp-submenu li.current a').html();
         var num = $('li#toplevel_page_'+dirName+'-admin-panel-forums-spa-forums ul.wp-submenu li.current').index() - 1;
         
@@ -52,7 +46,7 @@
             active: num
         });
         
-        $(document).on('click', '#sfsidepanel .sf-tooggle-admin-menu', function() {
+        $(document).on('click', '#sfsidepanel .sf-toggle-admin-menu', function() {
             $('#sfsidepanel').toggleClass('sf-admin-menu-mobile-show');
         });
     

@@ -278,7 +278,7 @@
         
         
         spj.after_users_listing = function() {
-                console.log('loaded');
+                //console.log('loaded');
 		
 		$('.sf-plugin-hide-users .actions.bulkactions .button.action')
                         .addClass('sf-button')

@@ -43,7 +43,6 @@ function spa_forums_create_forum_form() {
 
 					# Select the forum type first
 					echo "<div class='sf-form-row'>\n";
-					echo "<div class='sf-alert-block sf-info'>".SP()->primitives->admin_text('What type of forum are you creating')."</div>\n";
 					echo "<div class='wp-core-ui sp-radio'>";
 					echo '<input type="radio" name="forumtype" id="sfradio1" tabindex="'.$tab.'" value="1" checked="checked" class="spForumSetOptions" data-target="forum" />'."\n";
 					echo '<label for="sfradio1" class="wp-core-ui">'.SP()->primitives->admin_text('Standard Forum').'</label><br>'."\n";
@@ -63,20 +62,20 @@ function spa_forums_create_forum_form() {
 					echo '<div id="groupselect" class="sf-dis-block">';
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Select group new forum will belong to')."</label>\n";
-					echo '<div class="sf-select-wrap"><select class="spForumSetSequence" tabindex="'.$tab.'" name="group_id">';
+					echo '<select class="spForumSetSequence" tabindex="'.$tab.'" name="group_id">';
 					echo spa_create_group_select(0, 1);
-					echo "</select></div>\n";
+					echo "</select>\n";
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
 					$tab++;
 					echo '</div>';
 
-					echo '<div id="forumselect" class="sf-dis-block">';
+					echo '<div id="forumselect" class="sf-dis-block" style="display:none;">';
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Select forum new subforum will belong to').":</label>\n";
-					echo '<div class="sf-select-wrap"><select class="spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';
+					echo '<select class="spForumSetSequence" tabindex="'.$tab.'" name="forum_id">';
 					echo sp_render_group_forum_select(false, false, false, true);
-					echo "</select></div>\n";
+					echo "</select>\n";
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
 					$tab++;
@@ -115,20 +114,22 @@ function spa_forums_create_forum_form() {
 					spa_paint_checkbox(SP()->primitives->admin_text('Locked'), 'forum_status', 0);
 					spa_paint_checkbox(SP()->primitives->admin_text('Disable forum RSS feed so feed will not be generated'), 'forum_private', 0);
 
-					spa_paint_select_start(sprintf(SP()->primitives->admin_text('Featured Image for this forum %s(200px x 200px recommended)'), '<br>'), 'feature_image', '');
-					spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', '', false);
-					spa_paint_select_end();
+                    spa_paint_select_start(SP()->primitives->admin_text('Featured Image'), 'feature_image', '');
+                    spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', '', false);
+                        spa_paint_select_end('<span class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Featured images are shown when sharing links on social media. Recommended size 200x200px').'</span>');
 
-					echo '<div class="sf-alert-block sf-info">';
-					echo '<p><b>'.SP()->primitives->front_text('Custom Icon Ordering').'</b></br>';
-					echo SP()->primitives->front_text('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
-                    echo SP()->primitives->front_text('Locked').'<br />';
-                    echo SP()->primitives->front_text('Pinned and Unread').'<br />';
-                    echo SP()->primitives->front_text('Pinned').'<br />';
-                    echo SP()->primitives->front_text('Unread').'<br />';
-                    echo SP()->primitives->front_text('Custom').'<br />';
-                    echo SP()->primitives->front_text('Theme Default').'<br />';
-					echo '</div>';
+                    echo '<div class="sf-alert-block sf-info">';
+                        echo '<p><b>'.SP()->primitives->front_text('Custom Icon Ordering').'</b></br>';
+                        echo SP()->primitives->front_text('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
+                        echo '<ul>';
+                            echo '<li>'. SP()->primitives->front_text('Locked').'</li>';
+                            echo '<li>'. SP()->primitives->front_text('Pinned and Unread').'</li>';
+                            echo '<li>'. SP()->primitives->front_text('Pinned').'</li>';
+                            echo '<li>'. SP()->primitives->front_text('Unread').'</li>';
+                            echo '<li>'. SP()->primitives->front_text('Custom').'</li>';
+                            echo '<li>'. SP()->primitives->front_text('Theme Default').'</li>';
+                        echo '</ul>';
+                    echo '</div>';
 
 					
 					$custom_icons =  spa_get_custom_icons();
@@ -185,10 +186,6 @@ function spa_forums_create_forum_form() {
 					spa_paint_input(SP()->primitives->admin_text('Custom meta keywords (SEO option must be enabled)'), 'forum_keywords', '', false, true);
 					spa_paint_wide_textarea('Special forum message to be displayed above forums', 'forum_message', '');
 				spa_paint_close_fieldset();
-
-			echo '<div class="sf-alert-block sf-info">';
-			echo sprintf(SP()->primitives->front_text('To re-order your Groups, Forums and SubForums use the %s Order Groups and Forums %s option from the Forums Menu'), '<b>', '</b>');
-			echo '</div>';
 
 			spa_paint_close_panel();
 

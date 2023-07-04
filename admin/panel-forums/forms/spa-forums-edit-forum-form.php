@@ -6,7 +6,9 @@ $LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
 $Rev: 15601 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
+    die('Access denied - you cannot directly call this file');
+}
 
 # function to display the edit form information form.  It is hidden until the edit forum link is clicked
 function spa_forums_edit_forum_form($forum_id) {
@@ -44,34 +46,37 @@ function spa_forums_edit_forum_form($forum_id) {
 						$mess = SP()->primitives->front_text('This is a sub-forum and also a parent to other sub-forums and on this panel you can change the forum parent it belongs to. If changed it will be moved, along with the sub-forums, to the target Forum.');
 					}
 
-					echo '<div class="sf-alert-block sf-info">';
-					echo "<p><b>$mess</b></br>";
-					echo SP()->primitives->front_text('For more flexible Group/Forum ordering and sub-forum promotion and demotion, please use the drag and drop interface on the Order Groups and Forums admin panel from the Forums Menu - or the Order Forums panel at Group level.').'</p>';
-					echo '</div>';
+					#echo '<div class="sf-alert-block sf-info">';
+					#echo "<p><b>$mess</b></br>";
+					#echo SP()->primitives->front_text('For more flexible Group/Forum ordering and sub-forum promotion and demotion, please use the drag and drop interface on the Order Groups and Forums admin panel from the Forums Menu - or the Order Forums panel at Group level.').'</p>';
+					#echo '</div>';
 
 					# Top level forum...
-					$class = ($subforum) ? ' sf-dis-none' : ' sf-dis-block';
-					echo "<div class='sf-form-row $class'>";
-					spa_paint_select_start(SP()->primitives->admin_text('The group this forum belongs to'), 'group_id', '');
-					echo spa_create_group_select($forum->group_id);
-					spa_paint_select_end();
-					echo '</div>';
+					#$class = ($subforum) ? ' sf-dis-none' : ' sf-dis-block';
+					#echo "<div class='sf-form-row $class'>";
+					#spa_paint_select_start(SP()->primitives->admin_text('The group this forum belongs to'), 'group_id', '');
+					#echo spa_create_group_select($forum->group_id);
+					#spa_paint_select_end();
+					#echo '</div>';
 
 					# sub-forum...
-					$class = ($subforum) ? ' sf-dis-block' : ' sf-dis-none';
-					echo "<div class='sf-form-row $class'>";
-					spa_paint_select_start(SP()->primitives->admin_text('Parent forum this subforum belongs to'), 'parent', '');
-					echo spa_create_forum_select($forum->parent);
-					spa_paint_select_end();
-					echo '</div>';
+					#$class = ($subforum) ? ' sf-dis-block' : ' sf-dis-none';
+					#echo "<div class='sf-form-row $class'>";
+					#spa_paint_select_start(SP()->primitives->admin_text('Parent forum this subfiiorum belongs to'), 'parent', '');
+					#echo spa_create_forum_select($forum->parent);
+					#spa_paint_select_end();
+					# echo '</div>';
 
 					$target = 'cforum_slug';
 					$ajaxURL = wp_nonce_url(SPAJAXURL.'forums', 'forums');
-					echo '<div class="sf-form-row"><input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.$tab.'" name="forum_name" id="forum_name" value="'.esc_attr($forum->forum_name).'" data-url="'.$ajaxURL.'" data-target="'.$target.'" data-type="edit" />';
+					echo '<div class="sf-form-row">';
+                        echo "<label>".SP()->primitives->admin_text('Forum name').'</label>';
+                    echo '<input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.$tab.'" name="forum_name" id="forum_name" value="'.esc_attr($forum->forum_name).'" data-url="'.$ajaxURL.'" data-target="'.$target.'" data-type="edit" />';
 					echo '<input type="hidden" name="forum_id" value="'.$forum->forum_id.'" /></div>';
 
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".SP()->primitives->admin_text('Forum slug').'</label>';
+
 					echo '<input type="text" class="wp-core-ui sp-input-60" tabindex="'.$tab.'" name="cforum_slug" id="cforum_slug" value="'.esc_attr($forum->forum_slug).'" />';
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
@@ -90,19 +95,21 @@ function spa_forums_edit_forum_form($forum_id) {
 					spa_paint_checkbox(SP()->primitives->admin_text('Locked'), 'forum_status', $forum->forum_status);
 					spa_paint_checkbox(SP()->primitives->admin_text('Disable forum RSS feed so feed will not be generated'), 'forum_private', $forum->forum_rss_private);
 
-					spa_paint_select_start(sprintf(SP()->primitives->admin_text('Featured Image for this forum %s(200px x 200px recommended)'), '<br>'), 'feature_image', '');
-					spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', $forum->feature_image, false);
-					spa_paint_select_end();
+					spa_paint_select_start(SP()->primitives->admin_text('Featured Image'), 'feature_image', '');
+					    spa_select_icon_dropdown('feature_image', SP()->primitives->admin_text('Select Feature Image'), SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/', $forum->feature_image, false);
+					spa_paint_select_end('<span class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Featured images are shown when sharing links on social media. Recommended size 200x200px').'</span>');
 
 					echo '<div class="sf-alert-block sf-info">';
-					echo '<p><b>'.SP()->primitives->front_text('Custom Icon Ordering').'</b></br>';
-					echo SP()->primitives->front_text('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
-                    echo SP()->primitives->front_text('Locked').'<br />';
-                    echo SP()->primitives->front_text('Pinned and Unread').'<br />';
-                    echo SP()->primitives->front_text('Pinned').'<br />';
-                    echo SP()->primitives->front_text('Unread').'<br />';
-                    echo SP()->primitives->front_text('Custom').'<br />';
-                    echo SP()->primitives->front_text('Theme Default').'<br />';
+                        echo '<p><b>'.SP()->primitives->front_text('Custom Icon Ordering').'</b></br>';
+                        echo SP()->primitives->front_text('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
+                        echo '<ul>';
+                        echo '<li>'. SP()->primitives->front_text('Locked').'</li>';
+                        echo '<li>'. SP()->primitives->front_text('Pinned and Unread').'</li>';
+                        echo '<li>'. SP()->primitives->front_text('Pinned').'</li>';
+                        echo '<li>'. SP()->primitives->front_text('Unread').'</li>';
+                        echo '<li>'. SP()->primitives->front_text('Custom').'</li>';
+                        echo '<li>'. SP()->primitives->front_text('Theme Default').'</li>';
+                        echo '</ul>';
 					echo '</div>';
 					
 					$custom_icons =  spa_get_custom_icons();

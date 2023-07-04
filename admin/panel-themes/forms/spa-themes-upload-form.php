@@ -26,7 +26,7 @@ function spa_themes_upload_form() {
 				<div class="clear"></div>
 				<div class="sf-upload-file-name"><label class="sp-label"></label></div>
 				<div class="clear"></div>			
-                <label class="sf-button-primary">
+                <label class="sf-button-primary sf-upload-button">
                     <input type="file" id="themezip" name="themezip" class="sf-hidden-important" />
                     <span class="sf-icon sf-icon-button sf-white sf-upload"></span>
                     <?php echo SP()->primitives->admin_text('Select file') ?>
