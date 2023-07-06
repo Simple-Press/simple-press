@@ -218,7 +218,7 @@ function sp_do_themes_update() {
 	wp_enqueue_script('jquery');
 	iframe_header();
 
-	$upgrader = new spcThemeUpgrader(new spcThemeUpgraderSkin(compact('nonce', 'url')));
+	$upgrader = new spcThemeUpgrader(new spcThemeUpgraderSkin(compact('url')));
 	$upgrader->bulk_upgrade($themes);
 
 	iframe_footer();
