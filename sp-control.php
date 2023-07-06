@@ -502,8 +502,7 @@ if (!class_exists('spcSimplePress')) {
 
 			# Finally wait to find out if this is a forum page being requested
 			if ($this->isAdmin == false) {
-				add_action('wp', array($this,
-				                       'check_is_forum_page'));
+				add_action('wp', [$this, 'check_is_forum_page']);
 			}
 
 			# fire action to indicate startup complete

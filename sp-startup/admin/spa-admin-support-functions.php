@@ -973,8 +973,6 @@ function spa_theme_addon_dashboard_update()
 
 # List of Plugins to update in admin Updates page if there any update available by licensing method or by xml 
 function spa_check_plugin_addon_update() {
-	
-	
 	$plugins = SP()->plugin->get_list();
 	$header = true;
 	$update = false;
@@ -983,10 +981,9 @@ function spa_check_plugin_addon_update() {
 	$plugin_count = 0;
 	
 	foreach ($plugins as $plugin_file => $plugin_data) {
-		
+
 		if (!empty($plugins) && isset($plugin_data['ItemId']) && $plugin_data['ItemId'] != '') {
-			
-			
+
 			$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['plugins']).'/'.strtok(plugin_basename($plugin_file), '/');
 			
 			$sp_plugin_name = sanitize_title_with_dashes($plugin_data['Name']);
@@ -1055,7 +1052,7 @@ function spa_check_plugin_addon_update() {
 			}
 		
 		}else{
-			
+
 			if ($xml) {
 					
 				foreach ($xml->plugins->plugin as $latest) {
@@ -1161,8 +1158,8 @@ function spa_check_theme_addon_update(){
 	$plugin_count = 0;
 	
 	foreach ($themes as $theme_file => $theme_data) {
-		
-		if (!empty($themes) && isset($theme_data['ItemId']) && $theme_data['ItemId'] != '') {
+        // Only EDD themes has an `ItemId` (themes that cost money)
+		if (isset($theme_data['ItemId']) && $theme_data['ItemId'] != '') {
 			
 			$this_path = realpath(SP_STORE_DIR.'/'.SP()->plugin->storage['themes']).'/'.$theme_file;
 			
@@ -1230,13 +1227,10 @@ function spa_check_theme_addon_update(){
 				$up->response[$theme_file] = $data;
 				$update = true;
 			}
-
-		}else{
-			
+		} else {
+            // If free theme use old xml setup for versioning
 			if ($xml) {
-				
-				require_once SP_PLUGIN_DIR.'/admin/panel-themes/support/spa-themes-prepare.php';
-				
+
 				foreach ($xml->themes->theme as $latest) {
 						
 					if ($theme_data['Name'] == $latest->name) {
@@ -1279,7 +1273,7 @@ function spa_check_theme_addon_update(){
 										$data->stylesheet = $theme_data['Stylesheet'];
 										$data->new_version = (string) $latest->version;
 										$data->url = 'https://simple-press.com';
-										$data->package = ((string) $latest->archive).'&wpupdate=1';
+										$data->package = ((string) $latest->archive);
 										$up->response[$theme_file] = $data;
 										$update = true;
 						}

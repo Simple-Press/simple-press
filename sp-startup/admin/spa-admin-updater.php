@@ -198,7 +198,9 @@ function sp_update_themes() {
  * @return void
  */
 function sp_do_themes_update() {
-	if (!SP()->auths->current_user_can('SPF Manage Themes')) die();
+	if (!SP()->auths->current_user_can('SPF Manage Themes')) {
+        die();
+    }
 
 	check_admin_referer('bulk-update-sp-themes');
 
@@ -207,7 +209,7 @@ function sp_do_themes_update() {
 	} else if (isset($_POST['checked'])) {
 		$themes = array_map('sanitize_text_field', (array) $_POST['checked']);
 	} else {
-		$themes = array();
+		$themes = [];
 	}
 
 	$themes = array_map('urldecode', $themes);

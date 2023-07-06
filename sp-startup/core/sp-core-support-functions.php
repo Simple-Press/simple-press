@@ -306,7 +306,7 @@ function sp_check_for_updates() {
 							$data->stylesheet    = $installed['Stylesheet'];
 							$data->new_version   = (string)$latest->version;
 							$data->url           = 'https://simple-press.com';
-							$data->package       = ((string)$latest->archive).'&wpupdate=1';
+							$data->package       = ((string)$latest->archive);
 							$up->response[$file] = $data;
 							$update              = true;
 						}
