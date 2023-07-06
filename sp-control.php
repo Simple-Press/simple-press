@@ -47,7 +47,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object spCore    core loader class object
+		 * @var spcCoreLoader
 		 *
 		 * @since 6.0
 		 */
@@ -55,7 +55,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object spSite    site loader class object
+		 * @var spcSiteLoader
 		 *
 		 * @since 6.0
 		 */
@@ -63,7 +63,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object spForum    forum loader class object
+		 * @var spcForumLoader    forum loader class object
 		 *
 		 * @since 6.0
 		 */
@@ -71,7 +71,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object spAdminCore    admin core loader class object
+		 * @var spcAdminCoreLoader  admin core loader class object
 		 *
 		 * @since 6.0
 		 */
@@ -79,7 +79,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object spAdmin    admin loader class object
+		 * @var spcAdminLoader    admin loader class object
 		 *
 		 * @since 6.0
 		 */
@@ -87,7 +87,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object spError class object
+		 * @var spcError class object
 		 *
 		 * @since 6.0
 		 */
@@ -95,7 +95,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object spPermalinks class object
+		 * @var spcPermalinks  class object
 		 *
 		 * @since 6.0
 		 */
@@ -103,7 +103,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object spOptions class object
+		 * @var spcOptions class object
 		 *
 		 * @since 6.0
 		 */
@@ -111,7 +111,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object    spcDB class object
+		 * @var spcDB    spcDB class object
 		 *
 		 * @since 6.0
 		 */
@@ -119,7 +119,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object    spAuths class object
+		 * @var spcAuths    spAuths class object
 		 *
 		 * @since 6.0
 		 */
@@ -127,7 +127,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object    spActivity class object
+		 * @var spcActivity  spActivity class object
 		 *
 		 * @since 6.0
 		 */
@@ -135,7 +135,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object    spCache class object
+		 * @var spcCache
 		 *
 		 * @since 6.0
 		 */
@@ -143,7 +143,7 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object    spMemberData class object
+		 * @var spcMemberData    spMemberData class object
 		 *
 		 * @since 6.0
 		 */
@@ -151,91 +151,91 @@ if (!class_exists('spcSimplePress')) {
 
 		/**
 		 *
-		 * @var object    spMeta class object
+		 * @var spcMeta    spMeta class object
 		 *
 		 * @since 6.0
 		 */
 		public $meta;
 
 		/**
-		 * @var object    spNotifications class object
+		 * @var spcNotifications   spcNotifications class object
 		 *
 		 * @since 6.0
 		 */
 		public $notifications;
 
 		/**
-		 * @var object    spUser class object
+		 * @var spcUser    spcUser class object
 		 *
 		 * @since 6.0
 		 */
 		public $user;
 
 		/**
-		 * @var object    spDateTime class object
+		 * @var spcDateTime    spDateTime class object
 		 *
 		 * @since 6.0
 		 */
 		public $dateTime;
 
 		/**
-		 * @var object    spFilters class object
+		 * @var spcFilters    spFilters class object
 		 *
 		 * @since 6.0
 		 */
 		public $filters;
 
 		/**
-		 * @var object    spDisplayFilters class object
+		 * @var spcDisplayFilters    spDisplayFilters class object
 		 *
 		 * @since 6.0
 		 */
 		public $displayFilters;
 
 		/**
-		 * @var object    spSaveFilters class object
+		 * @var spcSaveFilters    spSaveFilters class object
 		 *
 		 * @since 6.0
 		 */
 		public $saveFilters;
 
 		/**
-		 * @var object    spEditFilters class object
+		 * @var spcEditFilters    spEditFilters class object
 		 *
 		 * @since 6.0
 		 */
 		public $editFilters;
 
 		/**
-		 * @var object    spPrimitives class object
+		 * @var spcPrimitives    spPrimitives class object
 		 *
 		 * @since 6.0
 		 */
 		public $primitives;
 
 		/**
-		 * @var object    spTheme class object
+		 * @var spcTheme
 		 *
 		 * @since 6.0
 		 */
 		public $theme;
 
 		/**
-		 * @var object    spPlugin class object
+		 * @var spcPlugin
 		 *
 		 * @since 6.0
 		 */
 		public $plugin;
 
 		/**
-		 * @var object    spProfile class object
+		 * @var spcProfile    spProfile class object
 		 *
 		 * @since 6.0
 		 */
 		public $profile;
 
 		/**
-		 * @var object    spRewrites class object
+		 * @var spcRewrites    spRewrites class object
 		 *
 		 * @since 6.0
 		 */
