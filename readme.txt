@@ -1,4 +1,4 @@
-=== Simple:Press - WordPress Forum Plugin ===
+=== Simple:Press - Forum ===
 
 Plugin Name: Simple:Press Forums
 Contributors: simplepress, elindydotcom, usermrpapa, yellowswordfish, tahir1235
@@ -6,7 +6,7 @@ Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
 Tested up to: 6.2
 Requires PHP: 7.0
-Stable tag: 6.10.0
+Stable tag: 6.10.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,9 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 19. The front-end admin options for a post
 
 == Latest Updates ==
+
+= 6.10.1 - July 2023 =
+* Fixed a bug that made "Manage Groups And Forums" return an error when editing a forum
 
 = 6.10.0 - July 2023 =
 * Full PHP8.2 support, this ensures that all features and functionalities provided by the plugin work smoothly and efficiently in PHP 8.2 environments
