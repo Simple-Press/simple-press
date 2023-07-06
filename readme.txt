@@ -156,6 +156,7 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 
 = 6.10.1 - July 2023 =
 * Fixed a bug that made "Manage Groups And Forums" return an error when editing a forum
+* Solve issue with automatic updates for free themes
 
 = 6.10.0 - July 2023 =
 * Full PHP8.2 support, this ensures that all features and functionalities provided by the plugin work smoothly and efficiently in PHP 8.2 environments
