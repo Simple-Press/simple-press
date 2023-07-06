@@ -1,10 +1,4 @@
 <?php
-/*
-Simple:Press
-Admin Forums Edit Forum Form
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
-*/
 
 if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
     die('Access denied - you cannot directly call this file');
@@ -21,18 +15,17 @@ function spa_forums_edit_forum_form($forum_id) {
 
 	$forum = SP()->DB->table(SPFORUMS, "forum_id=$forum_id", 'row');
 
-	spa_paint_options_init();
-
 	$ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=editforum', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumedit<?php echo $forum->forum_id; ?>" name="sfforumedit<?php echo $forum->forum_id; ?>">
+<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumedit<?php echo $forum->forum_id; ?>" name="sfforumedit<?php echo $forum->forum_id; ?>">
 <?php
 		echo sp_create_nonce('forum-adminform_forumedit');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
-			//spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Details'), false);
 					$subforum = ($forum->parent) ? true : false;
-					echo "<input type='hidden' name='cgroup_id' value='$forum->group_id' />";
+					echo "<input type='hidden' name='group_id' value='$forum->group_id' />";
+                    echo "<input type='hidden' name='parent' value='$forum->parent' />";
+                    echo "<input type='hidden' name='cgroup_id' value='$forum->group_id' />";
 					echo "<input type='hidden' name='cparent' value='$forum->parent' />";
 					echo "<input type='hidden' name='cchildren' value='$forum->children' />";
 
@@ -45,27 +38,6 @@ function spa_forums_edit_forum_form($forum_id) {
 					} else {
 						$mess = SP()->primitives->front_text('This is a sub-forum and also a parent to other sub-forums and on this panel you can change the forum parent it belongs to. If changed it will be moved, along with the sub-forums, to the target Forum.');
 					}
-
-					#echo '<div class="sf-alert-block sf-info">';
-					#echo "<p><b>$mess</b></br>";
-					#echo SP()->primitives->front_text('For more flexible Group/Forum ordering and sub-forum promotion and demotion, please use the drag and drop interface on the Order Groups and Forums admin panel from the Forums Menu - or the Order Forums panel at Group level.').'</p>';
-					#echo '</div>';
-
-					# Top level forum...
-					#$class = ($subforum) ? ' sf-dis-none' : ' sf-dis-block';
-					#echo "<div class='sf-form-row $class'>";
-					#spa_paint_select_start(SP()->primitives->admin_text('The group this forum belongs to'), 'group_id', '');
-					#echo spa_create_group_select($forum->group_id);
-					#spa_paint_select_end();
-					#echo '</div>';
-
-					# sub-forum...
-					#$class = ($subforum) ? ' sf-dis-block' : ' sf-dis-none';
-					#echo "<div class='sf-form-row $class'>";
-					#spa_paint_select_start(SP()->primitives->admin_text('Parent forum this subfiiorum belongs to'), 'parent', '');
-					#echo spa_create_forum_select($forum->parent);
-					#spa_paint_select_end();
-					# echo '</div>';
 
 					$target = 'cforum_slug';
 					$ajaxURL = wp_nonce_url(SPAJAXURL.'forums', 'forums');
