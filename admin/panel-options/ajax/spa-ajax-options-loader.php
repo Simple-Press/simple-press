@@ -1,16 +1,14 @@
 <?php
-/*
-Simple:Press Admin
-Ajax form loader - Option
-$LastChangedDate: 2018-11-02 13:02:17 -0500 (Fri, 02 Nov 2018) $
-$Rev: 15795 $
-*/
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
+    die('Access denied - you cannot directly call this file');
+}
 
 spa_admin_ajax_support();
 
-if (!sp_nonce('options-loader')) die();
+if (!sp_nonce('options-loader')) {
+    die();
+}
 
 if (SP()->core->status != 'ok') {
 	echo SP()->core->status;

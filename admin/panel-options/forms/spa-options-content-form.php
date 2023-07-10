@@ -1,12 +1,8 @@
 <?php
-/*
-Simple:Press
-Admin Options Content Form
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
-*/
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) {
+    die('Access denied - you cannot directly call this file');
+}
 
 function spa_options_content_form() {
 ?>
@@ -18,14 +14,13 @@ function spa_options_content_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'options-loader&amp;saveform=content', 'options-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfcontentform" name="sfcontent">
+<form action="<?php echo $ajaxURL; ?>" method="post" id="sfcontentform" name="sfcontent">
 	<?php echo sp_create_nonce('forum-adminform_content'); ?>
 <?php
-	spa_paint_options_init();
 
     #== POSTS Tab ============================================================
 
-	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('Content Settings'));
+	spa_paint_open_tab(SP()->primitives->admin_text('Content Settings'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Date/Time Formatting'), true, 'date-time-formatting');
 				spa_paint_input(SP()->primitives->admin_text('Date display format'), 'sfdates', $sfoptions['sfdates']);
@@ -54,8 +49,6 @@ function spa_options_content_form() {
 				echo spa_create_imagestyle_select($sfoptions['style']);
 				spa_paint_select_end();
 				spa_paint_checkbox(SP()->primitives->admin_text('Force paragraph after an image to start new line'), 'forceclear', $sfoptions['forceclear']);
-
-
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 

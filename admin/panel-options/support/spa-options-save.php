@@ -142,7 +142,7 @@ function spa_save_content_data() {
 	$mess = SP()->primitives->admin_text('Options updated');
 
 	# Save Image resizing
-	$sfimage = array();
+	$sfimage = [];
 	$sfimage = SP()->options->get('sfimage');
     $sfimage['enlarge'] = isset($_POST['sfimgenlarge']);
     $sfimage['process'] = isset($_POST['process']);
