@@ -420,7 +420,7 @@ function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $ro
 function spa_paint_checkbox($label, $name, $value, $disabled=false, $large=false, $displayhelp=true, $msg='', $indent=false) {
 	echo "<div class='sf-form-row'>\n";
 	if ($indent) echo str_repeat('&nbsp;', 7);
-	echo "<input type='checkbox' 'name='$name' id='sf-$name' ";
+	echo "<input type='checkbox' name='$name' id='sf-$name' ";
 	if ($value == true) echo "checked='checked' ";
 	if ($disabled == true) echo "disabled='disabled' ";
 	echo "/>\n";
