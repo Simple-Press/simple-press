@@ -291,9 +291,7 @@ function spa_plugins_list_form() {
 								<?php echo esc_html( $plugin_name ); ?>
 							</strong>
 							<div class="row-actions-visible">
-                                <?php
-                                 echo implode(' | ', array_merge([$actionlink], sp_active_plugin_options( $plugin_file )));
-                                ?>
+                                <?php echo implode(' | ', array_merge([$actionlink], sp_active_plugin_options( $plugin_file ))); ?>
                             </div>
 						</td>
 						<td class='manage-column column-description'>
