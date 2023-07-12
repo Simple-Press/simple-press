@@ -587,6 +587,9 @@ $Rev:2099 $
     font-weight: normal;
     color: black;
 }
+.sf-icon-button {
+    cursor: pointer;
+}
 
 #sf-root-wrap #sfmaincontainer #sfstorageform .sf-panel+.sf-panel {
     margin: 0;
