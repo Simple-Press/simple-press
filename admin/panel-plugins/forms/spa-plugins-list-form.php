@@ -351,14 +351,14 @@ function spa_plugins_list_form() {
 						if ( is_main_site() && $update_condition && $status_condition && $version_compare ) {
 
 							$changelog_link = add_query_arg(
-								array(
+								[
 									'tab'       => 'plugin-information',
 									'plugin'    => $sp_plugin_name,
 									'section'   => 'changelog',
 									'TB_iframe' => true,
 									'width'     => 722,
 									'height'    => 949,
-								),
+                                ],
 								admin_url( 'plugin-install.php' )
 							);
 
