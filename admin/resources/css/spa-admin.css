@@ -476,8 +476,6 @@ $Rev:2099 $
 }
 
 #sf-root-wrap .sf-select-wrap {
-    float: left;
-    width: 100%;
     position: relative;
     background-color: #FFF;
     cursor: pointer;
