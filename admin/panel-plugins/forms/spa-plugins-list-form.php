@@ -366,38 +366,42 @@ function spa_plugins_list_form() {
 
 							?>
 							<tr class='<?php echo $rowClass; ?>'>
-								<td></td>
 								<td class="plugin-update colspanchange" colspan="3">
-									<div class="update-message notice inline notice-warning notice-alt">
-										<?php
-										if ( $check_addons_status->license == 'valid' ) {
-
-											echo SP()->primitives->admin_text( 'There is an update for the ' ) . ' ' . $plugin_data['Name'] . ' '
-												 . SP()->primitives->admin_text( 'plugin' ) . '.<br />';
-											echo SP()->primitives->admin_text( 'Version' ) . ' ' . $check_for_addon_update->new_version . ' '
-												 . SP()->primitives->admin_text( 'of the plugin is available' ) . '.<br />';
-											echo '<span title="' . SP()->primitives->admin_text( 'View version full details' ) . '" class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="' . $ajaxURThem . '" data-label="Simple:Press Plugin Update" data-href="' . esc_url( $changelog_link ) . '">' . SP()->primitives->admin_text( 'View version ' ) . $check_for_addon_update->new_version
-												 . SP()->primitives->admin_text( ' details ' ) . '</span> '
-												 . SP()->primitives->admin_text( 'or' ) . ' ';
-											echo '<a href="' . self_admin_url( 'update-core.php' ) . '" title="'
-												 . SP()->primitives->admin_text( 'update now' ) . '">' . SP()->primitives->admin_text( 'update now' ) . '</a>.';
-
-										} else {
-
-											echo SP()->primitives->admin_text( 'There is an update for the ' ) . ' ' . $plugin_data['Name'] . ' ' . SP()->primitives->admin_text( 'plugin' ) . '.<br />';
-											echo SP()->primitives->admin_text( 'Version' ) . ' ' . $check_for_addon_update->new_version . ' '
-												 . SP()->primitives->admin_text( 'of the plugin is available' ) . '.<br />';
-											echo '<span title="' . SP()->primitives->admin_text( 'View version full details.' ) . '" class="thickbox open-plugin-details-modal spPluginUpdate" data-width="1000" data-height="0" data-site="' . $ajaxURThem . '" data-label="Simple:Press Plugin Update" data-href="' . esc_url( $changelog_link ) . '">' . SP()->primitives->admin_text( 'View version ' ) . $check_for_addon_update->new_version . SP()->primitives->admin_text( ' details.' ) . '</span>';
-											echo '<br />' . SP()->primitives->admin_text( ' Automatic update is unavailable for this plugin - most likely because the license key is not present and activated.' );
-										}
-										?>
+                                    <div class="sf-alert-block sf-caution">
+                                        <span
+                                            class="thickbox open-plugin-details-modal spPluginUpdate"
+                                            data-width="1000"
+                                            data-height="0"
+                                            data-site="<?php echo $ajaxURThem; ?>"
+                                            data-label="Simple:Press Plugin Update"
+                                            data-href="<?php echo esc_url( $changelog_link ); ?>"
+                                        >
+                                            <?php
+                                                echo sprintf(
+                                                    '%s <strong>%s</strong> %s',
+                                                    SP()->primitives->admin_text( 'Version' ),
+                                                    $check_for_addon_update->new_version,
+                                                    SP()->primitives->admin_text( ' is available, click to view details.')
+                                                );
+                                                ?>
+                                            </span>
+										<?php if ( $check_addons_status->license == 'valid' ) : ?>
+											<a
+                                                href="<?php echo self_admin_url( 'update-core.php' ); ?>"
+											    title="<?php echo SP()->primitives->admin_text( 'Update now' );?>"
+                                            ><?php echo SP()->primitives->admin_text( 'Update now' ); ?></a>
+										<?php else : ?>
+											<br />
+                                            <strong>
+                                                <?php echo SP()->primitives->admin_text( 'Automatic updates unavailable, verify your plugin license to enable automatic updates.' ); ?>
+                                            </strong>
+                                        <?php endif; ?>
 									</div>
 								</td>
 							</tr>
 							<?php
 						}
 					} else {
-
 						// any upgrade for this plugin?  in multisite only main site can update
 						if ( is_main_site() && $versions && $update ) {
 							$active = ( $is_active ) ? ' active' : '';
