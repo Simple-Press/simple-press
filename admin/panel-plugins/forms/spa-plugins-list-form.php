@@ -29,15 +29,6 @@ function spa_plugins_list_form() {
 				});
 
 				spj.loadAjaxForm('sppluginsform', 'sfreloadpl');
-
-				$('.column-more img').click(function (e) {
-					if ($(this).parent().find('.sp-plugin-more').css('display') === 'none') {
-						$(this).parent().find('.sp-plugin-more').css('display', 'block');
-					} else {
-						$(this).parent().find('.sp-plugin-more').css('display', 'none');
-					}
-				});
-
 			});
 
 			function display_filtr() {
