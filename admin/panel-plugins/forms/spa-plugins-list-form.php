@@ -1,10 +1,4 @@
 <?php
-/*
-Simple:Press
-Admin plugins list
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
-*/
 
 if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 	die( 'Access denied - you cannot directly call this file' );
