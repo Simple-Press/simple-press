@@ -9,14 +9,10 @@ $search_term = isset( $_REQUEST['s'] ) ? $_REQUEST['s'] : '';
 ?>
 
 <form action="<?php echo SPADMINPLUGINS; ?>" method="post" id="sppluginssearchform" name="sppluginssearchform">
-		<?php echo sp_create_nonce( 'forum-adminform_plugins' ); ?>
-		<input type="hidden" name="s" value="<?php echo $search_term; ?>" />
-
+    <?php echo sp_create_nonce( 'forum-adminform_plugins' ); ?>
+    <input type="hidden" name="s" value="<?php echo $search_term; ?>" />
 </form>
 <?php
-
-
-
 function spa_plugins_list_form() {
 	?>
 	<script>
