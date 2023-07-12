@@ -530,10 +530,8 @@ $Rev:2099 $
     display: inline-block;
 }
 
+#sf-root-wrap label strong,
 #sf-root-wrap strong {
-    font-weight: 600;
-}
-#sf-root-wrap label strong {
     font-weight: 600;
 }
 
