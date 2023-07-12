@@ -1252,7 +1252,11 @@ img.sf-iconset-icon-img{
 */
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap {
     padding: 0;
-    border: 1px solid black;
+    border: 1px solid #8c8f94;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50%;
 }
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .icons-selector {
     width: 100%;
@@ -1293,7 +1297,6 @@ img.sf-iconset-icon-img{
     height: 100%;
     background: transparent;
     border: none;
-    cursor: default;
 }
 #sfmaincontainer .sf-icon-picker-row.sf-select-wrap .fip-bootstrap.icons-selector .selector-button:active {
     box-shadow: none;
