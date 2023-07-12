@@ -138,7 +138,7 @@
 		if (!dClass)
 			dClass = 'spDialogDefault';
 		if ((sp_platform_vars.device != 'mobile' && sp_platform_vars.focus == 'forum') || (sp_platform_vars.focus == 'admin') || (sp_platform_vars.mobiletheme == false) || mobileScroll) {
-			// close and remove any existing dialog. remove hdden div and recreate it */
+			// close and remove any existing dialog. remove hidden div and recreate it */
 			if ($().dialog("isOpen")) {
 				$().dialog('close');
 			}
