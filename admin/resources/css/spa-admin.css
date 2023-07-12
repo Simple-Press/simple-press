@@ -1080,7 +1080,7 @@ img.sf-iconset-icon-img{
     border: 1px solid var(--sp-primary-border-color);
     border-radius: 3px;
     margin: 10px 10px 15px;
-    align-items: center;
+    background: white;
 }
 
 #sf-root-wrap .sf-alert-block p:first-child {
