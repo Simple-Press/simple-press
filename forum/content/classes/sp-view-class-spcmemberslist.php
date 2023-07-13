@@ -74,7 +74,18 @@ class spcMembersList {
 
 		$data                   = $this->query($this->membersGroupBy, $this->membersOrderBy, $this->membersSortBy, $this->membersNumber, $this->membersLimitUG, $this->membersWhere);
 		$this->pageData         = $data->records;
-		$this->memberGroupCount = count($this->pageData);
+
+        /*
+         * todo: find a better solution for this
+         *
+         * This needs to be refined, this is just a quickfix for solving the critical error that
+         * breaks the forum when no results are returned the returned object is a stdClass
+         */
+        if (is_object($data->records)) {
+            $this->memberGroupCount = 0;
+        } else {
+            $this->memberGroupCount = count($this->pageData);
+        }
 		$this->totalMemberCount = $data->count;
 		sp_display_inspector('mv_members', $this);
 	}
