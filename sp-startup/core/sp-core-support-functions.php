@@ -1086,6 +1086,9 @@ function sph_check_for_addons_updates() {
  * Adds a Simple:Press link to the WP admin bar
  */
 function simple_press_admin_bar( $wp_admin_bar ) {
+    if (!SP()->auths->current_user_can('SPF Manage Forums')) {
+        return;
+    }
 
     // Bail if no admin bar.
     if ( empty( $wp_admin_bar ) ) {
