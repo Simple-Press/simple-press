@@ -2839,10 +2839,10 @@ function sp_ForumStats($args = '', $titleLabel = '', $groupsLabel = '', $forumsL
 
 	# render the forum stats
 	$out = "<div class='$pTitleClass'>$titleLabel</div>";
-	$out .= "<div class='$pGroupsClass'>".$groupsLabel.$counts->groups.'</div>';
-	$out .= "<div class='$pForumsClass'>".$forumsLabel.$counts->forums.'</div>';
-	$out .= "<div class='$pTopicsClass'>".$topicsLabel.$counts->topics.'</div>';
-	$out .= "<div class='$pPostsClass'>".$postsLabel.$counts->posts."</div>";
+	$out .= "<div class='$pGroupsClass'>".$groupsLabel . ($counts->groups ?? 0) .'</div>';
+	$out .= "<div class='$pForumsClass'>".$forumsLabel . ($counts->forums ?? 0) .'</div>';
+	$out .= "<div class='$pTopicsClass'>".$topicsLabel . ($counts->topics ?? 0) .'</div>';
+	$out .= "<div class='$pPostsClass'>".$postsLabel . ($counts->posts ?? 0) ."</div>";
 
 	# finish it up
 	$out = apply_filters('sph_ForumStats', $out, $a);
