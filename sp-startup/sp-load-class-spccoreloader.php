@@ -137,6 +137,11 @@ class spcCoreLoader {
 	
 		# makes sure storage exists
 		if (!file_exists(INSTALL_STORE_DIR.'/'.$basepath) && $is_install ) @mkdir(INSTALL_STORE_DIR.'/'.$basepath, $perms);
+
+        if (is_multisite()) {
+            global $wpdb;
+            if (!defined('SPBLOGID')) define('SPBLOGID', $wpdb->blogid);
+        }
 	
 		# for multisite, make sure main site storage exists
 		if (is_multisite() && SPBLOGID != 1) {
