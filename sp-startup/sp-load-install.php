@@ -216,7 +216,7 @@ function sp_go_install() {
             <div class="sf-panel-body">
                 <div class="sf-form-row">
                     <div>
-                        <h1 id="installation-header"><?php echo SP()->primitives->admin_text('Installation is in progress - please wait'); ?></h1i>
+                        <h1 id="installation-header"><?php echo SP()->primitives->admin_text('Installation is in progress - please wait'); ?></h1>
                     </div>
                     <div class="pbar" id="progressbar"></div>
                     <table id="SPLOADINSTALLtable">
