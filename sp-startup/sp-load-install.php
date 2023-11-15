@@ -199,6 +199,10 @@ function sp_go_install() {
 
     add_option('sfInstallID', $current_user->ID); # use wp option table
 
+    if (!array_key_exists('sample', $_POST)) {
+        $_POST['sample'] = '';
+    }
+
     $phpfile = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL . 'install&sample=' . $_POST['sample'] . '&installadmins=' . $_POST['installadmins'] . '&pagename=' . $_POST['pagename'], 'install'));
     $image = SPCOMMONIMAGES . 'working.gif';
 
