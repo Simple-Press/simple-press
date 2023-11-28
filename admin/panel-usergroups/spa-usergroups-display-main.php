@@ -92,6 +92,18 @@ function spa_usergroups_usergroup_main() {
                                                data-open=""
                                         />
                                         <input type="button"
+                                               id="move<?php echo $usergroup->usergroup_id; ?>"
+                                               class="sf-button-secondary sf-button-small spLoadForm"
+                                               value="<?php SP()->primitives->admin_etext('Move'); ?>"
+                                               data-form="delmembers"
+                                               data-url="<?php echo $base; ?>"
+                                               data-target="<?php echo $target; ?>"
+                                               data-img="<?php echo SPADMINIMAGES ?>"
+                                               data-id="<?php echo $usergroup->usergroup_id; ?>"
+                                               data-open=""
+                                               style="display: none"
+                                        />
+                                        <input type="button"
                                                id="add<?php echo $usergroup->usergroup_id; ?>"
                                                class="sf-button-secondary sf-button-small spLoadForm"
                                                value="<?php SP()->primitives->admin_etext('Add'); ?>"

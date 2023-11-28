@@ -64,7 +64,6 @@ function spa_usergroups_add_members_form($usergroup_id) {
         ?>
         <span class="sf-controls">
             <input type="submit" class="sf-button-primary" name="sfmembernew<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" />
-            <input type="button" class="sf-button-primary spCancelForm sf-mobile-hide" data-target="#members-<?php echo $usergroup_id; ?>" name="addmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
         </span>
         <span class="sf-button sf-hidden-important" id='onFinish'></span>
         <div class="pbar" id="progressbar"></div>

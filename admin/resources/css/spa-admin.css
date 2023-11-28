@@ -1239,12 +1239,23 @@ img.sf-iconset-icon-img{
 #sfmaincontainer .sf-item-controls {
     float: right;
 }
-#sfmaincontainer .sf-item-controls>.sf-icon {
+#sfmaincontainer .sf-item-controls > .sf-icon {
     margin-right: 10px;
 }
 
+#sfmaincontainer .sf-pagination {
+    text-align: center;
+}
+
 #sfmaincontainer .sf-pagination-links a {
-    padding: 5px;
+    padding: 2px 6px;
+    color: var(--sp-secondary-button-color);
+}
+
+#sfmaincontainer .sf-pagination .sf-current-page {
+    color: white;
+    background: var(--sp-secondary-button-color);
+    border-radius: 4px;
 }
 
 /**
@@ -2978,4 +2989,12 @@ body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-st
 #sf-root-wrap .licensing-wrapper .license-info {
     margin-top: 5px;
     margin-bottom: 10px;
+}
+
+
+/*2023-11-28*/
+img[src$="sp_WaitBox.gif"] {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

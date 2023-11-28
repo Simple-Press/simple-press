@@ -31,7 +31,7 @@ function spa_usergroups_delete_members_form($usergroup_id) {
     $smessage = esc_js(SP()->primitives->admin_text('Please Wait - Processing'));
     $emessage = esc_js(SP()->primitives->admin_text('Users Removed/Moved'));
 ?>
-<form class="sf-usergroups-delete-members" action="<?php echo $ajaxURL; ?>" method="post" id="<?php echo $formId; ?>" name="sfmemberdel<?php echo $usergroup_id ?>"
+<form action="<?php echo $ajaxURL; ?>" method="post" id="<?php echo $formId; ?>" name="sfmemberdel<?php echo $usergroup_id ?>"
           onsubmit="spj.addDelMembers(
                       '<?php echo $formId; ?>',
                       '<?php echo $url; ?>',
@@ -57,7 +57,7 @@ function spa_usergroups_delete_members_form($usergroup_id) {
             <input type="submit" class="sf-button-primary" name="sfmemberdel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Remove from group'); ?>" />
             <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $usergroup_id; ?>" name="delmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
         </span>
-        <span class="_sf-button sf-hidden-important" id='onFinish'></span>
+        <span class="sf-button sf-hidden-important" id='onFinish'></span>
         <div class="pbar" id="progressbar"></div>
          <?php
         spa_paint_close_container();

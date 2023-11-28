@@ -143,7 +143,7 @@ function spa_prepare_msbox_list($msbox, $uid) {
 # Initial list (i.e., psge 1)
 # --------------------------------------------------------------------------
 
-function spa_populate_msbox_list($msbox, $uid, $name, $from, $to, $ug, $num = 8) {
+function spa_populate_msbox_list($msbox, $uid, $name, $from, $to, $ug, $num = 40) {
     $records = SP()->DB->select('SELECT * FROM sftempmembers LIMIT 0, ' . $num);
     $max = spa_get_query_max($msbox, $uid, '');
     return spa_render_msbox_list($msbox, $uid, $name, $from, $num, $records, 0, $max, '', $ug);
@@ -186,11 +186,28 @@ function spa_get_query_max($msbox, $uid, $filter) {
 
 function spa_render_msbox_list($msbox, $uid, $name, $from, $num, $records, $offset, $max, $filter, $ug) {
     $empty = true;
+
+
     $out = '<div id="mslist-' . $name . $uid . '">';
+        $out .= "<div style='display: flex;'>";
+        $gif = SPCOMMONIMAGES . "working.gif";
+        $site = wp_nonce_url(
+            SPAJAXURL . "multiselect&amp;page_msbox=filter&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode(
+                $from
+            ) . "&amp;num=$num&amp;offset=0&amp;max=$max&amp;ug=$ug",
+            'multiselect'
+        );
+        $out .= '       <p class="search-box-v2 sf-filter-auto">';
+        $out .= '           <input type="search" placeholder="Search" id="list-filter' . $name . $uid . '" name="list-filter' . $name . $uid . '" value="' . $filter . '" class="sfacontrol" size="10">';
+        $out .= '           <input type="button" id="filter' . $uid . '" class="spFilterList sf-hidden-important" value="' . SP(
+            )->primitives->admin_text(
+                'Filter'
+            ) . '" data-url="' . $site . '" data-uid="' . $name . $uid . '" data-image="' . $gif . '">';
+        $out .= '       </p>';
         // If user group is set
         if ($ug) {
-            $out .= '<div style="flex-basis: 80%;">';
-                $out .= '<select name="usergroup_id">';
+            $out .= '<div style="flex-basis: 80%; text-align: right">';
+                $out .= '<select name="usergroup_id" style="vertical-align: unset">';
                     $out .= '<option value="">' . SP()->primitives->admin_text('Select User Group') . '</option>';
                     foreach (spa_get_usergroups_all(null) as $usergroup) {
                         $out .= '<option value="' . $usergroup->usergroup_id . '"' . (!empty($_POST['usergroup_id']) && $usergroup->usergroup_id == $_POST['usergroup_id'] ? ' checked="checked"' : '') . '>' . SP()->displayFilters->title($usergroup->usergroup_name) . '</option>';
@@ -199,6 +216,7 @@ function spa_render_msbox_list($msbox, $uid, $name, $from, $num, $records, $offs
                 $out .= '<button class="sf-button-primary">' . SP()->primitives->admin_text('Move to group') . '</button>';
             $out .= '</div>';
         }
+        $out .= "</div>";
 
         // Container for users or message that there are no users
         $out .= '<ul class="list-grid">';
@@ -207,7 +225,7 @@ function spa_render_msbox_list($msbox, $uid, $name, $from, $num, $records, $offs
                     $empty = false;
                     $out .= "<li class='sf-grid-item'>";
                         $out .= "<input type='checkbox' name='{$name}[]' value='{$record->user_id}'>";
-                        $out .= "<span class='sf-user-name'>" . SP()->displayFilters->name($record->display_name) . "</span>";
+                        $out .= "<span class='sf-user-name' title='User ID: " . $record->user_id."'>" . SP()->displayFilters->name($record->display_name) . "</span>";
                     $out .= "</li>";
                 }
             }
@@ -227,25 +245,48 @@ function spa_msbox_pagination($msbox, $uid, $name, $from, $num, $offset, $max, $
     $countPages = ceil($max / $num);
     $currentPageNum = ceil($offset / $num);
     $pagination = spa_pagination($countPages, $currentPageNum);
+
+
     if ($pagination) {
         $out .= '<div class="sf-pagination sf-mb-15">';
         $out .= '<div class="sf-pagination-links">';
-        $out .= '<a class="sf-first-page spUpdateList" href="javascript:void(0)"'
-                . ' data-uid="' . $name . $uid . '"'
-                . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=0&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '"'
-                . '>&lt;</a>';
-        foreach ($pagination as $n => $v) {
-            $out .= '<a href="javascript:void(0)"'
-                    . ' class="spUpdateList' . ($currentPageNum == $n - 1 ? ' sf-current-page' : '') . '"'
-                    . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=" . (($n - 1 ) * $num) . "&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '"'
-                    . ' data-uid="' . $name . $uid . '">' . $v . '</a>';
+
+        // First Page Link
+        if ($currentPageNum > 0) {
+            $out .= create_pagination_link(0, 'First', $msbox, $uid, $name, $from, $num, $max, $filter, $ug);
         }
-        $out .= '<a class="sf-last-page spUpdateList"  href="javascript:void(0)"'
-                . ' data-uid="' . $name . $uid . '"'
-                . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=" . (($countPages - 1 ) * $num) . "&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '" '
-                . '>&gt;</a>';
+
+        // Previous Page Link
+        if ($currentPageNum >= 1) {
+            $out .= create_pagination_link(($currentPageNum - 1) * $num, 'Previous', $msbox, $uid, $name, $from, $num, $max, $filter, $ug);
+        }
+
+        // Page Links
+        foreach ($pagination as $n => $v) {
+            $out .= create_pagination_link(($n - 1) * $num, $v, $msbox, $uid, $name, $from, $num, $max, $filter, $ug, $currentPageNum == $n - 1 ? ' sf-current-page' : '');
+        }
+
+        // Next Page Link
+        if (($currentPageNum + 1)*$num < $max) {
+            $out .= create_pagination_link(($currentPageNum + 1) * $num, 'Next', $msbox, $uid, $name, $from, $num, $max, $filter, $ug);
+        }
+
+        // Last Page Link
+        if ($currentPageNum < $countPages - 1) {
+            $out .= create_pagination_link(($countPages - 1) * $num, 'Last', $msbox, $uid, $name, $from, $num, $max, $filter, $ug);
+        }
+
         $out .= '</div>';
         $out .= '</div>';
     }
+
     return $out;
 }
+
+function create_pagination_link($offset, $text, $msbox, $uid, $name, $from, $num, $max, $filter, $ug, $class = '') {
+    return '<a class="sf-first-page spUpdateList' . $class . '" href="javascript:void(0)"'
+        . ' data-uid="' . $name . $uid . '"'
+        . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=$offset&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '"'
+        . '>' . $text . '</a>';
+}
+
