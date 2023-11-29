@@ -4,9 +4,9 @@ Plugin Name: Simple:Press Forums
 Contributors: simplepress, elindydotcom, usermrpapa, yellowswordfish, tahir1235
 Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
-Tested up to: 6.4.0
+Tested up to: 6.4.1
 Requires PHP: 7.0
-Stable tag: 6.10.5
+Stable tag: 6.10.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,15 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 19. The front-end admin options for a post
 
 == Latest Updates ==
+
+= 6.10.6 - November 2023 =
+* Improved the pagination handler to handle large amounts of pages better
+* Improved the user group handling allowing admins to search for specific users
+* Increased the number of shown users per page in the user group admin
+* Added indicator showing current page in pagination links
+* Added hover in the user group admin to show user ID to easier find the correct user
+* Improved the spinner/loading image positioning
+* Fixed warning when installing forum without sample data
 
 = 6.10.5 - November 2023 =
 * Fixed compatibility issue with WordPress 6.4
