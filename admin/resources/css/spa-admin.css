@@ -2992,9 +2992,28 @@ body.simplepress-sp-startup-sp-load-install-php #toplevel_page_simplepress-sp-st
 }
 
 
-/*2023-11-28*/
-img[src$="sp_WaitBox.gif"] {
+img[src$="sp_WaitBox.gif"],
+#sf-deactivate-loader img[src$="sp_WaitBox.gif"],
+#sf-activate-loader img[src$="sp_WaitBox.gif"] {
+    z-index: 10000;
+    position: absolute;
+    padding: 20px;
     display: block;
+    background: white;
+    border-radius: 40px;
+    box-shadow: 0 0 30px 50px white;
+    margin-top: 50px;
+}
+
+#sf-deactivate-loader img[src$="sp_WaitBox.gif"],
+#sf-activate-loader img[src$="sp_WaitBox.gif"] {
+    top: 200px;
+    left: calc(50% - 100px);
+}
+
+#sfmaincontainer img[src$="sp_WaitBox.gif"] {
+    position: relative;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: -200px;
 }
