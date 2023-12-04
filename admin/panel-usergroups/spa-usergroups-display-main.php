@@ -266,9 +266,28 @@ function spa_members_not_belonging_to_any_usergroup_tab() {
     <script>
         (function (spj, $, undefined) {
             $(document).ready(function () {
-                //$('#members_not_belonging_to_any_usergroup').ajaxForm({
-                //target: '#sfmsgspot',
-                //});
+                $('#members_not_belonging_to_any_usergroup').keydown(function(event){
+
+                    // Listen to enter and prevent
+                    if (event.keyCode == 13) {
+                        // Enter should not submit form
+                        event.preventDefault();
+
+                        // Get data from submit
+                        let filter = $(this).find('[type="search"]');
+
+                        // Load data in correct html-element
+                        $(filter.attr('data-target')).load(
+                            filter.attr('data-filter-url')
+                            + '&filter=' + encodeURIComponent(filter.val())+ '&rnd='
+                            + new Date().getTime()
+                        )
+
+                        // Make sure not to continue
+                        return false;
+                    }
+                });
+
                 $('#members_not_belonging_to_any_usergroup').submit(function (e) {
                     e.preventDefault();
                     spj.addDelMembers('members_not_belonging_to_any_usergroup'
@@ -315,16 +334,18 @@ function spa_members_not_belonging_to_any_usergroup_tab() {
                                data-target=".sf-not-belonging-to-any-usergroup"
                                data-filter-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1", 'usergroups') ?>"
                         >
-                        <button class="sf-button-secondary"><?php echo SP()->primitives->admin_text('Search') ?></button>
                     </p>
 
                 </div>
             </div>
         </div>
-        <div class="sf-not-belonging-to-any-usergroup">
-            <?php spa_members_not_belonging_to_any_usergroup() ?>
-        </div>
 
+        <div class="sf-not-belonging-to-any-usergroup">
+            <?php
+            ?>
+            <?php spa_members_not_belonging_to_any_usergroup("", $_GET['filter'] ?? '') ?>
+
+        </div>
         <span class="_sf-button sf-hidden-important" id='onFinish'></span>
         <div class="pbar" id="progressbar"></div>
     </form>

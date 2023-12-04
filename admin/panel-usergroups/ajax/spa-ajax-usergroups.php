@@ -20,7 +20,7 @@ include_once SP_PLUGIN_DIR.'/admin/panel-usergroups/support/spa-usergroups-prepa
 if(isset($_GET['ug_no'])) {
     spa_members_not_belonging_to_any_usergroup(
         array_key_exists('page', $_GET) ? (int) $_GET['page'] : 0,
-        array_key_exists('filter', $_GET) ? (int) $_GET['filter'] : null
+        array_key_exists('filter', $_GET) ? $_GET['filter'] : null
     );
     die();
 }

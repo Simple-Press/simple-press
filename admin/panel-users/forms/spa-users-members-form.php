@@ -457,13 +457,17 @@ function spa_users_members_form() {
             ?>
         </div>
     </form>
+
 	<?php
+
 	$countItems     = $membersTable->count_pages;
 	$maxItemsOnPage = $membersTable->per_page;
 	$countPages     = ceil( $countItems / $maxItemsOnPage );
 	$pageNum        = $membersTable->get_pagenum();
-	$pagination     = spa_pagination( $countPages, $pageNum, 8, 2 );
-    $userGroupId    = array_key_exists('usergroup', $_GET) ? $_GET['usergroup'] : 1; ?>
+	$pagination     = spa_pagination( $countPages, $pageNum);
+    $userGroupId    = array_key_exists('usergroup', $_GET) ? $_GET['usergroup'] : '';
+
+    ?>
 	<?php if ( $pagination ): ?>
         <div class="sf-pagination">
             <span class="sf-pagination-links">
