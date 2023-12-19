@@ -88,7 +88,7 @@ function spa_get_messages_data() {
 
 	if(!empty($sfpostmsg)){
 		$sfcomps['sfpostmsgtext'] = SP()->editFilters->text( isset($sfpostmsg['sfpostmsgtext']) ? $sfpostmsg['sfpostmsgtext'] : '' );
-		$sfcomps['sfpostmsgtopic'] = isset($sfpostmsg['sfpostmsgtext']) ? $sfpostmsg['sfpostmsgtext'] : false;
+		$sfcomps['sfpostmsgtopic'] = isset($sfpostmsg['sfpostmsgtopic']) ? $sfpostmsg['sfpostmsgtopic'] : false;
 		$sfcomps['sfpostmsgpost'] =  isset($sfpostmsg['sfpostmsgpost']) ? $sfpostmsg['sfpostmsgpost'] : false;
 
 		$sfcomps['sfpostmsgtext2'] = SP()->editFilters->text(isset($sfpostmsg['sfpostmsgtext2']) ? $sfpostmsg['sfpostmsgtext2'] : '' );
