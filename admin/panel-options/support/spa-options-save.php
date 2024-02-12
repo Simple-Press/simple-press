@@ -91,6 +91,8 @@ function spa_save_display_data() {
     $sfdisplay['pagetitle']['notitle'] = isset($_POST['sfnotitle']);
 	$sfdisplay['pagetitle']['banner'] = SP()->saveFilters->cleanurl($_POST['sfbanner']);
 
+    $sfdisplay['hideuserinfo'] = isset($_POST['sfhideuserinfo']) ;
+
 	# Stats
 	$sfcontrols['shownewcount'] = (isset($_POST['shownewcount'])) ? SP()->filters->integer($_POST['shownewcount']) : 6;
 	$newuserlist = SP()->options->get('spRecentMembers');

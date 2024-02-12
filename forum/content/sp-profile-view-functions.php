@@ -325,6 +325,12 @@ function sp_ProfileShowDisplayName($args = '', $label = '') {
 function sp_ProfileShowFirstName($args = '', $label = '') {
 	if (!SP()->auths->get('view_profiles')) return;
 
+    // If option to hide firstname and lastname is set, do not return any data
+    $profileOptions = SP()->options->get('sfprofile');
+    if ($profileOptions['hideuserinfo']) {
+        return;
+    }
+
 	$defs = array('tagClass'    => 'spProfileShowFirstName',
 	              'leftClass'   => 'spColumnSection spProfileLeftCol',
 	              'middleClass' => 'spColumnSection spProfileSpacerCol',
@@ -381,6 +387,12 @@ function sp_ProfileShowFirstName($args = '', $label = '') {
 # --------------------------------------------------------------------------------------
 function sp_ProfileShowLastName($args = '', $label = '') {
 	if (!SP()->auths->get('view_profiles')) return;
+
+    // If option to hide firstname and lastname is set, do not return any data
+    $profileOptions = SP()->options->get('sfprofile');
+    if ($profileOptions['hideuserinfo']) {
+        return;
+    }
 
 	$defs = array('tagClass'    => 'spProfileShowLastName',
 	              'leftClass'   => 'spColumnSection spProfileLeftCol',
@@ -1703,7 +1715,13 @@ function sp_ProfileShowLink($args = '', $label = '') {
 function sp_ProfileShowEmail($args = '', $label = '') {
 	if (!SP()->auths->get('view_profiles')) return;
 
-	$defs = array('tagClass'    => 'spProfileShowLink',
+    // If option to hide firstname and lastname is set, do not return any data
+    $profileOptions = SP()->options->get('sfprofile');
+    if ($profileOptions['hideuserinfo']) {
+        return;
+    }
+
+    $defs = array('tagClass'    => 'spProfileShowLink',
 	              'leftClass'   => 'spColumnSection spProfileLeftCol',
 	              'middleClass' => 'spColumnSection spProfileSpacerCol',
 	              'rightClass'  => 'spColumnSection spProfileRightCol',

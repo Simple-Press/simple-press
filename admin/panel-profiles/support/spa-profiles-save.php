@@ -22,6 +22,8 @@ function spa_save_options_data() {
 	$sfprofile['photosmax'] = SP()->filters->integer($_POST['photosmax']);
 	$sfprofile['photoscols'] = SP()->filters->integer($_POST['photoscols']);
 
+    $sfprofile['hideuserinfo'] = isset($_POST['hideuserinfo']) ?? false;
+
 	$sfsigimagesize = [];
 	$sfsigimagesize['sfsigwidth'] = SP()->filters->integer($_POST['sfsigwidth']);
 	$sfsigimagesize['sfsigheight'] = SP()->filters->integer($_POST['sfsigheight']);

@@ -39,7 +39,14 @@ function spa_profiles_options_form() {
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
 
-		spa_paint_open_panel();
+        spa_paint_open_panel();
+            spa_paint_open_fieldset(SP()->primitives->admin_text('Hide user info'), false);
+                spa_paint_checkbox(SP()->primitives->admin_text('Hide personal information'), 'hideuserinfo', $sfoptions['hideuserinfo'] ?? false);
+                echo '<span class="sf-sublabel sf-sublabel-small">This will hide firstname, lastname and e-mail from the userprofile.</span>';
+            spa_paint_close_fieldset();
+        spa_paint_close_panel();
+
+        spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Personal Photos'), true, 'personal-photos');
 				spa_paint_input(SP()->primitives->admin_text('Maximum number of photos allowed'), 'photosmax', $sfoptions['photosmax'] ?? null, false, false);
 				spa_paint_input(SP()->primitives->admin_text('Number of columns for photo display'), 'photoscols', $sfoptions['photoscols'] ?? null, false, false);
