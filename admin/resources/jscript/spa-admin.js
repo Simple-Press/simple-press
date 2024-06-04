@@ -20,8 +20,8 @@
         'new-user-admin-body',
         'resend-body',
         'resend-admin-body',
-        // 'pw-change-body',
-        // 'pw-change-admin-body'
+        'pw-change-body',
+        'pw-change-admin-body'
     ];
 
     let isVisualMode = true;

@@ -182,10 +182,10 @@ function spa_paint_textarea($label, $name, $value, $submessage='', $rows=5, $pla
 function spa_paint_textarea_editor($label, $name, $value, $submessage='', $rows=5, $placeholder=''): void
 {
 	echo "<div class='sf-form-row'>\n";
+	echo "<a href='#' class='element-switcher' data-editor-id='$name'>Switch to Text Mode</a>"; // Add switcher
 	echo "<label>\n";
 	echo "$label";
 	echo '</label>';
-	echo "<a href='#' class='element-switcher' data-editor-id='$name'>Switch to Text Mode</a>"; // Add switcher
 	echo "<textarea id='$name' rows='$rows' class='wp-core-ui' name='$name'>".esc_html($value)."</textarea>\n";
     if (!empty($submessage)) {
         echo '<span class="sf-sublabel sf-sublabel-small">' . esc_html($submessage) . '</span>';
