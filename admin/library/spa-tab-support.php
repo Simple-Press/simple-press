@@ -181,7 +181,7 @@ function spa_paint_textarea($label, $name, $value, $submessage='', $rows=5, $pla
 
 function spa_paint_textarea_editor($label, $name, $value, $submessage='', $rows=5, $placeholder=''): void
 {
-	echo "<div class='sf-form-row'>\n";
+	echo "<div class='sf-form-row html-email'>\n";
 	echo "<a href='#' class='element-switcher' data-editor-id='$name'>Switch to Text Mode</a>"; // Add switcher
 	echo "<label>\n";
 	echo "$label";
