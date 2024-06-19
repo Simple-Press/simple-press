@@ -1,6 +1,6 @@
 /*
 Simple:Press Admin CSS
-$LastChangedDate:2009-06-23 00:17:06 +0100 (Tue, 23 Jun 2009) $
+$LastChangedDate: 2024-06-01 00:56:34 -0500 (Sat, 01 Jun 2024) $
 $Rev:2099 $
 */
 
@@ -3016,4 +3016,30 @@ img[src$="sp_WaitBox.gif"],
     margin-left: auto;
     margin-right: auto;
     margin-bottom: -200px;
+}
+
+.sf-form-row .element-switcher{
+    margin-top:30px;
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    text-decoration: none;
+    color: #595959 !important;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    text-shadow: none;
+    width: 200px;
+    padding: 10px;
+    cursor: pointer;
+    background: #F6F7F7;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    border:1px solid #dcdcde !important;
+}
+
+.sf-form-row.html-email textarea{
+    width:100% !important;
+}
+
+.sf-form-row.html-email .mce-container .mce-btn.mce-active button i{
+     color: #000;
 }

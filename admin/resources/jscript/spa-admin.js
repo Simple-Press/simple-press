@@ -11,6 +11,81 @@
 	// public properties
 
 	// public methods
+  
+    const htmlEditors = [
+        'email-footer',
+        'email-header',
+        'admin-notification-body',
+        'new-user-body',
+        'new-user-admin-body',
+        'resend-body',
+        'resend-admin-body',
+        'pw-change-body',
+        'pw-change-admin-body'
+    ];
+
+    let isVisualMode = true;
+
+    $(window).on('load', function() {
+        addHtmlEditor();
+    });
+
+    $(document).ajaxComplete(function (event, xhr, settings) {
+        addHtmlEditor();
+    });
+
+    $(document).on('click', '.element-switcher', function(e) {
+        e.preventDefault();
+        let editorId = $(this).data('editor-id');
+        if (isVisualMode) {
+            switchToTextMode(editorId);
+            $(this).text('Switch to Visual Mode');
+        } else {
+            switchToVisualMode(editorId);
+            $(this).text('Switch to Text Mode');
+        }
+        isVisualMode = !isVisualMode;
+    });
+
+    function addHtmlEditor() {
+        $('textarea.wp-core-ui:visible').each(function () {
+            let editorId = $(this).attr('id');
+			if (editorId && $.inArray(editorId, htmlEditors) !== -1) {
+				if (tinyMCE.get(editorId)) {
+					//Remove and reinit
+					tinyMCE.remove('#' + editorId);
+				}
+				initTinyMCE(editorId);
+			}
+        });
+    }
+
+    function initTinyMCE(editorId) {
+        tinymce.init({
+            selector: '#' + editorId,
+            plugins: 'link lists textcolor',
+            toolbar: 'formatselect bold italic underline | bullist numlist blockquote | alignleft aligncenter alignright | link unlink | forecolor backcolor',
+            menubar: false,
+            height: 300,
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save();
+                });
+            }
+        });
+    }
+
+    function switchToTextMode(editorId) {
+        if (tinymce.get(editorId)) {
+            tinymce.get(editorId).save();
+            tinymce.get(editorId).remove();
+        }
+    }
+
+    function switchToVisualMode(editorId) {
+        initTinyMCE(editorId);
+    }
+
 	spj.loadForm_OLD = function(formID, baseURL, targetDiv, imagePath, id, open, upgradeUrl, admin, save, sform, reload) {
 		/* close a dialog (popup help) if one is open */
 		if ($().dialog("isOpen")) {

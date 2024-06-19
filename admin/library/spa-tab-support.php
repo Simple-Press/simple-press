@@ -179,6 +179,25 @@ function spa_paint_textarea($label, $name, $value, $submessage='', $rows=5, $pla
 	echo '</div>';
 }
 
+function spa_paint_textarea_editor($label, $name, $value, $submessage='', $rows=5, $placeholder=''): void
+{
+	echo "<div class='sf-form-row html-email'>\n";
+	echo "<a href='#' class='element-switcher' data-editor-id='$name'>Switch to Text Mode</a>"; // Add switcher
+	echo "<label>\n";
+	echo "$label";
+	echo '</label>';
+	echo "<textarea id='$name' rows='$rows' class='wp-core-ui' name='$name'>".esc_html($value)."</textarea>\n";
+    if (!empty($submessage)) {
+        echo '<span class="sf-sublabel sf-sublabel-small">' . esc_html($submessage) . '</span>';
+    }
+	
+	echo '</div>';
+}
+
+function spa_paint_wide_textarea_editor($label, $name, $value, $submessage='', $rows=5, $placeholder='') {
+    spa_paint_textarea_editor($label, $name, $value, $submessage, $rows, $placeholder);
+}
+
 function spa_paint_wide_textarea($label, $name, $value, $submessage='', $rows=5, $placeholder='') {
     spa_paint_textarea($label, $name, $value, $submessage, $rows, $placeholder);
 }
@@ -238,6 +257,34 @@ function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, 
 				));
 	
 	//echo '<div class="clearboth"></div>';
+	echo '</div>';
+}
+
+function spa_paint_wide_editor_custom($label, $name, $value, $submessage='', $xrows=1, $mediaButtons = false) {
+	add_filter( 'tiny_mce_before_init', 'spa_cache_ajax_editor_settings', 11, 2 );
+	
+	echo "<div class='sf-form-row'>\n";
+	echo "<label>\n";
+	echo "$label";
+	if (!empty($submessage)) echo "<small><br /><strong>$submessage</strong></small>\n";
+	echo '</label>';
+      if (is_array($value) || is_object($value)) {
+          error_log(print_r($value, true));
+      } else {
+          error_log($value);
+  }
+
+	wp_editor( html_entity_decode( $value ), $name, array(
+                    'textarea_name' => $name,
+					'media_buttons' => (bool) $mediaButtons,
+					'quicktags'     => true,
+					'textarea_rows' => $xrows,
+					'tinymce'       => array(
+						'toolbar1'      => 'formatselect bold italic underline | bullist numlist blockquote | alignleft aligncenter alignright | link unlink | forecolor backcolor',
+					),
+                    'editor_height' => 300
+				));
+	
 	echo '</div>';
 }
 
