@@ -400,9 +400,6 @@ function sp_php_overrides() {
 	# try to increase backtrack limit
 	if ((int)@ini_get('pcre.backtrack_limit') < 10000000000) @ini_set('pcre.backtrack_limit', 10000000000);
 
-	# try to increase php memory
-	if (function_exists('memory_get_usage') && ((int)@ini_get('memory_limit') < abs(intval('64M')))) @ini_set('memory_limit', '64M');
-
 	# try to increase cpu time
 	if ((int)@ini_get('max_execution_time') < 120) @ini_set('max_execution_time', '120');
 }
