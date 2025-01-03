@@ -2192,6 +2192,7 @@ function sp_SearchForm($args = '') {
 	}
 
 	$terms = (isset(SP()->rewrites->pageData['searchvalue']) && SP()->rewrites->pageData['searchtype'] != 4 && SP()->rewrites->pageData['searchtype'] != 5) ? SP()->rewrites->pageData['searchvalue'] : '';
+    $terms = esc_attr($terms);
 	$out .= "<input type='text' id='searchvalue' class='$inputClass' size='$inputWidth' name='searchvalue' value='$terms' placeholder='$placeHolder...' />";
 	$out .= "<a rel='nofollow' id='$submitId' class='$submitClass spSearchSubmit' title='$toolTip' data-id='$submitId' data-type='link' data-min='".SPSEARCHMIN."'>";
 	if (!empty($icon)) {
@@ -3451,7 +3452,7 @@ function sp_page_url($thisPage, $baseUrl, $iconType, $linkClass, $iconClass, $pr
 			$url         = add_query_arg($param, esc_url($url));
 			$url         = SP()->filters->ampersand($url);
 		}
-		$out .= $url;
+        $out .= esc_url($url);
 	}
 
 	Switch ($iconType) {

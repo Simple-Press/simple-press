@@ -738,6 +738,7 @@ function sp_MemberListSearchForm($args = '') {
 
 	$search = (!empty($_POST['msearch']) && !isset($_POST['allmembers'])) ? SP()->filters->str($_POST['msearch']) : '';
 	$search = (!empty($_GET['msearch'])) ? SP()->filters->str($_GET['msearch']) : $search;
+    $search = esc_attr($search);
 	$ug     = (!empty($_POST['ug']) && !isset($_POST['allmembers'])) ? SP()->filters->integer($_POST['ug']) : '';
 	$ug     = (!empty($_GET['ug'])) ? SP()->filters->integer($_GET['ug']) : $ug;
 
@@ -826,7 +827,7 @@ function sp_MemberListPageLinks($args = '', $label = '', $toolTip = '') {
 	$url = apply_filters('sph_page_link', $url, SP()->rewrites->pageData['page']);
 
 	if (!empty($search)) {
-		$param['msearch'] = $search;
+		$param['msearch'] = esc_attr($search);
 		$url              = add_query_arg($param, esc_url($url));
 		$url              = SP()->filters->ampersand($url);
 	}
