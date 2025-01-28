@@ -6,7 +6,7 @@ Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
 Tested up to: 6.7.1
 Requires PHP: 7.0
-Stable tag: 6.10.11
+Stable tag: 6.10.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ The most versatile and feature-rich forum plugin for WordPress. Create unlimited
 Simple:Press is an all-in-one, feature-rich forum plugin designed to seamlessly integrate with your WordPress site.
 With a focus on performance and user experience, it offers an extensive range of free and premium features to meet all your forum needs.
 
-The plugin has undergone rigorous testing and offers complete support for PHP 7.4 up to PHP 8.2.
+The plugin has undergone rigorous testing and offers complete support for PHP 7.4 up to PHP 8.4.
 
 = Key Features =
 * Enterprise-grade performance, scalable for thousands of users
@@ -153,6 +153,9 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 19. The front-end admin options for a post
 
 == Latest Updates ==
+
+= 6.10.12 - January 2025 =
+* Improved security by sanitizing inputs in plugin search functionality to prevent potential vulnerabilities.
 
 = 6.10.11 - January 2025 =
 * Enhanced methods for search forms and links to sanitize inputs, preventing malicious JavaScript and HTML injection.
