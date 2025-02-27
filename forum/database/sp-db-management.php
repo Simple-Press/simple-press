@@ -173,13 +173,36 @@ function sp_save_edited_post() {
 function sp_save_edited_topic() {
 	$topicid   = SP()->filters->integer($_POST['tid']);
 	$topicname = SP()->saveFilters->title($_POST['topicname'], SPTOPICS, 'topic_name');
+
+    # Verify topic name
 	if (empty($topicname)) {
 		SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Update failed'));
-
 		return;
 	}
+
 	# grab topic to check
 	$topicrecord = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
+
+    # Verify topic record
+    if (empty($topicrecord)) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Update failed'));
+        return;
+    }
+
+    # verify we can edit this post
+    $canEdit = false;
+
+    if (SP()->auths->get('edit_own_topic_titles', $topicrecord->forum_id) && $topicrecord->user_id == SP()->user->thisUser->ID) {
+        $canEdit = true;
+    }
+    if(SP()->auths->get('edit_any_topic_titles', $topicrecord->forum_id)) {
+        $canEdit = true;
+    }
+
+    if (!$canEdit) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Edit failed - you do not have permission'));
+        return;
+    }
 
 	if (empty($_POST['topicslug']) && $topicname == $topicrecord->topic_name) {
 		$topicslug = $topicrecord->topic_slug;
