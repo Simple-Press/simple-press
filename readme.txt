@@ -4,9 +4,9 @@ Plugin Name: Simple:Press Forums
 Contributors: simplepress, elindydotcom, usermrpapa, yellowswordfish, tahir1235
 Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
-Tested up to: 6.7.1
+Tested up to: 6.7.2
 Requires PHP: 7.0
-Stable tag: 6.10.12
+Stable tag: 6.10.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,9 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 19. The front-end admin options for a post
 
 == Latest Updates ==
+
+= 6.10.13 - March 2025 =
+* Improved security posture: Implemented fixes for potential XSS attacks and ensured proper nonce usage on front-end forms.
 
 = 6.10.12 - January 2025 =
 * Improved security by sanitizing inputs in plugin search functionality to prevent potential vulnerabilities.
