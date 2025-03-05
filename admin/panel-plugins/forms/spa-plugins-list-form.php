@@ -69,7 +69,8 @@ function spa_plugins_list_form() {
 	$versions = array();
 	$required = array();
 	$folders  = array();
-	if ( $xml ) {
+
+	if ( $xml->plugins->plugin !== null ) {
 		foreach ( $xml->plugins->plugin as $plugin ) {
 			$versions[ (string) $plugin->name ] = (string) $plugin->version;
 			$required[ (string) $plugin->name ] = (string) $plugin->requires;
