@@ -609,68 +609,19 @@ class spcDB {
 	private function executeShow($sql, $inspect) {
 		spdebug_styles(true);
 		echo '<div class="spdebug">';
-		echo SP()->primitives->front_text('Inspect Query').': <strong>'.$inspect.'</strong><br><hr>';
+		echo SP()->primitives->front_text('Inspect Query');
+        echo '<strong>' . esc_html($inspect) .' </strong><br><hr>';
 		echo '<pre><code>';
 		$k	 = array(
 			"\t",
 			"\n",
-			'SELECT ',
-			'UPDATE ',
-			'INSERT ',
-			'DELETE ',
-			'TRUNCATE ',
-			' DISTINCT ',
-			' DISTINCTROW ',
-			'FROM ',
-			'LEFT JOIN ',
-			'RIGHT JOIN ',
-			' JOIN ',
-			'WHERE ',
-			'ORDER BY ',
-			'GROUP BY ',
-			'LIMIT ',
-			'SET ',
-			' ON ',
-			' IN ',
-			' DESC ',
-			' ASC ',
-			' DESC, ',
-			' ASC, ',
-			' AS ',
-			' OR ',
-			' AND ',
-			' LIKE ');
+            );
 		$r	 = array(
 			'',
 			'',
-			"\n<b>SELECT</b> ",
-			"\n<b>UPDATE</b> ",
-			"\n<b>INSERT</b> ",
-			"\n<b>DELETE</b> ",
-			"\n<b>TRUNCATE</b> ",
-			' <b>DISTINCT</b> ',
-			' <b>DISTINCTROW</b> ',
-			"\n<b>FROM</b> ",
-			"\n<b>LEFT JOIN</b> ",
-			"\n<b>RIGHT JOIN</b> ",
-			" \n<b>JOIN</b> ",
-			"\n<b>WHERE</b> ",
-			"\n<b>ORDER BY</b> ",
-			"\n<b>GROUP BY</b> ",
-			"\n<b>LIMIT</b> ",
-			"\n<b>SET</b> ",
-			' <b>ON</b> ',
-			' <b>IN</b> ',
-			' <b>DESC</b> ',
-			' <b>ASC</b> ',
-			' <b>DESC</b>, ',
-			' <b>ASC</b>, ',
-			' <b>AS</b> ',
-			' <b>OR</b> ',
-			' <b>AND</b> ',
-			' <b>LIKE</b> ');
+			);
 		$sql = str_replace($k, $r, $sql);
-		echo $sql;
+		echo esc_html($sql);
 		echo '</code></pre>';
 		echo '</div>';
 	}

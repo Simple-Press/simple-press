@@ -57,7 +57,10 @@ function sp_render_edit_post_form($args, $postid, $postcontent) {
 	$toolbarClass			= esc_attr($toolbarClass);
 	$toolbarSubmit			= esc_attr($toolbarSubmit);	
 	$labelHeading			= SP()->displayFilters->title($labelHeading);
+    $postid                 = SP()->filters->integer($postid);
 
+    # Nonce for validation of edit
+    $nonce = wp_create_nonce('sp_edit_post_' . $postid);
 	require_once SP_PLUGIN_DIR.'/forum/content/forms/sp-form-components.php';
 
 	$captchaValue = SP()->options->get('captcha-value');
@@ -66,8 +69,8 @@ function sp_render_edit_post_form($args, $postid, $postcontent) {
 
 	$out.= "<div id='spPostForm' class='$containerClass'>\n";
 	$out.= "<form class='$formClass' action='".SP()->spPermalinks->build_url(SP()->forum->view->thisTopic->forum_slug, SP()->forum->view->thisTopic->topic_slug, SP()->forum->view->thisTopic->display_page, $postid)."' method='post' id='editpostform' name='editpostform'>\n";
-
-	$out.= "<input type='hidden' name='forumid' value='".SP()->forum->view->thisTopic->forum_id."' />\n";
+    $out.= "<input type='hidden' name='sp_edit_post' value='".esc_attr($nonce)."' />";
+    $out.= "<input type='hidden' name='forumid' value='".SP()->forum->view->thisTopic->forum_id."' />\n";
 	$out.= "<input type='hidden' name='forumslug' value='".SP()->forum->view->thisTopic->forum_slug."' />\n";
 	$out.= "<input type='hidden' name='topicid' value='".SP()->forum->view->thisTopic->topic_id."' />\n";
 	$out.= "<input type='hidden' name='topicslug' value='".SP()->forum->view->thisTopic->topic_slug."' />\n";

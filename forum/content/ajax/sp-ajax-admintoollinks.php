@@ -74,13 +74,15 @@ function sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail
 	$out = '';
 
 	if (($post['post_status'] != 0) && SP()->auths->get('moderate_posts', $forum['forum_id'])) {
-		$out.= sp_open_grid_cell();
+        $nonce = wp_create_nonce('sp_approve_post_' . $post['post_id']);
+        $out.= sp_open_grid_cell();
 		$out.= '<div class="spForumToolsModerate">';
-		$out.= '<a href="javascript:document.postapprove'.$post['post_id'].'.submit();">';
+		$out.= '<a href="javascript:document.postapprove'.esc_attr($post['post_id']).'.submit();">';
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsApprove.png').$br;
 		$out.= SP()->primitives->front_text('Approve this post').'</a>';
 		$out.= '<form action="'.SP()->spPermalinks->build_url($forum['forum_slug'], $topic['topic_slug'], $page, $post['post_id'], $post['post_index']).'" method="post" name="postapprove'.$post['post_id'].'">';
-		$out.= '<input type="hidden" name="approvepost" value="'.$post['post_id'].'" />';
+        $out.= "<input type='hidden' name='sp_approve_post' value='".esc_attr($nonce)."' />";
+		$out.= '<input type="hidden" name="approvepost" value="'.esc_attr($post['post_id']).'" />';
 		$out.= '</form>';
 		$out.= '</div>';
 		$out.= sp_close_grid_cell();
@@ -91,13 +93,15 @@ function sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail
 	$out = '';
 
 	if (($post['post_status'] == 0) && SP()->auths->get('moderate_posts', $forum['forum_id'])) {
+        $nonce = wp_create_nonce('sp_unapprove_post_' . $forum['forum_id']);
 		$out.= sp_open_grid_cell();
 		$out.= '<div class="spForumToolsModerate">';
 		$out.= '<a href="javascript:document.unapprovepost'.$post['post_id'].'.submit();">';
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsUnapprove.png').$br;
 		$out.= SP()->primitives->front_text('Unapprove this post').'</a>';
 		$out.= '<form action="'.SP()->spPermalinks->build_url($forum['forum_slug'], $topic['topic_slug'], $page, $post['post_id'], $post['post_index']).'" method="post" name="unapprovepost'.$post['post_id'].'">';
-		$out.= '<input type="hidden" name="unapprovepost" value="'.$post['post_id'].'" />';
+        $out.= "<input type='hidden' name='sp_unapprove_post' value='".esc_attr($nonce)."' />";
+		$out.= '<input type="hidden" name="unapprovepost" value="'.esc_attr($post['post_id']).'" />';
 		$out.= '</form>';
 		$out.= '</div>';
 		$out.= sp_close_grid_cell();

@@ -64,13 +64,19 @@ function sp_edit_title_popup() {
 	$userid  = SP()->filters->integer($_GET['userid']);
 	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
 
-	if (!(SP()->auths->get('edit_own_topic_titles', $forumid) && $userid == SP()->user->thisUser->ID) && !SP()->auths->get('edit_any_topic_titles', $forumid)) die();
+	if (!(SP()->auths->get('edit_own_topic_titles', $forumid) && $userid == SP()->user->thisUser->ID) && !SP()->auths->get('edit_any_topic_titles', $forumid)) {
+        die();
+    }
 
 	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$thistopic->forum_id", 'row');
     $page = sp_get_page_from_url();
 
+    # Nonce for validation of edit
+    $nonce = wp_create_nonce('sp_edit_title_' . $topicid);
+
 	$out = "<div id='spMainContainer' class='$tagClass'>";
 	$out.= '<form class="'.$formClass.'" action="'.SP()->spPermalinks->build_url($thisforum->forum_slug, '', $page, 0).'" method="post" name="edittopicform">';
+    $out.= "<input type='hidden' name='sp_edit_title' value='".esc_attr($nonce)."' />";
 	$out.= '<input type="hidden" name="tid" value="'.$thistopic->topic_id.'" />';
     $out.= '<div class="spCenter">';
 	$out.= "<div class='$titleClass'>".SP()->primitives->front_text('Topic Title').':</div>';
@@ -171,6 +177,7 @@ function sp_reassign_post_popup() {
 	$thispost = SP()->filters->integer($_GET['pid']);
 	$thisuser = SP()->filters->integer($_GET['uid']);
     $thistopic = SP()->filters->integer($_GET['id']);
+
     if (empty($thispost) || empty($thistopic)) die();
 
 	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$thistopic", 'row');
@@ -178,12 +185,15 @@ function sp_reassign_post_popup() {
 
 	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$thistopic->forum_id", 'row');
 
-	$out = "<div id='spMainContainer' class='$tagClass'>";
+    $nonce = wp_create_nonce('sp_reassign_post_' . $thispost);
+
+    $out = "<div id='spMainContainer' class='$tagClass'>";
 	$out.= "<div class='spForumToolsHeader'>";
 	$out.= "<div class='$titleClass'>".SP()->primitives->front_text('Reassign post to new user')." (".SP()->primitives->front_text('current ID').': '.$thisuser.")</div>";
 	$out.= '</div>';
 	$out.= "<form class='$formClass' action='".SP()->spPermalinks->build_url($thisforum->forum_slug, $thistopic->topic_slug, 0, $thispost)."' method='post' name='reassignpostform'>";
 	$out.= '<div class="spCenter">';
+    $out.= "<input type='hidden' name='sp_reassign_post' value='".esc_attr($nonce)."' />";
 	$out.= "<input type='hidden' name='postid' value='".$thispost."' />";
 	$out.= "<input type='hidden' name='olduserid' value='".$thisuser."' />";
 	$out.= SP()->primitives->front_text('New user ID');
@@ -499,9 +509,13 @@ function sp_move_post_popup() {
 }
 
 function sp_notify_user() {
+    # Basic validation
 	$thisPost = SP()->filters->integer($_GET['pid']);
-    if (empty($thisPost)) die();
-	if (!SP()->user->thisUser->admin && !SP()->user->thisUser->moderator) die();
+
+    # Check permissions
+	if (!SP()->user->thisUser->admin && !SP()->user->thisUser->moderator) {
+        die();
+    }
 
 	$defs = array('tagClass'		=> 'spForumToolsPopup',
 	              'formClass'		=> 'spPopupForm',
@@ -541,11 +555,15 @@ function sp_notify_user() {
     </script>
 
 <?php
+
+    $nonce = wp_create_nonce('sp_post_notification_' . $thisPost);
+
 	$out = "<div id='spMainContainer' class='$tagClass'>";
 	$out.= "<form class='$formClass' action='".SP()->spPermalinks->permalink_from_postid($thisPost)."' method='post' name='notifyuserform'>";
 	$out.= "<div class='spCenter'>";
 	$out.= "<input type='hidden' name='postid' value='".$thisPost."' />";
-	$out.= "<label class='$titleClass' for='sp_notify_user'>".SP()->primitives->front_text('User to notify').": </label>";
+    $out.= "<input type='hidden' name='sp_post_notification' value='".esc_attr($nonce)."' />";
+    $out.= "<label class='$titleClass' for='sp_notify_user'>".SP()->primitives->front_text('User to notify').": </label>";
 	$out.= "<input type='text' id='sp_notify_user' class='$controlClass' name='sp_notify_user' />";
 	$out.= "<p class='$titleClass'>".SP()->primitives->front_text("Start typing a member's name above and it will auto-complete")."</p>";
 	$out.= "<label class='$titleClass' for='sp_notify_user'>".SP()->primitives->front_text('Message').": </label>";
@@ -587,8 +605,17 @@ function sp_search_user() {
 }
 
 function sp_order_topic_pins() {
+    # Basic validation
 	$forumid = SP()->filters->integer($_GET['forumid']);
-	if (!SP()->auths->get('pin_topics', $forumid)) die();
+    $forumid = absint($forumid);
+    if ($forumid === 0) {
+        return;
+    }
+
+    # Check permissions
+	if (!SP()->auths->get('pin_topics', $forumid)) {
+        die();
+    }
 
 	$defs = array('tagClass'		=> 'spForumToolsPopup',
 				  'formClass'		=> '',
@@ -619,11 +646,14 @@ function sp_order_topic_pins() {
 
     if (empty($topics) || empty($forumid)) die();
 
+    $nonce = wp_create_nonce('sp_order_topic_pins_' . $forumid);
+
 	$out = "<div id='spMainContainer' class='spForumToolsPopup'>";
 	$out.= "<div class='spForumToolsHeader'>";
 	$out.= "<div class='spForumToolsHeaderTitle'>".SP()->primitives->front_text('Please note: The HIGHER numbered topics will appear at the top of the list')."</div>";
 	$out.= "</div>";
 	$out.= "<form class='$formClass' action='".SP()->spPermalinks->build_url($thisforum->forum_slug, '', 1, 0)."' method='post' name='ordertopicpinsform'>";
+    $out.= "<input type='hidden' name='sp_order_topic_pins' value='".esc_attr($nonce)."' />";
 	$out.= "<input type='hidden' name='orderpinsforumid' value='".$forumid."' />";
 	$out.= "<table class='$tableClass'>";
 	foreach ($topics as $topic) {

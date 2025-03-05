@@ -43,9 +43,15 @@ if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access de
 function sp_save_edited_post() {
 	# post id of edited post
 	$newpost           = array();
-	$newpost['postid'] = SP()->filters->integer($_POST['pid']);
+	$newpost['postid'] = absint($_POST['pid']);
 
-	# no post editng if guest, in post edit mode or lockdwon
+    # Validate nonce
+    if (!wp_verify_nonce($_POST['sp_edit_post'], 'sp_edit_post_' . $newpost['postid'])) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to update post'));
+        return;
+    }
+
+    # no post editng if guest, in post edit mode or lockdwon
 	if (SP()->rewrites->pageData['displaymode'] == 'edit' && SP()->rewrites->pageData['postedit'] == $newpost['postid']) return;
 	if (SP()->core->forumData['lockdown']) return;
 
@@ -173,6 +179,12 @@ function sp_save_edited_post() {
 function sp_save_edited_topic() {
 	$topicid   = SP()->filters->integer($_POST['tid']);
 	$topicname = SP()->saveFilters->title($_POST['topicname'], SPTOPICS, 'topic_name');
+
+    # Validate nonce
+    if (!wp_verify_nonce($_POST['sp_edit_title'], 'sp_edit_title_' . $topicid)) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to update title'));
+        return;
+    }
 
     # Verify topic name
 	if (empty($topicname)) {
@@ -544,13 +556,28 @@ function sp_move_post_notice($m, $a) {
 # Reassign post to different user
 # ------------------------------------------------------------------
 function sp_reassign_post() {
-	if (!SP()->auths->get('reassign_posts', SP()->rewrites->pageData['forumid'])) return;
+    # Check auth
+	if (!SP()->auths->get('reassign_posts', SP()->rewrites->pageData['forumid'])) {
+        return;
+    }
+
 
 	$postid    = SP()->filters->integer($_POST['postid']);
 	$olduserid = SP()->filters->integer($_POST['olduserid']);
 	$newuserid = SP()->filters->integer($_POST['newuserid']);
 
-	# transfer the post
+    # Check that inputs are ok based on previous filters
+    if ($postid === '' || $newuserid === '' || $olduserid === '') {
+        return;
+    }
+
+    # Validate nonce
+    if (!wp_verify_nonce($_POST['sp_reassign_post'], 'sp_reassign_post_' . $postid)) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to reassign post'));
+        return;
+    }
+
+    # transfer the post
 	$sql = 'UPDATE '.SPPOSTS." SET
 			user_id=$newuserid
 			WHERE post_id=$postid";
@@ -782,7 +809,13 @@ function sp_promote_pinned_topic() {
 
 	if (!SP()->auths->get('pin_topics', $forumid)) return;
 
-	if (!empty($_POST['topicid'])) {
+    # Validate nonce
+    if (!wp_verify_nonce($_POST['sp_order_topic_pins'], 'sp_order_topic_pins_' . $forumid)) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to reorder pinned topics'));
+        return;
+    }
+
+    if (!empty($_POST['topicid'])) {
 		for ($x = 0; $x < count($_POST['topicid']); $x++) {
 			if (empty($_POST['porder'][$x]) || $_POST['porder'][$x] == 0) {
 				$o = 1;
@@ -831,13 +864,28 @@ function sp_pin_post_toggle($postid, $forumid = '') {
 #	$forumid		added for when pageData is not available (5.3)
 # ------------------------------------------------------------------
 function sp_approve_post($moderation, $postid = 0, $topicid = 0, $show = true, $forumid = 0) {
-	if ($postid == 0 && $topicid == 0) return;
+    # Basic validation
+	if ($postid == 0 && $topicid == 0) {
+        return;
+    }
+
 	if (!isset(SP()->rewrites->pageData['forumid']) && $forumid == 0) return;
 	$forumid = (isset(SP()->rewrites->pageData['forumid'])) ? SP()->rewrites->pageData['forumid'] : $forumid;
 
-	if (!SP()->auths->get('moderate_posts', $forumid)) return;
+    # Validate auth
+	if (!SP()->auths->get('moderate_posts', $forumid)) {
+        return;
+    }
 
-	$success        = true;
+    # Validate nonce
+    if (!wp_verify_nonce($_POST['sp_approve_post'], 'sp_approve_post_' . $postid)) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to approve post'));
+        return;
+    }
+
+
+
+    $success        = true;
 	$approved_posts = array();
 	if ($postid != 0) {
 		if (SP()->DB->execute('UPDATE '.SPPOSTS." SET
@@ -893,8 +941,21 @@ function sp_approve_post($moderation, $postid = 0, $topicid = 0, $show = true, $
 #	$show			true if no return message is required
 # ------------------------------------------------------------------
 function sp_unapprove_post($postid = 0, $show = true) {
-	if ($postid == 0) return;
-	if (!SP()->auths->get('moderate_posts', SP()->rewrites->pageData['forumid'])) return;
+    # Basic validation
+	if ($postid == 0) {
+        return;
+    }
+
+    # Validate permissions
+	if (!SP()->auths->get('moderate_posts', SP()->rewrites->pageData['forumid'])) {
+        return;
+    }
+
+    # Validate nonce
+    if (!wp_verify_nonce($_POST['sp_unapprove_post'], 'sp_unapprove_post_' . $postid)) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to unapprove post'));
+        return;
+    }
 
 	$success = SP()->DB->execute('UPDATE '.SPPOSTS." SET post_status=1 WHERE post_id=$postid");
 
@@ -1009,7 +1070,14 @@ function sp_remove_from_waiting($moderation, $topicid, $postid = 0) {
 # Removes the admin queue unless a post is awaiting approval
 # ------------------------------------------------------------------
 function sp_remove_waiting_queue() {
-	$rows = SP()->DB->select('SELECT topic_id FROM '.SPWAITING, 'col');
+
+    # Validate nonce
+    if (!wp_verify_nonce($_POST['sp_empty_admin_postbag'], 'sp_empty_admin_postbag')) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to empty admin postbag'));
+        return;
+    }
+
+    $rows = SP()->DB->select('SELECT topic_id FROM '.SPWAITING, 'col');
 	if ($rows) {
 		$queued = array();
 		foreach ($rows as $row) {
@@ -1159,12 +1227,33 @@ function sp_transient_cleanup() {
 }
 
 function sp_post_notification($user, $message, $postid) {
-	if (!SP()->user->thisUser->admin && !SP()->user->thisUser->moderator) return;
+    # Check id
+    $postid = absint($postid);
+    if ($postid === 0) {
+        return;
+    }
 
+    # Validate nonce
+    if (!wp_verify_nonce($_POST['sp_post_notification'], 'sp_post_notification_' . $postid)) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to send notification'));
+        return;
+    }
+
+    # Check if admin or moderator
+	if (!SP()->user->thisUser->admin && !SP()->user->thisUser->moderator) {
+        return;
+    }
+
+    # Check if user exists
 	$userid = SP()->DB->table(SPMEMBERS, "display_name='$user'", 'user_id');
-	if (empty($userid)) return;
+	if (empty($userid)) {
+        return;
+    }
 
-	$topic_id = SP()->DB->table(SPPOSTS, "post_id=$postid", 'topic_id');
+	$topic_id = SP()->DB->table(SPPOSTS, "post_id=".absint($postid), 'topic_id');
+    if (empty($topic_id)) {
+        return;
+    }
 
 	$nData                = array();
 	$nData['user_id']     = $userid;
