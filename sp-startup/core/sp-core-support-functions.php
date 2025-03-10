@@ -464,7 +464,7 @@ function sp_setup_forum_data() {
  * @return string
  */
 function sp_create_nonce($action) {
-	return '<input type="hidden" name="'.$action.'" value="'.wp_create_nonce($action).'" />'."\n";
+	return '<input type="hidden" name="'.esc_attr($action).'" value="'.esc_attr(wp_create_nonce($action)).'" />'."\n";
 }
 
 function sp_get_admins() {
