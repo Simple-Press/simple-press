@@ -50,8 +50,8 @@ function spa_options_newposts_form() {
 	$sfoptions = spa_get_newposts_data();
     $ajaxURL = wp_nonce_url(SPAJAXURL.'options-loader&amp;saveform=newposts', 'options-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfnewpostsform" name="sfnewposts">
-	<?php echo sp_create_nonce('forum-adminform_newposts'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfnewpostsform" name="sfnewposts">
+    <input type="hidden" name="forum-adminform_newposts" value="<?php esc_attr(wp_create_nonce($action)); ?>" />
 <?php
 	spa_paint_options_init();
 
@@ -78,25 +78,25 @@ function spa_options_newposts_form() {
     		spa_paint_open_fieldset(__('Post Flagging', 'sp-polls'), true, 'flag-display');         	
 ?>
             <div class="sf-form-row">
-                <label><?php echo SP()->primitives->admin_text('Flag Preview') ?></label>
-                <span id="sf-flag-target" class="sf-after-label sf-badge"><?php echo $sfoptions['flagstext'] ?></span>
+                <label><?php echo esc_html(SP()->primitives->admin_text('Flag Preview')); ?></label>
+                <span id="sf-flag-target" class="sf-after-label sf-badge"><?php echo esc_html($sfoptions['flagstext']); ?></span>
             </div>
             <?php spa_paint_input(SP()->primitives->admin_text('Flag Text'), 'flagstext', $sfoptions['flagstext'], false, false, '', SP()->primitives->admin_text('Text to use in flags')) ?>
             <div class="sf-form-row sf-half sf-wrap-farbtastic">
                 <div class="sf-input-group sf-input-icon">
-                    <label for="flag-color"><?php echo SP()->primitives->admin_text('Text color') ?></label>
-                    <input id="flag-color" type="text" value="#<?php echo $sfoptions['flagscolor']; ?>" name="flagscolor" />
+                    <label for="flag-color"><?php echo esc_html(SP()->primitives->admin_text('Text color')); ?></label>
+                    <input id="flag-color" type="text" value="#<?php echo esc_attr($sfoptions['flagscolor']); ?>" name="flagscolor" />
                 </div>
                 <div class="sf-farbtastic"><div id="color-text"></div></div>
-                <span class="sf-sublabel sf-sublabel-small"><?php echo SP()->primitives->admin_text('New Post Flag text color') ?></span>
+                <span class="sf-sublabel sf-sublabel-small"><?php echo esc_html(SP()->primitives->admin_text('New Post Flag text color')); ?></span>
             </div>
             <div class="sf-form-row sf-half sf-wrap-farbtastic">
                 <div class="sf-input-group sf-input-icon">
-                    <label for="flag-background"><?php echo SP()->primitives->admin_text('Background color') ?></label>
-                    <input id="flag-background" type="text" value="#<?php echo $sfoptions['flagsbground']; ?>" name="flagsbground" />
+                    <label for="flag-background"><?php echo esc_html(SP()->primitives->admin_text('Background color')); ?></label>
+                    <input id="flag-background" type="text" value="#<?php echo esc_attr($sfoptions['flagsbground']); ?>" name="flagsbground" />
                 </div>
                 <div class="sf-farbtastic"><div id="color-background"></div></div>
-                <span class="sf-sublabel sf-sublabel-small"><?php echo SP()->primitives->admin_text('New Post Flag background color') ?></span>
+                <span class="sf-sublabel sf-sublabel-small"><?php echo esc_html(SP()->primitives->admin_text('New Post Flag background color')); ?></span>
             </div>  
 <?php
                 spa_paint_checkbox(SP()->primitives->admin_text('Display new post flags'), 'flagsuse', $sfoptions['flagsuse']);
