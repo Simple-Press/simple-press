@@ -6,7 +6,9 @@ $LastChangedDate: 2017-11-12 17:27:02 -0600 (Sun, 12 Nov 2017) $
 $Rev: 15583 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 class spcMembersList {
 	# Status: 'data', 'no access', 'no data'

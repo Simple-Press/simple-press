@@ -5,7 +5,9 @@
  * $LastChangedDate: 2018-11-02 16:17:56 -0500 (Fri, 02 Nov 2018) $
  * $Rev: 15797 $
  */
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 /**
  * This function grabs the display name for just logged in user and stores in cookie.

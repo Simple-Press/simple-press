@@ -6,7 +6,9 @@ $LastChangedDate: 2018-11-02 12:29:50 -0500 (Fri, 02 Nov 2018) $
 $Rev: 15792 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 # Saves the selected theme as the current active theme
 function spa_save_theme_data() {

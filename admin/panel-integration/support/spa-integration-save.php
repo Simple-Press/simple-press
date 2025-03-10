@@ -6,7 +6,9 @@ $LastChangedDate: 2018-10-15 21:45:40 -0500 (Mon, 15 Oct 2018) $
 $Rev: 15753 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function spa_save_integration_page_data() {
     check_admin_referer('forum-adminform_integration', 'forum-adminform_integration');

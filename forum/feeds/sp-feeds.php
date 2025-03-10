@@ -5,7 +5,9 @@ Forum RSS Feeds
 $LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
 $Rev: 15187 $
 */
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 # check installed version is correct
 if (sp_get_system_status() != 'ok') {

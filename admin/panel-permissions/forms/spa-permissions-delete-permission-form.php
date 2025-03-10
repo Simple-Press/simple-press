@@ -6,7 +6,9 @@ $LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
 $Rev: 15601 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 # function to display the delete permission set form.  It is hidden until the delete permission set link is clicked
 function spa_permissions_delete_permission_form($role_id) {

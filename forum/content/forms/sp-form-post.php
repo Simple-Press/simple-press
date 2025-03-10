@@ -6,7 +6,9 @@ $LastChangedDate: 2017-04-10 11:07:19 -0500 (Mon, 10 Apr 2017) $
 $Rev: 15324 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function sp_render_add_post_form($args) {
 	global $tab;

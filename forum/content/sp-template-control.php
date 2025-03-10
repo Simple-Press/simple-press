@@ -6,7 +6,9 @@ $LastChangedDate: 2017-08-21 04:25:50 -0500 (Mon, 21 Aug 2017) $
 $Rev: 15517 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 # --------------------------------------------------------------------------------------
 #

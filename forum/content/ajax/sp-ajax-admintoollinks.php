@@ -6,7 +6,9 @@ $LastChangedDate: 2018-10-17 15:14:27 -0500 (Wed, 17 Oct 2018) $
 $Rev: 15755 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 sp_forum_ajax_support();
 

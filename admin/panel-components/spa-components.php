@@ -6,7 +6,9 @@ $LastChangedDate: 2018-11-02 13:31:02 -0500 (Fri, 02 Nov 2018) $
 $Rev: 15796 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 # Check Whether User Can Manage Components
 if (!SP()->auths->current_user_can('SPF Manage Components')) die();

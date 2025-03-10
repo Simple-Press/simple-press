@@ -6,7 +6,9 @@ $LastChangedDate: 2017-08-05 17:36:04 -0500 (Sat, 05 Aug 2017) $
 $Rev: 15488 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function spa_get_login_data() {
 	$sfcomps = array();

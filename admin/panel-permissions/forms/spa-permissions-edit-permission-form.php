@@ -6,7 +6,9 @@ $LastChangedDate: 2018-08-05 11:33:29 -0500 (Sun, 05 Aug 2018) $
 $Rev: 15685 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 # function to display the edit permission set form.  It is hidden until the edit permission set link is clicked
 function spa_permissions_edit_permission_form($role_id) {

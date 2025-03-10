@@ -6,7 +6,9 @@
  *  $LastChangedDate: 2022-09-21 16:40:00 -0600 (Wed, 21 Sept 2022) $
  *  $Rev: 15877 $
  */
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 /**
  * Handles deactivating the_content filter when beaver builder is active.

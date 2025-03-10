@@ -6,7 +6,9 @@ $LastChangedDate: 2013-08-05 21:11:02 +0100 (Mon, 05 Aug 2013) $
 $Rev: 10469 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function spa_themes_tablet_form() {
 ?>

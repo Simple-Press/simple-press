@@ -6,7 +6,9 @@ $LastChangedDate: 2018-11-02 11:09:55 -0500 (Fri, 02 Nov 2018) $
 $Rev: 15787 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function spa_save_forums_create_group() {
 	check_admin_referer('forum-adminform_groupnew', 'forum-adminform_groupnew');

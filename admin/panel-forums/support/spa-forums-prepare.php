@@ -6,7 +6,9 @@ $LastChangedDate: 2017-04-02 14:20:25 -0500 (Sun, 02 Apr 2017) $
 $Rev: 15314 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function spa_paint_custom_icons() {
 	$out = '';

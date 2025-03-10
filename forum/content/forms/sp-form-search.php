@@ -6,7 +6,9 @@ $LastChangedDate: 2017-04-24 05:56:36 -0500 (Mon, 24 Apr 2017) $
 $Rev: 15372 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function sp_render_inline_search_form($args) {
 	extract($args, EXTR_SKIP);

@@ -6,7 +6,9 @@ $LastChangedDate: 2018-11-02 11:09:55 -0500 (Fri, 02 Nov 2018) $
 $Rev: 15787 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function spa_save_admins_your_options_data() {
     check_admin_referer('my-admin_options', 'my-admin_options');

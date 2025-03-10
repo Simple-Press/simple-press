@@ -6,7 +6,9 @@ $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
 $Rev: 15817 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function spa_themes_editor_form() {
 	# get current theme

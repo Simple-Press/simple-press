@@ -6,7 +6,9 @@ $LastChangedDate: 2015-08-04 11:06:48 +0100 (Tue, 04 Aug 2015) $
 $Rev: 13244 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 spa_admin_ajax_support();
 

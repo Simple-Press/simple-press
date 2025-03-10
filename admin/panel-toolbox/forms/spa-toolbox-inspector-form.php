@@ -6,7 +6,9 @@ $LastChangedDate: 2018-01-01 15:59:31 -0600 (Mon, 01 Jan 2018) $
 $Rev: 15630 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function spa_toolbox_inspector_form() {
 ?>

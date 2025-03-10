@@ -6,7 +6,9 @@ $LastChangedDate: 2017-06-04 13:42:16 -0500 (Sun, 04 Jun 2017) $
 $Rev: 15408 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function sp_render_inline_login_form($a) {
 	extract($a, EXTR_SKIP);  // See function sp_LoginForm() in sp-common-view-functions.php for a list of variables that this will produce.

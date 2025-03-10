@@ -6,7 +6,9 @@ $LastChangedDate: 2016-06-25 11:55:17 +0100 (Sat, 25 Jun 2016) $
 $Rev: 14322 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function spa_options_newposts_form() {
 ?>

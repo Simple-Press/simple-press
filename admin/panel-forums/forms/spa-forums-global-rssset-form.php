@@ -6,7 +6,9 @@ $LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
 $Rev: 15601 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 # function to display the add global permission set form. It is hidden until user clicks the add global permission set link
 function spa_forums_global_rssset_form($id) {

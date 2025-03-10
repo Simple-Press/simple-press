@@ -6,7 +6,9 @@ $LastChangedDate: 2011-09-09 20:28:24 +0100 (Fri, 09 Sep 2011) $
 $Rev: 7034 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 # function to display the merge forums form.
 function spa_forums_merge_form() {

@@ -6,7 +6,9 @@ $LastChangedDate: 2018-11-02 12:10:58 -0500 (Fri, 02 Nov 2018) $
 $Rev: 15789 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 # function to create a new permission set role
 function spa_save_permissions_new_role() {

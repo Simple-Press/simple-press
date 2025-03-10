@@ -6,7 +6,9 @@ $LastChangedDate: 2018-12-03 11:05:54 -0600 (Mon, 03 Dec 2018) $
 $Rev: 15840 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function spa_save_global_data()
 {

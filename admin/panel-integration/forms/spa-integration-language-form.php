@@ -6,7 +6,9 @@ $LastChangedDate: 2014-06-21 04:47:00 +0100 (Sat, 21 Jun 2014) $
 $Rev: 11582 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function spa_integration_language_form() {
 	require_once SP_PLUGIN_DIR.'/admin/library/sp-languages.php';

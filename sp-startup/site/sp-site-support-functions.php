@@ -6,7 +6,9 @@
  *  $LastChangedDate: 2018-08-18 04:27:34 -0500 (Sat, 18 Aug 2018) $
  *  $Rev: 15708 $
  */
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 /**
  * This function redirects Forum RSS Feed requests

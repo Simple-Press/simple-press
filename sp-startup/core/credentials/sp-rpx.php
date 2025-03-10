@@ -6,7 +6,9 @@
  * $Rev: 15797 $
  */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 function sp_rpx_loginform($id, $width = '373px', $fieldset = false) {
 	$out = '';

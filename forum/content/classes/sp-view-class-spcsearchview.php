@@ -6,7 +6,9 @@ $LastChangedDate: 2017-11-14 20:09:27 -0600 (Tue, 14 Nov 2017) $
 $Rev: 15585 $
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 class spcSearchView {
 	# Search View DB query result set

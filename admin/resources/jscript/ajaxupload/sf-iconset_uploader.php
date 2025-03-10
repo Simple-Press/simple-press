@@ -4,7 +4,9 @@ Simple:Press
 Iconset Uploader Script
 */
 
-if (preg_match('#'.basename(__FILE__).'#', $_SERVER['PHP_SELF'])) die('Access denied - you cannot directly call this file');
+if ( ! defined( 'ABSPATH' ) ) {
+	die('Access denied - you cannot directly call this file');
+}
 
 // ========= THIS MIGHT NEED TO BE TURNED OFF UNTIL ALL PLUGIN ADMIN FORMS ARE CHANGED TO USE THE NEW NONCE CODE.  IT'S TURNED ON NOW BUT IF ISSUES ARISE PLEASE CHECK TO MAKE SURE FORMS ARE USING THE NEW NONCE CODE.
 if (!sp_nonce('uploader')) die();
