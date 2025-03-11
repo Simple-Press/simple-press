@@ -660,8 +660,8 @@ $Rev:2099 $
 }
 #sf-root-wrap .sf-icon.sf-requires-enable {
     background-color: #408EAD;
-    mask-image: url("../icons/Requires Enable.svg");
-    -webkit-mask-image: url("../icons/Requires Enable.svg");
+    mask-image: url("../icons/Requires-Enable.svg");
+    -webkit-mask-image: url("../icons/Requires-Enable.svg");
 }
 #sf-root-wrap .sf-icon.sf-warning {
     background-color: #C3282C;
@@ -670,8 +670,8 @@ $Rev:2099 $
 }
 #sf-root-wrap .sf-icon.sf-disable-forum {
     background-color: #408EAD;
-    mask-image: url("../icons/Disable Forum.svg");
-    -webkit-mask-image: url("../icons/Disable Forum.svg");
+    mask-image: url("../icons/Disable-Forum.svg");
+    -webkit-mask-image: url("../icons/Disable-Forum.svg");
 }
 #sf-root-wrap .sf-icon.sf-check {
     background-color: #32AA63;
@@ -717,16 +717,16 @@ $Rev:2099 $
     -webkit-mask-image: url("../icons/Components.svg");
 }
 #sf-root-wrap .sf-icon.sf-user-groups {
-    mask-image: url("../icons/User Groups.svg");
-    -webkit-mask-image: url("../icons/User Groups.svg");
+    mask-image: url("../icons/User-Groups.svg");
+    -webkit-mask-image: url("../icons/User-Groups.svg");
 }
 #sf-root-wrap .sf-icon.sf-permissions {
     mask-image: url("../icons/Permissions.svg");
     -webkit-mask-image: url("../icons/Permissions.svg");
 }
 #sf-root-wrap .sf-icon.sf-ignore-guest {
-    mask-image: url("../icons/Ignore Guest.svg");
-    -webkit-mask-image: url("../icons/Ignore Guest.svg");
+    mask-image: url("../icons/Ignore-Guest.svg");
+    -webkit-mask-image: url("../icons/Ignore-Guest.svg");
 }
 #sf-root-wrap .sf-icon.sf-integration {
     mask-image: url("../icons/Integration.svg");
