@@ -64,18 +64,19 @@ class spcPrimitives {
 		return (!empty(SP()->rewrites->pageData['page']));
 	}
 
-	public function redirect($url) {
-		?>
+    public function redirect($url) {
+        ?>
         <script>
-			(function(spj, $, undefined) {
-				window.location = "<?php echo $url; ?>";
-			}(window.spj = window.spj || {}, jQuery));
-		</script>
-		<?php
-		exit();
-	}
+            (function(spj, $, undefined) {
+                window.location.href = <?php echo json_encode(esc_url_raw($url), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+            }(window.spj = window.spj || {}, jQuery));
+        </script>
+        <?php
+        exit();
+    }
 
-	public function check_url($url) {
+
+    public function check_url($url) {
 		if ($url == 'http://' || $url == 'https://') $url = '';
 
 		return $url;
@@ -155,59 +156,57 @@ class spcPrimitives {
 		return $ret;
 	}
 
-	function copy_dir($src, $dst) { 
-		// open the source directory 
-		$dir = opendir($src); 
-
-		// Make the destination directory if not exist 
-		@mkdir($dst); 
-
-		// Loop through the files in source directory 
-		while( $file = readdir($dir) ) { 
-			if (( $file != '.' ) && ( $file != '..' )) { 
-				if ( is_dir($src . '/' . $file) ) { 
-					// Recursively calling custom copy function 
-					// for sub directory 
-					$this->copy_dir($src . '/' . $file, $dst . '/' . $file); 
-				} else { 
-					copy($src . '/' . $file, $dst . '/' . $file); 
-				} 
-			} 
-		}
-		closedir($dir); 
-	} 
+	function copy_dir($src, $dst) {
+        copy_dir($src, $dst);
+	}
 
 
 	public function remove_dir($dir) {
-		if (is_dir($dir)) {
-			foreach (glob($dir.'/*') as $file) {
-				if (is_dir($file)) {
-					$this->remove_dir($file);
-				} else {
-					@unlink($file);
-				}
-			}
-			@rmdir($dir);
-		}
+        delete($dir, true);
 	}
 
-	public function get_image_size($file, $replace = false) {
-		$size = array();
-		# if allow_url_fopen is off then need to ignore
-		if (ini_get('allow_url_fopen') == true) {
-			set_error_handler(array($this, 'suppress_error'));
-			if ($replace) {
-				$size = getimagesize(str_replace(' ', '%20', $file));
-			} else {
-				$size = getimagesize($file);
-			}
-			restore_error_handler();
-		}
+    public function get_image_size($file, $replace = false) {
+        $size = array();
 
-		return $size;
-	}
+        // Ensure that file modifications are allowed
+        if (!wp_is_file_mod_allowed('image_edit')) {
+            return $size;
+        }
 
-	public function suppress_error($errno, $errstr) {
+        // Validate and sanitize URL or local path
+        if (filter_var($file, FILTER_VALIDATE_URL)) {
+            $file = esc_url_raw($file);
+        } else {
+            $file = sanitize_text_field($file);
+        }
+
+        // Check if allow_url_fopen is enabled or handle remote files with wp_remote_get()
+        if (ini_get('allow_url_fopen')) {
+            if ($replace) {
+                $file = str_replace(' ', '%20', $file);
+            }
+
+            // Handle remote images separately
+            if (filter_var($file, FILTER_VALIDATE_URL)) {
+                $response = wp_remote_get($file, array('timeout' => 5));
+
+                if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) == 200) {
+                    $image_data = wp_remote_retrieve_body($response);
+                    if ($image_data) {
+                        $size = @getimagesizefromstring($image_data);
+                    }
+                }
+            } else {
+                // Suppressing errors directly without using set_error_handler
+                $size = @getimagesize($file);
+            }
+        }
+
+        return $size;
+    }
+
+
+    public function suppress_error($errno, $errstr) {
 		# do nothing
 		return;
 	}
