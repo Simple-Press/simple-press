@@ -28,7 +28,7 @@ function sp_list_members() {
     $usergroup_filter = isset( $_GET['usergroup'] ) ? intval( $_GET['usergroup'] ) : 0;
 
     //Build navigation links for user groups.
-    $current_url = remove_query_arg( 'usergroup' );
+    $current_url = remove_query_arg( array( 'usergroup', 'paged' ) );
     $ug_links    = array();
 
     //"All Members" link.
