@@ -61,14 +61,14 @@ function sp_cron_scheduler() {
 function sp_cron_schedules($schedules) {
 	$schedules['sp_stats_interval'] = array(
 		'interval'	 => SP()->options->get('sp_stats_interval'),
-		'display'	 => __('SP Stats Interval'));
+		'display'	 => SP()->primitives->admin_text_noesc('SP Stats Interval'));
 	$schedules['sp_news_interval'] = array(
 		'interval'	 => (60 * 60 * 24 * 7),
-		'display'	 => __('SP News Check Interval')); # weekly
+		'display'	 => SP()->primitives->admin_text_noesc('SP News Check Interval')); # weekly
 		
 	$schedules['sph_check_addons_status_interval'] = array(
 		'interval'	 => (60 * 60 * 24),
-		'display'	 => __('SP Addons Interval')); # daily
+		'display'	 => SP()->primitives->admin_text_noesc('SP Addons Interval')); # daily
 		
 	return $schedules;
 }

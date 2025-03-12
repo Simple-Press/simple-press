@@ -367,5 +367,5 @@ function sp_FooterEnd() {
 function __sp($text) {
 	$domain = (isset(SP()->core->forumData['themedomain'])) ? SP()->core->forumData['themedomain'] : '';
 
-	return __($text, $domain);
+	return SP()->primitives->admin_text($text, $domain);
 }
