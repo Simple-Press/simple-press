@@ -72,10 +72,10 @@
 
     //activate plugin license
     function spl_license_activate(){
-
         $(document).on("click", 'input[name="SP_license_activate"]', function(e) {
             e.preventDefault();
             var s = $(this).parents("form").find('input[name="sp_addon_license_key"]').val(),
+                nonce = $(this).parents("form").find('input[name="sp_nonce"]').val(),
                 n = $(this).parents("form").find('input[name="sp_item_name"]').val(),
                 a = $(this).parents("form").find('input[name="sp_item"]').val(),
 				em = $('.sp-licensing-instructions-tab').find('input[name="ajax_error_message"]').val(),
@@ -88,6 +88,7 @@
                     action: "license-check",
                     licence_key: s,
                     item_name: n,
+                    nonce: nonce,
                     sp_item: a,
                     sp_item_id: i,
                     sp_action: "activate_license"

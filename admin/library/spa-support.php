@@ -282,8 +282,8 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	
 	
 	if( $show_label ) {
-		echo "<div class='sf-form-row ". $css_classes ."'>\n";
-		echo "<label class='sp-label-40'>$label</label>\n";
+		echo "<div class='sf-form-row ". esc_attr($css_classes) ."'>\n";
+		echo "<label class='sp-label-40'>". esc_html($label) ."</label>\n";
 	}
 	
 	$icon_picker_id = 'icon_picker_' . rand( 111111, 999999 );
@@ -293,16 +293,16 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 	
 	echo '<div class="sf-icon-picker-row sf-select-wrap">';
 	
-	printf( '<input type="hidden" name="%s" value="%s" class="icon_value" />', $name, esc_attr( json_encode( $selected_icon ) ) );
+	printf( '<input type="hidden" name="%s" value="%s" class="icon_value" />', esc_attr($name), esc_attr( json_encode( $selected_icon ) ) );
 	
-	printf( '<select class="wp-core-ui  sp-input-60" tabindex="%s" id="%s">', $tab, $icon_picker_id );
+	printf( '<select class="wp-core-ui  sp-input-60" tabindex="%s" id="%s">', esc_attr($tab), esc_attr($icon_picker_id) );
 	
 	$tab++;
 	
 	foreach( $iconsets as $iconset_name => $iconset ) {
-		echo '<optgroup label="'.$iconset_name.'">';
+		echo '<optgroup label="'.esc_attr($iconset_name).'">';
 		
-		printf( '<option value=""></option>', $iconset_name );
+		printf( '<option value=""></option>', esc_html($iconset_name) );
 		
 		foreach ( $iconset['icons'] as $icon_id => $icon ) {
 			
@@ -310,7 +310,7 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 			
 			$_selected = $selected_icon['icon'] && $selected_icon['icon'] === $icon_id ? ' selected="selected"' : '';
 			
-			printf( '<option value="%s"%s>%s</option>', $icon, $_selected, $icon_id );
+			printf( '<option value="%s"%s>%s</option>', esc_attr($icon), esc_attr($_selected), esc_html($icon_id) );
 			
 		}
 		
@@ -326,17 +326,17 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 		echo '</div>';
 	}
 	
-	$color_field = sprintf( '<input type="text" class="wp-core-ui font-style-color" value="%s" id="%s" />', isset($selected_icon['color'])? $selected_icon['color'] : '', $icon_color_id );
+	$color_field = sprintf( '<input type="text" class="wp-core-ui font-style-color" value="%s" id="%s" />', isset($selected_icon['color'])? esc_attr($selected_icon['color']) : '', esc_attr($icon_color_id) );
 	
-	$size_input_field = sprintf( '<input type="number" placeholder="Size" class="wp-core-ui font-style-size" value="%s" id="%s" />', isset($selected_icon['size']) ? $selected_icon['size'] : '', $icon_size_id );
+	$size_input_field = sprintf( '<input type="number" placeholder="Size" class="wp-core-ui font-style-size" value="%s" id="%s" />', isset($selected_icon['size']) ? esc_attr($selected_icon['size']) : '', esc_attr($icon_size_id) );
 	
-	$size_type_dropdown = spa_iconset_size_type_field( isset($selected_icon['size_type']) ? $selected_icon['size_type'] : '' );
+	$size_type_dropdown = spa_iconset_size_type_field( isset($selected_icon['size_type']) ? esc_attr($selected_icon['size_type']) : '' );
 	
 	
 	
 	$font_style_fields = '<div class="font-style-container">\
-								<div class="font-color-container">'.$color_field.'</div>\
-								<div class="font-size-container">'.$size_input_field.$size_type_dropdown.'</div>\
+								<div class="font-color-container">'.wp_kses_post($color_field).'</div>\
+								<div class="font-size-container">'.wp_kses_post($size_input_field).wp_kses_post($size_type_dropdown).'</div>\
 								<div class="clear wp-clearfix"></div>\
 						 </div>';
 	
@@ -348,8 +348,8 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 
 	jQuery(document).ready(function($) {
 		
-		var _icon_ins = $('#<?php echo $icon_picker_id; ?>').fontIconPicker({
-		        theme: 'fip-bootstrap',
+		var _icon_ins = $('#<?php echo esc_js($icon_picker_id); ?>').fontIconPicker({
+		        theme: 'fip-bootstrap',
 				iconsPerPage: 30,
 				allCategoryText : 'From All Libraries',
 				iconGenerator: function( icon ) {
@@ -368,23 +368,23 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 					}
 
 				}
-		    }).on( 'change', function( e ) {
-				spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>' );
+		    }).on( 'change', function( e ) {
+				spj.UpdateFontIcon( '<?php echo esc_attr($icon_picker_id); ?>' );
 			});
 	
 		$( '<?php echo $font_style_fields ?>' ).insertBefore( _icon_ins.closest('.sf-icon-picker-row').find('.selector-popup .fip-icons-container') );
 		
 		
 		$( '#<?php echo $icon_picker_id; ?>').closest('.sf-icon-picker-row').find('.font-style-size, .font-style-size_type').on( 'change', function() {
-			spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>' );
+			spj.UpdateFontIcon( '<?php echo esc_attr($icon_picker_id); ?>' );
 		})
 			
 		$('#<?php echo $icon_color_id; ?>').wpColorPicker({
 			change : function(a, b) {
-				spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>' );
+				spj.UpdateFontIcon( '<?php echo esc_attr($icon_picker_id); ?>' );
 			},
 			clear :  function(a, b) {
-				spj.UpdateFontIcon( '<?php echo $icon_picker_id; ?>', true );
+				spj.UpdateFontIcon( '<?php echo esc_attr($icon_picker_id); ?>', true );
 			}
 		});
 		

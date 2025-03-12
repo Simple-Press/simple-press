@@ -140,7 +140,8 @@ function spa_toolbox_calculating_expiration_date($license_info){
  */
  
 function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_days, $license_status, $license_info, $sp_addon_name){
-	
+    $nonce = wp_create_nonce('license-check');
+
 	if($type == 'plugins'){
 		$ajaxURL = wp_nonce_url(SPAJAXURL.'toolbox-loader&amp;saveform=licensing', 'toolbox-loader');
 		$classname = 'plugins_check';
@@ -159,11 +160,12 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 	
 	$button_id 	= $sp_addon_name;
 ?>	
-    <h3><?php echo $sp_item_name; ?></h3>
+    <h3><?php echo esc_html($sp_item_name); ?></h3>
 
-    <form method="post" action="<?php echo $ajaxURL; ?>" class="<?php echo $classname; ?>" name="<?php echo $form_name; ?>">
+    <form method="post" action="<?php echo esc_attr($ajaxURL); ?>" class="<?php echo esc_attr($classname); ?>" name="<?php echo esc_attr($form_name); ?>">
 
         <?php
+        spa_paint_hidden_input('sp_nonce', $nonce);
         spa_paint_hidden_input('sp_item', $sp_item);
         spa_paint_hidden_input('sp_item_name', $sp_item_name);
         spa_paint_hidden_input('sp_item_id', $sp_item_id);

@@ -121,7 +121,7 @@ function spa_paint_rank_images() {
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/';
 	$dlist = @opendir($path);
 	if (!$dlist) {
-		echo '<table><tr><td class="sflabel"><strong>'.SP()->primitives->admin_text('The rank badges folder does not exist').'</strong></td></tr></table>';
+		echo '<table><tr><td class="sflabel"><strong>'.esc_html(SP()->primitives->admin_text('The rank badges folder does not exist')).'</strong></td></tr></table>';
 		return;
 	}
 
@@ -141,8 +141,8 @@ function spa_paint_rank_images() {
 	<table id="sf-rank-badges" class="widefat sf-table-small sf-table-mobile">
 		<thead>
 			<tr>
-				<th><?php SP()->primitives->admin_etext('Filename'); ?></th>
-				<th><?php SP()->primitives->admin_etext('Badge'); ?></th>
+				<th><?php esc_html(SP()->primitives->admin_etext('Filename')); ?></th>
+				<th><?php esc_html(SP()->primitives->admin_etext('Badge')); ?></th>
 				<th><?php //SP()->primitives->admin_etext('Remove'); ?></th>
 			</tr>
 		</thead>
@@ -154,17 +154,17 @@ function spa_paint_rank_images() {
 		$ext = strtolower($path_info['extension']);
 		if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif' || $ext == 'bmp') {
 ?>
-			<tr id='rankbadge<?php echo $row; ?>' class="spMobileTableData sf-display-table-row">
-				<td data-label='<?php SP()->primitives->admin_etext('Filename'); ?>' class="sf-Leftm">
-					<?php echo($file); ?>
+			<tr id='rankbadge<?php echo esc_attr($row); ?>' class="spMobileTableData sf-display-table-row">
+				<td data-label='<?php esc_attr(SP()->primitives->admin_etext('Filename')); ?>' class="sf-Leftm">
+					<?php echo esc_html($file); ?>
 				</td>
-				<td data-label='<?php SP()->primitives->admin_etext('Badge'); ?>' class="sf-Leftm">
+				<td data-label='<?php esc_attr(SP()->primitives->admin_etext('Badge')); ?>' class="sf-Leftm">
 					<img class="sfrankbadge" src="<?php echo(esc_url(SPRANKS.$file)); ?>" alt="" />
 				</td>
 				<td data-label='<?php SP()->primitives->admin_etext('Remove'); ?>' class="sf-Leftm">
 <?php
 					$site = esc_url(wp_nonce_url(SPAJAXURL."components&amp;targetaction=delbadge&amp;file=$file", 'components'));
-					echo '<span class="sf-item-controls"><span class="sf-icon-button sf-small sf-little spDeleteRow" title="'.SP()->primitives->admin_text('Delete Rank Badge').'" data-url="'.$site.'" data-target="rankbadge'.$row.'"><span class="sf-icon sf-delete"></></span></span>';
+					echo '<span class="sf-item-controls"><span class="sf-icon-button sf-small sf-little spDeleteRow" title="'.esc_attr(SP()->primitives->admin_text('Delete Rank Badge')).'" data-url="'.esc_attr($site).'" data-target="rankbadge'.esc_attr($row).'"><span class="sf-icon sf-delete"></></span></span>';
 ?>
 				</td>
 			</tr>
@@ -173,7 +173,7 @@ function spa_paint_rank_images() {
 		}
 	}
 	echo '</table>';
-	echo '<input type="hidden" id="rank-count" name="rank-count" value="'.$row.'" />';
+	echo '<input type="hidden" id="rank-count" name="rank-count" value="'.esc_attr($row).'" />';
 }
 
 function spa_paint_custom_smileys() {
