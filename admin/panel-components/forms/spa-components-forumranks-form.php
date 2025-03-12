@@ -189,7 +189,7 @@ function spa_paint_rankings_table($rankings) {
                 <?php $tab++; ?>
 
                 <td data-label='<?php esc_attr(SP()->primitives->admin_etext('Badge')); ?>' id="new-range-badge" >
-                    <?php spa_select_iconset_icon_picker('rankbadge[]', SP()->primitives->admin_text(('Select Badge'), array('Badges' => $badges), '', false); ?>
+                    <?php spa_select_iconset_icon_picker('rankbadge[]', SP()->primitives->admin_text(('Select Badge'), array('Badges' => $badges), '', false)); ?>
                 </td>
                 <?php $tab++; ?>
 
