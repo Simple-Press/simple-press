@@ -13,7 +13,7 @@
  */
 class spcPrimitives {
 	public function admin_text($text) {
-		return __($text, 'spa');
+		return esc_attr(__($text, 'spa'));
 	}
 
 	public function admin_etext($text) {
