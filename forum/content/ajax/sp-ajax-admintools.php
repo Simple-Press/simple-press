@@ -11,15 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 sp_forum_ajax_support();
 
+if (!sp_nonce('spForumTools')) die();
+
 # get out of here if no action specified
 if (empty($_GET['targetaction'])) die();
-$action = SP()->filters->str($_GET['targetaction']);
+$action = SP()->filters->str(wp_unslash(['targetaction']));
 
 # check the autocomplete task before the nonce check
 if ($action == 'notify-search') sp_search_user();
 
 # now check the nonce
-if (!sp_nonce('spForumTools')) die();
 
 if ($action == 'edit-title') sp_edit_title_popup();
 if ($action == 'move-topic') sp_move_topic_popup();
@@ -61,9 +62,9 @@ function sp_edit_title_popup() {
 	$controlClass	= esc_attr($controlClass);
 	$buttonClass	= esc_attr($buttonClass);
 
-	$topicid = SP()->filters->integer($_GET['topicid']);
-	$forumid = SP()->filters->integer($_GET['forumid']);
-	$userid  = SP()->filters->integer($_GET['userid']);
+	$topicid = absint(wp_unslash($_GET['topicid']));
+	$forumid = absint(wp_unslash($_GET['forumid']));
+	$userid  = absint(wp_unslash($_GET['userid']));
 	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
 
 	if (!(SP()->auths->get('edit_own_topic_titles', $forumid) && $userid == SP()->user->thisUser->ID) && !SP()->auths->get('edit_any_topic_titles', $forumid)) {
@@ -125,8 +126,8 @@ function sp_move_topic_popup() {
 	$controlClass	= esc_attr($controlClass);
 	$buttonClass	= esc_attr($buttonClass);
 
-	$topicid = SP()->filters->integer($_GET['topicid']);
-	$forumid = SP()->filters->integer($_GET['forumid']);
+	$topicid = absint($_GET['topicid']);
+	$forumid = absint($_GET['forumid']);
 	if (!SP()->auths->get('move_topics', $forumid)) die();
 
 	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
@@ -176,9 +177,9 @@ function sp_reassign_post_popup() {
 	$controlClass	= esc_attr($controlClass);
 	$buttonClass	= esc_attr($buttonClass);
 
-	$thispost = SP()->filters->integer($_GET['pid']);
-	$thisuser = SP()->filters->integer($_GET['uid']);
-    $thistopic = SP()->filters->integer($_GET['id']);
+	$thispost = absint($_GET['pid']);
+	$thisuser = absint($_GET['uid']);
+    $thistopic = absint($_GET['id']);
 
     if (empty($thispost) || empty($thistopic)) die();
 
@@ -227,8 +228,8 @@ function sp_show_properties() {
 	$dataClass		= esc_attr($dataClass);
 	$buttonClass	= esc_attr($buttonClass);
 
-    $forumid = SP()->filters->integer($_GET['forum']);
-    $topicid = SP()->filters->integer($_GET['topic']);
+    $forumid = absint($_GET['forum']);
+    $topicid = absint($_GET['topic']);
     if (empty($forumid) || empty($topicid)) die();
 
 	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
@@ -238,10 +239,10 @@ function sp_show_properties() {
 	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$forumid", 'row');
 
 	if (isset($_GET['post'])) {
-		$groupid = SP()->filters->integer($thisforum->group_id);
+		$groupid = absint($thisforum->group_id);
 		$thisgroup = SP()->DB->table(SPGROUPS, "group_id=$groupid", 'row');
 	} else {
-        $groupid = SP()->filters->integer($_GET['group']);
+        $groupid = absint($_GET['group']);
         if (empty($groupid)) die();
 		$thisgroup = SP()->DB->table(SPGROUPS, "group_id=$groupid", 'row');
 	}
@@ -300,7 +301,7 @@ function sp_show_properties() {
 	$out.= "<td colspan='2' class='$dataClass'>".$last."</td></tr>";
 
 	if (isset($_GET['post'])) {
-		$postid = SP()->filters->integer($_GET['post']);
+		$postid = absint($_GET['post']);
 		$post = SP()->DB->table(SPPOSTS, "post_id=$postid");
 
 		$out.= "<tr><td class='$labelClass'>".SP()->primitives->front_text('This Post ID')."</td>";
@@ -339,7 +340,7 @@ function sp_rebuild_topic_form($forumid, $topicid, $forumslug, $topicslug, $clas
 }
 
 function sp_forum_sort_order() {
-	$forumid = SP()->filters->integer($_GET['forumid']);
+	$forumid = absint($_GET['forumid']);
 	if (!SP()->user->thisUser->admin) die();
 
     # make sure we have valid forum
@@ -372,7 +373,7 @@ function sp_forum_sort_order() {
 }
 
 function sp_topic_sort_order() {
-	$topicid = SP()->filters->integer($_GET['topicid']);
+	$topicid = absint($_GET['topicid']);
 	if (!SP()->user->thisUser->admin) die();
 
     # make sure we have valid forum
@@ -435,9 +436,9 @@ function sp_move_post_popup() {
 	$controlClass	= esc_attr($controlClass);
 	$buttonClass	= esc_attr($buttonClass);
 
-	$thispost = SP()->filters->integer($_GET['pid']);
-	$topicid = SP()->filters->integer($_GET['id']);
-	$thispostindex = SP()->filters->integer($_GET['pix']);
+	$thispost = absint($_GET['pid']);
+	$topicid = absint($_GET['id']);
+	$thispostindex = absint($_GET['pix']);
 	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
     if (empty($thispost) || empty($thistopic)) die();
 
@@ -512,7 +513,7 @@ function sp_move_post_popup() {
 
 function sp_notify_user() {
     # Basic validation
-	$thisPost = SP()->filters->integer($_GET['pid']);
+	$thisPost = absint($_GET['pid']);
 
     # Check permissions
 	if (!SP()->user->thisUser->admin && !SP()->user->thisUser->moderator) {
@@ -608,7 +609,7 @@ function sp_search_user() {
 
 function sp_order_topic_pins() {
     # Basic validation
-	$forumid = SP()->filters->integer($_GET['forumid']);
+	$forumid = absint($_GET['forumid']);
     $forumid = absint($forumid);
     if ($forumid === 0) {
         return;
@@ -674,12 +675,12 @@ function sp_order_topic_pins() {
 }
 
 function sp_post_delete() {
-    sp_delete_post(SP()->filters->integer($_GET['killpost']));
+    sp_delete_post(absint($_GET['killpost']));
 
 	if ((int) $_GET['count'] == 1) {
-    	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.SP()->filters->integer($_GET['killpostforum']), 'forum_slug');
-       	$topicslug = SP()->DB->table(SPTOPICS, 'topic_id='.SP()->filters->integer($_GET['killposttopic']), 'topic_slug');
-        $page = SP()->filters->integer($_GET['page']);
+    	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.absint($_GET['killpostforum']), 'forum_slug');
+       	$topicslug = SP()->DB->table(SPTOPICS, 'topic_id='.absint($_GET['killposttopic']), 'topic_slug');
+        $page = absint($_GET['page']);
         if ($page == 1) {
             $returnURL = SP()->spPermalinks->build_url($forumslug, '', 0);
         } else {
@@ -693,16 +694,16 @@ function sp_post_delete() {
 
 function sp_topic_delete() {
 
-    sp_delete_topic(SP()->filters->integer($_GET['killtopic']), SP()->filters->integer($_GET['killtopicforum']), false);
+    sp_delete_topic(absint($_GET['killtopic']), absint($_GET['killtopicforum']), false);
 
     $view = SP()->filters->str($_GET['view']);
     if ($view == 'topic') {
-      	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.SP()->filters->integer($_GET['killtopicforum']), 'forum_slug');
+      	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.absint($_GET['killtopicforum']), 'forum_slug');
         $returnURL = SP()->spPermalinks->build_url($forumslug, '', 0);
         echo $returnURL;
     } else if ((int) $_GET['count'] == 1) {
-      	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.SP()->filters->integer($_GET['killtopicforum']), 'forum_slug');
-        $page = SP()->filters->integer($_GET['page']);
+      	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.absint($_GET['killtopicforum']), 'forum_slug');
+        $page = absint($_GET['page']);
         if ($page == 1) {
             $returnURL = SP()->spPermalinks->build_url($forumslug, '', 0);
         } else {
@@ -716,17 +717,17 @@ function sp_topic_delete() {
 }
 
 function sp_pin_post() {
-     sp_pin_post_toggle(SP()->filters->integer($_GET['post']), SP()->filters->integer($_GET['forum']));
+     sp_pin_post_toggle(absint($_GET['post']), absint($_GET['forum']));
      die();
 }
 
 function sp_pin_topic() {
-     sp_pin_topic_toggle(SP()->filters->integer($_GET['topic']), SP()->filters->integer($_GET['forum']));
+     sp_pin_topic_toggle(absint($_GET['topic']), absint($_GET['forum']));
      die();
 }
 
 function sp_lock_topic() {
-    sp_lock_topic_toggle(SP()->filters->integer($_GET['topic']), SP()->filters->integer($_GET['forum']));
+    sp_lock_topic_toggle(absint($_GET['topic']), absint($_GET['forum']));
     die();
 }
 
