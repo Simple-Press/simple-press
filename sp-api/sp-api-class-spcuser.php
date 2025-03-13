@@ -118,16 +118,31 @@ class spcUser {
 		$this->guest_cookie->email        = '';
 		$this->guest_cookie->display_name = '';
 
-		if (!empty($this->thisUser->guest) && empty($this->thisUser->offmember)) {
-			# so no record of them being a current member
-			$sfguests = SP()->options->get('sfguests');
-			if ($sfguests['storecookie']) {
-				if (isset($_COOKIE['guestname_'.COOKIEHASH])) $this->guest_cookie->name = SP()->displayFilters->name($_COOKIE['guestname_'.COOKIEHASH]);
-				if (isset($_COOKIE['guestemail_'.COOKIEHASH])) $this->guest_cookie->email = SP()->displayFilters->email($_COOKIE['guestemail_'.COOKIEHASH]);
-				$this->guest_cookie->display_name = $this->guest_cookie->name;
-			}
-		}
-	}
+        if (!empty($this->thisUser->guest) && empty($this->thisUser->offmember)) {
+            // No record of them being a current member
+            $sfguests = SP()->options->get('sfguests');
+
+            if (!empty($sfguests['storecookie'])) {
+                $cookiePrefix = 'guest';
+                $cookieHash = COOKIEHASH;
+
+                if (!empty($_COOKIE["{$cookiePrefix}name_{$cookieHash}"])) {
+                    $this->guest_cookie->name = SP()->displayFilters->name(
+                        wp_unslash($_COOKIE["{$cookiePrefix}name_{$cookieHash}"])
+                    );
+                }
+
+                if (!empty($_COOKIE["{$cookiePrefix}email_{$cookieHash}"])) {
+                    $this->guest_cookie->email = SP()->displayFilters->email(
+                        wp_unslash($_COOKIE["{$cookiePrefix}email_{$cookieHash}"])
+                    );
+                }
+
+                $this->guest_cookie->display_name = $this->guest_cookie->name;
+            }
+        }
+
+    }
 
 	/**
 	 * This method creates a user object
@@ -408,7 +423,8 @@ class spcUser {
 		$sfmemberopts = SP()->options->get('sfmemberopts');
 		if (isset($_COOKIE['sforum_'.COOKIEHASH]) && $sfmemberopts['sfcheckformember']) {
 			# Yes it is - a user not logged in.  So grab the user name but sanitize it in case its used for anything other than a display.
-			$username = SP()->displayFilters->name($_COOKIE['sforum_'.COOKIEHASH]);
+			$username = SP()->displayFilters->name(
+                wp_unslash($_COOKIE['sforum_'.COOKIEHASH]));
 			return $username;
 		}
 
@@ -587,14 +603,19 @@ class spcUser {
 		$user_options = serialize($useropts);
 
 		# generate feedkey
-		$feedkey = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
+		$feedkey = wp_generate_uuid4();
 
 		# save initial record
-		$sql = 'INSERT INTO '.SPMEMBERS."
-		(user_id, display_name, admin, moderator, avatar, signature, posts, lastvisit, checktime, newposts, admin_options, user_options, feedkey)
-		VALUES
-		($userid, '$display_name', $admin, $moderator, '$avatar', '$signature', $posts, '$lastvisit', '$checktime', '$newposts', '$admin_options', '$user_options', '$feedkey')";
-		SP()->DB->execute($sql);
+        $sql = "INSERT INTO " . SPMEMBERS . " 
+    (user_id, display_name, admin, moderator, avatar, signature, posts, lastvisit, checktime, newposts, admin_options, user_options, feedkey) 
+    VALUES 
+    (%d, %s, %d, %d, %s, %s, %d, %s, %s, %s, %s, %s, %s)";
+
+        SP()->DB->execute($sql,
+            $userid, $display_name, $admin, $moderator, $avatar, $signature,
+            $posts, $lastvisit, $checktime, $newposts, $admin_options,
+            $user_options, $feedkey
+        );
 
 		if (!$install) {
 			# update stats status and recent member list
@@ -705,23 +726,33 @@ class spcUser {
 		do_action('sph_member_deleted', $userid);
 
 		# remove member from core
-		$option = (isset($_POST['sp_delete_option'])) ? SP()->filters->str($_POST['sp_delete_option']) : $delete_option;
+		$option = (isset($_POST['sp_delete_option'])) ? SP()->filters->str(wp_unslash($_POST['sp_delete_option'])) : $delete_option;
 		switch ($option) {
 			case 'spreassign':
-				$newuser = (isset($_POST['sp_reassign_user'])) ? SP()->filters->integer($_POST['sp_reassign_user']) : $reassign;
+				$newuser = (isset($_POST['sp_reassign_user'])) ? absint(wp_unslash($_POST['sp_reassign_user'])) : $reassign;
 
 				# Set poster ID to the new user id
-				$wpdb->query('UPDATE '.$dbprefix."sfposts SET user_id=$newuser WHERE user_id=$userid");
-				$wpdb->query('UPDATE '.$dbprefix."sftopics SET user_id=$newuser WHERE user_id=$userid");
-				break;
+                $sql = "UPDATE " . esc_sql($dbprefix . "sfposts") . " SET user_id = %d WHERE user_id = %d";
+
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                $wpdb->query($wpdb->prepare($sql, $newuser, $userid ));
+
+                # Set poster ID to the new user id
+                $sql = "UPDATE " . esc_sql($dbprefix . "sftopics") . " SET user_id = %d WHERE user_id = %d";
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                $wpdb->query($wpdb->prepare($sql, $newuser, $userid ));
+
+                break;
 
 			case 'spdelete':
 				# need to get topics for user posts to see if topic will be empty after deleting posts
 				$topics = SP()->DB->select('SELECT DISTINCT topic_id, forum_id FROM '.SPPOSTS." WHERE user_id=$userid");
 
 				# delete all the user posts
-				SP()->DB->execute('DELETE FROM '.SPPOSTS." WHERE user_id=$userid");
-
+                SP()->DB->execute(
+                    "DELETE FROM " . SPPOSTS . " WHERE user_id = %d",
+                    $userid
+                );
 				# if any topics are now empty of posts, lets remove the topic and update the forum
 				if (!empty($topics)) {
 
@@ -743,30 +774,54 @@ class spcUser {
 				# Set display name to guest and remove User ID and IP Address from all of their posts
 				$guest_name = SP()->primitives->front_text('Guest');
 
-				$sql = 'UPDATE '.$dbprefix."sfposts SET user_id=0, guest_name='$guest_name', poster_ip=''";
-				if (!empty($mess)) {
-					$sql .= ", post_content ='$mess'";
-				}
-				$sql .= " WHERE user_id=$userid";
+                // Sanitize the table name
+                $table = esc_sql($dbprefix . "sfposts");
 
-				$wpdb->query($sql);
+                // Start SQL query with placeholders
+                $sql = "UPDATE $table SET user_id = %d, guest_name = %s, poster_ip = ''";
+
+                // If $mess is not empty, append post_content update
+                if (!empty($mess)) {
+                    $sql .= ", post_content = %s";
+                    $params = [$userid, $guest_name, $mess, $userid]; // Include $mess in parameters
+                } else {
+                    $params = [$userid, $guest_name, $userid]; // Exclude $mess from parameters
+                }
+
+                // Complete WHERE clause
+                $sql .= " WHERE user_id = %d";
+
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                $wpdb->query($wpdb->prepare($sql, ...$params));
+
 				# and any refereneces from the topic records
-				$wpdb->query('UPDATE '.$dbprefix."sftopics SET user_id=0 WHERE user_id=$userid");
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                $wpdb->query( $wpdb->prepare( 'UPDATE '.$dbprefix.'sftopics SET user_id=0 WHERE user_id=%d', $userid ) );
 		}
 
 		# flush and rebuild topic cache
 		SP()->meta->rebuild_topic_cache();
 
-		# remove from various core tables
-		$wpdb->query('DELETE FROM '.$dbprefix."sfmembers WHERE user_id=$userid");
-		$wpdb->query('DELETE FROM '.$dbprefix."sfmemberships WHERE user_id=$userid");
-		$wpdb->query('DELETE FROM '.$dbprefix."sfspecialranks WHERE user_id=$userid");
-		$wpdb->query('DELETE FROM '.$dbprefix."sftrack WHERE trackuserid=$userid");
-		$wpdb->query('DELETE FROM '.$dbprefix."sfnotices WHERE user_id=$userid");
-		$wpdb->query('DELETE FROM '.$dbprefix."sfuseractivity WHERE user_id=$userid");
-		$wpdb->query('DELETE FROM '.$dbprefix."sfwaiting WHERE user_id=$userid");
+        // List of tables that need deletion
+        $tables = [
+            "sfmembers",
+            "sfmemberships",
+            "sfspecialranks",
+            "sftrack",
+            "sfnotices",
+            "sfuseractivity",
+            "sfwaiting"
+        ];
 
-		# eemove from recent members list if present
+        # remove from various core tables
+        foreach ($tables as $table) {
+            $sanitized_table = esc_sql($dbprefix . $table); // Sanitize table name
+
+            $query = $wpdb->prepare("DELETE FROM $sanitized_table WHERE user_id = %d", $userid);
+            $wpdb->query($query);
+        }
+
+		# remove from recent members list if present
 		$this->remove_new($userid);
 
 		# check if forum moderator list needs updating
@@ -1259,25 +1314,33 @@ class spcUser {
 			<?php
 			foreach ($userids as $id) {
 				if (SP()->auths->forum_admin($id)) {
-					echo '<div class="error"><p>'.SP()->primitives->admin_text('Warning:  You are about to delete a Simple:Press Admin user. This could have consequences for administration of your forum. Please ensure you really want to do this.').'</p></div>';
+					echo '<div class="error"><p>'.esc_html(SP()->primitives->admin_text('Warning:  You are about to delete a Simple:Press Admin user. This could have consequences for administration of your forum. Please ensure you really want to do this.')).'</p></div>';
 					break;
 				}
 			}
 			?>
-            <legend><?php echo SP()->primitives->admin_text('What should be done with the user(s) forum posts?'); ?></legend>
+            <legend><?php echo esc_html(SP()->primitives->admin_text('What should be done with the user(s) forum posts?')); ?></legend>
             <ul style="list-style:none;">
-                <li><label><input type="radio" id="sp_guest_option" name="sp_delete_option" value="spguest"
-                                  checked="checked"/>
-						<?php echo SP()->primitives->admin_text('Change all posts to be from a guest.'); ?></label>
+                <li>
+                    <label>
+                        <input type="radio" id="sp_guest_option" name="sp_delete_option" value="spguest" checked="checked"/>
+					    <?php echo esc_html(SP()->primitives->admin_text('Change all posts to be from a guest.')); ?>
+                    </label>
                 </li>
-                <li><label><input type="radio" id="sp_delete_option" name="sp_delete_option" value="spdelete"/>
-						<?php echo SP()->primitives->admin_text('Delete all the posts (warning - may take time and resources if lots of posts).'); ?>
-                    </label></li>
-                <li><label><input type="radio" id="sp_reassign_option" name="sp_delete_option" value="spreassign"/></label>
-					<?php
-					echo '<label for="sp_reassign_option">'.SP()->primitives->admin_text('Reassign all the posts to:').'</label> ';
-					wp_dropdown_users(array('name' => 'sp_reassign_user', 'exclude' => array($user->ID)));
-					?></li>
+                <li>
+                    <label>
+                        <input type="radio" id="sp_delete_option" name="sp_delete_option" value="spdelete"/>
+					   	<?php echo esc_html(SP()->primitives->admin_text('Delete all the posts (warning - may take time and resources if lots of posts).')); ?>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="radio" id="sp_reassign_option" name="sp_delete_option" value="spreassign"/></label>
+                        <label for="sp_reassign_option">
+                        <?php echo esc_html(SP()->primitives->admin_text('Reassign all the posts to:')); ?>
+                    </label>
+                    <?php echo wp_dropdown_users(array('name' => 'sp_reassign_user', 'exclude' => array($user->ID))); ?>
+                </li>
             </ul>
         </fieldset>
 		<?php
