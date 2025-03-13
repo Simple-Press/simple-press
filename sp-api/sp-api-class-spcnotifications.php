@@ -120,7 +120,7 @@ class spcNotifications {
                 <script>
 					(function(spj, $, undefined) {
 				        $(document).ready(function () {
-					        spj.displayNotification(<?php echo $notification[0]; ?>, '<?php echo esc_js($notification[1]); ?>');
+					        spj.displayNotification(<?php echo wp_json_encode((int) $notification[0]) ?>, '<?php echo esc_js($notification[1]); ?>');
 						});
 					}(window.spj = window.spj || {}, jQuery));
                </script>
