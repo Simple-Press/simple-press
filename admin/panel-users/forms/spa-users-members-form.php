@@ -2,8 +2,6 @@
 /*
 Simple:Press
 Admin Users Members Form
-$LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
-$Rev: 15817 $
 */
 
 if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
@@ -13,6 +11,7 @@ if ( preg_match( '#' . basename( __FILE__ ) . '#', $_SERVER['PHP_SELF'] ) ) {
 /**
  * Outputs a simple paginated table of members from SPMEMBERS table,
  * with a navigation menu above - filter by user group.
+ * With a "Delete" link for each user (protected by nonce).
  *
  * @return string HTML output.
  */
@@ -27,10 +26,11 @@ function sp_list_members() {
     //Get current usergroup from URL.
     $usergroup_filter = isset( $_GET['usergroup'] ) ? intval( $_GET['usergroup'] ) : 0;
 
-    //Build navigation links for user groups.
-    $current_url = remove_query_arg( array( 'usergroup', 'paged' ) );
-    $ug_links    = array();
+    $base_url = admin_url( 'admin.php?page=simplepress/admin/panel-users/spa-users.php' );
+    $current_url = remove_query_arg( array( 'usergroup', 'paged' ), $base_url );
 
+    //Build usergroup links
+    $ug_links = array();
     //"All Members" link.
     $all_total = $wpdb->get_var( "SELECT COUNT(*) FROM " . SPMEMBERS );
     $class = empty( $usergroup_filter ) ? ' class="current"' : '';
@@ -38,7 +38,6 @@ function sp_list_members() {
 
     //Get all user groups (SP function).
     $usergroups = spa_get_usergroups_all();
-    //error_log(print_r(  $usergroups, true));
     if ( ! empty( $usergroups ) ) {
         foreach ( $usergroups as $ug ) {
             $class = ( $ug->usergroup_id == $usergroup_filter ) ? ' class="current"' : '';
@@ -49,19 +48,30 @@ function sp_list_members() {
     }
 
     //"No Membership" link.
-    $no_membership = $wpdb->get_var( "SELECT COUNT(*) FROM " . SPMEMBERS . " WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") AND admin = 0" );
+    $no_membership = $wpdb->get_var(
+        "SELECT COUNT(*) FROM " . SPMEMBERS . " 
+         WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") 
+         AND admin = 0"
+    );
     $class = ( $usergroup_filter === -1 ) ? ' class="current"' : '';
     $ug_links['No Membership'] = "<a href='" . esc_url( add_query_arg( 'usergroup', -1, $current_url ) ) . "'{$class}>No Membership ({$no_membership})</a>";
 
     //Build navigation HTML.
     $nav_output = '<div class="sp-usergroup-nav" style="margin-bottom:20px;">' . implode(' &nbsp; ', $ug_links) . '</div>';
 
-    // Prepare member query based on filter.
+    //Prepare member query based on filter.
     if ( $usergroup_filter ) {
         if ( $usergroup_filter === -1 ) {
             //Only members with no membership.
-            $total = $wpdb->get_var( "SELECT COUNT(*) FROM " . SPMEMBERS . " WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") AND admin = 0" );
-            $query = "SELECT * FROM " . SPMEMBERS . " WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") AND admin = 0 LIMIT %d, %d";
+            $total = $wpdb->get_var(
+                "SELECT COUNT(*) FROM " . SPMEMBERS . " 
+                 WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") 
+                 AND admin = 0"
+            );
+            $query = "SELECT * FROM " . SPMEMBERS . " 
+                      WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") 
+                      AND admin = 0 
+                      LIMIT %d, %d";
             $members = SP()->DB->select( $wpdb->prepare( $query, $offset, $per_page ) );
         } else {
             //Filter by specific user group.
@@ -97,12 +107,13 @@ function sp_list_members() {
                 <th><?php esc_html_e( 'User ID', 'simplepress' ); ?></th>
                 <th><?php esc_html_e( 'Display Name', 'simplepress' ); ?></th>
                 <th><?php esc_html_e( 'Memberships', 'simplepress' ); ?></th>
+                <th><?php esc_html_e( 'Actions', 'simplepress' ); ?></th>
             </tr>
         </thead>
         <tbody>
             <?php if ( empty( $members ) ) : ?>
                 <tr>
-                    <td colspan="3"><?php esc_html_e( 'No members found', 'simplepress' ); ?></td>
+                    <td colspan="4"><?php esc_html_e( 'No members found', 'simplepress' ); ?></td>
                 </tr>
             <?php else : ?>
                 <?php foreach ( $members as $member ) : ?>
@@ -116,10 +127,12 @@ function sp_list_members() {
                                     echo esc_html__( 'No Membership', 'simplepress' );
                                 } else {
                                     //Show only the filtered group name.
-                                    echo esc_html( $wpdb->get_var( $wpdb->prepare(
-                                        "SELECT usergroup_name FROM " . SPUSERGROUPS . " WHERE usergroup_id = %d",
+                                    $group_name = $wpdb->get_var( $wpdb->prepare(
+                                        "SELECT usergroup_name FROM " . SPUSERGROUPS . " 
+                                         WHERE usergroup_id = %d",
                                         $usergroup_filter
-                                    ) ) );
+                                    ) );
+                                    echo esc_html( $group_name );
                                 }
                             } else {
                                 //List all memberships for member.
@@ -137,6 +150,25 @@ function sp_list_members() {
                             }
                             ?>
                         </td>
+                        <td>
+                            <?php
+                            //Delete link with nonce - calls users.php?action=delete&user=xxx (WP built-in user deletion)
+                            //'bulk-users' action is recognized by WP core. Change for custom check.
+							$delete_base = admin_url( 'users.php' );
+                            $delete_args = array(
+                                'action'         => 'delete',
+                                'user'           => $member->user_id,
+                                'wp_http_referer'=> urlencode( 'admin.php?page=' . SP_FOLDER_NAME . '/admin/panel-users/spa-users.php' ),
+                            );
+                            //Build the link
+                            $delete_url = add_query_arg( $delete_args, $delete_base );
+                            //Wrap with nonce for 'bulk-users'
+                            $delete_url = wp_nonce_url( $delete_url, 'bulk-users' );
+                            ?>
+                            <a href="<?php echo esc_url( $delete_url ); ?>" class="sf-icon sf-blue sf-delete">
+                                <?php esc_html_e( 'Delete', 'simplepress' ); ?>
+                            </a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -149,15 +181,14 @@ function sp_list_members() {
     $query_args = array(
         'page' => SP_FOLDER_NAME . '/admin/panel-users/spa-users.php',
     );
-
-    if ( isset( $_GET['usergroup'] ) && $_GET['usergroup'] !== '' ) {
-        $query_args['usergroup'] = intval( $_GET['usergroup'] );
+    if ( ! empty( $usergroup_filter ) ) {
+        $query_args['usergroup'] = $usergroup_filter;
     }
     $base_url = add_query_arg( $query_args, $base_url );
     //Remove existing 'paged' value.
     $base_url = remove_query_arg( 'paged', $base_url );
     $pagination_base = add_query_arg( 'paged', '%#%', $base_url );
-    //error_log(print_r($pagination_base, true));
+
     $pagination = paginate_links( array(
         'base'      => $pagination_base,
         'format'    => '',
@@ -176,11 +207,8 @@ function sp_list_members() {
  * outputting the Simple:Press Admin Users Members Form.
  */
 function spa_users_members_form() {
-    global $adminhelpfile;
     require_once SP_PLUGIN_DIR . '/forum/content/sp-common-view-functions.php';
-
     spa_paint_options_init();
-
     spa_paint_open_tab( SP()->primitives->admin_text( 'Member Information' ), true );
     spa_paint_open_panel();
     spa_paint_open_fieldset( SP()->primitives->admin_text( 'Member Information' ), false, '', false );
@@ -189,11 +217,16 @@ function spa_users_members_form() {
     <form id="members-filter" method="get" action="<?php echo SPADMINUSER; ?>">
         <?php echo sp_list_members(); ?>
     </form>
+
+    <script>
+        if (typeof spj !== 'undefined' && typeof spj.after_users_listing === 'function') {
+            spj.after_users_listing();
+        }
+    </script>
     <?php
 
     spa_paint_close_fieldset();
     spa_paint_close_panel();
-
     do_action( 'sph_users_members_panel' );
     spa_paint_close_container();
     spa_paint_close_tab();
