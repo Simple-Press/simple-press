@@ -305,8 +305,6 @@ function spa_render_sidemenu() {
 	$image = SPADMINIMAGES;
 	$upgrade = admin_url('admin.php?page='.SPINSTALLPATH);
 
-	if (isset($_GET['tab']) ? $formid = SP()->filters->str($_GET['tab']) : $formid = '') ;
-
 	if (SP()->core->device == '_mobile') { // @TODO admin design (no used)
 		echo '<div id="spaMobileAdmin">'."\n";
 		echo '<select class="wp-core-ui" onchange="location = this.options[this.selectedIndex].value;">'."\n";
@@ -323,10 +321,12 @@ function spa_render_sidemenu() {
 							$id = ' id="acc'.esc_attr($formid).'"';
 						}
 						$sel = '';
-						if (isset($_GET['tab'])) {
-                            if (sanitize_text_field($_GET['tab']) == 'plugin') {
-                                if (isset($_GET['admin']) && isset($data['admin']) && sanitize_text_field($_GET['admin']) == $data['admin']) $sel = ' selected="selected" ';
-                            } else if (sanitize_text_field($_GET['tab']) == $formid) {
+                        if (!empty($_GET['tab'])) {
+                            $tab = sanitize_text_field(wp_unslash($_GET['tab']));
+
+                            if ($tab === 'plugin' && !empty($_GET['admin']) && !empty($data['admin']) && sanitize_text_field(wp_unslash($_GET['admin'])) === $data['admin']) {
+                                $sel = ' selected="selected" ';
+                            } elseif ($tab === $formid) {
                                 $sel = ' selected="selected" ';
                             }
                         }
@@ -358,8 +358,8 @@ function spa_render_sidemenu() {
 		echo '<div id="sfsidepanel">'."\n";
                 
             echo '<span class="sf-toggle-admin-menu">' ."\n";
-                echo '<span class="sf-button-secondary sf-hide">' . esc_html(__('Hide Admin Menu', 'sp')) . '</span>';
-                echo '<span class="sf-button-secondary sf-show">' . esc_html( __('Show Admin Menu', 'sp')) . '</span>';
+                echo '<span class="sf-button-secondary sf-hide">' . esc_html(SP()->primitives->admin_text('Hide Admin Menu')) . '</span>';
+                echo '<span class="sf-button-secondary sf-show">' . esc_html(SP()->primitives->admin_text('Show Admin Menu')) . '</span>';
             echo '</span>'."\n";
                 
             echo '<div id="sfadminmenu">'."\n";

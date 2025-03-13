@@ -8,7 +8,7 @@ $search_term = isset( $_REQUEST['s'] ) ? esc_attr($_REQUEST['s']) : '';
 
 ?>
 
-<form action="<?php echo SPADMINPLUGINS; ?>" method="post" id="sppluginssearchform" name="sppluginssearchform">
+<form action="<?php esc_attr_e(SPADMINPLUGINS); ?>" method="post" id="sppluginssearchform" name="sppluginssearchform">
     <?php echo sp_create_nonce( 'forum-adminform_plugins' ); ?>
     <input type="hidden" name="s" value="<?php echo $search_term; ?>" />
 </form>
