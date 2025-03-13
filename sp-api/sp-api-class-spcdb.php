@@ -265,25 +265,33 @@ class spcDB {
 	 * @return bool success or failure
 	 * -----------------------------------------------------------------
 	 */
-	public function execute($sql) {
-		global $wpdb;
+    public function execute($sql, ...$params) {
+        global $wpdb;
 
-		SP()->rewrites->pageData['affectedrows']	 = 0;
-		SP()->rewrites->pageData['insertid']		 = 0;
+        SP()->rewrites->pageData['affectedrows'] = 0;
+        SP()->rewrites->pageData['insertid'] = 0;
 
-		$wpdb->hide_errors();
+        $wpdb->hide_errors();
 
-		$wpdb->query($sql);
+        // Automatically prepare the query if parameters are passed
+        if (!empty($params)) {
+            $sql = $wpdb->prepare($sql, ...$params);
+        }
 
-		if ($wpdb->last_error == '') {
-			SP()->rewrites->pageData['affectedrows']	 = $wpdb->rows_affected;
-			if (substr($sql, 0, 6) == 'INSERT') SP()->rewrites->pageData['insertid']		 = $wpdb->insert_id;
-			return true;
-		} else {
-			SP()->error->errorSQL($sql, $wpdb->last_error);
-			return false;
-		}
-	}
+        $wpdb->query($sql);
+
+        if (empty($wpdb->last_error)) {
+            SP()->rewrites->pageData['affectedrows'] = $wpdb->rows_affected;
+            if (stripos(trim($sql), 'INSERT') === 0) {
+                SP()->rewrites->pageData['insertid'] = $wpdb->insert_id;
+            }
+            return true;
+        } else {
+            SP()->error->errorSQL($sql, $wpdb->last_error);
+            return false;
+        }
+    }
+
 
 	/** -----------------------------------------------------------------
 	 * Constructs a single table select query
@@ -481,11 +489,15 @@ class spcDB {
 	 * @return string as bool
 	 * -----------------------------------------------------------------
 	 */
-	public function truncate($table) {
-		global $wpdb;
-		$result = $wpdb->query("TRUNCATE TABLE $table");
-		return $result;
-	}
+    public function truncate($table) {
+        global $wpdb;
+
+        // Allow only alphanumeric characters and underscores (prevents SQL injection)
+        $table = preg_replace('/[^a-zA-Z0-9_]/', '', $table);
+
+        // Execute the safe query
+        return $wpdb->query("TRUNCATE TABLE `$table`");
+    }
 
 	/** -----------------------------------------------------------------
 	 * checks that there is still a database connection
@@ -553,47 +565,52 @@ class spcDB {
 	 * @return mixed	db query data
 	 * -----------------------------------------------------------------
 	 */
-	private function executeSelect($sql, $queryType = 'set', $resultType = OBJECT) {
-		global $wpdb;
+    private function executeSelect($sql, $queryType = 'set', $resultType = OBJECT, ...$params) {
+        global $wpdb;
 
-		// PHP 7.4 fix: PHP Warning - Creating default object from empty value
-		// Not sure why none of the components of SP() is unavailable here even though SP() itself is fine.  
-		// Tracing through the code shows that SP()->rewrites = new spcRewrites(); is getting called before this function 
-		// in file /sp-api/sp-load-class-spccoreloader.php around line 76.  So the fact that it's not already an object here 
-		// sometimes is quite puzzling.
-		if ( ! is_object(SP()->rewrites) ) {
-			SP()->rewrites = new spcRewrites();
-		}	
+        // Ensure SP()->rewrites is an object (PHP 7.4+ Fix)
+        if (!is_object(SP()->rewrites)) {
+            SP()->rewrites = new spcRewrites();
+        }
 
-		SP()->rewrites->pageData['queryrows'] = 0;
+        SP()->rewrites->pageData['queryrows'] = 0;
 
-		$wpdb->hide_errors();
+        $wpdb->hide_errors();
 
-		switch ($queryType) {
-			case 'row':
-				$records = $wpdb->get_row($sql, $resultType);
-				break;
-			case 'col':
-				$records = $wpdb->get_col($sql);
-				break;
-			case 'var':
-				$records = $wpdb->get_var($sql);
-				break;
-			case 'set':
-			default:
-				$records = $wpdb->get_results($sql, $resultType);
-				break;
-		}
+        // Automatically prepare the query if parameters are provided
+        if (!empty($params)) {
+            $sql = $wpdb->prepare($sql, ...$params);
+        }
 
-		if ($wpdb->last_error == '') {
-			SP()->rewrites->pageData['queryrows'] = $wpdb->num_rows;
-		} else {
-			SP()->error->errorSQL($sql, $wpdb->last_error);
-		}
-		return $records;
-	}
+        // Execute the query based on type
+        switch ($queryType) {
+            case 'row':
+                $records = $wpdb->get_row($sql, $resultType);
+                break;
+            case 'col':
+                $records = $wpdb->get_col($sql);
+                break;
+            case 'var':
+                $records = $wpdb->get_var($sql);
+                break;
+            case 'set':
+            default:
+                $records = $wpdb->get_results($sql, $resultType);
+                break;
+        }
 
-	/** -----------------------------------------------------------------
+        // Handle errors and store row count
+        if (empty($wpdb->last_error)) {
+            SP()->rewrites->pageData['queryrows'] = $wpdb->num_rows;
+        } else {
+            SP()->error->errorSQL($sql, $wpdb->last_error);
+        }
+
+        return $records;
+    }
+
+
+    /** -----------------------------------------------------------------
 	 * Display the SQL statement on screen for debugging
 	 *
 	 * @access private
@@ -609,7 +626,7 @@ class spcDB {
 	private function executeShow($sql, $inspect) {
 		spdebug_styles(true);
 		echo '<div class="spdebug">';
-		echo SP()->primitives->front_text('Inspect Query');
+		echo esc_html(SP()->primitives->front_text('Inspect Query'));
         echo '<strong>' . esc_html($inspect) .' </strong><br><hr>';
 		echo '<pre><code>';
 		$k	 = array(
