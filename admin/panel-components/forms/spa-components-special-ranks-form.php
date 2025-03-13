@@ -6,8 +6,9 @@
   $Rev: 15601 $
  */
 
-if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
+if ( ! defined( 'ABSPATH' ) ) {
     die('Access denied - you cannot directly call this file');
+}
 
 function spa_special_rankings_form($rankings) {
     global $tab;

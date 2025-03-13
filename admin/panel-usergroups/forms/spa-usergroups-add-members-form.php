@@ -6,8 +6,9 @@
   $Rev: 15601 $
  */
 
-if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
+if ( ! defined( 'ABSPATH' ) ) {
     die('Access denied - you cannot directly call this file');
+}
 
 function spa_usergroups_add_members_form($usergroup_id) {
     $formId = sprintf('sfmembernew-%s-%d', uniqid(), $usergroup_id);
