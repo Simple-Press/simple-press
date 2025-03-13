@@ -40,7 +40,7 @@ function spa_plugins_user_form($admin, $save, $form, $reload) {
 ?>
     	<div class="sf-form-submit-bar">
 <?php
-			echo apply_filters('sph_UpdateBar', '<input type="submit" class="sf-button-primary" value="'.esc_attr(SP()->primitives->admin_text("Update")).'" />', esc_attr($reload));
+			echo wp_kses_post(apply_filters('sph_UpdateBar', '<input type="submit" class="sf-button-primary" value="'.esc_attr(SP()->primitives->admin_text("Update")).'" />', esc_attr($reload)));
 ?>
     	</div>
         <?php spa_paint_close_tab(); ?>
