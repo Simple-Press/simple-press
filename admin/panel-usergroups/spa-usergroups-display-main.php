@@ -6,8 +6,9 @@
   $Rev: 15488 $
  */
 
-if (preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']))
+if ( ! defined( 'ABSPATH' ) ) {
     die('Access denied - you cannot directly call this file');
+}
 
 function spa_usergroups_usergroup_main() {
     $usergroups = spa_get_usergroups_all(null);
