@@ -313,11 +313,11 @@ function spa_get_saved_icon_html($jsonIcon, $location = 'forum', $title = '', $d
         }
     }
     if ('file' === $arr_icon['type']) {
-        $out .= '<img src="' . $arr_icon['icon'] . '" alt="" title="' . $title . '" />';
+        $out .= '<img src="' . esc_attr($arr_icon['icon']) . '" alt="" title="' . esc_attr($title) . '" />';
     } else {
-        $out .= '<i class="' . $arr_icon['icon'] . '"';
+        $out .= '<i class="' . esc_attr($arr_icon['icon']) . '"';
         if (!empty($arr_icon['color'])) {
-            $out .= ' style="color:' . $arr_icon['color'] . '"';
+            $out .= ' style="color:' . esc_attr($arr_icon['color']) . '"';
         }
         $out .= '></i>';
     }
@@ -370,11 +370,17 @@ function spa_iconset_size_type_field( $current = '' ) {
 	$size_units = spa_iconset_icon_size_units();
 
 	$field = '<div class="sf-select-wrap"><select class="font-style-size_type">';
-	foreach( $size_units as $unit )  {
-		$selected = $current == $unit ? ' selected="selected"' : '';
-		$field .= sprintf( '<option value="%s"%s>%s</option>', $unit, $selected, $unit );
-	}
-	$field .= '</select></div>';
+    foreach( $size_units as $unit )  {
+        $selected = $current == $unit ? ' selected="selected"' : '';
+        $field .= sprintf(
+            '<option value="%s"%s>%s</option>',
+            esc_attr($unit),
+            $selected,
+            esc_html($unit)
+        );
+    }
+
+    $field .= '</select></div>';
 
 	return $field;
 }

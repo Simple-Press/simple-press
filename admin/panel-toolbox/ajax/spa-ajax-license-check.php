@@ -28,23 +28,24 @@ $adminhelpfile = 'admin-toolbox';
 # Check Whether User Can Manage Options
 if (!SP()->auths->current_user_can('SPF Manage Toolbox')) die();
 
+if ( ! isset($_POST['nonce']) || ! wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'license-check') ) {
+    die('Could not validate nonce');
+}
 
-if(isset($_POST['sp_action'])){
-	
-	$sp_action = sanitize_text_field($_POST['sp_action']);
+
+$sp_action = isset( $_POST['sp_action'] ) ? sanitize_text_field( wp_unslash( ['sp_action'] ) ) : '';
+
+if($sp_action !== ''){
 
 	if(isset($_POST['sp_item']) && isset($_POST['sp_item_id']) && ($sp_action == 'activate_license' || $sp_action == 'deactivate_license')){
 
 		# Check Whether license key is valid or not
 
-		$license_key = sanitize_text_field( $_POST['licence_key'] );
+        $license_key = isset( $_POST['licence_key'] ) ? sanitize_text_field( wp_unslash( $_POST['licence_key'] ) ) : '';
+        $item_id = isset( $_POST['sp_item_id'] ) ? sanitize_text_field( wp_unslash( $_POST['sp_item_id'] ) ) : '';
+        $item_name = isset( $_POST['item_name'] ) ? sanitize_text_field( wp_unslash( $_POST['item_name'] ) ) : '';
+        $sp_item = isset( $_POST['sp_item'] ) ? sanitize_text_field( wp_unslash( $_POST['sp_item'] ) ) : '';
 
-		$item_id = sanitize_text_field( $_POST['sp_item_id'] );
-		
-		$item_name = sanitize_text_field( $_POST['item_name'] );
-		
-		$sp_item = sanitize_text_field( $_POST['sp_item'] );
-		
 		if($sp_item == 'sp_check_plugin'){
 			
 			$update_key_option 		= 'spl_plugin_key_'.$item_id;
@@ -52,7 +53,7 @@ if(isset($_POST['sp_action'])){
 			$update_info_option 	= 'spl_plugin_info_'.$item_id;
 			
 		}else{
-			
+
 			$update_key_option 		= 'spl_theme_key_'.$item_id;
 			$update_status_option 	= 'spl_theme_stats_'.$item_id;
 			$update_info_option 	= 'spl_theme_info_'.$item_id;
@@ -68,7 +69,7 @@ if(isset($_POST['sp_action'])){
 		 * get_version - Used to remotely retrieve the latest version information for a product
 		 * 
 		 */
-		 
+
 		// save key to option table
 		SP()->options->update($update_key_option, $license_key);
 		
@@ -93,7 +94,7 @@ if(isset($_POST['sp_action'])){
 			);
 		}
 		
-		$sp_item_id = sanitize_text_field($_POST['sp_item_id']);
+		$sp_item_id = sanitize_text_field(wp_unslash($_POST['sp_item_id']));
 		
 		if($sp_item_id == ''){
 						
@@ -148,7 +149,7 @@ if(isset($_POST['sp_action'])){
 					case 'expired' :
 		
 						$message = sprintf(
-							__( 'Your license key expired on %s.' ),
+                            SP()->primitives->admin_text( 'Your license key expired on %s.' ),
 							date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
 						);
 						break;
@@ -171,7 +172,7 @@ if(isset($_POST['sp_action'])){
 		
 					case 'item_name_mismatch' :
 		
-						$message = sprintf( __( 'This appears to be an invalid license key for %s.' ), $item_name );
+						$message = sprintf( SP()->primitives->admin_text( 'This appears to be an invalid license key for %s.' ), $item_name );
 						break;
 		
 					case 'no_activations_left':
@@ -214,7 +215,7 @@ if(isset($_POST['sp_action'])){
 	}elseif($sp_action == 'sp_licensing_server_url'){
 		
 		# Save store url for get license of plugins from
-		$sp_licensing_server_url = sanitize_text_field($_POST['sp_licensing_server_url']);
+		$sp_licensing_server_url = sanitize_text_field(wp_unslash(['sp_licensing_server_url']));
 		
 		SP()->options->update('sp_addon_store_url', $sp_licensing_server_url);
 		
@@ -238,8 +239,8 @@ if(isset($_POST['sp_action'])){
 
 		# remove license key
 		
-		$sp_item = sanitize_text_field($_POST['sp_item']);
-		$item_id = sanitize_text_field($_POST['sp_item_id']);
+		$sp_item = sanitize_text_field(wp_unslash($_POST['sp_item']));
+		$item_id = sanitize_text_field(wp_unslash($_POST['sp_item_id']));
 		
 		if($sp_item == 'sp_check_plugin'){
 			$remove_key_option 	= 'spl_plugin_key_'.$item_id;
@@ -268,11 +269,11 @@ if(isset($_POST['changelog_link'])){
 
 	# Plugin changelog popup
 
-	$changelog_link = sanitize_text_field($_POST['changelog_link']);
+	$changelog_link = sanitize_text_field(wp_unslash($_POST['changelog_link']));
 	
 	if($changelog_link != ''){
     
-		$message =  '<div class="sfhelptext"><iframe src="'.$changelog_link.'" height="700" width="100%"></iframe><div class="sfhelptextlogo"><img src="'.SPCOMMONIMAGES.'sp-mini-logo.png" alt="" title="" /></div></div>';
+		$message =  '<div class="sfhelptext"><xfiframe src="'.esc_attr($changelog_link).'" height="700" width="100%"></xfiframe><div class="sfhelptextlogo"><img src="'.esc_attr(SPCOMMONIMAGES).'sp-mini-logo.png" alt="" title="" /></div></div>';
 		
 		$result = array('message'=>$message);
 		

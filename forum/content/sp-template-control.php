@@ -283,9 +283,9 @@ function sp_load_template($tempName) {
 		require_once SPTHEMEBASEDIR.$curTheme['parent'].'/templates/'.$tempName;
 	} else {
 		$tempName = explode('/', $tempName);
-		echo '<p class="spCenter spHeaderName">['.$tempName[count($tempName) - 1].'] - '.SP()->primitives->front_text('Template File Not Found').'</p>';
+		echo '<p class="spCenter spHeaderName">['.esc_html($tempName[count($tempName) - 1]).'] - '.esc_html(SP()->primitives->front_text('Template File Not Found')).'</p>';
 		echo '<div class="spHeaderMessage">';
-		echo '<p>'.SP()->primitives->admin_text('Sorry, but the required template file could not be found or could not be opened.').'</p>';
+		echo '<p>'.esc_html(SP()->primitives->admin_text('Sorry, but the required template file could not be found or could not be opened.')).'</p>';
 		echo '<br/><p>';
 		SP()->primitives->admin_etext('This can be caused by a missing/corrupt theme or theme file. Please check the Simple:Press Theme List admin panel and make sure a valid theme is selected. Or please check the location of the selected theme on your server and make sure the theme and the required template file exist.');
 		echo '</p>';
@@ -367,5 +367,5 @@ function sp_FooterEnd() {
 function __sp($text) {
 	$domain = (isset(SP()->core->forumData['themedomain'])) ? SP()->core->forumData['themedomain'] : '';
 
-	return __($text, $domain);
+	return SP()->primitives->admin_text($text, $domain);
 }

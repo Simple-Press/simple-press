@@ -28,16 +28,19 @@ function sp_plugins_check_sp_version($plugin) {
 
 		if (SP()->options->get('sfuninstall')) {
 			if (!$screen->is_network) {
-				echo '<tr class="plugin-update-tr'.$active_class.'">';
+				echo '<tr class="plugin-update-tr'.esc_attr($active_class).'">';
 				echo '<td colspan="3" class="plugin-update colspanchange"><div class="update-message notice inline notice-error notice-alt"><p>';
-				echo '<span style="color:red;font-weight:bold;">'.SP()->primitives->admin_text('Simple:Press is READY TO BE REMOVED. When you deactivate it ALL DATA WILL BE DELETED').'</span>';
+				echo '<span style="color:red;font-weight:bold;">'.esc_html(SP()->primitives->admin_text('Simple:Press is READY TO BE REMOVED. When you deactivate it ALL DATA WILL BE DELETED')).'</span>';
 				echo '</p></div></td></tr>';
 			}
 		} else if (SP()->core->status == 'Upgrade') {
 			if (!$screen->is_network) {
-				echo '<tr class="plugin-update-tr'.$active_class.'">';
+				echo '<tr class="plugin-update-tr'.esc_attr($active_class).'">';
 				echo '<td colspan="3" class="plugin-update colspanchange"><div class="update-message notice inline notice-warning notice-alt"><p>';
-				echo SP()->primitives->admin_text_noesc('Your Simple:Press version needs updating. <a href="'.SPADMINUPGRADE.'">Upgrade now</a>.');
+				echo wp_kses(
+                    SP()->primitives->admin_text_noesc('Your Simple:Press version needs updating. <a href="'.SPADMINUPGRADE.'">Upgrade now</a>.'),
+                    ['a' => ['href' => ['href' => []]]]
+                );
 				echo '</p></div></td></tr>';
 			}
 		} else {
@@ -49,13 +52,38 @@ function sp_plugins_check_sp_version($plugin) {
 			if (empty($installed_build)) return;
 
 			if ($xml->core->build > $installed_build) {
-				echo '<tr class="plugin-update-tr'.$active_class.'" id="simple-press-update" data-slug="simple-press" data-plugin="'.$plugin.'">';
+				echo '<tr class="plugin-update-tr'.esc_attr($active_class).'" id="simple-press-update" data-slug="simple-press" data-plugin="'.esc_attr($plugin).'">';
 				echo '<td colspan="3" class="plugin-update colspanchange"><div class="update-message notice inline notice-warning notice-alt"><p>';
 
 				$details_url = self_admin_url('plugin-install.php?tab=plugin-information&plugin='.SP_FOLDER_NAME.'&section=changelog&TB_iframe=true&width=600&height=800');
 
-				printf(SP()->primitives->admin_text_noesc('There is a new version of %1$s available. <a href="%2$s" %3$s>View version %4$s details</a> or <a href="%5$s" %6$s>update now</a>.'), 'Simple:Press', esc_url($details_url), sprintf('class="thickbox open-plugin-details-modal" aria-label="%s"', esc_attr(sprintf(SP()->primitives->admin_text_noesc('View %1$s version %2$s details'), 'Simple:Press', $xml->core->version))
-					), $xml->core->version, wp_nonce_url(self_admin_url('update.php?action=upgrade-plugin&plugin=').$plugin, 'upgrade-plugin_'.$plugin), sprintf('class="update-link" aria-label="%s"', esc_attr(sprintf(SP()->primitives->admin_text_noesc('Update %s now'), 'Simple:Press'))
+				printf(
+                    wp_kses(
+                        SP()->primitives->admin_text_noesc('There is a new version of %1$s available. <a href="%2$s" %3$s>View version %4$s details</a> or <a href="%5$s" %6$s>update now</a>.'),
+                        ['a' => ['href' => ['href' => []]]]
+                    ),
+                    esc_html('Simple:Press'),
+                    esc_url($details_url),
+                    sprintf(
+                        'class="thickbox open-plugin-details-modal" aria-label="%s"',
+                        esc_attr(
+                            sprintf(
+                                SP()->primitives->admin_text_noesc('View %1$s version %2$s details'),
+                                'Simple:Press',
+                                $xml->core->version
+                            )
+                        )
+					),
+                    esc_html($xml->core->version),
+                    esc_url(wp_nonce_url(self_admin_url('update.php?action=upgrade-plugin&plugin=').$plugin, 'upgrade-plugin_'.$plugin)),
+                    sprintf(
+                        'class="update-link" aria-label="%s"',
+                        esc_attr(
+                            sprintf(
+                                SP()->primitives->admin_text_noesc('Update %s now'),
+                                'Simple:Press'
+                            )
+                        )
 					)
 				);
 
@@ -80,12 +108,14 @@ function sp_update_wp_counts($counts, $titles) {
 		if (!empty($pup->response)) {
 			$num = count($pup->response);
 			$counts['counts']['plugins'] = $counts['counts']['plugins'] + $num;
-			$titles['sp_plugins'] = sprintf(_n('%d Simple:Press Plugin Update', '%d Simple:Press Plugin Updates', $num), $num);
+            /* translators: 1: number of plugin updates */
+			$titles['sp_plugins'] = sprintf( _n( '%d Simple:Press Plugin Update', '%d Simple:Press Plugin Updates', esc_html($num), 'spa' ), esc_html($num));
 		}
 		if (!empty($tup->response)) {
 			$num = count($tup->response);
 			$counts['counts']['themes'] = $counts['counts']['themes'] + $num;
-			$titles['sp_themes'] = sprintf(_n('%d Simple:Press Theme Update', '%d Simple:press Theme Updates', $num), $num);
+            /* translators: 1: number of theme updates */
+			$titles['sp_themes'] = sprintf(_n('%d Simple:Press Theme Update', '%d Simple:press Theme Updates', esc_html($num), 'spa'), esc_html($num));
 		}
 
 		$counts['counts']['total'] = $counts['counts']['plugins'] + $counts['counts']['themes'] + $counts['counts']['wordpress'];
@@ -108,9 +138,9 @@ function sp_update_plugins() {
 	check_admin_referer('upgrade-core');
 
 	if (isset($_GET['plugins'])) {
-		$plugins = explode(',', sanitize_text_field($_GET['plugins']));
+		$plugins = explode(',', sanitize_text_field(wp_unslash($_GET['plugins'])));
 	} else if (isset($_POST['checked'])) {
-		$plugins = array_map('sanitize_text_field', (array) $_POST['checked']);
+		$plugins = array_map('sanitize_text_field', (array) wp_unslash($_POST['checked']));
 	} else {
 		wp_redirect(admin_url('update-core.php'));
 		exit;
@@ -121,8 +151,8 @@ function sp_update_plugins() {
 
 	require_once ABSPATH.'wp-admin/admin-header.php';
 	echo '<div class="wrap">';
-	echo '<h2>'.SP()->primitives->admin_text('Update SP Plugins').'</h2>';
-	echo "<iframe src='$url' style='width: 100%; height: 100%; min-height: 750px;' frameborder='0'></iframe>";
+	echo '<h2>'.esc_html(SP()->primitives->admin_text('Update SP Plugins')).'</h2>';
+	echo "<iframe src='".esc_attr($url)."' style='width: 100%; height: 100%; min-height: 750px;' frameborder='0'></iframe>";
 	echo '</div>';
 	require_once ABSPATH.'wp-admin/admin-footer.php';
 }
@@ -139,13 +169,15 @@ function sp_do_plugins_update() {
 
 	check_admin_referer('bulk-update-sp-plugins');
 
-	if (isset($_GET['plugins'])) {
-		$plugins = explode(',', stripslashes($_GET['plugins']));
-	} else if (isset($_POST['checked'])) {
-		$plugins = array_map('sanitize_text_field', (array) $_POST['checked']);
-	} else {
-		$plugins = array();
-	}
+    if ( isset( $_GET['plugins'] ) ) {
+        $sanitized_plugins = sanitize_text_field(wp_unslash($_GET['plugins']));
+        $plugins = array_map( 'sanitize_text_field', explode( ',',$sanitized_plugins) );
+    } elseif ( isset( $_POST['checked'] ) ) {
+        $sanitized_checked_plugins = sanitize_text_field(wp_unslash($_POST['checked']));
+        $plugins = array_map( 'sanitize_text_field', (array) $sanitized_checked_plugins );
+    } else {
+        $plugins = array();
+    }
 
 	$plugins = array_map('urldecode', $plugins);
 	$url = 'update.php?action=update-sp-plugins&amp;plugins='.urlencode(implode(',', $plugins));
@@ -173,9 +205,9 @@ function sp_update_themes() {
 	check_admin_referer('upgrade-core');
 
 	if (isset($_GET['themes'])) {
-		$themes = explode(',', sanitize_text_field($_GET['themes']));
+		$themes = explode(',', sanitize_text_field(wp_unslash($_GET['themes'])));
 	} else if (isset($_POST['checked'])) {
-		$themes = array_map('sanitize_text_field', (array) $_POST['checked']);
+		$themes = array_map('sanitize_text_field', (array) wp_unslash($_POST['checked']));
 	} else {
 		wp_redirect(admin_url('update-core.php'));
 		exit;
@@ -186,8 +218,8 @@ function sp_update_themes() {
 
 	require_once ABSPATH.'wp-admin/admin-header.php';
 	echo '<div class="wrap">';
-	echo '<h2>'.SP()->primitives->admin_text('Update SP Themes').'</h2>';
-	echo "<iframe src='$url' style='width: 100%; height: 100%; min-height: 750px;' frameborder='0'></iframe>";
+	echo '<h2>'.esc_html(SP()->primitives->admin_text('Update SP Themes')).'</h2>';
+	echo "<iframe src='".esc_attr($url)."' style='width: 100%; height: 100%; min-height: 750px;' frameborder='0'></iframe>";
 	echo '</div>';
 	require_once ABSPATH.'wp-admin/admin-footer.php';
 }
@@ -207,9 +239,11 @@ function sp_do_themes_update() {
 	check_admin_referer('bulk-update-sp-themes');
 
 	if (isset($_GET['themes'])) {
-		$themes = explode(',', stripslashes($_GET['themes']));
+        $sanitized_themes = sanitize_text_field(wp_unslash($_GET['themes']));
+		$themes = explode(',',$sanitized_themes);
 	} else if (isset($_POST['checked'])) {
-		$themes = array_map('sanitize_text_field', (array) $_POST['checked']);
+        $sanitized_themes = sanitize_text_field(wp_unslash($_POST['checked']));
+		$themes = array_map('sanitize_text_field', (array) $sanitized_themes);
 	} else {
 		$themes = [];
 	}
@@ -253,7 +287,7 @@ function sp_do_plugin_upload() {
 	// Plugin uploading indicator
 	?>
 		<div id = "sf-plugin-loader" >
-			<img src="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>" alt="Loading" />
+			<img src="<?php echo esc_attr(SPADMINIMAGES . 'sp_WaitBox.gif'); ?>" alt="Loading" />
 		</div>
 
 		<script>
@@ -272,7 +306,7 @@ function sp_do_plugin_upload() {
 	if ($result || is_wp_error($result)) $file_upload->cleanup();
 
 	# double check if we deleted the upload file and output message if not
-	if (file_exists($file_upload->package)) echo sprintf(SP()->primitives->admin_text('Notice: Unable to remove the uploaded plugin zip archive: %s'), $file_upload->package);
+	if (file_exists($file_upload->package)) echo esc_html(sprintf(SP()->primitives->admin_text('Notice: Unable to remove the uploaded plugin zip archive: %s'), $file_upload->package));
 
 	require_once ABSPATH.'wp-admin/admin-footer.php';
 }
@@ -303,7 +337,7 @@ function sp_do_theme_upload() {
 	// Theme Uploading indicator
 	?>
 		<div id = "sf-theme-loader" >
-			<img src="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>" alt="Loading" />
+			<img src="<?php echo esc_attr(SPADMINIMAGES . 'sp_WaitBox.gif') ?>" alt="Loading" />
 		</div>
 
 		<script>
@@ -322,7 +356,7 @@ function sp_do_theme_upload() {
 	if ($result || is_wp_error($result)) $file_upload->cleanup();
 
 	# double check if we deleted the upload file and output message if not
-	if (file_exists($file_upload->package)) echo sprintf(SP()->primitives->admin_text('Notice: Unable to remove the uploaded theme zip archive: %s'), $file_upload->package);
+	if (file_exists($file_upload->package)) echo esc_html(sprintf(SP()->primitives->admin_text('Notice: Unable to remove the uploaded theme zip archive: %s'), $file_upload->package));
 
 	require_once ABSPATH.'wp-admin/admin-footer.php';
 }
