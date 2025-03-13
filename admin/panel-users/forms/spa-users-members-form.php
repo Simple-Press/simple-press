@@ -194,11 +194,21 @@ function sp_list_members() {
         'format'    => '',
         'current'   => $paged,
         'total'     => $total_pages,
-        'prev_text' => __( '&laquo; Prev', 'simplepress' ),
-        'next_text' => __( 'Next &raquo;', 'simplepress' ),
+        'prev_text' => __( 'Previous', 'simplepress' ),
+        'next_text' => __( 'Next', 'simplepress' ),
+        'type'      => 'array'
     ) );
-
-    echo '<div class="pagination">' . $pagination . '</div>';
+    
+    if ( ! empty( $pagination ) ) {
+        $processed_pagination = array_map( function( $link ) use ( $paged, $base_url ) {
+            if ( strpos( $link, 'current' ) !== false ) {
+                return '<a class="page-numbers current sf-current-page" href="' . esc_url( add_query_arg( 'paged', $paged, $base_url ) ) . '">' . $paged . '</a>';
+            }
+            return $link;
+        }, $pagination );
+    
+        echo '<div class="sf-pagination sf-mt-15"><span class="sf-pagination-links">' . implode( '', $processed_pagination ) . '</span></div>';
+    }
 
     return ob_get_clean();
 }
