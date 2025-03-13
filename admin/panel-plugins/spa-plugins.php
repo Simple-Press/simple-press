@@ -45,11 +45,10 @@ $title  = (isset($_GET['title'])) ? urldecode(SP()->filters->str($_GET['title'])
 $plugin = (isset($_GET['plugin'])) ? SP()->filters->str($_GET['plugin']) : '';
 
 if ($action && $action == 'uninstall') {
-    $msg = '<h3>'.SP()->primitives->admin_text('Please confirm that you want to uninstall this plugin?');
-    $msg.= '</h3><b>'.SP()->primitives->admin_text('Please be aware!');
-    $msg.= '</b><br><br>'.SP()->primitives->admin_text('Uninstalling a plugin will also remove ANY components that the plugin created when first activated. This can include folders where items have been stored, database tables, permission settings etc.');
-    $msg.= '<br><br><b>'.SP()->primitives->admin_text('If in doubt - deactivate the plugin instead');
-    $msg.= '</b>';
+    $msg = '<h3>'. esc_html(SP()->primitives->admin_text('Please confirm that you want to uninstall this plugin?')) . '</h3>';
+    $msg.= '<b>'.esc_html(SP()->primitives->admin_text('Please be aware!')) . '</b>';
+    $msg.= '<br><br>'.esc_html(SP()->primitives->admin_text('Uninstalling a plugin will also remove ANY components that the plugin created when first activated. This can include folders where items have been stored, database tables, permission settings etc.'));
+    $msg.= '<br><br><b>'.esc_html(SP()->primitives->admin_text('If in doubt - deactivate the plugin instead')) .'</b>';
     $msg = apply_filters('sph_uninstall_message', $msg, $plugin);
 ?>
 	<div id="dialog"></div>
@@ -58,13 +57,13 @@ if ($action && $action == 'uninstall') {
 		(function(spj, $, undefined) {
 			$(document).ready(function() {
 				var execute = function() {
-					window.location = '<?php echo SPADMINPLUGINS."&plugin=$plugin&action=uninstall_confirmed&sfnonce=".wp_create_nonce('forum-adminform_plugins'); ?>';
+					window.location = '<?php echo esc_js(SPADMINPLUGINS."&plugin=$plugin&action=uninstall_confirmed&sfnonce=".wp_create_nonce('forum-adminform_plugins')); ?>';
 				};
 				var cancel = function() {
-					window.location = '<?php echo SPADMINPLUGINS."&plugin=$plugin&action=uninstall_cancelled&sfnonce=".wp_create_nonce('forum-adminform_plugins'); ?>';
+					window.location = '<?php echo esc_js(SPADMINPLUGINS."&plugin=$plugin&action=uninstall_cancelled&sfnonce=".wp_create_nonce('forum-adminform_plugins')); ?>';
 				};
 
-				$('#dialog').html('<?php echo $msg; ?>');
+				$('#dialog').html('<?php wp_kses_post($msg); ?>');
 				$('#dialog').dialog({
 					modal: true,
 					autoOpen: true,
@@ -74,7 +73,7 @@ if ($action && $action == 'uninstall') {
 					height: 'auto',
 					draggable: false,
 					resizable: false,
-					title: '<?php echo($plugin); ?>',
+					title: '<?php echo esc_js($plugin); ?>',
 					closeText: '',
 					buttons: {
 						"<?php SP()->primitives->admin_etext('Uninstall'); ?>": execute,
@@ -110,9 +109,9 @@ if ($action) {
 			(function(spj, $, undefined) {
 				$(document).ready(function(){
 					$("#sfmsgspot").fadeIn("fast");
-					$("#sfmsgspot").html("<?php echo $msg; ?>");
+					$("#sfmsgspot").html("<?php echo wp_kses_post($msg); ?>");
 					$("#sfmsgspot").fadeOut(8000);
-					window.location = '<?php echo SPADMINPLUGINS; ?>';
+					window.location = '<?php echo esc_js(SPADMINPLUGINS); ?>';
 				});
 			}(window.spj = window.spj || {}, jQuery));
     	</script>
