@@ -18,7 +18,7 @@ function spa_options_newposts_form() {
 			spj.loadAjaxForm('sfnewpostsform', '');
 			$('#color-background').farbtastic('#flag-background');
 			$('#color-text').farbtastic('#flag-color');
-                        
+
                         // farbtastic >
                         $('.sf-wrap-farbtastic input').focus(function() {
                             $(this).closest('.sf-wrap-farbtastic').find('.sf-farbtastic').show();
@@ -75,7 +75,7 @@ function spa_options_newposts_form() {
 	spa_paint_tab_right_cell();
 
     	spa_paint_open_panel();
-    		spa_paint_open_fieldset(__('Post Flagging', 'sp-polls'), true, 'flag-display');         	
+    		spa_paint_open_fieldset(SP()->primitives->admin_text('Post Flagging', 'sp-polls'), true, 'flag-display');
 ?>
             <div class="sf-form-row">
                 <label><?php echo esc_html(SP()->primitives->admin_text('Flag Preview')); ?></label>

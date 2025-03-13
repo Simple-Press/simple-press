@@ -19,7 +19,7 @@ function spa_plugins_user_form($admin, $save, $form, $reload) {
 					$('#sfpluginsuser').ajaxForm({
 						target: '#sfmsgspot',
 						success: function() {
-							<?php if (!empty($reload)) echo "jQuery('#".$reload."').click();"; ?>
+							<?php if (!empty($reload)) echo "jQuery('#".esc_attr($reload)."').click();"; ?>
 							$('#sfmsgspot').fadeIn();
 							$('#sfmsgspot').fadeOut(6000);
 						}
@@ -30,8 +30,8 @@ function spa_plugins_user_form($admin, $save, $form, $reload) {
 <?php
     	spa_paint_options_init();
         $ajaxURL = wp_nonce_url(SPAJAXURL.'plugins-loader&amp;saveform=plugin&amp;func='.$save, 'plugins-loader');
-    	echo '<form action="'.$ajaxURL.'" method="post" id="sfpluginsuser" name="sfpluginsuser">';
-    	echo sp_create_nonce('forum-adminform_userplugin');
+    	echo '<form action="'.esc_attr($ajaxURL).'" method="post" id="sfpluginsuser" name="sfpluginsuser">';
+        echo '<input type="hidden" name="forum-adminform_userplugin" value="forum-adminform_userplugin" />';
     }
 
     call_user_func($admin);
@@ -40,7 +40,7 @@ function spa_plugins_user_form($admin, $save, $form, $reload) {
 ?>
     	<div class="sf-form-submit-bar">
 <?php
-			echo apply_filters('sph_UpdateBar', '<input type="submit" class="sf-button-primary" value="'.SP()->primitives->admin_text("Update").'" />', $reload);
+			echo apply_filters('sph_UpdateBar', '<input type="submit" class="sf-button-primary" value="'.esc_attr(SP()->primitives->admin_text("Update")).'" />', esc_attr($reload));
 ?>
     	</div>
         <?php spa_paint_close_tab(); ?>
