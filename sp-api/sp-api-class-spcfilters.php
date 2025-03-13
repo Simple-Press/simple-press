@@ -37,16 +37,20 @@ class spcFilters {
 		return addslashes(preg_replace($patterns, $replace, $str));
 	}
 
-	public function integer($checkval) {
-		$actual = '';
-		if (isset($checkval)) {
-			if (is_numeric($checkval)) $actual = $checkval;
-			$checklen = strlen(strval($actual));
-			if ($checklen != strlen($checkval)) die(SP()->primitives->front_text('A Suspect Request has been Rejected'));
-		}
+    public function integer($checkval) {
+        if (!is_numeric($checkval)) {
+            return '';
+        }
 
-		return $actual;
-	}
+        $actual = (string) $checkval;
+
+        if (strlen($actual) !== strlen((string) $checkval)) {
+            die(esc_html(SP()->primitives->front_text('A Suspect Request has been Rejected')));
+        }
+
+        return $actual;
+    }
+
 
 	public function str($string) {
 		$string = $this->esc_sql($string);
@@ -85,7 +89,7 @@ class spcFilters {
 		global $wpdb;
 		return mysqli_real_escape_string($wpdb->dbh, $string);
 	}
-	
+
 	public function url($string) {
 		return filter_var($string, FILTER_SANITIZE_URL);
 	}
@@ -133,7 +137,7 @@ class spcFilters {
 		$content = str_replace('&nbsp;', ' ', $content);
 
 		# 7: strip html tags
-		$content = strip_tags($content);
+		$content = wp_strip_all_tags($content);
 
 		# 8: apply any users custom filters
 		$content = apply_filters('sph_email_content_filter', $content, $original);
