@@ -149,7 +149,7 @@ if($sp_action !== ''){
 					case 'expired' :
 		
 						$message = sprintf(
-							__( 'Your license key expired on %s.' ),
+                            SP()->primitives->admin_text( 'Your license key expired on %s.' ),
 							date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
 						);
 						break;
@@ -172,7 +172,7 @@ if($sp_action !== ''){
 		
 					case 'item_name_mismatch' :
 		
-						$message = sprintf( __( 'This appears to be an invalid license key for %s.' ), $item_name );
+						$message = sprintf( SP()->primitives->admin_text( 'This appears to be an invalid license key for %s.' ), $item_name );
 						break;
 		
 					case 'no_activations_left':
