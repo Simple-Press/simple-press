@@ -2,10 +2,7 @@
 /*
   Simple:Press
   Admin User Groups Support Functions
-  $LastChangedDate: 2017-02-11 15:35:37 -0600 (Sat, 11 Feb 2017) $
-  $Rev: 15187 $
  */
-
 if ( ! defined( 'ABSPATH' ) ) {
     die('Access denied - you cannot directly call this file');
 }
@@ -26,7 +23,7 @@ function spa_get_mapping_data() {
 
 function spa_members_not_belonging_to_any_usergroup($pageNum = 1, $filter = '', $maxItemsOnPage = 10) {
     global $wpdb;
-    $alphabet = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+    $alphabet = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
     $members = array();
     $pagination = array();
     $filter = urldecode($filter);
@@ -73,20 +70,20 @@ function spa_members_not_belonging_to_any_usergroup($pageNum = 1, $filter = '', 
     ?>
     <table class="widefat sf-table-small sf-table-mobile">
         <thead>
-            <tr class="sf-v-a-middle" class="sf-narrow">
+            <tr class="sf-v-a-middle sf-narrow">
                 <th class="sf-narrow"><input type="checkbox" data-bind-cb="[name='amid[]']"></th>
                 <th>
                     <div class="sf-alphabet">
-                        <button class="sf-button<?php echo (!mb_strlen($filter)) ? ' sf-active' : '' ?>"><?php echo SP()->primitives->admin_text('All') ?></button>
-                        <button class="sf-button<?php echo $filter == '[0-9]' ? ' sf-active' : '' ?>" value="[0-9]">0 - 9</button>
+                        <button class="sf-button<?php echo (!mb_strlen($filter)) ? ' sf-active' : '' ?>"><?php echo esc_html( SP()->primitives->admin_text('All') ) ?></button>
+                        <button class="sf-button<?php echo ($filter == '[0-9]') ? ' sf-active' : '' ?>" value="[0-9]">0 - 9</button>
                         <?php foreach ($alphabet as $letter): ?>
-                            <button class="sf-button<?php echo strcasecmp($filter, $letter) == 0 ? ' sf-active' : '' ?>" value="<?php echo $letter ?>"><?php echo $letter ?></button>
+                            <button class="sf-button<?php echo (strcasecmp($filter, $letter) == 0) ? ' sf-active' : '' ?>" value="<?php echo esc_attr($letter) ?>"><?php echo esc_html($letter) ?></button>
                         <?php endforeach ?>
                     </div>
                 </th>
                 <th>
                     <div class="sf-pull-right">
-                        <?php echo sprintf('%s %d %s', SP()->primitives->admin_text('Total'), $countTotal, SP()->primitives->admin_text('Members')) ?>
+                        <?php echo sprintf('%s %d %s', esc_html( SP()->primitives->admin_text('Total') ), intval($countTotal), esc_html( SP()->primitives->admin_text('Members') ) ); ?>
                     </div>
                 </th> 
             </tr>
@@ -95,16 +92,16 @@ function spa_members_not_belonging_to_any_usergroup($pageNum = 1, $filter = '', 
             <?php if (!$members): ?> 
                 <tr class="sp-v-a-middle">
                     <td colspan="3">
-                        <div class="sf-alert-block sf-info"><?php echo SP()->primitives->admin_text('List is empty') ?></div> 
+                        <div class="sf-alert-block sf-info"><?php echo esc_html( SP()->primitives->admin_text('List is empty') ) ?></div> 
                     </td>
                 </tr>
             <?php else: ?>
                 <?php foreach ($members as $member) : ?>
                     <tr class="sp-v-a-middle">
-                        <td class="sf-narrow"><input type="checkbox" name="amid[]" value="<?php echo $member->user_id ?>"></td>
+                        <td class="sf-narrow"><input type="checkbox" name="amid[]" value="<?php echo esc_attr($member->user_id) ?>"></td>
                         <td colspan="2">
-                            <div class="sf-avatar"><img src="<?php echo get_avatar_url($member->user_id) ?>" alt="avatar"></div>
-                            <span class="sf-user-name"><?php echo $member->display_name ?></span>
+                            <div class="sf-avatar"><img src="<?php echo esc_url(get_avatar_url($member->user_id)) ?>" alt="avatar"></div>
+                            <span class="sf-user-name"><?php echo esc_html($member->display_name) ?></span>
                         </td>
                     </tr>
                 <?php endforeach ?>
@@ -116,20 +113,19 @@ function spa_members_not_belonging_to_any_usergroup($pageNum = 1, $filter = '', 
             <span class="sf-pagination-links">
                 <a class="sf-first-page spLoadAjax" href="javascript:void(0);"
                    data-target=".sf-not-belonging-to-any-usergroup"
-                   data-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1&amp;page=1&amp;filter={$filter}", 'usergroups') ?>"
+                   data-url="<?php echo esc_url( wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1&amp;page=1&amp;filter=" . urlencode($filter), 'usergroups') ); ?>"
                    ></a>
                    <?php foreach ($pagination as $n => $v): ?>
-                    <a class="spLoadAjax<?php echo $pageNum == $n ? ' sf-current-page' : '' ?>" href="javascript:void(0);"
+                    <a class="spLoadAjax<?php echo ($pageNum == $n) ? ' sf-current-page' : '' ?>" href="javascript:void(0);"
                        data-target=".sf-not-belonging-to-any-usergroup"
-                       data-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1&amp;page={$n}&amp;filter={$filter}", 'usergroups') ?>"
-                       ><?php echo $v ?></a>
+                       data-url="<?php echo esc_url( wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1&amp;page=" . intval($n) . "&amp;filter=" . urlencode($filter), 'usergroups') ); ?>"
+                       ><?php echo esc_html($v) ?></a>
                    <?php endforeach ?>
                 <a class="sf-last-page spLoadAjax" href="javascript:void(0);"
                    data-target=".sf-not-belonging-to-any-usergroup"
-                   data-url="<?php echo wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1&amp;page={$countPages}&amp;filter={$filter}", 'usergroups') ?>"
+                   data-url="<?php echo esc_url( wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1&amp;page=" . intval($countPages) . "&amp;filter=" . urlencode($filter), 'usergroups') ); ?>"
                    ></a>
             </span>
         </div>
-    <?php endif ?>
-    <?php
+    <?php endif;
 }
