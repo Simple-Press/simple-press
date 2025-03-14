@@ -136,7 +136,7 @@ function spa_add_plugin_action($links, $plugin) {
 	if ($plugin == SP_FOLDER_NAME.'/sp-control.php') {
 		if (SP()->core->status != 'ok') {
 			# Install or Upgrade
-			$actionlink = '<a href="'.admin_url('admin.php?page='.SPINSTALLPATH).'">'.SP()->primitives->admin_text(SP()->core->status).'</a>';
+			$actionlink = '<a href="'.esc_url(admin_url('admin.php?page='.SPINSTALLPATH)).'">'.esc_html(SP()->primitives->admin_text(SP()->core->status)).'</a>';
 			array_unshift($links, $actionlink);
 		} else {
 			# Uninstall
@@ -152,35 +152,35 @@ function spa_add_plugin_action($links, $plugin) {
 								var answer = $("#spuninstalldialog").dialog({width: 600})
 									.find(':checkbox').off('change').on('change', function (e) {
 										if (this.checked)
-											$('#sp-url').val('<?php echo "$passURL&remove=storage"; ?>');
+											$('#sp-url').val('<?php echo esc_js($passURL . "&remove=storage"); ?>');
 										else
-											$('#sp-url').val('<?php echo $passURL; ?>');
+											$('#sp-url').val('<?php echo esc_js($passURL); ?>');
 									});
 							});
 						});
 					}(window.spj = window.spj || {}, jQuery));
                 </script>
 				<?php
-				$actionlink = '<div id="spuninstalldialog" style="display:none;border:2px solid red;width:auto;" title="'.SP()->primitives->admin_text('Uninstall Simple:Press').'">';
-				$actionlink .= '<input type="hidden" id="sp-url" name="sp-url" value="'.$passURL.'" />';
-				$actionlink .= '<p style="font-weight:bold">'.SP()->primitives->admin_text('Are you sure you want to uninstall Simple:Press?').'</p>';
-				$actionlink .= '<p style="font-weight:bold">'.SP()->primitives->admin_text('This option will REMOVE ALL FORUM DATA after deactivating Simple:Press.').'</p>';
-				$actionlink .= '<p style="font-weight:bold">'.SP()->primitives->admin_text('Press CONFIRM to prepare for Simple:Press removal.	Press the X at top to cancel without proceeding.').'</p>';
-				$actionlink .= '<p style="font-weight:bold">'.SP()->primitives->admin_text('If after enabling, you wish to cancel the uninstall, visit the forum admin - toolbox - uninstall panel.').'</p>';
+				$actionlink = '<div id="spuninstalldialog" style="display:none;border:2px solid red;width:auto;" title="'.esc_html(SP()->primitives->admin_text('Uninstall Simple:Press')).'">';
+				$actionlink .= '<input type="hidden" id="sp-url" name="sp-url" value="'.esc_attr($passURL).'" />';
+				$actionlink .= '<p style="font-weight:bold">'.esc_html(SP()->primitives->admin_text('Are you sure you want to uninstall Simple:Press?')).'</p>';
+				$actionlink .= '<p style="font-weight:bold">'.esc_html(SP()->primitives->admin_text('This option will REMOVE ALL FORUM DATA after deactivating Simple:Press.')).'</p>';
+				$actionlink .= '<p style="font-weight:bold">'.esc_html(SP()->primitives->admin_text('Press CONFIRM to prepare for Simple:Press removal.	Press the X at top to cancel without proceeding.')).'</p>';
+				$actionlink .= '<p style="font-weight:bold">'.esc_html(SP()->primitives->admin_text('If after enabling, you wish to cancel the uninstall, visit the forum admin - toolbox - uninstall panel.')).'</p>';
 				$actionlink .= '<label for="sp-storage"><input type="checkbox" id="sp-storage" />Remove SP Storage Locations on uninstall.</label><br /><br />';
-				$actionlink .= '<div style="text-align:center;"><input type="button" class="sf-button-primary" onclick="javascript:loc=jQuery(\'#sp-url\').val();window.location = loc;" value="'.SP()->primitives->admin_text('Confirm').'" /></div>';
-				$actionlink .= '<br /><hr /><p><u>'.SP()->primitives->admin_text('HELP US TO IMPROVE Simple:Press').'</u></p>';
-				$actionlink .= '<p style="font-weight:bold"><i>'.SP()->primitives->admin_text('We continually strive to improve and enhance Simple:Press to meet our users requirements and we are sorry to see you go.  We would very much welcome your feedback').'</i></p>';
-				$actionlink .= '<p style="font-weight:bold">'.SP()->primitives->admin_text('Please do send us an').' <a href="mailto:support@simple-press.com?subject=Why%20we%20are%20unintsalling%20Simple:Press">'.SP()->primitives->admin_text('email').'</a> '.SP()->primitives->admin_text('with your comments.').'</p>';
+				$actionlink .= '<div style="text-align:center;"><input type="button" class="sf-button-primary" onclick="javascript:loc=jQuery(\'#sp-url\').val();window.location = loc;" value="'.esc_html(SP()->primitives->admin_text('Confirm')).'" /></div>';
+				$actionlink .= '<br /><hr /><p><u>'.esc_html(SP()->primitives->admin_text('HELP US TO IMPROVE Simple:Press')).'</u></p>';
+				$actionlink .= '<p style="font-weight:bold"><i>'.esc_html(SP()->primitives->admin_text('We continually strive to improve and enhance Simple:Press to meet our users requirements and we are sorry to see you go.  We would very much welcome your feedback')).'</i></p>';
+				$actionlink .= '<p style="font-weight:bold">'.esc_html(SP()->primitives->admin_text('Please do send us an')).' <a href="mailto:support@simple-press.com?subject=Why%20we%20are%20unintsalling%20Simple:Press">'.esc_html(SP()->primitives->admin_text('email')).'</a> '.esc_html(SP()->primitives->admin_text('with your comments.')).'</p>';
 				$actionlink .= '</div>';
-				$actionlink .= '<a id="sp-uninstall-link">'.SP()->primitives->admin_text('Uninstall').'</a>';
+				$actionlink .= '<a id="sp-uninstall-link">'.esc_html(SP()->primitives->admin_text('Uninstall')).'</a>';
 				array_unshift($links, $actionlink);
 			}
 
-			$actionlink = '<a href="https://simple-press.com/pricing/">'.SP()->primitives->admin_text('Premium Support').'</a>';
+			$actionlink = '<a href="https://simple-press.com/pricing/">'.esc_html(SP()->primitives->admin_text('Premium Support')).'</a>';
 			array_push($links, $actionlink);
 
-			$actionlink = '<a href="https://simple-press.com/documentation-landing-page/">'.SP()->primitives->admin_text('Documentation').'</a>';
+			$actionlink = '<a href="https://simple-press.com/documentation-landing-page/">'.esc_html(SP()->primitives->admin_text('Documentation')).'</a>';
 			array_push($links, $actionlink);
 		}
 	}
@@ -372,7 +372,7 @@ function spa_deactivate_plugin() {
  */
 function spa_wp_discussion_avatar($list) {
 	echo '<h3>'.SP()->primitives->admin_text('Currently, all WP avatars are being replaced by Simple:Press avatars. You can change this at');
-	echo ': <a href="'.admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-profiles/spa-profiles.php&amp;tab=avatars').'">';
+	echo ': <a href="'.esc_url(admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-profiles/spa-profiles.php&amp;tab=avatars')).'">';
 	echo SP()->primitives->admin_text('Forum - Profiles - Avatars');
 	echo '</a>.';
 	echo '</h3>';
@@ -391,28 +391,25 @@ function spa_wp_discussion_avatar($list) {
 function sp_action_nag() {
 	if (strpos($_SERVER['REQUEST_URI'], 'sp-load-install') == 0 && $_SERVER['REQUEST_URI'] != '/wp-admin/index.php') {
 		echo '<div class="error highlight notice is-dismissible"><p><b>';
-		echo '<img style="vertical-align:bottom;border:none;margin:0 8px 60px 0;float:left" src="'.SP()->theme->paint_file_icon(SPADMINIMAGES, 'sp_Information.png').'" alt="" />'."\n";
+		echo '<img style="vertical-align:bottom;border:none;margin:0 8px 60px 0;float:left" src="'.esc_url(SP()->theme->paint_file_icon(SPADMINIMAGES, 'sp_Information.png')).'" alt="" />'."\n";
 		if (SP()->core->status == 'Install') {
-			echo sprintf(SP()->primitives->admin_text('Your Simple:Press forum is awaiting the initial database %s before it can be used'), strtolower(SP()->core->status));
+			echo sprintf(SP()->primitives->admin_text('Your Simple:Press forum is awaiting the initial database %s before it can be used'), strtolower(esc_html(SP()->core->status)));
 		} else if (SP()->core->status == 'Upgrade') {
-			echo sprintf(SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database %s'), strtolower(SP()->core->status));
+			echo sprintf(SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database %s'), strtolower(esc_html(SP()->core->status)));
 		}
-		echo '<br />' .SP()->primitives->admin_text('Please backup your site and then ') . '<a style="text-decoration: underline;" href="'.SPADMINUPGRADE.'">'.SP()->primitives->admin_text('Perform').' '.SP()->core->status.'</a>';
+		echo '<br />' .SP()->primitives->admin_text('Please backup your site and then ') . '<a style="text-decoration: underline;" href="'.esc_url(SPADMINUPGRADE).'">'.SP()->primitives->admin_text('Perform').' '.esc_html(SP()->core->status).'</a>';
 		echo '</b></p></div>';
     }
 
     # check for upgrades to 6.0+ from versions < 5.7.2 which is not allowed automatically (must be manual)
     if ($_SERVER['REQUEST_URI'] != '/wp-admin/index.php' && SP()->core->status == 'Unallowed 6.0 Upgrade') {
 		echo '<div class="error highlight notice is-dismissible"><p><b>';
-		echo '<img style="vertical-align:bottom;border:none;margin:0 8px 60px 0;float:left" src="'.SP()->theme->paint_file_icon(SPADMINIMAGES, 'sp_Information.png').'" alt="" />'."\n";
-        # this is unallowed 6.0+ upgrade - version less than 5.7.2
-        # uprading not allowed since its breaking changes and should be manually upgraded
-        # since we dont allow, we need special messaging here
+		echo '<img style="vertical-align:bottom;border:none;margin:0 8px 60px 0;float:left" src="'.esc_url(SP()->theme->paint_file_icon(SPADMINIMAGES, 'sp_Information.png')).'" alt="" />'."\n";
 		echo SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database upgrade.').'<br />';
-		echo sprintf(SP()->primitives->admin_text('You are attempting to upgrade to version %s from you current version of %s.'), SPVERSION, SP()->options->get('sfversion')).'<br />';
+		echo sprintf(SP()->primitives->admin_text('You are attempting to upgrade to version %s from you current version of %s.'), esc_html(SPVERSION), esc_html(SP()->options->get('sfversion'))).'<br />';
 		echo SP()->primitives->admin_text('Unfortunately, auto upgrades from versions prior to 5.7.2 are not allowd due to the complexity of the changes.').'<br />';
         echo SP()->primitives->admin_text('Please visit our ').'<a href="https://simple-press.com/documentation/installation/upgrading/previous-simplepress-versions/">'.SP()->primitives->admin_text('previous versions page').'</a>';
-        echo sprintf(SP()->primitives->admin_text(', then download and upgrade to at least version 5.7.2 before attempting to upgrade to version %s.'), SPVERSION).'<br />';
+        echo sprintf(SP()->primitives->admin_text(', then download and upgrade to at least version 5.7.2 before attempting to upgrade to version %s.'), esc_html(SPVERSION)).'<br />';
     	echo '</b></p></div>';
    }
 }
@@ -478,10 +475,10 @@ function spa_dashboard_forum() {
 	# check we have an installed version
 	if (SP()->core->status != 'ok') {
 		$out .= '<div style="border: 1px solid #ddd; padding: 10px; font-weight: bold;">'."\n";
-		$out .= '<p><img style="vertical-align:bottom;border:none;margin:0 8px 30px 0;float:left" src="'.SP()->theme->paint_file_icon(SPADMINIMAGES, 'sp_Information.png').'" alt="" />'."\n";
-		$out .= sprintf(SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database %s'), strtolower(SP()->core->status));
+		$out .= '<p><img style="vertical-align:bottom;border:none;margin:0 8px 30px 0;float:left" src="'.esc_url(SP()->theme->paint_file_icon(SPADMINIMAGES, 'sp_Information.png')).'" alt="" />'."\n";
+		$out .= sprintf(SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database %s'), strtolower(esc_html(SP()->core->status)));
 
-		if (SP()->user->thisUser->admin) $out .= '<br />' .SP()->primitives->admin_text('Please backup your site and then ') . '<a style="text-decoration: underline;" href="'.SPADMINUPGRADE.'">'.SP()->primitives->admin_text('Perform Upgrade').'</a>';
+		if (SP()->user->thisUser->admin) $out .= '<br />' .SP()->primitives->admin_text('Please backup your site and then ') . '<a style="text-decoration: underline;" href="'.esc_url(SPADMINUPGRADE).'">'.SP()->primitives->admin_text('Perform Upgrade').'</a>';
 		$out .= '</p></div>';
 		echo $out;
 
@@ -530,7 +527,7 @@ function spa_dashboard_forum() {
 	do_action('sph_dashboard_end');
 
 	$out = '';
-	$out .= '<p><br /><a href="'.SP()->spPermalinks->get_url().'">'.SP()->primitives->admin_text('Go To Forum').'</a></p>';
+	$out .= '<p><br /><a href="'.esc_url(SP()->spPermalinks->get_url()).'">'.SP()->primitives->admin_text('Go To Forum').'</a></p>';
 	$out .= '</div>';
 	echo $out;
 }
@@ -558,7 +555,7 @@ function spa_dashboard_news() {
 	<?php
 	echo '<div id="spa_dashboard_news" style="background:#FFFFEA;border:2px solid #666;border-radius:9px;margin:10px;padding:15px;">';
 	echo '<div style="vertical-align:middle;border-bottom:1px solid #666;margin-bottom:16px;padding:7px 0;">';
-	echo '<img src="'.SPCOMMONIMAGES.'sp-full-logo.png" alt="" style="vertical-align:middle;float:left;margin:0 15px 10px 0;padding-right:12px;border-right:1px solid #666;" />';
+	echo '<img src="'.esc_url(SPCOMMONIMAGES).'sp-full-logo.png" alt="" style="vertical-align:middle;float:left;margin:0 15px 10px 0;padding-right:12px;border-right:1px solid #666;" />';
 	echo '<p style="vertical-align:middle;margin:13px 0 0 0;font-weight:bold;font-size:20px;line-height:1em;">'.SP()->primitives->admin_text('Recent News').'</p>';
 	echo '<div style="clear:both;"></div>';
 	echo '</div>';
@@ -571,9 +568,9 @@ function spa_dashboard_news() {
 	echo '<div style="border-top:1px solid #666;margin-top:18px;padding:10px 0;">';
 	$site = wp_nonce_url(SPAJAXURL.'remove-news&amp;targetaction=news', 'remove-news');
 	if(!empty($sp_update_plugins) || !empty($sp_update_themes)){
-		echo '<a href="'.self_admin_url('update-core.php').'"><input type="button" value="'.SP()->primitives->admin_text('Go to Update page').'" class="sf-button-primary" /></a> &nbsp; &nbsp;';	
+		echo '<a href="'.esc_url(self_admin_url('update-core.php')).'"><input type="button" value="'.SP()->primitives->admin_text('Go to Update page').'" class="sf-button-primary" /></a> &nbsp; &nbsp;';	
 	}
-	echo '<input type="button" value="'.SP()->primitives->admin_text('Remove News Item').'" class="sf-button-primary" onclick="spj.removeNews(\''.$site.'\')"/>';
+	echo '<input type="button" value="'.SP()->primitives->admin_text('Remove News Item').'" class="sf-button-primary" onclick="spj.removeNews(\''.esc_js($site).'\')"/>';
 	echo '</div>';
 	echo '</div>';
 }
@@ -635,7 +632,7 @@ if ( ! function_exists( 'spa_white_label_check' ) ) {
 }
 
 /**
- * This function returns true based on certain SAAS / SUPERADMIN conditions
+ * This function returns true based on certain SAAS / super-admin conditions
  *
  * @access public
  *
@@ -760,7 +757,7 @@ function spa_addons_changelog($_data, $_action = '', $_args = null ){
 			$_data = json_decode($check_for_addon_update);
 			
 			if ( $_data && isset( $_data->name ) ) {
-				$_data->name = $plugin_data['Name'];
+				$_data->name = esc_html($plugin_data['Name']);
 			}
 
 			if ( $_data && isset( $_data->download_link ) ) {
@@ -793,7 +790,7 @@ function spa_addons_changelog($_data, $_action = '', $_args = null ){
 			$_data = json_decode($check_for_addon_update);
 			
 			if ( $_data && isset( $_data->name ) ) {
-				$_data->name = $theme_data['Name'];
+				$_data->name = esc_html($theme_data['Name']);
 			}
 
 			if ( $_data && isset( $_data->download_link ) ) {
@@ -844,14 +841,14 @@ function spa_plugin_addon_dashboard_update()
 					if ($header) {
 						
 						?>
-						<h3 style="margin: 10px 0px 0px 0px;"><?php SP()->primitives->admin_etext('Simple:Press Plugins'); ?></h3>
-						<p><?php SP()->primitives->admin_etext('The following plugins have new versions available.'); ?></p>
+						<h3 style="margin: 10px 0px 0px 0px;"><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
+						<p><?php echo esc_html(SP()->primitives->admin_etext('The following plugins have new versions available.')); ?></p>
 							<table class="widefat" id="update-plugins-table">
 								<tbody class="plugins">
 									<?php
 									$header = false;
 					}
-					echo "<tr class='active'><td><strong>{".$plugin_data['Name']."}</strong><br />".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $plugin_data['Version'], $check_for_addon_update->new_version, SPVERSION)."</td>
+					echo "<tr class='active'><td><strong>{".esc_html($plugin_data['Name'])."}</strong><br />".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($plugin_data['Version']), esc_html($check_for_addon_update->new_version), esc_html(SPVERSION))."</td>
 					</tr>";
 				}
 			
@@ -869,14 +866,14 @@ function spa_plugin_addon_dashboard_update()
 
 							if ($header) {
 								?>
-								<h3 style="margin: 10px 0px 0px 0px;"><?php SP()->primitives->admin_etext('Simple:Press Plugins'); ?></h3>
-								<p><?php SP()->primitives->admin_etext('The following plugins have new versions available.'); ?></p>
+								<h3 style="margin: 10px 0px 0px 0px;"><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
+								<p><?php echo esc_html(SP()->primitives->admin_etext('The following plugins have new versions available.')); ?></p>
 									<table class="widefat" id="update-plugins-table">
 										<tbody class="plugins">
 											<?php
 											$header = false;
 							}
-							echo "<tr class='active'><td><strong>{".$plugin_data['Name']."}</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $plugin_data['Version'], $latest->version, SPVERSION)."</td>
+							echo "<tr class='active'><td><strong>{".esc_html($plugin_data['Name'])."}</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($plugin_data['Version']), esc_html($latest->version), esc_html(SPVERSION))."</td>
 							</tr>";
 						}
 					}
@@ -921,8 +918,8 @@ function spa_theme_addon_dashboard_update()
 				
 					if ($header) {
 						?>
-						<h3><?php SP()->primitives->admin_etext('Simple:Press Themes'); ?></h3>
-						<p><?php SP()->primitives->admin_etext('The following themes have new versions available.'); ?></p>
+						<h3><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Themes')); ?></h3>
+						<p><?php echo esc_html(SP()->primitives->admin_etext('The following themes have new versions available.')); ?></p>
 							<table class="widefat" id="update-themes-table">
 								<tbody class="plugins">
 									<?php
@@ -931,7 +928,7 @@ function spa_theme_addon_dashboard_update()
 					$screenshot = SPTHEMEBASEURL.$theme_file.'/'.$theme_data['Screenshot'];
 					echo "
 						<tr class='active'>
-						<td class='plugin-title'><strong>{$theme_data['Name']}</strong>".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $theme_data['Version'], $check_for_addon_update->new_version, SPVERSION)."</td>
+						<td class='plugin-title'><strong>".esc_html($theme_data['Name'])."</strong>".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($theme_data['Version']), esc_html($check_for_addon_update->new_version), esc_html(SPVERSION))."</td>
 						</tr>";
 				}
 			}
@@ -948,14 +945,14 @@ function spa_theme_addon_dashboard_update()
 
 							if ($header) {
 								?>
-								<h3 style="margin: 10px 0px 0px 0px;"><?php SP()->primitives->admin_etext('Simple:Press Plugins'); ?></h3>
-								<p><?php SP()->primitives->admin_etext('The following plugins have new versions available.'); ?></p>
+								<h3 style="margin: 10px 0px 0px 0px;"><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
+								<p><?php echo esc_html(SP()->primitives->admin_etext('The following plugins have new versions available.')); ?></p>
 									<table class="widefat" id="update-plugins-table">
 										<tbody class="plugins">
 											<?php
 											$header = false;
 							}
-							echo "<tr class='active'><td><strong>{".$theme_data['Name']."}</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $theme_data['Version'], $latest->version, SPVERSION)."</td>
+							echo "<tr class='active'><td><strong>{".esc_html($theme_data['Name'])."}</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($theme_data['Version']), esc_html($latest->version), esc_html(SPVERSION))."</td>
 							</tr>";
 						}
 					}
@@ -1016,23 +1013,23 @@ function spa_check_plugin_addon_update() {
 					$plugin_count++;
 					$form_action = 'update-core.php?action=do-sp-plugin-upgrade';
 					?>
-					<h3><?php SP()->primitives->admin_etext('Simple:Press Plugins'); ?></h3>
-					<p><?php SP()->primitives->admin_etext('The following plugins have new versions available. Check the ones you want to update and then click Update SP Plugin'); ?></p>
-					<p><?php SP()->primitives->admin_etext('Please Note: Any customizations you have made to plugin files will be lost'); ?></p>
-					<form method="post" action="<?php echo $form_action; ?>" name="upgrade-sp-plugins" class="upgrade">
+					<h3><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
+					<p><?php echo esc_html(SP()->primitives->admin_etext('The following plugins have new versions available. Check the ones you want to update and then click Update SP Plugin')); ?></p>
+					<p><?php echo esc_html(SP()->primitives->admin_etext('Please Note: Any customizations you have made to plugin files will be lost')); ?></p>
+					<form method="post" action="<?php echo esc_url($form_action); ?>" name="upgrade-sp-plugins" class="upgrade">
 						<?php wp_nonce_field('upgrade-core'); ?>
-						<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Plugins'); ?>" name="upgrade" /></p>
+						<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Plugins')); ?>" name="upgrade" /></p>
 						<table class="widefat" id="update-plugins-table">
 							<thead>
 								<tr>
 									<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-4" /></th>
-									<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php SP()->primitives->admin_etext('Select All'); ?></label></th>
+									<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
 									<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-4" /></th>
-									<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php SP()->primitives->admin_etext('Select All'); ?></label></th>
+									<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 								</tr>
 							</tfoot>
 							<tbody class="plugins">
@@ -1042,8 +1039,8 @@ function spa_check_plugin_addon_update() {
 				echo "
 				<tr class='active'>
 				<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($plugin_file)."' /></th>
-				<td><strong>{$plugin_data['Name']}</strong><br />".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s.'), $plugin_data['Version'], $check_for_addon_update->new_version).'</td>
-				</tr>';
+				<td><strong>".esc_html($plugin_data['Name'])."</strong><br />".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s.'), esc_html($plugin_data['Version']), esc_html($check_for_addon_update->new_version))."</td>
+				</tr>";
 				$data = new stdClass;
 				$data->slug = $plugin_file;
 				$data->new_version = (string) $check_for_addon_update->new_version;
@@ -1067,23 +1064,23 @@ function spa_check_plugin_addon_update() {
 								$plugin_count++;
 								$form_action = 'update-core.php?action=do-sp-plugin-upgrade';
 							?>
-							<h3><?php SP()->primitives->admin_etext('Simple:Press Plugins'); ?></h3>
-							<p><?php SP()->primitives->admin_etext('The following plugins have new versions available. Check the ones you want to update and then click Update SP Plugin'); ?></p>
-							<p><?php SP()->primitives->admin_etext('Please Note: Any customizations you have made to plugin files will be lost'); ?></p>
-							<form method="post" action="<?php echo $form_action; ?>" name="upgrade-sp-plugins" class="upgrade">
+							<h3><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
+							<p><?php echo esc_html(SP()->primitives->admin_etext('The following plugins have new versions available. Check the ones you want to update and then click Update SP Plugin')); ?></p>
+							<p><?php echo esc_html(SP()->primitives->admin_etext('Please Note: Any customizations you have made to plugin files will be lost')); ?></p>
+							<form method="post" action="<?php echo esc_url($form_action); ?>" name="upgrade-sp-plugins" class="upgrade">
 								<?php wp_nonce_field('upgrade-core'); ?>
-								<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Plugins'); ?>" name="upgrade" /></p>
+								<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Plugins')); ?>" name="upgrade" /></p>
 								<table class="widefat" id="update-themes-table">
 									<thead>
 										<tr>
 											<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-4" /></th>
-											<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php SP()->primitives->admin_etext('Select All'); ?></label></th>
+											<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
 											<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-4" /></th>
-											<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php SP()->primitives->admin_etext('Select All'); ?></label></th>
+											<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 										</tr>
 									</tfoot>
 									<tbody class="plugins">
@@ -1093,8 +1090,8 @@ function spa_check_plugin_addon_update() {
 									echo "
 									<tr class='active'>
 									<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($plugin_file)."' /></th>
-									<td><strong>{$plugin_data['Name']}</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $plugin_data['Version'], $latest->version, $latest->requires).'</td>
-									</tr>';
+									<td><strong>".esc_html($plugin_data['Name'])."</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($plugin_data['Version']), esc_html($latest->version), esc_html(SPVERSION))."</td>
+									</tr>";
 									$data = new stdClass;
 									$data->slug = $plugin_file;
 									$data->new_version = (string) $latest->version;
@@ -1122,12 +1119,12 @@ function spa_check_plugin_addon_update() {
 			?>
 		</tbody>
 	</table>
-	<p><input id="upgrade-themes-2" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Plugins'); ?>" name="upgrade" /></p>
+	<p><input id="upgrade-themes-2" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Plugins')); ?>" name="upgrade" /></p>
 	</form>
 	<?php
 	} else {
-		echo '<h3>'.SP()->primitives->admin_text('Simple:Press Plugins').'</h3>';
-		echo '<p>'.SP()->primitives->admin_text('Your SP plugins are all up to date').'</p>';
+		echo '<h3>'.esc_html(SP()->primitives->admin_text('Simple:Press Plugins')).'</h3>';
+		echo '<p>'.esc_html(SP()->primitives->admin_text('Your SP plugins are all up to date')).'</p>';
 	}
 
 	if($plugin_count > 0){
@@ -1146,7 +1143,6 @@ function spa_check_plugin_addon_update() {
 		}
 	}
 }
-
 
 # Lis of themes of update in admin Updates page if there any update available by licensing method or by xml
 
@@ -1191,23 +1187,23 @@ function spa_check_theme_addon_update(){
 					$plugin_count++;
 					$form_action = 'update-core.php?action=do-sp-theme-upgrade';
 					?>
-					<h3><?php SP()->primitives->admin_etext('Simple:Press Themes'); ?></h3>
-					<p><?php SP()->primitives->admin_etext('The following themes have new versions available. Check the ones you want to update and then click Update Themes.'); ?></p>
-					<p><?php echo '<b>'.SP()->primitives->admin_text('Please Note:').'</b> '.SP()->primitives->admin_text('Any customizations you have made to theme files will be lost.'); ?></p>
-					<form method="post" action="<?php echo $form_action; ?>" name="upgrade-themes" class="upgrade">
+					<h3><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Themes')); ?></h3>
+					<p><?php echo esc_html(SP()->primitives->admin_etext('The following themes have new versions available. Check the ones you want to update and then click Update Themes.')); ?></p>
+					<p><?php echo '<b>'.esc_html(SP()->primitives->admin_text('Please Note:')).'</b> '.esc_html(SP()->primitives->admin_text('Any customizations you have made to theme files will be lost.')); ?></p>
+					<form method="post" action="<?php echo esc_url($form_action); ?>" name="upgrade-themes" class="upgrade">
 						<?php wp_nonce_field('upgrade-core'); ?>
-						<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Themes'); ?>" name="upgrade" /></p>
+						<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Themes')); ?>" name="upgrade" /></p>
 						<table class="widefat" id="update-themes-table">
 							<thead>
 								<tr>
 									<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-3" /></th>
-									<th scope="col" class="manage-column"><label for="themes-select-all-3"><?php SP()->primitives->admin_etext('Select All'); ?></label></th>
+									<th scope="col" class="manage-column"><label for="themes-select-all-3"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
 									<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-3" /></th>
-									<th scope="col" class="manage-column"><label for="themes-select-all-3"><?php SP()->primitives->admin_etext('Select All'); ?></label></th>
+									<th scope="col" class="manage-column"><label for="themes-select-all-3"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 								</tr>
 							</tfoot>
 							<tbody class="plugins">
@@ -1218,7 +1214,7 @@ function spa_check_theme_addon_update(){
 				echo "
 					<tr class='active'>
 					<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($theme_file)."' /></th>
-					<td class='plugin-title'><img src='$screenshot' width='64' height='64' style='float:left; padding: 5px' /><strong>{$theme_data['Name']}</strong>".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s.'), $theme_data['Version'], $check_for_addon_update->new_version)."</td>
+					<td class='plugin-title'><img src='".esc_url($screenshot)."' width='64' height='64' style='float:left; padding: 5px' /><strong>".esc_html($theme_data['Name'])."</strong>".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s.'), esc_html($theme_data['Version']), esc_html($check_for_addon_update->new_version))."</td>
 					</tr>";
 				$data = new stdClass;
 				$data->slug = $theme_file;
@@ -1243,23 +1239,23 @@ function spa_check_theme_addon_update(){
 								$plugin_count++;
 								$form_action = 'update-core.php?action=do-sp-theme-upgrade';
 								?>
-								<h3><?php SP()->primitives->admin_etext('Simple:Press Themes'); ?></h3>
-								<p><?php SP()->primitives->admin_etext('The following themes have new versions available. Check the ones you want to update and then click Update Themes.'); ?></p>
-								<p><?php echo '<b>'.SP()->primitives->admin_text('Please Note:').'</b> '.SP()->primitives->admin_text('Any customizations you have made to theme files will be lost.'); ?></p>
-								<form method="post" action="<?php echo $form_action; ?>" name="upgrade-themes" class="upgrade">
+								<h3><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Themes')); ?></h3>
+								<p><?php echo esc_html(SP()->primitives->admin_etext('The following themes have new versions available. Check the ones you want to update and then click Update Themes.')); ?></p>
+								<p><?php echo '<b>'.esc_html(SP()->primitives->admin_text('Please Note:')).'</b> '.esc_html(SP()->primitives->admin_text('Any customizations you have made to theme files will be lost.')); ?></p>
+								<form method="post" action="<?php echo esc_url($form_action); ?>" name="upgrade-themes" class="upgrade">
 									<?php wp_nonce_field('upgrade-core'); ?>
-									<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Themes'); ?>" name="upgrade" /></p>
+									<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Themes')); ?>" name="upgrade" /></p>
 									<table class="widefat" id="update-themes-table">
 										<thead>
 											<tr>
 												<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all" /></th>
-												<th scope="col" class="manage-column"><label for="themes-select-all"><?php SP()->primitives->admin_etext('Select All'); ?></label></th>
+												<th scope="col" class="manage-column"><label for="themes-select-all"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 											</tr>
 										</thead>
 										<tfoot>
 											<tr>
 												<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-2" /></th>
-												<th scope="col" class="manage-column"><label for="themes-select-all-2"><?php SP()->primitives->admin_etext('Select All'); ?></label></th>
+												<th scope="col" class="manage-column"><label for="themes-select-all-2"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 											</tr>
 										</tfoot>
 										<tbody class="plugins">
@@ -1269,7 +1265,7 @@ function spa_check_theme_addon_update(){
 										$screenshot = SPTHEMEBASEURL.$theme_file.'/'.$theme_data['Screenshot'];
 										echo "<tr class='active'>
 										<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($theme_file)."' /></th>
-										<td class='plugin-title'><img src='$screenshot' width='64' height='64' style='float:left; padding: 5px' /><strong>{$theme_data['Name']}</strong>".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), $theme_data['Version'], $latest->version, $latest->requires)."</td></tr>";
+										<td class='plugin-title'><img src='".esc_url($screenshot)."' width='64' height='64' style='float:left; padding: 5px' /><strong>".esc_html($theme_data['Name'])."</strong>".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($theme_data['Version']), esc_html($latest->version), esc_html(SPVERSION))."</td></tr>";
 										$data = new stdClass;
 										$data->slug = $theme_file;
 										$data->stylesheet = $theme_data['Stylesheet'];
@@ -1298,13 +1294,13 @@ function spa_check_theme_addon_update(){
 		
 			</tbody>
 		</table>
-		<p><input id="upgrade-themes-2" class="sf-button" type="submit" value="<?php SP()->primitives->admin_etext('Update SP Themes'); ?>" name="upgrade" /></p>
+		<p><input id="upgrade-themes-2" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Themes')); ?>" name="upgrade" /></p>
 	</form>
 	<?php
 		
 	} else {
-		echo '<h3>'.SP()->primitives->admin_text('Simple:Press Themes').'</h3>';
-		echo '<p>'.SP()->primitives->admin_text('Your SP themes are all up to date').'</p>';
+		echo '<h3>'.esc_html(SP()->primitives->admin_text('Simple:Press Themes')).'</h3>';
+		echo '<p>'.esc_html(SP()->primitives->admin_text('Your SP themes are all up to date')).'</p>';
 	}
 
 	if($plugin_count > 0){
@@ -1314,6 +1310,7 @@ function spa_check_theme_addon_update(){
 			$sp_news_meta = array('show' => 1, 'news' => 'There are one or more Simple:Press plugin updates available');
 			SP()->meta->add('news', 'news', $sp_news_meta);
 		}else{
+
 			if(!isset($sp_news[0]['meta_value']['news'])){
 				$sp_news[0]['meta_value']['show'] = 1;
 				$sp_news[0]['meta_value']['news'] = 'There are one or more Simple:Press plugin updates available';
