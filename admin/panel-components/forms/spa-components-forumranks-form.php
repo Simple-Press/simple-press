@@ -82,7 +82,7 @@ function spa_components_forumranks_form() {
     $ajaxURL = wp_nonce_url(SPAJAXURL . 'components-loader&amp;saveform=forumranks', 'components-loader');
     ?>
         <div class='sf-panel-head'>
-            <?php echo esc_html(SP()->primitives->admin_text('Forum Ranks'); ?>
+            <?php SP()->primitives->admin_etext('Forum Ranks'); ?>
         </div>
         <div class='sf-panel-body'>
             <div class="sf-full-form">
