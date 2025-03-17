@@ -33,21 +33,21 @@ $list = SP()->DB->select($sql);
 <div>
     <?php if(empty($list)) : ?>
         <div class="sf-alert-block sf-caution">
-            <?php echo SP()->primitives->admin_etext('Not Currently In Use'); ?>
+            <?php echo esc_attr(SP()->primitives->admin_text('Not Currently In Use')); ?>
         </div>
     <?php else : ?>
         <table class="widefat sf-table-small sf-table-mobile">
             <thead>
                 <tr>
-                    <th><?php SP()->primitives->admin_etext('Used for Forum'); ?></th>
-                    <th><?php SP()->primitives->admin_etext('With Permission Set'); ?></th>
+                    <th><?php echo esc_html(SP()->primitives->admin_text('Used for Forum')); ?></th>
+                    <th><?php echo esc_html(SP()->primitives->admin_text('With Permission Set')); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach($list as $usage) : ?>
                     <tr>
-                        <td><?php echo($usage->forum_name); ?></td>
-                        <td><?php echo($usage->role_name); ?></td>
+                        <td><?php echo esc_html($usage->forum_name); ?></td>
+                        <td><?php echo esc_html($usage->role_name); ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
