@@ -12,11 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 spa_admin_ajax_support();
 
-if (!sp_nonce('permissions-loader')) die();
+if (!sp_nonce('permissions-loader')) {
+    die();
+}
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
-	die();
+	die(esc_html(SP()->core->status));
 }
 
 require_once SP_PLUGIN_DIR.'/admin/panel-permissions/spa-permissions-display.php';
@@ -39,24 +40,19 @@ if (isset($_GET['loadform'])) {
 if (isset($_GET['saveform'])) {
 	$saveform = sanitize_text_field($_GET['saveform']);
 	if ($saveform == 'addperm') {
-		echo spa_save_permissions_new_role();
-		die();
+		die(esc_html(spa_save_permissions_new_role()));
 	}
 	if ($saveform == 'editperm') {
-		echo spa_save_permissions_edit_role();
-		die();
+		die(esc_html(spa_save_permissions_edit_role()));
 	}
 	if ($saveform == 'delperm') {
-		echo spa_save_permissions_delete_role();
-		die();
+		die(esc_html(spa_save_permissions_delete_role()));
 	}
 	if ($saveform == 'resetperms') {
-		echo spa_save_permissions_reset();
-		die();
+		die(esc_html(spa_save_permissions_reset()));
 	}
 	if ($saveform == 'newauth') {
-		echo spa_save_permissions_new_auth();
-		die();
+		die(esc_html(spa_save_permissions_new_auth()));
 	}
 }
 
