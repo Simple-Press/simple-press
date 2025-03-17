@@ -32,7 +32,9 @@ function spa_options_content_form() {
                         if (empty($tz)) {
                             $tz = SP()->primitives->admin_text('Unknown');
                         }
-                        echo '&nbsp;'.SP()->primitives->admin_text('Server timezone set to').': '.$tz;
+                        echo '&nbsp;';
+                        SP()->primitives->admin_etext('Server timezone set to');
+                        echo ': '.$tz;
                     echo '</span>';
                 echo '</div>';
 
