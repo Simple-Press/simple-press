@@ -23,7 +23,7 @@ function spa_forums_edit_group_form($group_id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=editgroup', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfgroupedit<?php echo $group->group_id; ?>" name="sfgroupedit<?php echo $group->group_id; ?>" class="sfinline-form">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfgroupedit<?php echo $group->group_id; ?>" name="sfgroupedit<?php echo $group->group_id; ?>" class="sfinline-form">
 <?php
 		sp_echo_create_nonce('forum-adminform_groupedit');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), false);

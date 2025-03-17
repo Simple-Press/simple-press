@@ -16,7 +16,7 @@ function spa_toolbox_cron_form() {
 <script>
    	spj.loadAjaxForm('sfcronform', 'sfcron');
 </script>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfcronform" name="sfcronform">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfcronform" name="sfcronform">
 	<?php sp_echo_create_nonce('forum-adminform_cron'); ?>
 <?php
    	$cronData = spa_get_cron_data();

@@ -20,7 +20,7 @@ function spa_components_sr_add_members_form($rank_id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL."components-loader&saveform=specialranks&targetaction=addmember&id=$rank_id", 'components-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfmembernew<?php echo $rank_id; ?>" name="sfmembernew<?php echo $rank_id ?>">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfmembernew<?php echo $rank_id; ?>" name="sfmembernew<?php echo $rank_id ?>">
 <?php
                 spa_paint_open_nohead_tab(true, '');
 		sp_echo_create_nonce('special-rank-add');

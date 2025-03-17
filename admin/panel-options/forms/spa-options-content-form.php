@@ -14,7 +14,7 @@ function spa_options_content_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'options-loader&amp;saveform=content', 'options-loader');
 ?>
-<form action="<?php echo $ajaxURL; ?>" method="post" id="sfcontentform" name="sfcontent">
+<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfcontentform" name="sfcontent">
 	<?php sp_echo_create_nonce('forum-adminform_content'); ?>
 <?php
 

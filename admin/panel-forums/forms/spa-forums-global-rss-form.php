@@ -22,7 +22,7 @@ function spa_forums_global_rss_form() {
 
 	$ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=globalrss', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfnewglobalrss" name="sfnewglobalrss">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfnewglobalrss" name="sfnewglobalrss">
 <?php
 		sp_echo_create_nonce('forum-adminform_globalrss');
 		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Global RSS Settings'), true);

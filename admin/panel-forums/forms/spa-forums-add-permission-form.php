@@ -25,7 +25,7 @@ function spa_forums_add_permission_form($forum_id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=addperm', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfpermissionnew<?php echo $forum->forum_id; ?>" name="sfpermissionnew<?php echo $forum->forum_id; ?>">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfpermissionnew<?php echo $forum->forum_id; ?>" name="sfpermissionnew<?php echo $forum->forum_id; ?>">
 <?php
         echo '<input type="hidden" name="'.esc_attr('forum-adminform_permissionnew').'" value="'.esc_attr(wp_create_nonce('forum-adminform_resetpermissions')).'" />';
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);

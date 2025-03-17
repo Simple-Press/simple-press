@@ -20,7 +20,7 @@ function spa_admins_your_options_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'admins-loader&amp;saveform=youradmin', 'admins-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfmyadminoptionsform" name="sfmyadminoptions">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfmyadminoptionsform" name="sfmyadminoptions">
 	<?php sp_echo_create_nonce('my-admin_options'); ?>
 <?php
 	spa_paint_options_init();

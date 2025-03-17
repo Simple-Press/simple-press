@@ -20,7 +20,7 @@ function spa_toolbox_toolbox_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'toolbox-loader&amp;saveform=toolbox', 'toolbox-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sftoolboxform" name="sftoolbox">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sftoolboxform" name="sftoolbox">
 	<?php sp_echo_create_nonce('forum-adminform_toolbox'); ?>
 <?php
 	spa_paint_options_init();

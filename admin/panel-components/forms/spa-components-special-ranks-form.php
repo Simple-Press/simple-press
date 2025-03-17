@@ -20,7 +20,7 @@ function spa_special_rankings_form($rankings) {
     spa_paint_open_nohead_tab(true);
     $ajaxURL = wp_nonce_url(SPAJAXURL . 'components-loader&amp;saveform=specialranks&amp;targetaction=newrank', 'components-loader');
     ?>
-    <form action="<?php echo $ajaxURL; ?>" method="post" name="sfaddspecialrank" id="sfaddspecialrank" class="sf-opener">
+    <form action="<?php echo esc_url($ajaxURL); ?>" method="post" name="sfaddspecialrank" id="sfaddspecialrank" class="sf-opener">
         <?php sp_echo_create_nonce('special-rank-new'); ?>
         <div class="sf-panel">
             <fieldset class="sf-fieldset">
@@ -61,7 +61,7 @@ function spa_special_rankings_form($rankings) {
                                 ?>
                                 <tr id="srank<?php echo $rank['meta_id']; ?>">
                                     <td colspan="4" class="sf-padding-none sf-border-none">
-                                        <form action="<?php echo $ajaxURL; ?>" method="post" id="sfspecialrankupdate<?php echo $rank['meta_id']; ?>" name="sfspecialrankupdate<?php echo $rank['meta_id']; ?>">
+                                        <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfspecialrankupdate<?php echo $rank['meta_id']; ?>" name="sfspecialrankupdate<?php echo $rank['meta_id']; ?>">
                                             <?php
                                             sp_echo_create_nonce('special-rank-update');
                                             ?>

@@ -21,7 +21,7 @@ function spa_profiles_options_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'profiles-loader&amp;saveform=options', 'profiles-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfoptionsform" name="sfoptions">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfoptionsform" name="sfoptions">
 	<?php sp_echo_create_nonce('forum-adminform_options'); ?>
 <?php
 	spa_paint_options_init();

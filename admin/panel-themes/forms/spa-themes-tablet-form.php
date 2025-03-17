@@ -22,7 +22,7 @@ function spa_themes_tablet_form() {
 
 	$ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=tablet', 'themes-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sftablettheme" name="sftablettheme">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sftablettheme" name="sftablettheme">
 	<?php sp_echo_create_nonce('forum-adminform_themes'); ?>
 <?php
 	spa_paint_options_init();
@@ -237,7 +237,7 @@ function spa_themes_tablet_form() {
 					spj.loadAjaxForm('sftheme-<?php echo esc_js($theme_file); ?>', 'sfreloadtablist');
 				</script>
 				<?php $ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=tablet', 'themes-loader'); ?>
-				<form action="<?php echo $ajaxURL; ?>" method="post" id="sftheme-<?php echo esc_attr($theme_file); ?>" name="sftheme-<?php echo esc_attr($theme_file); ?>">
+				<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sftheme-<?php echo esc_attr($theme_file); ?>" name="sftheme-<?php echo esc_attr($theme_file); ?>">
 				<?php sp_echo_create_nonce('forum-adminform_themes'); ?>
 				<input type="hidden" name="active" value="<?php echo $tabletTheme['active']; ?>" />
 				<input type="hidden" name="theme" value="<?php echo esc_attr($theme_file); ?>" />

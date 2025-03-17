@@ -75,7 +75,7 @@ function spa_components_smileys_form() {
 	}(window.spj = window.spj || {}, jQuery));
 </script>
 <?php $ajaxURL = wp_nonce_url(SPAJAXURL.'components-loader&amp;saveform=smileys', 'components-loader'); ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfsmileysform" name="sfsmileys" enctype="multipart/form-data">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfsmileysform" name="sfsmileys" enctype="multipart/form-data">
 	<?php sp_echo_create_nonce('forum-adminform_smileys'); ?>
     <?php spa_paint_open_tab(SP()->primitives->admin_text('Smileys'), true); ?>
         <div class="sf-panel">

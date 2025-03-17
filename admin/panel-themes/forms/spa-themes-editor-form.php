@@ -46,7 +46,7 @@ function spa_themes_editor_form() {
 <?php
     $ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=editor', 'themes-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="spedittheme" name="spedittheme">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="spedittheme" name="spedittheme">
 	<?php sp_echo_create_nonce('forum-adminform_theme-editor'); ?>
 <?php
 	spa_paint_options_init();

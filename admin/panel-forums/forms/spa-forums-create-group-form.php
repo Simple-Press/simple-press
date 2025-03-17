@@ -21,7 +21,7 @@ function spa_forums_create_group_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=creategroup', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfgroupnew" name="sfgroupnew">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfgroupnew" name="sfgroupnew">
 <?php
 		sp_echo_create_nonce('forum-adminform_groupnew');
 		

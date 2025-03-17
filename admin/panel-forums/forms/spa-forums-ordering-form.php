@@ -64,7 +64,7 @@ function spa_forums_ordering_form($groupId=0) {
 
 	$ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=orderforum', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumorder" name="sfforumorder">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfforumorder" name="sfforumorder">
 <?php
 		sp_echo_create_nonce('forum-adminform_forumorder');
         if ($groupId === 0) {

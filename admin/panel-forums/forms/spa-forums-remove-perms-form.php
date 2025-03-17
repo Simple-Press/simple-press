@@ -21,7 +21,7 @@ function spa_forums_remove_perms_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=removeperms', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfallpermissionsdel" name="sfallpermissionsdel">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfallpermissionsdel" name="sfallpermissionsdel">
 <?php
 		sp_echo_create_nonce('forum-adminform_allpermissionsdelete');
 		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Delete All Permission Sets'), true);
