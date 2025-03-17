@@ -107,7 +107,7 @@ function spa_options_global_form() {
                 <li class="sf-option-global-label">
                     <input type="radio" name="editor" id="sfradio-editor1" tabindex="<?php echo $tab;
 					$tab ++; ?>" value="1" <?php echo $checked; ?> />
-                    <label for="sfradio-editor1"><?php echo SP()->primitives->admin_text( 'Rich text' ) . ' (' . RICHTEXTNAME . ')'; ?></label>
+                    <label for="sfradio-editor1"><?php SP()->primitives->admin_etext( 'Rich text' ) . ' (' . RICHTEXTNAME . ')'; ?></label>
                 </li>
 				<?php
 			}
@@ -117,7 +117,7 @@ function spa_options_global_form() {
                 <li class="sf-option-global-label">
                     <input type="radio" name="editor" id="sfradio-editor2" tabindex="<?php echo $tab;
 					$tab ++; ?>" value="2" <?php echo $checked; ?> />
-                    <label for="sfradio-editor2"><?php echo SP()->primitives->admin_text( 'HTML' ) . ' (' . HTMLNAME . ')'; ?></label>
+                    <label for="sfradio-editor2"><?php SP()->primitives->admin_etext( 'HTML' ) . ' (' . HTMLNAME . ')'; ?></label>
                 </li>
 				<?php
 			}
@@ -127,7 +127,7 @@ function spa_options_global_form() {
                 <li class="sf-option-global-label">
                     <input type="radio" name="editor" id="sfradio-editor3" tabindex="<?php echo $tab;
 					$tab ++; ?>" value="3" <?php echo $checked; ?> />
-                    <label for="sfradio-editor3"><?php echo SP()->primitives->admin_text( 'bbCode' ) . ' (' . BBCODENAME . ')'; ?></label>
+                    <label for="sfradio-editor3"><?php SP()->primitives->admin_etext( 'bbCode' ) . ' (' . BBCODENAME . ')'; ?></label>
                 </li>
 				<?php
 			}
@@ -136,7 +136,7 @@ function spa_options_global_form() {
             <li class="sf-option-global-label">
                 <input type="radio" name="editor" id="sfradio-editor4" tabindex="<?php echo $tab;
 				$tab ++; ?>" value="4" <?php echo $checked; ?> />
-                <label for="sfradio-editor4"><?php echo SP()->primitives->admin_text( 'Plain text' ) . ' (' . PLAINTEXTNAME . ')'; ?></label>
+                <label for="sfradio-editor4"><?php SP()->primitives->admin_etext( 'Plain text' ) . ' (' . PLAINTEXTNAME . ')'; ?></label>
             </li>
 
                 </ul>

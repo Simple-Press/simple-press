@@ -30,7 +30,7 @@ function spa_forums_global_perm_form(): void {
             <div class="sf-panel">
                 <fieldset class="sf-fieldset">
                     <div class="sf-panel-body-top">
-                        <h4><?php echo SP()->primitives->admin_text('Add a User Group Permission Set to All Forums') ?></h4>
+                        <h4><?php SP()->primitives->admin_etext('Add a User Group Permission Set to All Forums') ?></h4>
                         <?php echo spa_paint_help('add-a-user-group-permission-set-to-all-forums') ?>
                     </div>
                     <?php

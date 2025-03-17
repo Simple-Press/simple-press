@@ -84,7 +84,7 @@ function spa_profiles_avatars_pool_form(): void
 		spa_paint_open_panel(); ?>
 			<fieldset class="sf-fieldset">
                 <div class="sf-panel-body-top">
-                <h4><?php echo SP()->primitives->admin_text('Avatar Pool Upload'); ?></h4>
+                <h4><?php SP()->primitives->admin_etext('Avatar Pool Upload'); ?></h4>
                 <?php echo spa_paint_help('avatar-pool-upload') ?>
 
                 <?php $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/'; ?>

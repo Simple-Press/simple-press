@@ -20,8 +20,8 @@ function spa_themes_upload_form() {
         spa_paint_open_fieldset(SP()->primitives->admin_text('Upload Theme'), true, 'upload-theme');
 ?>
             <div class="sf-alert-block sf-info">
-                <p><?php echo SP()->primitives->admin_text('Upload a Simple:Press theme in .zip format') ?></p>
-                <p><?php echo SP()->primitives->admin_text('If you have a theme in a .zip format, you may upload it here') ?></p>
+                <p><?php SP()->primitives->admin_etext('Upload a Simple:Press theme in .zip format') ?></p>
+                <p><?php SP()->primitives->admin_etext('If you have a theme in a .zip format, you may upload it here') ?></p>
             </div>
             <form method="post" enctype="multipart/form-data" action="<?php echo self_admin_url('update.php?action=upload-sp-theme'); ?>" id="sfthemeuploadform" name="sfthemeuploadform">
                 <?php sp_echo_create_nonce('forum-theme_upload'); ?>
@@ -31,7 +31,7 @@ function spa_themes_upload_form() {
                 <label class="sf-button-primary sf-upload-button">
                     <input type="file" id="themezip" name="themezip" class="sf-hidden-important" />
                     <span class="sf-icon sf-icon-button sf-white sf-upload"></span>
-                    <?php echo SP()->primitives->admin_text('Select file') ?>
+                    <?php SP()->primitives->admin_etext('Select file') ?>
                 </label>
                 <input type="button" class="sf-button-primary spThemeUpload" id="saveupload" name="sa sf-uppercaseveupload" value="<?php SP()->primitives->admin_etext('Upload Now'); ?>" onclick="sfloader()" data-target="#saveupload" />
                 

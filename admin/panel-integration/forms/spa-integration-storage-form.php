@@ -27,13 +27,13 @@ function spa_integration_storage_form() { ?>
                             </p>
                             <div class="">
                                 <p><span class="sf-icon sf-check"></span>
-                                    <?php echo SP()->primitives->admin_text('Location found'); ?></p>
+                                    <?php SP()->primitives->admin_etext('Location found'); ?></p>
                                 <p><span class="sf-icon sf-no-check"></span>
-                                    <?php echo SP()->primitives->admin_text('Location not found'); ?></p>
+                                    <?php SP()->primitives->admin_etext('Location not found'); ?></p>
                                 <p><span class="sf-icon sf-requires-enable"></span>
-                                    <?php echo SP()->primitives->admin_text('Write - OK'); ?></p>
+                                    <?php SP()->primitives->admin_etext('Write - OK'); ?></p>
                                 <p><span class="sf-icon sf-warning"></span>
-                                    <?php echo SP()->primitives->admin_text('Write - denied'); ?></p>
+                                    <?php SP()->primitives->admin_etext('Write - denied'); ?></p>
                             </div>
                             <div class="sf-alert-block sf-caution">
                                 <?php echo SP()->primitives->front_text('BEWARE: Please read the help before making any changes to these locations. Incorrect changes may cause Simple:Press to stop functioning.'); ?>

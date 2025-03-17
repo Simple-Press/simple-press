@@ -77,7 +77,7 @@ function spa_themes_tablet_form() {
 		spa_paint_open_panel();
 		spa_paint_open_fieldset(SP()->primitives->admin_text('Tablet Theme Management'), true, 'themes');
 ?>
-		<h3><?php echo SP()->primitives->admin_text('Current Tablet Theme'); ?></h3>
+		<h3><?php SP()->primitives->admin_etext('Current Tablet Theme'); ?></h3>
 		<div class="theme-browser rendered">
 		<div class="spThemeContainer">
 		<div id="current-theme" class="spTheme spThemeTablet">
@@ -181,7 +181,7 @@ function spa_themes_tablet_form() {
 
 		<br class="clear" />
 
-		<h3><?php echo SP()->primitives->admin_text('Available Themes'); ?></h3>
+		<h3><?php SP()->primitives->admin_etext('Available Themes'); ?></h3>
 <?php
 		$numThemes = count($themes);
 		if ($numThemes > 1) {

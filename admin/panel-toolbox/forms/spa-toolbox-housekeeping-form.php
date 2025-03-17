@@ -66,7 +66,7 @@ function spa_toolbox_housekeeping_form() {
                 <span class="sf-sublabel">
 				<input class="wp-core-ui" type="text" value="30" name="sfdays"/></span>
                 <p class="sf-sublabel sf-sublabel-small">
-					<?php echo SP()->primitives->admin_text( 'Cleaning up the New Post Lists may take some time if you have a large number of users that meet the criteria.' ) ?>
+					<?php SP()->primitives->admin_etext( 'Cleaning up the New Post Lists may take some time if you have a large number of users that meet the criteria.' ) ?>
                 </p>
                 <input type="submit" class="sf-button-primary spShowElement" id="saveit2" name="clean-newposts" value="<?php SP()->primitives->admin_etext( 'Clean New Posts List' ); ?>"
                        data-target="#npcimg"/>

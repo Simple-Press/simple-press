@@ -91,7 +91,7 @@ function spa_forums_custom_icons_form(): void
             <div class="sf-panel">
                 <fieldset class="sf-fieldset">
                     <div class="sf-panel-body-top">
-                        <h4><?php echo SP()->primitives->admin_text('Group/Forum Custom Icons Upload') ?></h4>
+                        <h4><?php SP()->primitives->admin_etext('Group/Forum Custom Icons Upload') ?></h4>
                         <?php $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/'; ?>
                         <?php spa_paint_file(SP()->primitives->admin_text('Select custom icon file to upload'), 'newiconfile', false, true, $loc); ?>
                         <?php echo spa_paint_help('custom-icon-upload') ?>

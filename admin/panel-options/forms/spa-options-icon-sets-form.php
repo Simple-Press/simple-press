@@ -95,7 +95,7 @@ function spa_options_iconsets_form() {
             <div class="sf-panel">
                 <fieldset class="sf-fieldset">
                     <div class="sf-panel-body-top">
-                        <h4><?php echo SP()->primitives->admin_text('Custom Iconset Upload'); ?></h4>
+                        <h4><?php SP()->primitives->admin_etext('Custom Iconset Upload'); ?></h4>
                         <?php
                             $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['iconsets'].'/';
                             spa_paint_file(SP()->primitives->admin_text('Select iconset zip file to upload'), 'iconset', false, true, $loc);
@@ -111,7 +111,7 @@ function spa_options_iconsets_form() {
             <div class="sf-panel">
                 <fieldset class="sf-fieldset">
                     <div class="sf-panel-body-top">
-                        <h4><?php echo SP()->primitives->admin_text('Installed Iconsets'); ?></h4>
+                        <h4><?php SP()->primitives->admin_etext('Installed Iconsets'); ?></h4>
                         <?php echo spa_paint_help('custom-iconsets') ?>
                     </div>
                     <div class="sf-form-row">

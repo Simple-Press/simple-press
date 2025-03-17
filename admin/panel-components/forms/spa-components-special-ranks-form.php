@@ -25,15 +25,15 @@ function spa_special_rankings_form($rankings) {
         <div class="sf-panel">
             <fieldset class="sf-fieldset">
                 <div class="sf-panel-body-top">
-                    <h4><?php echo SP()->primitives->admin_text('Special Forum Ranks') ?></h4>
+                    <h4><?php SP()->primitives->admin_etext('Special Forum Ranks') ?></h4>
                     <span class="sf-icon-button sf-opener-button-open"><span class="sf-icon sf-add"></span></span>
                     <?php echo spa_paint_help('special-ranks') ?>
                 </div>
                 <div class="sf-opener-target">
                     <div class="sf-form-row">
-                        <label><?php echo SP()->primitives->admin_text('New Special Rank Name'); ?></label>
+                        <label><?php SP()->primitives->admin_etext('New Special Rank Name'); ?></label>
                         <?php spa_paint_single_input('specialrank', '', false, true); ?>
-                        <input type="submit" class="sf-button-primary" id="addspecialrank" name="addspecialrank" value="<?php echo SP()->primitives->admin_text('Add Special Rank') ?>" />
+                        <input type="submit" class="sf-button-primary" id="addspecialrank" name="addspecialrank" value="<?php SP()->primitives->admin_etext('Add Special Rank') ?>" />
                     </div>
                 </div>
                 <div class="sf-form-row">

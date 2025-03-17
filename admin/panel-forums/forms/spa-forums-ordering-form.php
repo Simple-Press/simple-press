@@ -76,7 +76,7 @@ function spa_forums_ordering_form($groupId=0) {
 		?>
             <fieldset class="sf-fieldset">
                 <div class="sf-panel-body-top">
-                    <h4><?php echo SP()->primitives->admin_text('Order Groups and Forums') ?></h4>
+                    <h4><?php SP()->primitives->admin_etext('Order Groups and Forums') ?></h4>
                     <?php echo spa_paint_help('order-forums') ?>
                 </div>
 

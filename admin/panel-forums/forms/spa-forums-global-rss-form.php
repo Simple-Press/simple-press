@@ -42,8 +42,8 @@ function spa_forums_global_rss_form() {
 				echo SP()->primitives->admin_text('Disabled Forum RSS feeds').': '.$rss_count;
 				echo '</div>';
 ?>
-				<input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Disable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="1" data-open="open" />
-				<input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Enable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="0" data-open="open" />
+				<input type="button" class="sf-button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Disable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="1" data-open="open" />
+				<input type="button" class="sf-button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Enable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="0" data-open="open" />
 
 				<div class="sfinline-form">  <!-- This row will hold ajax forms for the all rss -->
 				    <div id="sfallrss"></div>

@@ -166,7 +166,7 @@ function sp_upgrade_required() {
 				<h3><?php echo sprintf(SP()->primitives->admin_text('Upgrade Simple:Press From Version %s to %s'), SP()->options->get('sfversion'), SPVERSION); ?>
 					(<?php SP()->primitives->admin_etext('Build'); ?> <?php echo SP()->options->get('sfbuild'); ?> <?php SP()->primitives->admin_etext('to'); ?> <?php SP()->primitives->admin_etext('Build'); ?> <?php echo SPBUILD; ?>)
 				</h3>
-				<p><?php echo SP()->primitives->admin_text('As with all WordPress related updates we recommend that you backup your site before proceeding with this upgrade.') ?></p>				
+				<p><?php SP()->primitives->admin_etext('As with all WordPress related updates we recommend that you backup your site before proceeding with this upgrade.') ?></p>				
 			</div>
 			<hr />
 			<?php
@@ -221,7 +221,7 @@ function sp_go_install() {
             <div class="sf-panel-body">
                 <div class="sf-form-row">
                     <div>
-                        <h1 id="installation-header"><?php echo SP()->primitives->admin_text('Installation is in progress - please wait'); ?></h1>
+                        <h1 id="installation-header"><?php SP()->primitives->admin_etext('Installation is in progress - please wait'); ?></h1>
                     </div>
                     <div class="pbar" id="progressbar"></div>
                     <table id="SPLOADINSTALLtable">
@@ -240,7 +240,7 @@ function sp_go_install() {
                     <div class="sf-zmessage" id="errorzone"></div>
                     <form name="sfinstalldone" method="post" action="admin.php?page=<?php echo SP_FOLDER_NAME ?>/admin/panel-forums/spa-forums.php">
                         <input type="hidden" name="install" value="1" />
-                        <button id="installation-finished" type="submit" class="sf-button-primary sfhidden" disabled name="goforuminstall" ><span class="sf-icon sf-admins"></span><?php echo SP()->primitives->admin_text('Go to Forum Admin') ?></button>
+                        <button id="installation-finished" type="submit" class="sf-button-primary sfhidden" disabled name="goforuminstall" ><span class="sf-icon sf-admins"></span><?php SP()->primitives->admin_etext('Go to Forum Admin') ?></button>
                     </form>
                 </div>
             </div>
@@ -438,13 +438,13 @@ function sp_version_checks() {
     } else {
         echo '<div class="error">';
         echo '<span>' . SP()->primitives->admin_text('Please Note') . '</span>';
-        echo SP()->primitives->admin_text('We were unable to establish version details to ensure your system meets requirements') . '.';
-        echo SP()->primitives->admin_text('As a general rule - Simple:Press requires the same minimum versions of PHP and MySQL as WordPress and the most up to date version of WordPress itself') . '.</br />';
-        echo SP()->primitives->admin_text('If in doubt, please read the');
+        SP()->primitives->admin_etext('We were unable to establish version details to ensure your system meets requirements') . '.';
+        SP()->primitives->admin_etext('As a general rule - Simple:Press requires the same minimum versions of PHP and MySQL as WordPress and the most up to date version of WordPress itself') . '.</br />';
+        SP()->primitives->admin_etext('If in doubt, please read the');
         echo ' <a href="https://simple-press.com/documentation/installation/installation-information/system-requirements/" target="_blank"> ';
-        echo SP()->primitives->admin_text('System Requirements');
+        SP()->primitives->admin_etext('System Requirements');
         echo '</a> ';
-        echo SP()->primitives->admin_text('page in our Online Documentation');
+        SP()->primitives->admin_etext('page in our Online Documentation');
         echo '</div>';
     }
 

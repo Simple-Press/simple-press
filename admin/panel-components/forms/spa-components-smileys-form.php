@@ -81,13 +81,13 @@ function spa_components_smileys_form() {
         <div class="sf-panel">
             <fieldset class="sf-fieldset">
                 <div class="sf-panel-body-top">
-                    <h4><?php echo SP()->primitives->admin_text('Manage Custom Smileys') ?></h4>
+                    <h4><?php SP()->primitives->admin_etext('Manage Custom Smileys') ?></h4>
                     <?php $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/'; ?>
                     <?php spa_paint_file(SP()->primitives->admin_text('Select smiley file to upload'), 'newsmileyfile', false, true, $loc); ?>
                     <?php echo spa_paint_help('custom-smileys') ?>
                 </div>
                 <div class="sf-form-row">
-                    <span><?php echo SP()->primitives->admin_text('Re-order your Smileys by dragging and dropping the buttons below. To edit - click on the open control to the right') ?>.</span>
+                    <span><?php SP()->primitives->admin_etext('Re-order your Smileys by dragging and dropping the buttons below. To edit - click on the open control to the right') ?>.</span>
                 </div>
                 <div class="sf-form-row">
                     <?php do_action('sph_components_smileys_right_panel'); ?>

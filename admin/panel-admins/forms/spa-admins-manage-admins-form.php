@@ -42,7 +42,7 @@ function spa_admins_manage_admins_form() {
                 <div class="sf-panel">
                     <fieldset class="sf-fieldset">
                         <div class="sf-panel-body-top">
-                            <h4><?php echo SP()->primitives->admin_text('Current Admins and Moderators'); ?></h4>
+                            <h4><?php SP()->primitives->admin_etext('Current Admins and Moderators'); ?></h4>
                             <?php echo spa_paint_help('manage-admins') ?>
                         </div>
                         <div class="sf-form-row">
@@ -73,7 +73,7 @@ function spa_admins_manage_admins_form() {
 
                                     ?>
                                     <div>
-                                        <h3> <?php echo $adminName ?> (<?php echo SP()->primitives->admin_text('ID') . ': ' . $adminId . ')'; ?></h3>
+                                        <h3> <?php echo $adminName ?> (<?php SP()->primitives->admin_etext('ID') . ': ' . $adminId . ')'; ?></h3>
                                         <input type="hidden" name="uids[]" value="<?php echo $adminId; ?>" />
 
                                         <ul class="list-grid sf-ml-10">
@@ -165,7 +165,7 @@ function spa_admins_manage_admins_form() {
                 <div class="sf-panel">
                     <fieldset class="sf-fieldset">
                         <div class="sf-panel-body-top">
-                            <h4><?php echo SP()->primitives->admin_text('Add New Admins'); ?></h4>
+                            <h4><?php SP()->primitives->admin_etext('Add New Admins'); ?></h4>
                             <?php echo spa_paint_help('addadmin') ?>
                         </div>
                         <div class="sf-form-row" style="border: 1px solid green;">
