@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function spa_permissions_edit_permission_form($role_id) {
 ?>
 <script>
-   	spj.loadAjaxForm('sfroleedit<?php echo $role_id; ?>', 'sfreloadpb');
+   	spj.loadAjaxForm('sfroleedit<?php echo esc_js($role_id;   ?>', 'sfreloadpb');
 </script>
 <?php
 	# Get correct tooltips file
@@ -30,14 +30,14 @@ function spa_permissions_edit_permission_form($role_id) {
     $ajaxURL = wp_nonce_url(SPAJAXURL.'permissions-loader&amp;saveform=editperm', 'permissions-loader');
 
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfroleedit<?php echo $role->role_id; ?>" name="sfroleedit<?php echo $role->role_id; ?>">
+	<form action="<?php echo esc_attr($ajaxURL); ?>" method="post" id="sfroleedit<?php echo esc_attr($role->role_id); ?>" name="sfroleedit<?php echo esc_attr($role->role_id); ?>">
 <?php
-		echo sp_create_nonce('forum-adminform_roleedit');
+		sp_echo_create_nonce('forum-adminform_roleedit');
 		spa_paint_open_tab(SP()->primitives->admin_text('Permissions').' - '.SP()->primitives->admin_text('Manage Permissions'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Edit Permission'), 'true', 'edit-master-permission-set');
 				?>
-					<input type="hidden" name="role_id" value="<?php echo $role->role_id; ?>" />
+					<input type="hidden" name="role_id" value="<?php echo esc_attr($role->role_id); ?>" />
 <?php
 					spa_paint_input(SP()->primitives->admin_text('Permission Set Name'), 'role_name', SP()->displayFilters->title($role->role_name), false, true);
 					spa_paint_input(SP()->primitives->admin_text('Permission Set Description'), 'role_desc', SP()->displayFilters->title($role->role_desc), false, true);
@@ -46,11 +46,11 @@ function spa_permissions_edit_permission_form($role_id) {
 
                     <div class="sf-alert-block sf-info">
                         <p><span class="sf-icon sf-ignore-guest sf-red sf-small"></span>
-                            <?php echo SP()->primitives->admin_text('Ignored for Guest Users') ?></p>
+                            <?php SP()->primitives->admin_etext('Ignored for Guest Users') ?></p>
                         <p><span class="sf-icon sf-requires-enable sf-green sf-small"></span>
-                            <?php echo SP()->primitives->admin_text('Require enabling to use') ?></p>
+                            <?php SP()->primitives->admin_etext('Require enabling to use') ?></p>
                         <p><span class="sf-icon sf-warning sf-yellow sf-small"></span>
-                            <?php echo SP()->primitives->admin_text('Use with great care') ?></p>
+                            <?php SP()->primitives->admin_etext('Use with great care') ?></p>
                     </div>
 <?php
 
@@ -100,22 +100,22 @@ function spa_permissions_edit_permission_form($role_id) {
                         $checked = (isset($role_auths[$auth_id]) && $role_auths[$auth_id]) ? ' checked="checked"' : '' ;
 
 ?>
-						<div <?php echo $tip; ?>>
+						<div <?php echo esc_attr($tip); ?>>
 							<div class="permentry">
-								<input type="checkbox" name="<?php echo $button; ?>" id="sfR<?php echo $role->role_id.$button; ?>"<?php echo $checked; ?>  />
-								<label for="sfR<?php echo $role->role_id.$button; ?>" class="sflabel">
-                                    <img style="float: right; margin-left: 10px; margin-right: 10px; width: 20px;" title="<?php echo $tooltip; ?>" src="<?php echo SPADMINIMAGES; ?>sp_Information.png" />
+								<input type="checkbox" name="<?php echo esc_attr($button); ?>" id="sfR<?php echo esc_attr($role->role_id.$button); ?>"<?php echo esc_attr($checked); ?>  />
+                                <label for="sfR<?php echo esc_attr($role->role_id . $button); ?>" class="sflabel">
+                                    <img style="float: right; margin-left: 10px; margin-right: 10px; width: 20px;" title="<?php echo esc_attr($tooltip); ?>" src="<?php echo esc_attr(SPADMINIMAGES . 'sp_Information.png');?>" />
                                     <?php SP()->primitives->admin_etext(SP()->core->forumData['auths'][$auth_id]->auth_desc); ?>
                                 </label>
 <?php
 									if (SP()->core->forumData['auths'][$auth_id]->enabling) {
-										echo '<img src="'.SPADMINIMAGES.'sp_GlobalPerm.png" alt="" style="width:16px;height:16px" title="'.SP()->primitives->admin_text('Requires Enabling').'" />';
+										echo '<img src="'.esc_attr(SPADMINIMAGES.'sp_GlobalPerm.png').'" alt="" style="width:16px;height:16px" title="'.esc_attr(SP()->primitives->admin_text('Requires Enabling')).'" />';
 									}
 									if (SP()->core->forumData['auths'][$auth_id]->ignored) {
-										echo '<img src="'.SPADMINIMAGES.'sp_GuestPerm.png" alt="" style="width:16px;height:16px" title="'.SP()->primitives->admin_text('Ignored for Guests').'" />';
+										echo '<img src="'.esc_attr(SPADMINIMAGES.'sp_GuestPerm.png').'" alt="" style="width:16px;height:16px" title="'.esc_attr(SP()->primitives->admin_text('Ignored for Guests')).'" />';
 									}
 									if ($authWarn) {
-										echo '<img src="'.SPADMINIMAGES.'sp_Warning.png" alt="" style="width:16px;height:16px" title="'.SP()->primitives->admin_text('Use with Caution').'" />';
+										echo '<img src="'.esc_attr(SPADMINIMAGES.'sp_Warning.png').'" alt="" style="width:16px;height:16px" title="'.esc_attr(SP()->primitives->admin_text('Use with Caution')).'" />';
 									}
 ?>
                             </div>
@@ -132,8 +132,8 @@ function spa_permissions_edit_permission_form($role_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
-		<input type="submit" class="sf-button-primary" id="sfpermedit<?php echo $role->role_id; ?>" name="sfpermedit<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Update Permission'); ?>" />
-		<input type="button" class="sf-button-primary spCancelForm" data-target="#perm-<?php echo $role->role_id; ?>" id="sfpermedit<?php echo $role->role_id; ?>" name="editpermcancel<?php echo $role->role_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+		<input type="submit" class="sf-button-primary" id="sfpermedit<?php echo esc_attr($role->role_id); ?>" name="sfpermedit<?php echo esc_attr($role->role_id); ?>" value="<?php SP()->primitives->admin_etext('Update Permission'); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#perm-<?php echo esc_attr($role->role_id); ?>" id="sfpermedit<?php echo esc_attr($role->role_id); ?>" name="editpermcancel<?php echo esc_attr($role->role_id); ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 		</form>
 	<?php spa_paint_close_tab(); ?>
