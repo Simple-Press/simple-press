@@ -20,14 +20,14 @@ function spa_options_members_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'options-loader&amp;saveform=members', 'options-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfmembersform" name="sfmembers">
-	<?php echo sp_create_nonce('forum-adminform_members'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfmembersform" name="sfmembers">
+	<?php sp_echo_create_nonce('forum-adminform_members'); ?>
 <?php
 	spa_paint_options_init();
 
     #== MEMBERS Tab ============================================================
 
-	spa_paint_open_tab(/*SP()->primitives->admin_text('Options').' - '.*/SP()->primitives->admin_text('Member Settings'));
+	spa_paint_open_tab(SP()->primitives->admin_text('Member Settings'));
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Member Profiles'), true, 'member-profiles');
 				spa_paint_checkbox(SP()->primitives->admin_text('Disallow members not logged in to post as guests'), 'sfcheckformember', $sfoptions['sfcheckformember']);
@@ -60,7 +60,7 @@ function spa_options_members_form() {
 				spa_paint_input(SP()->primitives->admin_text('Number of days back to remove inactive members and/or members with no forum posts (if auto removal enabled)'), 'sfuserperiod', $sfoptions['sfuserperiod'] ?? null);
 				if ($sfoptions['sched']) {
 					$msg = SP()->primitives->admin_text('Users auto removal cron job is scheduled to run daily');
-					echo '<tr><td class="message" colspan="2" class="sf-line-h-2-em">&nbsp;<u>'.$msg.'</u></td></tr>';
+					echo '<tr><td class="message" colspan="2" class="sf-line-h-2-em">&nbsp;<u>'.esc_html($msg).'</u></td></tr>';
 				}
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
@@ -88,7 +88,7 @@ function spa_options_members_form() {
 		
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Deprecated Identities'), true, 'member-deprecated-identities');
-				echo '<div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('Certain identities such as AIM are part of services that no longer exists. We have removed these from the main user profile screen so that users can no longer enter new data for these identities. If you would still like your users to see these, turn this option on.').'</div>';
+				echo '<div class="sf-alert-block sf-info">'.esc_html(SP()->primitives->admin_text('Certain idrentities such as AIM are part of services that no longer exists. We have removed these from the main user profile screen so that users can no longer enter new data for these identities. If you would still like your users to see these, turn this option on.')).'</div>';
 				spa_paint_checkbox(SP()->primitives->admin_text('Display Deprecated Identities'), 'sfdisplaydeprecatedidentities', $sfoptions['display_deprecated_identities']);
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();		

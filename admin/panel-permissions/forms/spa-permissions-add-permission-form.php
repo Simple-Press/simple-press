@@ -17,23 +17,25 @@ function spa_permissions_add_permission_form() {
     <?php
     # Get correct tooltips file
     $lang = spa_get_language_code();
-    if (empty($lang))
+    if (empty($lang)) {
         $lang = 'en';
+    }
     $ttpath = SPHELP . 'admin/tooltips/admin-permissions-tips-' . $lang . '.php';
-    if (file_exists($ttpath) == false)
+    if (file_exists($ttpath) == false) {
         $ttpath = SPHELP . 'admin/tooltips/admin-permissions-tips-en.php';
-    if (file_exists($ttpath))
+    }
+    if (file_exists($ttpath)) {
         require_once $ttpath;
+    }
 
     spa_paint_options_init();
 
     $ajaxURL = wp_nonce_url(SPAJAXURL . 'permissions-loader&amp;saveform=addperm', 'permissions-loader');
     ?>
-    <form action="<?php echo $ajaxURL; ?>" method="post" id="sfrolenew" name="sfrolenew">
+    <form action="<?php echo esc_attr($ajaxURL); ?>" method="post" id="sfrolenew" name="sfrolenew">
         <?php
-        echo sp_create_nonce('forum-adminform_rolenew');
+        sp_echo_create_nonce('forum-adminform_rolenew');
         spa_paint_open_tab(SP()->primitives->admin_text('Add New Permission Set'));
-
 
         spa_paint_open_fieldset(SP()->primitives->admin_text('Permission Set Details'), 'true', 'create-new-permission-set');
         spa_paint_input(SP()->primitives->admin_text('Set Name'), "role_name", '', false, true);
@@ -52,11 +54,11 @@ function spa_permissions_add_permission_form() {
         ?>
             <div class="sf-alert-block sf-info">
                 <p><span class="sf-icon sf-ignore-guest sf-red sf-small"></span>
-                    <?php echo SP()->primitives->admin_text('Ignored for Guest Users') ?></p>
+                    <?php SP()->primitives->admin_etext('Ignored for Guest Users') ?></p>
                 <p><span class="sf-icon sf-requires-enable sf-green sf-small"></span>
-                    <?php echo SP()->primitives->admin_text('Require enabling to use') ?></p>
+                    <?php SP()->primitives->admin_etext('Require enabling to use') ?></p>
                 <p><span class="sf-icon sf-warning sf-yellow sf-small"></span>
-                    <?php echo SP()->primitives->admin_text('Use with great care') ?></p>
+                    <?php  SP()->primitives->admin_etext('Use with great care') ?></p>
             </div>
         <?php
         sp_build_site_auths_cache();
@@ -98,24 +100,24 @@ function spa_permissions_add_permission_form() {
                                 $span = ' colspan="2" ';
                             }
                             ?>
-                            <div<?php //echo $tip;             ?> class="sp-permission-item">
-                                <div class="permentry<?php echo $warn; ?>" >
-                                    <input type="checkbox" name="<?php echo $button; ?>" id="sf<?php echo $button; ?>"  />
-                                    <label for="sf<?php echo $button; ?>" class="sflabel">
+                            <div class="sp-permission-item">
+                                <div class="permentry<?php echo esc_attr($warn); ?>" >
+                                    <input type="checkbox" name="<?php echo esc_attr($button); ?>" id="sf<?php echo esc_attr($button); ?>"  />
+                                    <label for="sf<?php echo esc_attr($button); ?>" class="sflabel">
                                         <?php SP()->primitives->admin_etext(SP()->core->forumData['auths'][$auth_id]->auth_desc); ?>
                                     </label>
                                     <div class="sf-icons">
                                         <?php if ($span == ''): ?>
                                             <?php if (SP()->core->forumData['auths'][$auth_id]->enabling): ?>
-                                                <span class="sf-icon sf-requires-enable sf-green sf-small" title="<?php echo SP()->primitives->admin_text('Requires Enabling') ?>"></span>
+                                                <span class="sf-icon sf-requires-enable sf-green sf-small" title="<?php SP()->primitives->admin_etext('Requires Enabling') ?>"></span>
                                             <?php endif ?>
                                             <?php if (SP()->core->forumData['auths'][$auth_id]->ignored): ?>
-                                                <span class="sf-icon sf-ignore-guest sf-red sf-small" title="<?php echo SP()->primitives->admin_text('Ignored for Guests') ?>"></span>
+                                                <span class="sf-icon sf-ignore-guest sf-red sf-small" title="<?php SP()->primitives->admin_etext('Ignored for Guests') ?>"></span>
                                             <?php endif ?>
                                             <?php if ($authWarn): ?>
-                                                <span class="sf-icon sf-warning sf-yellow sf-small" title="<?php echo SP()->primitives->admin_text('Use with Caution') ?>"></span>
+                                                <span class="sf-icon sf-warning sf-yellow sf-small" title="<?php SP()->primitives->admin_etext('Use with Caution') ?>"></span>
                                             <?php endif ?>
-                                            <span class="sf-icon sf-about sf-blue sf-small" title="<?php echo $tooltips[$auth_name]; ?>"></span>
+                                            <span class="sf-icon sf-about sf-blue sf-small" title="<?php echo esc_attr($tooltips[$auth_name]); ?>"></span>
                                         <?php endif ?>
                                     </div>
                                 </div>

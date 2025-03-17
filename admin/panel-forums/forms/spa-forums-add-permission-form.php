@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function spa_forums_add_permission_form($forum_id) {
 ?>
 <script>
-   	spj.loadAjaxForm('sfpermissionnew<?php echo $forum_id; ?>', 'sfreloadfb');
+   	spj.loadAjaxForm('sfpermissionnew<?php echo esc_js($forum_id); ?>', 'sfreloadfb');
 </script>
 <?php
 	$forum = SP()->DB->table(SPFORUMS, "forum_id=$forum_id", 'row');
@@ -25,9 +25,9 @@ function spa_forums_add_permission_form($forum_id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=addperm', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfpermissionnew<?php echo $forum->forum_id; ?>" name="sfpermissionnew<?php echo $forum->forum_id; ?>">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfpermissionnew<?php echo $forum->forum_id; ?>" name="sfpermissionnew<?php echo $forum->forum_id; ?>">
 <?php
-		echo sp_create_nonce('forum-adminform_permissionnew');
+        echo '<input type="hidden" name="'.esc_attr('forum-adminform_permissionnew').'" value="'.esc_attr(wp_create_nonce('forum-adminform_resetpermissions')).'" />';
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Add Permission Set'), 'true', 'add-user-group-permission-set');

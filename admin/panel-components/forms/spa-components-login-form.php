@@ -20,8 +20,8 @@ function spa_components_login_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'components-loader&amp;saveform=login', 'components-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfloginform" name="sflogin">
-	<?php echo sp_create_nonce('forum-adminform_login'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfloginform" name="sflogin">
+	<?php sp_echo_create_nonce('forum-adminform_login'); ?>
 <?php
 	spa_paint_options_init();
 

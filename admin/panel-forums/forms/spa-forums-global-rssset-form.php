@@ -21,9 +21,9 @@ function spa_forums_global_rssset_form($id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=globalrssset', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfglobalrssset" name="sfglobalrssset">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfglobalrssset" name="sfglobalrssset">
 <?php
-		echo sp_create_nonce('forum-adminform_globalrssset');
+		sp_echo_create_nonce('forum-adminform_globalrssset');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Global RSS Settings'), true);
 			spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Globally Enable/Disable RSS Feeds'), false);

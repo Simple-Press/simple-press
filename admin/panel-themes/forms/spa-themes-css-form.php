@@ -27,8 +27,8 @@ function spa_themes_css_form() {
 <?php
     $ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=css', 'themes-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="speditcss" name="speditcss">
-	<?php echo sp_create_nonce('forum-adminform_css-editor'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="speditcss" name="speditcss">
+	<?php sp_echo_create_nonce('forum-adminform_css-editor'); ?>
 <?php
 
 	spa_paint_options_init();

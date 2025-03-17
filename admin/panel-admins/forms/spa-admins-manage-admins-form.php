@@ -37,13 +37,13 @@ function spa_admins_manage_admins_form() {
         ?>
 
         <div class='sf-panel-body'>
-            <form action="<?php echo $ajaxURL; ?>" method="post" id="sfupdatecaps" name="sfupdatecaps">
-                <?php echo sp_create_nonce('forum-adminform_sfupdatecaps'); ?>
+            <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfupdatecaps" name="sfupdatecaps">
+                <?php sp_echo_create_nonce('forum-adminform_sfupdatecaps'); ?>
                 <div class="sf-panel">
                     <fieldset class="sf-fieldset">
                         <div class="sf-panel-body-top">
-                            <h4><?php echo SP()->primitives->admin_text('Current Admins and Moderators'); ?></h4>
-                            <?php echo spa_paint_help('manage-admins') ?>
+                            <h4><?php SP()->primitives->admin_etext('Current Admins and Moderators'); ?></h4>
+                            <?php spa_paint_help('manage-admins') ?>
                         </div>
                         <div class="sf-form-row">
                             <?php for ($x = 1; $x < 3; $x++) : ?>
@@ -73,7 +73,7 @@ function spa_admins_manage_admins_form() {
 
                                     ?>
                                     <div>
-                                        <h3> <?php echo $adminName ?> (<?php echo SP()->primitives->admin_text('ID') . ': ' . $adminId . ')'; ?></h3>
+                                        <h3> <?php echo $adminName ?> (<?php SP()->primitives->admin_etext('ID') . ': ' . $adminId . ')'; ?></h3>
                                         <input type="hidden" name="uids[]" value="<?php echo $adminId; ?>" />
 
                                         <ul class="list-grid sf-ml-10">
@@ -160,13 +160,13 @@ function spa_admins_manage_admins_form() {
         <?php $ajaxURL = wp_nonce_url(SPAJAXURL . 'admins-loader&amp;saveform=addadmin', 'admins-loader'); ?>
 
         <div class='sf-panel-body'>
-            <form action="<?php echo $ajaxURL; ?>" method="post" id="sfaddadmins" name="sfaddadmins">
-                <?php echo sp_create_nonce('forum-adminform_sfaddadmins'); ?>
+            <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfaddadmins" name="sfaddadmins">
+                <?php sp_echo_create_nonce('forum-adminform_sfaddadmins'); ?>
                 <div class="sf-panel">
                     <fieldset class="sf-fieldset">
                         <div class="sf-panel-body-top">
-                            <h4><?php echo SP()->primitives->admin_text('Add New Admins'); ?></h4>
-                            <?php echo spa_paint_help('addadmin') ?>
+                            <h4><?php SP()->primitives->admin_etext('Add New Admins'); ?></h4>
+                            <?php spa_paint_help('addadmin') ?>
                         </div>
                         <div class="sf-form-row" style="border: 1px solid green;">
                             <?php

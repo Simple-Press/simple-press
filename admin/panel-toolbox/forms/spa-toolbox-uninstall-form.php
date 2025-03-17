@@ -20,8 +20,8 @@ function spa_toolbox_uninstall_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'toolbox-loader&amp;saveform=uninstall', 'toolbox-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfuninstallform" name="sfuninstall">
-	<?php echo sp_create_nonce('forum-adminform_uninstall'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfuninstallform" name="sfuninstall">
+	<?php sp_echo_create_nonce('forum-adminform_uninstall'); ?>
 <?php
 
 	spa_paint_options_init();

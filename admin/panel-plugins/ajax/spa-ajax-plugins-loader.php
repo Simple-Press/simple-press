@@ -15,7 +15,7 @@ spa_admin_ajax_support();
 if (!sp_nonce('plugins-loader')) die();
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
+	echo esc_html(SP()->core->status);
 	die();
 }
 
@@ -43,17 +43,17 @@ if (isset($_GET['loadform'])) {
 if (isset($_GET['saveform'])) {
 	$saveform = sanitize_text_field($_GET['saveform']);
 	if ($saveform == 'list') {
-		echo spa_save_plugin_list_actions();
+		echo esc_html(spa_save_plugin_list_actions());
 		die();
 	}
 
 	if ($saveform == 'activation') {
-		echo spa_save_plugin_activation();
+		echo esc_html(spa_save_plugin_activation());
 		die();
 	}
 
 	if ($saveform == 'plugin') {
-		echo spa_save_plugin_userdata(SP()->filters->str($_GET['func']));
+		echo esc_html(spa_save_plugin_userdata(SP()->filters->str($_GET['func'])));
 		die();
 	}
 }

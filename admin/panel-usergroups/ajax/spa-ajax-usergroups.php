@@ -48,7 +48,25 @@ if (isset($_GET['ug'])) {
 		$text1 = SP()->primitives->admin_text('User Group Members');
 		$text2 = SP()->primitives->admin_text('No Members in this User Group.');
 	}
-	echo spa_display_member_roll($members, $text1, $text2);
+	echo wp_kses(
+        spa_display_member_roll($members, $text1, $text2),
+        [
+            'div' => [
+                'class' => true
+            ],
+            'h4' => [
+                'style' => true
+            ],
+            'p' => [
+                'style' => true
+            ],
+            'b' => [],
+            'ul' => [
+                'class' => true
+            ],
+            'li' => []
+        ]
+    );
 	die();
 }
 

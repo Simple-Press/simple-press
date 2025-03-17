@@ -22,8 +22,8 @@ function spa_themes_tablet_form() {
 
 	$ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=tablet', 'themes-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sftablettheme" name="sftablettheme">
-	<?php echo sp_create_nonce('forum-adminform_themes'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sftablettheme" name="sftablettheme">
+	<?php sp_echo_create_nonce('forum-adminform_themes'); ?>
 <?php
 	spa_paint_options_init();
 
@@ -77,7 +77,7 @@ function spa_themes_tablet_form() {
 		spa_paint_open_panel();
 		spa_paint_open_fieldset(SP()->primitives->admin_text('Tablet Theme Management'), true, 'themes');
 ?>
-		<h3><?php echo SP()->primitives->admin_text('Current Tablet Theme'); ?></h3>
+		<h3><?php SP()->primitives->admin_etext('Current Tablet Theme'); ?></h3>
 		<div class="theme-browser rendered">
 		<div class="spThemeContainer">
 		<div id="current-theme" class="spTheme spThemeTablet">
@@ -132,7 +132,7 @@ function spa_themes_tablet_form() {
 <?php
 			$ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=tablet', 'themes-loader');
 			echo '<form action="'.$ajaxURL.'" method="post" id="sftheme-'.esc_attr($tabletTheme['theme']).'" name="sftheme-'.esc_attr($tabletTheme['theme']).'">';
-			echo sp_create_nonce('forum-adminform_themes');
+			sp_echo_create_nonce('forum-adminform_themes');
 			echo '<input type="hidden" name="active" value="'.$tabletTheme['active'].'" />';
 			echo '<input type="hidden" name="theme" value="'.esc_attr($tabletTheme['theme']).'" />';
 			echo '<input type="hidden" name="style" value="'.esc_attr($themes[$tabletTheme['theme']]['Stylesheet']).'" />';
@@ -181,7 +181,7 @@ function spa_themes_tablet_form() {
 
 		<br class="clear" />
 
-		<h3><?php echo SP()->primitives->admin_text('Available Themes'); ?></h3>
+		<h3><?php SP()->primitives->admin_etext('Available Themes'); ?></h3>
 <?php
 		$numThemes = count($themes);
 		if ($numThemes > 1) {
@@ -237,8 +237,8 @@ function spa_themes_tablet_form() {
 					spj.loadAjaxForm('sftheme-<?php echo esc_js($theme_file); ?>', 'sfreloadtablist');
 				</script>
 				<?php $ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=tablet', 'themes-loader'); ?>
-				<form action="<?php echo $ajaxURL; ?>" method="post" id="sftheme-<?php echo esc_attr($theme_file); ?>" name="sftheme-<?php echo esc_attr($theme_file); ?>">
-				<?php echo sp_create_nonce('forum-adminform_themes'); ?>
+				<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sftheme-<?php echo esc_attr($theme_file); ?>" name="sftheme-<?php echo esc_attr($theme_file); ?>">
+				<?php sp_echo_create_nonce('forum-adminform_themes'); ?>
 				<input type="hidden" name="active" value="<?php echo $tabletTheme['active']; ?>" />
 				<input type="hidden" name="theme" value="<?php echo esc_attr($theme_file); ?>" />
 				<input type="hidden" name="style" value="<?php echo esc_attr($theme_style); ?>" />

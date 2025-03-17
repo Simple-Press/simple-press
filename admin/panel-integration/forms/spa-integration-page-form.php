@@ -21,8 +21,8 @@ function spa_integration_page_form() {
     $ajaxURL = wp_nonce_url(SPAJAXURL.'integration-loader&amp;saveform=page', 'integration-loader');
 ?>
 
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="wppageform" name="wppage">
-	<?php echo sp_create_nonce('forum-adminform_integration'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="wppageform" name="wppage">
+	<?php sp_echo_create_nonce('forum-adminform_integration'); ?>
 <?php
 	spa_paint_open_tab(SP()->primitives->admin_text('Page and Permalink'), true);
 		spa_paint_open_panel();

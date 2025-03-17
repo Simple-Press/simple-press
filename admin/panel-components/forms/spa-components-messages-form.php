@@ -20,8 +20,8 @@ function spa_components_messages_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'components-loader&amp;saveform=messages', 'components-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfmessagesform" name="sfmessages">
-	<?php echo sp_create_nonce('forum-adminform_messages'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfmessagesform" name="sfmessages">
+	<?php sp_echo_create_nonce('forum-adminform_messages'); ?>
 <?php
 	spa_paint_options_init();
 

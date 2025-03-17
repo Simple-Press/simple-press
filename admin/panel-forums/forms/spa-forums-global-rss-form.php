@@ -22,9 +22,9 @@ function spa_forums_global_rss_form() {
 
 	$ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=globalrss', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfnewglobalrss" name="sfnewglobalrss">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfnewglobalrss" name="sfnewglobalrss">
 <?php
-		echo sp_create_nonce('forum-adminform_globalrss');
+		sp_echo_create_nonce('forum-adminform_globalrss');
 		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Global RSS Settings'), true);
 			spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Globally Enable/Disable RSS Feeds'), true, 'global-rss');
@@ -42,8 +42,8 @@ function spa_forums_global_rss_form() {
 				echo SP()->primitives->admin_text('Disabled Forum RSS feeds').': '.$rss_count;
 				echo '</div>';
 ?>
-				<input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Disable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="1" data-open="open" />
-				<input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Enable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="0" data-open="open" />
+				<input type="button" class="sf-button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Disable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="1" data-open="open" />
+				<input type="button" class="sf-button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Enable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="0" data-open="open" />
 
 				<div class="sfinline-form">  <!-- This row will hold ajax forms for the all rss -->
 				    <div id="sfallrss"></div>

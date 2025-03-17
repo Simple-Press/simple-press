@@ -25,9 +25,9 @@ function spa_forums_edit_permission_form($perm_id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=editperm', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfpermissionnedit<?php echo $perm->permission_id; ?>" name="sfpermissionedit<?php echo $perm->permission_id; ?>">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfpermissionnedit<?php echo $perm->permission_id; ?>" name="sfpermissionedit<?php echo $perm->permission_id; ?>">
 <?php
-		echo sp_create_nonce('forum-adminform_permissionedit');
+		sp_echo_create_nonce('forum-adminform_permissionedit');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Edit Permission Set'), 'true', 'edit-permission-set');

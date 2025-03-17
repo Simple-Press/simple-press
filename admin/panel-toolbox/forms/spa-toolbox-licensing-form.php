@@ -169,7 +169,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
         spa_paint_hidden_input('sp_item', $sp_item);
         spa_paint_hidden_input('sp_item_name', $sp_item_name);
         spa_paint_hidden_input('sp_item_id', $sp_item_id);
-        echo sp_create_nonce('forum-adminform_licensing');
+        sp_echo_create_nonce('forum-adminform_licensing');
         ?>
 
         <div class="licensing-wrapper">
@@ -182,9 +182,9 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
                 </div>
                 <div>
                     <?php if( $license_status !== false && $license_status == 'valid' ) { ?>
-                        <input type="submit" class="sf-button-secondary" id="<?php echo $button_id; ?>" name="SP_license_deactivate" value="<?php echo SP()->primitives->admin_text('Deactivate License'); ?>"/>
+                        <input type="submit" class="sf-button-secondary" id="<?php echo $button_id; ?>" name="SP_license_deactivate" value="<?php SP()->primitives->admin_etext('Deactivate License'); ?>"/>
                     <?php } else { ?>
-                        <input type="submit" class="sf-button-secondary" id="<?php echo $button_id; ?>" name="SP_license_activate" value="<?php echo SP()->primitives->admin_text('Activate License'); ?>"/>
+                        <input type="submit" class="sf-button-secondary" id="<?php echo $button_id; ?>" name="SP_license_activate" value="<?php SP()->primitives->admin_etext('Activate License'); ?>"/>
                     <?php } ?>
 
                     <?php if($license_status != 'valid' && $get_key != '') {
@@ -208,7 +208,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 
             <?php if( $license_status !== false && $license_status == 'valid' && !empty($license_info) ) { ?>
                 <div>
-                    <h4><?php echo SP()->primitives->admin_text('License Information'); ?></h4>
+                    <h4><?php SP()->primitives->admin_etext('License Information'); ?></h4>
                     <div class="sf-ml-10">
                         <?php
 							echo SP()->primitives->admin_text('License Limit:') . ' ';

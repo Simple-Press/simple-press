@@ -82,7 +82,7 @@ function spa_components_forumranks_form() {
     $ajaxURL = wp_nonce_url(SPAJAXURL . 'components-loader&amp;saveform=forumranks', 'components-loader');
     ?>
         <div class='sf-panel-head'>
-            <?php echo esc_html(SP()->primitives->admin_text('Forum Ranks'); ?>
+            <?php SP()->primitives->admin_etext('Forum Ranks'); ?>
         </div>
         <div class='sf-panel-body'>
             <div class="sf-full-form">
@@ -94,7 +94,7 @@ function spa_components_forumranks_form() {
                         <div class="sf-panel-body-top">
                             <h4><?php echo esc_html(SP()->primitives->admin_text('Standard Forum Ranks')); ?></h4>
                             <span class="sf-icon-button sf-opener-button-open"><span class="sf-icon sf-add"></span></span>
-                            <?php echo wp_kses_post(spa_paint_help('forum-ranks')) ?>
+                            <?php spa_paint_help('forum-ranks') ?>
                         </div>
                         <div class="sf-form-row">
                             <?php wp_kses_post(spa_paint_rankings_table($rankings)); ?>
@@ -115,7 +115,7 @@ function spa_components_forumranks_form() {
                             <h4><?php echo esc_html(SP()->primitives->admin_text('Forum Rank Badges')); ?></h4>
                             <?php $loc = SP_STORE_DIR . '/' . SP()->plugin->storage['ranks'] . '/'; ?>
                             <?php wp_kses_post(spa_paint_file(SP()->primitives->admin_text('Select rank badge to upload'), 'newrankfile', false, true, $loc)); ?>
-                            <?php echo wp_kses_post(spa_paint_help('badges-upload')) ?>
+                            <?php spa_paint_help('badges-upload') ?>
                         </div>
                         <div class="sf-form-row">
                             <?php spa_paint_rank_images(); ?>
@@ -224,7 +224,21 @@ function spa_paint_rankings_table($rankings) {
                         ?>
                     </td>
                     <td data-label="<?php echo esc_attr(SP()->primitives->admin_text('Badge')); ?>" class="sf-Left">
-                        <?php echo wp_kses(spa_get_saved_icon_html($ranks['badge'][$x], 'ranks')); ?>
+                        <?php echo wp_kses(
+                                spa_get_saved_icon_html($ranks['badge'][$x], 'ranks')
+                                , [
+                                    'img' => [
+                                        'class' => [],
+                                        'src' => [],
+                                        'alt' => [],
+                                        'title' => [],
+                                    ],
+                                    'span' => [
+                                        'class' => [],
+                                        'style' => [],
+                                    ],
+                                ]
+                        ); ?>
                     </td>
                     <td data-label="" class="sf-Left">
                         <span class="sf-item-controls">

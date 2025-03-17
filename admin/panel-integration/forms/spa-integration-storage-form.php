@@ -15,8 +15,8 @@ function spa_integration_storage_form() { ?>
         $ajaxURL = wp_nonce_url(SPAJAXURL.'integration-loader&amp;saveform=storage', 'integration-loader');
     ?>
     <div>
-        <form action="<?php echo $ajaxURL; ?>" method="post" id="sfstorageform" name="sfstorage">
-            <?php echo sp_create_nonce('forum-adminform_storage'); ?>
+        <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfstorageform" name="sfstorage">
+            <?php sp_echo_create_nonce('forum-adminform_storage'); ?>
             <?php spa_paint_open_tab(SP()->primitives->admin_text('Storage Locations'),true); ?>
 
                 <?php spa_paint_open_panel(); ?>
@@ -27,13 +27,13 @@ function spa_integration_storage_form() { ?>
                             </p>
                             <div class="">
                                 <p><span class="sf-icon sf-check"></span>
-                                    <?php echo SP()->primitives->admin_text('Location found'); ?></p>
+                                    <?php SP()->primitives->admin_etext('Location found'); ?></p>
                                 <p><span class="sf-icon sf-no-check"></span>
-                                    <?php echo SP()->primitives->admin_text('Location not found'); ?></p>
+                                    <?php SP()->primitives->admin_etext('Location not found'); ?></p>
                                 <p><span class="sf-icon sf-requires-enable"></span>
-                                    <?php echo SP()->primitives->admin_text('Write - OK'); ?></p>
+                                    <?php SP()->primitives->admin_etext('Write - OK'); ?></p>
                                 <p><span class="sf-icon sf-warning"></span>
-                                    <?php echo SP()->primitives->admin_text('Write - denied'); ?></p>
+                                    <?php SP()->primitives->admin_etext('Write - denied'); ?></p>
                             </div>
                             <div class="sf-alert-block sf-caution">
                                 <?php echo SP()->primitives->front_text('BEWARE: Please read the help before making any changes to these locations. Incorrect changes may cause Simple:Press to stop functioning.'); ?>
@@ -135,7 +135,9 @@ function spa_paint_storage_input($label, $name, $value, $na = false) {
 	}
 
 	echo '<tr >';
-        echo '<td> ' . SP()->primitives->admin_text($label) . spa_paint_help($name, $adminhelpfile) . '</td>';
+        echo '<td> ' . SP()->primitives->admin_text($label);
+            spa_paint_help($name, $adminhelpfile) ;
+        echo '</td>';
         echo '<td>' . $icon1 . $icon2 . '</td>';
         echo '<td><input type="text"  name="'.$name.'" value="'.esc_attr($value).'" style="width:100%;"></td>';
 	echo '</tr>';

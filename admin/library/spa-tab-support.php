@@ -95,10 +95,10 @@ function spa_paint_open_fieldset($legend, $displayhelp = false, $helpname = '', 
 		if($subTitle) {
 			echo "<span>".esc_html($subTitle)."</span>";
 		}
-		if ($displayhelp) echo spa_paint_help($helpname, $adminhelpfile);
+		if ($displayhelp) spa_paint_help($helpname, $adminhelpfile);
 		echo "</div>\n";
 	} else {
-		if ($displayhelp) echo spa_paint_help($helpname, $adminhelpfile);
+		if ($displayhelp) spa_paint_help($helpname, $adminhelpfile);
 	}
 }
 
@@ -482,7 +482,16 @@ function spa_paint_select_start($label, $name, $helpname) {
 
 function spa_paint_select_end($msg='') {
 	echo "</select>\n";
-	if ($msg) echo esc_html($msg);
+	if ($msg) {
+        echo wp_kses(
+            $msg,
+            [
+                'span' => [
+                    'class' => true,
+                ]
+            ]
+        );
+    }
 	echo '</div>';
 }
 
@@ -546,23 +555,40 @@ function spa_paint_spacer() { // @TODO admin design
 }
 
 function spa_paint_help($name, $helpfile = null, $show=true) {
-        if(is_null($helpfile)) {
-            global $adminhelpfile;
-            $helpfile = $adminhelpfile;
-        }
+    if(is_null($helpfile)) {
+        global $adminhelpfile;
+        $helpfile = $adminhelpfile;
+    }
 	$site = wp_nonce_url(SPAJAXURL."help&amp;file=$helpfile&amp;item=$name", 'help');
-	if (!spa_saas_check() && !spa_white_label_check()) {
-		$title = SP()->primitives->admin_text('Simple:Press Help');
-	} else {
-		$title = SP()->primitives->admin_text('Forum Help');
-	}
+
+	$title = (!spa_saas_check() && !spa_white_label_check())
+		? SP()->primitives->admin_text('Simple:Press Help')
+		: SP()->primitives->admin_text('Forum Help');
+    
 	$out = '';
 
 	if ($show) {
 		$out.= '<a id="'.esc_attr($name).'" class="sf-icon-button sfhelplink spHelpLink" data-site="'.esc_attr($site).'" data-label="'.esc_attr($title).'" data-width="600" data-height="0" data-align="center">';
 		$out.= '<span class="sf-icon sf-help"></span></a>';
 	}
-	return $out;
+    
+	echo wp_kses(
+            $out,
+            [
+                'a' => [
+                    'id' => true,
+                    'class' => true,
+                    'data-site' => true,
+                    'data-label' => true,
+                    'data-width' => true,
+                    'data-height' => true,
+                    'data-align' => true,
+                ],
+                'span' => [
+                    'class' => true,
+                ]
+            ]
+        );
 }
 
 /**

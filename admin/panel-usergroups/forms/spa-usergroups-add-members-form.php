@@ -11,12 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function spa_usergroups_add_members_form($usergroup_id) {
-    $formId = sprintf('sfmembernew-%s-%d', uniqid(), $usergroup_id);
+    $formId = sprintf('sfmembernew-%s-%d', uniqid(), esc_attr($usergroup_id));
     ?>
     <script>
         (function (spj, $, undefined) {
             $(document).ready(function () {
-                $('#<?php echo $formId; ?>').ajaxForm({
+                $('#<?php echo esc_js($formId); ?>').ajaxForm({
                     target: '#sfmsgspot',
                 });
             });
@@ -28,20 +28,20 @@ function spa_usergroups_add_members_form($usergroup_id) {
     $ajaxURL = wp_nonce_url(SPAJAXURL . 'usergroups-loader&amp;saveform=addmembers', 'usergroups-loader');
     $url = wp_nonce_url(SPAJAXURL . 'memberships&amp;targetaction=add', 'memberships');
     $target = 'sfmsgspot';
-    $smessage = esc_js(SP()->primitives->admin_text('Please Wait - Processing'));
-    $emessage = esc_js(SP()->primitives->admin_text('Users added'));
+    $smessage = SP()->primitives->admin_text('Please Wait - Processing');
+    $emessage = SP()->primitives->admin_text('Users added');
     ?>
-    <form action="<?php echo $ajaxURL; ?>" method="post" id="<?php echo $formId; ?>" name="sfmembernew<?php echo $usergroup_id ?>" 
+    <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="<?php echo esc_attr($formId); ?>" name="sfmembernew<?php echo esc_attr($usergroup_id) ?>"
           onsubmit="spj.addDelMembers(
-                      '<?php echo $formId; ?>',
-                      '<?php echo $url; ?>',
-                      '<?php echo $target; ?>',
-                      '<?php echo $smessage; ?>',
-                      '<?php echo($emessage); ?>',
-                      0, 50, '#amid<?php echo $usergroup_id; ?>', 'add');">
+                      '<?php echo esc_js($formId); ?>',
+                      '<?php echo esc_js($url); ?>',
+                      '<?php echo esc_js($target); ?>',
+                      '<?php echo esc_js($smessage); ?>',
+                      '<?php echo esc_js($emessage); ?>',
+                      0, 50, '#amid<?php echo esc_js($usergroup_id); ?>', 'add');">
         <?php
         spa_paint_open_nohead_tab(true, '');
-        echo sp_create_nonce('forum-adminform_membernew');
+        echo '<input type="hidden" name="'.esc_attr('forum-adminform_membernew').'" value="'.esc_attr(wp_create_nonce('forum-adminform_membernew')).'" />';
 
         $sfmemberopts = SP()->options->get('sfmemberopts');
 
@@ -53,7 +53,7 @@ function spa_usergroups_add_members_form($usergroup_id) {
         $singleOpt = ($singleGrp) ? SP()->primitives->admin_text('On') : SP()->primitives->admin_text('Off');
         $singleMsg = ($singleGrp) ? SP()->primitives->admin_text('Any members moved will be deleted from current user group memberships') : SP()->primitives->admin_text('Any members moved will be retained in current user group memberships');
         ?>
-        <input type="hidden" name="usergroup_id" value="<?php echo $usergroup_id; ?>" />
+        <input type="hidden" name="usergroup_id" value="<?php echo esc_attr($usergroup_id); ?>" />
         <?php
         $from = esc_js(SP()->primitives->admin_text('No members selected'));
         $action = 'addug';
@@ -64,7 +64,7 @@ function spa_usergroups_add_members_form($usergroup_id) {
         do_action('sph_usergroup_add_member_panel');
         ?>
         <span class="sf-controls">
-            <input type="submit" class="sf-button-primary" name="sfmembernew<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" />
+            <input type="submit" class="sf-button-primary" name="sfmembernew<?php echo esc_attr($usergroup_id); ?>" value="<?php echo esc_attr(SP()->primitives->admin_text('Add Members')); ?>" />
         </span>
         <span class="sf-button sf-hidden-important" id='onFinish'></span>
         <div class="pbar" id="progressbar"></div>

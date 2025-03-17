@@ -23,9 +23,9 @@ function spa_forums_create_forum_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=createforum', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumnew" name="sfforumnew">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfforumnew" name="sfforumnew">
 <?php
-		echo sp_create_nonce('forum-adminform_forumnew');
+		sp_echo_create_nonce('forum-adminform_forumnew');
 		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Create New Forum'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Create New Forum'), 'true', 'create-new-forum');

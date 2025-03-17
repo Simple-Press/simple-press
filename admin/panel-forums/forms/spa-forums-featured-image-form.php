@@ -82,15 +82,15 @@ function spa_forums_featured_image_form() {
         <div class="sf-panel">
             <fieldset class="sf-fieldset">
                 <div class="sf-panel-body-top">
-                    <h4><?php echo SP()->primitives->admin_text('Forum Featured Image Upload')?></h4>
+                    <h4><?php SP()->primitives->admin_etext('Forum Featured Image Upload')?></h4>
                     <?php
                         $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/';
                         spa_paint_file(SP()->primitives->admin_text('Select image file to upload'), 'newimagefile', false, true, $loc);
                     ?>
-                    <?php echo spa_paint_help('featured-image-upload') ?>
+                    <?php spa_paint_help('featured-image-upload') ?>
                 </div>
                 <div class="sf-alert-block sf-info">
-                    <?php echo SP()->primitives->admin_text('Notice: Currently, featured images, if one exists, may be used for the Open Graph meta tag and, for this use, images are recommended to be 200px x 200px.' ); ?>
+                    <?php SP()->primitives->admin_etext('Notice: Currently, featured images, if one exists, may be used for the Open Graph meta tag and, for this use, images are recommended to be 200px x 200px.' ); ?>
                 </div>
                 <div class="sf-form-row">
                     <?php spa_paint_featured_images(); ?>

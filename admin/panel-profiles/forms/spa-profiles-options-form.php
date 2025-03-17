@@ -21,8 +21,8 @@ function spa_profiles_options_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'profiles-loader&amp;saveform=options', 'profiles-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfoptionsform" name="sfoptions">
-	<?php echo sp_create_nonce('forum-adminform_options'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfoptionsform" name="sfoptions">
+	<?php sp_echo_create_nonce('forum-adminform_options'); ?>
 <?php
 	spa_paint_options_init();
 
@@ -58,7 +58,7 @@ function spa_profiles_options_form() {
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Signature Image Size'), true, 'sig-images');
                 echo '<div class="sf-form-row">';
-                    echo SP()->primitives->admin_text('If you are allowing signature images (zero = not limited)');
+                    SP()->primitives->admin_etext('If you are allowing signature images (zero = not limited)');
                 echo '</div>';
 				spa_paint_input(SP()->primitives->admin_text('Maximum signature width (pixels)'), 'sfsigwidth', $sfoptions['sfsigwidth'] ?? 0);
 				spa_paint_input(SP()->primitives->admin_text('Maximum signature height (pixels)'), 'sfsigheight', $sfoptions['sfsigheight'] ?? 0);

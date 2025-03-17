@@ -16,13 +16,13 @@ function spa_permissions_permission_main() {
     if ($roles) {
         foreach ($roles as $role) {
             ?>
-            <table id="rolerow-<?php echo($role->role_id); ?>" class="widefat sf-table-small sf-table-mobile">
+            <table id="rolerow-<?php echo esc_attr($role->role_id); ?>" class="widefat sf-table-small sf-table-mobile">
                 <tr>
-                    <td class='row-title'><?php echo $role->role_id; ?></td>
+                    <td class='row-title'><?php echo esc_attr($role->role_id); ?></td>
                     <td>
                         <div class="sf-title-block sf-title-block-v2">
-                            <h4><?php echo SP()->displayFilters->title($role->role_name); ?></h4>
-                            <p><?php echo SP()->displayFilters->title($role->role_desc); ?></p>
+                            <h4><?php echo esc_attr(SP()->displayFilters->title($role->role_name)); ?></h4>
+                            <p><?php echo esc_attr(SP()->displayFilters->title($role->role_desc)); ?></p>
                         </div>
                     </td>
                     <td style="width: 250px;">
@@ -31,18 +31,18 @@ function spa_permissions_permission_main() {
                         $target = 'perm-' . $role->role_id;
                         $image = SPADMINIMAGES;
                         $site = wp_nonce_url(SPAJAXURL . "permission-tip&amp;role={$role->role_id}", 'permission-tip');
-                        $title = esc_js(SP()->displayFilters->title($role->role_name));
+                        $title = SP()->displayFilters->title($role->role_name);
                         ?>
                         <div class="sf-panel-body-top-right sf-mobile-btns sf-mobile-no-vertical-margin">
-                            <input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit'); ?>" data-form="editperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $role->role_id; ?>" data-open="" />
-                            <input type="button" class="sf-button-secondary spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete'); ?>" data-form="delperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $role->role_id; ?>" data-open="" />
-                            <input type='button' class='sf-button-secondary spOpenDialog' value='<?php echo SP()->primitives->admin_text('Usage'); ?>' data-site='<?php echo $site ?>' data-label='<?php echo $title ?>' data-width='600' data-height='0' data-align='center' />
+                            <input type="button" class="sf-button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Edit'); ?>" data-form="editperm" data-url="<?php echo esc_url($base); ?>" data-target="<?php echo esc_attr($target); ?>" data-img="<?php echo esc_url($image); ?>" data-id="<?php echo esc_attr($role->role_id); ?>" data-open="" />
+                            <input type="button" class="sf-button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Delete'); ?>" data-form="delperm" data-url="<?php echo esc_url($base); ?>" data-target="<?php echo esc_attr($target); ?>" data-img="<?php echo esc_url($image); ?>" data-id="<?php echo esc_attr($role->role_id); ?>" data-open="" />
+                            <input type='button' class='sf-button-secondary spOpenDialog' value='<?php SP()->primitives->admin_etext('Usage'); ?>' data-site='<?php echo esc_url($site); ?>' data-label='<?php echo esc_attr($title); ?>' data-width='600' data-height='0' data-align='center' />
                         </div>
                     </td>
                 </tr>
                 <tr class="sfinline-form"> <!-- This row will hold ajax forms for the current permission set -->
                     <td colspan="3" class="sf-padding-none">
-                        <div id="perm-<?php echo $role->role_id; ?>">
+                        <div id="perm-<?php echo esc_attr($role->role_id); ?>">
                         </div>
                     </td>
                 </tr>
@@ -51,7 +51,7 @@ function spa_permissions_permission_main() {
         <br />
         <?php
     } else {
-        echo '<div class="sfempty">&nbsp;&nbsp;&nbsp;&nbsp;' . SP()->primitives->admin_text('There are no Permission Sets defined.') . '</div>';
+        echo '<div class="sfempty">&nbsp;&nbsp;&nbsp;&nbsp;' . esc_html(SP()->primitives->admin_text('There are no Permission Sets defined.')). '</div>';
     }
     spa_paint_close_container();
     spa_paint_close_tab();

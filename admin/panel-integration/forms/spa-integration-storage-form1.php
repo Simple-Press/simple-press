@@ -21,8 +21,8 @@ function spa_integration_storage_form() {
 
 	$ajaxURL = wp_nonce_url(SPAJAXURL.'integration-loader&amp;saveform=storage', 'integration-loader');
 	?>
-    <form action="<?php echo $ajaxURL; ?>" method="post" id="sfstorageform" name="sfstorage">
-		<?php echo sp_create_nonce('forum-adminform_storage'); ?>
+    <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfstorageform" name="sfstorage">
+		<?php sp_echo_create_nonce('forum-adminform_storage'); ?>
 		<?php
 		spa_paint_options_init();
 		spa_paint_open_tab(/*SP()->primitives->admin_text('Integration').' - '.*/SP()->primitives->admin_text('Storage Locations'), true);

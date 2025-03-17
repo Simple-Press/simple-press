@@ -20,10 +20,11 @@ function spa_permissions_add_auth_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'permissions-loader&amp;saveform=newauth', 'permissions-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfauthnew" name="sfauthnew">
+	<form action="<?php echo esc_attr($ajaxURL); ?>" method="post" id="sfauthnew" name="sfauthnew">
 <?php
-		echo sp_create_nonce('forum-adminform_authnew');
-		spa_paint_open_tab(/*SP()->primitives->admin_text('Permissions').' - '.*/SP()->primitives->admin_text('Add New Authorization'), true);
+		sp_echo_create_nonce('forum-adminform_authnew');
+
+		spa_paint_open_tab(SP()->primitives->admin_text('Add New Authorization'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Add New Authorization'), 'true', 'create-new-authorization');
 ?>

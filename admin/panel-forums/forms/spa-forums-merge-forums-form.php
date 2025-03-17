@@ -22,9 +22,9 @@ function spa_forums_merge_form() {
 
 	$ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=mergeforums', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfmergeforums" name="sfmergeforums">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfmergeforums" name="sfmergeforums">
 <?php
-		echo sp_create_nonce('forum-adminform_mergeforums');
+		sp_echo_create_nonce('forum-adminform_mergeforums');
 		spa_paint_open_tab(/*SP()->primitives->admin_text('Forums').' - '.*/SP()->primitives->admin_text('Merge Forums'));
 
 			spa_paint_open_panel();

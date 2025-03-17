@@ -64,9 +64,9 @@ function spa_forums_ordering_form($groupId=0) {
 
 	$ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=orderforum', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumorder" name="sfforumorder">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfforumorder" name="sfforumorder">
 <?php
-		echo sp_create_nonce('forum-adminform_forumorder');
+		sp_echo_create_nonce('forum-adminform_forumorder');
         if ($groupId === 0) {
             spa_paint_open_tab(
                 SP()->primitives->admin_text('Group and Forum Ordering'),
@@ -76,8 +76,8 @@ function spa_forums_ordering_form($groupId=0) {
 		?>
             <fieldset class="sf-fieldset">
                 <div class="sf-panel-body-top">
-                    <h4><?php echo SP()->primitives->admin_text('Order Groups and Forums') ?></h4>
-                    <?php echo spa_paint_help('order-forums') ?>
+                    <h4><?php SP()->primitives->admin_etext('Order Groups and Forums') ?></h4>
+                    <?php spa_paint_help('order-forums') ?>
                 </div>
 
                 <?php

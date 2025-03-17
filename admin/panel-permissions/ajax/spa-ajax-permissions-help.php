@@ -48,18 +48,18 @@ if(empty($list)) {
 			if($firstline) {
 				$firstline = false;
 			} else {
-				echo '<td>'.$data.'</td>';
+				echo '<td>'.wp_kses($data, ['br' => []]).'</td>';
 				echo '</tr>';
 				$first = false;
 				$data = '';
 			}
 			echo '<tr>';
 			$fname = $usage->forum_name;
-			echo '<td>'.$usage->forum_name.'</td>';
+			echo '<td>'.esc_html($usage->forum_name).'</td>';
 		}
 		$data.= $usage->usergroup_name.'<br />';
 	}
-	echo '<td>'.$data.'</td>';
+	echo '<td>'.wp_kses($data, ['br' => []]).'</td>';
 	echo '</tr>';
 
 ?>

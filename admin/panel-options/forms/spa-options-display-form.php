@@ -19,8 +19,8 @@ function spa_options_display_form() {
 	$sfoptions	 = spa_get_display_data();
 	$ajaxURL	 = wp_nonce_url(SPAJAXURL.'options-loader&amp;saveform=display', 'options-loader');
 	?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfdisplayform" name="sfdisplay">
-		<?php echo sp_create_nonce('forum-adminform_display'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfdisplayform" name="sfdisplay">
+		<?php sp_echo_create_nonce('forum-adminform_display'); ?>
 		<?php
 		spa_paint_options_init();
 

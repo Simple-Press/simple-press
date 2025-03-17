@@ -23,9 +23,9 @@ function spa_forums_delete_group_form($group_id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=deletegroup', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfgroupdel<?php echo $group->group_id; ?>" name="sfgroupdel<?php echo $group->group_id; ?>">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfgroupdel<?php echo $group->group_id; ?>" name="sfgroupdel<?php echo $group->group_id; ?>">
 <?php
-		echo sp_create_nonce('forum-adminform_groupdelete');
+		sp_echo_create_nonce('forum-adminform_groupdelete');
 		//spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Delete Group'), 'true', 'delete-forum-group');

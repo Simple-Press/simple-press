@@ -21,17 +21,17 @@ function spa_forums_global_perm_form(): void {
 	spa_paint_options_init();
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=globalperm', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfnewglobalpermission" name="sfnewglobalpermission">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfnewglobalpermission" name="sfnewglobalpermission">
 <?php
-		echo sp_create_nonce('forum-adminform_globalpermissionnew');
+		sp_echo_create_nonce('forum-adminform_globalpermissionnew');
 		spa_paint_open_tab(SP()->primitives->admin_text('Add Global Permission Set'), true);
 		?>
 
             <div class="sf-panel">
                 <fieldset class="sf-fieldset">
                     <div class="sf-panel-body-top">
-                        <h4><?php echo SP()->primitives->admin_text('Add a User Group Permission Set to All Forums') ?></h4>
-                        <?php echo spa_paint_help('add-a-user-group-permission-set-to-all-forums') ?>
+                        <h4><?php SP()->primitives->admin_etext('Add a User Group Permission Set to All Forums') ?></h4>
+                        <?php spa_paint_help('add-a-user-group-permission-set-to-all-forums') ?>
                     </div>
                     <?php
                     echo '<div class="sf-alert-block sf-caution">'.SP()->primitives->admin_text('Caution:  Any current permission sets for the selected usergroup for ANY forum may be overwritten').'</div>';

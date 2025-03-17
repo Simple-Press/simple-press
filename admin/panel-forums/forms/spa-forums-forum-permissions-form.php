@@ -26,7 +26,7 @@ function spa_forums_view_forums_permission_form($forum_id)
 ?>
 					<table class="sfmaintable sf-forum-perms-table">
 						<tr>
-							<td class="sf-text-al-center" colspan="3"><strong><?php echo SP()->primitives->admin_text('Current permission set for forum').' '.SP()->displayFilters->title($forum->forum_name); ?></strong></td>
+							<td class="sf-text-al-center" colspan="3"><strong><?php SP()->primitives->admin_etext('Current permission set for forum').' '.SP()->displayFilters->title($forum->forum_name); ?></strong></td>
 						</tr>
 <?php
 					foreach ($perms as $perm) {
@@ -41,8 +41,8 @@ function spa_forums_view_forums_permission_form($forum_id)
 								$target = "curperm-$perm->permission_id";
 								$image = SPADMINIMAGES;
 ?>
-								<input type="button" class="sf-button-secondary spStackBtnLong spLoadForm" value="<?php echo SP()->primitives->admin_text('Edit Permission Set'); ?>" data-form="editperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $perm->permission_id; ?>" data-open="" />
-								<input type="button" class="sf-button-secondary spStackBtnLong spLoadForm" value="<?php echo SP()->primitives->admin_text('Delete Permission Set'); ?>" data-form="delperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $perm->permission_id; ?>" data-open="" />
+								<input type="button" class="sf-button-secondary spStackBtnLong spLoadForm" value="<?php SP()->primitives->admin_etext('Edit Permission Set'); ?>" data-form="editperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $perm->permission_id; ?>" data-open="" />
+								<input type="button" class="sf-button-secondary spStackBtnLong spLoadForm" value="<?php SP()->primitives->admin_etext('Delete Permission Set'); ?>" data-form="delperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $perm->permission_id; ?>" data-open="" />
 							</td>
 			   			</tr>
 						<tr class="sfinline-form"> <!-- This row will hold hidden forms for the current forum permission set -->
@@ -66,7 +66,7 @@ function spa_forums_view_forums_permission_form($forum_id)
 								$target = "newperm-$forum->forum_id";
 								$image = SPADMINIMAGES;
 ?>
-								<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php echo SP()->primitives->admin_text('Add Permission'); ?>" data-form="addperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="open" />
+								<input type="button" class="sf-button-secondary spStackBtn spLoadForm" value="<?php SP()->primitives->admin_etext('Add Permission'); ?>" data-form="addperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open="open" />
 			   				</td>
 						</tr>
 						<tr class="sfinline-form"> <!-- This row will hold ajax forms for adding a new forum permission set -->

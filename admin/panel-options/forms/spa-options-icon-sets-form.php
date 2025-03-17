@@ -8,7 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die('Access denied - you cannot directly call this file');
 }
 
-
 /**
  * Print iconsets listing and upload form
  */
@@ -30,18 +29,14 @@ function spa_options_iconsets_form() {
 					$('.ui-tooltip').hide();
 					$('#' + data.reload).click();
 				});
-				
 			});
-			
-			
-			
-			
+
 			spj.loadAjaxForm('sficonsetsform', 'acciconsets');
 
 			// Handle iconset upload
 			var button = $('#sf-upload-button'), interval;
 			new AjaxUpload(button,{
-				action: '<?php echo $ajaxurl; ?>',
+				action: '<?php echo esc_js($ajaxurl); ?>',
 				name: 'uploadfile',
 				onSubmit : function(file, ext){
 					/* check for valid extension */
@@ -49,20 +44,8 @@ function spa_options_iconsets_form() {
 						$('#sf-upload-status').html('<p class="sf-upload-status-text"><?php echo esc_js(SP()->primitives->admin_text('Only Zip files are allowed!')); ?></p>');
 						return false;
 					}
-					/* change button text, when user selects file */
-					//utext = '<?php echo esc_js(SP()->primitives->admin_text('Uploading')); ?>';
-					//button.text(utext);
 					/* If you want to allow uploading only 1 file at time, you can disable upload button */
 					this.disable();
-					/* Uploding -> Uploading. -> Uploading... */
-					//interval = window.setInterval(function(){
-					//	var text = button.text();
-					//	if (text.length < 13){
-					//		button.text(text + '.');
-					//	} else {
-					//		button.text(utext);
-					//	}
-					//}, 200);
 				},
 				onComplete: function(file, response){
 					$('#sf-upload-status').html('');
@@ -89,18 +72,18 @@ function spa_options_iconsets_form() {
 	}(window.spj = window.spj || {}, jQuery));
 </script>
 <?php $ajaxURL = wp_nonce_url(SPAJAXURL.'options-loader&amp;saveform=iconsets', 'options-loader'); ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sficonsetsform" name="sficonsets" enctype="multipart/form-data">
-        <?php echo sp_create_nonce('forum-adminform_iconsets'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sficonsetsform" name="sficonsets" enctype="multipart/form-data">
+        <?php sp_echo_create_nonce('forum-adminform_iconsets'); ?>
         <?php spa_paint_open_tab(SP()->primitives->admin_text('Iconsets'), true);?>
             <div class="sf-panel">
                 <fieldset class="sf-fieldset">
                     <div class="sf-panel-body-top">
-                        <h4><?php echo SP()->primitives->admin_text('Custom Iconset Upload'); ?></h4>
+                        <h4><?php SP()->primitives->admin_etext('Custom Iconset Upload'); ?></h4>
                         <?php
                             $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['iconsets'].'/';
                             spa_paint_file(SP()->primitives->admin_text('Select iconset zip file to upload'), 'iconset', false, true, $loc);
                         ?>
-                        <?php echo spa_paint_help('iconset-upload') ?>
+                        <?php spa_paint_help('iconset-upload') ?>
                     </div>
                     <div class="sf-form-row">
                         <?php spa_paint_close_container(); ?>
@@ -111,8 +94,8 @@ function spa_options_iconsets_form() {
             <div class="sf-panel">
                 <fieldset class="sf-fieldset">
                     <div class="sf-panel-body-top">
-                        <h4><?php echo SP()->primitives->admin_text('Installed Iconsets'); ?></h4>
-                        <?php echo spa_paint_help('custom-iconsets') ?>
+                        <h4><?php SP()->primitives->admin_etext('Installed Iconsets'); ?></h4>
+                        <?php spa_paint_help('custom-iconsets') ?>
                     </div>
                     <div class="sf-form-row">
                         <?php spa_paint_iconsets_table(); ?>

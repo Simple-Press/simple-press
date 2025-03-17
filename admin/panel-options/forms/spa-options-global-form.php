@@ -21,8 +21,8 @@ function spa_options_global_form() {
 	$sfoptions = spa_get_global_data();
 	$ajaxURL   = wp_nonce_url( SPAJAXURL . 'options-loader&amp;saveform=global', 'options-loader' );
 	?>
-    <form action="<?php echo $ajaxURL; ?>" method="post" id="sfglobalform" name="sfglobal">
-		<?php echo sp_create_nonce( 'forum-adminform_global' ); ?>
+    <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfglobalform" name="sfglobal">
+		<?php sp_echo_create_nonce( 'forum-adminform_global' ); ?>
 		<?php
 		#== GLOBAL Tab ============================================================
 
@@ -40,8 +40,8 @@ function spa_options_global_form() {
 		if ( $sfoptions['blockadmin'] ) {
 			$roles = array_keys( $wp_roles->role_names );
 			if ( $roles ) {
-				echo '<p class="sf-subhead">' . SP()->primitives->admin_text( 'Allow these WP roles access to the WP admin' ) . ':</p>';
-				echo '<p><strong><small>(' . SP()->primitives->admin_text( 'Administrators will always have access' ) . ')</small></strong></p>';
+				echo '<p class="sf-subhead">' . esc_html(SP()->primitives->admin_text( 'Allow these WP roles access to the WP admin' )).':</p>';
+				echo '<p><strong><small>(' . esc_html(SP()->primitives->admin_text( 'Administrators will always have access' )) . ')</small></strong></p>';
 				foreach ( $roles as $index => $role ) {
 					if ( $role != 'administrator' ) {
 						$checked = ( ! empty( $sfoptions['blockroles'][ $role ] ) ) ? 1 : 0;
@@ -105,9 +105,9 @@ function spa_options_global_form() {
 				$checked = ( $sfoptions['defeditor'] == 1 ) ? 'checked="checked"' : '';
 				?>
                 <li class="sf-option-global-label">
-                    <input type="radio" name="editor" id="sfradio-editor1" tabindex="<?php echo $tab;
-					$tab ++; ?>" value="1" <?php echo $checked; ?> />
-                    <label for="sfradio-editor1"><?php echo SP()->primitives->admin_text( 'Rich text' ) . ' (' . RICHTEXTNAME . ')'; ?></label>
+                    <input type="radio" name="editor" id="sfradio-editor1" tabindex="<?php echo esc_attr($tab);
+					$tab ++; ?>" value="1" <?php echo esc_attr($checked); ?> />
+                    <label for="sfradio-editor1"><?php SP()->primitives->admin_etext( 'Rich text' ) . ' (' . esc_html(RICHTEXTNAME) . ')'; ?></label>
                 </li>
 				<?php
 			}
@@ -115,9 +115,9 @@ function spa_options_global_form() {
 				$checked = ( $sfoptions['defeditor'] == 2 ) ? 'checked="checked"' : '';
 				?>
                 <li class="sf-option-global-label">
-                    <input type="radio" name="editor" id="sfradio-editor2" tabindex="<?php echo $tab;
-					$tab ++; ?>" value="2" <?php echo $checked; ?> />
-                    <label for="sfradio-editor2"><?php echo SP()->primitives->admin_text( 'HTML' ) . ' (' . HTMLNAME . ')'; ?></label>
+                    <input type="radio" name="editor" id="sfradio-editor2" tabindex="<?php echo esc_attr($tab);
+					$tab ++; ?>" value="2" <?php echo esc_attr($checked); ?> />
+                    <label for="sfradio-editor2"><?php SP()->primitives->admin_etext( 'HTML' ) . ' (' . esc_html(HTMLNAME) . ')'; ?></label>
                 </li>
 				<?php
 			}
@@ -125,21 +125,21 @@ function spa_options_global_form() {
 				$checked = ( $sfoptions['defeditor'] == 3 ) ? 'checked="checked"' : '';
 				?>
                 <li class="sf-option-global-label">
-                    <input type="radio" name="editor" id="sfradio-editor3" tabindex="<?php echo $tab;
-					$tab ++; ?>" value="3" <?php echo $checked; ?> />
-                    <label for="sfradio-editor3"><?php echo SP()->primitives->admin_text( 'bbCode' ) . ' (' . BBCODENAME . ')'; ?></label>
+                    <input type="radio" name="editor" id="sfradio-editor3" tabindex="<?php echo esc_attr($tab);
+					$tab ++; ?>" value="3" <?php echo esc_attr($checked); ?> />
+                    <label for="sfradio-editor3"><?php SP()->primitives->admin_etext( 'bbCode' ) . ' (' . esc_html(BBCODENAME) . ')'; ?></label>
                 </li>
 				<?php
 			}
 			$checked = ( $sfoptions['defeditor'] == 4 ) ? 'checked="checked"' : '';
 			?>
             <li class="sf-option-global-label">
-                <input type="radio" name="editor" id="sfradio-editor4" tabindex="<?php echo $tab;
-				$tab ++; ?>" value="4" <?php echo $checked; ?> />
-                <label for="sfradio-editor4"><?php echo SP()->primitives->admin_text( 'Plain text' ) . ' (' . PLAINTEXTNAME . ')'; ?></label>
+                <input type="radio" name="editor" id="sfradio-editor4" tabindex="<?php echo esc_attr($tab);
+				$tab ++; ?>" value="4" <?php echo esc_attr($checked); ?> />
+                <label for="sfradio-editor4"><?php SP()->primitives->admin_etext( 'Plain text' ) . ' (' . esc_html(PLAINTEXTNAME)  . ')'; ?></label>
             </li>
 
-                </ul>
+            </ul>
         </div>
 		<?php
 		spa_paint_input( SP()->primitives->admin_text( '# of days a post can be edited (if user has permission)' ), 'editpostdays', $sfoptions['editpostdays'] );

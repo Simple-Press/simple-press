@@ -20,9 +20,9 @@ function spa_forums_enable_forum_form($forum_id) {
 	spa_paint_options_init();
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=enableforum', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumenable<?php echo $forum_id; ?>" name="sfforumenable<?php echo $forum_id; ?>">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfforumenable<?php echo $forum_id; ?>" name="sfforumenable<?php echo $forum_id; ?>">
 <?php
-		echo sp_create_nonce('forum-adminform_forumenable');
+		sp_echo_create_nonce('forum-adminform_forumenable');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Enable Forum'), 'true', 'enable-forum');

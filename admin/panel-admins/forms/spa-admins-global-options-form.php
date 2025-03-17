@@ -20,8 +20,8 @@ function spa_admins_global_options_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'admins-loader&amp;saveform=globaladmin', 'admins-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfadminoptionsform" name="sfadminoptions">
-	<?php echo sp_create_nonce('global-admin_options'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfadminoptionsform" name="sfadminoptions">
+	<?php sp_echo_create_nonce('global-admin_options'); ?>
 <?php
 	spa_paint_options_init();
 	spa_paint_open_tab(/*SP()->primitives->admin_text('Admins')." - ".*/SP()->primitives->admin_text('Global Admin Options'));

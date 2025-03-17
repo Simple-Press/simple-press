@@ -20,20 +20,20 @@ function spa_special_rankings_form($rankings) {
     spa_paint_open_nohead_tab(true);
     $ajaxURL = wp_nonce_url(SPAJAXURL . 'components-loader&amp;saveform=specialranks&amp;targetaction=newrank', 'components-loader');
     ?>
-    <form action="<?php echo $ajaxURL; ?>" method="post" name="sfaddspecialrank" id="sfaddspecialrank" class="sf-opener">
-        <?php echo sp_create_nonce('special-rank-new'); ?>
+    <form action="<?php echo esc_url($ajaxURL); ?>" method="post" name="sfaddspecialrank" id="sfaddspecialrank" class="sf-opener">
+        <?php sp_echo_create_nonce('special-rank-new'); ?>
         <div class="sf-panel">
             <fieldset class="sf-fieldset">
                 <div class="sf-panel-body-top">
-                    <h4><?php echo SP()->primitives->admin_text('Special Forum Ranks') ?></h4>
+                    <h4><?php SP()->primitives->admin_etext('Special Forum Ranks') ?></h4>
                     <span class="sf-icon-button sf-opener-button-open"><span class="sf-icon sf-add"></span></span>
-                    <?php echo spa_paint_help('special-ranks') ?>
+                    <?php spa_paint_help('special-ranks') ?>
                 </div>
                 <div class="sf-opener-target">
                     <div class="sf-form-row">
-                        <label><?php echo SP()->primitives->admin_text('New Special Rank Name'); ?></label>
+                        <label><?php SP()->primitives->admin_etext('New Special Rank Name'); ?></label>
                         <?php spa_paint_single_input('specialrank', '', false, true); ?>
-                        <input type="submit" class="sf-button-primary" id="addspecialrank" name="addspecialrank" value="<?php echo SP()->primitives->admin_text('Add Special Rank') ?>" />
+                        <input type="submit" class="sf-button-primary" id="addspecialrank" name="addspecialrank" value="<?php SP()->primitives->admin_etext('Add Special Rank') ?>" />
                     </div>
                 </div>
                 <div class="sf-form-row">
@@ -61,9 +61,9 @@ function spa_special_rankings_form($rankings) {
                                 ?>
                                 <tr id="srank<?php echo $rank['meta_id']; ?>">
                                     <td colspan="4" class="sf-padding-none sf-border-none">
-                                        <form action="<?php echo $ajaxURL; ?>" method="post" id="sfspecialrankupdate<?php echo $rank['meta_id']; ?>" name="sfspecialrankupdate<?php echo $rank['meta_id']; ?>">
+                                        <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfspecialrankupdate<?php echo $rank['meta_id']; ?>" name="sfspecialrankupdate<?php echo $rank['meta_id']; ?>">
                                             <?php
-                                            echo sp_create_nonce('special-rank-update');
+                                            sp_echo_create_nonce('special-rank-update');
                                             ?>
                                             <table class='widefat sf-table-small sf-table-mobile sf-border-none'>
                                                 <tr>

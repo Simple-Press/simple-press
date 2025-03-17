@@ -15,8 +15,7 @@ spa_admin_ajax_support();
 if (!sp_nonce('usergroups-loader')) die();
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
-	die();
+	die(esc_html(SP()->core->status));
 }
 
 require_once SP_PLUGIN_DIR.'/admin/panel-usergroups/spa-usergroups-display.php';
@@ -40,31 +39,31 @@ if (isset($_GET['loadform'])) {
 if (isset($_GET['saveform'])) {
 	$saveform = sanitize_text_field($_GET['saveform']);
 	if ($saveform == 'newusergroup') {
-		echo spa_save_usergroups_new_usergroup();
+		echo esc_html(spa_save_usergroups_new_usergroup());
 		die();
 	}
 	if ($saveform == 'editusergroup') {
-		echo spa_save_usergroups_edit_usergroup();
+		echo esc_html(spa_save_usergroups_edit_usergroup());
 		die();
 	}
 	if ($saveform == 'delusergroup') {
-		echo spa_save_usergroups_delete_usergroup();
+		echo esc_html(spa_save_usergroups_delete_usergroup());
 		die();
 	}
 	if ($saveform == 'addmembers') {
-		echo spa_save_usergroups_add_members();
+		echo esc_html(spa_save_usergroups_add_members());
 		die();
 	}
 	if ($saveform == 'delmembers') {
-		echo spa_save_usergroups_delete_members();
+		echo esc_html(spa_save_usergroups_delete_members());
 		die();
 	}
 	if ($saveform == 'mapsettings') {
-		echo spa_save_usergroups_map_settings();
+		echo esc_html(spa_save_usergroups_map_settings());
 		die();
 	}
 	if ($saveform == 'mapusers') {
-		echo spa_save_usergroups_map_users();
+		echo esc_html(spa_save_usergroups_map_users());
 		die();
 	}
 }

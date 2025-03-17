@@ -9,11 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function spa_usergroups_delete_members_form($usergroup_id) {
-    $formId = sprintf('sfmemberdel-%s-%d', uniqid(), $usergroup_id); ?>
+    $usergroup_id = absint($usergroup_id);
+    $formId = sprintf('sfmemberdel-%s-%d', esc_attr(uniqid()), $usergroup_id); ?>
 <script>
     (function (spj, $, undefined) {
         $(document).ready(function () {
-            $('#<?php echo esc_attr($formId); ?>').ajaxForm({
+            $('#<?php echo esc_js($formId); ?>').ajaxForm({
                 target: '#sfmsgspot',
             });
         });
@@ -26,8 +27,9 @@ function spa_usergroups_delete_members_form($usergroup_id) {
 
     $url = wp_nonce_url(SPAJAXURL . 'memberships&amp;targetaction=del', 'memberships');
     $target = 'sfmsgspot';
-    $smessage = esc_js(SP()->primitives->admin_text('Please Wait - Processing'));
-    $emessage = esc_js(SP()->primitives->admin_text('Users Removed/Moved'));
+    $smessage = SP()->primitives->admin_text('Please Wait - Processing');
+    
+    $emessage = SP()->primitives->admin_text('Users Removed/Moved');
 ?>
 <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="<?php echo esc_attr($formId); ?>" name="sfmemberdel<?php echo esc_attr($usergroup_id); ?>"
           onsubmit="spj.addDelMembers(
@@ -41,7 +43,7 @@ function spa_usergroups_delete_members_form($usergroup_id) {
                       );">
         <?php
         spa_paint_open_nohead_tab(true, '');
-        echo esc_attr(sp_create_nonce('forum-adminform_memberdel'));
+        echo '<input type="hidden" name="'.esc_attr('forum-adminform_memberdel').'" value="'.esc_attr(wp_create_nonce('forum-adminform_memberdel')).'" />';
         ?>
         <input type="hidden" name="usergroupid" value="<?php echo esc_attr($usergroup_id); ?>" />
         <?php
@@ -52,8 +54,8 @@ function spa_usergroups_delete_members_form($usergroup_id) {
         ?>
         <?php do_action('sph_usergroup_delete_member_panel'); ?>
         <span class="sf-controls">
-            <input type="submit" class="sf-button-primary" name="sfmemberdel<?php echo esc_attr($usergroup_id); ?>" value="<?php SP()->primitives->admin_etext('Remove from group'); ?>" />
-            <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo esc_attr($usergroup_id); ?>" id="sfforumedit<?php echo esc_attr($forum->forum_id); ?>" name="editforumcancel<?php echo esc_attr($forum->forum_id); ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+            <input type="submit" class="sf-button-primary" name="sfmemberdel<?php echo esc_attr($usergroup_id); ?>" value="<?php echo esc_attr(SP()->primitives->admin_text('Remove from group')); ?>" />
+            <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo esc_attr($usergroup_id); ?>" name="delmemberscancel<?php echo esc_attr($usergroup_id); ?>" value="<?php echo esc_attr(SP()->primitives->admin_text('Cancel')); ?>" />
         </span>
         <span class="sf-button sf-hidden-important" id='onFinish'></span>
         <div class="pbar" id="progressbar"></div>

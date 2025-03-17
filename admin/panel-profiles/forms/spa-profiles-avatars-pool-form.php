@@ -73,8 +73,8 @@ function spa_profiles_avatars_pool_form(): void
 <?php
     $ajaxURL = wp_nonce_url(SPAJAXURL.'profiles-loader&amp;saveform=avatars', 'profiles-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfavatarsform" name="sfavatars">
-	<?php echo sp_create_nonce('forum-adminform_avatars'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfavatarsform" name="sfavatars">
+	<?php sp_echo_create_nonce('forum-adminform_avatars'); ?>
 <?php
 	spa_paint_options_init();
 
@@ -84,8 +84,8 @@ function spa_profiles_avatars_pool_form(): void
 		spa_paint_open_panel(); ?>
 			<fieldset class="sf-fieldset">
                 <div class="sf-panel-body-top">
-                <h4><?php echo SP()->primitives->admin_text('Avatar Pool Upload'); ?></h4>
-                <?php echo spa_paint_help('avatar-pool-upload') ?>
+                <h4><?php SP()->primitives->admin_etext('Avatar Pool Upload'); ?></h4>
+                <?php spa_paint_help('avatar-pool-upload') ?>
 
                 <?php $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/'; ?>
 				<?php spa_paint_file(SP()->primitives->admin_text('Select avatar to upload'), 'newavatar', false, true, $loc); ?>

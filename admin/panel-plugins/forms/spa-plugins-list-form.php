@@ -9,7 +9,7 @@ $search_term = isset( $_REQUEST['s'] ) ? esc_attr($_REQUEST['s']) : '';
 ?>
 
 <form action="<?php echo esc_url( SPADMINPLUGINS ); ?>" method="post" id="sppluginssearchform" name="sppluginssearchform">
-    <?php echo esc_attr( sp_create_nonce( 'forum-adminform_plugins' ) ); ?>
+    <?php echo '<input type="hidden" name="'.esc_attr('forum-adminform_plugins').'" value="'.esc_attr(wp_create_nonce('forum-adminform_plugins')).'" />'; ?>
     <input type="hidden" name="s" value="<?php echo esc_attr( $search_term ); ?>" />
 </form>
 <?php
@@ -162,7 +162,7 @@ function spa_plugins_list_form() {
 
 	<form action="<?php echo esc_url( $ajaxURL ); ?>" method="post" id="sppluginsform" name="sppluginsform"
 		onsubmit="javascript: if (ActionType.options[ActionType.selectedIndex].value == 'delete-selected' || ActionType2.options[ActionType2.selectedIndex].value == 'delete-selected') { if (confirm('<?php echo esc_js( $msg ); ?>')) { return true; } else { return false; } } else { return true; }">
-		<?php echo esc_attr( sp_create_nonce( 'forum-adminform_plugins' ) ); ?>
+        <?php echo '<input type="hidden" name="'.esc_attr('forum-adminform_plugins').'" value="'.esc_attr(wp_create_nonce('forum-adminform_plugins')).'" />'; ?>
 		<?php
 		spa_paint_options_init();
 		spa_paint_open_tab( esc_html( SP()->primitives->admin_text( 'Available Plugins' ) ), true );
@@ -193,7 +193,7 @@ function spa_plugins_list_form() {
 						</p>
 					</div>
 					<div>
-						<?php echo wp_kses_post( spa_paint_help( 'plugins' ) ); ?>
+						<?php spa_paint_help( 'plugins' ); ?>
 					</div>
 				</div>
 			</div>
