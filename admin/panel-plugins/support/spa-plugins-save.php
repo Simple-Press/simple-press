@@ -29,7 +29,7 @@ function spa_save_plugin_activation() {
 		SP()->plugin->activate($plugin);
 		?>
 			<div id = "sf-activate-loader" >
-				<img src="<?php echo esc_attr(SPADMINIMAGES . 'sp_WaitBox.gif'); ?>" alt="Loading" />
+				<img src="<?php echo esc_attr(SPADMINIMAGES . 'sp_WaitBox.gif'); ?>" alt="<?php echo esc_attr(SP()->primitives->admin_text('Loading')); ?>" />
 			</div>
 		<?php
 
@@ -40,7 +40,7 @@ function spa_save_plugin_activation() {
         SP()->plugin->deactivate($plugin);
 		?>
 			<div id="sf-deactivate-loader">
-				<img src="<?php echo esc_url(SPADMINIMAGES . 'sp_WaitBox.gif'); ?>" alt="<?php echo esc_attr__('Loading', 'sp-plugins'); ?>" />
+				<img src="<?php echo esc_url(SPADMINIMAGES . 'sp_WaitBox.gif'); ?>" alt="<?php echo esc_attr(SP()->primitives->admin_text('Loading')); ?>" />
 			</div>
 		<?php
     } else if ($action == 'uninstall_confirmed') {
