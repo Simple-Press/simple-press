@@ -20,8 +20,8 @@ function spa_options_email_form() {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'options-loader&amp;saveform=email', 'options-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfemailform" name="sfemail">
-	<?php echo sp_create_nonce('forum-adminform_email'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfemailform" name="sfemail">
+	<?php sp_echo_create_nonce('forum-adminform_email'); ?>
 <?php
 	spa_paint_options_init();
 
@@ -32,7 +32,7 @@ function spa_options_email_form() {
 			spa_paint_open_fieldset(SP()->primitives->admin_text('New User Email'), true, 'new-user-email');
 				spa_paint_checkbox(SP()->primitives->admin_text('Use the Simple:Press new user email version'), 'sfusespfreg', $sfoptions['sfusespfreg']);
                 echo '<div class="sf-form-row">';
-				echo SP()->primitives->admin_text('The following placeholders are available: ') ;
+				SP()->primitives->admin_etext('The following placeholders are available: ') ;
                 echo '<code>%USERNAME%</code>,<code>%BLOGNAME%</code>,<code>%SITEURL%</code>,<code>%LOGINURL%</code>,<code>%PWURL%</code>';
                 echo '</div>';
 				spa_paint_input(SP()->primitives->admin_text('Email subject line'), 'sfnewusersubject', $sfoptions['sfnewusersubject'], false, true);
