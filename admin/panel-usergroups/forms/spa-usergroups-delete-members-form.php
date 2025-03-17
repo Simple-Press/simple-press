@@ -11,15 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function spa_usergroups_delete_members_form($usergroup_id) {
-    $formId = sprintf('sfmemberdel-%s-%d', uniqid(), $usergroup_id); ?>
+    $usergroup_id = absint($usergroup_id);
+    $formId = sprintf('sfmemberdel-%s-%d', esc_attr(uniqid()), $usergroup_id); ?>
 <script>
     (function (spj, $, undefined) {
         $(document).ready(function () {
-            $('#<?php echo $formId; ?>').ajaxForm({
+            $('#<?php echo esc_js($formId); ?>').ajaxForm({
                 target: '#sfmsgspot',
             });
         });
-    }(window.spj = window.spj || {}, jQuery));o
+    }(window.spj = window.spj || {}, jQuery));
 </script>
 <?php
     spa_paint_options_init();
@@ -28,24 +29,25 @@ function spa_usergroups_delete_members_form($usergroup_id) {
 
     $url = wp_nonce_url(SPAJAXURL . 'memberships&amp;targetaction=del', 'memberships');
     $target = 'sfmsgspot';
-    $smessage = esc_js(SP()->primitives->admin_text('Please Wait - Processing'));
-    $emessage = esc_js(SP()->primitives->admin_text('Users Removed/Moved'));
+    $smessage = SP()->primitives->admin_text('Please Wait - Processing');
+    
+    $emessage = SP()->primitives->admin_text('Users Removed/Moved');
 ?>
-<form action="<?php echo $ajaxURL; ?>" method="post" id="<?php echo $formId; ?>" name="sfmemberdel<?php echo $usergroup_id ?>"
+<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="<?php echo esc_attr($formId); ?>" name="sfmemberdel<?php echo esc_attr($usergroup_id); ?>"
           onsubmit="spj.addDelMembers(
-                      '<?php echo $formId; ?>',
-                      '<?php echo $url; ?>',
-                      '<?php echo $target; ?>',
-                      '<?php echo $smessage; ?>',
-                      '<?php echo $emessage; ?>',
-                      0, 50, '#dmid<?php echo $usergroup_id; ?>',
+                      '<?php echo esc_js($formId); ?>',
+                      '<?php echo esc_js($url); ?>',
+                      '<?php echo esc_js($target); ?>',
+                      '<?php echo esc_js($smessage); ?>',
+                      '<?php echo esc_js($emessage); ?>',
+                      0, 50, '#dmid<?php echo esc_js($usergroup_id); ?>',
 					  'move'
                       );">
         <?php
         spa_paint_open_nohead_tab(true, '');
-        echo sp_create_nonce('forum-adminform_memberdel');
+        echo '<input type="hidden" name="'.esc_attr('forum-adminform_memberdel').'" value="'.esc_attr(wp_create_nonce('forum-adminform_memberdel')).'" />';
         ?>
-        <input type="hidden" name="usergroupid" value="<?php echo $usergroup_id; ?>" />
+        <input type="hidden" name="usergroupid" value="<?php echo esc_attr($usergroup_id); ?>" />
         <?php
         $from = esc_js(SP()->primitives->admin_text('Current Members'));
         $ug = true;
@@ -54,8 +56,8 @@ function spa_usergroups_delete_members_form($usergroup_id) {
         ?>
         <?php do_action('sph_usergroup_delete_member_panel'); ?>
         <span class="sf-controls">
-            <input type="submit" class="sf-button-primary" name="sfmemberdel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Remove from group'); ?>" />
-            <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $usergroup_id; ?>" name="delmemberscancel<?php echo $usergroup_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+            <input type="submit" class="sf-button-primary" name="sfmemberdel<?php echo esc_attr($usergroup_id); ?>" value="<?php echo esc_attr(SP()->primitives->admin_text('Remove from group')); ?>" />
+            <input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo esc_attr($usergroup_id); ?>" name="delmemberscancel<?php echo esc_attr($usergroup_id); ?>" value="<?php echo esc_attr(SP()->primitives->admin_text('Cancel')); ?>" />
         </span>
         <span class="sf-button sf-hidden-important" id='onFinish'></span>
         <div class="pbar" id="progressbar"></div>
