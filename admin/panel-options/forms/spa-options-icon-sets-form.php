@@ -49,6 +49,7 @@ function spa_options_iconsets_form() {
 				},
 				onComplete: function(file, response){
 					$('#sf-upload-status').html('');
+					//button.text('<?php echo esc_js(SP()->primitives->admin_text('Browse')); ?>');
 					window.clearInterval(interval);
 					/* re-enable upload button */
 					this.enable();

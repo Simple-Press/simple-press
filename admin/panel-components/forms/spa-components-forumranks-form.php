@@ -224,7 +224,21 @@ function spa_paint_rankings_table($rankings) {
                         ?>
                     </td>
                     <td data-label="<?php echo esc_attr(SP()->primitives->admin_text('Badge')); ?>" class="sf-Left">
-                        <?php echo wp_kses(spa_get_saved_icon_html($ranks['badge'][$x], 'ranks')); ?>
+                        <?php echo wp_kses(
+                                spa_get_saved_icon_html($ranks['badge'][$x], 'ranks')
+                                , [
+                                    'img' => [
+                                        'class' => [],
+                                        'src' => [],
+                                        'alt' => [],
+                                        'title' => [],
+                                    ],
+                                    'span' => [
+                                        'class' => [],
+                                        'style' => [],
+                                    ],
+                                ]
+                        ); ?>
                     </td>
                     <td data-label="" class="sf-Left">
                         <span class="sf-item-controls">
