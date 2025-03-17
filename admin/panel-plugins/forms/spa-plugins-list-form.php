@@ -193,7 +193,7 @@ function spa_plugins_list_form() {
 						</p>
 					</div>
 					<div>
-						<?php echo wp_kses_post( spa_paint_help( 'plugins' ) ); ?>
+						<?php spa_paint_help( 'plugins' ); ?>
 					</div>
 				</div>
 			</div>

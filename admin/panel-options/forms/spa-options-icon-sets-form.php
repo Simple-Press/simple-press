@@ -8,7 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die('Access denied - you cannot directly call this file');
 }
 
-
 /**
  * Print iconsets listing and upload form
  */
@@ -30,12 +29,8 @@ function spa_options_iconsets_form() {
 					$('.ui-tooltip').hide();
 					$('#' + data.reload).click();
 				});
-				
 			});
-			
-			
-			
-			
+
 			spj.loadAjaxForm('sficonsetsform', 'acciconsets');
 
 			// Handle iconset upload
@@ -49,24 +44,11 @@ function spa_options_iconsets_form() {
 						$('#sf-upload-status').html('<p class="sf-upload-status-text"><?php echo esc_js(SP()->primitives->admin_text('Only Zip files are allowed!')); ?></p>');
 						return false;
 					}
-					/* change button text, when user selects file */
-					//utext = '<?php echo esc_js(SP()->primitives->admin_text('Uploading')); ?>';
-					//button.text(utext);
 					/* If you want to allow uploading only 1 file at time, you can disable upload button */
 					this.disable();
-					/* Uploding -> Uploading. -> Uploading... */
-					//interval = window.setInterval(function(){
-					//	var text = button.text();
-					//	if (text.length < 13){
-					//		button.text(text + '.');
-					//	} else {
-					//		button.text(utext);
-					//	}
-					//}, 200);
 				},
 				onComplete: function(file, response){
 					$('#sf-upload-status').html('');
-					//button.text('<?php echo esc_js(SP()->primitives->admin_text('Browse')); ?>');
 					window.clearInterval(interval);
 					/* re-enable upload button */
 					this.enable();
@@ -100,7 +82,7 @@ function spa_options_iconsets_form() {
                             $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['iconsets'].'/';
                             spa_paint_file(SP()->primitives->admin_text('Select iconset zip file to upload'), 'iconset', false, true, $loc);
                         ?>
-                        <?php echo spa_paint_help('iconset-upload') ?>
+                        <?php spa_paint_help('iconset-upload') ?>
                     </div>
                     <div class="sf-form-row">
                         <?php spa_paint_close_container(); ?>
@@ -112,7 +94,7 @@ function spa_options_iconsets_form() {
                 <fieldset class="sf-fieldset">
                     <div class="sf-panel-body-top">
                         <h4><?php SP()->primitives->admin_etext('Installed Iconsets'); ?></h4>
-                        <?php echo spa_paint_help('custom-iconsets') ?>
+                        <?php spa_paint_help('custom-iconsets') ?>
                     </div>
                     <div class="sf-form-row">
                         <?php spa_paint_iconsets_table(); ?>

@@ -27,7 +27,7 @@ function spa_special_rankings_form($rankings) {
                 <div class="sf-panel-body-top">
                     <h4><?php SP()->primitives->admin_etext('Special Forum Ranks') ?></h4>
                     <span class="sf-icon-button sf-opener-button-open"><span class="sf-icon sf-add"></span></span>
-                    <?php echo spa_paint_help('special-ranks') ?>
+                    <?php spa_paint_help('special-ranks') ?>
                 </div>
                 <div class="sf-opener-target">
                     <div class="sf-form-row">

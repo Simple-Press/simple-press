@@ -85,7 +85,7 @@ function spa_profiles_avatars_pool_form(): void
 			<fieldset class="sf-fieldset">
                 <div class="sf-panel-body-top">
                 <h4><?php SP()->primitives->admin_etext('Avatar Pool Upload'); ?></h4>
-                <?php echo spa_paint_help('avatar-pool-upload') ?>
+                <?php spa_paint_help('avatar-pool-upload') ?>
 
                 <?php $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/'; ?>
 				<?php spa_paint_file(SP()->primitives->admin_text('Select avatar to upload'), 'newavatar', false, true, $loc); ?>

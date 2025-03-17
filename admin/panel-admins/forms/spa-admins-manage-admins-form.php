@@ -43,7 +43,7 @@ function spa_admins_manage_admins_form() {
                     <fieldset class="sf-fieldset">
                         <div class="sf-panel-body-top">
                             <h4><?php SP()->primitives->admin_etext('Current Admins and Moderators'); ?></h4>
-                            <?php echo spa_paint_help('manage-admins') ?>
+                            <?php spa_paint_help('manage-admins') ?>
                         </div>
                         <div class="sf-form-row">
                             <?php for ($x = 1; $x < 3; $x++) : ?>
@@ -166,7 +166,7 @@ function spa_admins_manage_admins_form() {
                     <fieldset class="sf-fieldset">
                         <div class="sf-panel-body-top">
                             <h4><?php SP()->primitives->admin_etext('Add New Admins'); ?></h4>
-                            <?php echo spa_paint_help('addadmin') ?>
+                            <?php spa_paint_help('addadmin') ?>
                         </div>
                         <div class="sf-form-row" style="border: 1px solid green;">
                             <?php

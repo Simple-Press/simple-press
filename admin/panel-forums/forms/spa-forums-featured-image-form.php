@@ -87,7 +87,7 @@ function spa_forums_featured_image_form() {
                         $loc = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/';
                         spa_paint_file(SP()->primitives->admin_text('Select image file to upload'), 'newimagefile', false, true, $loc);
                     ?>
-                    <?php echo spa_paint_help('featured-image-upload') ?>
+                    <?php spa_paint_help('featured-image-upload') ?>
                 </div>
                 <div class="sf-alert-block sf-info">
                     <?php SP()->primitives->admin_etext('Notice: Currently, featured images, if one exists, may be used for the Open Graph meta tag and, for this use, images are recommended to be 200px x 200px.' ); ?>

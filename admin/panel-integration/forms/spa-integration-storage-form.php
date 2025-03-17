@@ -135,7 +135,9 @@ function spa_paint_storage_input($label, $name, $value, $na = false) {
 	}
 
 	echo '<tr >';
-        echo '<td> ' . SP()->primitives->admin_text($label) . spa_paint_help($name, $adminhelpfile) . '</td>';
+        echo '<td> ' . SP()->primitives->admin_text($label);
+            spa_paint_help($name, $adminhelpfile) ;
+        echo '</td>';
         echo '<td>' . $icon1 . $icon2 . '</td>';
         echo '<td><input type="text"  name="'.$name.'" value="'.esc_attr($value).'" style="width:100%;"></td>';
 	echo '</tr>';
