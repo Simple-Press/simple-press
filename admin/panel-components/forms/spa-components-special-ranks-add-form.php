@@ -23,7 +23,7 @@ function spa_components_sr_add_members_form($rank_id) {
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfmembernew<?php echo $rank_id; ?>" name="sfmembernew<?php echo $rank_id ?>">
 <?php
                 spa_paint_open_nohead_tab(true, '');
-		echo sp_create_nonce('special-rank-add');
+		sp_echo_create_nonce('special-rank-add');
 ?>
 					<!--<p><?php SP()->primitives->admin_etext('Select members to add (use CONTROL for multiple members)') ?></p>-->
 <?php

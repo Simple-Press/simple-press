@@ -22,7 +22,7 @@ function spa_options_global_form() {
 	$ajaxURL   = wp_nonce_url( SPAJAXURL . 'options-loader&amp;saveform=global', 'options-loader' );
 	?>
     <form action="<?php echo $ajaxURL; ?>" method="post" id="sfglobalform" name="sfglobal">
-		<?php echo sp_create_nonce( 'forum-adminform_global' ); ?>
+		<?php sp_echo_create_nonce( 'forum-adminform_global' ); ?>
 		<?php
 		#== GLOBAL Tab ============================================================
 

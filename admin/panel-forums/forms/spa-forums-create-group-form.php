@@ -23,7 +23,7 @@ function spa_forums_create_group_form() {
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfgroupnew" name="sfgroupnew">
 <?php
-		echo sp_create_nonce('forum-adminform_groupnew');
+		sp_echo_create_nonce('forum-adminform_groupnew');
 		
 		spa_paint_open_tab(SP()->primitives->admin_text('Create New Group'));
 

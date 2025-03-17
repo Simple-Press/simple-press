@@ -25,7 +25,7 @@ function spa_forums_edit_group_form($group_id) {
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfgroupedit<?php echo $group->group_id; ?>" name="sfgroupedit<?php echo $group->group_id; ?>" class="sfinline-form">
 <?php
-		echo sp_create_nonce('forum-adminform_groupedit');
+		sp_echo_create_nonce('forum-adminform_groupedit');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), false);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Edit Group'), 'true', 'edit-forum-group');

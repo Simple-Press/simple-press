@@ -23,7 +23,7 @@ function spa_forums_global_perm_form(): void {
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfnewglobalpermission" name="sfnewglobalpermission">
 <?php
-		echo sp_create_nonce('forum-adminform_globalpermissionnew');
+		sp_echo_create_nonce('forum-adminform_globalpermissionnew');
 		spa_paint_open_tab(SP()->primitives->admin_text('Add Global Permission Set'), true);
 		?>
 

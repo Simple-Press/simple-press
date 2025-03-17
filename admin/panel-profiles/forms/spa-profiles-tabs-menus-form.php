@@ -54,7 +54,7 @@ function spa_profiles_tabs_menus_form() {
     $ajaxURL = wp_nonce_url(SPAJAXURL.'profiles-loader&amp;saveform=tabs-menus', 'profiles-loader');
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sptabsmenusform" name="sptabsmenusform">
-	<?php echo sp_create_nonce('forum-adminform_tabsmenus'); ?>
+	<?php sp_echo_create_nonce('forum-adminform_tabsmenus'); ?>
 <?php
 	spa_paint_options_init();
 

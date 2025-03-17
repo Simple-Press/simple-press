@@ -24,7 +24,7 @@ function spa_themes_upload_form() {
                 <p><?php echo SP()->primitives->admin_text('If you have a theme in a .zip format, you may upload it here') ?></p>
             </div>
             <form method="post" enctype="multipart/form-data" action="<?php echo self_admin_url('update.php?action=upload-sp-theme'); ?>" id="sfthemeuploadform" name="sfthemeuploadform">
-                <?php echo sp_create_nonce('forum-theme_upload'); ?>
+                <?php sp_echo_create_nonce('forum-theme_upload'); ?>
 				<div class="clear"></div>
 				<div class="sf-upload-file-name"><label class="sp-label"></label></div>
 				<div class="clear"></div>			

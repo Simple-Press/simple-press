@@ -38,7 +38,7 @@ function spa_admins_manage_admins_form() {
 
         <div class='sf-panel-body'>
             <form action="<?php echo $ajaxURL; ?>" method="post" id="sfupdatecaps" name="sfupdatecaps">
-                <?php echo sp_create_nonce('forum-adminform_sfupdatecaps'); ?>
+                <?php sp_echo_create_nonce('forum-adminform_sfupdatecaps'); ?>
                 <div class="sf-panel">
                     <fieldset class="sf-fieldset">
                         <div class="sf-panel-body-top">
@@ -161,7 +161,7 @@ function spa_admins_manage_admins_form() {
 
         <div class='sf-panel-body'>
             <form action="<?php echo $ajaxURL; ?>" method="post" id="sfaddadmins" name="sfaddadmins">
-                <?php echo sp_create_nonce('forum-adminform_sfaddadmins'); ?>
+                <?php sp_echo_create_nonce('forum-adminform_sfaddadmins'); ?>
                 <div class="sf-panel">
                     <fieldset class="sf-fieldset">
                         <div class="sf-panel-body-top">

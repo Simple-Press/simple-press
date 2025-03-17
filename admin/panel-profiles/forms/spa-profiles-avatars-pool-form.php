@@ -74,7 +74,7 @@ function spa_profiles_avatars_pool_form(): void
     $ajaxURL = wp_nonce_url(SPAJAXURL.'profiles-loader&amp;saveform=avatars', 'profiles-loader');
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfavatarsform" name="sfavatars">
-	<?php echo sp_create_nonce('forum-adminform_avatars'); ?>
+	<?php sp_echo_create_nonce('forum-adminform_avatars'); ?>
 <?php
 	spa_paint_options_init();
 

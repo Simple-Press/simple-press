@@ -23,7 +23,7 @@ function spa_themes_tablet_form() {
 	$ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=tablet', 'themes-loader');
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sftablettheme" name="sftablettheme">
-	<?php echo sp_create_nonce('forum-adminform_themes'); ?>
+	<?php sp_echo_create_nonce('forum-adminform_themes'); ?>
 <?php
 	spa_paint_options_init();
 
@@ -132,7 +132,7 @@ function spa_themes_tablet_form() {
 <?php
 			$ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=tablet', 'themes-loader');
 			echo '<form action="'.$ajaxURL.'" method="post" id="sftheme-'.esc_attr($tabletTheme['theme']).'" name="sftheme-'.esc_attr($tabletTheme['theme']).'">';
-			echo sp_create_nonce('forum-adminform_themes');
+			sp_echo_create_nonce('forum-adminform_themes');
 			echo '<input type="hidden" name="active" value="'.$tabletTheme['active'].'" />';
 			echo '<input type="hidden" name="theme" value="'.esc_attr($tabletTheme['theme']).'" />';
 			echo '<input type="hidden" name="style" value="'.esc_attr($themes[$tabletTheme['theme']]['Stylesheet']).'" />';
@@ -238,7 +238,7 @@ function spa_themes_tablet_form() {
 				</script>
 				<?php $ajaxURL = wp_nonce_url(SPAJAXURL.'themes-loader&amp;saveform=tablet', 'themes-loader'); ?>
 				<form action="<?php echo $ajaxURL; ?>" method="post" id="sftheme-<?php echo esc_attr($theme_file); ?>" name="sftheme-<?php echo esc_attr($theme_file); ?>">
-				<?php echo sp_create_nonce('forum-adminform_themes'); ?>
+				<?php sp_echo_create_nonce('forum-adminform_themes'); ?>
 				<input type="hidden" name="active" value="<?php echo $tabletTheme['active']; ?>" />
 				<input type="hidden" name="theme" value="<?php echo esc_attr($theme_file); ?>" />
 				<input type="hidden" name="style" value="<?php echo esc_attr($theme_style); ?>" />

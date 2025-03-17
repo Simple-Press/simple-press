@@ -169,7 +169,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
         spa_paint_hidden_input('sp_item', $sp_item);
         spa_paint_hidden_input('sp_item_name', $sp_item_name);
         spa_paint_hidden_input('sp_item_id', $sp_item_id);
-        echo sp_create_nonce('forum-adminform_licensing');
+        sp_echo_create_nonce('forum-adminform_licensing');
         ?>
 
         <div class="licensing-wrapper">

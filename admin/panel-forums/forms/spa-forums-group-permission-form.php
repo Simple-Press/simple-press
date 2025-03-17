@@ -25,7 +25,7 @@ function spa_forums_add_group_permission_form($group_id) {
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfgrouppermnew<?php echo $group->group_id; ?>" name="sfgrouppermnew<?php echo $group->group_id; ?>" class="sfinline-form">
 <?php
-		echo sp_create_nonce('forum-adminform_grouppermissionnew');
+		sp_echo_create_nonce('forum-adminform_grouppermissionnew');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Add a User Group Permission Set to an Entire Group'), 'true', 'add-a-user-group-permission-set-to-an-entire-group');

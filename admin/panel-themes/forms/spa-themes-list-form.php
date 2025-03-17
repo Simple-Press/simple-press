@@ -120,7 +120,7 @@ function spa_themes_list_form() {
 				<?php
 				$ajaxURL = wp_nonce_url( SPAJAXURL . 'themes-loader&amp;saveform=theme', 'themes-loader' );
 				echo '<form action="' . esc_url( $ajaxURL ) . '" method="post" id="sftheme-' . esc_attr( $curTheme['theme'] ) . '" name="sftheme-' . esc_attr( $curTheme['theme'] ) . '">';
-				echo sp_create_nonce( 'forum-adminform_themes' );
+				sp_echo_create_nonce( 'forum-adminform_themes' );
 				echo '<input type="hidden" name="theme" value="' . esc_attr( $curTheme['theme'] ) . '" />';
 				echo '<input type="hidden" name="style" value="' . esc_attr( $themes[ $curTheme['theme'] ]['Stylesheet'] ) . '" />';
 				echo '<input type="hidden" name="parent" value="' . esc_attr( $curTheme['parent'] ) . '" />';
@@ -216,7 +216,7 @@ function spa_themes_list_form() {
 			<?php $ajaxURL = wp_nonce_url( SPAJAXURL . 'themes-loader&amp;saveform=theme', 'themes-loader' ); ?>
 			<?php $msg = SP()->primitives->admin_text( 'Are you sure you want to delete this Simple Press theme?' ); ?>
 			<form action="<?php echo esc_url( $ajaxURL ); ?>" method="post" id="sftheme-<?php echo esc_attr( $theme_file ); ?>" name="sftheme-<?php echo esc_attr( $theme_file ); ?>" >
-				<?php echo sp_create_nonce( 'forum-adminform_themes' ); ?>
+				<?php sp_echo_create_nonce( 'forum-adminform_themes' ); ?>
 				<input type="hidden" name="theme" value="<?php echo esc_attr( $theme_file ); ?>" />
 				<input type="hidden" name="style" value="<?php echo esc_attr( $theme_style ); ?>" />
 				<input type="hidden" name="parent" value="<?php echo esc_attr( $theme_data['Parent'] ); ?>" />

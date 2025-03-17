@@ -41,7 +41,7 @@ function spa_options_iconsets_form() {
 			// Handle iconset upload
 			var button = $('#sf-upload-button'), interval;
 			new AjaxUpload(button,{
-				action: '<?php echo $ajaxurl; ?>',
+				action: '<?php echo esc_js($ajaxurl); ?>',
 				name: 'uploadfile',
 				onSubmit : function(file, ext){
 					/* check for valid extension */
@@ -89,8 +89,8 @@ function spa_options_iconsets_form() {
 	}(window.spj = window.spj || {}, jQuery));
 </script>
 <?php $ajaxURL = wp_nonce_url(SPAJAXURL.'options-loader&amp;saveform=iconsets', 'options-loader'); ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sficonsetsform" name="sficonsets" enctype="multipart/form-data">
-        <?php echo sp_create_nonce('forum-adminform_iconsets'); ?>
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sficonsetsform" name="sficonsets" enctype="multipart/form-data">
+        <?php sp_echo_create_nonce('forum-adminform_iconsets'); ?>
         <?php spa_paint_open_tab(SP()->primitives->admin_text('Iconsets'), true);?>
             <div class="sf-panel">
                 <fieldset class="sf-fieldset">

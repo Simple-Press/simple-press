@@ -21,7 +21,7 @@ function spa_components_seo_form() {
     $ajaxURL = wp_nonce_url(SPAJAXURL.'components-loader&amp;saveform=seo', 'components-loader');
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfseoform" name="sfseo">
-	<?php echo sp_create_nonce('forum-adminform_seo'); ?>
+	<?php sp_echo_create_nonce('forum-adminform_seo'); ?>
 <?php
 	spa_paint_options_init();
 

@@ -20,7 +20,7 @@ function spa_toolbox_inspector_form() {
     $ajaxURL = wp_nonce_url(SPAJAXURL.'toolbox-loader&amp;saveform=inspector', 'toolbox-loader');
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfinspectorform" name="sfinspector">
-	<?php echo sp_create_nonce('forum-adminform_inspector'); ?>
+	<?php sp_echo_create_nonce('forum-adminform_inspector'); ?>
 <?php
 	spa_paint_options_init();
 

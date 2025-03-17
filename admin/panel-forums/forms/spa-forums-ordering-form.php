@@ -66,7 +66,7 @@ function spa_forums_ordering_form($groupId=0) {
 ?>
 	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfforumorder" name="sfforumorder">
 <?php
-		echo sp_create_nonce('forum-adminform_forumorder');
+		sp_echo_create_nonce('forum-adminform_forumorder');
         if ($groupId === 0) {
             spa_paint_open_tab(
                 SP()->primitives->admin_text('Group and Forum Ordering'),

@@ -16,7 +16,7 @@ function spa_integration_storage_form() { ?>
     ?>
     <div>
         <form action="<?php echo $ajaxURL; ?>" method="post" id="sfstorageform" name="sfstorage">
-            <?php echo sp_create_nonce('forum-adminform_storage'); ?>
+            <?php sp_echo_create_nonce('forum-adminform_storage'); ?>
             <?php spa_paint_open_tab(SP()->primitives->admin_text('Storage Locations'),true); ?>
 
                 <?php spa_paint_open_panel(); ?>
