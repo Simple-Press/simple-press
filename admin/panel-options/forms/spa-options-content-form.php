@@ -34,7 +34,7 @@ function spa_options_content_form() {
                         }
                         echo '&nbsp;';
                         SP()->primitives->admin_etext('Server timezone set to');
-                        echo ': '.$tz;
+                        echo ': '.esc_html($tz);
                     echo '</span>';
                 echo '</div>';
 
@@ -48,7 +48,7 @@ function spa_options_content_form() {
 				spa_paint_checkbox(SP()->primitives->admin_text('Always use image thumbnails'), 'process', $sfoptions['process']);
 				spa_paint_input(SP()->primitives->admin_text('Thumbnail width of images in posts (Minimum 100px)'), 'sfthumbsize', $sfoptions['sfthumbsize']);
 				spa_paint_select_start(SP()->primitives->admin_text('Default image style'), 'style', 'style');
-				echo spa_create_imagestyle_select($sfoptions['style']);
+				spa_create_imagestyle_select($sfoptions['style']);
 				spa_paint_select_end();
 				spa_paint_checkbox(SP()->primitives->admin_text('Force paragraph after an image to start new line'), 'forceclear', $sfoptions['forceclear']);
 			spa_paint_close_fieldset();
@@ -120,8 +120,7 @@ function spa_create_imagestyle_select($defstyle) {
 		} else {
 			$default = null;
 		}
-		$out.= '<option '.$default.'value="'.$style.'">'.$style.'</option>';
+		echo '<option '.esc_attr($default).' value="'.esc_attr($style).'">'.esc_html($style).'</option>';
 		$default = '';
 	}
-	return $out;
 }
