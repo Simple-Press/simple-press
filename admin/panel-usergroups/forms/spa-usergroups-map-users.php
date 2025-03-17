@@ -32,43 +32,68 @@ function spa_usergroups_map_users() {
 <?php
 	global $wp_roles;
     $sfoptions = spa_get_mapping_data();
+    $action = 'forum-adminform_mapusers';
     $ajaxURL = wp_nonce_url(SPAJAXURL.'usergroups-loader&amp;saveform=mapsettings', 'usergroups-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfmapsettingsform" name="sfmapsettingsform">
-	<?php echo sp_create_nonce('forum-adminform_mapusers'); ?>
-<?php
+	<form action="<?php echo esc_attr($ajaxURL); ?>" method="post" id="sfmapsettingsform" name="sfmapsettingsform">
+       <?php echo '<input type="hidden" name="'.esc_attr($action).'" value="'.esc_attr(wp_create_nonce($action)).'" />'; ?>
+       <?php
 	spa_paint_options_init();
 	spa_paint_open_tab(SP()->primitives->admin_text('User Mapping Settings'));
 
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('User Memberships'), true, 'user-memberships');
 				echo '<div class="sf-alert-block sf-caution">';
-					SP()->primitives->admin_etext('Warning: Use caution when setting the single usergroup membership option below. It should primarily be used in conjunction with a membership plugin (such as Wishlist) where strict usergroup membership is required.  Please note that auto usergroup membership by WP role or by forum rank may conflict or overwrite any manual usergroup memberships (such as moderator) you may set if you have single usergroup membership set');
+					echo esc_html(SP()->primitives->admin_text('Warning: Use caution when setting the single usergroup membership option below. It should primarily be used in conjunction with a membership plugin (such as Wishlist) where strict usergroup membership is required. Please note that auto usergroup membership by WP role or by forum rank may conflict or overwrite any manual usergroup memberships (such as moderator) you may set if you have single usergroup membership set'));
     			echo '</div>';
 				spa_paint_checkbox(SP()->primitives->admin_text('Users are limited to single usergroup membership'), 'sfsinglemembership', $sfoptions['sfsinglemembership']);
                 echo '<div class="sf-form-row">';
-                    echo '<h3>'.SP()->primitives->admin_text('Default usergroup membership').':</h3>';
+                    echo '<h3>'.esc_html(SP()->primitives->admin_text('Default usergroup membership')).':</h3>';
                 echo '</div>';
 				spa_paint_select_start(SP()->primitives->admin_text('Default usergroup for guests'), 'sfguestsgroup', 'sfguestsgroup');
-                    echo spa_create_usergroup_select($sfoptions['sfguestsgroup']);
+                    echo wp_kses(
+                        spa_create_usergroup_select($sfoptions['sfguestsgroup']),
+                        ['option' =>
+                            [
+                                'selected' => true,
+                                'value' => true
+                            ]
+                        ]
+                    );
 				spa_paint_select_end();
 
 				spa_paint_select_start(SP()->primitives->admin_text('Default usergroup for new members'), 'sfdefgroup', 'sfdefgroup');
-                    echo spa_create_usergroup_select($sfoptions['sfdefgroup']);
+                    echo wp_kses(
+                        spa_create_usergroup_select($sfoptions['sfdefgroup']),
+                        ['option' =>
+                            [
+                                'selected' => true,
+                                'value' => true
+                            ]
+                        ]
+                    );
 				spa_paint_select_end();
 
 				$roles = array_keys($wp_roles->role_names);
 				if ($roles) {
                     echo '<div class="sf-form-row">';
-                        echo '<h3>'.SP()->primitives->admin_text('Usergroup memberships based on WP role').':</h3>';
+                        echo '<h3>'.esc_html(SP()->primitives->admin_text('Usergroup memberships based on WP role')).':</h3>';
                     echo '</div>';
 					$sfoptions['role'] = array();
 					foreach ($roles as $index => $role) {
 						$value = SP()->meta->get('default usergroup', $role);
                         $group = $value ? $value[0]['meta_value'] : $sfoptions['sfdefgroup'];
-						echo '<input type="hidden" class="sfhiddeninput" name="sfoldrole['.$index.']" value="'.$group.'" />';
+						echo '<input type="hidden" class="sfhiddeninput" name="sfoldrole['.esc_attr($index).']" value="'.esc_attr($group).'" />';
 						spa_paint_select_start(SP()->primitives->admin_text('Default usergroup for').' '.$role, "sfrole[$index]", 'sfguestsgroup');
-						echo spa_create_usergroup_select($group);
+                        echo wp_kses(
+                            spa_create_usergroup_select($group),
+                            ['option' =>
+                                [
+                                    'selected' => true,
+                                    'value' => true
+                                ]
+                            ]
+                        );
 						spa_paint_select_end();
 					}
 				}
@@ -80,7 +105,7 @@ function spa_usergroups_map_users() {
 		spa_paint_close_container();
 ?>
 	<div class="sf-form-submit-bar">
-	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Update Mapping Settings'); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php echo esc_attr(SP()->primitives->admin_text('Update Mapping Settings')); ?>" />
 	</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
@@ -91,12 +116,12 @@ function spa_usergroups_map_users() {
    	$uCount = SP()->DB->count(SPMEMBERS);
 	$url = wp_nonce_url(SPAJAXURL.'usermapping', 'usermapping');
 	$target = 'sfmsgspot';
-	$smessage = esc_js(SP()->primitives->admin_text('Please Wait - Processing'));
+	$smessage = SP()->primitives->admin_text('Please Wait - Processing');
 	$emessage = $uCount.' '.esc_js(SP()->primitives->admin_text('Users mapped'));
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfmapusersform" name="sfmapusersform" onsubmit="spj.batch('sfmapusersform', '<?php echo $url; ?>', '<?php echo $target; ?>', '<?php echo $smessage; ?>', '<?php echo $emessage; ?>', 0, 500, <?php echo $uCount; ?>);">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfmapusersform" name="sfmapusersform" onsubmit="spj.batch('sfmapusersform', '<?php echo esc_js($url); ?>', '<?php echo esc_js($target); ?>', '<?php echo esc_js($smessage); ?>', '<?php echo esc_js($emessage); ?>', 0, 500, <?php echo esc_js(absint($uCount)); ?>);">
 <?php
-	echo sp_create_nonce('forum-adminform_mapusers');
+echo '<input type="hidden" name="' . esc_attr('forum-adminform_mapusers') . '" value="' . esc_attr(wp_create_nonce('forum-adminform_mapusers')) . '" />';
 	spa_paint_options_init();
         spa_paint_open_nohead_tab(true);
 		spa_paint_open_panel();
@@ -117,7 +142,7 @@ function spa_usergroups_map_users() {
 
 ?>
     	<div class="sf-form-submit-bar">
-        	<span><input type="submit" class="sf-button-primary" id="saveit2" name="saveit2" value="<?php SP()->primitives->admin_etext('Map Users'); ?>" /> <span class="_sf-button sf-hidden-important" id='onFinish'></span></span>
+        	<span><input type="submit" class="sf-button-primary" id="saveit2" name="saveit2" value="<?php echo esc_attr(SP()->primitives->admin_text('Map Users')); ?>" /> <span class="_sf-button sf-hidden-important" id='onFinish'></span></span>
         	<br />
         	<div class="pbar" id="progressbar"></div>
     	</div>
@@ -125,13 +150,16 @@ function spa_usergroups_map_users() {
     <?php spa_paint_close_tab(); ?>
 	</form>
 <?php
+
 }
 
 function spa_create_usergroup_select($sfdefgroup) {
     $out = '';
 
     $ugid = SP()->DB->table(SPUSERGROUPS, "usergroup_id=$sfdefgroup", 'usergroup_id');
-	if (empty($ugid)) $out.= '<option selected="selected" value="-1">INVALID</option>';
+	if (empty($ugid)) {
+        $out.= '<option selected="selected" value="-1">INVALID</option>';
+    }
 
 	$usergroups = spa_get_usergroups_all();
 	foreach ($usergroups as $usergroup) {
@@ -140,7 +168,7 @@ function spa_create_usergroup_select($sfdefgroup) {
 		} else {
 			$default = null;
 		}
-		$out.= '<option '.$default.'value="'.$usergroup->usergroup_id.'">'.SP()->displayFilters->title($usergroup->usergroup_name).'</option>';
+		$out.= '<option '.$default.'value="'.$usergroup->usergroup_id.'">'.esc_html(SP()->displayFilters->title($usergroup->usergroup_name)).'</option>';
 	}
 	return $out;
 }
