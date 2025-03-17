@@ -13,9 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 function spa_save_plugin_activation() {
 	check_admin_referer('forum-adminform_plugins', 'sfnonce');
 
-	if (!SP()->auths->current_user_can('SPF Manage Plugins')) die();
+	if (!SP()->auths->current_user_can('SPF Manage Plugins')) {
+        die();
+    }
 
-    if (empty($_GET['action']) || empty($_GET['plugin'])) return SP()->primitives->admin_text('An error occurred activating/deactivating the plugin!');
+    if (empty($_GET['action']) || empty($_GET['plugin'])) {
+        return esc_html(SP()->primitives->admin_text('An error occurred activating/deactivating the plugin!'));
+    }
 
     $action = SP()->filters->str($_GET['action']);
     $plugin = SP()->filters->str($_GET['plugin']);
@@ -25,7 +29,7 @@ function spa_save_plugin_activation() {
 		SP()->plugin->activate($plugin);
 		?>
 			<div id = "sf-activate-loader" >
-				<img src="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>" alt="Loading" />
+				<img src="<?php echo esc_attr(SPADMINIMAGES . 'sp_WaitBox.gif'); ?>" alt="Loading" />
 			</div>
 		<?php
 
@@ -35,8 +39,8 @@ function spa_save_plugin_activation() {
     	# deactivate the plugin
         SP()->plugin->deactivate($plugin);
 		?>
-			<div id = "sf-deactivate-loader" >
-				<img src="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>" alt="Loading" />
+			<div id="sf-deactivate-loader">
+				<img src="<?php echo esc_url(SPADMINIMAGES . 'sp_WaitBox.gif'); ?>" alt="<?php echo esc_attr__('Loading', 'sp-plugins'); ?>" />
 			</div>
 		<?php
     } else if ($action == 'uninstall_confirmed') {
@@ -61,7 +65,9 @@ function spa_save_plugin_list_actions() {
 
     if (!SP()->auths->current_user_can('SPF Manage Plugins')) die();
 
-	if (empty($_POST['checked'])) return SP()->primitives->admin_text('Error - no plugins selected');
+	if (empty($_POST['checked'])) {
+        return esc_html(SP()->primitives->admin_text('Error - no plugins selected'));
+    }
 
 	$action  = '';
 	if (isset($_POST['action1']) && SP()->filters->str($_POST['action1']) != -1) $action = SP()->filters->str($_POST['action1']);
@@ -79,9 +85,9 @@ function spa_save_plugin_list_actions() {
    				}
 			}
 			if ($activate) {
-				$msg = SP()->primitives->admin_text('Selected plugins activated');
+				$msg = esc_html(SP()->primitives->admin_text('Selected plugins activated'));
 			} else {
-				$msg = SP()->primitives->admin_text('All selected plugins already active');
+				$msg = esc_html(SP()->primitives->admin_text('All selected plugins already active'));
 			}
 			break;
 
@@ -96,9 +102,9 @@ function spa_save_plugin_list_actions() {
    				}
 			}
 			if ($deactivate) {
-				$msg = SP()->primitives->admin_text('Selected plugins deactivated');
+				$msg = esc_html(SP()->primitives->admin_text('Selected plugins deactivated'));
 			} else {
-				$msg = SP()->primitives->admin_text('All selected plugins already deactived');
+				$msg = esc_html(SP()->primitives->admin_text('All selected plugins already deactived'));
 			}
 			break;
 
@@ -114,14 +120,14 @@ function spa_save_plugin_list_actions() {
    				}
 			}
 			if ($active) {
-				$msg = SP()->primitives->admin_text('Selected plugins deleted but any active plugins were not deleted');
+				$msg = esc_html(SP()->primitives->admin_text('Selected plugins deleted but any active plugins were not deleted'));
 			} else {
-				$msg = SP()->primitives->admin_text('Selected plugins deleted');
+				$msg = esc_html(SP()->primitives->admin_text('Selected plugins deleted'));
 			}
 			break;
 
 		default:
-			$msg = SP()->primitives->admin_text('Error - no action selected');
+			$msg = esc_html(SP()->primitives->admin_text('Error - no action selected'));
 			break;
 	}
 	return $msg;
