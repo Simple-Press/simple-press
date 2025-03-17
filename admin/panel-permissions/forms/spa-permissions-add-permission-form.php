@@ -37,7 +37,6 @@ function spa_permissions_add_permission_form() {
         sp_echo_create_nonce('forum-adminform_rolenew');
         spa_paint_open_tab(SP()->primitives->admin_text('Add New Permission Set'));
 
-
         spa_paint_open_fieldset(SP()->primitives->admin_text('Permission Set Details'), 'true', 'create-new-permission-set');
         spa_paint_input(SP()->primitives->admin_text('Set Name'), "role_name", '', false, true);
         spa_paint_wide_textarea('Set Description', 'role_desc', '', '', 4);
@@ -47,7 +46,7 @@ function spa_permissions_add_permission_form() {
         spa_paint_close_fieldset();
         ?>
         <div class="_sf-form-submit-bar sf-mb-15">
-            <input type="submit" class="sf-button-primary" name="saveit" value="<?php esc_attr(SP()->primitives->admin_etext('Create New Permission')); ?>" />
+            <input type="submit" class="sf-button-primary" name="saveit" value="<?php SP()->primitives->admin_etext('Create New Permission'); ?>" />
         </div>
 
         <?php

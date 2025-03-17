@@ -482,7 +482,16 @@ function spa_paint_select_start($label, $name, $helpname) {
 
 function spa_paint_select_end($msg='') {
 	echo "</select>\n";
-	if ($msg) echo esc_html($msg);
+	if ($msg) {
+        echo wp_kses(
+            $msg,
+            [
+                'span' => [
+                    'class' => true,
+                ]
+            ]
+        );
+    }
 	echo '</div>';
 }
 
