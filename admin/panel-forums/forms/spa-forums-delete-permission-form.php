@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function spa_forums_delete_permission_form($perm_id) {
 ?>
 <script>
-   	spj.loadAjaxForm('sfpermissiondel<?php echo $perm_id; ?>', 'sfreloadfb');
+   	spj.loadAjaxForm('sfpermissiondel<?php echo esc_js($perm_id); ?>', 'sfreloadfb');
 </script>
 <?php
 	$perm = SP()->DB->table(SPPERMISSIONS, "permission_id=$perm_id", 'row');
@@ -25,14 +25,14 @@ function spa_forums_delete_permission_form($perm_id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=delperm', 'forums-loader');
 ?>
-	<form action="<?php echo $ajaxURL; ?>" method="post" id="sfpermissiondel<?php echo $perm->permission_id; ?>" name="sfpermissiondel<?php echo $perm->permission_id; ?>">
+	<form action="<?php echo esc_attr($ajaxURL); ?>" method="post" id="sfpermissiondel<?php echo esc_attr($perm->permission_id); ?>" name="sfpermissiondel<?php echo esc_attr($perm->permission_id); ?>">
 <?php
-		echo sp_create_nonce('forum-adminform_permissiondelete');
+        echo '<input type="hidden" name="'.esc_attr('forum-adminform_permissiondelete').'" value="'.esc_attr(wp_create_nonce('forum-adminform_permissiondelete')).'" />';
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Delete Permission Set'), 'true', 'delete-permission-set');
 ?>
-					<input type="hidden" name="permission_id" value="<?php echo $perm->permission_id; ?>" />
+					<input type="hidden" name="permission_id" value="<?php echo esc_attr($perm->permission_id); ?>" />
 <?php
 					echo '<p>';
 					SP()->primitives->admin_etext('Warning! You are about to delete a permission set');
@@ -41,7 +41,12 @@ function spa_forums_delete_permission_form($perm_id) {
 					SP()->primitives->admin_etext('This will remove ALL access to this forum for this usergroup');
 					echo '</p>';
 					echo '<p>';
-					echo sprintf(SP()->primitives->admin_text('Please note that this action %s can NOT be reversed %s'), '<strong>', '</strong>');
+					echo wp_kses(
+                       sprintf(SP()->primitives->admin_text('Please note that this action %s can NOT be reversed %s'), '<strong>', '</strong>'),
+                       [
+                           'strong' => []
+                       ]
+                    );
 					echo '</p>';
 					echo '<p>';
 					SP()->primitives->admin_etext('Click on the delete permission set button below to proceed');
@@ -53,8 +58,8 @@ function spa_forums_delete_permission_form($perm_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
-    		<input type="submit" class="sf-button-primary" id="delperm<?php echo $perm->permission_id; ?>" name="delperm<?php echo $perm->permission_id; ?>" value="<?php SP()->primitives->admin_etext('Delete Permission Set'); ?>" />
-    		<input type="button" class="sf-button-primary spCancelForm" data-target="#curperm-<?php echo $perm->permission_id; ?>" id="sfpermissiondel<?php echo $perm->permission_id; ?>" name="delpermcancel<?php echo $perm->permission_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+    		<input type="submit" class="sf-button-primary" id="delperm<?php echo esc_attr($perm->permission_id); ?>" name="delperm<?php echo esc_attr($perm->permission_id); ?>" value="<?php SP()->primitives->admin_etext('Delete Permission Set'); ?>" />
+    		<input type="button" class="sf-button-primary spCancelForm" data-target="#curperm-<?php echo esc_attr($perm->permission_id); ?>" id="sfpermissiondel<?php echo esc_attr($perm->permission_id); ?>" name="delpermcancel<?php echo esc_attr($perm->permission_id); ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
         </div>
 	<?php spa_paint_close_tab(); ?>
     </form>
