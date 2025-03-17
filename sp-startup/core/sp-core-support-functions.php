@@ -467,6 +467,19 @@ function sp_create_nonce($action) {
 	return '<input type="hidden" name="'.esc_attr($action).'" value="'.esc_attr(wp_create_nonce($action)).'" />'."\n";
 }
 
+function sp_echo_create_nonce($action) {
+    echo wp_kses(
+        sp_create_nonce($action),
+        [
+            'input' => [
+                'type' => ['hidden'],
+                'name' => true,
+                'value' => true,
+            ],
+        ]
+    );
+}
+
 function sp_get_admins() {
 	$administrators = array();
 
