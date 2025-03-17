@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function spa_permissions_edit_permission_form($role_id) {
 ?>
 <script>
-   	spj.loadAjaxForm('sfroleedit<?php echo esc_js($role_id;   ?>', 'sfreloadpb');
+   	spj.loadAjaxForm('sfroleedit<?php echo esc_js($role_id);   ?>', 'sfreloadpb');
 </script>
 <?php
 	# Get correct tooltips file
