@@ -20,7 +20,7 @@ function spa_themes_user_form($admin, $save, $form, $reload) {
 						target: '#sfmsgspot',
 						success: function() {
 	<?php
-				if (!empty($reload)) echo "jQuery('#".$reload."').click();";
+				if (!empty($reload)) echo "jQuery('#".esc_js($reload)."').click();";
 	?>
 							$('#sfmsgspot').fadeIn();
 							$('#sfmsgspot').fadeOut(6000);
@@ -32,7 +32,7 @@ function spa_themes_user_form($admin, $save, $form, $reload) {
 <?php
 		spa_paint_options_init();
 		$ajaxURL = wp_nonce_url(SPAJAXURL."themes-loader&amp;saveform=plugin&amp;func=$save", 'themes-loader');
-		echo '<form action="'.$ajaxURL.'" method="post" id="sfpluginsuser" name="sfpluginsuser">';
+		echo '<form action="'.esc_url($ajaxURL).'" method="post" id="sfpluginsuser" name="sfpluginsuser">';
 		sp_echo_create_nonce('forum-adminform_userplugin');
 	}
 
