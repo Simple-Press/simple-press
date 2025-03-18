@@ -34,7 +34,7 @@ function spa_forums_global_perm_form(): void {
                         <?php spa_paint_help('add-a-user-group-permission-set-to-all-forums') ?>
                     </div>
                     <?php
-                    echo '<div class="sf-alert-block sf-caution">'.SP()->primitives->admin_text('Caution:  Any current permission sets for the selected usergroup for ANY forum may be overwritten').'</div>';
+                    echo '<div class="sf-alert-block sf-caution">'.esc_html(SP()->primitives->admin_text('Caution:  Any current permission sets for the selected usergroup for ANY forum may be overwritten')).'</div>';
                     spa_paint_select_start(SP()->primitives->admin_text('Select usergroup'), 'usergroup_id', '');
                     spa_display_usergroup_select(false, 0, false);
                     spa_paint_select_end();
