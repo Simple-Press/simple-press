@@ -837,8 +837,8 @@ function spa_plugin_addon_dashboard_update()
 					if ($header) {
 						
 						?>
-						<h3 style="margin: 10px 0px 0px 0px;"><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
-						<p><?php echo esc_html(SP()->primitives->admin_etext('The following plugins have new versions available.')); ?></p>
+						<h3 style="margin: 10px 0px 0px 0px;"><?php esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
+						<p><?php esc_html(SP()->primitives->admin_etext('The following plugins have new versions available.')); ?></p>
 							<table class="widefat" id="update-plugins-table">
 								<tbody class="plugins">
 									<?php
@@ -862,8 +862,8 @@ function spa_plugin_addon_dashboard_update()
 
 							if ($header) {
 								?>
-								<h3 style="margin: 10px 0px 0px 0px;"><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
-								<p><?php echo esc_html(SP()->primitives->admin_etext('The following plugins have new versions available.')); ?></p>
+								<h3 style="margin: 10px 0px 0px 0px;"><?php esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
+								<p><?php esc_html(SP()->primitives->admin_etext('The following plugins have new versions available.')); ?></p>
 									<table class="widefat" id="update-plugins-table">
 										<tbody class="plugins">
 											<?php
@@ -914,8 +914,8 @@ function spa_theme_addon_dashboard_update()
 				
 					if ($header) {
 						?>
-						<h3><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Themes')); ?></h3>
-						<p><?php echo esc_html(SP()->primitives->admin_etext('The following themes have new versions available.')); ?></p>
+						<h3><?php esc_html(SP()->primitives->admin_etext('Simple:Press Themes')); ?></h3>
+						<p><?php esc_html(SP()->primitives->admin_etext('The following themes have new versions available.')); ?></p>
 							<table class="widefat" id="update-themes-table">
 								<tbody class="plugins">
 									<?php
@@ -941,8 +941,8 @@ function spa_theme_addon_dashboard_update()
 
 							if ($header) {
 								?>
-								<h3 style="margin: 10px 0px 0px 0px;"><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
-								<p><?php echo esc_html(SP()->primitives->admin_etext('The following plugins have new versions available.')); ?></p>
+								<h3 style="margin: 10px 0px 0px 0px;"><?php esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
+								<p><?php esc_html(SP()->primitives->admin_etext('The following plugins have new versions available.')); ?></p>
 									<table class="widefat" id="update-plugins-table">
 										<tbody class="plugins">
 											<?php
@@ -1009,23 +1009,23 @@ function spa_check_plugin_addon_update() {
 					$plugin_count++;
 					$form_action = 'update-core.php?action=do-sp-plugin-upgrade';
 					?>
-					<h3><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
-					<p><?php echo esc_html(SP()->primitives->admin_etext('The following plugins have new versions available. Check the ones you want to update and then click Update SP Plugin')); ?></p>
-					<p><?php echo esc_html(SP()->primitives->admin_etext('Please Note: Any customizations you have made to plugin files will be lost')); ?></p>
+					<h3><?php esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
+					<p><?php esc_html(SP()->primitives->admin_etext('The following plugins have new versions available. Check the ones you want to update and then click Update SP Plugin')); ?></p>
+					<p><?php esc_html(SP()->primitives->admin_etext('Please Note: Any customizations you have made to plugin files will be lost')); ?></p>
 					<form method="post" action="<?php echo esc_url($form_action); ?>" name="upgrade-sp-plugins" class="upgrade">
 						<?php wp_nonce_field('upgrade-core'); ?>
-						<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Plugins')); ?>" name="upgrade" /></p>
+						<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php esc_html(SP()->primitives->admin_etext('Update SP Plugins')); ?>" name="upgrade" /></p>
 						<table class="widefat" id="update-plugins-table">
 							<thead>
 								<tr>
 									<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-4" /></th>
-									<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
+									<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
 									<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-4" /></th>
-									<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
+									<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 								</tr>
 							</tfoot>
 							<tbody class="plugins">
@@ -1060,23 +1060,23 @@ function spa_check_plugin_addon_update() {
 								$plugin_count++;
 								$form_action = 'update-core.php?action=do-sp-plugin-upgrade';
 							?>
-							<h3><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
-							<p><?php echo esc_html(SP()->primitives->admin_etext('The following plugins have new versions available. Check the ones you want to update and then click Update SP Plugin')); ?></p>
-							<p><?php echo esc_html(SP()->primitives->admin_etext('Please Note: Any customizations you have made to plugin files will be lost')); ?></p>
+							<h3><?php esc_html(SP()->primitives->admin_etext('Simple:Press Plugins')); ?></h3>
+							<p><?php esc_html(SP()->primitives->admin_etext('The following plugins have new versions available. Check the ones you want to update and then click Update SP Plugin')); ?></p>
+							<p><?php esc_html(SP()->primitives->admin_etext('Please Note: Any customizations you have made to plugin files will be lost')); ?></p>
 							<form method="post" action="<?php echo esc_url($form_action); ?>" name="upgrade-sp-plugins" class="upgrade">
 								<?php wp_nonce_field('upgrade-core'); ?>
-								<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Plugins')); ?>" name="upgrade" /></p>
+								<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php esc_html(SP()->primitives->admin_etext('Update SP Plugins')); ?>" name="upgrade" /></p>
 								<table class="widefat" id="update-themes-table">
 									<thead>
 										<tr>
 											<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-4" /></th>
-											<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
+											<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
 											<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-4" /></th>
-											<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
+											<th scope="col" class="manage-column"><label for="themes-select-all-4"><?php esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 										</tr>
 									</tfoot>
 									<tbody class="plugins">
@@ -1115,7 +1115,7 @@ function spa_check_plugin_addon_update() {
 		
 			</tbody>
 	</table>
-	<p><input id="upgrade-themes-2" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Plugins')); ?>" name="upgrade" /></p>
+	<p><input id="upgrade-themes-2" class="sf-button" type="submit" value="<?php esc_html(SP()->primitives->admin_etext('Update SP Plugins')); ?>" name="upgrade" /></p>
 	</form>
 	<?php
 	} else {
@@ -1183,23 +1183,23 @@ function spa_check_theme_addon_update(){
 					$plugin_count++;
 					$form_action = 'update-core.php?action=do-sp-theme-upgrade';
 					?>
-					<h3><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Themes')); ?></h3>
-					<p><?php echo esc_html(SP()->primitives->admin_etext('The following themes have new versions available. Check the ones you want to update and then click Update Themes.')); ?></p>
+					<h3><?php esc_html(SP()->primitives->admin_etext('Simple:Press Themes')); ?></h3>
+					<p><?php esc_html(SP()->primitives->admin_etext('The following themes have new versions available. Check the ones you want to update and then click Update Themes.')); ?></p>
 					<p><?php echo '<b>'.esc_html(SP()->primitives->admin_text('Please Note:')).'</b> '.esc_html(SP()->primitives->admin_text('Any customizations you have made to theme files will be lost.')); ?></p>
 					<form method="post" action="<?php echo esc_url($form_action); ?>" name="upgrade-themes" class="upgrade">
 						<?php wp_nonce_field('upgrade-core'); ?>
-						<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Themes')); ?>" name="upgrade" /></p>
+						<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php esc_html(SP()->primitives->admin_etext('Update SP Themes')); ?>" name="upgrade" /></p>
 						<table class="widefat" id="update-themes-table">
 							<thead>
 								<tr>
 									<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-3" /></th>
-									<th scope="col" class="manage-column"><label for="themes-select-all-3"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
+									<th scope="col" class="manage-column"><label for="themes-select-all-3"><?php esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
 									<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-3" /></th>
-									<th scope="col" class="manage-column"><label for="themes-select-all-3"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
+									<th scope="col" class="manage-column"><label for="themes-select-all-3"><?php esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 								</tr>
 							</tfoot>
 							<tbody class="plugins">
@@ -1235,23 +1235,23 @@ function spa_check_theme_addon_update(){
 								$plugin_count++;
 								$form_action = 'update-core.php?action=do-sp-theme-upgrade';
 								?>
-								<h3><?php echo esc_html(SP()->primitives->admin_etext('Simple:Press Themes')); ?></h3>
-								<p><?php echo esc_html(SP()->primitives->admin_etext('The following themes have new versions available. Check the ones you want to update and then click Update Themes.')); ?></p>
+								<h3><?php esc_html(SP()->primitives->admin_etext('Simple:Press Themes')); ?></h3>
+								<p><?php esc_html(SP()->primitives->admin_etext('The following themes have new versions available. Check the ones you want to update and then click Update Themes.')); ?></p>
 								<p><?php echo '<b>'.esc_html(SP()->primitives->admin_text('Please Note:')).'</b> '.esc_html(SP()->primitives->admin_text('Any customizations you have made to theme files will be lost.')); ?></p>
 								<form method="post" action="<?php echo esc_url($form_action); ?>" name="upgrade-themes" class="upgrade">
 									<?php wp_nonce_field('upgrade-core'); ?>
-									<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Themes')); ?>" name="upgrade" /></p>
+									<p><input id="upgrade-themes" class="sf-button" type="submit" value="<?php esc_html(SP()->primitives->admin_etext('Update SP Themes')); ?>" name="upgrade" /></p>
 									<table class="widefat" id="update-themes-table">
 										<thead>
 											<tr>
 												<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all" /></th>
-												<th scope="col" class="manage-column"><label for="themes-select-all"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
+												<th scope="col" class="manage-column"><label for="themes-select-all"><?php esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 											</tr>
 										</thead>
 										<tfoot>
 											<tr>
 												<th scope="col" class="manage-column check-column"><input type="checkbox" id="themes-select-all-2" /></th>
-												<th scope="col" class="manage-column"><label for="themes-select-all-2"><?php echo esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
+												<th scope="col" class="manage-column"><label for="themes-select-all-2"><?php esc_html(SP()->primitives->admin_etext('Select All')); ?></label></th>
 											</tr>
 										</tfoot>
 										<tbody class="plugins">
@@ -1290,7 +1290,7 @@ function spa_check_theme_addon_update(){
 		
 			</tbody>
 		</table>
-		<p><input id="upgrade-themes-2" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Themes')); ?>" name="upgrade" /></p>
+		<p><input id="upgrade-themes-2" class="sf-button" type="submit" value="<?php esc_html(SP()->primitives->admin_etext('Update SP Themes')); ?>" name="upgrade" /></p>
 	</form>
 	<?php
 		

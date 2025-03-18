@@ -58,7 +58,7 @@ function spa_themes_tablet_form() {
 	spa_paint_close_container();
 ?>
 	<div class="sf-form-submit-bar">
-	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php echo esc_attr(SP()->primitives->admin_etext('Update Tablet Component')); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php esc_attr(SP()->primitives->admin_etext('Update Tablet Component')); ?>" />
 	</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
@@ -75,7 +75,7 @@ function spa_themes_tablet_form() {
 		spa_paint_open_panel();
 		spa_paint_open_fieldset(esc_html(SP()->primitives->admin_text('Tablet Theme Management')), true, 'themes');
 ?>
-		<h3><?php echo esc_html(SP()->primitives->admin_etext('Current Tablet Theme')); ?></h3>
+		<h3><?php esc_html(SP()->primitives->admin_etext('Current Tablet Theme')); ?></h3>
 		<div class="theme-browser rendered">
 		<div class="spThemeContainer">
 		<div id="current-theme" class="spTheme spThemeTablet">
@@ -179,7 +179,7 @@ function spa_themes_tablet_form() {
 
 		<br class="clear" />
 
-		<h3><?php echo esc_html(SP()->primitives->admin_etext('Available Themes')); ?></h3>
+		<h3><?php esc_html(SP()->primitives->admin_etext('Available Themes')); ?></h3>
 <?php
 		$numThemes = count($themes);
 		if ($numThemes > 1) {
@@ -259,7 +259,7 @@ function spa_themes_tablet_form() {
 					}
 				}
 				?>
-				<input type="submit" class="sf-button-secondary action" id="saveit-<?php echo esc_attr($theme_file); ?>" name="saveit-<?php echo esc_attr($theme_file); ?>" value="<?php echo esc_attr(SP()->primitives->admin_etext('Activate Tablet Theme')); ?>" />
+				<input type="submit" class="sf-button-secondary action" id="saveit-<?php echo esc_attr($theme_file); ?>" name="saveit-<?php echo esc_attr($theme_file); ?>" value="<?php esc_attr(SP()->primitives->admin_etext('Activate Tablet Theme')); ?>" />
 				</form>
 				</div>
 				<?php

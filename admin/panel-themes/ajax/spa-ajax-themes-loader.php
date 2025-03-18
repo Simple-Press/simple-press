@@ -2,8 +2,6 @@
 /*
 Simple:Press Admin
 Ajax form loader - themes
-$LastChangedDate: 2018-11-02 13:02:17 -0500 (Fri, 02 Nov 2018) $
-$Rev: 15795 $
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,7 +13,7 @@ spa_admin_ajax_support();
 if (!sp_nonce('themes-loader')) die();
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
+	echo esc_html(SP()->core->status);
 	die();
 }
 
@@ -46,7 +44,7 @@ if (isset($_GET['saveform'])) {
 				(function(spj, $, undefined) {
 					$(document).ready(function(){
 						$("#sfmsgspot").fadeIn("fast");
-						$("#sfmsgspot").html("<?php echo $msg; ?>");
+						$("#sfmsgspot").html("<?php echo esc_js($msg); ?>");
 						$("#sfmsgspot").fadeOut(8000);
 					});
 				}(window.spj = window.spj || {}, jQuery));
@@ -61,7 +59,7 @@ if (isset($_GET['saveform'])) {
 				(function(spj, $, undefined) {
 					$(document).ready(function(){
 						$("#sfmsgspot").fadeIn("fast");
-						$("#sfmsgspot").html("<?php echo $msg; ?>");
+						$("#sfmsgspot").html("<?php echo esc_js($msg); ?>");
 						$("#sfmsgspot").fadeOut(8000);
 	            	});
 				}(window.spj = window.spj || {}, jQuery));
@@ -76,7 +74,7 @@ if (isset($_GET['saveform'])) {
 				(function(spj, $, undefined) {
 					$(document).ready(function(){
 						$("#sfmsgspot").fadeIn("fast");
-						$("#sfmsgspot").html("<?php echo $msg; ?>");
+						$("#sfmsgspot").html("<?php echo esc_js($msg); ?>");
 						$("#sfmsgspot").fadeOut(8000);
 	            	});
 				}(window.spj = window.spj || {}, jQuery));
@@ -85,11 +83,11 @@ if (isset($_GET['saveform'])) {
 			break;
 
 		case 'editor':
-			echo spa_save_editor_data();
+			echo wp_kses_post(spa_save_editor_data());
 			break;
 
 		case 'css':
-			echo spa_save_css_data();
+			echo wp_kses_post(spa_save_css_data());
 			break;
 	}
 	die();

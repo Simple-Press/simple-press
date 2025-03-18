@@ -48,8 +48,8 @@ function spa_usergroups_edit_usergroup_form($usergroup_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
-		<input type="submit" class="sf-button-primary" id="sfusergroupedit<?php echo esc_attr($usergroup->usergroup_id); ?>" name="sfusergroupedit<?php echo esc_attr($usergroup->usergroup_id); ?>" value="<?php echo esc_attr(SP()->primitives->admin_etext('Update User Group')); ?>" />
-		<input type="button" class="sf-button-primary spCancelForm" data-target="#usergroup-<?php echo esc_attr($usergroup->usergroup_id); ?>" id="sfusergroupedit<?php echo esc_attr($usergroup->usergroup_id); ?>" name="editusergroupcancel<?php echo esc_attr($usergroup->usergroup_id); ?>" value="<?php echo esc_attr(SP()->primitives->admin_etext('Cancel')); ?>" />
+		<input type="submit" class="sf-button-primary" id="sfusergroupedit<?php echo esc_attr($usergroup->usergroup_id); ?>" name="sfusergroupedit<?php echo esc_attr($usergroup->usergroup_id); ?>" value="<?php esc_attr(SP()->primitives->admin_etext('Update User Group')); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#usergroup-<?php echo esc_attr($usergroup->usergroup_id); ?>" id="sfusergroupedit<?php echo esc_attr($usergroup->usergroup_id); ?>" name="editusergroupcancel<?php echo esc_attr($usergroup->usergroup_id); ?>" value="<?php esc_attr(SP()->primitives->admin_etext('Cancel')); ?>" />
 		</div>
 	</form>
 	<?php spa_paint_close_tab(); ?>

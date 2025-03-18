@@ -107,7 +107,7 @@ function spa_integration_page_form() {
 		spa_paint_close_container();
 ?>
 	<div class="sf-form-submit-bar">
-	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php echo esc_attr(SP()->primitives->admin_etext('Update WP Integration')); ?>" />
+	<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php esc_attr(SP()->primitives->admin_etext('Update WP Integration')); ?>" />
 	</div>
 <?php
 	spa_paint_close_tab();

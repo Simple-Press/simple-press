@@ -175,8 +175,8 @@ function spa_forums_edit_forum_form($forum_id) {
 			spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
-    		<input type="submit" class="sf-button-primary" id="sfforumedit<?php echo esc_attr($forum->forum_id); ?>" name="sfforumedit<?php echo esc_attr($forum->forum_id); ?>" value="<?php echo esc_attr(SP()->primitives->admin_etext('Update Forum')); ?>" />
-    		<input type="button" class="sf-button-primary spCancelForm" data-target="#forum-<?php echo esc_attr($forum->forum_id); ?>" id="sfforumedit<?php echo esc_attr($forum->forum_id); ?>" name="editforumcancel<?php echo esc_attr($forum->forum_id); ?>" value="<?php echo esc_attr(SP()->primitives->admin_etext('Cancel')); ?>" />
+    		<input type="submit" class="sf-button-primary" id="sfforumedit<?php echo esc_attr($forum->forum_id); ?>" name="sfforumedit<?php echo esc_attr($forum->forum_id); ?>" value="<?php esc_attr(SP()->primitives->admin_etext('Update Forum')); ?>" />
+    		<input type="button" class="sf-button-primary spCancelForm" data-target="#forum-<?php echo esc_attr($forum->forum_id); ?>" id="sfforumedit<?php echo esc_attr($forum->forum_id); ?>" name="editforumcancel<?php echo esc_attr($forum->forum_id); ?>" value="<?php esc_attr(SP()->primitives->admin_etext('Cancel')); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
