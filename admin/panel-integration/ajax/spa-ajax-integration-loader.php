@@ -15,8 +15,7 @@ spa_admin_ajax_support();
 if (!sp_nonce('integration-loader')) die();
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
-	die();
+	die(esc_html(SP()->core->status));
 }
 
 require_once SP_PLUGIN_DIR.'/admin/panel-integration/spa-integration-display.php';
@@ -40,16 +39,13 @@ if (isset($_GET['loadform'])) {
 if (isset($_GET['saveform'])) {
 	$saveform = sanitize_text_field($_GET['saveform']);
 	if ($saveform == 'page') {
-		echo spa_save_integration_page_data();
-		die();
+		die(esc_html(spa_save_integration_page_data()));
 	}
 	if ($saveform == 'storage') {
-		echo spa_save_integration_storage_data();
-		die();
+		die(esc_html(spa_save_integration_storage_data()));
 	}
 	if ($saveform == 'language') {
-		echo spa_save_integration_language_data();
-		die();
+		die(esc_html(spa_save_integration_language_data()));
 	}
 }
 
