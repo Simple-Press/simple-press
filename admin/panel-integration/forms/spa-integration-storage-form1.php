@@ -35,10 +35,25 @@ function spa_integration_storage_form() {
 		spa_paint_open_fieldset(SP()->primitives->admin_text('Set Storage Locations'), true, 'storage-locations');
 		echo '<table><tr>';
 
-		echo '<td><span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Location found').'"></span>'.SP()->primitives->admin_text('Location found').'</td>';
-		echo '<td><span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Location not found').'"></span>'.SP()->primitives->admin_text('Location not found').'</td></tr><tr>';
-		echo '<td><span class="sf-icon sf-requires-enable" title="'.SP()->primitives->admin_text('Write - OK').'"></span>'.SP()->primitives->admin_text('Write - OK').'</td>';
-		echo '<td><span class="sf-icon sf-warning" title="'.SP()->primitives->admin_text('Write - denied').'"></span>'.SP()->primitives->admin_text('Write - denied').'</td></tr><tr>';
+		echo '<td>
+			<span class="sf-icon sf-check" title="' . esc_attr(SP()->primitives->admin_text('Location found')) . '"></span>' .
+			esc_html(SP()->primitives->admin_text('Location found')) .
+		'</td>';
+
+		echo '<td>
+			<span class="sf-icon sf-no-check" title="' . esc_attr(SP()->primitives->admin_text('Location not found')) . '"></span>' .
+			esc_html(SP()->primitives->admin_text('Location not found')) .
+		'</td></tr><tr>';
+
+		echo '<td>
+			<span class="sf-icon sf-requires-enable" title="' . esc_attr(SP()->primitives->admin_text('Write - OK')) . '"></span>' .
+			esc_html(SP()->primitives->admin_text('Write - OK')) .
+		'</td>';
+
+		echo '<td>
+			<span class="sf-icon sf-warning" title="' . esc_attr(SP()->primitives->admin_text('Write - denied')) . '"></span>' .
+			esc_html(SP()->primitives->admin_text('Write - denied')) .
+		'</td></tr><tr>';
 
 		echo '</tr></table>';
 		echo '<br>';
@@ -108,33 +123,70 @@ function spa_paint_storage_input($label, $name, $value, $na = false) {
 	}
 
 	if ($found) {
-		$icon1 = '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Location found').'"></span>';
+		$icon1 = sprintf(
+			'<span class="sf-icon sf-check" title="%s"></span>',
+			esc_attr(SP()->primitives->admin_text('Location found'))
+		);
 	} else {
-		$icon1 = '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Location not found').'"></span>';
-		$icon2 = '<span class="sf-icon sf-warning" title="'.SP()->primitives->admin_text('Write - denied').'"></span>';
+		$icon1 = sprintf(
+			'<span class="sf-icon sf-no-check" title="%s"></span>',
+			esc_attr(SP()->primitives->admin_text('Location not found'))
+		);
+		$icon2 = sprintf(
+			'<span class="sf-icon sf-warning" title="%s"></span>',
+			esc_attr(SP()->primitives->admin_text('Write - denied'))
+		);
 	}
 
 	if ($found) {
-		if (is_writable($path)) {
-			$icon2 = '<span class="sf-icon sf-requires-enable" title="'.SP()->primitives->admin_text('Write - OK').'"></span>';
+		if (wp_is_writable($path)) {
+			$icon2 = sprintf(
+				'<span class="sf-icon sf-requires-enable" title="%s"></span>',
+				esc_attr(SP()->primitives->admin_text('Write - OK'))
+			);
 		} else {
-			$icon2 = '<span class="sf-icon sf-warning" title="'.SP()->primitives->admin_text('Write - denied').'"></span>';
+			$icon2 = sprintf(
+				'<span class="sf-icon sf-warning" title="%s"></span>',
+				esc_attr(SP()->primitives->admin_text('Write - denied'))
+			);
 			$ok = false;
 		}
 	}
 
 	if ($na) {
-		$icon2 = '<img src="'.SPADMINIMAGES.'sp_NA.gif" title="" alt="" class="sf-vert-align-middle" />&nbsp;&nbsp;';
+		$icon2 = sprintf(
+			'<img src="%s" title="" alt="" class="sf-vert-align-middle" />&nbsp;&nbsp;',
+			esc_url(SPADMINIMAGES . 'sp_NA.gif')
+		);
 		$ok = $found;
 	}
 
 	echo "<tr>\n";
 	echo "<td>";
-	echo "<span class='sf-float-l'>$icon1 $icon2 </span>";
+	echo "<span class='sf-float-l'>";
+    echo wp_kses(
+        $icon1,
+        [
+            'span' => [
+                'class' => true,
+                'title' => true,
+            ]
+        ]
+    );
+    echo wp_kses(
+        $icon2,
+        [
+            'span' => [
+                'class' => true,
+                'title' => true,
+            ]
+        ]
+    );
+    echo "</span>";
 	spa_paint_open_fieldset(SP()->primitives->admin_text($label), true, $name, true,'', $adminhelpfile);
-	echo SP_STORE_RELATIVE_BASE;
+	echo esc_html(SP_STORE_RELATIVE_BASE);
 
-	echo '<input type="text" class="wp-core-ui sf-width-90-per " tabindex="'.$tab.'" name="'.$name.'" value="'.esc_attr($value).'" ';
+	echo '<input type="text" class="wp-core-ui sf-width-90-per " tabindex="'.esc_attr($tab).'" name="'.esc_attr($name).'" value="'.esc_attr($value).'" ';
 	echo "/></td>\n";
 
 	echo "</tr>\n";
@@ -164,27 +216,71 @@ function spa_check_upgrade_error() {
 		echo '</h3>';
 
 		if ($sCreate == false) {
-			echo $image.'<h4>[';
+            echo wp_kses(
+                $image,
+                [
+                    'img' => [
+                        'src' => [],
+                        'alt' => [],
+                        'class' => [],
+                    ]
+                ]
+            );
+
+            echo '<h4>[';
 			SP()->primitives->admin_etext('Storage location creation failed on upgrade');
 			echo '] - ';
-			SP()->primitives->admin_etext("You will need to manually create a required sub-folder in your wp-content folder named 'sp-resources'");
+			SP()->rimitives->admin_etext("You will need to manually create a required sub-folder in your wp-content folder named 'sp-resources'");
 			echo '</h4>';
 		} else if ($sOwner == false) {
-			echo $image.'<h5>[';
+            echo wp_kses(
+                $image,
+                [
+                    'img' => [
+                        'src' => [],
+                        'alt' => [],
+                        'class' => [],
+                    ]
+                ]
+            );
+
+            echo '<h5>[';
 			SP()->primitives->admin_etext('Storage location part 1 ownership failed');
 			echo '] - ';
 			SP()->primitives->admin_etext("We were unable to create your folders with the correct server ownership and these will need to be manually changed");
 			echo '</h5>';
 		}
 		if ($sCopy == false) {
-			echo $image.'<h4>[';
+            echo wp_kses(
+                $image,
+                [
+                    'img' => [
+                        'src' => [],
+                        'alt' => [],
+                        'class' => [],
+                    ]
+                ]
+            );
+
+            echo '<h4>[';
 			SP()->primitives->admin_etext('Resources file failed to copy on upgrade');
 			echo '] - ';
 			SP()->primitives->admin_etext("You will need to manually copy the file ".SP_FOLDER_NAME."/sp-startup/install/sp-resources-install-part2.zip' to the new 'wp-content/sp-resources' folder");
 			echo '</h4>';
 		}
 		if ($sUnzip == false) {
-			echo $image.'<h4>[';
+            echo wp_kses(
+                $image,
+                [
+                    'img' => [
+                        'src' => [],
+                        'alt' => [],
+                        'class' => [],
+                    ]
+                ]
+            );
+
+            echo '<h4>[';
 			SP()->primitives->admin_etext('Resources file failed to unzip on upgrade');
 			echo '] - ';
 			SP()->primitives->admin_etext("You will need to manually unzip the file 'sp-resources-install-part2.zip in the new 'wp-content/sp-resources' folder");

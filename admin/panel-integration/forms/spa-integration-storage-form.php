@@ -23,7 +23,7 @@ function spa_integration_storage_form() { ?>
                     <?php spa_paint_open_fieldset(SP()->primitives->admin_text('Set Storage Locations'), 'true', 'storage-locations', 'true'); ?>
                         <div class="sf-form-row">
                             <p>
-                                <strong>  Storage locations base path:</strong> <code><?php echo SP_STORE_RELATIVE_BASE; ?></code>
+                                <strong>  Storage locations base path:</strong> <code><?php echo esc_html(SP_STORE_RELATIVE_BASE); ?></code>
                             </p>
                             <div class="">
                                 <p><span class="sf-icon sf-check"></span>
@@ -36,7 +36,7 @@ function spa_integration_storage_form() { ?>
                                     <?php SP()->primitives->admin_etext('Write - denied'); ?></p>
                             </div>
                             <div class="sf-alert-block sf-caution">
-                                <?php echo SP()->primitives->front_text('BEWARE: Please read the help before making any changes to these locations. Incorrect changes may cause Simple:Press to stop functioning.'); ?>
+                                <?php SP()->primitives->front_etext('BEWARE: Please read the help before making any changes to these locations. Incorrect changes may cause Simple:Press to stop functioning.'); ?>
                             </div>
                         </div>
                         <div class="sf-form-row">
@@ -69,7 +69,7 @@ function spa_integration_storage_form() { ?>
 
                             <?php if (!$ok) : ?>
                                 <div class="sf-alert-block sf-warning">
-                                    <?php echo SP()->primitives->admin_etext('For Simple:Press to function correctly it is imperative that the above location errors are resolved'); ?>
+                                    <?php SP()->primitives->admin_etext('For Simple:Press to function correctly it is imperative that the above location errors are resolved'); ?>
                                 </div>
                             <?php endif; ?>
 
@@ -121,7 +121,7 @@ function spa_paint_storage_input($label, $name, $value, $na = false) {
 	}
 
 	if ($found) {
-		if (is_writable($path)) {
+		if (wp_is_writable($path)) {
 			$icon2 = '<span class="sf-icon sf-requires-enable" title="'.SP()->primitives->admin_text('Write - OK').'"></span>';
 		} else {
 			$icon2 = '<span class="sf-icon sf-warning" title="'.SP()->primitives->admin_text('Write - denied').'"></span>';
@@ -135,11 +135,31 @@ function spa_paint_storage_input($label, $name, $value, $na = false) {
 	}
 
 	echo '<tr >';
-        echo '<td> ' . SP()->primitives->admin_text($label);
+        echo '<td> ';
+            SP()->primitives->admin_etext($label);
             spa_paint_help($name, $adminhelpfile) ;
         echo '</td>';
-        echo '<td>' . $icon1 . $icon2 . '</td>';
-        echo '<td><input type="text"  name="'.$name.'" value="'.esc_attr($value).'" style="width:100%;"></td>';
+        echo '<td>';
+        echo wp_kses(
+            $icon1,
+            [
+                'span' => [
+                    'class' => true,
+                    'title' => true,
+                ]
+            ]
+        );
+        echo wp_kses(
+            $icon2,
+            [
+                'span' => [
+                    'class' => true,
+                    'title' => true,
+                ]
+            ]
+        );
+        echo '</td>';
+        echo '<td><input type="text" name="'.esc_attr($name).'" value="'.esc_attr($value).'" style="width:100%;"></td>';
 	echo '</tr>';
 	return $ok;
 }
@@ -166,27 +186,67 @@ function spa_check_upgrade_error() {
 		echo '</h3>';
 
 		if ($sCreate == false) {
-			echo $image.'<h4>[';
+			echo wp_kses(
+                $image,
+                [
+                    'img' => [
+                        'src' => [],
+                        'alt' => [],
+                        'class' => [],
+                    ]
+                ]
+            );
+            echo '<h4>[';
 			SP()->primitives->admin_etext('Storage location creation failed on upgrade');
 			echo '] - ';
 			SP()->primitives->admin_etext("You will need to manually create a required sub-folder in your wp-content folder named 'sp-resources'");
 			echo '</h4>';
 		} else if ($sOwner == false) {
-			echo $image.'<h5>[';
+			echo wp_kses(
+                $image,
+                [
+                    'img' => [
+                        'src' => [],
+                        'alt' => [],
+                        'class' => [],
+                    ]
+                ]
+            );
+            echo '<h5>[';
 			SP()->primitives->admin_etext('Storage location part 1 ownership failed');
 			echo '] - ';
 			SP()->primitives->admin_etext("We were unable to create your folders with the correct server ownership and these will need to be manually changed");
 			echo '</h5>';
 		}
 		if ($sCopy == false) {
-			echo $image.'<h4>[';
+			echo wp_kses(
+                $image,
+                [
+                    'img' => [
+                        'src' => [],
+                        'alt' => [],
+                        'class' => [],
+                    ]
+                ]
+            );
+            echo '<h4>[';
 			SP()->primitives->admin_etext('Resources file failed to copy on upgrade');
 			echo '] - ';
 			SP()->primitives->admin_etext("You will need to manually copy the file ".SP_FOLDER_NAME."/sp-startup/install/sp-resources-install-part2.zip' to the new 'wp-content/sp-resources' folder");
 			echo '</h4>';
 		}
 		if ($sUnzip == false) {
-			echo $image.'<h4>[';
+			echo wp_kses(
+                $image,
+                [
+                    'img' => [
+                        'src' => [],
+                        'alt' => [],
+                        'class' => [],
+                    ]
+                ]
+            );
+            echo '<h4>[';
 			SP()->primitives->admin_etext('Resources file failed to unzip on upgrade');
 			echo '] - ';
 			SP()->primitives->admin_etext("You will need to manually unzip the file 'sp-resources-install-part2.zip in the new 'wp-content/sp-resources' folder");
