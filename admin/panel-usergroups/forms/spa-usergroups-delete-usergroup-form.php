@@ -23,7 +23,7 @@ function spa_usergroups_delete_usergroup_form($usergroup_id) {
 ?>
 	<form action="<?php echo esc_url( $ajaxURL ); ?>" method="post" id="sfusergroupdel<?php echo esc_attr( $usergroup->usergroup_id ); ?>" name="sfusergroupdel<?php echo esc_attr( $usergroup->usergroup_id ); ?>">
 <?php
-		echo sp_create_nonce('forum-adminform_usergroupdelete');
+		sp_echo_create_nonce('forum-adminform_usergroupdelete');
 		spa_paint_open_tab( esc_html( SP()->primitives->admin_text('User Groups') ) . ' - ' . esc_html( SP()->primitives->admin_text('Manage User Groups') ), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset( SP()->primitives->admin_text('Delete User Group'), 'true', 'delete-user-group');
