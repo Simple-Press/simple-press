@@ -49,7 +49,7 @@ function spa_create_group_select($groupid = 0, $label = false) {
 			} else {
 				$default = null;
 			}
-			$out .= '<option '.$default.'value="'.$group->group_id.'">'.SP()->displayFilters->title($group->group_name).'</option>'."\n";
+			$out .= '<option '.$default.'value="'.esc_attr($group->group_id).'">'.SP()->displayFilters->title($group->group_name).'</option>'."\n";
 			$default = '';
 		}
 	}
@@ -67,7 +67,7 @@ function spa_create_forum_select($forumid) {
 			} else {
 				$default = '';
 			}
-			$out .= '<option '.$default.'value="'.$forum->forum_id.'">'.SP()->displayFilters->title($forum->forum_name).'</option>'."\n";
+			$out .= '<option '.$default.'value="'.esc_attr($forum->forum_id).'">'.SP()->displayFilters->title($forum->forum_name).'</option>'."\n";
 			$default = '';
 		}
 	}
@@ -159,10 +159,9 @@ function spa_get_defpermissions_role($group_id, $usergroup_id) {
 
 function spa_display_usergroup_select($filter = false, $forum_id = 0, $showSelect = true) {
 	$usergroups = spa_get_usergroups_all();
-	//if ($showSelect) SP()->primitives->admin_etext('Select usergroup');
 	if ($showSelect) {
 		?>
-		<label><?php SP()->primitives->admin_etext('Select usergroup') ?></label>
+		<label><?php SP()->primitives->admin_etext('Select usergroup'); ?></label>
         <select class='sfacontrol' name='usergroup_id'>
 		<?php
 	}
@@ -178,9 +177,9 @@ function spa_display_usergroup_select($filter = false, $forum_id = 0, $showSelec
 				}
 			}
 		}
-		$out .= '<option '.$disabled.'value="'.$usergroup->usergroup_id.'">'.SP()->displayFilters->title($usergroup->usergroup_name).'</option>'."\n";
+		$out .= '<option '.$disabled.'value="'.esc_attr($usergroup->usergroup_id).'">'.SP()->displayFilters->title($usergroup->usergroup_name).'</option>'."\n";
 	}
-	echo $out;
+	echo wp_kses_post($out);
 	if ($showSelect) {
 		?>
         </select>
@@ -199,10 +198,10 @@ function spa_display_permission_select($cur_perm = 0, $showSelect = true) {
 	if ($cur_perm == 0) $out .= '<option value="-1">'.SP()->primitives->admin_text('Select permission set').'</option>';
 	foreach ($roles as $role) {
 		$selected = '';
-		if ($cur_perm == $role->role_id) $selected = 'selected = "selected" ';
-		$out .= '<option '.$selected.'value="'.$role->role_id.'">'.SP()->displayFilters->title($role->role_name).'</option>'."\n";
+		if ($cur_perm == $role->role_id) $selected = 'selected="selected" ';
+		$out .= '<option '.esc_attr($selected).'value="'.esc_attr($role->role_id).'">'.SP()->displayFilters->title($role->role_name).'</option>'."\n";
 	}
-	echo $out;
+	echo wp_kses_post($out);
 	if ($showSelect) {
 		?>
         </select>
@@ -214,7 +213,7 @@ function spa_display_permission_select($cur_perm = 0, $showSelect = true) {
  * Get all custom icons in a directory
  * 
  * @param string $path
- * @param atring $url_base
+ * @param string $url_base
  * 
  * @return array
  */
@@ -286,7 +285,7 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 		echo "<label class='sp-label-40'>". esc_html($label) ."</label>\n";
 	}
 	
-	$icon_picker_id = 'icon_picker_' . rand( 111111, 999999 );
+	$icon_picker_id = 'icon_picker_' . wp_rand(111111, 999999);
 	$icon_color_id = $icon_picker_id . '_color';
 	
 	$icon_size_id = $icon_picker_id . '_size';
@@ -372,14 +371,14 @@ function spa_select_iconset_icon_picker( $name, $label, $extra_icon_groups = arr
 				spj.UpdateFontIcon( '<?php echo esc_attr($icon_picker_id); ?>' );
 			});
 	
-		$( '<?php echo $font_style_fields ?>' ).insertBefore( _icon_ins.closest('.sf-icon-picker-row').find('.selector-popup .fip-icons-container') );
+		$( '<?php echo esc_js($font_style_fields); ?>' ).insertBefore( _icon_ins.closest('.sf-icon-picker-row').find('.selector-popup .fip-icons-container') );
 		
 		
-		$( '#<?php echo $icon_picker_id; ?>').closest('.sf-icon-picker-row').find('.font-style-size, .font-style-size_type').on( 'change', function() {
+		$( '#<?php echo esc_js($icon_picker_id); ?>').closest('.sf-icon-picker-row').find('.font-style-size, .font-style-size_type').on( 'change', function() {
 			spj.UpdateFontIcon( '<?php echo esc_attr($icon_picker_id); ?>' );
-		})
+		});
 			
-		$('#<?php echo $icon_color_id; ?>').wpColorPicker({
+		$('#<?php echo esc_js($icon_color_id); ?>').wpColorPicker({
 			change : function(a, b) {
 				spj.UpdateFontIcon( '<?php echo esc_attr($icon_picker_id); ?>' );
 			},
@@ -429,7 +428,7 @@ function spa_get_selected_icon( $icon, $filter = 'title' ) {
 		}
 	}
 			
-	$file = parse_url( $icon, PHP_URL_QUERY );
+	$file = wp_parse_url( $icon, PHP_URL_QUERY );
 	$type = 'font';
 
 
@@ -472,14 +471,14 @@ function spa_select_icon_dropdown($name, $label, $path, $cur, $showSelect = true
 
 	$w = '';
 	if ($width > 0) $w = 'width:'.$width.'px;';
-	if ($showSelect) echo '<select name="'.$name.'" class="sfcontrol sf-vert-align-middle" '.$w.'">';
+	if ($showSelect) echo '<select name="'.esc_attr($name).'" class="sfcontrol sf-vert-align-middle" '.esc_attr($w).'">';
 	if ($cur != '') $label = SP()->primitives->admin_text('Remove');
-	echo '<option value="">'.$label.'</option>';
+	echo '<option value="">'.esc_html($label).'</option>';
 
 	foreach ($files as $file) {
 		$selected = '';
 		if ($file == $cur) $selected = ' selected="selected"';
-		echo '<option'.$selected.' value="'.esc_attr($file).'">'.esc_html($file).'</option>';
+		echo '<option'.esc_attr($selected).' value="'.esc_attr($file).'">'.esc_html($file).'</option>';
 	}
 	if ($showSelect) echo '</select>';
 }
@@ -645,8 +644,8 @@ function sp_add_caps() {
 function sp_display_item_stats($table, $key, $value, $label) {
 	$c = SP()->DB->count($table, "$key = $value");
         ?>
-    <span class="stats--key"><?php echo $label ?></span>
-    <span class="stats--value"><?php echo $c ?></span>
+    <span class="stats--key"><?php echo esc_html($label); ?></span>
+    <span class="stats--value"><?php echo esc_html($c); ?></span>
         <?php
 }
 
@@ -806,31 +805,31 @@ function spa_print_pagination( $link_args, $countPages, $currentPageNum, $pagina
 				$href = $load_type === 'ajax' ? 'javascript:void(0);' : $a_url;
 				
 				?>
-                <a class="sf-first-page <?php echo $anchor_ajax_class; ?>" 
-				   <?php echo implode( ' ', $anchor_tag_attrs ); ?> 
-				   data-url="<?php echo $a_url; ?>" 
-				   href="<?php echo $href; ?>"
+                <a class="sf-first-page <?php echo esc_attr($anchor_ajax_class); ?>" 
+				   <?php echo esc_attr(implode( ' ', $anchor_tag_attrs )); ?> 
+				   data-url="<?php echo esc_url($a_url); ?>" 
+				   href="<?php echo esc_url($href); ?>"
                 ></a>
                    <?php foreach ( $pagination as $n => $v ): 
 					   
 						$a_url = wp_nonce_url( str_replace( '{page_num}', $n, $url ), $nonce_action );
 						$href = $load_type === 'ajax' ? 'javascript:void(0);' : $a_url;
 					   ?>
-                       <a class="<?php echo $anchor_ajax_class; ?><?php echo $currentPageNum == $n ? ' sf-current-page' : '' ?>" 
-                          <?php echo implode( ' ', $anchor_tag_attrs ); ?>
-                          data-url="<?php echo $a_url; ?>" 
-						  href="<?php echo $href; ?>"
-                       ><?php echo $v ?></a>
+                       <a class="<?php echo esc_attr($anchor_ajax_class . ($currentPageNum == $n ? ' sf-current-page' : '')); ?>" 
+                          <?php echo esc_attr(implode( ' ', $anchor_tag_attrs )); ?>
+                          data-url="<?php echo esc_url($a_url); ?>" 
+						  href="<?php echo esc_url($href); ?>"
+                       ><?php echo esc_html($v); ?></a>
                    <?php endforeach;
 				   
 					$a_url = wp_nonce_url( str_replace( '{page_num}', $countPages, $url ), $nonce_action );
 					$href = $load_type === 'ajax' ? 'javascript:void(0);' : $a_url;
 				   
 				   ?>
-                <a class="sf-last-page <?php echo $anchor_ajax_class; ?>" 
-                   <?php echo implode( ' ', $anchor_tag_attrs ); ?>
-					data-url="<?php echo $a_url; ?>" 
-					href="<?php echo $href; ?>"
+                <a class="sf-last-page <?php echo esc_attr($anchor_ajax_class); ?>" 
+                   <?php echo esc_attr(implode( ' ', $anchor_tag_attrs )); ?>
+					data-url="<?php echo esc_url($a_url); ?>" 
+					href="<?php echo esc_url($href); ?>"
                 ></a>
             </span>
         </div>
