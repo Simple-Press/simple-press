@@ -25,7 +25,7 @@ function spa_forums_add_permission_form($forum_id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=addperm', 'forums-loader');
 ?>
-	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfpermissionnew<?php echo $forum->forum_id; ?>" name="sfpermissionnew<?php echo $forum->forum_id; ?>">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfpermissionnew<?php echo esc_attr($forum->forum_id); ?>" name="sfpermissionnew<?php echo esc_attr($forum->forum_id); ?>">
 <?php
         echo '<input type="hidden" name="'.esc_attr('forum-adminform_permissionnew').'" value="'.esc_attr(wp_create_nonce('forum-adminform_resetpermissions')).'" />';
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
@@ -39,7 +39,7 @@ function spa_forums_add_permission_form($forum_id) {
 							<td class="sflabel"><?php spa_display_permission_select(); ?></td>
 						</tr>
 					</table>
-					<input type="hidden" name="forum_id" value="<?php echo $forum->forum_id; ?>" />
+					<input type="hidden" name="forum_id" value="<?php echo esc_attr($forum->forum_id); ?>" />
 <?php
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
@@ -48,8 +48,8 @@ function spa_forums_add_permission_form($forum_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
-		<input type="submit" class="sf-button-primary" id="permnew<?php echo $forum->forum_id; ?>" name="permnew<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Add Permission Set'); ?>" />
-		<input type="button" class="sf-button-primary spCancelForm" data-target="#newperm-<?php echo $forum->forum_id; ?>" name="addpermcancel<?php echo $forum->forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'	); ?>" />
+		<input type="submit" class="sf-button-primary" id="permnew<?php echo esc_attr($forum->forum_id); ?>" name="permnew<?php echo esc_attr($forum->forum_id); ?>" value="<?php SP()->primitives->admin_etext('Add Permission Set'); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#newperm-<?php echo esc_attr($forum->forum_id); ?>" name="addpermcancel<?php echo esc_attr($forum->forum_id); ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 <?php spa_paint_close_tab(); ?>
 	</form>
