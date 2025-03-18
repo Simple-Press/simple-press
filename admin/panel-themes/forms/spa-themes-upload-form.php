@@ -23,7 +23,7 @@ function spa_themes_upload_form() {
                 <p><?php SP()->primitives->admin_etext('Upload a Simple:Press theme in .zip format') ?></p>
                 <p><?php SP()->primitives->admin_etext('If you have a theme in a .zip format, you may upload it here') ?></p>
             </div>
-            <form method="post" enctype="multipart/form-data" action="<?php echo self_admin_url('update.php?action=upload-sp-theme'); ?>" id="sfthemeuploadform" name="sfthemeuploadform">
+            <form method="post" enctype="multipart/form-data" action="<?php echo esc_url(self_admin_url('update.php?action=upload-sp-theme')); ?>" id="sfthemeuploadform" name="sfthemeuploadform">
                 <?php sp_echo_create_nonce('forum-theme_upload'); ?>
 				<div class="clear"></div>
 				<div class="sf-upload-file-name"><label class="sp-label"></label></div>
@@ -36,7 +36,7 @@ function spa_themes_upload_form() {
                 <input type="button" class="sf-button-primary spThemeUpload" id="saveupload" name="sa sf-uppercaseveupload" value="<?php SP()->primitives->admin_etext('Upload Now'); ?>" onclick="sfloader()" data-target="#saveupload" />
                 
                 <div id="sf-loader-gif" style="display: none;">
-                    <img src="<?php echo SPADMINIMAGES . 'sp_WaitBox.gif' ?>" alt="loading" />
+                    <img src="<?php echo esc_attr(SPADMINIMAGES . 'sp_WaitBox.gif'); ?>" alt="loading" />
                 </div>
             </form>
             <script>
