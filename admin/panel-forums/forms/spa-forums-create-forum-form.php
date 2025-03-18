@@ -63,7 +63,7 @@ function spa_forums_create_forum_form() {
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".esc_html(SP()->primitives->admin_text('Select group new forum will belong to'))."</label>\n";
 					echo '<select class="spForumSetSequence" tabindex="'.esc_attr($tab).'" name="group_id">';
-					echo spa_create_group_select(0, 1);
+					echo wp_kses_post( spa_create_group_select(0, 1) );
 					echo "</select>\n";
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
@@ -74,7 +74,7 @@ function spa_forums_create_forum_form() {
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".esc_html(SP()->primitives->admin_text('Select forum new subforum will belong to')).":</label>\n";
 					echo '<select class="spForumSetSequence" tabindex="'.esc_attr($tab).'" name="forum_id">';
-					echo sp_render_group_forum_select(false, false, false, true);
+					echo wp_kses_post( sp_render_group_forum_select(false, false, false, true) );
 					echo "</select>\n";
 					echo '<div class="clearboth"></div>';
 					echo '</div>';
