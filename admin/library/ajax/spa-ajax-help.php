@@ -35,12 +35,21 @@ $helptext = wpautop(sp_retrieve_help($file, $tag, $folder), false);
 
 echo '<div class="sfhelptext">';
     echo '<fieldset>';
-        echo $helptext;
+        echo wp_kses(
+            $helptext,
+            [
+                'ul' => [],
+                'li' => [],
+                'p' => [],
+                'strong' => [],
+                'br' => [],
+            ]
+        );
     echo '</fieldset>';
     $uid = $uid ?? '';
     if (!spa_white_label_check($uid)) {
         echo '<div class="sfhelptextlogo">';
-        echo '<img src="'.SPCOMMONIMAGES.'sp-mini-logo.png" alt="" title="" />';
+        echo '<img src="'.esc_attr(SPCOMMONIMAGES.'sp-mini-logo.png').'" alt="" title="" />';
         echo '</div>';
     }
 echo '</div>';
