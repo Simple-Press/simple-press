@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function spa_forums_edit_permission_form($perm_id) {
 ?>
 <script>
-   	spj.loadAjaxForm('sfpermissionnedit<?php echo $perm_id; ?>', 'sfreloadfb');
+   	spj.loadAjaxForm('sfpermissionnedit<?php echo esc_js($perm_id); ?>', 'sfreloadfb');
 </script>
 <?php
 	$perm = SP()->DB->table(SPPERMISSIONS, "permission_id=$perm_id", 'row');
@@ -25,15 +25,15 @@ function spa_forums_edit_permission_form($perm_id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=editperm', 'forums-loader');
 ?>
-	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfpermissionnedit<?php echo $perm->permission_id; ?>" name="sfpermissionedit<?php echo $perm->permission_id; ?>">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfpermissionnedit<?php echo esc_attr($perm->permission_id); ?>" name="sfpermissionedit<?php echo esc_attr($perm->permission_id); ?>">
 <?php
 		sp_echo_create_nonce('forum-adminform_permissionedit');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Edit Permission Set'), 'true', 'edit-permission-set');
 ?>
-					<input type="hidden" name="permission_id" value="<?php echo $perm->permission_id; ?>" />
-					<input type="hidden" name="ugroup_perm" value="<?php echo $perm->permission_role; ?>" />
+					<input type="hidden" name="permission_id" value="<?php echo esc_attr($perm->permission_id); ?>" />
+					<input type="hidden" name="ugroup_perm" value="<?php echo esc_attr($perm->permission_role); ?>" />
 					<table class="form-table">
 						<tr>
 							<td class="sflabel"><?php spa_display_permission_select($perm->permission_role); ?></td>
@@ -46,8 +46,8 @@ function spa_forums_edit_permission_form($perm_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
-    		<input type="submit" class="sf-button-primary" id="editperm<?php echo $perm->permission_id; ?>" name="editperm<?php echo $perm->permission_id; ?>" value="<?php SP()->primitives->admin_etext('Update Permission Set'); ?>" />
-    		<input type="button" class="sf-button-primary spCancelForm" data-target="#curperm-<?php echo $perm->permission_id; ?>" id="sfpermissionnedit<?php echo $perm->permission_id; ?>" name="editpermcancel<?php echo $perm->permission_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+    		<input type="submit" class="sf-button-primary" id="editperm<?php echo esc_attr($perm->permission_id); ?>" name="editperm<?php echo esc_attr($perm->permission_id); ?>" value="<?php SP()->primitives->admin_etext('Update Permission Set'); ?>" />
+    		<input type="button" class="sf-button-primary spCancelForm" data-target="#curperm-<?php echo esc_attr($perm->permission_id); ?>" id="sfpermissionnedit<?php echo esc_attr($perm->permission_id); ?>" name="editpermcancel<?php echo esc_attr($perm->permission_id); ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
