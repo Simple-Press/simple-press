@@ -140,7 +140,7 @@ function spa_themes_list_form() {
 				foreach ( $overlays as $overlay ) {
 					$overlay  = trim( $overlay );
 					$selected = ( $curTheme['color'] == $overlay ) ? ' selected="selected" ' : '';
-					echo '<option' . $selected . ' value="' . esc_attr( $overlay ) . '">' . esc_html( $overlay ) . '</option>';
+					echo '<option' . esc_attr($selected) . ' value="' . esc_attr( $overlay ) . '">' . esc_html( $overlay ) . '</option>';
 				}
 				echo '</select> ';
 				echo ' <input type="submit" class="currentThemeUpdate sf-button-secondary action" id="update" name="update" value="' . esc_attr( SP()->primitives->admin_text( 'Update Overlay' ) ) . '" />';
@@ -231,7 +231,7 @@ function spa_themes_list_form() {
 						foreach ( $theme_overlays as $theme_overlay ) {
 							$theme_overlay = trim( $theme_overlay );
 							$selected      = ( $theme_overlays[0] == $theme_overlay ) ? ' selected="selected" ' : '';
-							echo '<option' . $selected . ' value="' . esc_attr( $theme_overlay ) . '">' . esc_html( $theme_overlay ) . '</option>';
+							echo '<option' . esc_attr($selected) . ' value="' . esc_attr( $theme_overlay ) . '">' . esc_html( $theme_overlay ) . '</option>';
 						}
 						echo '</select> ';
 					}
