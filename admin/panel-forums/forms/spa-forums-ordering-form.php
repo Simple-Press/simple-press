@@ -84,16 +84,16 @@ function spa_forums_ordering_form($groupId=0) {
 			//spa_paint_open_panel();
 			//	spa_paint_open_fieldset(SP()->primitives->admin_text('Order Groups and Forums'), 'true', 'order-forums');
 				?>
-				<input type="hidden" id="cgroup" name="cgroup" value="<?php echo $groupId; ?>" />
+				<input type="hidden" id="cgroup" name="cgroup" value="<?php echo esc_attr($groupId); ?>" />
 				<?php
-				echo '<div class="sf-alert-block sf-info">'.SP()->primitives->admin_text('Here you can set the order of Groups, Forums and SubForums by dragging and dropping below. After ordering, push the save button.').'</div>';
+				echo '<div class="sf-alert-block sf-info">'.esc_html(SP()->primitives->admin_text('Here you can set the order of Groups, Forums and SubForums by dragging and dropping below. After ordering, push the save button.')).'</div>';
 
 				if (!empty($groups)) {
 					echo '<ul id="groupList" class="groupList sf-list">';
 					foreach ($groups as $group) {
-						echo "<li id='group-G$group->group_id' class='sf-list-item-depth-0'>";
+						echo "<li id='group-G".esc_attr($group->group_id)."' class='sf-list-item-depth-0'>";
 						echo "<div class='sf-group-list sf-list-item'>";
-						echo "<span class='sf-item-name'>$group->group_name</span>";
+						echo "<span class='sf-item-name'>".esc_html($group->group_name)."</span>";
 						echo '</div>';
 
 						# now output any forums in the group
@@ -101,7 +101,7 @@ function spa_forums_ordering_form($groupId=0) {
 						$depth = 1;
 
 						if (!empty($allForums)) {
-							echo "<ul id='forumList-$group->group_id' class='forumList sf-list'>";
+							echo "<ul id='forumList-".esc_attr($group->group_id)."' class='forumList sf-list'>";
 							foreach ($allForums as $thisForum) {
 								if ($thisForum->parent == 0) {
 									sp_paint_order_forum($thisForum, $allForums, $depth);
@@ -120,9 +120,9 @@ function spa_forums_ordering_form($groupId=0) {
 		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
-		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php SP()->primitives->admin_etext('Save Ordering'); ?>" />
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php echo esc_attr(SP()->primitives->admin_text('Save Ordering')); ?>" />
         <?php if ($groupId) { ?>
-		<input type="button" class="sf-button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="sforder<?php echo $group->group_id; ?>" name="groupordercancel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#group-<?php echo esc_attr($group->group_id); ?>" id="sforder<?php echo esc_attr($group->group_id); ?>" name="groupordercancel<?php echo esc_attr($group->group_id); ?>" value="<?php echo esc_attr(SP()->primitives->admin_text('Cancel')); ?>" />
         <?php } ?>
 
 		</div>
@@ -136,15 +136,15 @@ function spa_forums_ordering_form($groupId=0) {
 
 function sp_paint_order_forum($thisForum, $allForums, $depth) {
 	# display this forum
-	echo "<li id='forum-F$thisForum->forum_id' class='sf-list-item-depth-$depth'>";
+	echo "<li id='forum-F".esc_attr($thisForum->forum_id)."' class='sf-list-item-depth-".esc_attr($depth)."'>";
 	echo "<div class='sf-forum-list sf-list-item'>";
-	echo "<span class='sf-item-name'>$thisForum->forum_name</span>";
+	echo "<span class='sf-item-name'>".esc_html($thisForum->forum_name)."</span>";
 	echo '</div>';
 	if ($thisForum->children) {
 		$depth++;
 		$subForums = unserialize($thisForum->children);
 		$subForums = sp_sort_by_seq($subForums, $allForums);
-		echo "<ul id='subForumList-$thisForum->forum_id' class='subforumList sf-list'>";
+		echo "<ul id='subForumList-".esc_attr($thisForum->forum_id)."' class='subforumList sf-list'>";
 		foreach ($subForums as $subForum) {
 			foreach ($allForums as $whichForum) {
 				if ($whichForum->forum_id == $subForum) {
