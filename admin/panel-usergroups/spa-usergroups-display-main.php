@@ -307,7 +307,7 @@ function spa_members_not_belonging_to_any_usergroup_tab() {
         }(window.spj = window.spj || {}, jQuery));
     </script>
     <form action="<?php echo esc_url( $ajaxURL ); ?>" method="get" id="members_not_belonging_to_any_usergroup">
-        <?php echo esc_html( sp_create_nonce( 'forum-adminform_membernew' ) ); ?>
+        <?php echo sp_create_nonce( 'forum-adminform_membernew' ); ?>
         <div class="sf-panel">
             <fieldset class="sf-fieldset">
                 <div class="sf-panel-body-top">

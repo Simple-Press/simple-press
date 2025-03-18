@@ -23,7 +23,7 @@ function spa_usergroups_edit_usergroup_form($usergroup_id) {
 ?>
 	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfusergroupedit<?php echo esc_attr($usergroup->usergroup_id); ?>" name="sfusergroupedit<?php echo esc_attr($usergroup->usergroup_id); ?>">
 <?php
-		echo esc_attr(sp_create_nonce('forum-adminform_usergroupedit'));
+		echo sp_create_nonce('forum-adminform_usergroupedit');
 		spa_paint_open_tab( esc_html( SP()->primitives->admin_text('User Groups') ) . ' - ' . esc_html( SP()->primitives->admin_text('Manage User Groups') ), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset( SP()->primitives->admin_text('Edit User Group'), 'true', 'edit-user-group');

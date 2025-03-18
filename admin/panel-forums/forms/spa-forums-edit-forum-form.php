@@ -19,7 +19,7 @@ function spa_forums_edit_forum_form($forum_id) {
 ?>
 <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfforumedit<?php echo esc_attr($forum->forum_id); ?>" name="sfforumedit<?php echo esc_attr($forum->forum_id); ?>">
 <?php
-        echo esc_attr(sp_create_nonce('forum-adminform_forumedit'));
+        echo sp_create_nonce('forum-adminform_forumedit');
         spa_paint_open_tab(esc_html(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums')), true);
         spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Details'), false);
                     $subforum = ($forum->parent) ? true : false;
