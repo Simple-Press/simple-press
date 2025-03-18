@@ -33,7 +33,7 @@ function spa_forums_forums_main() { ?>
         <?php if ($groups) : ?>
             <?php foreach ($groups as $group) : ?>
                 <?php spa_paint_open_nohead_tab(true, ''); ?>
-                <div id="grouprow-<?php echo $group->group_id; ?>" class="spGroupRow">
+                <div id="grouprow-<?php echo esc_attr($group->group_id); ?>" class="spGroupRow">
                     <div class="spGroupRow--container">
                         <div class="spGroupRow--tools">
                             <?php
@@ -41,20 +41,59 @@ function spa_forums_forums_main() { ?>
                             $target = "group-$group->group_id";
                             $image = SPADMINIMAGES;
                             ?>
-                            <button class="sf-icon-button spLoadForm" title="<?php SP()->primitives->admin_etext('Add Permission'); ?>" data-form="groupperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""><span class="sf-icon sf-permissions"></span></button>
-                            <button class="sf-icon-button spLoadForm" title="<?php SP()->primitives->admin_etext('Order Forums'); ?>" data-form="ordering" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php $group->group_id; ?>" data-open=""><span class="sf-icon sf-order"></span></button>
-                            <button class="sf-icon-button spLoadForm" title="<?php SP()->primitives->admin_etext('Edit This Group'); ?>" data-form="editgroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""><span class="sf-icon sf-edit"></span></button>
-                            <button class="sf-icon-button spLoadForm" title="<?php SP()->primitives->admin_etext('Delete Group'); ?>" data-form="deletegroup" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $group->group_id; ?>" data-open=""><span class="sf-icon sf-delete"></span></button>
+                            <button class="sf-icon-button spLoadForm"
+                                    title="<?php SP()->primitives->admin_etext('Add Permission'); ?>"
+                                    data-form="groupperm"
+                                    data-url="<?php echo esc_url($base); ?>"
+                                    data-target="<?php echo esc_attr($target); ?>"
+                                    data-img="<?php echo esc_url($image); ?>"
+                                    data-id="<?php echo esc_attr($group->group_id); ?>"
+                                    data-open="">
+                                <span class="sf-icon sf-permissions"></span>
+                            </button>
+
+                            <button class="sf-icon-button spLoadForm"
+                                    title="<?php SP()->primitives->admin_etext('Order Forums'); ?>"
+                                    data-form="ordering"
+                                    data-url="<?php echo esc_url($base); ?>"
+                                    data-target="<?php echo esc_attr($target); ?>"
+                                    data-img="<?php echo esc_url($image); ?>"
+                                    data-id="<?php echo esc_attr($group->group_id); ?>"
+                                    data-open="">
+                                <span class="sf-icon sf-order"></span>
+                            </button>
+
+                            <button class="sf-icon-button spLoadForm"
+                                    title="<?php SP()->primitives->admin_etext('Edit This Group'); ?>"
+                                    data-form="editgroup"
+                                    data-url="<?php echo esc_url($base); ?>"
+                                    data-target="<?php echo esc_attr($target); ?>"
+                                    data-img="<?php echo esc_url($image); ?>"
+                                    data-id="<?php echo esc_attr($group->group_id); ?>"
+                                    data-open="">
+                                <span class="sf-icon sf-edit"></span>
+                            </button>
+
+                            <button class="sf-icon-button spLoadForm"
+                                    title="<?php SP()->primitives->admin_etext('Delete Group'); ?>"
+                                    data-form="deletegroup"
+                                    data-url="<?php echo esc_url($base); ?>"
+                                    data-target="<?php echo esc_attr($target); ?>"
+                                    data-img="<?php echo esc_url($image); ?>"
+                                    data-id="<?php echo esc_attr($group->group_id); ?>"
+                                    data-open="">
+                                <span class="sf-icon sf-delete"></span>
+                            </button>
                         </div>
                         <div class="spGroupRow--information">
                             <div>
-                                <h4><?php echo SP()->displayFilters->title($group->group_name); ?></h4>
-                                <?php echo SP()->displayFilters->text($group->group_desc); ?>
+                                <h4><?php echo esc_html(SP()->displayFilters->title($group->group_name)); ?></h4>
+                                <?php echo wp_kses_post(SP()->displayFilters->text($group->group_desc)); ?>
                             </div>
                         </div>
 
                         <div>
-                            <div id="group-<?php echo $group->group_id; ?>" class="inline-form-container"></div>
+                            <div id="group-<?php echo esc_attr($group->group_id); ?>" class="inline-form-container"></div>
                         </div>
                     </div>
                 </div>
@@ -64,14 +103,14 @@ function spa_forums_forums_main() { ?>
                 if ($forums) {
                     # display the current forum information for each forum in table format
                     ?>
-                    <div id="forum-group-<?php echo $group->group_id; ?>">
+                    <div id="forum-group-<?php echo esc_attr($group->group_id); ?>">
                             <?php
                             spa_paint_group_forums($group->group_id, 0, '', 0);
                             ?>
                     </div>
                     <?php
                 } else {
-                    echo '<div class="sf-alert-block sf-info">' . SP()->primitives->admin_text('There are no forums defined in this group') . '</div>';
+                    echo '<div class="sf-alert-block sf-info">' .esc_html(SP()->primitives->admin_text('There are no forums defined in this group')) . '</div>';
                 }
                 spa_paint_close_tab(); ?>
             <?php endforeach; ?>
@@ -128,7 +167,7 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                 $rowClasses[] = 'spWarningBG';
             }
             ?>
-            <div id="forumrow-<?php echo $forum->forum_id; ?>" class="<?php echo implode(' ', $rowClasses) ?>"> <!-- display forum information for each forum -->
+            <div id="forumrow-<?php echo esc_attr($forum->forum_id); ?>" class="<?php echo esc_attr(implode(' ', $rowClasses)); ?>"> <!-- display forum information for each forum -->
                 <div class="spForumRow--container">
                     <div class="spForumRow--tools">
                         <?php
@@ -136,45 +175,105 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                             $target = "forum-$forum->forum_id";
                             $image = SPADMINIMAGES;
                         ?>
-                        <button class="sf-icon-button sf-small spLoadForm" title="<?php SP()->primitives->admin_etext('Forum Permissions'); ?>" data-form="forumperm" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open=""><span class="sf-icon sf-blue sf-permissions"></span></button>
-                        <?php if ($forum->forum_disabled) { ?>
-                            <button class="sf-icon-button sf-small spLoadForm" title="<?php SP()->primitives->admin_etext('Enable Forum'); ?>" data-form="enableforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open=""><span class="sf-icon sf-blue sf-forums"></span></button>
-                        <?php } else { ?>
-                            <button class="sf-icon-button sf-small spLoadForm" title="<?php SP()->primitives->admin_etext('Disable Forum'); ?>" data-form="disableforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open=""><span class="sf-icon sf-blue sf-disable-forum"></span></button>
-                        <?php } ?>
-                        <button class="sf-icon-button sf-small spLoadForm" title="<?php SP()->primitives->admin_etext('Edit This Forum'); ?>" data-form="editforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open=""><span class="sf-icon sf-blue sf-edit"></span></button>
-                        <button class="sf-icon-button sf-small spLoadForm" title="<?php SP()->primitives->admin_etext('Delete Forum'); ?>" data-form="deleteforum" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $forum->forum_id; ?>" data-open=""><span class="sf-icon sf-blue sf-delete"></span></button>
+                        <button class="sf-icon-button sf-small spLoadForm"
+                                title="<?php SP()->primitives->admin_etext('Forum Permissions'); ?>"
+                                data-form="forumperm"
+                                data-url="<?php echo esc_url($base); ?>"
+                                data-target="<?php echo esc_attr($target); ?>"
+                                data-img="<?php echo esc_url($image); ?>"
+                                data-id="<?php echo esc_attr($forum->forum_id); ?>"
+                                data-open="">
+                            <span class="sf-icon sf-blue sf-permissions"></span>
+                        </button>
+
+                        <?php if ($forum->forum_disabled) : ?>
+                            <button class="sf-icon-button sf-small spLoadForm"
+                                    title="<?php SP()->primitives->admin_etext('Enable Forum'); ?>"
+                                    data-form="enableforum"
+                                    data-url="<?php echo esc_url($base); ?>"
+                                    data-target="<?php echo esc_attr($target); ?>"
+                                    data-img="<?php echo esc_url($image); ?>"
+                                    data-id="<?php echo esc_attr($forum->forum_id); ?>"
+                                    data-open="">
+                                <span class="sf-icon sf-blue sf-forums"></span>
+                            </button>
+                        <?php else : ?>
+                            <button class="sf-icon-button sf-small spLoadForm"
+                                    title="<?php SP()->primitives->admin_etext('Disable Forum'); ?>"
+                                    data-form="disableforum"
+                                    data-url="<?php echo esc_url($base); ?>"
+                                    data-target="<?php echo esc_attr($target); ?>"
+                                    data-img="<?php echo esc_url($image); ?>"
+                                    data-id="<?php echo esc_attr($forum->forum_id); ?>"
+                                    data-open="">
+                                <span class="sf-icon sf-blue sf-disable-forum"></span>
+                            </button>
+                        <?php endif; ?>
+
+                        <button class="sf-icon-button sf-small spLoadForm"
+                                title="<?php SP()->primitives->admin_etext('Edit This Forum'); ?>"
+                                data-form="editforum"
+                                data-url="<?php echo esc_url($base); ?>"
+                                data-target="<?php echo esc_attr($target); ?>"
+                                data-img="<?php echo esc_url($image); ?>"
+                                data-id="<?php echo esc_attr($forum->forum_id); ?>"
+                                data-open="">
+                            <span class="sf-icon sf-blue sf-edit"></span>
+                        </button>
+
+                        <button class="sf-icon-button sf-small spLoadForm"
+                                title="<?php SP()->primitives->admin_etext('Delete Forum'); ?>"
+                                data-form="deleteforum"
+                                data-url="<?php echo esc_url($base); ?>"
+                                data-target="<?php echo esc_attr($target); ?>"
+                                data-img="<?php echo esc_url($image); ?>"
+                                data-id="<?php echo esc_attr($forum->forum_id); ?>"
+                                data-open="">
+                            <span class="sf-icon sf-blue sf-delete"></span>
+                        </button>
                     </div>
                     <div class="spForumRow--information">
                         <?php
                            $iconData = '';
                             if ('file' === $forum_icon_type) {
-                                $iconData = '<img src="' . $icon . '" alt="" title="' . SP()->primitives->admin_text('Current forum icon') . '" />';
+                                $iconData = '<img src="' . esc_attr($icon) . '" alt="" title="' . esc_attr(SP()->primitives->admin_text('Current forum icon')) . '" />';
                             } else {
-                                $iconData = '<i class="' . $icon . '"></i>';
+                                $iconData = '<i class="' . esc_attr($icon) . '"></i>';
                             }
                         ?>
                         <?php if ($iconData !== '') : ?>
                             <div class="spForumRow--information--icon">
-                                <?php echo $iconData; ?>
+                                <?php echo wp_kses(
+                                    $iconData,
+                                    [
+                                        'img' => [
+                                            'src' => [],
+                                            'alt' => [],
+                                            'title' => [],
+                                        ],
+                                        'i' => [
+                                            'class' => [],
+                                        ],
+                                    ]
+                                ); ?>
                             </div>
                         <?php endif; ?>
                         <div>
 
                             <h4>
                             <?php if ($forum->forum_status) {
-                                echo '<img src="' . SPADMINIMAGES . 'sp_LockedBig.png"  title="' . SP(
-                                    )->primitives->admin_text('Forum is locked') . '" />';
+                                echo '<img src="' . esc_attr(SPADMINIMAGES . 'sp_LockedBig.png').'"  title="' . esc_attr(SP(
+                                    )->primitives->admin_text('Forum is locked')) . '" />';
                             } ?>
 
                             <?php if ($forum->forum_disabled) {
-                                echo '<img src="' . SPADMINIMAGES . 'sp_NoWrite.png" title="' . SP(
-                                    )->primitives->admin_text('Forum is disabled') . '" /> ';
+                                echo '<img src="' . esc_attr(SPADMINIMAGES . 'sp_NoWrite.png').'" ="' . esc_attr(SP(
+                                    )->primitives->admin_text('Forum is disabled')) . '" /> ';
                             } ?>
-                            <?php echo SP()->displayFilters->title($forum->forum_name); ?></h4>
+                            <?php echo esc_html(SP()->displayFilters->title($forum->forum_name)); ?></h4>
                             <?php
                             if (in_array($forum->forum_id, $noMembers)) {
-                                echo '<div class="sf-alert-block sf-warning">' . SP()->primitives->admin_text('Warning - There are no usergroups with members that have permission to use this forum') . '</div>';
+                                echo '<div class="sf-alert-block sf-warning">' . esc_html(SP()->primitives->admin_text('Warning - There are no usergroups with members that have permission to use this forum')) . '</div>';
                             }
                             ?>
                             <div class="spForumRow--stats">
@@ -184,7 +283,7 @@ function spa_paint_group_forums($groupid, $parent, $parentname, $level) {
                         </div>
                     </div>
                     <div class="sfinline-form">  <!-- This row will hold ajax forms for the current forum -->
-                        <div id="forum-<?php echo $forum->forum_id; ?>"></div>
+                        <div id="forum-<?php echo esc_attr($forum->forum_id); ?>"></div>
                     </div>
                 </div>
             </div>
