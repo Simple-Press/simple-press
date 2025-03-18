@@ -56,9 +56,9 @@ function spa_usergroups_usergroup_main() {
                                 <div>
                                     <?php
                                     if ( $usergroup->usergroup_is_moderator == 1 ) {
-                                        echo esc_html( SP()->primitives->admin_etext( "Yes" ) );
+                                        esc_html(SP()->primitives->admin_etext( "Yes" ) );
                                     } else {
-                                        echo esc_html( SP()->primitives->admin_etext( "No" ) );
+                                        esc_html(SP()->primitives->admin_etext( "No" ) );
                                     }
                                     ?>
                                 </div>
@@ -83,7 +83,7 @@ function spa_usergroups_usergroup_main() {
                                         <input type="button"
                                                id="remove<?php echo esc_attr( $usergroup->usergroup_id ); ?>"
                                                class="sf-button-secondary sf-button-small spLoadForm"
-                                               value="<?php echo esc_attr( SP()->primitives->admin_etext( 'Manage' ) ); ?>"
+                                               value="<?php esc_attr(SP()->primitives->admin_etext( 'Manage' ) ); ?>"
                                                data-form="delmembers"
                                                data-url="<?php echo esc_url( $base ); ?>"
                                                data-target="<?php echo esc_attr( $target ); ?>"
@@ -94,7 +94,7 @@ function spa_usergroups_usergroup_main() {
                                         <input type="button"
                                                id="move<?php echo esc_attr( $usergroup->usergroup_id ); ?>"
                                                class="sf-button-secondary sf-button-small spLoadForm"
-                                               value="<?php echo esc_attr( SP()->primitives->admin_etext( 'Move' ) ); ?>"
+                                               value="<?php esc_attr(SP()->primitives->admin_etext( 'Move' ) ); ?>"
                                                data-form="delmembers"
                                                data-url="<?php echo esc_url( $base ); ?>"
                                                data-target="<?php echo esc_attr( $target ); ?>"
@@ -106,7 +106,7 @@ function spa_usergroups_usergroup_main() {
                                         <input type="button"
                                                id="add<?php echo esc_attr( $usergroup->usergroup_id ); ?>"
                                                class="sf-button-secondary sf-button-small spLoadForm"
-                                               value="<?php echo esc_attr( SP()->primitives->admin_etext( 'Add' ) ); ?>"
+                                               value="<?php esc_attr(SP()->primitives->admin_etext( 'Add' ) ); ?>"
                                                data-form="addmembers"
                                                data-url="<?php echo esc_url( $base ); ?>"
                                                data-target="<?php echo esc_attr( $target ); ?>"
@@ -125,7 +125,7 @@ function spa_usergroups_usergroup_main() {
                                                      data-img="<?php echo esc_url( SPADMINIMAGES . 'sp_WaitBox.gif' ); ?>"
                                                      data-id="<?php echo esc_attr( $usergroup->usergroup_id ); ?>"
                                                 >
-                                                    <span class="sf-item-name"><?php echo esc_html( SP()->primitives->admin_etext( 'Show Members' ) ); ?></span>
+                                                    <span class="sf-item-name"><?php esc_html(SP()->primitives->admin_etext( 'Show Members' ) ); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
                                                     </span>
@@ -143,7 +143,7 @@ function spa_usergroups_usergroup_main() {
                                                      data-id="<?php echo esc_attr( $usergroup->usergroup_id ); ?>"
                                                      data-open=""
                                                 >
-                                                    <span class="sf-item-name"><?php echo esc_html( SP()->primitives->admin_etext( 'Add Members' ) ); ?></span>
+                                                    <span class="sf-item-name"><?php esc_html(SP()->primitives->admin_etext( 'Add Members' ) ); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
                                                     </span>
@@ -161,7 +161,7 @@ function spa_usergroups_usergroup_main() {
                                                      data-id="<?php echo esc_attr( $usergroup->usergroup_id ); ?>"
                                                      data-open=""
                                                 >
-                                                    <span class="sf-item-name"><?php echo esc_html( SP()->primitives->admin_etext( 'Move Members' ) ); ?></span>
+                                                    <span class="sf-item-name"><?php esc_html(SP()->primitives->admin_etext( 'Move Members' ) ); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
                                                     </span>
@@ -179,7 +179,7 @@ function spa_usergroups_usergroup_main() {
                                                      data-id="<?php echo esc_attr( $usergroup->usergroup_id ); ?>"
                                                      data-open=""
                                                 >
-                                                    <span class="sf-item-name"><?php echo esc_html( SP()->primitives->admin_etext( 'Remove Members' ) ); ?></span>
+                                                    <span class="sf-item-name"><?php esc_html(SP()->primitives->admin_etext( 'Remove Members' ) ); ?></span>
                                                     <span class="sf-item-controls">
                                                         <a class="sf-item-edit _spLayerToggle"></a>
                                                     </span>

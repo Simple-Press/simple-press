@@ -240,8 +240,8 @@ function spa_themes_list_form() {
 				
 				<?php
 				if ( ! is_multisite() || is_super_admin() ) { ?>
-                    <input type="submit" class="sf-button-secondary action" id="activate-<?php echo esc_attr( $theme_file ); ?>" name="activate" value="<?php echo esc_attr( SP()->primitives->admin_etext( 'Activate' ) ); ?>" />
-                    <input type="submit" class="sf-button-secondary action spThemeDeleteConfirm" id="delete-<?php echo esc_attr( $theme_file ); ?>" name="delete" value="<?php echo esc_attr( SP()->primitives->admin_etext( 'Delete' ) ); ?>" data-msg="<?php echo esc_attr( $msg ); ?>" />
+                    <input type="submit" class="sf-button-secondary action" id="activate-<?php echo esc_attr( $theme_file ); ?>" name="activate" value="<?php esc_attr(SP()->primitives->admin_etext( 'Activate' ) ); ?>" />
+                    <input type="submit" class="sf-button-secondary action spThemeDeleteConfirm" id="delete-<?php echo esc_attr( $theme_file ); ?>" name="delete" value="<?php esc_attr(SP()->primitives->admin_etext( 'Delete' ) ); ?>" data-msg="<?php echo esc_attr( $msg ); ?>" />
                 <?php } ?>
 			</form>
 		</div>

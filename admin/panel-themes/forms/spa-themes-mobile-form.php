@@ -63,7 +63,7 @@ function spa_themes_mobile_form() {
 
 ?>
 	<div class="sf-form-submit-bar">
-		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php echo esc_attr( SP()->primitives->admin_etext('Update Mobile Component') ); ?>" />
+		<input type="submit" class="sf-button-primary" id="saveit" name="saveit" value="<?php esc_attr(SP()->primitives->admin_etext('Update Mobile Component') ); ?>" />
 	</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
@@ -278,7 +278,7 @@ function spa_themes_mobile_form() {
 					}
 				}
 ?>
-								<input type="submit" class="sf-button-secondary action" id="saveit-<?php echo esc_attr( $theme_file ); ?>" name="saveit-<?php echo esc_attr( $theme_file ); ?>" value="<?php echo esc_attr( SP()->primitives->admin_etext('Activate Mobile Theme') ); ?>" />
+								<input type="submit" class="sf-button-secondary action" id="saveit-<?php echo esc_attr( $theme_file ); ?>" name="saveit-<?php echo esc_attr( $theme_file ); ?>" value="<?php esc_attr(SP()->primitives->admin_etext('Activate Mobile Theme') ); ?>" />
 							</form>
 						</div>
 <?php

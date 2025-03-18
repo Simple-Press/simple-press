@@ -207,10 +207,10 @@ function spa_plugins_list_form() {
 				<tr class="sf-plugin-hide">
 					<th class="manage-column check-column"></th>
 					<th class="manage-column column-name column-primary">
-						<?php echo esc_html( SP()->primitives->admin_etext( 'Plugin' ) ); ?>
+						<?php esc_html(SP()->primitives->admin_etext( 'Plugin' ) ); ?>
 					</th>
 					<th class="manage-column column-description">
-						<?php echo esc_html( SP()->primitives->admin_etext( 'Description' ) ); ?>
+						<?php esc_html(SP()->primitives->admin_etext( 'Description' ) ); ?>
 					</th>
 				</tr>
 				</thead>
