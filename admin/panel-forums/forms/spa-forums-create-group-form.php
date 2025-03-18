@@ -52,7 +52,7 @@ function spa_forums_create_group_form() {
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Group Permissions'), true, 'create-new-forum-permissions');
 
 					echo '<div class="sf-alert-block sf-info">';
-					echo SP()->primitives->admin_text('This will not add or modify any current permissions.');
+					SP()->primitives->admin_etext('This will not add or modify any current permissions.');
 					echo '</div>';
 
 					# Permissions
@@ -60,11 +60,11 @@ function spa_forums_create_group_form() {
 					$roles = sp_get_all_roles();
 
 					foreach ($usergroups as $usergroup) {
-						echo '<input type="hidden" name="usergroup_id[]" value="'.$usergroup->usergroup_id.'" />';
+						echo '<input type="hidden" name="usergroup_id[]" value="'.esc_attr($usergroup->usergroup_id).'" />';
 						spa_paint_select_start(SP()->displayFilters->title($usergroup->usergroup_name), 'role[]', '');
-						echo '<option value="-1">'.SP()->primitives->admin_text('Select permission set').'</option>';
+						echo '<option value="-1">'.esc_attr(SP()->primitives->admin_text('Select permission set')).'</option>';
 						foreach ($roles as $role) {
-							echo '<option value="'.$role->role_id.'">'.SP()->displayFilters->title($role->role_name).'</option>'."\n";
+							echo '<option value="'.esc_attr($role->role_id).'">'.esc_html(SP()->displayFilters->title($role->role_name)).'</option>'."\n";
 						}
 						spa_paint_select_end();
 					}
