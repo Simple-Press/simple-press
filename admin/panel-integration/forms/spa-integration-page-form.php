@@ -30,8 +30,19 @@ function spa_integration_page_form() {
                             'ERROR: The page slug is either missing or incorrect. The forum will not display until this is corrected'
                         )) . '</div>>';
                 }
-				spa_paint_select_start( esc_html(SP()->primitives->admin_text('Select the WP Page to be used to display your forum')), 'slug', 'slug');
-				echo wp_kses_post( spa_create_page_select($sfoptions['sfpage']) );
+				spa_paint_select_start( SP()->primitives->admin_text('Select the WP Page to be used to display your forum'), 'slug', 'slug');
+				echo wp_kses(
+                    spa_create_page_select($sfoptions['sfpage']),
+                    [
+                        'option' => [
+                            'selected' => [],
+                            'value' => []
+                        ],
+                        'optgroup' => [
+                            'label' => []
+                        ]
+                    ]
+                );
 				spa_paint_select_end();
 			spa_paint_close_fieldset();
 
