@@ -37,13 +37,31 @@ function spa_forums_global_rss_form() {
 
 				echo '<div class="sf-alert-block sf-info">';
 				$rss_count = SP()->DB->count(SPFORUMS, 'forum_rss_private=0');
-				echo SP()->primitives->admin_text('Enabled Forum RSS feeds').': '.$rss_count.'&nbsp;&nbsp;&nbsp;&nbsp;';
+				SP()->primitives->admin_etext('Enabled Forum RSS feeds');
+                echo ': '.esc_html($rss_count).'&nbsp;&nbsp;&nbsp;&nbsp;';
 				$rss_count = SP()->DB->count(SPFORUMS, 'forum_rss_private=1');
-				echo SP()->primitives->admin_text('Disabled Forum RSS feeds').': '.$rss_count;
+				SP()->primitives->admin_etext('Disabled Forum RSS feeds');
+                echo ': '.esc_html($rss_count);
 				echo '</div>';
 ?>
-				<input type="button" class="sf-button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Disable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="1" data-open="open" />
-				<input type="button" class="sf-button-secondary spLoadForm" value="<?php SP()->primitives->admin_etext('Enable All RSS Feeds'); ?>" data-form="globalrssset" data-url="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="0" data-open="open" />
+				<input type="button"
+                       class="sf-button-secondary spLoadForm"
+                       value="<?php SP()->primitives->admin_etext('Disable All RSS Feeds'); ?>"
+                       data-form="globalrssset"
+                       data-url="<?php echo esc_url($base); ?>"
+                       data-target="<?php echo esc_attr($target); ?>"
+                       data-img="<?php echo esc_url($image); ?>"
+                       data-id="1"
+                       data-open="open" />
+				<input type="button"
+                       class="sf-button-secondary spLoadForm"
+                       value="<?php SP()->primitives->admin_text('Enable All RSS Feeds'); ?>"
+                       data-form="globalrssset"
+                       data-url="<?php echo esc_url($base); ?>"
+                       data-target="<?php echo esc_attr($target); ?>"
+                       data-img="<?php echo esc_url($image); ?>"
+                       data-id="0"
+                       data-open="open" />
 
 				<div class="sfinline-form">  <!-- This row will hold ajax forms for the all rss -->
 				    <div id="sfallrss"></div>
