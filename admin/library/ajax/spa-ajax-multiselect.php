@@ -22,7 +22,7 @@ if (isset($_GET['page_msbox'])) {
 
     if (sanitize_text_field($_GET['page_msbox']) == 'filter')
         $max = spa_get_query_max($msbox, $uid, $filter);
-    echo spa_page_msbox_list($msbox, $uid, $name, $from, $num, $offset, $max, $filter, $ug);
+    echo wp_kses_post( spa_page_msbox_list($msbox, $uid, $name, $from, $num, $offset, $max, $filter, $ug) );
     die();
 }
 
@@ -42,27 +42,27 @@ if (isset($action)) {
 
     if ($action == 'addug') {
         spa_prepare_msbox_list('usergroup_add', $usergroup_id);
-        echo spa_populate_msbox_list('usergroup_add', $usergroup_id, 'amid', $from, $to, $ug);
+        echo wp_kses_post( spa_populate_msbox_list('usergroup_add', $usergroup_id, 'amid', $from, $to, $ug) );
     }
 
     if ($action == 'delug') {
         spa_prepare_msbox_list('usergroup_del', $usergroup_id);
-        echo spa_populate_msbox_list('usergroup_del', $usergroup_id, 'dmid', $from, $to, $ug);
+        echo wp_kses_post( spa_populate_msbox_list('usergroup_del', $usergroup_id, 'dmid', $from, $to, $ug) );
     }
 
     if ($action == 'addru') {
         spa_prepare_msbox_list('rank_add', $rank_id);
-        echo spa_populate_msbox_list('rank_add', $rank_id, 'amember_id', $from, $to, $ug);
+        echo wp_kses_post( spa_populate_msbox_list('rank_add', $rank_id, 'amember_id', $from, $to, $ug) );
     }
 
     if ($action == 'delru') {
         spa_prepare_msbox_list('rank_del', $rank_id);
-        echo spa_populate_msbox_list('rank_del', $rank_id, 'dmember_id', $from, $to, $ug);
+        echo wp_kses_post( spa_populate_msbox_list('rank_del', $rank_id, 'dmember_id', $from, $to, $ug) );
     }
 
     if ($action == 'addadmin') {
         spa_prepare_msbox_list('admin_add', '');
-        echo spa_populate_msbox_list('admin_add', '', 'member_id', $from, $to, $ug, 20);
+        echo wp_kses_post( spa_populate_msbox_list('admin_add', '', 'member_id', $from, $to, $ug, 20) );
     }
 
     return;
@@ -199,16 +199,13 @@ function spa_render_msbox_list($msbox, $uid, $name, $from, $num, $records, $offs
         );
         $out .= '       <p class="search-box-v2 sf-filter-auto">';
         $out .= '           <input type="search" placeholder="Search" id="list-filter' . $name . $uid . '" name="list-filter' . $name . $uid . '" value="' . $filter . '" class="sfacontrol" size="10">';
-        $out .= '           <input type="button" id="filter' . $uid . '" class="spFilterList sf-hidden-important" value="' . SP(
-            )->primitives->admin_text(
-                'Filter'
-            ) . '" data-url="' . $site . '" data-uid="' . $name . $uid . '" data-image="' . $gif . '">';
+        $out .= '           <input type="button" id="filter' . $uid . '" class="spFilterList sf-hidden-important" value="' . esc_html(SP()->primitives->admin_text('Filter')) . '" data-url="' . $site . '" data-uid="' . $name . $uid . '" data-image="' . $gif . '">';
         $out .= '       </p>';
         // If user group is set
         if ($ug) {
             $out .= '<div style="flex-basis: 80%; text-align: right">';
                 $out .= '<select name="usergroup_id" style="vertical-align: unset">';
-                    $out .= '<option value="">' . SP()->primitives->admin_text('Select User Group') . '</option>';
+                    $out .= '<option value="">' . esc_html(SP()->primitives->admin_text('Select User Group')) . '</option>';
                     foreach (spa_get_usergroups_all(null) as $usergroup) {
                         $out .= '<option value="' . $usergroup->usergroup_id . '"' . (!empty($_POST['usergroup_id']) && $usergroup->usergroup_id == $_POST['usergroup_id'] ? ' checked="checked"' : '') . '>' . SP()->displayFilters->title($usergroup->usergroup_name) . '</option>';
                     }
@@ -287,6 +284,6 @@ function create_pagination_link($offset, $text, $msbox, $uid, $name, $from, $num
     return '<a class="sf-first-page spUpdateList' . $class . '" href="javascript:void(0)"'
         . ' data-uid="' . $name . $uid . '"'
         . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=$offset&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '"'
-        . '>' . $text . '</a>';
+        . '>' . esc_html($text) . '</a>';
 }
 

@@ -11,7 +11,7 @@ if (!sp_nonce('options-loader')) {
 }
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
+	echo esc_html(SP()->core->status);
 	die();
 }
 
@@ -36,27 +36,27 @@ if (isset($_GET['loadform'])) {
 if (isset($_GET['saveform'])) {
 	switch (sanitize_text_field($_GET['saveform'])) {
 		case 'global':
-		echo spa_save_global_data();
+		echo esc_html(spa_save_global_data());
 		break;
 
 		case 'display':
-		echo spa_save_display_data();
+		echo esc_html(spa_save_display_data());
 		break;
 
 		case 'content':
-		echo spa_save_content_data();
+		echo esc_html(spa_save_content_data());
 		break;
 
 		case 'members':
-		echo spa_save_members_data();
+		echo esc_html(spa_save_members_data());
 		break;
 
 		case 'email':
-		echo spa_save_email_data();
+		echo esc_html(spa_save_email_data());
 		break;
 
 		case 'newposts':
-		echo spa_save_newposts_data();
+		echo esc_html(spa_save_newposts_data());
 		break;
 	}
 	die();
