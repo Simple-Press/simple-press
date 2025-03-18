@@ -2,8 +2,6 @@
 /*
 Simple:Press
 Admin Forums Merge Forums Form
-$LastChangedDate: 2011-09-09 20:28:24 +0100 (Fri, 09 Sep 2011) $
-$Rev: 7034 $
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -51,9 +49,9 @@ function spa_forums_merge_form() {
 					<?php SP()->primitives->admin_etext('The target forum selected here will inherit all sub-forums, topics, posts and references from the source forum. Current permissions for this forum will be retained.'); ?>
 				</div>
 				<div id="forumselect2" class="sf-select-wrap">	
-                                    <select name="target">
-						<?php echo sp_render_group_forum_select(false, false, false, true, SP()->primitives->admin_text('Select Target Forum to Merge To')); ?>
-                                    </select>
+					<select name="target">
+						<?php echo wp_kses_post( sp_render_group_forum_select(false, false, false, true, esc_html(SP()->primitives->admin_text('Select Target Forum to Merge To')) ) ); ?>
+					</select>
 				</div>
 <?php
 			spa_paint_close_fieldset();
