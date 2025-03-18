@@ -137,7 +137,7 @@ function spa_paint_date($label, $name, $value, $disabled=false, $large=false) {
 	} else {
 		echo "<label class='sp-label-60'>\n";
 	}
-	echo "$label</label>";
+	echo esc_html($label) . "</label>";
 	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
 
 	echo "<input type='date' class='wp-core-ui ".esc_attr($c)."' name='".esc_attr($name)."' value='".esc_attr($value)."' ";
@@ -154,7 +154,7 @@ function spa_paint_number($label, $name, $value, $disabled=false, $large=false) 
 	} else {
 		echo "<label class='sp-label-60'>\n";
 	}
-	echo "$label</label>";
+	echo esc_html($label) . "</label>";
 	$c = ($large) ? 'sp-input-60' : 'sp-input-40';
 
 	echo "<input type='number' class='wp-core-ui ".esc_attr($c)."' name='".esc_attr($name)."' value='".esc_attr($value)."' ";
@@ -204,41 +204,20 @@ function spa_paint_thin_textarea($label, $name, $value, $submessage='', $rows=1)
     spa_paint_textarea($label, $name, $value, $submessage, $rows, '');
 }
 
-/**
- * Print wp editor
- *
- * @param string $label
- * @param string $name
- * @param string $value
- * @param string $submessage
- * @param int $xrows
- */
 function spa_paint_editor($label, $name, $value, $submessage='', $xrows=1) {
 	echo "<div class='sf-form-row'>\n";
 	echo "<label class='sp-label-50'>\n";
 	echo esc_html($label);
 	if (!empty($submessage)) echo "<br /><small><strong>".esc_html($submessage)."</strong></small>\n";
 	echo '</label>';
-	//echo '<div class="clearboth"></div>';
 	wp_editor( html_entity_decode($value), $name, array(
 					'media_buttons' => false,
 					'quicktags'     => true,
 					'textarea_rows' => $xrows
 				));
-	//echo '<div class="clearboth"></div>';
 	echo '</div>';
 }
 
-/**
- * Print wide wp editor
- *
- * @param string $label
- * @param string $name
- * @param string $value
- * @param string $submessage
- * @param int $rows
- * @param boolean $mediaButtons [optional]
- */
 function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, $mediaButtons = false) {
 	add_filter( 'tiny_mce_before_init', 'spa_cache_ajax_editor_settings', 11, 2 );
 
@@ -247,14 +226,12 @@ function spa_paint_wide_editor($label, $name, $value, $submessage='', $xrows=1, 
 	echo esc_html($label);
 	if (!empty($submessage)) echo "<small><br /><strong>".esc_html($submessage)."</strong><br /><br /></small>\n";
 	echo '</label>';
-	//echo '<div class="clearboth"></div>';
 	wp_editor( html_entity_decode( $value ), $name, array(
 					'media_buttons' => (bool) $mediaButtons,
 					'quicktags'     => true,
 					'textarea_rows' => $xrows
 				));
 
-	//echo '<div class="clearboth"></div>';
 	echo '</div>';
 }
 
@@ -286,38 +263,20 @@ function spa_paint_wide_editor_custom($label, $name, $value, $submessage='', $xr
 	echo '</div>';
 }
 
-/**
- * Print thin wp editor
- *
- * @param string $label
- * @param string $name
- * @param string $value
- * @param string $submessage
- * @param int $rows
- */
 function spa_paint_thin_editor($label, $name, $value, $submessage='', $xrows=1) {
 	echo "<div class='sf-form-row'>\n";
 	echo "<label class='sp-label-66'>\n";
 	echo esc_html($label);
 	if (!empty($submessage)) echo "<small><br /><strong>".esc_html($submessage)."</strong><br /><br /></small>\n";
 	echo '</label>';
-	//echo '<div class="clearboth"></div>';
 	wp_editor( html_entity_decode($value), $name, array(
 					'media_buttons' => false,
 					'quicktags'     => true,
 					'textarea_rows' => $xrows
 				));
-	//echo '<div class="clearboth"></div>';
 	echo '</div>';
 }
 
-/**
- * Print settings for ajax wp editors
- *
- * @global array $spa_cache_ajax_editor_settings
- *
- * @return void
- */
 function spa_print_ajax_editor_settings() {
 	global $spa_cache_ajax_editor_settings;
 
@@ -347,17 +306,6 @@ function spa_print_ajax_editor_settings() {
 	<?php
 }
 
-
-/**
- * Cache wp editor settings
- *
- * @global array $spa_cache_ajax_editor_settings
- *
- * @param array $mceInit
- * @param string $editor_id
- *
- * @return array
- */
 function spa_cache_ajax_editor_settings( $mceInit, $editor_id ) {
 
 	global $spa_cache_ajax_editor_settings;
@@ -369,15 +317,6 @@ function spa_cache_ajax_editor_settings( $mceInit, $editor_id ) {
 	return $mceInit;
 }
 
-/**
- * Print thin code css editor
- *
- * @param string $label
- * @param string $name
- * @param string $value
- * @param string $submessage [optional]
- * @param int $rows [optional]
- */
 function spa_paint_css_editor($label, $name, $value, $submessage='', $rows=10) {
 	if(floatval(get_bloginfo('version')) >= 4.9) {
 		spa_paint_code_editor('text/css', $label, $name, $value, $submessage, $rows);
@@ -386,15 +325,6 @@ function spa_paint_css_editor($label, $name, $value, $submessage='', $rows=10) {
 	}
 }
 
-/**
- * Print thin code javascript editor
- *
- * @param string $label
- * @param string $name
- * @param string $value
- * @param string $submessage [optional]
- * @param int $rows [optional]
- */
 function spa_paint_js_editor($label, $name, $value, $submessage='', $rows=10) {
 	if(floatval(get_bloginfo('version')) >= 4.9) {
 		spa_paint_code_editor('text/javascript', $label, $name, $value, $submessage, $rows);
@@ -403,15 +333,6 @@ function spa_paint_js_editor($label, $name, $value, $submessage='', $rows=10) {
 	}
 }
 
-/**
- * Print thin code html editor
- *
- * @param string $label
- * @param string $name
- * @param string $value
- * @param string $submessage [optional]
- * @param int $rows [optional]
- */
 function spa_paint_html_editor($label, $name, $value, $submessage='', $rows=10) {
 	if(floatval(get_bloginfo('version')) >= 4.9) {
 		spa_paint_code_editor('text/html', $label, $name, $value, $submessage, $rows);
@@ -420,22 +341,8 @@ function spa_paint_html_editor($label, $name, $value, $submessage='', $rows=10) 
 	}
 }
 
-/**
- * Print thin WP Code Editor
- *
- * @param string $type CodeMirror type: "text/html", "text/css", "text/javascript"
- * @param string $label
- * @param string $name
- * @param string $value
- * @param string $submessage [optional]
- * @param int $rows [optional]
- */
 function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $rows=10) {
 
-	// Make sure that the codeditor scripts are enqueued.
-	// @TODO: However, because this is being called via ajax, this functiona actually does nothing.
-	//        Leaving it here though to note that something like this is needed.
-	//		  Right now the scripts are loaded globally at the bottom of this file. ugg!
 	spa_enqueue_codemirror();
 
     echo "<div class='sf-form-row'>\n";
@@ -448,7 +355,6 @@ function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $ro
     }
     $id = sprintf("sp-%s-editor-%d", str_replace('/', '-', $type), 0);
     echo '</label>';
-    //echo '<div class="clearboth"></div>';
     echo sprintf("<textarea id=\"%s\" class=\"wp-core-ui sp-textarea\" rows=\"%s\" name=\"%s\">%s</textarea>", esc_attr($id), esc_attr($rows), esc_attr($name), esc_html($value));
     if(floatval(get_bloginfo('version')) >= 4.9) {
         echo "<script>";
@@ -464,7 +370,7 @@ function spa_paint_code_editor($type, $label, $name, $value, $submessage='', $ro
 
 function spa_paint_checkbox($label, $name, $value, $disabled=false, $large=false, $displayhelp=true, $msg='', $indent=false) {
 	echo "<div class='sf-form-row'>\n";
-	if ($indent) echo str_repeat('&nbsp;', 7);
+	if ($indent) echo esc_html(str_repeat('&nbsp;', 7));
 	echo "<input type='checkbox' name='" . esc_attr($name) ."' id='sf-" . esc_attr($name) ."' ";
 	if ($value == true) echo "checked='checked' ";
 	if ($disabled == true) echo "disabled='disabled' ";
@@ -507,10 +413,9 @@ function spa_paint_file($label, $name, $disabled, $large, $path) {
 	echo '<div id="sf-upload-button"><span class="sf-icon sf-upload"></span></div>';
 	echo '<div id="sf-upload-status">';
 	if (!is_writable($path)) {
-		echo '<p class="sf-upload-status-fail">'.SP()->primitives->admin_text('Sorry, uploads disabled! Storage location does not exist or is not writable. Please see forum - integration - storage locations to correct').'</p>';
+		echo '<p class="sf-upload-status-fail">'.esc_html(SP()->primitives->admin_text('Sorry, uploads disabled! Storage location does not exist or is not writable. Please see forum - integration - storage locations to correct')).'</p>';
 	}
 	echo '</div>';
-	//echo '<div class="clearboth"></div>';
 	echo '</div>';
 }
 
@@ -525,7 +430,6 @@ function spa_paint_link($link, $label) {
 	echo "<span class='wp-core-ui sp-label'>";
 	echo "<a href='".esc_url($link)."'>" . esc_html($label) . "</a>\n";
 	echo '</span>';
-	//echo '<div class="clearboth"></div>';
 }
 
 function spa_paint_radiogroup($label, $name, $values, $current, $large=false, $displayhelp=true, $class='') {
@@ -545,13 +449,11 @@ function spa_paint_radiogroup($label, $name, $values, $current, $large=false, $d
 		$tab++;
 	}
 	echo '</div>';
-	//echo '<div class="clearboth"></div>';
 	echo '</div>';
 }
 
 function spa_paint_spacer() { // @TODO admin design
 	echo '';
-	//echo '<br /><div class="clearboth"></div>';
 }
 
 function spa_paint_help($name, $helpfile = null, $show=true) {

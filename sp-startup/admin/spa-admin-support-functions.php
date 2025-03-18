@@ -2,9 +2,6 @@
 /**
  * Admin support functions
  * Loads for all forum admin pages and provides general support functions across the admin
- *
- * $LastChangedDate: 2018-11-13 20:41:56 -0600 (Tue, 13 Nov 2018) $
- * $Rev: 15817 $
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	die('Access denied - you cannot directly call this file');
@@ -55,7 +52,7 @@ function spa_block_admin() {
 			$is_moderator = SP()->memberData->get($current_user->ID, 'moderator');
 			if (!SP()->auths->current_user_can('SPF Manage Options') && !SP()->auths->current_user_can('SPF Manage Forums') && !SP()->auths->current_user_can('SPF Manage Components') && !SP()->auths->current_user_can('SPF Manage User Groups') && !SP()->auths->current_user_can('SPF Manage Permissions') && !SP()->auths->current_user_can('SPF Manage Tags') && !SP()->auths->current_user_can('SPF Manage Users') && !SP()->auths->current_user_can('SPF Manage Profiles') && !SP()->auths->current_user_can('SPF Manage Admins') && !SP()->auths->current_user_can('SPF Manage Toolbox') && !$is_moderator && !$access) {
 				if ($sfblock['blockprofile']) {
-					$redirect = SP()->spPermalinks->get_url('profile');
+					$redirect = esc_url(SP()->spPermalinks->get_url('profile'));
 				} else {
 					$redirect = $sfblock['blockredirect'];
 				}
@@ -79,10 +76,10 @@ function spa_block_admin() {
  */
 function spa_permalink_changed($old, $new) {
 	if (empty($new)) {
-		$perm = user_trailingslashit(SPSITEURL).'?page_id='.SP()->options->get('sfpage');
+		$perm = user_trailingslashit(SPSITEURL).'?page_id='.esc_attr(SP()->options->get('sfpage'));
 		SP()->options->update('sfpermalink', $perm);
 	} else {
-		$perm = user_trailingslashit(SPSITEURL.SP()->options->get('sfslug'));
+		$perm = user_trailingslashit(SPSITEURL . esc_attr(SP()->options->get('sfslug')));
 		SP()->options->update('sfpermalink', $perm);
 		flush_rewrite_rules();
 	}
@@ -218,7 +215,6 @@ function spa_activate_plugin() {
 			if ($sfuser['sfuserremove']) wp_schedule_event(time(), 'daily', 'sph_cron_user');
 		}
 		
-		
 		# set up daily sp_check_addons_status clean up cron
 		wp_clear_scheduled_hook('sph_check_addons_status_interval');
 		wp_schedule_event(time(), 'daily', 'sph_check_addons_status_interval');
@@ -343,7 +339,7 @@ function spa_deactivate_plugin() {
 	SP()->plugin->clear_css_cache('mobile');
 	SP()->plugin->clear_css_cache('tablet');
 
-	# remove cron jobs for deactivaton or uninstall
+	# remove cron jobs for deactivation or uninstall
 	wp_clear_scheduled_hook('spf_cron_pm'); # left here for 5.0 who doesnt upgrade
 	wp_clear_scheduled_hook('spf_cron_sitemap'); # left here for 5.0 who doesnt upgrade
 
@@ -480,13 +476,13 @@ function spa_dashboard_forum() {
 
 		if (SP()->user->thisUser->admin) $out .= '<br />' .SP()->primitives->admin_text('Please backup your site and then ') . '<a style="text-decoration: underline;" href="'.esc_url(SPADMINUPGRADE).'">'.SP()->primitives->admin_text('Perform Upgrade').'</a>';
 		$out .= '</p></div>';
-		echo $out;
+		echo wp_kses_post($out);
 
 		return;
 	}
 
 	$out .= '<div id="sf-dashboard">';
-	echo $out;
+	echo wp_kses_post($out);
 	do_action('sph_dashboard_start');
 
 	if (SP()->core->forumData['admin']['sfdashboardstats']) {
@@ -529,7 +525,7 @@ function spa_dashboard_forum() {
 	$out = '';
 	$out .= '<p><br /><a href="'.esc_url(SP()->spPermalinks->get_url()).'">'.SP()->primitives->admin_text('Go To Forum').'</a></p>';
 	$out .= '</div>';
-	echo $out;
+	echo wp_kses_post($out);
 }
 
 /**
@@ -1115,9 +1111,9 @@ function spa_check_plugin_addon_update() {
 		delete_site_transient('sp_update_plugins');
 	}
 
-	if (!$header) {
-			?>
-		</tbody>
+	if (!$header) { ?>
+		
+			</tbody>
 	</table>
 	<p><input id="upgrade-themes-2" class="sf-button" type="submit" value="<?php echo esc_html(SP()->primitives->admin_etext('Update SP Plugins')); ?>" name="upgrade" /></p>
 	</form>
