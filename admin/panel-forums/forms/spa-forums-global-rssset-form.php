@@ -2,8 +2,6 @@
 /*
 Simple:Press
 Admin Forums Global RSS Set Form
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -35,7 +33,7 @@ function spa_forums_global_rssset_form($id) {
 				if ($id == 0) SP()->primitives->admin_etext('Please press the confirm button below to enable RSS feeds for all forums');
 				echo '</div><br />';
 				echo '</td></tr>';
-				echo '<input type="hidden" name="sfglobalrssset" value="'.$id.'" />';
+				echo '<input type="hidden" name="sfglobalrssset" value="'. esc_attr($id) .'" />';
 			spa_paint_close_fieldset();
 			spa_paint_close_panel();
 			do_action('sph_forums_rss_panel');
