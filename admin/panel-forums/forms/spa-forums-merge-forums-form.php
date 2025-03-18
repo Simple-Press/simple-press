@@ -28,29 +28,53 @@ function spa_forums_merge_form() {
 			spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Select Source Forum to Merge From'), false);
 ?>
-				<div class="sf-alert-block sf-info">	
-					<?php SP()->primitives->admin_etext('The source forum selected here will have all sub-forums, topics, posts and references transferred to the forum selected as the target for the merge. It will then be deleted.'); ?>
-				</div>
-                                <div id="forumselect1" class="sf-select-wrap">				
-                                    <select name="source">
-						<?php echo sp_render_group_forum_select(false, false, false, true, SP()->primitives->admin_text('Select Source Forum to Merge From')); ?>
-                                    </select>
-				</div>
+        <div class="sf-alert-block sf-info">
+            <?php SP()->primitives->admin_etext('The source forum selected here will have all sub-forums, topics, posts and references transferred to the forum selected as the target for the merge. It will then be deleted.'); ?>
+        </div>
+        <div id="forumselect1" class="sf-select-wrap">
+            <select name="source">
+                <?php echo wp_kses(
+                    sp_render_group_forum_select(false, false, false, true, SP()->primitives->admin_text('Select Source Forum to Merge From')),
+                    [
+                        'option' => [
+                            'selected' => [],
+                            'value' => [],
+                        ],
+                        'optgroup' => [
+                            'label' => [],
+                            'class' => [],
+                        ]
+                    ]
+                ); ?>
+            </select>
+        </div>
 <?php
-			spa_paint_close_fieldset();
-			spa_paint_close_panel();
+spa_paint_close_fieldset();
+spa_paint_close_panel();
 
-		spa_paint_tab_right_cell();
+spa_paint_tab_right_cell();
 
-			spa_paint_open_panel();
-			spa_paint_open_fieldset(SP()->primitives->admin_text('Select Target Forum to Merge To'), true, 'merge-forums');
+spa_paint_open_panel();
+spa_paint_open_fieldset(SP()->primitives->admin_text('Select Target Forum to Merge To'), true, 'merge-forums');
 ?>
 				<div class="sf-alert-block sf-info">
 					<?php SP()->primitives->admin_etext('The target forum selected here will inherit all sub-forums, topics, posts and references from the source forum. Current permissions for this forum will be retained.'); ?>
 				</div>
 				<div id="forumselect2" class="sf-select-wrap">	
 					<select name="target">
-						<?php echo wp_kses_post( sp_render_group_forum_select(false, false, false, true, esc_html(SP()->primitives->admin_text('Select Target Forum to Merge To')) ) ); ?>
+						<?php echo wp_kses(
+                            sp_render_group_forum_select(false, false, false, true, SP()->primitives->admin_text('Select Target Forum to Merge To')),
+                            [
+                                'option' => [
+                                    'selected' => [],
+                                    'value' => [],
+                                ],
+                                'optgroup' => [
+                                    'label' => [],
+                                    'class' => [],
+                                ]
+                            ]
+                        ); ?>
 					</select>
 				</div>
 <?php
