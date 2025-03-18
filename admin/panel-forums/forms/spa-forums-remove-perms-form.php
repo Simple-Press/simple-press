@@ -35,7 +35,12 @@ function spa_forums_remove_perms_form() {
                         SP()->primitives->admin_etext('This will delete all permission sets for all groups and forums');
                         echo '</p>';
                         echo '<p>';
-                        echo sprintf(SP()->primitives->admin_text('Please note that this action %s can NOT be reversed %s'), '<strong>', '</strong>');
+                        echo wp_kses(
+                            sprintf(SP()->primitives->admin_text('Please note that this action %s can NOT be reversed %s'), '<strong>', '</strong>'),
+                            [
+                                'strong' => []
+                            ]
+                        );
                         echo '</p>';
                         echo '<p>';
                         SP()->primitives->admin_etext('Click on the delete all permission sets button below to proceed');
