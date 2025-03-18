@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function spa_forums_add_group_permission_form($group_id) {
 ?>
 <script>
-   	spj.loadAjaxForm('sfgrouppermnew<?php echo $group_id; ?>', 'sfreloadfb');
+   	spj.loadAjaxForm('sfgrouppermnew<?php echo esc_js($group_id); ?>', 'sfreloadfb');
 </script>
 <?php
 	$group = $group = SP()->DB->table(SPGROUPS, "group_id=$group_id", 'row');
@@ -23,7 +23,7 @@ function spa_forums_add_group_permission_form($group_id) {
 
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=grouppermission', 'forums-loader');
 ?>
-	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfgrouppermnew<?php echo $group->group_id; ?>" name="sfgrouppermnew<?php echo $group->group_id; ?>" class="sfinline-form">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfgrouppermnew<?php echo esc_attr($group->group_id); ?>" name="sfgrouppermnew<?php echo esc_attr($group->group_id); ?>" class="sfinline-form">
 <?php
 		sp_echo_create_nonce('forum-adminform_grouppermissionnew');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
@@ -44,7 +44,7 @@ function spa_forums_add_group_permission_form($group_id) {
 						</tr>
 					</table>
 
-					<input type="hidden" name="group_id" value="<?php echo $group->group_id; ?>" />
+					<input type="hidden" name="group_id" value="<?php echo esc_attr($group->group_id); ?>" />
 <?php
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
@@ -53,8 +53,8 @@ function spa_forums_add_group_permission_form($group_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
-    		<input type="submit" class="sf-button-primary" id="groupperm<?php echo $group->group_id; ?>" name="groupperm<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Add Group Permission'); ?>" />
-    		<input type="button" class="sf-button-primary spCancelForm" data-target="#group-<?php echo $group->group_id; ?>" id="grouppermcancel<?php echo $group->group_id; ?>" name="grouppermcancel<?php echo $group->group_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+    		<input type="submit" class="sf-button-primary" id="groupperm<?php echo esc_attr($group->group_id); ?>" name="groupperm<?php echo esc_attr($group->group_id); ?>" value="<?php SP()->primitives->admin_etext('Add Group Permission'); ?>" />
+    		<input type="button" class="sf-button-primary spCancelForm" data-target="#group-<?php echo esc_attr($group->group_id); ?>" id="grouppermcancel<?php echo esc_attr($group->group_id); ?>" name="grouppermcancel<?php echo esc_attr($group->group_id); ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
