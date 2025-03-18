@@ -38,7 +38,7 @@ function spa_themes_css_form() {
 
 	echo '<div>';
         spa_paint_css_editor("", "spnewcontent", $css, "", 25);
-	echo '<input type="hidden" name="metaId" value="'.$id.'" />';
+	echo '<input type="hidden" name="metaId" value="'.esc_attr($id).'" />';
 	echo '</div>';
 
 	spa_paint_close_fieldset();
