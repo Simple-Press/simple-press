@@ -21,10 +21,10 @@ function spa_forums_custom_icons_form(): void
 
 			var button = $('#sf-upload-button'), interval;
 			new AjaxUpload(button,{
-				action: '<?php echo $ajaxurl; ?>',
+				action: '<?php echo esc_js($ajaxurl); ?>',
 				name: 'uploadfile',
 				data: {
-					saveloc : '<?php echo addslashes(SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/'); ?>'
+					saveloc : '<?php echo esc_js(addslashes(SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/')); ?>'
 				},
 				onSubmit : function(file, ext){
 					/* check for valid extension */
@@ -60,12 +60,12 @@ function spa_forums_custom_icons_form(): void
 						break_cache = Math.random();
 						break_cache = break_cache.toString();
 						
-						site = "<?php echo SPAJAXURL.'forums' ?>&amp;_wpnonce=<?php echo wp_create_nonce('forums'); ?>&amp;targetaction=delicon&amp;file=" + file;
+						site = "<?php echo esc_js(SPAJAXURL.'forums'); ?>&amp;_wpnonce=<?php echo esc_js(wp_create_nonce('forums')); ?>&amp;targetaction=delicon&amp;file=" + file;
 						//var count = document.getElementById('icon-count');
 					    var icount = parseInt($('#icon-count').val()) + 1;
 
 						var row_id = 'icon' + icount + '-' + (Math.random() + 1).toString(36).substring(7);
-						$('#sf-custom-icons').append('<tr id="'+row_id+'"><td class="spWFBorder"><img class="sfcustomicon" src="<?php echo SPCUSTOMURL; ?>/' + file + '?break_cache=' + break_cache + '" alt="" /></td><td class="spWFBorder sflabel">' + file + '</td><td class="spWFBorder"><span title="<?php echo esc_js(SP()->primitives->admin_text('Delete custom icon')); ?>" class="sf-icon sf-delete spDeleteRow" data-url="' + site + '" data-target="' + row_id + '"></span></td></tr>');
+						$('#sf-custom-icons').append('<tr id="'+row_id+'"><td class="spWFBorder"><img class="sfcustomicon" src="<?php echo esc_attr(SPCUSTOMURL); ?>/' + file + '?break_cache=' + break_cache + '" alt="" /></td><td class="spWFBorder sflabel">' + file + '</td><td class="spWFBorder"><span title="<?php echo esc_attr(SP()->primitives->admin_text('Delete custom icon')); ?>" class="sf-icon sf-delete spDeleteRow" data-url="' + site + '" data-target="' + row_id + '"></span></td></tr>');
 						//$('#sf-upload-status').html('<p class="sf-upload-status-success"><?php echo esc_js(SP()->primitives->admin_text('Custom icon uploaded!')); ?></p>');
 						$('.ui-tooltip').hide();
 

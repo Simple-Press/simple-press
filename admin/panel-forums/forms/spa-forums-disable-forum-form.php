@@ -14,20 +14,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 function spa_forums_disable_forum_form($forum_id) {
 ?>
 <script>
-   	spj.loadAjaxForm('sfforumdisable<?php echo $forum_id; ?>', 'sfreloadfb');
+    spj.loadAjaxForm('sfforumdisable<?php echo esc_js($forum_id); ?>', 'sfreloadfb');
 </script>
 <?php
 	spa_paint_options_init();
     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums-loader&amp;saveform=disableforum', 'forums-loader');
 ?>
-	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfforumdisable<?php echo $forum_id; ?>" name="sfforumdisable<?php echo $forum_id; ?>">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfforumdisable<?php echo esc_attr($forum_id); ?>" name="sfforumdisable<?php echo esc_attr($forum_id); ?>">
 <?php
 		sp_echo_create_nonce('forum-adminform_forumdisable');
 		spa_paint_open_tab(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums'), true);
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('Disable Forum'), 'true', 'disable-forum');
 ?>
-					<input type="hidden" name="forum_id" value="<?php echo $forum_id; ?>" />
+					<input type="hidden" name="forum_id" value="<?php echo esc_attr($forum_id); ?>" />
 <?php
 					echo '<div class="sf-alert-block sf-info"><p><b>';
 					SP()->primitives->admin_etext('Warning! You are about to disable this forum');
@@ -47,8 +47,17 @@ function spa_forums_disable_forum_form($forum_id) {
 		spa_paint_close_container();
 ?>
 		<div class="sf-form-submit-bar">
-    		<input type="submit" class="sf-button-primary" id="sfforumdisable<?php echo $forum_id; ?>" name="sfforumdisable<?php echo $forum_id; ?>" value="<?php SP()->primitives->admin_etext('Disable Forum'); ?>" />
-    		<input type="button" class="sf-button-primary spCancelForm" data-target="#forum-<?php echo $forum_id; ?>" id="sfforumdisable<?php echo $forum_id; ?>" name="disableforumcancel<?php echo $forum_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+    		<input type="submit"
+				   class="sf-button-primary"
+				   id="sfforumdisable<?php echo esc_attr($forum_id); ?>"
+				   name="sfforumdisable<?php echo esc_attr($forum_id); ?>"
+				   value="<?php echo esc_attr(SP()->primitives->admin_text('Disable Forum')); ?>" />
+    		<input type="button"
+				   class="sf-button-primary spCancelForm"
+				   data-target="#forum-<?php echo esc_attr($forum_id); ?>"
+				   id="sfforumdisable<?php echo esc_attr($forum_id); ?>"
+				   name="disableforumcancel<?php echo esc_attr($forum_id); ?>"
+				   value="<?php echo esc_attr(SP()->primitives->admin_text('Cancel')); ?>" />
 		</div>
 	<?php spa_paint_close_tab(); ?>
 	</form>
