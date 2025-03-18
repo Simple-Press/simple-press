@@ -24,10 +24,10 @@ if (isset($_GET['item'])) {
 }
 
 function spa_update_permalink_tool() {
-	echo '<strong>&nbsp;'.SP()->spPermalinks->update_permalink(true).'</strong>';
+	echo '<strong>&nbsp;'.esc_html(SP()->spPermalinks->update_permalink(true)).'</strong>';
 ?>
 	<script>
-		window.location= "<?php echo SPADMININTEGRATION; ?>";
+		window.location= "<?php echo esc_js(SPADMININTEGRATION); ?>";
 	</script>
 <?php
 	die();
