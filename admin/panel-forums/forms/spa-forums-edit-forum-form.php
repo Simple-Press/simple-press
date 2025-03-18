@@ -19,7 +19,7 @@ function spa_forums_edit_forum_form($forum_id) {
 ?>
 <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfforumedit<?php echo esc_attr($forum->forum_id); ?>" name="sfforumedit<?php echo esc_attr($forum->forum_id); ?>">
 <?php
-        echo sp_create_nonce('forum-adminform_forumedit');
+        sp_echo_create_nonce('forum-adminform_forumedit');
         spa_paint_open_tab(esc_html(SP()->primitives->admin_text('Forums').' - '.SP()->primitives->admin_text('Manage Groups and Forums')), true);
         spa_paint_open_fieldset(SP()->primitives->admin_text('Forum Details'), false);
                     $subforum = ($forum->parent) ? true : false;
@@ -42,12 +42,12 @@ function spa_forums_edit_forum_form($forum_id) {
                     $target = 'cforum_slug';
                     $ajaxURL = wp_nonce_url(SPAJAXURL.'forums', 'forums');
                     echo '<div class="sf-form-row">';
-                        echo "<label>".SP()->primitives->admin_text('Forum name').'</label>';
+                        echo "<label>".esc_html(SP()->primitives->admin_text('Forum name')).'</label>';
                     echo '<input type="text" class="wp-core-ui sp-input-60 spForumSetSlug" tabindex="'.esc_attr($tab).'" name="forum_name" id="forum_name" value="'.esc_attr($forum->forum_name).'" data-url="'.esc_url($ajaxURL).'" data-target="'.esc_attr($target).'" data-type="edit" />';
                     echo '<input type="hidden" name="forum_id" value="'.esc_attr($forum->forum_id).'" /></div>';
 
                     echo "<div class='sf-form-row'>\n";
-                    echo "<label>".SP()->primitives->admin_text('Forum slug').'</label>';
+                    echo "<label>".esc_html(SP()->primitives->admin_text('Forum slug')).'</labe>';
 
                     echo '<input type="text" class="wp-core-ui sp-input-60" tabindex="'.esc_attr($tab).'" name="cforum_slug" id="cforum_slug" value="'.esc_attr($forum->forum_slug).'" />';
                     echo '<div class="clearboth"></div>';
@@ -72,15 +72,15 @@ function spa_forums_edit_forum_form($forum_id) {
                     spa_paint_select_end('<span class="sf-sublabel sf-sublabel-small">'.SP()->primitives->admin_text('Featured images are shown when sharing links on social media. Recommended size 200x200px').'</span>');
 
                     echo '<div class="sf-alert-block sf-info">';
-                        echo '<p><b>'.SP()->primitives->front_text('Custom Icon Ordering').'</b></br>';
-                        echo SP()->primitives->front_text('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
+                        echo '<p><b>'.esc_html(SP()->primitives->front_text('Custom Icon Ordering')).'</b></br>';
+                        SP()->primitives->front_etext('When using custom forum or topic icons and multiple conditions exist, the following precedence is used:').'</p>';
                         echo '<ul>';
-                        echo '<li>'. SP()->primitives->front_text('Locked').'</li>';
-                        echo '<li>'. SP()->primitives->front_text('Pinned and Unread').'</li>';
-                        echo '<li>'. SP()->primitives->front_text('Pinned').'</li>';
-                        echo '<li>'. SP()->primitives->front_text('Unread').'</li>';
-                        echo '<li>'. SP()->primitives->front_text('Custom').'</li>';
-                        echo '<li>'. SP()->primitives->front_text('Theme Default').'</li>';
+                        echo '<li>'. esc_html(SP()->primitives->front_text('Locked')).'</li>';
+                        echo '<li>'. esc_html(SP()->primitives->front_text('Pinned and Unread')).'</li>';
+                        echo '<li>'. esc_html(SP()->primitives->front_text('Pinned')).'</li>';
+                        echo '<li>'. esc_html(SP()->primitives->front_text('Unread')).'</li>';
+                        echo '<li>'. esc_html(SP()->primitives->front_text('Custom')).'</li>';
+                        echo '<li>'. esc_html(SP()->primitives->front_text('Theme Default')).'</li>';
                         echo '</ul>';
                     echo '</div>';
                     
