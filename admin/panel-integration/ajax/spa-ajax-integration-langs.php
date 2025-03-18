@@ -49,8 +49,13 @@ function spa_download_language_file($item) {
 	}
 
 	if (isset($_GET['remove'])) {
-		$status = unlink($home);
-		echo '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Translation file removed').'"></span>'.SP()->primitives->admin_text('Translation file removed');
+		$status = wp_delete_file($home);
+		printf(
+			'<span class="sf-icon sf-no-check" title="%s">%s</span>%s',
+			esc_attr(SP()->primitives->admin_text('Translation file removed')),
+			'',
+			esc_html(SP()->primitives->admin_text('Translation file removed'))
+		);
 		die();
 	} else {
 		$fData = file_get_contents($url);
@@ -63,11 +68,17 @@ function spa_download_language_file($item) {
 	}
 
 	if ($status) {
-		echo '<span class="sf-icon sf-check" title="'.SP()->primitives->admin_text('Translation file installed').'"></span>'
-			.SP()->primitives->admin_text('Translation file installed');
+		printf(
+			'<span class="sf-icon sf-check" title="%s"></span>%s',
+			esc_attr(SP()->primitives->admin_text('Translation file installed')),
+			esc_html(SP()->primitives->admin_text('Translation file installed'))
+		);
 	} else {
-		echo '<span class="sf-icon sf-no-check" title="'.SP()->primitives->admin_text('Translation install failed').'"></span>'
-			.SP()->primitives->admin_text('Install failed - or there is no available translation');
+		printf(
+			'<span class="sf-icon sf-no-check" title="%s"></span>%s',
+			esc_attr(SP()->primitives->admin_text('Translation install failed')),
+			esc_html(SP()->primitives->admin_text('Install failed - or there is no available translation'))
+		);
 	}
 }
 
