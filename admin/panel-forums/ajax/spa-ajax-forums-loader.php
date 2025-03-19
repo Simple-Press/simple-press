@@ -15,7 +15,7 @@ spa_admin_ajax_support();
 if (!sp_nonce('forums-loader')) die();
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
+	echo esc_html( SP()->core->status );
 	die();
 }
 
@@ -40,75 +40,75 @@ if (isset($_GET['loadform'])) {
 if (isset($_GET['saveform'])) {
 	$saveform = sanitize_text_field($_GET['saveform']);
 	if ($saveform == 'creategroup') {
-		echo spa_save_forums_create_group();
+		echo esc_html( spa_save_forums_create_group() );
 		die();
 	}
 	if ($saveform == 'createforum') {
-		echo spa_save_forums_create_forum();
+		echo esc_html( spa_save_forums_create_forum() );
 		die();
 	}
 	if ($saveform == 'globalperm') {
-		echo spa_save_forums_global_perm();
+		echo esc_html( spa_save_forums_global_perm() );
 		die();
 	}
 	if ($saveform == 'removeperms') {
-		echo spa_save_forums_remove_perms();
+		echo esc_html( spa_save_forums_remove_perms() );
 		die();
 	}
 	if ($saveform == 'mergeforums') {
-		echo spa_save_forums_merge();
+		echo esc_html( spa_save_forums_merge() );
 		die();
 	}
 	if ($saveform == 'globalrss') {
-		echo spa_save_forums_global_rss();
+		echo esc_html( spa_save_forums_global_rss() );
 		die();
 	}
 	if ($saveform == 'globalrssset') {
-		echo spa_save_forums_global_rssset();
+		echo esc_html( spa_save_forums_global_rssset() );
 		die();
 	}
 	if ($saveform == 'grouppermission') {
-		echo spa_save_forums_group_perm();
+		echo esc_html( spa_save_forums_group_perm() );
 		die();
 	}
 	if ($saveform == 'editgroup') {
-		echo spa_save_forums_edit_group();
+		echo esc_html( spa_save_forums_edit_group() );
 		die();
 	}
 	if ($saveform == 'deletegroup') {
-		echo spa_save_forums_delete_group();
+		echo esc_html( spa_save_forums_delete_group() );
 		die();
 	}
 	if ($saveform == 'editforum') {
-		echo spa_save_forums_edit_forum();
+		echo esc_html( spa_save_forums_edit_forum() );
 		die();
 	}
 	if ($saveform == 'deleteforum') {
-		echo spa_save_forums_delete_forum();
+		echo esc_html( spa_save_forums_delete_forum() );
 		die();
 	}
 	if ($saveform == 'disableforum') {
-		echo spa_save_forums_disable_forum();
+		echo esc_html( spa_save_forums_disable_forum() );
 		die();
 	}
 	if ($saveform == 'enableforum') {
-		echo spa_save_forums_enable_forum();
+		echo esc_html( spa_save_forums_enable_forum() );
 		die();
 	}
 	if ($saveform == 'addperm') {
-		echo spa_save_forums_forum_perm();
+		echo esc_html( spa_save_forums_forum_perm() );
 		die();
 	}
 	if ($saveform == 'editperm') {
-		echo spa_save_forums_edit_perm();
+		echo esc_html( spa_save_forums_edit_perm() );
 		die();
 	}
 	if ($saveform == 'delperm') {
-		echo spa_save_forums_delete_perm();
+		echo esc_html( spa_save_forums_delete_perm() );
 		die();
 	}
 	if ($saveform == 'orderforum') {
-		echo spa_save_forums_order();
+		echo esc_html( spa_save_forums_order() );
 		die();
 	}
 }
