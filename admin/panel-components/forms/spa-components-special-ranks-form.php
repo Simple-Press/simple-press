@@ -2,8 +2,6 @@
 /*
   Simple:Press
   Admin Components Special Ranks Form
-  $LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-  $Rev: 15601 $
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -59,35 +57,35 @@ function spa_special_rankings_form($rankings) {
                                 $target = 'members-' . $rank['meta_id'];
                                 $image = SPADMINIMAGES;
                                 ?>
-                                <tr id="srank<?php echo $rank['meta_id']; ?>">
+                                <tr id="srank<?php echo esc_attr($rank['meta_id']); ?>">
                                     <td colspan="4" class="sf-padding-none sf-border-none">
-                                        <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfspecialrankupdate<?php echo $rank['meta_id']; ?>" name="sfspecialrankupdate<?php echo $rank['meta_id']; ?>">
+                                        <form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfspecialrankupdate<?php echo esc_attr($rank['meta_id']); ?>" name="sfspecialrankupdate<?php echo esc_attr($rank['meta_id']); ?>">
                                             <?php
                                             sp_echo_create_nonce('special-rank-update');
                                             ?>
                                             <table class='widefat sf-table-small sf-table-mobile sf-border-none'>
                                                 <tr>
                                                     <td style="width: 30%">
-                                                        <?php echo $rank['meta_key'] ?>
+                                                        <?php echo esc_html($rank['meta_key']); ?>
                                                         </tdi>
                                                     <td style="width: 20%; text-align:center">
-                                                        <?php echo spa_get_saved_icon_html($rank['meta_value']['badge'], 'ranks') ?>
+                                                        <?php echo esc_html(spa_get_saved_icon_html($rank['meta_value']['badge'], 'ranks')); ?>
                                                     </td>
                                                     <td style="width: 40%">
                                                         <?php $loc = '#sfrankshow-' . $rank['meta_id']; ?>
-                                                        <input type="button" id="show<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankShow" value="<?php echo esc_js(SP()->primitives->admin_text('Show')) ?>" data-loc="<?php echo $loc; ?>" data-site="<?php echo wp_nonce_url(SPAJAXURL . 'components&amp;targetaction=show&amp;key=' . $rank['meta_id'], 'components') ?>" data-img="<?php echo SPCOMMONIMAGES . 'working.gif' ?>" data-id="<?php echo $rank['meta_id']; ?>" />
+                                                        <input type="button" id="show<?php echo esc_attr($rank['meta_id']); ?>" class="sf-button-secondary spSpecialRankShow" value="<?php echo esc_js(SP()->primitives->admin_text('Show')) ?>" data-loc="<?php echo esc_attr($loc); ?>" data-site="<?php echo esc_url(wp_nonce_url(SPAJAXURL . 'components&amp;targetaction=show&amp;key=' . esc_attr($rank['meta_id']), 'components')); ?>" data-img="<?php echo esc_url(SPCOMMONIMAGES . 'working.gif'); ?>" data-id="<?php echo esc_attr($rank['meta_id']); ?>" />
 
-                                                        <input type="button" id="remove<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Remove'); ?>" data-loc="<?php echo $loc; ?>" data-form="delmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
+                                                        <input type="button" id="remove<?php echo esc_attr($rank['meta_id']); ?>" class="sf-button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Remove'); ?>" data-loc="<?php echo esc_attr($loc); ?>" data-form="delmembers" data-base="<?php echo esc_attr($base); ?>" data-target="<?php echo esc_attr($target); ?>" data-img="<?php echo esc_attr($image); ?>" data-id="<?php echo esc_attr($rank['meta_id']); ?>" />
 
-                                                        <input type="button" id="add<?php echo $rank['meta_id']; ?>" class="sf-button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Add'); ?>" data-loc="<?php echo $loc; ?>" data-form="addmembers" data-base="<?php echo $base; ?>" data-target="<?php echo $target; ?>" data-img="<?php echo $image; ?>" data-id="<?php echo $rank['meta_id']; ?>" />
+                                                        <input type="button" id="add<?php echo esc_attr($rank['meta_id']); ?>" class="sf-button-secondary spSpecialRankForm" value="<?php SP()->primitives->admin_etext('Add'); ?>" data-loc="<?php echo esc_attr($loc); ?>" data-form="addmembers" data-base="<?php echo esc_attr($base); ?>" data-target="<?php echo esc_attr($target); ?>" data-img="<?php echo esc_attr($image); ?>" data-id="<?php echo esc_attr($rank['meta_id']); ?>" />
                                                     </td>
                                                     <td style="width: 10%">
                                                 <span class="sf-item-controls">
                                                     <span class="sf-icon-button sf-small sf-little sf-edit-item"><span class="sf-icon sf-edit"></span></span>
                                                     <span class="sf-icon-button sf-small sf-little spDeleteRowReload"
                                                           title="<?php SP()->primitives->admin_etext('Delete Special Rank'); ?>"
-                                                          data-url="<?php echo $delsite; ?>"
-                                                          data-target="srank<?php echo $rank['meta_id']; ?>"
+                                                          data-url="<?php echo esc_url($delsite); ?>"
+                                                          data-target="srank<?php echo esc_attr($rank['meta_id']); ?>"
                                                           data-reload="sfreloadfr"
                                                     ><span class="sf-icon sf-delete"></span>
                                                     </span>
@@ -96,24 +94,24 @@ function spa_special_rankings_form($rankings) {
                                                 </tr>
                                                 <tr class="sf-Hide">
                                                     <td>
-                                                        <input type="hidden" name="<?php echo('currentname[' . $rank['meta_id'] . ']'); ?>" value="<?php echo $rank['meta_key']; ?>" />
-                                                        <input type="text" size="13" tabindex="<?php echo $tab; ?>" name="<?php echo('specialrankdesc[' . $rank['meta_id'] . ']'); ?>" value="<?php echo $rank['meta_key']; ?>" />
+                                                        <input type="hidden" name="<?php echo 'currentname[' . esc_attr($rank['meta_id']) . ']'; ?>" value="<?php echo esc_attr($rank['meta_key']); ?>" />
+                                                        <input type="text" size="13" tabindex="<?php echo esc_attr($tab); ?>" name="<?php echo 'specialrankdesc[' . esc_attr($rank['meta_id']) . ']'; ?>" value="<?php echo esc_attr($rank['meta_key']); ?>" />
                                                     </td>
                                                     <td width="20%">
                                                         <?php
-                                                        spa_select_iconset_icon_picker('specialrankbadge[' . $rank['meta_id'] . ']', SP()->primitives->admin_text('Select Badge'), array('Badges' => $badges), $rank['meta_value']['badge'], false);
+                                                        spa_select_iconset_icon_picker('specialrankbadge[' . esc_attr($rank['meta_id']) . ']', SP()->primitives->admin_text('Select Badge'), array('Badges' => $badges), $rank['meta_value']['badge'], false);
                                                         ?>
                                                     </td>
                                                     <td colspan="2">
                                                 <span class="sf-item-controls">
-                                                    <input type="submit" class="sf-button-primary" id="updatespecialrank<?php echo $rank['meta_id']; ?>" name="updatespecialrank<?php echo $rank['meta_id']; ?>" value="<?php SP()->primitives->admin_etext('Save'); ?>" />
+                                                    <input type="submit" class="sf-button-primary" id="updatespecialrank<?php echo esc_attr($rank['meta_id']); ?>" name="updatespecialrank<?php echo esc_attr($rank['meta_id']); ?>" value="<?php SP()->primitives->admin_etext('Save'); ?>" />
                                                     <span class="sf-icon-button"><span class="sf-icon sf-cancel spHideRow"></span></span>
                                                 </span>
                                                     </td>
                                                 </tr>
-                                                <tr id="sfrankshow-<?php echo $rank['meta_id']; ?>" class="sfinline-form sf-border-none">
+                                                <tr id="sfrankshow-<?php echo esc_attr($rank['meta_id']); ?>" class="sfinline-form sf-border-none">
                                                     <td colspan="4" class="sf-padding-none">
-                                                        <div id="members-<?php echo $rank['meta_id']; ?>"></div>
+                                                        <div id="members-<?php echo esc_attr($rank['meta_id']); ?>"></div>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -121,7 +119,7 @@ function spa_special_rankings_form($rankings) {
                                     </td>
                                 </tr>
                                 <script>
-                                    spj.loadAjaxForm('sfspecialrankupdate<?php echo $rank['meta_id']; ?>', 'sfreloadfr');
+                                    spj.loadAjaxForm('sfspecialrankupdate<?php echo esc_js($rank['meta_id']); ?>', 'sfreloadfr');
                                 </script>
                                 <?php
                             }
