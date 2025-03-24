@@ -2,8 +2,6 @@
 /*
 Simple:Press
 Admin Components Special Rank Add Member Form
-$LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-$Rev: 15601 $
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,14 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 function spa_components_sr_add_members_form($rank_id) {
 ?>
 <script>
-   	spj.loadAjaxForm('sfmembernew<?php echo $rank_id; ?>', 'sfreloadfr');
+   	spj.loadAjaxForm('sfmembernew<?php echo esc_js($rank_id); ?>', 'sfreloadfr');
 </script>
 <?php
 	spa_paint_options_init();
 
-    $ajaxURL = wp_nonce_url(SPAJAXURL."components-loader&saveform=specialranks&targetaction=addmember&id=$rank_id", 'components-loader');
+    $ajaxURL = wp_nonce_url(SPAJAXURL."components-loader&saveform=specialranks&targetaction=addmember&id=" . esc_attr($rank_id), 'components-loader');
 ?>
-	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfmembernew<?php echo $rank_id; ?>" name="sfmembernew<?php echo $rank_id ?>">
+	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfmembernew<?php echo esc_attr($rank_id); ?>" name="sfmembernew<?php echo esc_attr($rank_id); ?>">
 <?php
                 spa_paint_open_nohead_tab(true, '');
 		sp_echo_create_nonce('special-rank-add');
@@ -34,11 +32,11 @@ function spa_components_sr_add_members_form($rank_id) {
 ?>
 					<div class="clearboth"></div>
 <?php
-        $loc = 'sfrankshow-'.$rank_id;
+        $loc = 'sfrankshow-' . $rank_id;
 ?>
             <div class="sf-controls">                           
-		<input type="submit" class="sf-button-primary spSpecialRankAdd" id="sfnewmember<?php echo $rank_id; ?>" name="sfnewmember<?php echo $rank_id; ?>" data-target="#amember_id<?php echo $rank_id; ?> option" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" />
-		<input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo $rank_id; ?>" data-loc="<?php echo $loc; ?>" id="addmemberscancel<?php echo $rank_id; ?>" name="addmemberscancel<?php echo $rank_id; ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
+		<input type="submit" class="sf-button-primary spSpecialRankAdd" id="sfnewmember<?php echo esc_attr($rank_id); ?>" name="sfnewmember<?php echo esc_attr($rank_id); ?>" data-target="#amember_id<?php echo esc_attr($rank_id); ?> option" value="<?php SP()->primitives->admin_etext('Add Members'); ?>" />
+		<input type="button" class="sf-button-primary spCancelForm" data-target="#members-<?php echo esc_attr($rank_id); ?>" data-loc="<?php echo esc_attr($loc); ?>" id="addmemberscancel<?php echo esc_attr($rank_id); ?>" name="addmemberscancel<?php echo esc_attr($rank_id); ?>" value="<?php SP()->primitives->admin_etext('Cancel'); ?>" />
             </div>
  <?php
         spa_paint_close_container();
