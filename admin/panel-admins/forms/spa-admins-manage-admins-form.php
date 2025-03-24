@@ -2,8 +2,6 @@
 /*
   Simple:Press
   Admin Admins Current Admins Form
-  $LastChangedDate: 2017-12-28 11:37:41 -0600 (Thu, 28 Dec 2017) $
-  $Rev: 15601 $
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -73,53 +71,53 @@ function spa_admins_manage_admins_form() {
 
                                     ?>
                                     <div>
-                                        <h3> <?php echo $adminName ?> (<?php SP()->primitives->admin_etext('ID') . ': ' . $adminId . ')'; ?></h3>
-                                        <input type="hidden" name="uids[]" value="<?php echo $adminId; ?>" />
+                                        <h3> <?php echo esc_html($adminName); ?> (<?php echo SP()->primitives->admin_etext('ID') . ': ' . esc_html($adminId) . ')'; ?></h3>
+                                        <input type="hidden" name="uids[]" value="<?php echo esc_attr($adminId); ?>" />
 
                                         <ul class="list-grid sf-ml-10">
                                             <li>
-                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Options'), 'manage-opts[' . $adminId . ']', $manage_opts, $adminId); ?>
-                                                <input type="hidden" name="old-opts[<?php echo $adminId; ?>]" value="<?php echo $manage_opts; ?>" />
+                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Options'), 'manage-opts[' . esc_attr($adminId) . ']', $manage_opts, $adminId); ?>
+                                                <input type="hidden" name="old-opts[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_opts); ?>" />
                                             </li>
                                             <li>
-                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Forums'), 'manage-forums[' . $adminId . ']', $manage_forums, $adminId); ?>
-                                                <input type="hidden" name="old-forums[<?php echo $adminId; ?>]" value="<?php echo $manage_forums; ?>" />
+                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Forums'), 'manage-forums[' . esc_attr($adminId) . ']', $manage_forums, $adminId); ?>
+                                                <input type="hidden" name="old-forums[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_forums); ?>" />
                                             </li>
                                             <li>
-                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage User Groups'), 'manage-ugs[' . $adminId . ']', $manage_ugs, $adminId); ?>
-                                                <input type="hidden" name="old-ugs[<?php echo $adminId; ?>]" value="<?php echo $manage_ugs; ?>" />
+                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage User Groups'), 'manage-ugs[' . esc_attr($adminId) . ']', $manage_ugs, $adminId); ?>
+                                                <input type="hidden" name="old-ugs[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_ugs); ?>" />
                                             </li>
                                             <li>
-                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Permissions'), 'manage-perms[' . $adminId . ']', $manage_perms, $adminId); ?>
-                                                <input type="hidden" name="old-perms[<?php echo $adminId; ?>]" value="<?php echo $manage_perms; ?>" />
+                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Permissions'), 'manage-perms[' . esc_attr($adminId) . ']', $manage_perms, $adminId); ?>
+                                                <input type="hidden" name="old-perms[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_perms); ?>" />
                                             </li>
                                             <li>
-                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Components'), 'manage-comps[' . $adminId . ']', $manage_comps, $adminId); ?>
-                                                <input type="hidden" name="old-comps[<?php echo $adminId; ?>]" value="<?php echo $manage_comps; ?>" />
+                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Components'), 'manage-comps[' . esc_attr($adminId) . ']', $manage_comps, $adminId); ?>
+                                                <input type="hidden" name="old-comps[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_comps); ?>" />
                                             </li>
                                             <li>
-                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Plugins'), 'manage-plugins[' . $adminId . ']', $manage_plugins, $adminId); ?>
-                                                <input type="hidden" name="old-plugins[<?php echo $adminId; ?>]" value="<?php echo $manage_plugins; ?>" />
+                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Plugins'), 'manage-plugins[' . esc_attr($adminId) . ']', $manage_plugins, $adminId); ?>
+                                                <input type="hidden" name="old-plugins[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_plugins); ?>" />
                                             </li>
                                             <li>
-                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Users'), 'manage-users[' . $adminId . ']', $manage_users, $adminId); ?>
-                                                <input type="hidden" name="old-users[<?php echo $adminId; ?>]" value="<?php echo $manage_users; ?>" />
+                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Users'), 'manage-users[' . esc_attr($adminId) . ']', $manage_users, $adminId); ?>
+                                                <input type="hidden" name="old-users[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_users); ?>" />
                                             </li>
                                             <li>
-                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Toolbox'), 'manage-tools[' . $adminId . ']', $manage_tools, $adminId); ?>
-                                                <input type="hidden" name="old-tools[<?php echo $adminId; ?>]" value="<?php echo $manage_tools; ?>" />
+                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Toolbox'), 'manage-tools[' . esc_attr($adminId) . ']', $manage_tools, $adminId); ?>
+                                                <input type="hidden" name="old-tools[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_tools); ?>" />
                                             </li>
                                             <li>
-                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Profiles'), 'manage-profiles[' . $adminId . ']', $manage_profiles, $adminId); ?>
-                                                <input type="hidden" name="old-profiles[<?php echo $adminId; ?>]" value="<?php echo $manage_profiles; ?>" />
+                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Profiles'), 'manage-profiles[' . esc_attr($adminId) . ']', $manage_profiles, $adminId); ?>
+                                                <input type="hidden" name="old-profiles[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_profiles); ?>" />
                                             </li>
                                             <li>
-                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Themes'), 'manage-themes[' . $adminId . ']', $manage_themes, $adminId); ?>
-                                                <input type="hidden" name="old-themes[<?php echo $adminId; ?>]" value="<?php echo $manage_themes; ?>" />
+                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Themes'), 'manage-themes[' . esc_attr($adminId) . ']', $manage_themes, $adminId); ?>
+                                                <input type="hidden" name="old-themes[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_themes); ?>" />
                                             </li>
                                             <li>
-                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Integration'), 'manage-integration[' . $adminId . ']', $manage_integration, $adminId); ?>
-                                                <input type="hidden" name="old-integration[<?php echo $adminId; ?>]" value="<?php echo $manage_integration; ?>" />
+                                                <?php spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Integration'), 'manage-integration[' . esc_attr($adminId) . ']', $manage_integration, $adminId); ?>
+                                                <input type="hidden" name="old-integration[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_integration); ?>" />
                                             </li>
                                             <li>
                                                 <?php if ($adminId == SP()->user->thisUser->ID) { ?>
@@ -129,19 +127,19 @@ function spa_admins_manage_admins_form() {
                                                         $manage_admins,
                                                         $adminId,
                                                         true
-                                                    ) ; ?>
-                                                    <input type="hidden" name="manage-admins[<?php echo $adminId ?>]" value="<?php echo $manage_admins; ?>" />
+                                                    ); ?>
+                                                    <input type="hidden" name="manage-admins[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_admins); ?>" />
                                                 <?php } else {
-                                                    spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Admins'), 'manage-admins[' . $adminId . ']', $manage_admins, $adminId);
+                                                    spa_render_caps_checkbox(SP()->primitives->admin_text('Manage Admins'), 'manage-admins[' . esc_attr($adminId) . ']', $manage_admins, $adminId);
                                                 }
                                                 ?>
-                                                <input type="hidden" name="old-admins[<?php echo $adminId ?>]" value="<?php echo $manage_admins; ?>" />
+                                                <input type="hidden" name="old-admins[<?php echo esc_attr($adminId); ?>]" value="<?php echo esc_attr($manage_admins); ?>" />
                                             </li>
                                             <?php do_action('sph_admin_caps_list', $user); ?>
                                         </ul>
                                         <div class="sf-ml-10">
                                             <?php if ($adminId != SP()->user->thisUser->ID) : ?>
-                                                <?echo spa_render_caps_checkbox(SP()->primitives->admin_text('Remove All Capabilities from this') . ' ' . $title, 'remove-admin[' . $adminId . ']', '', $adminId); ?>
+                                                <?php echo spa_render_caps_checkbox(SP()->primitives->admin_text('Remove All Capabilities from this') . ' ' . $title, 'remove-admin[' . esc_attr($adminId) . ']', '', $adminId); ?>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -207,10 +205,10 @@ function spa_admins_manage_admins_form() {
                     if (!SP()->auths->forum_admin($admin->ID)) {
                         $out .= '<tr>';
                         $out .= '<td>';
-                        $out .= $admin->ID;
+                        $out .= esc_html($admin->ID);
                         $out .= '</td>';
                         $out .= '<td>';
-                        $out .= "<div class='sf-avatar'><img src='" . get_avatar_url($admin->ID) . "' alt='avatar'></div>";
+                        $out .= "<div class='sf-avatar'><img src='" . esc_url(get_avatar_url($admin->ID)) . "' alt='avatar'></div>";
                         $out .= '</td>';
                         $out .= '<td>';
                         $out .= esc_html($admin->display_name);
@@ -258,11 +256,11 @@ function spa_render_caps_checkbox($label, $name, $value, $user = 0, $disabled = 
         $thisid = substr($name, 0, $pos) . $user;
     else
         $thisid = $name . $user;
-    echo "<input type='checkbox' name='$name' id='sf-$thisid' ";
+    echo "<input type='checkbox' name='" . esc_attr($name) . "' id='sf-" . esc_attr($thisid) . "' ";
     if ($value)
         echo 'checked="checked" ';
     if ($disabled)
         echo 'disabled="disabled" ';
     echo '/>';
-    echo "<label for='sf-$thisid'>$label</label>";
+    echo "<label for='sf-" . esc_attr($thisid) . "'>" . esc_html($label) . "</label>";
 }
