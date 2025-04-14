@@ -19,10 +19,10 @@ function spa_profiles_avatars_pool_form(): void
 		$(document).ready(function() {
 			var button = $('#sf-upload-button'), interval;
 			new AjaxUpload(button,{
-				action: '<?php echo $ajaxurl; ?>',
+				action: '<?php echo esc_js($ajaxurl); ?>',
 				name: 'uploadfile',
 				data: {
-					saveloc : '<?php echo addslashes(SP_STORE_DIR."/".SP()->plugin->storage['avatar-pool'].'/'); ?>'
+					saveloc : '<?php echo esc_js(addslashes(SP_STORE_DIR."/".SP()->plugin->storage['avatar-pool'].'/')); ?>'
 				},
 				onSubmit : function(file, ext){
 					/* check for valid extension */
@@ -53,10 +53,7 @@ function spa_profiles_avatars_pool_form(): void
 					this.enable();
 					/* add file to the list */
 					if (response==="success"){
-                                                $('#sfreloadpool').click();
-						//site = "<?php echo SPAJAXURL.'profiles' ?>&amp;_wpnonce=<?php echo wp_create_nonce('profiles'); ?>&amp;targetaction=delavatar&amp;file=" + file;
-						//$('<table style="width:100%"></table>').appendTo('#sf-avatar-pool').html('<tr><td class="spWFBorder" style="width:30%;text-align:center"><img class="sfavatarpool" src="<?php echo SPAVATARPOOLURL; ?>' + file + '" alt="" /></td><td class="spWFBorder" style="text-align:center;width:50%">' + file + '</td><td class="spWFBorder"><span title="<?php echo esc_js(SP()->primitives->admin_text('Delete Avatar')); ?>" class="sf-icon sf-delete spDeleteRowReload" data-url="' + site + '" data-reload="sfreloadpool"></span></td></tr>');
-						//$('#sf-upload-status').html('<p class="sf-upload-status-success"><?php echo esc_js(SP()->primitives->admin_text('Avatar Uploaded!')); ?></p>');
+                        $('#sfreloadpool').click();
 					} else if (response==="invalid"){
 						$('#sf-upload-status').html('<p class="sf-upload-status-fail"><?php echo esc_js(SP()->primitives->admin_text('Sorry, the file has an invalid format!')); ?></p>');
 					} else if (response==="exists") {
