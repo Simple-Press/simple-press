@@ -30,19 +30,25 @@ if ($action == 'slug') {
 	if ($slugaction == 'edit') $checkdupes = false;
 	$newslug = sp_create_slug($title, $checkdupes, SPFORUMS, 'forum_slug');
 	$newslug = sp_create_slug($newslug, $checkdupes, SPWPPOSTS, 'post_name'); # must also check WP posts table as WP can mistake forum slug for WP post
-	echo $newslug;
+	echo esc_js($newslug);
 }
 
 if ($action == 'delicon') {
 	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['custom-icons'].'/'.$file;
-	@unlink($path);
+
+    if (file_exists($path)) {
+        wp_delete_file($path);
+    }
 }
 
 if ($action == 'delimage') {
 	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/'.$file;
-	@unlink($path);
+
+    if (file_exists($path)) {
+        wp_delete_file($path);
+    }
 }
 
 die();
