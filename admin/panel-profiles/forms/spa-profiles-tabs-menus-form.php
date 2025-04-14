@@ -68,7 +68,7 @@ function spa_profiles_tabs_menus_form() {
 				if (!empty($tabs)) {
 					echo '<ul id="tabsList" class="tabsList sf-list">';
 					foreach ($tabs as $tindex => $tab) {
-						echo '<li id="tab-'.$tindex.'" class="sf-list-item-depth-0">';
+						echo '<li id="tab-'.esc_attr($tindex).'" class="sf-list-item-depth-0">';
                         $class = ($tab['display']) ? '' : ' sf-list-item-disabled';
 						echo "<div class='sf-list-item".esc_attr($class)."'>";
 						echo '<span class="sf-item-name">'.esc_html($tab['name']).'</span>';

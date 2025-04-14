@@ -35,8 +35,16 @@ function spa_profiles_options_form() {
                 SP()->primitives->admin_etext('Warning: If you change the display name format, it may take some time on a large number of users to update them to the new format. Please be patient.');
                 echo '</div>';
 				spa_paint_checkbox(SP()->primitives->admin_text('Let member choose display name'), 'nameformat', $sfoptions['nameformat'] ?? false);
-				spa_paint_select_start(SP()->primitives->admin_text('Display name format if member cannot choose').'<br />'.SP()->primitives->admin_text('(ignored if member allowed to choose)'), 'fixeddisplayformat', 'fixeddisplayformat');
-				echo spa_display_name_format_options($sfoptions['fixeddisplayformat']);
+				spa_paint_select_start(SP()->primitives->admin_text('Display name format if member cannot choose'). ' ' .SP()->primitives->admin_text('(ignored if member allowed to choose)'), 'fixeddisplayformat', 'fixeddisplayformat');
+                echo wp_kses(
+                    spa_display_name_format_options($sfoptions['fixeddisplayformat']),
+                    [
+                        'option' => [
+                            'selected' => true,
+                            'value' => true,
+                        ]
+                    ]
+                );
 				spa_paint_select_end();
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
