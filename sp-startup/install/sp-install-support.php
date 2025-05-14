@@ -131,27 +131,42 @@ function sp_create_usergroup_meta($members) {
 function sp_install_members_table($subphase) {
 	global $wpdb, $current_user;
 
-	# get limits for installs
-	$limit = ($subphase != 0) ? ' LIMIT 200 OFFSET '.(($subphase - 1) * 200) : '';
+    # Set limit for batch processing
+    $batch_size = 200;
+    $offset = ($subphase > 0) ? ($subphase - 1) * $batch_size : 0;
 
-	# select all users
-	$sql	 = 'SELECT ID FROM '.SPUSERS.$limit;
-	$members = $wpdb->get_results($sql);
+    # Prepare the SQL statement safely
+    $query = $wpdb->prepare(
+        "SELECT ID FROM {$wpdb->prefix}users LIMIT %d OFFSET %d",
+        $batch_size,
+        $offset
+    );
 
-	if ($members) {
-		foreach ($members as $member) {
-			# Check ID exists and is not zero
-			if (is_numeric($member->ID) && $member->ID > 0) {
-				SP()->user->create_data($member->ID, true);
+    # Fetch the user IDs
+    $members = $wpdb->get_results($query);
 
-				# for the admin installer, remove any usergroup membership added by create member function
-				if ($current_user->ID == $member->ID) $wpdb->query('DELETE FROM '.$wpdb->prefix."sfmemberships WHERE user_id=$member->ID");
-			}
-		}
-	}
+    if (!empty($members)) {
+        foreach ($members as $member) {
+            $user_id = intval($member->ID);
+
+            # Check ID exists and is not zero
+            if ($user_id > 0) {
+                # Create user data
+                SP()->user->create_data($user_id, true);
+
+                # Remove usergroup membership if the user is the current admin
+                if ($current_user->ID === $user_id) {
+                    $wpdb->delete(
+                        "{$wpdb->prefix}sfmemberships",
+                        ['user_id' => $user_id],
+                        ['%d']
+                    );
+                }
+            }
+        }
+    }
 }
 
-# 5.5.5 pre-create inspector array
 
 function sp_create_inspectors() {
 	$ins = array(
