@@ -171,11 +171,6 @@ class spcCoreLoader {
 				$newowners = stat(INSTALL_STORE_DIR.'/'.$basepath);
 				if ($newowners['uid'] == $owners['uid'] && $newowners['gid'] == $owners['gid']) {
 					$ownersgood = true;
-				} else {
-					@chown(INSTALL_STORE_DIR.'/'.$basepath, $owners['uid']);
-					@chgrp(INSTALL_STORE_DIR.'/'.$basepath, $owners['gid']);
-					$newowners	 = stat(INSTALL_STORE_DIR.'/'.$basepath);
-					if ($newowners['uid'] == $owners['uid'] && $newowners['gid'] == $owners['gid']) $ownersgood	 = true;
 				}
 			}
 			SP()->options->add('spOwnersInstall1', $ownersgood);
