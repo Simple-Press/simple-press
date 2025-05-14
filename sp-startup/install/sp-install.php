@@ -937,55 +937,65 @@ function sp_perform_install($phase, $subphase = 0) {
 		case 7:
 			# Move and extract zip install archives
 			$successCopy1	 = false;
-			$successExtract1 = false;
-			$zipfile		 = SP_PLUGIN_DIR.'/sp-startup/install/sp-resources-install-part1.zip';
+			$successExtract1 = false; 
 			$extract_to		 = get_option('sp_storage1');
+            $zipfile         = $extract_to.'/sp-resources-install-part1.zip';
+            $remote_zip_url_part1 = 'https://simple-press.com/uploads/sp-resources/sp-resources-install-part1.zip';
+
+            # Download the file from remote source
+            if (file_put_contents($zipfile, file_get_contents($remote_zip_url_part1)) !== false) {
+                $successCopy1 = true;
+            } else {
+                $successCopy1 = false;
+            }
+
 			# Copy the zip file
-			if (@copy($zipfile, $extract_to.'/sp-resources-install-part1.zip')) {
-				$successCopy1	 = true;
-				# Now try and unzip it
-				require_once ABSPATH.'wp-admin/includes/class-pclzip.php';
-				$zipfile		 = $extract_to.'/sp-resources-install-part1.zip';
-				$zipfile		 = str_replace('\\', '/', $zipfile); # sanitize for Win32 installs
-				$zipfile		 = preg_replace('|/+|', '/', $zipfile); # remove any duplicate slash
-				$extract_to		 = str_replace('\\', '/', $extract_to); # sanitize for Win32 installs
-				$extract_to		 = preg_replace('|/+|', '/', $extract_to); # remove any duplicate slash
-				$archive		 = new PclZip($zipfile);
-				$archive->extract($extract_to);
-				if ($archive->error_code == 0) {
-					$successExtract1 = true;
-					# Lets try and remove the zip as it seems to have worked
-					@unlink($zipfile);
-				}
-			}
+            $successCopy1	 = true;
+            # Now try and unzip it
+            require_once ABSPATH.'wp-admin/includes/class-pclzip.php';
+            $zipfile		 = str_replace('\\', '/', $zipfile); # sanitize for Win32 installs
+            $zipfile		 = preg_replace('|/+|', '/', $zipfile); # remove any duplicate slash
+            $extract_to		 = str_replace('\\', '/', $extract_to); # sanitize for Win32 installs
+            $extract_to		 = preg_replace('|/+|', '/', $extract_to); # remove any duplicate slash
+            $archive		 = new PclZip($zipfile);
+            $archive->extract($extract_to);
+            if ($archive->error_code == 0) {
+                $successExtract1 = true;
+                # Lets try and remove the zip as it seems to have worked
+                @unlink($zipfile);
+            }
 
 			SP()->options->add('spCopyZip1', $successCopy1);
 			SP()->options->add('spUnZip1', $successExtract1);
 
 			$successCopy2	 = false;
 			$successExtract2 = false;
-			$zipfile		 = SP_PLUGIN_DIR.'/sp-startup/install/sp-resources-install-part2.zip';
 			$extract_to		 = get_option('sp_storage2');
+            $zipfile         = $extract_to.'/sp-resources-install-part2.zip';
+            $remote_zip_url_part2 = 'https://simple-press.com/uploads/sp-resources/sp-resources-install-part2.zip';
+
+            # Download the file from remote source
+            if (file_put_contents($zipfile, file_get_contents($remote_zip_url_part2)) !== false) {
+                $successCopy2 = true;
+            } else {
+                $successCopy2 = false;
+            }
 
 			# Copy the zip file
 			if ($extract_to != 'multisite already done') {
-				if (@copy($zipfile, $extract_to.'/sp-resources-install-part2.zip')) {
-					$successCopy2	 = true;
-					# Now try and unzip it
-					require_once ABSPATH.'wp-admin/includes/class-pclzip.php';
-					$zipfile		 = $extract_to.'/sp-resources-install-part2.zip';
-					$zipfile		 = str_replace('\\', '/', $zipfile); # sanitize for Win32 installs
-					$zipfile		 = preg_replace('|/+|', '/', $zipfile); # remove any duplicate slash
-					$extract_to		 = str_replace('\\', '/', $extract_to); # sanitize for Win32 installs
-					$extract_to		 = preg_replace('|/+|', '/', $extract_to); # remove any duplicate slash
-					$archive		 = new PclZip($zipfile);
-					$archive->extract($extract_to);
-					if ($archive->error_code == 0) {
-						$successExtract2 = true;
-						# Lets try and remove the zip as it seems to have worked
-						@unlink($zipfile);
-					}
-				}
+                # Now try and unzip it
+                require_once ABSPATH.'wp-admin/includes/class-pclzip.php';
+                $zipfile		 = str_replace('\\', '/', $zipfile); # sanitize for Win32 installs
+                $zipfile		 = preg_replace('|/+|', '/', $zipfile); # remove any duplicate slash
+                $extract_to		 = str_replace('\\', '/', $extract_to); # sanitize for Win32 installs
+                $extract_to		 = preg_replace('|/+|', '/', $extract_to); # remove any duplicate slash
+                $archive		 = new PclZip($zipfile);
+                $archive->extract($extract_to);
+                if ($archive->error_code == 0) {
+                    $successExtract2 = true;
+                    # Lets try and remove the zip as it seems to have worked
+                    @unlink($zipfile);
+                }
 			} else {
 				$successCopy2	 = true;
 				$successExtract2 = true;
