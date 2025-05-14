@@ -121,11 +121,11 @@ function spa_toolbox_licensing_form_paint_instructions() {
 function spa_toolbox_calculating_expiration_date($license_info){
 	
 	$total_days = -1;
-	$get_expiredate =  date('Y-m-d', strtotime($license_info->expires));
-	$warn_expiredate = date('Y-m-d', strtotime(' + 3 days'));
+	$get_expiredate =  date_i18n('Y-m-d', strtotime($license_info->expires));
+	$warn_expiredate = date_i18n('Y-m-d', strtotime(' + 3 days'));
 	if($warn_expiredate >= $get_expiredate){
-		$expire_date = date('Y-m-d', strtotime($license_info->expires)); 
-		$today_date = date('Y-m-d');
+		$expire_date = date_i18n('Y-m-d', strtotime($license_info->expires)); 
+		$today_date = date_i18n('Y-m-d');
 		$total_days =  round(($expire_date - $today_date)/(60 * 60 * 24));
 		if($total_days < 0){
 			$total_days = 0;		
@@ -221,7 +221,7 @@ function spa_toolbox_licensing_key_common($type, $get_key, $addon_data, $total_d
 							echo isset($license_info->activations_left) ? esc_html(ucfirst($license_info->activations_left)) : 'N/A';
 							echo '<br/>';
 							echo esc_html(SP()->primitives->admin_text('Valid Until: '));
-							echo (isset($license_info->expires) && $license_info->expires == 'lifetime') ? esc_html(SP()->primitives->admin_text('Lifetime')) : esc_html(date('d M, Y', strtotime($license_info->expires)));
+							echo (isset($license_info->expires) && $license_info->expires == 'lifetime') ? esc_html(SP()->primitives->admin_text('Lifetime')) : esc_html(date_i18n('d M, Y', strtotime($license_info->expires)));
 						?>
 					</div>
                 </div>
