@@ -136,14 +136,13 @@ function sp_install_members_table($subphase) {
     $offset = ($subphase > 0) ? ($subphase - 1) * $batch_size : 0;
 
     # Prepare the SQL statement safely
-    $query = $wpdb->prepare(
-        "SELECT ID FROM {$wpdb->prefix}users LIMIT %d OFFSET %d",
-        $batch_size,
-        $offset
+    $members = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT ID FROM {$wpdb->users} LIMIT %d OFFSET %d",
+            $batch_size,
+            $offset
+        )
     );
-
-    # Fetch the user IDs
-    $members = $wpdb->get_results($query);
 
     if (!empty($members)) {
         foreach ($members as $member) {
