@@ -337,41 +337,9 @@ sp_bump_build($build, 15858);
 
 $section = 15861;
 if ($build < $section) {
-	
-	# Install iconsets
-	$extract_to = SP()->plugin->add_storage( 'forum-iconsets', 'iconsets' );
-	
-	# Move and extract zip install archives
-	$successCopy1	 = false;
-	$successExtract1 = false;
-	$zipfile		 = SP_PLUGIN_DIR.'/sp-startup/install/sp-resources-install-part1.zip';
-	
-	# Copy the zip file
-	if (copy($zipfile, $extract_to.'/sp-resources-install-part1.zip')) {
-		
-		$successCopy1	 = true;
-		# Now try and unzip it
-		require_once ABSPATH.'wp-admin/includes/class-pclzip.php';
-		$zipfile		 = $extract_to.'/sp-resources-install-part1.zip';
-		$zipfile		 = str_replace('\\', '/', $zipfile); # sanitize for Win32 installs
-		$zipfile		 = preg_replace('|/+|', '/', $zipfile); # remove any duplicate slash
-		$extract_to		 = str_replace('\\', '/', $extract_to); # sanitize for Win32 installs
-		$extract_to		 = preg_replace('|/+|', '/', $extract_to); # remove any duplicate slash
-		$archive		 = new PclZip($zipfile);
-		
-		$archive->extract( PCLZIP_OPT_PATH, $extract_to, PCLZIP_OPT_BY_NAME, 'forum-iconsets/', PCLZIP_OPT_REMOVE_PATH, 'forum-iconsets/' );
-		
-		if ($archive->error_code == 0) {
-			$successExtract1 = true;
-			# Lets try and remove the zip as it seems to have worked
-			@unlink($zipfile);
-		}
-	}
-	
 	sp_install_iconsets();
 	
 	sp_response($section);
-	
 }
 
 # Start of Upgrade Routines - 6.3.0 ============================================================
