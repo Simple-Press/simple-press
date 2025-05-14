@@ -351,7 +351,7 @@ function sp_UpdateProfile() {
 			}
 
 			# Clean up file name just in case
-			$filename   = date('U').SP()->saveFilters->filename(basename($_FILES['avatar-upload']['name']));
+			$filename   = date_i18n('YmdHis') . '_' .SP()->saveFilters->filename(basename($_FILES['avatar-upload']['name']));
 			$uploadfile = $uploaddir.$filename;
 
 			# check for existence
@@ -371,16 +371,14 @@ function sp_UpdateProfile() {
 				return $message;
 			}
 
-			# valid avatar, so try moving the uploaded file to the avatar storage directory
-			if (move_uploaded_file($_FILES['avatar-upload']['tmp_name'], $uploadfile)) {
-				@chmod("$uploadfile", 0644);
-
+			# valid avatar, so try moving the uploaded file to the avatar storage directoryw
+			if (copy($_FILES['avatar-upload']['tmp_name'], $uploadfile)) {
 				# do we need to resize?
 				$sfavatars = SP()->options->get('sfavatars');
 				if ($sfavatars['sfavatarresize']) {
 					$editor = wp_get_image_editor($uploadfile);
 					if (is_wp_error($editor)) {
-						@unlink($uploadfile);
+                        wp_delete_file($uploadfile);
 						$message['type'] = 'error';
 						$message['text'] = SP()->primitives->front_text('Sorry, there was a problem resizing the avatar');
 
