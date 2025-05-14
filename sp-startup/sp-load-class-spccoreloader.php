@@ -136,7 +136,9 @@ class spcCoreLoader {
 		$basepath	 = 'sp-resources';
 	
 		# makes sure storage exists
-		if (!file_exists(INSTALL_STORE_DIR.'/'.$basepath) && $is_install ) @mkdir(INSTALL_STORE_DIR.'/'.$basepath, $perms);
+        if ($is_install && !file_exists(INSTALL_STORE_DIR.'/'.$basepath)) {
+            wp_mkdir_p(INSTALL_STORE_DIR.'/'.$basepath);
+        }
 
         if (is_multisite()) {
             global $wpdb;
@@ -145,7 +147,9 @@ class spcCoreLoader {
 	
 		# for multisite, make sure main site storage exists
 		if (is_multisite() && SPBLOGID != 1) {
-			if (!file_exists(SP_STORE_DIR.'/uploads') && $is_install ) @mkdir(SP_STORE_DIR.'/uploads', $perms);
+            if (!file_exists(SP_STORE_DIR.'/uploads') && $is_install ) {
+                wp_mkdir_p(SP_STORE_DIR.'/uploads');
+            }
 		}
 	
 		if( $is_install ) {
@@ -159,7 +163,7 @@ class spcCoreLoader {
 			if (!file_exists(INSTALL_STORE_DIR.'/'.$basepath)) $success = false;
 			SP()->options->add('spStorageInstall1', $success);
 		}
-	
+
 		# Is the ownership correct?
 		if( $is_install ) {
 			$ownersgood = false;
@@ -222,24 +226,18 @@ class spcCoreLoader {
 				# The only reason this duplicated code should exist is if the INSTALL_STORE_DIR constant is set in 
 				# wp-config to something different than the $uploads['basedir'] value.
 				if (!$already_created && $is_install ) {
-					@mkdir($uploads['basedir'].'/'.$basepath, $perms);
+					wp_mkdir_p($uploads['basedir'].'/'.$basepath);
 					$success = (file_exists($uploads['basedir'].'/'.$basepath)) ? true : false;
 				}
 	
 				# Is the ownership correct?
 				$ownersgood = false;
 				if ($already_created || $success) {
-	
 					if( $is_install ) {
 						# @TODO: The folder check and creation in this block is also duplicated work.
 						$newowners = stat($uploads['basedir'].'/'.$basepath);
 						if ($newowners['uid'] == $owners['uid'] && $newowners['gid'] == $owners['gid']) {
 							$ownersgood = true;
-						} else {
-							@chown($uploads['basedir'].'/'.$basepath, $owners['uid']);
-							@chgrp($uploads['basedir'].'/'.$basepath, $owners['gid']);
-							$newowners	 = stat($uploads['basedir'].'/'.$basepath);
-							if ($newowners['uid'] == $owners['uid'] && $newowners['gid'] == $owners['gid']) $ownersgood	 = true;
 						}
 					}
 	
