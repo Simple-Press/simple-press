@@ -196,13 +196,7 @@ function sp_create_inspectors() {
 	SP()->options->update('spInspect', $ins);
 }
 
-
-
-
 function sp_install_iconsets() {
-	
-	
-	
 	$iconsets = array(
 		'afiado',
 		'brankic-1979',
@@ -224,16 +218,10 @@ function sp_install_iconsets() {
 		'zondicons'
 	);
 	
-	
-	
-	
 	$sfconfig          = SP()->options->get('sfconfig');
- 
 	$iconsets_base_dir = SP_STORE_DIR . '/' . $sfconfig['iconsets'] . '/';
 	
-	
 	foreach( $iconsets as $iconset_id => $iconset ) {
-		
 		$iconset_id = is_array( $iconset ) ? $iconset_id : $iconset;
 		
 		if( !is_array( $iconset ) ) {
@@ -249,7 +237,4 @@ function sp_install_iconsets() {
 		
 		spa_add_iconset( $iconset );
 	}
-	
-	
-	
 }
