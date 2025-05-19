@@ -24,7 +24,7 @@ $iconsets_base_dir = SP_STORE_DIR . '/' . $sfconfig['iconsets'] . '/';
 $upload_dir = $iconsets_base_dir . '__uploads/';
 
 if ( !file_exists($upload_dir) ) {
-	@mkdir($upload_dir, 0775);
+	wp_mkdir_p($upload_dir);
 }
 
 # Clean up file name just in case
@@ -56,9 +56,9 @@ if ( file_exists( $uploadfile ) || file_exists( $extract_to ) ) {
 }
 
 # try uploading the file over
-if ( move_uploaded_file( $_FILES['uploadfile']['tmp_name'], $uploadfile ) ) {
-	@chmod( $uploadfile, 0644 );
-	
+
+if ( wp_handle_upload( $_FILES['uploadfile'], array( 'test_form' => false ) ) ) {
+
 	# Now try and unzip it
 	require_once ABSPATH.'wp-admin/includes/class-pclzip.php';
 	$zipfile		 = $uploadfile;
@@ -89,7 +89,7 @@ if ( move_uploaded_file( $_FILES['uploadfile']['tmp_name'], $uploadfile ) ) {
 	
 
 	# Lets try and remove the zip as it seems to have worked
-	@unlink($zipfile);
+	wp_delete_file($zipfile);
 	
 	echo "success";
 } else {
