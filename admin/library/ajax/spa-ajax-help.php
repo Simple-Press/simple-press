@@ -74,25 +74,18 @@ function sp_retrieve_help($file, $tag, $folder) {
 		}
 	}
 
-	$fh = fopen($helpfile, 'r');
-	do {
-		$theData = fgets($fh);
-		if (feof($fh)) break;
-	} while ((substr($theData, 0, strlen($tag)) != $tag));
-
-	$theData = '';
-	$theEnd = false;
-	do {
-		if (feof($fh)) break;
-		$theLine = fgets($fh);
-		if (substr($theLine, 0, 5) == '[end]') {
-			$theEnd = true;
-		} else {
-			$theData.= $theLine;
-		}
-	} while ($theEnd == false);
-
-	fclose($fh);
+$theData = '';
+if (file_exists($helpfile)) {
+    $content = file_get_contents($helpfile);
+    $start = strpos($content, $tag);
+    if ($start !== false) {
+        $start += strlen($tag);
+        $end = strpos($content, '[end]', $start);
+        if ($end !== false) {
+            $theData = trim(substr($content, $start, $end - $start));
+        }
+    }
+}
 
 	return $note.'<br /><br />'.$theData;
 }
