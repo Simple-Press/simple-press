@@ -1205,28 +1205,64 @@ function sp_build_forum_index($forumid, $returnmsg = false) {
 #
 # Cleans any outdated wp transients and sp notices
 # ------------------------------------------------------------------
+
 function sp_transient_cleanup() {
-	global $wpdb;
+    global $wpdb;
 
-	$time = time();
+    $time = time();
 
-	# clean up wp transients
-	$sql     = 'SELECT * FROM '.SP_PREFIX."options
-            WHERE (option_name LIKE '_transient_timeout_%url' AND option_value < $time) OR
-       		      (option_name LIKE '_transient_timeout_%bookmark' AND option_value < $time) OR
-           		  (option_name LIKE '_transient_timeout_%post' AND option_value < $time) OR
-                  (option_name LIKE '_transient_timeout_%search' AND option_value < $time) OR
-           		  (option_name LIKE '_transient_timeout_%reload' AND option_value < $time)";
-	$records = $wpdb->get_results($sql);
-	foreach ($records as $record) {
-		$transient = explode('_transient_timeout_', $record->option_name);
-		$wpdb->query('DELETE FROM '.SP_PREFIX."options WHERE option_name='_transient_timeout_$transient[1]'");
-		$wpdb->query('DELETE FROM '.SP_PREFIX."options WHERE option_name='_transient_$transient[1]'");
-	}
+    // Prepare SQL for selecting expired transients
+    $records = $wpdb->get_results(
+        $wpdb->prepare(
+            'SELECT * FROM %s
+                WHERE (
+                    (option_name LIKE %s AND option_value < %d) OR
+                    (option_name LIKE %s AND option_value < %d) OR
+                    (option_name LIKE %s AND option_value < %d) OR
+                    (option_name LIKE %s AND option_value < %d) OR
+                    (option_name LIKE %s AND option_value < %d)
+                )',
+            SP_PREFIX . "options",
+            '_transient_timeout_%url', $time,
+            '_transient_timeout_%bookmark', $time,
+            '_transient_timeout_%post', $time,
+            '_transient_timeout_%search', $time,
+            '_transient_timeout_%reload', $time
+        )
+    );
 
-	# clean up our user notices
-	$wpdb->query('DELETE FROM '.SPNOTICES." WHERE expires < $time");
+    foreach ($records as $record) {
+        $transient = explode('_transient_timeout_', $record->option_name);
+
+        // Prepare statement for deleting transient timeout
+        $wpdb->query(
+            $wpdb->prepare(
+                'DELETE FROM %s WHERE option_name=%s',
+                SP_PREFIX . 'options',
+                '_transient_timeout_' . $transient[1]
+            )
+        );
+
+        // Prepare statement for deleting transient
+        $wpdb->query(
+            $wpdb->prepare(
+                'DELETE FROM  WHERE option_name=%s',
+                SP_PREFIX . 'options',
+                '_transient_' . $transient[1]
+            )
+        );
+    }
+
+    // Prepare statement for cleaning up user notices
+    $wpdb->query(
+        $wpdb->prepare(
+            'DELETE FROM %s WHERE expires < %d',
+            SPNOTICES,
+            $time
+        )
+    );
 }
+
 
 function sp_post_notification($user, $message, $postid) {
     # Check id
