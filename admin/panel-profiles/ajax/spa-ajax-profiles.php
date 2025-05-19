@@ -12,24 +12,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 spa_admin_ajax_support();
 
-if (!sp_nonce('profiles')) die();
+if (!sp_nonce('profiles')){
+    die();
+}
 
 # Check Whether User Can Manage Profiles
-if (!SP()->auths->current_user_can('SPF Manage Profiles')) die();
+if (!SP()->auths->current_user_can('SPF Manage Profiles')) {
+    die();
+}
 
 $action = SP()->filters->str($_GET['targetaction']);
 
 if ($action == 'delavatar') {
 	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/'.$file;
-	@unlink($path);
+	wp_delete_file($path);
 	echo '1';
 }
+
 
 if ($action == 'deldefault') {
 	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['avatars'].'/defaults/'.$file;
-	@unlink($path);
+	wp_delete_file($path);
 	echo '1';
 }
 
