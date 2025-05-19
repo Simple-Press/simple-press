@@ -233,7 +233,6 @@ function spa_save_theme_tablet_data() {
 }
 
 function spa_save_editor_data() {
-	
 	# This function should only be called if a wp-config.php constant is defined.
 	# if it's not defined, bail immediately with an error.
 	if ( ( ! defined('SP_ALLOW_THEME_EDITOR') ) || (defined('SP_ALLOW_THEME_EDITOR') && ! SP_ALLOW_THEME_EDITOR)) {
@@ -243,24 +242,23 @@ function spa_save_editor_data() {
 	
 	check_admin_referer('forum-adminform_theme-editor', 'forum-adminform_theme-editor');
 
-	$file = SP()->filters->filename($_POST['file']);
-	$newcontent = stripslashes($_POST['spnewcontent']);
-	if (is_writeable($file)) {
-		$f = fopen($file, 'w+');
-		if ($f !== false) {
-			fwrite($f, $newcontent);
-			fclose($f);
-			$msg = SP()->primitives->admin_text('Theme file updated!');
-		} else {
-			$msg = SP()->primitives->admin_text('Unable to save theme file');
-		}
-	} else {
-		$msg = SP()->primitives->admin_text('Theme file is not writable!');
-	}
+    $file = SP()->filters->filename($_POST['file']);
+    $newcontent = stripslashes($_POST['spnewcontent']);
 
-	return $msg;
+    // Restrict writable path for security
+    $allowed_dir = SPTHEMEBASEDIR; // Adjust path prefix if needed
+    $real_path = realpath($file);
+    if ($real_path !== false && strpos($real_path, realpath($allowed_dir)) === 0 && wp_is_writable($real_path)) {
+        if (file_put_contents($real_path, $newcontent) !== false) {
+            $msg = SP()->primitives->admin_text('Theme file updated!');
+        } else {
+            $msg = SP()->primitives->admin_text('Unable to save theme file');
+        }
+    } else {
+        $msg = SP()->primitives->admin_text('Theme file is not writable!');
+    }
 }
-
+  
 function spa_save_css_data() {
 	$css = '';
 	$curTheme = SP()->options->get('sp_current_theme');
