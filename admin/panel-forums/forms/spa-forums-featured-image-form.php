@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function spa_forums_featured_image_form() {
-	$ajaxurl = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'uploader', 'uploader'));
 ?>
 <script>
 	(function(spj, $, undefined) {
@@ -20,10 +19,10 @@ function spa_forums_featured_image_form() {
 
 			var button = $('#sf-upload-button'), interval;
 			new AjaxUpload(button,{
-				action: '<?php echo esc_url($ajaxurl); ?>',
-				name: 'uploadfile',
+                action: '<?php echo esc_url_raw(SPAJAXURL . "uploader&_wpnonce=" . wp_create_nonce('uploader')); ?>',
+                name: 'uploadfile',
 				data: {
-					saveloc : '<?php echo esc_js(addslashes(SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/')); ?>'
+					saveloc : '<?php echo esc_js(SP_STORE_DIR.'/'.SP()->plugin->storage['forum-images'].'/'); ?>'
 				},
 				onSubmit : function(file, ext){
 					/* check for valid extension */
