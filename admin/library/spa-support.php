@@ -848,12 +848,21 @@ function spa_print_pagination( $link_args, $countPages, $currentPageNum, $pagina
 function spa_user_groups_list( $user_id ) {
 	global $wpdb;
 	
-	$sql = "SELECT m.usergroup_id, ug.usergroup_name FROM " . SPMEMBERSHIPS . " m
-			LEFT JOIN " . SPUSERGROUPS . " ug ON ug.usergroup_id = m.usergroup_id
-			WHERE m.user_id = %d";
-	
-	
-	$results =  $wpdb->get_results( $wpdb->prepare( $sql, $user_id ) );
-	
+
+	$table_memberships = esc_sql( SPMEMBERSHIPS );
+	$table_usergroups = esc_sql( SPUSERGROUPS );
+
+    $results = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT m.usergroup_id, ug.usergroup_name
+            FROM %s AS m
+            LEFT JOIN %s AS ug ON ug.usergroup_id = m.usergroup_id
+            WHERE m.user_id = %d",
+            $table_memberships,
+            $table_usergroups,
+            $user_id
+        )
+	);
+
 	return $results;
 }
