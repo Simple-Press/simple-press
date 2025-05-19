@@ -10,12 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die('Access denied - you cannot directly call this file');
 }
 
-// ========= THIS MIGHT NEED TO BE TURNED OFF UNTIL ALL PLUGIN ADMIN FORMS ARE CHANGED TO USE THE NEW NONCE CODE.  IT'S TURNED ON NOW BUT IF ISSUES ARISE PLEASE CHECK TO MAKE SURE FORMS ARE USING THE NEW NONCE CODE.
-if (!sp_nonce('uploader')) die();
+if (!sp_nonce('uploader')) {
+    die('Could not find nonce');
+}
 // ===================================================================================================
 
 # only admins should be able to access this...
-if (!SP()->auths->current_user_can('SPF Manage Options')) die();
+if (!SP()->auths->current_user_can('SPF Manage Options')) {
+    die('Not enough permissions');
+}
 
 # workaround function for php installs without exif.  leave original function since this is slower.
 if (!function_exists('exif_imagetype')) {
