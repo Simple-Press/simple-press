@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function spa_components_smileys_form() {
-	$ajaxurl = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'uploader', 'uploader'));
 ?>
 <script>
 	(function(spj, $, undefined) {
@@ -24,10 +23,10 @@ function spa_components_smileys_form() {
 
 			var button = $('#sf-upload-button'), interval;
 			new AjaxUpload(button,{
-				action: '<?php echo $ajaxurl; ?>',
+                action: '<?php echo esc_url_raw(SPAJAXURL . "uploader&_wpnonce=" . wp_create_nonce('uploader')); ?>',
 				name: 'uploadfile',
 				data: {
-					saveloc : '<?php echo addslashes(SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/'); ?>'
+                    saveloc : '<?php echo esc_js(SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/'); ?>'
 				},
 				onSubmit : function(file, ext){
 					/* check for valid extension */
