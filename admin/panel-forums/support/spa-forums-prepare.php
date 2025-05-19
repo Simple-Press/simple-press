@@ -155,7 +155,10 @@ function spa_paint_featured_images() {
                 'id' => [],
                 'class' => [],
             ],
+            'thead' => [],
+            'tbody' => [],
             'tr' => [],
+            'th' => [],
             'td' => [
                 'class' => [],
             ],
