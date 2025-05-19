@@ -12,7 +12,7 @@ function spa_add_iconset( $set = array() ) {
 	$iconsets = spa_get_all_iconsets();
 	$sfconfig          = SP()->options->get('sfconfig');
 	
-	$id				= isset( $set['id'] )	  ? $set['id']     : rand( 1111111, 9999999 );
+	$id				= isset( $set['id'] )	  ? $set['id']     : wp_rand( 1111111, 9999999 );
 	$path			= SP_STORE_DIR . '/' . $sfconfig['iconsets'] . '/' . $id;
 	$prefix			= isset( $set['prefix'] ) ? $set['prefix'] : '';
 	$css_path		= trailingslashit( $path ) . 'style.css';
