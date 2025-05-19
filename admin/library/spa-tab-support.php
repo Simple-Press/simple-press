@@ -412,7 +412,7 @@ function spa_paint_file($label, $name, $disabled, $large, $path) {
 
 	echo '<div id="sf-upload-button"><span class="sf-icon sf-upload"></span></div>';
 	echo '<div id="sf-upload-status">';
-	if (!is_writable($path)) {
+	if (!wp_is_writable($path)) {
 		echo '<p class="sf-upload-status-fail">'.esc_html(SP()->primitives->admin_text('Sorry, uploads disabled! Storage location does not exist or is not writable. Please see forum - integration - storage locations to correct')).'</p>';
 	}
 	echo '</div>';
