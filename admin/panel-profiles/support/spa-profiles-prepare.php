@@ -41,7 +41,7 @@ function spa_paint_avatar_pool() {
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/';
 	$dlist = @opendir($path);
 	if (!$dlist) {
-		echo '<table><tr><td class="sflabel"><strong>'.SP()->primitives->admin_text('The avatar pool folder does not exist').'</strong></td></tr></table>';
+		echo '<table><tr><td class="sflabel"><strong>'.esc_html(SP()->primitives->admin_text('The avatar pool folder does not exist')).'</strong></td></tr></table>';
 		return;
 	}
 

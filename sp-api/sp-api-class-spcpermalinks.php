@@ -254,7 +254,7 @@ class spcPermalinks {
 				# get scheme for front end
 				# get_permalink() returns scheme for existing page so adjust to front
 				$perm   = get_permalink($page->ID);
-				$scheme = parse_url(get_option('siteurl'), PHP_URL_SCHEME); # get front end scheme
+				$scheme = wp_parse_url(get_option('siteurl'), PHP_URL_SCHEME); # get front end scheme
 				$perm   = set_url_scheme($perm, $scheme); # update permalink with proper front end scheme
 				if (get_option('page_on_front') == $page->ID && get_option('show_on_front') == 'page') {
 					$perm = rtrim($perm, '/');

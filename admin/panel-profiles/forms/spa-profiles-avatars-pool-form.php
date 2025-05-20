@@ -12,17 +12,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function spa_profiles_avatars_pool_form(): void
 {
-	$ajaxurl = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'uploader', 'uploader'));
 ?>
 <script>
 	(function(spj, $, undefined) {
 		$(document).ready(function() {
 			var button = $('#sf-upload-button'), interval;
 			new AjaxUpload(button,{
-				action: '<?php echo esc_js($ajaxurl); ?>',
+                action: '<?php echo esc_url_raw(SPAJAXURL . "uploader&_wpnonce=" . wp_create_nonce('uploader')); ?>',
 				name: 'uploadfile',
 				data: {
-					saveloc : '<?php echo esc_js(addslashes(SP_STORE_DIR."/".SP()->plugin->storage['avatar-pool'].'/')); ?>'
+					saveloc : '<?php echo esc_js(SP_STORE_DIR."/".SP()->plugin->storage['avatar-pool'].'/'); ?>'
 				},
 				onSubmit : function(file, ext){
 					/* check for valid extension */

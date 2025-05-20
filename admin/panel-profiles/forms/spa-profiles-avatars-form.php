@@ -9,7 +9,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function spa_profiles_avatars_form() {
-	$ajaxurl = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL.'uploader', 'uploader'));
 	$sfoptions = spa_get_avatars_data();
 ?>
 <script>
@@ -37,10 +36,10 @@ function spa_profiles_avatars_form() {
 
 			var button = $('#sf-upload-button'), interval;
 			new AjaxUpload(button,{
-				action: '<?php echo esc_js($ajaxurl); ?>',
+                action: '<?php echo esc_url_raw(SPAJAXURL . "uploader&_wpnonce=" . wp_create_nonce('uploader')); ?>',
 				name: 'uploadfile',
 				data: {
-					saveloc : '<?php echo esc_js(addslashes(SP_STORE_DIR."/".SP()->plugin->storage['avatars'].'/defaults/')); ?>'
+					saveloc : '<?php echo esc_js(SP_STORE_DIR."/".SP()->plugin->storage['avatars'].'/defaults/'); ?>'
 				},
 				onSubmit : function(file, ext){
 					/* check for valid extension */

@@ -12,7 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 spa_admin_ajax_support();
 
-if (!sp_nonce('profiles-loader')) die();
+if (!sp_nonce('profiles-loader')) {
+    die();
+}
 
 if (SP()->core->status != 'ok') {
 	echo SP()->core->status;
@@ -30,7 +32,9 @@ $adminhelpfile = 'admin-profiles';
 
 # ----------------------------------
 # Check Whether User Can Manage Profiles
-if (!SP()->auths->current_user_can('SPF Manage Profiles')) die();
+if (!SP()->auths->current_user_can('SPF Manage Profiles')) {
+    die();
+}
 
 if (isset($_GET['loadform'])) {
 	spa_render_profiles_container(sanitize_text_field($_GET['loadform']));
