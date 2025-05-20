@@ -40,16 +40,6 @@ if ( ( ! $file_type_check ) || ( ! in_array( $file_type_check['ext'], array('gif
 	die;
 }
 
-# check image file mimetype
-/*
-$mimetype = 0;
-$mimetype = exif_imagetype($_FILES['uploadfile']['tmp_name']);
-if (empty($mimetype) || $mimetype == 0 || $mimetype > 3) {
-	echo 'invalid';
-	die();
-}
-*/
-
 # check for existence
 if (file_exists($uploadfile)) {
 	echo 'exists';
@@ -64,14 +54,36 @@ if (isset($_POST['size'])) {
 	}
 }
 
-# try uploading the file over
-if (move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploadfile)) {
-	@chmod("$uploadfile", 0644);
-	echo "success";
+require_once(ABSPATH . 'wp-admin/includes/file.php');
+
+# Try uploading the file using WordPress default function
+$movefile = wp_handle_upload($_FILES['uploadfile'], array('test_form' => false));
+
+$filename = basename($movefile['file']);
+
+
+if ($movefile && !isset($movefile['error'])) {
+    global $wp_filesystem;
+    if (empty($wp_filesystem)) {
+        require_once(ABSPATH . '/wp-admin/includes/file.php');
+        WP_Filesystem();
+    }
+    $destination = $uploaddir . $filename;
+    if ($wp_filesystem->move($movefile['file'], $destination)) {
+        // File is successfully uploaded.
+        echo "success";
+    } else {
+        // Upload failed.
+        // WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!
+        // Otherwise onSubmit event will not be fired
+        echo "error";
+    }
 } else {
-	# WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!
-	# Otherwise onSubmit event will not be fired
-	echo "error";
+    // Upload failed.
+    // WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!
+    // Otherwise onSubmit event will not be fired
+    echo "error";
 }
+  
 
 die();

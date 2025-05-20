@@ -542,7 +542,7 @@ function sp_notify_user() {
 	$controlClass	= esc_attr($controlClass);
 	$buttonClass	= esc_attr($buttonClass);
 
-    $site = SPAJAXURL.'spForumTools&targetaction=notify-search&rand='.rand();
+    $site = SPAJAXURL.'spForumTools&targetaction=notify-search&rand='.wp_rand();
 ?>
     <script>
 		(function(spj, $, undefined) {

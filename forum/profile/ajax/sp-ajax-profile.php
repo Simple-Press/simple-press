@@ -328,7 +328,7 @@ if (isset($_GET['tab'])) {
 							$hideMenu         = apply_filters('sph_ProfileMenuHide', $hideMenu, $tab, $menu, $userid);
 							if (!$hideMenu) {
 								# buffer the menu list while we find the current menu item
-								$ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&amp;tab=$thisTab&amp;menu=".$menu['slug'].'&amp;user='.$userid.'&amp;rand='.rand(), 'profile'));
+								$ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&amp;tab=$thisTab&amp;menu=".$menu['slug'].'&amp;user='.$userid.'&amp;rand='.wp_rand(), 'profile'));
 								if (is_ssl()) $ajaxURL = str_replace('http://', "https://", $ajaxURL);
 								$out .= "<li class='spProfileMenuItem $current'>";
 								if ($current) {

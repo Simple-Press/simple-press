@@ -775,7 +775,7 @@ function sp_perform_install($phase, $subphase = 0) {
 			}
 
 			# Set up unique key
-			$uKey = substr(chr(rand(97, 122)).md5(time()), 0, 10);
+			$uKey = substr(chr(wp_rand(97, 122)).md5(time()), 0, 10);
 			SP()->options->add('spukey', $uKey);
 
 			# get Installed theme details.

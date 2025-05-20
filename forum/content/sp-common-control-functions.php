@@ -273,7 +273,7 @@ function sp_ColumnStart($args = '', $columnName = '') {
 
 	# sanitize before use
 	$tagClass = esc_attr($tagClass);
-	if (!empty($tagId)) $tagId = " id='".esc_attr($tagId).rand()."'";
+	if (!empty($tagId)) $tagId = " id='".esc_attr($tagId).wp_rand()."'";
 	$width  = esc_attr($width);
 	$height = esc_attr($height);
 	$echo   = (int) $echo;

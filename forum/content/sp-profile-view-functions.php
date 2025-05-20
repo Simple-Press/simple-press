@@ -60,7 +60,7 @@ function sp_ProfileEdit($tabSlug = 'profile', $menuSlug = '') {
 				if ($tab['slug'] == $tabSlug) $exist = true; # not if selected tab exists
 				$class   = ($first) ? "class='current'" : '';
 				$first   = false;
-				$ajaxURL = wp_nonce_url(SPAJAXURL.'profile&amp;tab='.$tab['slug']."&amp;user=$userid&amp;rand=".rand(), 'profile');
+				$ajaxURL = wp_nonce_url(SPAJAXURL.'profile&amp;tab='.$tab['slug']."&amp;user=$userid&amp;rand=".wp_rand(), 'profile');
 				if (is_ssl()) $ajaxURL = str_replace('http://', "https://", $ajaxURL);
 				echo "<li><a rel='nofollow' id='spProfileTab-".esc_attr($tab['slug'])."' $class href='$ajaxURL'>".$tab['name'].'</a></li>';
 			}

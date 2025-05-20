@@ -208,8 +208,8 @@ function sp_forum_unavailable() {
 }
 
 function sp_math_spam_build() {
-	$spammath[0] = rand(1, 12);
-	$spammath[1] = rand(1, 12);
+	$spammath[0] = wp_rand(1, 12);
+	$spammath[1] = wp_rand(1, 12);
 
 	# Calculate result
 	$result = $spammath[0] + $spammath[1];

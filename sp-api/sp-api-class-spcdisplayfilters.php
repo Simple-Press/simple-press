@@ -309,7 +309,7 @@ class spcDisplayFilters {
 		if (strpos($content, 'class="brush')) return $content;
 
 		while ($pos !== false) {
-			$id      = rand(100, 10000);
+			$id      = wp_rand(100, 10000);
 			$replace = "<p><input type='button' class='sfcodeselect' name='sfselectit$id' value='".SP()->primitives->front_text('Select Code')."' data-codeid='sfcode$id' /></p><div class='sfcode' id='sfcode$id'>";
 			$content = substr_replace($content, $replace, $pos, 20);
 			$pos     = $pos + 140;
