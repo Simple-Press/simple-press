@@ -86,8 +86,7 @@ class spcFilters {
 	}
 	
 	private function do_esc_sql($string) {
-		global $wpdb;
-		return mysqli_real_escape_string($wpdb->dbh, $string);
+        return esc_sql($string);
 	}
 
 	public function url($string) {
