@@ -51,7 +51,7 @@ function spa_options_newposts_form() {
     $ajaxURL = wp_nonce_url(SPAJAXURL.'options-loader&amp;saveform=newposts', 'options-loader');
 ?>
 	<form action="<?php echo esc_url($ajaxURL); ?>" method="post" id="sfnewpostsform" name="sfnewposts">
-    <input type="hidden" name="forum-adminform_newposts" value="<?php esc_attr(wp_create_nonce($action)); ?>" />
+	<?php sp_echo_create_nonce('forum-adminform_newposts'); ?>
 <?php
 	spa_paint_options_init();
 
