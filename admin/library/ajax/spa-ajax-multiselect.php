@@ -6,6 +6,60 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 spa_admin_ajax_support();
 
+$allowed_html = [
+    'div' => [
+        'id' => true,
+        'style' => true,
+        'class' => true,
+    ],
+    'input' => [
+        'type' => true,
+        'placeholder' => true,
+        'id' => true,
+        'name' => true,
+        'value' => true,
+        'class' => true,
+        'size' => true,
+        'data-url' => true,
+        'data-uid' => true,
+        'data-image' => true,
+        'checked' => true,
+    ],
+    'p' => [
+        'class' => true,
+    ],
+    'select' => [
+        'name' => true,
+        'style' => true,
+    ],
+    'option' => [
+        'value' => true,
+        'selected' => true,
+        'checked' => true,
+    ],
+    'button' => [
+        'class' => true,
+    ],
+    'ul' => [
+        'class' => true,
+    ],
+    'li' => [
+        'class' => true,
+    ],
+    'span' => [
+        'class' => true,
+        'title' => true,
+        'id' => true,
+    ],
+    'a' => [
+        'class' => true,
+        'href' => true,
+        'data-url' => true,
+        'data-uid' => true,
+    ],
+];
+
+
 # subseqeent page loads,,,
 if (isset($_GET['page_msbox'])) {
     if (!sp_nonce('multiselect'))
@@ -20,9 +74,14 @@ if (isset($_GET['page_msbox'])) {
     $filter = urldecode($_GET['filter']);
     $ug = $_GET['ug'];
 
-    if (sanitize_text_field($_GET['page_msbox']) == 'filter')
+    if (sanitize_text_field($_GET['page_msbox']) == 'filter'){
         $max = spa_get_query_max($msbox, $uid, $filter);
-    echo wp_kses_post( spa_page_msbox_list($msbox, $uid, $name, $from, $num, $offset, $max, $filter, $ug) );
+    }
+
+    echo wp_kses(
+        spa_page_msbox_list($msbox, $uid, $name, $from, $num, $offset, $max, $filter, $ug),
+        $allowed_html    
+    );
     die();
 }
 
@@ -42,27 +101,42 @@ if (isset($action)) {
 
     if ($action == 'addug') {
         spa_prepare_msbox_list('usergroup_add', $usergroup_id);
-        echo wp_kses_post( spa_populate_msbox_list('usergroup_add', $usergroup_id, 'amid', $from, $to, $ug) );
+        echo wp_kses(
+            spa_populate_msbox_list('usergroup_add', $usergroup_id, 'amid', $from, $to, $ug),
+            $allowed_html
+        );
     }
 
     if ($action == 'delug') {
         spa_prepare_msbox_list('usergroup_del', $usergroup_id);
-        echo wp_kses_post( spa_populate_msbox_list('usergroup_del', $usergroup_id, 'dmid', $from, $to, $ug) );
+        echo wp_kses(
+            spa_populate_msbox_list('usergroup_del', $usergroup_id, 'dmid', $from, $to, $ug),
+            $allowed_html
+        );
     }
 
     if ($action == 'addru') {
         spa_prepare_msbox_list('rank_add', $rank_id);
-        echo wp_kses_post( spa_populate_msbox_list('rank_add', $rank_id, 'amember_id', $from, $to, $ug) );
+        echo wp_kses(
+            spa_populate_msbox_list('rank_add', $rank_id, 'amember_id', $from, $to, $ug),
+            $allowed_html
+        );
     }
 
     if ($action == 'delru') {
         spa_prepare_msbox_list('rank_del', $rank_id);
-        echo wp_kses_post( spa_populate_msbox_list('rank_del', $rank_id, 'dmember_id', $from, $to, $ug) );
+        echo wp_kses(
+            spa_populate_msbox_list('rank_del', $rank_id, 'dmember_id', $from, $to, $ug),
+            $allowed_html
+        );
     }
 
     if ($action == 'addadmin') {
         spa_prepare_msbox_list('admin_add', '');
-        echo wp_kses_post( spa_populate_msbox_list('admin_add', '', 'member_id', $from, $to, $ug, 20) );
+        echo wp_kses(
+            spa_populate_msbox_list('admin_add', '', 'member_id', $from, $to, $ug, 20),
+            $allowed_html
+        );
     }
 
     return;
@@ -186,7 +260,6 @@ function spa_get_query_max($msbox, $uid, $filter) {
 
 function spa_render_msbox_list($msbox, $uid, $name, $from, $num, $records, $offset, $max, $filter, $ug) {
     $empty = true;
-
 
     $out = '<div id="mslist-' . $name . $uid . '">';
         $out .= "<div style='display: flex;'>";
