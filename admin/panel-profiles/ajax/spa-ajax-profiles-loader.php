@@ -17,7 +17,7 @@ if (!sp_nonce('profiles-loader')) {
 }
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
+	echo esc_html(SP()->core->status);
 	die();
 }
 
@@ -44,19 +44,19 @@ if (isset($_GET['loadform'])) {
 if (isset($_GET['saveform'])) {
 	switch(sanitize_text_field($_GET['saveform'])) {
 		case 'global':
-			echo spa_save_global_data();
+			echo esc_html(spa_save_global_data());
 			break;
 
 		case 'tabs-menus':
-			echo spa_save_tabs_menus_data();
+			echo esc_html(spa_save_tabs_menus_data());
 			break;
 
 		case 'options':
-			echo spa_save_options_data();
+			echo esc_html(spa_save_options_data());
 			break;
 
 		case 'avatars':
-			echo spa_save_avatars_data();
+			echo esc_html(spa_save_avatars_data());
 			break;
 	}
 }
