@@ -17,8 +17,6 @@
 
 				sp_SectionEnd();
 				
-				
-				
 				sp_InsertBreak();
 
 			sp_SectionEnd('', 'profileAvatarRank');
@@ -28,28 +26,17 @@
 			
 			
 			if( 0 === count( $groups ) ) {
-				printf( '<div class="spUsergroupEmpty">%s</div>', sprintf( '%s is not a member of a group', SP()->user->profileUser->display_name ) );
+				printf( '<div class="spUsergroupEmpty">%s</div>', sprintf( '%s is not a member of a group', esc_html(SP()->user->profileUser->display_name) ) );
 			} else {
 				
-				printf( '<div class="spUsergroupListMsg">%s</div>', sprintf( '%s belongs to following groups', SP()->user->profileUser->display_name ) );
+				printf( '<div class="spUsergroupListMsg">%s</div>', sprintf( '%s belongs to following groups', esc_html(SP()->user->profileUser->display_name )) );
 				
 				echo '<ul class="spUsergroupsList">';
 				foreach ( $groups as $group ) {
-					echo '<li>' . $group->usergroup_name . '</li>';
+					echo '<li>' . esc_html($group->usergroup_name) . '</li>';
 				}
 				echo '</ul>';
 			}
-			
-			
-
-				
-
 			sp_SectionEnd('', 'profileStats');
-
 		sp_SectionEnd('tagClass=spClear', 'profileBasic');
-
-			
-
-		
-
 	sp_SectionEnd('tagClass=spClear', 'profileShow');
