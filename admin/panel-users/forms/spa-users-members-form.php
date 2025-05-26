@@ -32,6 +32,7 @@ function sp_list_members() {
     //Build usergroup links
     $ug_links = array();
     //"All Members" link.
+    // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
     $all_total = $wpdb->get_var( "SELECT COUNT(*) FROM " . SPMEMBERS );
     $class = empty( $usergroup_filter ) ? ' class="current"' : '';
     $ug_links['all'] = "<a href='" . esc_url( add_query_arg( 'usergroup', '', $current_url ) ) . "'{$class}>All Members ({$all_total})</a>";
@@ -49,8 +50,8 @@ function sp_list_members() {
 
     //"No Membership" link.
     $no_membership = $wpdb->get_var(
-        "SELECT COUNT(*) FROM " . SPMEMBERS . " 
-         WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") 
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        "SELECT COUNT(*) FROM " . SPMEMBERS . " WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") 
          AND admin = 0"
     );
     $class = ( $usergroup_filter === -1 ) ? ' class="current"' : '';
@@ -64,30 +65,31 @@ function sp_list_members() {
         if ( $usergroup_filter === -1 ) {
             //Only members with no membership.
             $total = $wpdb->get_var(
-                "SELECT COUNT(*) FROM " . SPMEMBERS . " 
-                 WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") 
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                "SELECT COUNT(*) FROM " . SPMEMBERS . " WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") 
                  AND admin = 0"
             );
-            $query = "SELECT * FROM " . SPMEMBERS . " 
-                      WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") 
-                      AND admin = 0 
-                      LIMIT %d, %d";
-            $members = SP()->DB->select( $wpdb->prepare( $query, $offset, $per_page ) );
+            $members = SP()->DB->select( $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                "SELECT * FROM " . SPMEMBERS . " WHERE user_id NOT IN (SELECT user_id FROM " . SPMEMBERSHIPS . ") 
+                    AND admin = 0 
+                    LIMIT %d, %d",
+                $offset, $per_page ) );
         } else {
             //Filter by specific user group.
             $total = $wpdb->get_var( $wpdb->prepare(
-                "SELECT COUNT(DISTINCT m.user_id)
-                 FROM " . SPMEMBERS . " m
-                 INNER JOIN " . SPMEMBERSHIPS . " ms ON m.user_id = ms.user_id
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                "SELECT COUNT(DISTINCT m.user_id) FROM " . SPMEMBERS . " m INNER JOIN " . SPMEMBERSHIPS . " ms ON m.user_id = ms.user_id
                  WHERE ms.usergroup_id = %d",
                 $usergroup_filter
             ) );
-            $query = "SELECT DISTINCT m.* 
-                      FROM " . SPMEMBERS . " m
-                      INNER JOIN " . SPMEMBERSHIPS . " ms ON m.user_id = ms.user_id
+            $members = SP()->DB->select( $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                "SELECT DISTINCT m.* FROM " . SPMEMBERS . " m INNER JOIN " . SPMEMBERSHIPS . " ms ON m.user_id = ms.user_id
                       WHERE ms.usergroup_id = %d
-                      LIMIT %d, %d";
-            $members = SP()->DB->select( $wpdb->prepare( $query, $usergroup_filter, $offset, $per_page ) );
+                      LIMIT %d, %d",
+                $usergroup_filter, $offset, $per_page 
+            ) );
         }
     } else {
         //No filter: list all members.
@@ -99,7 +101,19 @@ function sp_list_members() {
     $total_pages = ceil( $total / $per_page );
 
     ob_start();
-    echo $nav_output;
+    echo wp_kses(
+        $nav_output,
+        [
+            'div' => [
+                'class' => true,
+                'style' => true
+            ],
+            'a' => [
+                'class' => true,
+                'href' => true
+            ]
+        ]
+    );
     ?>
     <table class="widefat striped">
         <thead>
