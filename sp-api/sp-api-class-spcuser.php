@@ -817,8 +817,11 @@ class spcUser {
         foreach ($tables as $table) {
             $sanitized_table = esc_sql($dbprefix . $table); // Sanitize table name
 
-            $query = $wpdb->prepare("DELETE FROM $sanitized_table WHERE user_id = %d", $userid);
-            $wpdb->query($query);
+            $wpdb->query($wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                "DELETE FROM " . $sanitized_table ." WHERE user_id = %d",
+                $userid
+            )) ;
         }
 
 		# remove from recent members list if present
