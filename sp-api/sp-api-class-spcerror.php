@@ -233,23 +233,27 @@ class spcError {
 			$cat = 'spaErrStrict';
 		}
 
-		$now = "'".current_time('mysql')."'";
-		$sql = 'INSERT INTO '.SPERRORLOG;
-		$sql .= ' (error_date, error_type, error_cat, keycheck, error_count, error_text) ';
-		$sql .= 'VALUES (';
-		$sql .= $now.', ';
-		$sql .= "'".$errortype."', ";
-		$sql .= "'".$cat."', ";
-		$sql .= "'".$keyCheck."', ";
-		$sql .= '1, ';
-		$sql .= "'".SP()->filters->esc_sql($errortext)."')";
-		$wpdb->query($sql);
+        $now = current_time('mysql');
+        $table = SPERRORLOG;
+        $data = array(
+            'error_date'  => $now,
+            'error_type'  => $errortype,
+            'error_cat'   => $cat,
+            'keycheck'    => $keyCheck,
+            'error_count' => 1,
+            'error_text'  => $errortext,
+        );
+        $format = array('%s', '%s', '%s', '%s', '%d', '%s');
+        $wpdb->insert($table, $data, $format);
 
 		# leave just last 50 entries
 		if ($wpdb->insert_id > 51) {
-			$sql = 'DELETE FROM '.SPERRORLOG.' WHERE
-					id < '.($wpdb->insert_id - 50);
-			$wpdb->query($sql);
+            $id_query = $wpdb->insert_id - 50;
+            $wpdb->query($wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                'DELETE FROM '.SPERRORLOG.' WHERE id < %d',
+                $id_query
+            ));
 		}
 	}
 
@@ -275,13 +279,18 @@ class spcError {
 
 		if (SP()->DB->connectionExists() == false) return;
 
-		$now = "'".current_time('mysql')."'";
-		$e++;
-		$sql = 'UPDATE '.SPERRORLOG.' SET
-				error_date = '.$now.',
-				error_count = '.$e.' WHERE
-				keycheck = "'.$keyCheck.'"';
-		$wpdb->query($sql);
+        $now = current_time('mysql');
+        $e++;
+        $table = SPERRORLOG;
+        $where = array('keycheck' => $keyCheck);
+        $data = array(
+            'error_date'  => $now,
+            'error_count' => $e,
+        );
+        $format = array('%s', '%d');
+        $where_format = array('%s');
+        $wpdb->update($table, $data, $where, $format, $where_format);
+  
 	}
 
 	/** -----------------------------------------------------------------
