@@ -119,7 +119,7 @@ function sp_load_forum_scripts() {
 		if (!empty($sp_plugin_scripts)) {
 			foreach ($sp_plugin_scripts->queue as $handle) {
 				# enqueue with wp
-				wp_enqueue_script($handle, $sp_plugin_scripts->registered[$handle]->src, $sp_plugin_scripts->registered[$handle]->deps, false, (!empty($sp_plugin_scripts->registered[$handle]->extra['group'])));
+				wp_enqueue_script($handle, $sp_plugin_scripts->registered[$handle]->src, $sp_plugin_scripts->registered[$handle]->deps, SPBUILD, (!empty($sp_plugin_scripts->registered[$handle]->extra['group'])));
 
 				# too late to localize scripts since already formatted - so just set the wp script data equal it our localized data
 				$data = $sp_plugin_scripts->get_data($handle, 'data');
@@ -369,13 +369,13 @@ function sp_forum_header() {
 		?>
 		<style>
 		<?php
-		if (!empty($inlineCSS)) echo $inlineCSS;
+		if (!empty($inlineCSS)) echo esc_html($inlineCSS);
 		if ($sfc['flagsuse']) {
 			?>
 				#spMainContainer a.spNewFlag,
 				#spMainContainer .spNewFlag {
-					color: #<?php echo($sfc['flagscolor']); ?> !important;
-					background-color: #<?php echo($sfc['flagsbground']); ?>;
+					color: #<?php echo(esc_html($sfc['flagscolor'])); ?> !important;
+					background-color: #<?php echo(esc_html($sfc['flagsbground'])); ?>;
 				}
 		<?php } ?>
 		</style>
