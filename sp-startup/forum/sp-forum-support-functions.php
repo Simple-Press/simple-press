@@ -324,7 +324,7 @@ function sp_browser_title($title) {
  */
 function sp_title_hook() {
 	$out = apply_filters('sph_before_page_title', '');
-	echo $out;
+	echo esc_html($out);
 }
 
 /**
@@ -457,7 +457,15 @@ function sp_setup_meta_tags() {
 		$description = sp_get_metadescription();
 		if ($description != '') {
 			$description = str_replace('"', '', $description);
-			echo "\t".'<meta name="description" content="'.$description.'" />'."\n";
+			echo "\t".wp_kses(
+				'<meta name="description" content="' . esc_attr($description) . '" />' . "\n",
+				array(
+					'meta' => array(
+						'name'    => array(),
+						'content' => array(),
+					),
+				)
+			);
 		}
 		# add to SEO data
 		SP()->rewrites->pageData['seodescription'] = $description;
@@ -467,7 +475,15 @@ function sp_setup_meta_tags() {
 		$keywords = sp_get_metakeywords();
 		if ($keywords != '') {
 			$keywords = str_replace('"', '', $keywords);
-			echo "\t".'<meta name="keywords" content="'.$keywords.'" />'."\n";
+			echo "\t".wp_kses(
+				'<meta name="keywords" content="' . esc_attr($keywords) . '" />' . "\n",
+				array(
+					'meta' => array(
+						'name' => true,
+						'content' => true,
+					),
+				)
+			);
 		}
 		SP()->rewrites->pageData['seokeywords'] = $keywords;
 	}
@@ -475,7 +491,16 @@ function sp_setup_meta_tags() {
 	if (empty(SP()->core->forumData['canonicalurl'])) {
 		# output the canonical url
 		$url = sp_canonical_url();
-		echo "\t".'<link rel="canonical" href="'.$url.'" />'."\n";
+		echo wp_kses(
+			"\t" . '<link rel="canonical" href="' . esc_url($url) . '" />' . "\n",
+			array(
+				'link' => array(
+					'rel' => array(),
+					'href' => array(),
+				),
+			)
+		);
+
 		SP()->rewrites->pageData['seourl'] = $url;
 	}
 }
