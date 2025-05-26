@@ -132,7 +132,22 @@ function spa_register_math() {
 		$out .= '<input class="input" type="text" id="'.$uKey1.'" name="'.$uKey1.'" value="" />'."\n";
 		$out .= '<input type="hidden" name="'.$uKey2.'" value="'.$spammath[2].'" />'."\n";
 		$out .= '<br />';
-		echo $out;
+
+        $allowed_html = array(
+            'input' => array(
+                'type' => true,
+                'size' => true,
+                'name' => true,
+                'value' => true,
+                'id' => true,
+                'class' => true,
+            ),
+            'label' => array(),
+            'strong' => array(),
+            'br' => array(),
+        );
+
+        echo wp_kses( $out, $allowed_html );
 	}
 }
 
@@ -217,7 +232,7 @@ function sp_math_spam_build() {
 	# Add name of the weblog:
 	$result .= get_bloginfo('name');
 	# Add date:
-	$result .= date('j').date('ny');
+	$result .= date_i18n('j').date_i18n('ny');
 	# Get MD5 and reverse it
 	$enc = strrev(md5($result));
 	# Get only a few chars out of the string
@@ -258,7 +273,7 @@ function sp_spamcheck() {
 	# Add name of the weblog:
 	$test .= get_bloginfo('name');
 	# Add date:
-	$test .= date('j').date('ny');
+	$test .= date_i18n('j').date_i18n('ny');
 	# Get MD5 and reverse it
 	$enc = strrev(md5($test));
 	# Get only a few chars out of the string
