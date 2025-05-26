@@ -69,7 +69,7 @@ class spcDateTime {
 		if ($return == 'display') {
 			$date = date_i18n(SPDATES, $date).' - '.date_i18n(SPTIMES, $date);
 		} else if ($return == 'mysql') {
-			$date = date('Y-m-d H:i:s', $date);
+			$date = date_i18n('Y-m-d H:i:s', $date);
 		}
 
 		return $date;
@@ -150,7 +150,7 @@ class spcDateTime {
 		}
 
 		# put in date string format
-		$date = date('Y-m-d H:i:s', $dts);
+		$date = date_i18n('Y-m-d H:i:s', $dts);
 
 		return $date;
 	}
@@ -178,7 +178,7 @@ class spcDateTime {
 		}
 
 		# put in date string format
-		$date = date('Y-m-d H:i:s', $dts);
+		$date = date_i18n('Y-m-d H:i:s', $dts);
 
 		return $date;
 	}
