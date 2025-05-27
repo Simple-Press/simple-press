@@ -568,7 +568,16 @@ function sp_og_meta() {
 		}
 		if ($link) $out .= $mp.'"og:image" content="'.$link.'"/>'."\n";
 
-		echo $out."\n";
+		// Define allowed HTML tags and attributes for wp_kses
+		$allowed_html = array(
+			'meta' => array(
+				'property' => array(),
+				'content'  => array(),
+			),
+		);
+
+		echo wp_kses($out, $allowed_html)."\n";
+  
 	}
 }
 

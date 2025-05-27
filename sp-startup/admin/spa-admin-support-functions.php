@@ -367,9 +367,9 @@ function spa_deactivate_plugin() {
  * @return void
  */
 function spa_wp_discussion_avatar($list) {
-	echo '<h3>'.SP()->primitives->admin_text('Currently, all WP avatars are being replaced by Simple:Press avatars. You can change this at');
+	echo '<h3>'.esc_html(SP()->primitives->admin_text('Currently, all WP avatars are being replaced by Simple:Press avatars. You can change this at'));
 	echo ': <a href="'.esc_url(admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-profiles/spa-profiles.php&amp;tab=avatars')).'">';
-	echo SP()->primitives->admin_text('Forum - Profiles - Avatars');
+	echo esc_html(SP()->primitives->admin_text('Forum - Profiles - Avatars')));
 	echo '</a>.';
 	echo '</h3>';
 }
@@ -389,11 +389,11 @@ function sp_action_nag() {
 		echo '<div class="error highlight notice is-dismissible"><p><b>';
 		echo '<img style="vertical-align:bottom;border:none;margin:0 8px 60px 0;float:left" src="'.esc_url(SP()->theme->paint_file_icon(SPADMINIMAGES, 'sp_Information.png')).'" alt="" />'."\n";
 		if (SP()->core->status == 'Install') {
-			echo sprintf(SP()->primitives->admin_text('Your Simple:Press forum is awaiting the initial database %s before it can be used'), strtolower(esc_html(SP()->core->status)));
+			echo esc_html(sprintf(SP()->primitives->admin_text('Your Simple:Press forum is awaiting the initial database %s before it can be used'), strtolower(esc_html(SP()->core->status))));
 		} else if (SP()->core->status == 'Upgrade') {
-			echo sprintf(SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database %s'), strtolower(esc_html(SP()->core->status)));
+			echo esc_html(sprintf(SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database %s'), strtolower(esc_html(SP()->core->status))));
 		}
-		echo '<br />' .SP()->primitives->admin_text('Please backup your site and then ') . '<a style="text-decoration: underline;" href="'.esc_url(SPADMINUPGRADE).'">'.SP()->primitives->admin_text('Perform').' '.esc_html(SP()->core->status).'</a>';
+		echo '<br />' .esc_html(SP()->primitives->admin_text('Please backup your site and then ')) . '<a style="text-decoration: underline;" href="'.esc_url(SPADMINUPGRADE).'">'.esc_html(SP()->primitives->admin_text('Perform')).' '.esc_html(SP()->core->status).'</a>';
 		echo '</b></p></div>';
     }
 
