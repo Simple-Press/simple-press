@@ -555,6 +555,7 @@ class spcPlugin {
 	 *
 	 * @param string $file contains the filename to get basename for
 	 */
+    /*
 	function combine_css() {
 		global $sp_plugin_styles;
 
@@ -660,6 +661,7 @@ class spcPlugin {
 		}
 		SP()->options->update($option, $css_concat);
 	}
+*/
 
 	/**
 	 * This method adds a new forum admin subpanels.
@@ -670,9 +672,21 @@ class spcPlugin {
 	 *
 	 * @param string $file contains the filename to get basename for
 	 */
-	public function clear_css_cache($media = 'all') {
-		if (file_exists(SP_COMBINED_CACHE_DIR.SP_COMBINED_CSS_BASE_NAME.$media.'.css')) @unlink(SP_COMBINED_CACHE_DIR.SP_COMBINED_CSS_BASE_NAME.$media.'.css');
-	}
+    public function clear_css_cache($media = 'all') {
+        $cache_file = SP_COMBINED_CACHE_DIR . SP_COMBINED_CSS_BASE_NAME . $media . '.css';
+        if (file_exists($cache_file)) {
+            // Use WordPress Filesystem API to delete the file
+            if (!function_exists('WP_Filesystem')) {
+                require_once ABSPATH . 'wp-admin/includes/file.php';
+            }
+            global $wp_filesystem;
+            if (empty($wp_filesystem)) {
+                WP_Filesystem();
+            }
+            $wp_filesystem->delete($cache_file);
+        }
+    }
+
 
 	/**
 	 * This method reads a plugin css file to add to css cache.
@@ -745,6 +759,7 @@ class spcPlugin {
 	 *
 	 * @param string $file contains the filename to get basename for
 	 */
+    /*
 	public function combine_scripts() {
 		global $sp_plugin_scripts, $skip_combine_js;
 
@@ -856,7 +871,7 @@ class spcPlugin {
 				if (!empty($saved_scripts)) {
 					foreach ($saved_scripts->queue as $handle) {
 						$plugin_footer = (is_array($saved_scripts->registered[$handle]->extra) && $saved_scripts->registered[$handle]->extra['group'] == 1) ? true : false;
-						wp_enqueue_script($handle, $saved_scripts->registered[$handle]->src, $saved_scripts->registered[$handle]->deps, false, $plugin_footer);
+						wp_enqueue_script($handle, $saved_scripts->registered[$handle]->src, $saved_scripts->registered[$handle]->deps, SPBUILD, $plugin_footer);
 					}
 				}
 
@@ -871,6 +886,7 @@ class spcPlugin {
 
 		SP()->options->update($option, $js_concat);
 	}
+*/
 
 	/**
 	 * This method reads a plugin css file to add to css cache.
@@ -882,26 +898,21 @@ class spcPlugin {
 	 * @param string $file contains the filename to get basename for
 	 */
 	public function clear_scripts_cache($media = 'desktop') {
-		if (file_exists(SP_COMBINED_CACHE_DIR.SP_COMBINED_SCRIPTS_BASE_NAME.$media.'-header.js')) @unlink(SP_COMBINED_CACHE_DIR.SP_COMBINED_SCRIPTS_BASE_NAME.$media.'-header.js');
-		if (file_exists(SP_COMBINED_CACHE_DIR.SP_COMBINED_SCRIPTS_BASE_NAME.$media.'-footer.js')) @unlink(SP_COMBINED_CACHE_DIR.SP_COMBINED_SCRIPTS_BASE_NAME.$media.'-footer.js');
+
+		if (file_exists(SP_COMBINED_CACHE_DIR . SP_COMBINED_SCRIPTS_BASE_NAME . $media . '-header.js')) {
+			wp_delete_file(SP_COMBINED_CACHE_DIR . SP_COMBINED_SCRIPTS_BASE_NAME . $media . '-header.js');
+		}
+		if (file_exists(SP_COMBINED_CACHE_DIR . SP_COMBINED_SCRIPTS_BASE_NAME . $media . '-footer.js')) {
+			wp_delete_file(SP_COMBINED_CACHE_DIR . SP_COMBINED_SCRIPTS_BASE_NAME . $media . '-footer.js');
+		}
+
 	}
 
 	public function add_storage($dir, $option) {
 		# make sure main storage location has ben created
 		$basepath = 'sp-resources';
 		if (!file_exists(SP_STORE_DIR.'/'.$basepath)) {
-			$perms  = fileperms(SP_STORE_DIR);
-			$owners = stat(SP_STORE_DIR);
-			if ($perms === false) $perms = 0755;
-			@mkdir(SP_STORE_DIR.'/'.$basepath, $perms);
-			if (file_exists(SP_STORE_DIR.'/'.$basepath)) {
-				# Is the ownership correct?
-				$newowners = stat(SP_STORE_DIR.'/'.$basepath);
-				if ($newowners['uid'] != $owners['uid'] || $newowners['gid'] != $owners['gid']) {
-					@chown(SP_STORE_DIR.'/'.$basepath, $owners['uid']);
-					@chgrp(SP_STORE_DIR.'/'.$basepath, $owners['gid']);
-				}
-			}
+            wp_mkdir_p(SP_STORE_DIR.'/'.$basepath);
 		}
 
 		# save the storage option
@@ -911,7 +922,9 @@ class spcPlugin {
 
 		# create the physical storage location
 		$newpath = SP_STORE_DIR.'/'.$sfconfig[$option];
-		if (!file_exists($newpath)) @mkdir($newpath, 0775);
+        if (!file_exists($newpath)){
+            wp_mkdir_p($newpath);
+        }
 
 		return $newpath;
 	}
@@ -947,11 +960,8 @@ class spcPlugin {
 			$css_file = substr($css_file, strlen(get_bloginfo('url')) + 1); # change to relative path
 			if (strpos($css_file, '?')) $css_file = substr($css_file, 0, strpos($css_file, '?')); # removing parameters
 		} else {
-			$source_file = fopen($css_file, 'r');
-			if ($source_file) {
-				$content = fread($source_file, filesize($css_file));
-				fclose($source_file);
-			} else {
+			$content = file_get_contents( $css_file );
+			if ( false === $content ) {
 				return '';
 			}
 		}
