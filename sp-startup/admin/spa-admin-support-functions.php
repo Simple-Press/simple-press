@@ -401,11 +401,11 @@ function sp_action_nag() {
     if ($_SERVER['REQUEST_URI'] != '/wp-admin/index.php' && SP()->core->status == 'Unallowed 6.0 Upgrade') {
 		echo '<div class="error highlight notice is-dismissible"><p><b>';
 		echo '<img style="vertical-align:bottom;border:none;margin:0 8px 60px 0;float:left" src="'.esc_url(SP()->theme->paint_file_icon(SPADMINIMAGES, 'sp_Information.png')).'" alt="" />'."\n";
-		echo SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database upgrade.').'<br />';
-		echo sprintf(SP()->primitives->admin_text('You are attempting to upgrade to version %s from you current version of %s.'), esc_html(SPVERSION), esc_html(SP()->options->get('sfversion'))).'<br />';
-		echo SP()->primitives->admin_text('Unfortunately, auto upgrades from versions prior to 5.7.2 are not allowd due to the complexity of the changes.').'<br />';
+		echo esc_html(SP()->primitives->admin_text('The forum is temporarily unavailable while awaiting a database upgrade.')).'<br />';
+		echo esc_html(sprintf(SP()->primitives->admin_text('You are attempting to upgrade to version %s from you current version of %s.'), esc_html(SPVERSION), esc_html(SP()->options->get('sfversion')))).'<br />';
+		echo esc_html(SP()->primitives->admin_text('Unfortunately, auto upgrades from versions prior to 5.7.2 are not allowd due to the complexity of the changes.')).'<br />';
         SP()->primitives->admin_etext('Please visit our ').'<a href="https://simple-press.com/documentation/installation/upgrading/previous-simplepress-versions/">'.SP()->primitives->admin_text('previous versions page').'</a>';
-        echo sprintf(SP()->primitives->admin_text(', then download and upgrade to at least version 5.7.2 before attempting to upgrade to version %s.'), SPVERSION).'<br />';
+        echo esc_html(sprintf(SP()->primitives->admin_text(', then download and upgrade to at least version 5.7.2 before attempting to upgrade to version %s.'), SPVERSION)).'<br />';
     	echo '</b></p></div>';
    }
 }
@@ -552,11 +552,11 @@ function spa_dashboard_news() {
 	echo '<div id="spa_dashboard_news" style="background:#FFFFEA;border:2px solid #666;border-radius:9px;margin:10px;padding:15px;">';
 	echo '<div style="vertical-align:middle;border-bottom:1px solid #666;margin-bottom:16px;padding:7px 0;">';
 	echo '<img src="'.esc_url(SPCOMMONIMAGES).'sp-full-logo.png" alt="" style="vertical-align:middle;float:left;margin:0 15px 10px 0;padding-right:12px;border-right:1px solid #666;" />';
-	echo '<p style="vertical-align:middle;margin:13px 0 0 0;font-weight:bold;font-size:20px;line-height:1em;">'.SP()->primitives->admin_text('Recent News').'</p>';
+	echo '<p style="vertical-align:middle;margin:13px 0 0 0;font-weight:bold;font-size:20px;line-height:1em;">'.esc_html(SP()->primitives->admin_text('Recent News')).'</p>';
 	echo '<div style="clear:both;"></div>';
 	echo '</div>';
 	echo '<div class="spa_dashboard_text">';
-	echo SP()->displayFilters->text($spNews);
+	echo esc_html(SP()->displayFilters->text($spNews));
 	spa_plugin_addon_dashboard_update();
 	spa_theme_addon_dashboard_update();
 	echo '</div>';
@@ -564,9 +564,9 @@ function spa_dashboard_news() {
 	echo '<div style="border-top:1px solid #666;margin-top:18px;padding:10px 0;">';
 	$site = wp_nonce_url(SPAJAXURL.'remove-news&amp;targetaction=news', 'remove-news');
 	if(!empty($sp_update_plugins) || !empty($sp_update_themes)){
-		echo '<a href="'.esc_url(self_admin_url('update-core.php')).'"><input type="button" value="'.SP()->primitives->admin_text('Go to Update page').'" class="sf-button-primary" /></a> &nbsp; &nbsp;';	
+		echo '<a href="'.esc_url(self_admin_url('update-core.php')).'"><input type="button" value="'.esc_html(SP()->primitives->admin_text('Go to Update page')).'" class="sf-button-primary" /></a> &nbsp; &nbsp;';	
 	}
-	echo '<input type="button" value="'.SP()->primitives->admin_text('Remove News Item').'" class="sf-button-primary" onclick="spj.removeNews(\''.esc_js($site).'\')"/>';
+	echo '<input type="button" value="'.esc_html(SP()->primitives->admin_text('Remove News Item')).'" class="sf-button-primary" onclick="spj.removeNews(\''.esc_js($site).'\')"/>';
 	echo '</div>';
 	echo '</div>';
 }
@@ -844,7 +844,7 @@ function spa_plugin_addon_dashboard_update()
 									<?php
 									$header = false;
 					}
-					echo "<tr class='active'><td><strong>{".esc_html($plugin_data['Name'])."}</strong><br />".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($plugin_data['Version']), esc_html($check_for_addon_update->new_version), esc_html(SPVERSION))."</td>
+					echo "<tr class='active'><td><strong>{".esc_html($plugin_data['Name'])."}</strong><br />".esc_html(sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($plugin_data['Version']), esc_html($check_for_addon_update->new_version), esc_html(SPVERSION)))."</td>
 					</tr>";
 				}
 			
@@ -869,7 +869,7 @@ function spa_plugin_addon_dashboard_update()
 											<?php
 											$header = false;
 							}
-							echo "<tr class='active'><td><strong>{".esc_html($plugin_data['Name'])."}</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($plugin_data['Version']), esc_html($latest->version), esc_html(SPVERSION))."</td>
+							echo "<tr class='active'><td><strong>{".esc_html($plugin_data['Name'])."}</strong><br />".esc_html(sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($plugin_data['Version']), esc_html($latest->version), esc_html(SPVERSION)))."</td>
 							</tr>";
 						}
 					}
@@ -924,7 +924,7 @@ function spa_theme_addon_dashboard_update()
 					$screenshot = SPTHEMEBASEURL.$theme_file.'/'.$theme_data['Screenshot'];
 					echo "
 						<tr class='active'>
-						<td class='plugin-title'><strong>".esc_html($theme_data['Name'])."</strong>".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($theme_data['Version']), esc_html($check_for_addon_update->new_version), esc_html(SPVERSION))."</td>
+						<td class='plugin-title'><strong>".esc_html($theme_data['Name'])."</strong>".esc_html(sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($theme_data['Version']), esc_html($check_for_addon_update->new_version), esc_html(SPVERSION)))."</td>
 						</tr>";
 				}
 			}
@@ -948,8 +948,18 @@ function spa_theme_addon_dashboard_update()
 											<?php
 											$header = false;
 							}
-							echo "<tr class='active'><td><strong>{".esc_html($theme_data['Name'])."}</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($theme_data['Version']), esc_html($latest->version), esc_html(SPVERSION))."</td>
-							</tr>";
+                            echo "<tr class='active'>
+                                <td>
+                                    <strong>{" . esc_html($theme_data['Name']) . "}</strong>
+                                    <br />" . esc_html(sprintf(
+                                        SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'),
+                                        esc_html($theme_data['Version']),
+                                        esc_html($latest->version),
+                                        esc_html(SPVERSION)
+                                    )) . "
+                                </td>
+                            </tr>";
+
 						}
 					}
 				}
@@ -1033,10 +1043,20 @@ function spa_check_plugin_addon_update() {
 								$header = false;
 				}
 				echo "
-				<tr class='active'>
-				<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($plugin_file)."' /></th>
-				<td><strong>".esc_html($plugin_data['Name'])."</strong><br />".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s.'), esc_html($plugin_data['Version']), esc_html($check_for_addon_update->new_version))."</td>
-				</tr>";
+                    <tr class='active'>
+                        <th scope='row' class='check-column'>
+                            <input type='checkbox' name='checked[]' value='".esc_attr($plugin_file)."' />
+                        </th>
+                        <td>
+                            <strong>".esc_html($plugin_data['Name'])."</strong>
+                            <br />
+                            ".esc_html(sprintf(
+                                SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s.'),
+                                esc_html($plugin_data['Version']),
+                                esc_html($check_for_addon_update->new_version)
+                            ))."
+                        </td>
+                    </tr>";
 				$data = new stdClass;
 				$data->slug = $plugin_file;
 				$data->new_version = (string) $check_for_addon_update->new_version;
@@ -1083,11 +1103,23 @@ function spa_check_plugin_addon_update() {
 										<?php
 										$header = false;
 									}
-									echo "
-									<tr class='active'>
-									<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($plugin_file)."' /></th>
-									<td><strong>".esc_html($plugin_data['Name'])."</strong><br />".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($plugin_data['Version']), esc_html($latest->version), esc_html(SPVERSION))."</td>
-									</tr>";
+                                    echo "
+                                    <tr class='active'>
+                                        <th scope='row' class='check-column'>
+                                            <input type='checkbox' name='checked[]' value='".esc_attr($plugin_file)."' />
+                                        </th>
+                                        <td>
+                                            <strong>".esc_html($plugin_data['Name'])."</strong>
+                                            <br />
+                                            ".esc_html(sprintf(
+                                                SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'),
+                                                esc_html($plugin_data['Version']),
+                                                esc_html($latest->version),
+                                                esc_html(SPVERSION)
+                                            ))."
+                                        </td>
+                                    </tr>
+                                    ";
 									$data = new stdClass;
 									$data->slug = $plugin_file;
 									$data->new_version = (string) $latest->version;
@@ -1207,11 +1239,25 @@ function spa_check_theme_addon_update(){
 								$header = false;
 				}
 				$screenshot = SPTHEMEBASEURL.$theme_file.'/'.$theme_data['Screenshot'];
+
 				echo "
 					<tr class='active'>
-					<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($theme_file)."' /></th>
-					<td class='plugin-title'><img src='".esc_url($screenshot)."' width='64' height='64' style='float:left; padding: 5px' /><strong>".esc_html($theme_data['Name'])."</strong>".sprintf(SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s.'), esc_html($theme_data['Version']), esc_html($check_for_addon_update->new_version))."</td>
-					</tr>";
+						<th scope='row' class='check-column'>
+							<input type='checkbox' name='checked[]' value='" . esc_attr($theme_file) . "' />
+						</th>
+						<td class='plugin-title'>
+							<img src='" . esc_url($screenshot) . "' width='64' height='64' style='float:left; padding: 5px' />
+							<strong>" . esc_html($theme_data['Name']) . "</strong>"
+							. esc_html(sprintf(
+								SP()->primitives->admin_text('You have version %1$s installed. Update to %2$s.'),
+								esc_html($theme_data['Version']),
+								esc_html($check_for_addon_update->new_version)
+							))
+							. "
+						</td>
+					</tr>
+				";
+  
 				$data = new stdClass;
 				$data->slug = $theme_file;
 				$data->stylesheet = $theme_data['Stylesheet'];
@@ -1259,9 +1305,23 @@ function spa_check_theme_addon_update(){
 											$header = false;
 										}
 										$screenshot = SPTHEMEBASEURL.$theme_file.'/'.$theme_data['Screenshot'];
-										echo "<tr class='active'>
-										<th scope='row' class='check-column'><input type='checkbox' name='checked[]' value='".esc_attr($theme_file)."' /></th>
-										<td class='plugin-title'><img src='".esc_url($screenshot)."' width='64' height='64' style='float:left; padding: 5px' /><strong>".esc_html($theme_data['Name'])."</strong>".sprintf(SP()->primitives->admin_text('[License free update available] You have version %1$s installed. Update to %2$s. Requires SP Version %3$s.'), esc_html($theme_data['Version']), esc_html($latest->version), esc_html(SPVERSION))."</td></tr>";
+
+                                        echo "<tr class='active'>
+                                            <th scope='row' class='check-column'>
+                                                <input type='checkbox' name='checked[]' value='" . esc_attr($theme_file) . "' />
+                                            </th>
+                                            <td class='plugin-title'>
+                                                <img src='" . esc_url($screenshot) . "' width='64' height='64' style='float:left; padding: 5px' />
+                                                <strong>" . esc_html($theme_data['Name']) . "</strong>" .
+                                                esc_html(sprintf(
+                                                    SP()->primitives->admin_text('[License free update available] You have version %1\$s installed. Update to %2\$s. Requires SP Version %3\$s.'),
+                                                    esc_html($theme_data['Version']),
+                                                    esc_html($latest->version),
+                                                    esc_html(SPVERSION)
+                                                ))
+                                            . "</td>
+                                        </tr>";
+  
 										$data = new stdClass;
 										$data->slug = $theme_file;
 										$data->stylesheet = $theme_data['Stylesheet'];
