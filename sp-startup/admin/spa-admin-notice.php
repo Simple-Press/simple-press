@@ -38,7 +38,7 @@ if ($adminrecords) {
 	echo '<p>';
 	echo '<ul>';
 	foreach ($adminrecords as $admin => $name) {
-		echo '<li>'.SP()->displayFilters->name($name).'</li>';
+		echo '<li>'.esc_html(SP()->displayFilters->name($name)).'</li>';
 	}
 	echo '</ul>';
 	echo '</p>';

@@ -219,7 +219,19 @@ function spa_panel_header() {
 
 	# display any warning messages and global 'cleanups'
     # Todo: How can we rewrite this to keep output sanitized
-	echo spa_check_warnings();
+    echo wp_kses(
+        spa_check_warnings(),
+        array(
+            'a' => array(
+                'href' => true,
+                'class' => true,
+                'id' => true,
+            ),
+            'p' => array(),
+            'em' => array(),
+        )
+    );
+
 
 	# News update widget
 	$spNews = spa_check_for_news();
@@ -406,8 +418,36 @@ function spa_render_sidemenu() {
                     }
                 }
 
-                echo $coreMenus;
-                echo $addonMenus;
+                // Define allowed HTML tags and attributes for wp_kses.
+                $allowed_html = array(
+                    'div' => array(
+                        'id' => true,
+                        'class' => true,
+                    ),
+                    'span' => array(
+                        'class' => true,
+                    ),
+                    'a' => array(
+                        'id' => true,
+                        'href' => true,
+                        'class' => true,
+                        'data-form' => true,
+                        'data-url' => true,
+                        'data-target' => true,
+                        'data-img' => true,
+                        'data-id' => true,
+                        'data-open' => true,
+                        'data-upgrade' => true,
+                        'data-admin' => true,
+                        'data-save' => true,
+                        'data-sform' => true,
+                        'data-reload' => true,
+                    ),
+                );
+
+                echo wp_kses($coreMenus, $allowed_html);
+                echo wp_kses($addonMenus, $allowed_html);
+
             echo '</div>'."\n";
 		echo '</div>'."\n";
 	}
@@ -649,13 +689,15 @@ function spa_extract_admin_page() {
  */
 function spa_add_slider_help() {
 
-	if (!SP()->isForumAdmin) return;
-	$out = '';
-	$out .= '<h5>'.SP()->primitives->admin_text('Simple:Press - Help Options').'</h5>';
-	$out .= '<div class="metabox-prefs">';
-	$out .= '<p>'.SP()->primitives->admin_text('For contextual help with Simple:Press, click on the Help buttons/links located on each administration panel').'<br />';
-	$out .= SP()->primitives->admin_text('For Simple:Press information, troubleshooting, how-to, administration, our API and more, please visit our').' <a target="_blank" href="https://simple-press.com/documentation/installation/">'.SP()->primitives->admin_text('Simple:Press Online Documentation').'</a><br />';
-	$out .= SP()->primitives->admin_text('If you cannot find your answer and need extra help, please visit our').' <a href="'.SPHOMESITE.'/support-forum">'.SP()->primitives->admin_text('Support Forum').'</a></p>';
-	$out .= '</div>';
-	echo $out;
+    if (!SP()->isForumAdmin){
+        return;
+    }
+    
+    echo '<h5>' . esc_html(SP()->primitives->admin_text('Simple:Press - Help Options')) . '</h5>';
+    echo '<div class="metabox-prefs">';
+    echo '<p>' . esc_html(SP()->primitives->admin_text('For contextual help with Simple:Press, click on the Help buttons/links located on each administration panel')) . '<br />';
+    echo esc_html(SP()->primitives->admin_text('For Simple:Press information, troubleshooting, how-to, administration, our API and more, please visit our')) . ' <a target="_blank" href="https://simple-press.com/documentation/installation/">' . esc_html(SP()->primitives->admin_text('Simple:Press Online Documentation')) . '</a><br />';
+    echo esc_html(SP()->primitives->admin_text('If you cannot find your answer and need extra help, please visit our')) . ' <a href="' . esc_html(SPHOMESITE) . '/support-forum">' . esc_html(SP()->primitives->admin_text('Support Forum')) . '</a></p>';
+    echo '</div>';
+  
 }
