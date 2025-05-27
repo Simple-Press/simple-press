@@ -111,10 +111,10 @@ function sp_load_forum_scripts() {
 	do_action('sph_print_plugin_scripts', $footer);
 
 	# either enqueue the combines js script cache (checks for updates first) )or enqueue individual scripts
-	$combine_js = SP()->options->get('combinejs');
-	if ($combine_js) { # use compressed scripts
-		SP()->plugin->combine_scripts();
-	} else { # use individual scripts
+	#$combine_js = SP()->options->get('combinejs');
+	#if ($combine_js) { # use compressed scripts
+	#	SP()->plugin->combine_scripts();
+	#} else { # use individual scripts
 		global $sp_plugin_scripts, $wp_scripts;
 		if (!empty($sp_plugin_scripts)) {
 			foreach ($sp_plugin_scripts->queue as $handle) {
@@ -126,7 +126,7 @@ function sp_load_forum_scripts() {
 				$wp_scripts->registered[$handle]->extra['data'] = $data;
 			}
 		}
-	}
+	#}
 
 	do_action('sph_scripts_end', $footer, $tooltips);
 }
@@ -323,17 +323,17 @@ function sp_load_plugin_styles($ajaxCall = false) {
 	# concat (if needed) and enqueue the plugin css
 	do_action('sph_print_plugin_styles');
 
-	$combine_css = SP()->options->get('combinecss');
-	if ($combine_css) {
-		SP()->plugin->combine_css();
-	} else {
+	#$combine_css = SP()->options->get('combinecss');
+	#if ($combine_css) {
+#		SP()->plugin->combine_css();
+#	} else {
 		global $sp_plugin_styles;
 		if (!empty($sp_plugin_styles)) {
 			foreach ($sp_plugin_styles->queue as $handle) {
 				wp_enqueue_style($handle, $sp_plugin_styles->registered[$handle]->src);
 			}
 		}
-	}
+#	}
 
 	do_action('sph_styles_end');
 }
@@ -511,10 +511,9 @@ function sp_render_forum($content) {
 		# set up some stuff after wp page content
 		$content = apply_filters('sph_after_wp_page_content', $content);
 		$content .= '<div id="dialogcontainer" style="display:none;"></div>';
-		$content .= sp_js_check();
 
 		# echo any wp page content
-		echo $content;
+		echo wp_kses_post($content);
 
 		# now add our content
 		do_action('sph_before_template_processing');

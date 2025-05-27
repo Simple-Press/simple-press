@@ -369,7 +369,7 @@ function spa_deactivate_plugin() {
 function spa_wp_discussion_avatar($list) {
 	echo '<h3>'.esc_html(SP()->primitives->admin_text('Currently, all WP avatars are being replaced by Simple:Press avatars. You can change this at'));
 	echo ': <a href="'.esc_url(admin_url('admin.php?page='.SP_FOLDER_NAME.'/admin/panel-profiles/spa-profiles.php&amp;tab=avatars')).'">';
-	echo esc_html(SP()->primitives->admin_text('Forum - Profiles - Avatars')));
+	echo esc_html(SP()->primitives->admin_text('Forum - Profiles - Avatars'));
 	echo '</a>.';
 	echo '</h3>';
 }

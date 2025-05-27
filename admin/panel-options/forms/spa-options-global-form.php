@@ -81,12 +81,12 @@ function spa_options_global_form() {
 
 		spa_paint_tab_right_cell();
 
-		spa_paint_open_panel();
-		spa_paint_open_fieldset( SP()->primitives->admin_text( 'CSS/JS Combined Caching' ), true, 'combined-caches' );
-		spa_paint_checkbox( SP()->primitives->admin_text( 'Enable combining and caching of forum CSS files' ), 'combinecss', $sfoptions['combinecss'] );
-		spa_paint_checkbox( SP()->primitives->admin_text( 'Enable combining and caching of forum script (JS) files' ), 'combinejs', $sfoptions['combinejs'] );
-		spa_paint_close_fieldset();
-		spa_paint_close_panel();
+		#spa_paint_open_panel();
+		#spa_paint_open_fieldset( SP()->primitives->admin_text( 'CSS/JS Combined Caching' ), true, 'combined-caches' );
+		##spa_paint_checkbox( SP()->primitives->admin_text( 'Enable combining and caching of forum CSS files' ), 'combinecss', $sfoptions['combinecss'] );
+		#spa_paint_checkbox( SP()->primitives->admin_text( 'Enable combining and caching of forum script (JS) files' ), 'combinejs', $sfoptions['combinejs'] );
+		#spa_paint_close_fieldset();
+		#spa_paint_close_panel();
 
 		spa_paint_open_panel();
 		spa_paint_open_fieldset( SP()->primitives->admin_text( 'Post Editing' ), true, 'post-editing' );
