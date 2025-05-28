@@ -34,7 +34,7 @@
 					if (SP()->user->thisUser->admin) {
 						
 						$editProfileLink = SP()->spPermalinks->get_url('profile/'.SP()->user->profileUser->ID.'/edit');
-						printf( '<div class="spProfileEditProfileLink"><a class="sf-button-secondary" href="%s">%s</a></div>', $editProfileLink, SP()->primitives->front_text('Edit User Profile') );
+						printf( '<div class="spProfileEditProfileLink"><a class="sf-button-secondary" href="%s">%s</a></div>', esc_html($editProfileLink), esc_html(SP()->primitives->front_text('Edit User Profile')) );
 					}
 					
 					sp_ProfileShowLink('tagClass=spProfileViewFullProfileLink sf-button-secondary', __sp('View Full Profile'));

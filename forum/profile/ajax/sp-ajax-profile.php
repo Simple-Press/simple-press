@@ -61,7 +61,7 @@ if ($action == 'update-sig') {
 	if (empty($userid)) die();
 
 	sp_SetupUserProfileData($userid);
-	echo sp_Signature('', SP()->user->profileUser->signature);
+	sp_Signature('echo=1', SP()->user->profileUser->signature);
 	?>
     <script>
 		(function(spj, $, undefined) {
@@ -78,7 +78,7 @@ if ($action == 'update-display-avatar') {
 	if (empty($userid)) die();
 
 	sp_SetupUserProfileData($userid);
-	echo sp_UserAvatar('tagClass=spCenter&context=user', SP()->user->profileUser);
+	sp_UserAvatar('tagClass=spCenter&context=user&echo=1', SP()->user->profileUser);
 
 	die();
 }
@@ -92,9 +92,10 @@ if ($action == 'update-uploaded-avatar') {
 		$target  = 'spAvatarUpload';
 		$spinner = SPCOMMONIMAGES.'working.gif';
 		echo '<img src="'.esc_url(SPAVATARURL.SP()->user->profileUser->avatar['uploaded']).'" alt="" /><br /><br />';
-		echo "<p class='spCenter'><input type='button' class='spSubmit' id='spDeleteUploadedAvatar' value='".SP()->primitives->front_text('Remove Uploaded Avatar')."' data-url='$ajaxURL' data-target='$target' data-spinner='$spinner' /></p>";
+        echo "<p class='spCenter'><input type='button' class='spSubmit' id='spDeleteUploadedAvatar' value='" . esc_attr( SP()->primitives->front_text( 'Remove Uploaded Avatar' ) ) . "' data-url='" . esc_url( $ajaxURL ) . "' data-target='" . esc_attr( $target ) . "' data-spinner='" . esc_attr( $spinner ) . "' /></p>";
+
 	} else {
-		echo '<p class="spCenter">'.SP()->primitives->front_text('No avatar currently uploaded').'<br /><br /></p>';
+		echo '<p class="spCenter">'.esc_attr(SP()->primitives->front_text('No avatar currently uploaded')).'<br /><br /></p>';
 	}
 
 	die();
@@ -109,9 +110,9 @@ if ($action == 'update-pool-avatar') {
 		$target  = 'spAvatarPool';
 		$spinner = SPCOMMONIMAGES.'working.gif';
 		echo '<img src="'.esc_url(SPAVATARPOOLURL.SP()->user->profileUser->avatar['pool']).'" alt="" /><br /><br />';
-		echo "<div id='spPoolStatus'><p class='spCenter'><input type='button' class='spSubmit' id='spDeletePoolAvatar' value='".SP()->primitives->front_text('Remove Pool Avatar')."' data-url='$ajaxURL' data-target='$target' data-spinner='$spinner' /></p></div>";
+		echo "<div id='spPoolStatus'><p class='spCenter'><input type='button' class='spSubmit' id='spDeletePoolAvatar' value='".esc_attr(SP()->primitives->front_text('Remove Pool Avatar'))."' data-url='".esc_attr($ajaxURL)."' data-target='".esc_attr($target)."' data-spinner='".esc_attr($spinner)."' /></p></div>";
 	} else {
-		echo '<div id="spPoolStatus"><p class="spCenter">'.SP()->primitives->front_text('No pool avatar currently selected').'<br /><br /></p></div>';
+		echo '<div id="spPoolStatus"><p class="spCenter">'.esc_attr(SP()->primitives->front_text('No pool avatar currently selected')).'<br /><br /></p></div>';
 	}
 
 	die();
@@ -124,7 +125,7 @@ if ($action == 'update-remote-avatar') {
 	if (!empty(SP()->user->profileUser->avatar['remote'])) {
 		echo '<img src="'.esc_url(SP()->user->profileUser->avatar['remote']).'" alt="" /><br /><br />';
 	} else {
-		echo '<p class="spCenter">'.SP()->primitives->front_text('No remote avatar currently selected').'<br /><br /></p>';
+		echo '<p class="spCenter">'.esc_attr(SP()->primitives->front_text('No remote avatar currently selected')).'<br /><br /></p>';
 	}
 
 	die();
@@ -137,17 +138,17 @@ if ($action == 'update-memberships') {
 	if ($spProfileData) {
 		$alt = 'spOdd';
 		foreach ($spProfileData as $userGroup) {
-			echo "<div class='spProfileUsergroup $alt'>";
+			echo "<div class='spProfileUsergroup ".esc_attr($alt)."'>";
 			echo '<div class="spColumnSection">';
-			echo '<div class="spHeaderName">'.$userGroup['usergroup_name'].'</div>';
-			echo '<div class="spHeaderDescription">'.$userGroup['usergroup_desc'].'</div>';
+			echo '<div class="spHeaderName">'.esc_html($userGroup['usergroup_name']).'</div>';
+			echo '<div class="spHeaderDescription">'.esc_html($userGroup['usergroup_desc']).'</div>';
 			echo '</div>';
 			if ($userGroup['usergroup_join'] == 1 || SP()->user->thisUser->admin) {
 				$submit = true;
 				echo '<div class="spColumnSection spProfileMembershipsLeave">';
 				echo '<div class="spInRowLabel">';
-				echo '<input type="checkbox" name="usergroup_leave[]" id="sfusergroup_leave_'.$userGroup['usergroup_id'].'" value="'.$userGroup['usergroup_id'].'" />';
-				echo '<label for="sfusergroup_leave_'.$userGroup['usergroup_id'].'">'.SP()->primitives->front_text('Leave Usergroup').'</label>';
+				echo '<input type="checkbox" name="usergroup_leave[]" id="sfusergroup_leave_'.esc_attr($userGroup['usergroup_id']).'" value="'.esc_attr($userGroup['usergroup_id']).'" />';
+				echo '<label for="sfusergroup_leave_'.esc_html($userGroup['usergroup_id']).'">'.esc_html(SP()->primitives->front_text('Leave Usergroup')).'</label>';
 				echo '</div>';
 				echo '</div>';
 			}
@@ -159,12 +160,12 @@ if ($action == 'update-memberships') {
 		echo '<div class="spProfileUsergroups">';
 		if (SP()->user->thisUser->admin && SP()->user->thisUser->ID == $userid) {
 			echo '<div class="spProfileUsergroup spOdd">';
-			echo '<div class="spHeaderName">'.SP()->primitives->front_text('Administrators').'</div>';
-			echo '<div class="spHeaderDescription">'.SP()->primitives->front_text('This pseudo Usergroup is for Adminstrators of the forum.').'</div>';
+			echo '<div class="spHeaderName">'.esc_html(SP()->primitives->front_text('Administrators')).'</div>';
+			echo '<div class="spHeaderDescription">'.esc_html(SP()->primitives->front_text('This pseudo Usergroup is for Adminstrators of the forum.')).'</div>';
 			echo '</div>';
 		} else {
 			echo '<div class="spProfileUsergroup spOdd">';
-			echo SP()->primitives->front_text('You are not a member of any Usergroups.');
+			echo esc_html(SP()->primitives->front_text('You are not a member of any Usergroups.'));
 			echo '</div>';
 		}
 		echo '</div>';
@@ -193,18 +194,18 @@ if ($action == 'update-nonmemberships') {
 				$submit = true;
 				if ($first) {
 					echo '<div class="spProfileUsergroupsNonMemberships">';
-					echo '<p class="spHeaderName">'.SP()->primitives->front_text('Non-Memberships').':</p>';
+					echo '<p class="spHeaderName">'.esc_html(SP()->primitives->front_text('Non-Memberships')).':</p>';
 					$first = false;
 				}
-				echo "<div class='spProfileUsergroup $alt'>";
+				echo "<div class='spProfileUsergroup ".esc_attr($alt)."'>";
 				echo '<div class="spColumnSection">';
-				echo '<div class="spHeaderName">'.$userGroup['usergroup_name'].'</div>';
-				echo '<div class="spHeaderDescription">'.$userGroup['usergroup_desc'].'</div>';
+				echo '<div class="spHeaderName">'.esc_html($userGroup['usergroup_name']).'</div>';
+				echo '<div class="spHeaderDescription">'.esc_html($userGroup['usergroup_desc']).'</div>';
 				echo '</div>';
 				echo '<div class="spColumnSection spProfileMembershipsJoin">';
 				echo '<div class="spInRowLabel">';
-				echo '<input type="checkbox" name="usergroup_join[]" id="sfusergroup_join_'.$userGroup['usergroup_id'].'" value="'.$userGroup['usergroup_id'].'" />';
-				echo '<label for="sfusergroup_join_'.$userGroup['usergroup_id'].'">'.SP()->primitives->front_text('Join Usergroup').'</label>';
+				echo '<input type="checkbox" name="usergroup_join[]" id="sfusergroup_join_'.esc_html($userGroup['usergroup_id']).'" value="'.esc_html($userGroup['usergroup_id']).'" />';
+				echo '<label for="sfusergroup_join_'.esc_html($userGroup['usergroup_id']).'">'.esc_html(SP()->primitives->front_text('Join Usergroup')).'</label>';
 				echo '</div>';
 				echo '</div>';
 				echo '<div class="spClear"></div>';
@@ -245,7 +246,21 @@ if ($action == 'update-photos') {
 		$tout .= '</div>';
 	}
 	$out = apply_filters('sph_ProfilePhotosLoop', $tout, $userid);
-	echo $out;
+    $allowed_tags = [
+        'div' => ['class' => true],
+        'p'   => ['class' => true],
+        'input' => [
+            'class' => true,
+            'type' => true,
+            'name' => true,
+            'value' => true,
+        ]
+    ];
+
+    wp_kses(
+        $out,
+        $allowed_tags
+    );
 	?>
     <script>
 		(function(spj, $, undefined) {
@@ -344,13 +359,27 @@ if (isset($_GET['tab'])) {
 
 				# output the header area
 				echo '<div id="spProfileHeader">';
-				echo $thisName.' <small>('.SP()->memberData->get($userid, 'display_name').')</small>';
+				echo esc_html($thisName).' <small>('.esc_html(SP()->memberData->get($userid, 'display_name')).')</small>';
 				echo '</div>';
 
 				# build the menus
 				echo '<div id="spProfileMenu">';
 				echo '<ul class="spProfileMenuGroup">';
-				echo $out; # output buffered menu list
+                $allowed_tags = [
+                    'li' => ['class' => []],
+                    'a'  => [
+                        'href'   => [],
+                        'rel'    => [],
+                        'id'     => [],
+                        'class'  => [],
+                        'title'  => [],
+                    ],
+                ];
+
+                echo wp_kses(
+                    $out,
+                    $allowed_tags
+                ); # output buffered menu list
 				echo '</ul>';
 				echo '</div>';
 
@@ -360,20 +389,19 @@ if (isset($_GET['tab'])) {
 				if (!empty($thisForm) && file_exists($thisForm)) {
 					require_once $thisForm;
 				} else {
-					echo SP()->primitives->front_text('Profile form could not be found').': ['.$menu['name'].']<br />';
-					echo SP()->primitives->front_text('You might try the forum - toolbox - housekeeping admin form and reset the profile tabs and menus and see if that helps');
+					echo esc_html(SP()->primitives->front_text('Profile form could not be found')).': ['.esc_html($menu['name']).']<br />';
+					echo esc_html(SP()->primitives->front_text('You might try the forum - toolbox - housekeeping admin form and reset the profile tabs and menus and see if that helps'));
 				}
 				echo '</div>';
 				echo '</div>';
 			}
 		}
 	} else {
-		echo SP()->primitives->front_text('No profile tabs are defined');
+		echo esc_html(SP()->primitives->front_text('No profile tabs are defined'));
 	}
 
 	$msg     = SP()->primitives->front_text('Forum rules require you to change your password in order to view forum or save your profile');
 	$msg     = apply_filters('sph_change_pw_msg', $msg);
-	$msg     = esc_attr($msg);
 	$message = '<p class="spProfileFailure">'.$msg.'</p>';
 	?>
     <script>
@@ -381,7 +409,7 @@ if (isset($_GET['tab'])) {
 			$(document).ready(function () {
 				/* set up the profile tabs */
 				$("#spProfileMenu li a").off('click').click(function () {
-					$("#spProfileContent").html("<div><img src='<?php echo SPCOMMONIMAGES; ?>working.gif' alt='Loading' /></div>");
+					$("#spProfileContent").html("<div><img src='<?php echo esc_js(SPCOMMONIMAGES); ?>working.gif' alt='Loading' /></div>");
 					$.ajax({
 						async: true, url: this.href, success: function (html) {
 							$("#spProfileContent").html(html);
@@ -401,7 +429,7 @@ if (isset($_GET['tab'])) {
 				$('#spProfileContent').trigger('profilecontentloaded');
 
 				<?php if (isset(SP()->user->thisUser->sp_change_pw) && SP()->user->thisUser->sp_change_pw) { ?>
-				spj.displayNotification(1, '<?php echo $message; ?>');
+				spj.displayNotification(1, '<?php echo esc_js($message); ?>');
 				<?php } ?>
 			});
 		}(window.spj = window.spj || {}, jQuery));
@@ -418,13 +446,13 @@ if (isset($_GET['avatarremove']) && (SP()->user->thisUser->ID == $userid || SP()
 	$avatar['uploaded'] = '';
 	$avatar['default']  = 0;
 	SP()->memberData->update($userid, 'avatar', $avatar);
-	echo '<strong>'.SP()->primitives->front_text('Uploaded Avatar Removed').'</strong>';
+	echo esc_html('<strong>'.SP()->primitives->front_text('Uploaded Avatar Removed').'</strong>');
 	$ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction=update-display-avatar&user=$userid", 'profile'));
 	?>
     <script>
 		(function(spj, $, undefined) {
 			$(document).ready(function () {
-				$('#spProfileDisplayAvatar').load('<?php echo $ajaxURL; ?>');
+				$('#spProfileDisplayAvatar').load('<?php echo esc_js($ajaxURL); ?>');
 			});
 		}(window.spj = window.spj || {}, jQuery));
     </script>
@@ -437,17 +465,17 @@ if ($action == 'avatarpool') {
 	$path  = SP_STORE_DIR.'/'.SP()->plugin->storage['avatar-pool'].'/';
 	$dlist = @opendir($path);
 	if (!$dlist) {
-		echo '<strong>'.SP()->primitives->front_text('The avatar pool folder does not exist').'</strong>';
+		echo '<strong>'.esc_html(SP()->primitives->front_text('The avatar pool folder does not exist')).'</strong>';
 		die();
 	}
 
 	# start the table display
-	echo '<p style="text-align:center;">'.SP()->primitives->front_text('Avatar Pool').'</p>';
+	echo '<p style="text-align:center;">'.esc_html(SP()->primitives->front_text('Avatar Pool')).'</p>';
 	echo '<div>';
 	while (false !== ($file = readdir($dlist))) {
 		if ($file != "." && $file != "..") {
 			$text = esc_attr("<p class='spCenter'>".SP()->primitives->front_text('Avatar selected. Please save pool avatar').'</p>');
-			echo "<img class='spAvatarPool spSelectPoolAvatar' src='".esc_url(SPAVATARPOOLURL.'/'.$file)."' alt='' data-src='".esc_attr(SPAVATARPOOLURL.'/'.$file)."' data-file='$file' data-text='$text' />&nbsp;&nbsp;";
+echo "<img class='spAvatarPool spSelectPoolAvatar' src='" . esc_url(SPAVATARPOOLURL . '/' . $file) . "' alt='' data-src='" . esc_url(SPAVATARPOOLURL . '/' . $file) . "' data-file='" . esc_attr($file) . "' data-text='" . esc_attr($text) . "' />&nbsp;&nbsp;";
 		}
 	}
 	echo '</div>';
@@ -462,13 +490,13 @@ if (isset($_GET['poolremove']) && (SP()->user->thisUser->ID == $userid || SP()->
 	$avatar         = SP()->memberData->get($userid, 'avatar');
 	$avatar['pool'] = '';
 	SP()->memberData->update($userid, 'avatar', $avatar);
-	echo '<div id="spPoolStatus"><p class="spCenter"><strong>'.SP()->primitives->front_text('No pool avatar currently selected').'</strong></div>';
+	echo '<div id="spPoolStatus"><p class="spCenter"><strong>'.esc_html(SP()->primitives->front_text('No pool avatar currently selected')).'</strong></div>';
 	$ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction=update-display-avatar&user=$userid", 'profile'));
 	?>
     <script>
 		(function(spj, $, undefined) {
 			$(document).ready(function () {
-				$('#spProfileDisplayAvatar').load('<?php echo $ajaxURL; ?>');
+				$('#spProfileDisplayAvatar').load('<?php echo esc_js($ajaxURL); ?>');
 			});
 		}(window.spj = window.spj || {}, jQuery));
     </script>

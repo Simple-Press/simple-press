@@ -331,7 +331,26 @@ function sp_UserAvatar($args = '', $contextData = '') {
 		$avatar = "<div class='$tagClass'>$avatar</div>";
 
 		if ($echo) {
-			echo $avatar;
+            echo wp_kses(
+                $avatar,
+                array(
+                    'div' => array(
+                        'class' => array(),
+                        'id' => array(),
+                        'style' => array(),
+                    ),
+                    'img' => array(
+                        'src' => array(),
+                        'alt' => array(),
+                        'class' => array(),
+                        'width' => array(),
+                        'height' => array(),
+                        'id' => array(),
+                        'title' => array(),
+                        'style' => array(),
+                    ),
+                )
+            );
 		} else {
 			return $avatar;
 		}
@@ -3253,6 +3272,7 @@ function sp_UserGroupList($args = '', $titleLabel = '', $userGroup = 0) {
 #
 # --------------------------------------------------------------------------------------
 
+
 function sp_Signature($args, $sig) {
 	$defs = array('tagClass' => 'spSignature',
 	              'echo'     => 1,);
@@ -3275,6 +3295,13 @@ function sp_Signature($args, $sig) {
 	$out = apply_filters('sph_Signature', $out, $a);
 
 	if ($echo) {
+        echo wp_kses(
+            $out,
+            [
+                "div" => [],
+                "p" => []
+            ]
+        );
 		echo $out;
 	} else {
 		return $out;
