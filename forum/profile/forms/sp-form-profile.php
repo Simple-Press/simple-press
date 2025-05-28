@@ -137,4 +137,41 @@ $out .= '</form>';
 $out .= "</div>\n";
 
 $out = apply_filters('sph_ProfileProfileForm', $out, $userid);
-echo $out;
+
+/**
+ * Sanitize $out using wp_kses with allowed HTML tags and attributes.
+ */
+$allowed_tags = array(
+    'p' => array(),
+    'hr' => array(),
+    'div' => array(
+        'class' => array(),
+    ),
+    'form' => array(
+        'action' => array(),
+        'method' => array(),
+        'name' => array(),
+        'id' => array(),
+        'class' => array(),
+    ),
+    'input' => array(
+        'type' => array(),
+        'disabled' => array(),
+        'class' => array(),
+        'name' => array(),
+        'value' => array(),
+        'id' => array(),
+    ),
+    'textarea' => array(
+        'class' => array(),
+        'name' => array(),
+        'rows' => array(),
+    ),
+    'span' => array(
+        'class' => array(),
+    ),
+);
+
+$allowed_protocols = array( 'http', 'https', 'mailto' );
+
+echo wp_kses( $out, $allowed_tags, $allowed_protocols );
