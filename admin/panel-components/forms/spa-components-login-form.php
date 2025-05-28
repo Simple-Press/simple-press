@@ -75,16 +75,16 @@ function spa_components_login_form() {
 				spa_paint_close_fieldset();
 			spa_paint_close_panel();
 
-			spa_paint_open_panel();
-				spa_paint_open_fieldset(SP()->primitives->admin_text('RPX 3rd Party Login'), true, 'rpx-login');
-					spa_paint_checkbox(SP()->primitives->admin_text('Enable RPX support'), 'sfrpxenable', $sfcomps['sfrpxenable'] ?? false);
-        			SP()->primitives->admin_etext('Please enter your RPX API key. If you haven\'t yet created one, please create one at');
-                    echo ' <a href="https://rpxnow.com" target="_blank">Janrain</a>';
-			        spa_paint_input(SP()->primitives->admin_text('RPX API key'), 'sfrpxkey', $sfcomps['sfrpxkey'] ?? '', false, true);
-    				$submessage = SP()->primitives->admin_text('Force a redirect to a specific page on RPX login.  Leave blank to have SPF/RPX determine redirect location');
-					spa_paint_wide_textarea(SP()->primitives->admin_text('URL to redirect to after RPX login'), 'sfrpxredirect', $sfcomps['sfrpxredirect'] ?? '', $submessage);
-				spa_paint_close_fieldset();
-			spa_paint_close_panel();
+			#spa_paint_open_panel();
+				#spa_paint_open_fieldset(SP()->primitives->admin_text('RPX 3rd Party Login'), true, 'rpx-login');
+					#spa_paint_checkbox(SP()->primitives->admin_text('Enable RPX support'), 'sfrpxenable', $sfcomps['sfrpxenable'] ?? false);
+        			#SP()->primitives->admin_etext('Please enter your RPX API key. If you haven\'t yet created one, please create one at');
+                    #echo ' <a href="https://rpxnow.com" target="_blank">Janrain</a>';
+			        #spa_paint_input(SP()->primitives->admin_text('RPX API key'), 'sfrpxkey', $sfcomps['sfrpxkey'] ?? '', false, true);
+    				#$submessage = SP()->primitives->admin_text('Force a redirect to a specific page on RPX login.  Leave blank to have SPF/RPX determine redirect location');
+					#spa_paint_wide_textarea(SP()->primitives->admin_text('URL to redirect to after RPX login'), 'sfrpxredirect', $sfcomps['sfrpxredirect'] ?? '', $submessage);
+				#spa_paint_close_fieldset();
+			#spa_paint_close_panel();
 
 			spa_paint_open_panel();
 				spa_paint_open_fieldset(SP()->primitives->admin_text('User Registration'), true, 'user-registration');
