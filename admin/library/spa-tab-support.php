@@ -375,8 +375,17 @@ function spa_paint_checkbox($label, $name, $value, $disabled=false, $large=false
 	if ($value == true) echo "checked='checked' ";
 	if ($disabled == true) echo "disabled='disabled' ";
 	echo "/>\n";
-	echo "<label for='sf-" . esc_attr($name) ."' class='wp-core-ui'>" . esc_html($label) . "</label>\n";
-	if ($msg) echo esc_html($msg);
+	echo "<label for='sf-" . esc_attr($name) ."' class='wp-core-ui'>" . esc_html($label). "</label>\n";
+    if ($msg) {
+        echo wp_kses(
+            $msg,
+            [
+                'span' => [
+                    'class' => []
+                ]
+            ]
+        );
+    }
 	echo '</div>';
 }
 
@@ -392,6 +401,7 @@ function spa_paint_select_end($msg='') {
         echo wp_kses(
             $msg,
             [
+                'small' => [],
                 'span' => [
                     'class' => true,
                 ]

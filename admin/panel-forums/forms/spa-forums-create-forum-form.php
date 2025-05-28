@@ -63,7 +63,7 @@ function spa_forums_create_forum_form() {
 					echo "<div class='sf-form-row'>\n";
 					echo "<label>".esc_html(SP()->primitives->admin_text('Select group new forum will belong to'))."</label>\n";
 					echo '<select class="spForumSetSequence" tabindex="'.esc_attr($tab).'" name="group_id">';
-					echo wp_kses_post( spa_create_group_select(0, 1) );
+					echo spa_create_group_select(0, 1);
 					echo "</select>\n";
 					echo '<div class="clearboth"></div>';
 					echo '</div>';

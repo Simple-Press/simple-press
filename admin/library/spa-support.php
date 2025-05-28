@@ -41,7 +41,7 @@ function spa_create_group_select($groupid = 0, $label = false) {
 
 	if ($groups) {
 		if ($label) {
-			$out .= '<option value="">'.SP()->primitives->admin_text('Select forum group:').'</option>';
+			echo '<option value="">'.esc_html(SP()->primitives->admin_text('Select forum group:')).'</option>';
 		}
 		foreach ($groups as $group) {
 			if ($group->group_id == $groupid) {
@@ -49,7 +49,7 @@ function spa_create_group_select($groupid = 0, $label = false) {
 			} else {
 				$default = null;
 			}
-			$out .= '<option '.$default.'value="'.esc_attr($group->group_id).'">'.SP()->displayFilters->title($group->group_name).'</option>'."\n";
+			echo '<option '.esc_html($default).' value="'.esc_attr($group->group_id).'">'.esc_html(SP()->displayFilters->title($group->group_name)).'</option>'."\n";
 			$default = '';
 		}
 	}
@@ -179,7 +179,16 @@ function spa_display_usergroup_select($filter = false, $forum_id = 0, $showSelec
 		}
 		$out .= '<option '.$disabled.'value="'.esc_attr($usergroup->usergroup_id).'">'.SP()->displayFilters->title($usergroup->usergroup_name).'</option>'."\n";
 	}
-	echo wp_kses_post($out);
+    echo wp_kses(
+        $out,
+        array(
+            'option' => array(
+                'value' => true,
+                'disabled' => true,
+            ),
+            // allow text nodes (default)
+        )
+    );
 	if ($showSelect) {
 		?>
         </select>
@@ -201,7 +210,16 @@ function spa_display_permission_select($cur_perm = 0, $showSelect = true) {
 		if ($cur_perm == $role->role_id) $selected = 'selected="selected" ';
 		$out .= '<option '.esc_attr($selected).'value="'.esc_attr($role->role_id).'">'.SP()->displayFilters->title($role->role_name).'</option>'."\n";
 	}
-	echo wp_kses_post($out);
+    echo wp_kses(
+        $out,
+        array(
+            'option' => array(
+                'value' => true,
+                'disabled' => true,
+            ),
+            // allow text nodes (default)
+        )
+    );
 	if ($showSelect) {
 		?>
         </select>
@@ -456,18 +474,31 @@ function spa_get_selected_icon( $icon, $filter = 'title' ) {
 
 function spa_select_icon_dropdown($name, $label, $path, $cur, $showSelect = true, $width = 0) {
 	# Open folder and get cntents for matching
-	$dlist = @opendir($path);
-	if (!$dlist) return;
+    global $wp_filesystem;
+    if ( empty( $wp_filesystem ) ) {
+        require_once( ABSPATH . '/wp-admin/includes/file.php' );
+        // Initialize the WP_Filesystem. This will prompt for credentials if needed.
+        // For most common scenarios, 'direct' method is preferred if available.
+        $creds = request_filesystem_credentials( site_url() . '/wp-admin/', '', false, false, null );
 
-	$files = array();
-	while (false !== ($file = readdir($dlist))) {
-		if ($file != '.' && $file != '..') {
-			$files[] = $file;
-		}
-	}
-	closedir($dlist);
-	if (empty($files)) return;
-	sort($files);
+        // If we can't get credentials, or if the filesystem cannot be initialized, return early.
+        if ( ! WP_Filesystem( $creds ) ) {
+            // Log an error for debugging, but don't expose sensitive info to the user.
+            error_log( 'WP_Filesystem could not be initialized for path: ' . $path );
+            return array();
+        }
+    }
+    $dir_contents = $wp_filesystem->dirlist( $path, false, false );
+
+    $files = [];
+    if ( ! empty( $dir_contents ) ) {
+        foreach ( $dir_contents as $item_name => $item_data ) {
+            // Exclude '.' and '..'
+            if ( $item_name != '.' && $item_name != '..' ) {
+                $files[] = $item_name;
+            }
+        }
+    }
 
 	$w = '';
 	if ($width > 0) $w = 'width:'.$width.'px;';
