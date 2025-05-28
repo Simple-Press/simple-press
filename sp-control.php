@@ -316,7 +316,7 @@ if (!class_exists('spcSimplePress')) {
 		 */
 		public function __clone() {
 			# Cloning instances of the class is forbidden.
-			_doing_it_wrong(__FUNCTION__, SP()->primitives->front_text('Cloning SimplePress class not allowed'), '6.0');
+			_doing_it_wrong(__FUNCTION__, esc_html(SP()->primitives->front_text('Cloning SimplePress class not allowed')), '6.0');
 		}
 
 		/**
@@ -330,7 +330,7 @@ if (!class_exists('spcSimplePress')) {
 		 */
 		public function __wakeup() {
 			# Unserializing instances of the class is forbidden.
-			_doing_it_wrong(__FUNCTION__, SP()->primitives->front_text('Unserializing SimplePress class not allowed'), '6.0');
+			_doing_it_wrong(__FUNCTION__, esc_html(SP()->primitives->front_text('Unserializing SimplePress class not allowed')), '6.0');
 		}
 
 		/**

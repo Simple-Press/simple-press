@@ -232,7 +232,19 @@ function sp_load_version_xml($showError = true, $usecache = true) {
 						recommend seeking assistance from your hosting support team and then contacting
 						Simple:Press support if they are unable to help.').'</p>';
 				$out .= '</div>';
-				echo $out;
+
+                $allowed_html = array(
+                    'div' => array(
+                        'style' => true,
+                    ),
+                    'p' => array(
+                        'style' => true,
+                    ),
+                    'br' => array(),
+                );
+
+                // Sanitize the output with wp_kses before echoing
+                echo wp_kses($out, $allowed_html);
 			}
 
 			return false;

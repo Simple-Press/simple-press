@@ -25,8 +25,8 @@ $ajaxURL4 = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction
 				$('#spProfileForm1').ajaxForm({
 					dataType: 'json',
 					success: function (response) {
-						$('#spProfileDisplayAvatar').load('<?php echo $ajaxURL1; ?>');
-						$('#spAvatarUpload').load('<?php echo $ajaxURL2; ?>');
+						$('#spProfileDisplayAvatar').load('<?php echo esc_url($ajaxURL1); ?>');
+						$('#spAvatarUpload').load('<?php echo esc_url($ajaxURL2); ?>');
 						if (response.type == 'success') {
 							spj.displayNotification(0, response.message);
 						} else {
@@ -37,8 +37,8 @@ $ajaxURL4 = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction
 				$('#spProfileForm2').ajaxForm({
 					dataType: 'json',
 					success: function (response) {
-						$('#spProfileDisplayAvatar').load('<?php echo $ajaxURL1; ?>');
-						$('#spAvatarPool').load('<?php echo $ajaxURL3; ?>');
+						$('#spProfileDisplayAvatar').load('<?php echo esc_url($ajaxURL1); ?>');
+						$('#spAvatarPool').load('<?php echo esc_url($ajaxURL3); ?>');
 						if (response.type == 'success') {
 							spj.displayNotification(0, response.message);
 						} else {
@@ -49,8 +49,8 @@ $ajaxURL4 = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction
 				$('#spProfileForm3').ajaxForm({
 					dataType: 'json',
 					success: function (response) {
-						$('#spProfileDisplayAvatar').load('<?php echo $ajaxURL1; ?>');
-						$('#spRemoteAvatar').load('<?php echo $ajaxURL4; ?>');
+						$('#spProfileDisplayAvatar').load('<?php echo esc_url($ajaxURL1); ?>');
+						$('#spRemoteAvatar').load('<?php echo esc_url($ajaxURL4); ?>');
 						if (response.type == 'success') {
 							spj.displayNotification(0, response.message);
 						} else {
@@ -128,7 +128,7 @@ foreach ($spAvatars['sfavatarpriority'] as $priority) {
 			if (($spAvatars['sfavataruploads'] && SP()->auths->get('upload_avatars', '', $userid)) || (SP()->user->thisUser->admin)) {
 				$out .= '<fieldset><legend>'.SP()->primitives->front_text('Upload An Avatar').'</legend>';
 				$out .= '<div class="spColumnSection spProfileLeftHalf">';
-				if (is_writable(SP_STORE_DIR."/".SP()->plugin->storage['avatars']."/")) {
+				if (wp_is_writable(SP_STORE_DIR."/".SP()->plugin->storage['avatars']."/")) {
 					$ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile-save&amp;form=avatar-upload&amp;userid=".$userid, 'profile-save'));
 					$out .= '<form action="'.$ajaxURL.'" method="post" name="spProfileForm1" id="spProfileForm1" class="spProfileForm" enctype="multipart/form-data">';
 					$out .= sp_create_nonce('forum-profile');
@@ -263,4 +263,51 @@ $out = apply_filters('sph_ProfileFormBottom', $out, $userid, $thisSlug);
 $out .= "</div>\n";
 
 $out = apply_filters('sph_ProfileAvatarForm', $out, $userid);
-echo $out;
+
+
+$allowed_tags = [
+    'div' => [
+        'id' => true, 'class' => true, 'style' => true, 'data-*' => true,
+    ],
+    'fieldset' => [
+        'id' => true, 'class' => true,
+    ],
+    'legend' => [],
+    'form' => [
+        'id' => true, 'class' => true, 'method' => true, 'name' => true, 'action' => true, 'enctype' => true,
+    ],
+    'input' => [
+        'type' => true, 'name' => true, 'id' => true, 'class' => true, 'value' => true, 'readonly' => true,
+        'data-*' => true, 'style' => true, 'checked' => true,
+    ],
+    'button' => [
+        'class' => true, 'id' => true, 'type' => true, 'value' => true, 'data-*' => true,
+    ],
+    'p' => [
+        'class' => true, 'style' => true, 'id' => true,
+    ],
+    'span' => [
+        'class' => true, 'style' => true, 'id' => true,
+    ],
+    'ol' => [
+        'class' => true, 'id' => true,
+    ],
+    'ul' => [
+        'class' => true, 'id' => true,
+    ],
+    'li' => [
+        'class' => true, 'id' => true,
+    ],
+    'a' => [
+        'href' => true, 'class' => true, 'id' => true, 'title' => true, 'target' => true,
+    ],
+    'img' => [
+        'src' => true, 'alt' => true, 'class' => true, 'id' => true, 'style' => true,
+    ],
+    'hr' => [
+        'class' => true, 'id' => true, 'style' => true,
+    ],
+    'br' => [],
+];
+
+echo wp_kses($out, $allowed_tags);

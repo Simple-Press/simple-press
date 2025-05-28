@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 # double check we have a user
 if (empty($userid)) return;
 
-$ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction=update-photos&user=$userid", 'profile'));
+$ajaxURL = SPAJAXURL."profile&targetaction=update-photos&user=$userid&_wpnonce=" . wp_create_nonce('profile');
 ?>
     <script>
 		(function(spj, $, undefined) {
@@ -22,7 +22,7 @@ $ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction=
 				$('#spProfileFormPhotos').ajaxForm({
 					dataType: 'json',
 					success: function (response) {
-						$('#spProfilePhotos').load('<?php echo $ajaxURL; ?>');
+						$('#spProfilePhotos').load('<?php echo esc_url_raw($ajaxURL); ?>');
 						if (response.type == 'success') {
 							spj.displayNotification(0, response.message);
 						} else {
@@ -82,4 +82,37 @@ if ($spProfileOptions['photosmax'] < 1) {
 $out .= '</div>'."\n";
 
 $out = apply_filters('sph_ProfilePhotosForm', $out, $userid);
-echo $out;
+
+// Define allowed HTML tags and attributes for profile photos form output
+$allowed_tags = array(
+    'p' => array(
+        'class' => array(),
+    ),
+    'hr' => array(),
+    'div' => array(
+        'class' => array(),
+        'id' => array(),
+        'style' => array(),
+    ),
+    'form' => array(
+        'action' => array(),
+        'method' => array(),
+        'name' => array(),
+        'id' => array(),
+        'class' => array(),
+    ),
+    'input' => array(
+        'class' => array(),
+        'type' => array(),
+        'name' => array(),
+        'value' => array(),
+    ),
+    'span' => array(
+        'class' => array(),
+    ),
+    'br' => array(),
+);
+
+// Sanitize $out before echoing
+echo wp_kses($out, $allowed_tags);
+

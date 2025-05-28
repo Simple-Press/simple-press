@@ -74,4 +74,41 @@ $out .= '</form>';
 $out .= "</div>\n";
 
 $out = apply_filters('sph_ProfilePostingOptionsForm', $out, $userid);
-echo $out;
+
+/**
+ * Allow only specific HTML tags and attributes in profile posting options form output.
+ */
+$allowed_tags = array(
+    'div' => array(
+        'class' => true,
+        'id' => true,
+        'style' => true,
+    ),
+    'form' => array(
+        'action' => true,
+        'method' => true,
+        'name' => true,
+        'id' => true,
+        'class' => true,
+    ),
+    'input' => array(
+        'type' => true,
+        'class' => true,
+        'name' => true,
+        'value' => true,
+        'id' => true,
+        'checked' => true,
+    ),
+    'p' => array(
+        'class' => true,
+    ),
+    'label' => array(
+        'for' => true,
+    ),
+    'span' => array(),
+);
+
+/**
+ * Sanitize the generated output before printing.
+ */
+echo wp_kses(apply_filters('sph_ProfilePostingOptionsForm', $out, $userid), $allowed_tags);

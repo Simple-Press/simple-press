@@ -65,23 +65,36 @@ function spdebug_styles($force = false) {
 function spdebug_stats() {
 	global $spdebug_stats, $spdebug_queries;
 	if (defined('SP_DEVFLAG') && SP_DEVFLAG && isset($spdebug_stats)) {
-		$out = "\n\n<div class='spdebug'>\n";
-		$out .= "\t<table>\n";
-		if (isset($spdebug_stats['total_time'])) {
-			$out .= "\t\t<tr>\n";
-			$out .= "\t\t\t<td>Target section</td>\n";
-			$out .= "\t\t\t<td>".$spdebug_stats['total_query']." queries</td>\n";
-			$out .= "\t\t\t<td>".number_format($spdebug_stats['total_time'], 3)." seconds</td>\n";
-			$out .= "\t\t</tr>\n";
-		}
-		$out .= "\t\t<tr>\n";
-		$out .= "\t\t\t<td>Total page</td>\n";
-		$out .= "\t\t\t<td>".(get_num_queries() - $spdebug_queries)." queries</td>\n";
-		$out .= "\t\t\t<td>".timer_stop(0)." seconds</td>\n";
-		$out .= "\t\t</tr>\n";
-		$out .= "\t</table>\n";
-		$out .= "</div>\n\n";
-		echo $out;
+
+        // Define allowed HTML tags and their attributes for wp_kses
+        $allowed_html = array(
+            'div' => array(
+                'class' => array(),
+            ),
+            'table' => array(),
+            'tr' => array(),
+            'td' => array(),
+        );
+
+        $out = "\n\n<div class='spdebug'>\n";
+        $out .= "\t<table>\n";
+        if (isset($spdebug_stats['total_time'])) {
+            $out .= "\t\t<tr>\n";
+            $out .= "\t\t\t<td>Target section</td>\n";
+            $out .= "\t\t\t<td>".$spdebug_stats['total_query']." queries</td>\n";
+            $out .= "\t\t\t<td>".number_format($spdebug_stats['total_time'], 3)." seconds</td>\n";
+            $out .= "\t\t</tr>\n";
+        }
+        $out .= "\t\t<tr>\n";
+        $out .= "\t\t\t<td>Total page</td>\n";
+        $out .= "\t\t\t<td>".(get_num_queries() - $spdebug_queries)." queries</td>\n";
+        $out .= "\t\t\t<td>".timer_stop(0)." seconds</td>\n";
+        $out .= "\t\t</tr>\n";
+        $out .= "\t</table>\n";
+        $out .= "</div>\n\n";
+        // Output sanitized HTML using wp_kses
+        echo wp_kses($out, $allowed_html);
+  
 		show_log();
 		show_control();
 	}
@@ -142,7 +155,7 @@ function ashow($what, $user = -1, $title = '') {
 	if ($user == -1 || $user == SP()->user->thisUser->ID) {
 		spdebug_styles(true);
 		echo '<div class="spdebug">';
-		if ($title) echo SP()->primitives->front_text('Inspect').': <strong>'.$title.'</strong><hr>';
+		if ($title) echo esc_html(SP()->primitives->front_text('Inspect')).': <strong>'.esc_html($title).'</strong><hr>';
 		echo '<pre><code>';
 		if (is_string($what)) $what = htmlentities($what);
 		print_r($what);
@@ -164,7 +177,7 @@ function vshow($what = 'HERE', $user = -1, $ent = true) {
 	if ($user == -1 || $user == SP()->user->thisUser->ID) {
 		echo '<div class="spdebug">';
 		if ($ent) $what = htmlentities($what);
-		echo $what;
+		echo esc_html($what);
 		echo '</div>';
 	}
 }
@@ -236,7 +249,7 @@ function show_includes() {
 
 	$filelist = get_included_files();
 	foreach ($filelist as $f) {
-		if (strpos($f, '/plugins/'.SP_FOLDER_NAME) || strpos($f, '/sp-resources/')) echo strrchr($f, '/').'<br />';
+		if (strpos($f, '/plugins/'.SP_FOLDER_NAME) || strpos($f, '/sp-resources/')) echo esc_html(strrchr($f, '/')).'<br />';
 	}
 	echo '</div>';
 }

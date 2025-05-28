@@ -70,7 +70,7 @@ function sp_no_downgrade() {
         # Warn you can't downgrade
         ?>
         <div class="updated">
-            <img class="stayleft" src="<?php echo SPCOMMONIMAGES; ?>sp-mini-logo.png" alt="" title="" />
+            <img class="stayleft" src="<?php echo esc_html(SPCOMMONIMAGES); ?>sp-mini-logo.png" alt="" title="" />
             <h3><?php SP()->primitives->admin_etext('Downgrade Warning'); ?></h3>
             <p><?php SP()->primitives->admin_etext('It appears you are attempting to downgrade your Simple:Press Version. The Build or Version number in the sp-control.php file is lower than the currently installed version in the database.'); ?></p>
             <p><?php SP()->primitives->admin_etext('You must restore your database to this earlier version before you can continue. You cannot simply downgrade Simple:Press files as the database has been upgraded beyond the version you are attempting to downgrade to and may cause irreparable damage to the database.'); ?></p>
@@ -93,26 +93,55 @@ function sp_install_required() {
             # Check versions
             $bad = sp_version_checks();
             if ($bad != '') {
-                echo $bad . '</div>';
+                echo wp_kses(
+                    $bad . '</div>',
+                    $allowed_html = [
+                        'div' => ['class' => []],
+                        'img' => ['src' => [], 'alt' => [], 'title' => []],
+                        'hr' => [],
+                        'h3' => [],
+                        'p' => [],
+                        'span' => [],
+                        'a' => ['href' => [], 'target' => []]
+                    ]
+                );
                 return;
             }
             # Check we can create a folder in wp-content
             $bad = sp_check_folder_creation();
             if ($bad != '') {
-                echo $bad . '</div>';
+                // Sanitize output with wp_kses
+                $allowed_html = array(
+                    'div' => array('class' => array()),
+                    'img' => array(
+                        'src' => array(),
+                        'alt' => array(),
+                        'title' => array(),
+                    ),
+                    'hr' => array(),
+                    'h3' => array(),
+                    'p' => array(),
+                    'br' => array(),
+                    // Add other tags/attributes if needed
+                );
+                echo wp_kses(
+                    $bad . '</div>',
+                     $allowed_html
+                );
+
                 return;
             }
             # OK - we can continue to offer full install
             ?>
             <div class="sf-panel-head">
                 <div class='sf-buttons'>					
-					<?php echo '<a class="sf-button sf-help" target="_blank" href="https://simple-press.com/documentation/installation/new-install/install/">'.SP()->primitives->admin_text('Installation Help').'</a>'; ?>
+					<?php echo '<a class="sf-button sf-help" target="_blank" href="https://simple-press.com/documentation/installation/new-install/install/">'.esc_html(SP()->primitives->admin_text('Installation Help')).'</a>'; ?>
                 </div>
-                <h3><?php SP()->primitives->admin_etext('Simple:Press'); ?> <?php echo SPVERSION; ?> <?php SP()->primitives->admin_etext('Installation'); ?></h3>
+                <h3><?php SP()->primitives->admin_etext('Simple:Press'); ?> <?php echo esc_html(SPVERSION); ?> <?php SP()->primitives->admin_etext('Installation'); ?></h3>
             </div>
-            <form class="sf-panel-body" name="sfinstall" method="post" action="<?php echo admin_url('admin.php?page=' . SPINSTALLPATH); ?>">
+            <form class="sf-panel-body" name="sfinstall" method="post" action="<?php echo esc_url(admin_url('admin.php?page=' . SPINSTALLPATH)); ?>">
                 <div class="sf-form-row">
-                    <label for="pagename"><?php echo SP()->primitives->admin_etext('Forum Name') ?></label>
+                    <label for="pagename"><?php echo esc_html(SP()->primitives->admin_etext('Forum Name')) ?></label>
                     <input type="text" id="pagename" name="pagename" tabindex="3" placeholder="<?php SP()->primitives->admin_etext('WordPress page name you want the forum to appear on (default is FORUM)'); ?>" />
                     <span class="sf-sublabel sf-sublabel-small">
                         <?php SP()->primitives->admin_etext('Simple:Press creates a new WordPress page for the forum display - the default name is Forum'); ?>
@@ -154,29 +183,33 @@ function sp_upgrade_required() {
     <div id="sf-root-wrap" class="wrap">
         <div id="sfmaincontainer" class="sf-installation">
 			<?php
-			$bad = sp_version_checks();
-			if ($bad != '') {
-				echo $bad . '</div>';
-				return;
-			}
+                $bad = sp_version_checks();
+                if ($bad != '') {
+                    echo wp_kses(
+                        $bad . '</div>',
+                        $allowed_html = [
+                            'div' => ['class' => []],
+                            'img' => ['src' => [], 'alt' => [], 'title' => []],
+                            'hr' => [],
+                            'h3' => [],
+                            'p' => [],
+                            'span' => [],
+                            'a' => ['href' => [], 'target' => []]
+                        ]
+                    );
+                    return;
+	    		}
 			?>
 
 			<div class="sf-panel-body">
-				<img class="stayleft" src="<?php echo SPCOMMONIMAGES; ?>sp-mini-logo.png" alt="" title="" />
-				<h3><?php echo sprintf(SP()->primitives->admin_text('Upgrade Simple:Press From Version %s to %s'), SP()->options->get('sfversion'), SPVERSION); ?>
-					(<?php SP()->primitives->admin_etext('Build'); ?> <?php echo SP()->options->get('sfbuild'); ?> <?php SP()->primitives->admin_etext('to'); ?> <?php SP()->primitives->admin_etext('Build'); ?> <?php echo SPBUILD; ?>)
+				<img class="stayleft" src="<?php echo esc_html(SPCOMMONIMAGES); ?>sp-mini-logo.png" alt="" title="" />
+				<h3><?php echo esc_html(sprintf(SP()->primitives->admin_text('Upgrade Simple:Press From Version %s to %s'), SP()->options->get('sfversion'), SPVERSION)); ?>
+					(<?php SP()->primitives->admin_etext('Build'); ?> <?php echo esc_html(SP()->options->get('sfbuild')); ?> <?php SP()->primitives->admin_etext('to'); ?> <?php SP()->primitives->admin_etext('Build'); ?> <?php echo esc_html(SPBUILD); ?>)
 				</h3>
 				<p><?php SP()->primitives->admin_etext('As with all WordPress related updates we recommend that you backup your site before proceeding with this upgrade.') ?></p>				
 			</div>
 			<hr />
-			<?php
-			$f = 'update' . str_replace('.', '-', SPVERSION) . '.html';
-			$path = SP_PLUGIN_DIR . '/sp-startup/install/resources/versions/' . $f;
-			if (file_exists($path)) {
-				readfile($path);
-			}
-			?>
-			<form name="sfupgrade" method="post" action="<?php echo admin_url('admin.php?page=' . SPINSTALLPATH); ?>">
+			<form name="sfupgrade" method="post" action="<?php echo esc_url(admin_url('admin.php?page=' . SPINSTALLPATH)); ?>">
 				<?php if (SPVERSION == '5.0.0' && substr(SP()->options->get('sfversion'), 0, 1) != '5') { ?>
 					<p><b><input type="checkbox" name="dostorage" id="dostorage" />
 							<label for="dostorage"><?php SP()->primitives->admin_etext('Check this box to have the upgrade attempt to convert current storage locations to V5 format (optional)'); ?></label>
@@ -216,29 +249,30 @@ function sp_go_install() {
     <div id="sf-root-wrap" class="wrap">
         <div id="sfmaincontainer" class="sf-installation">
             <div class="sf-panel-head">
-                <h3><?php SP()->primitives->admin_etext('Simple:Press is being installed'); ?></h3>
+                <h3><?php esc_html(SP()->primitives->admin_etext('Simple:Press is being installed')); ?></h3>
             </div>
             <div class="sf-panel-body">
                 <div class="sf-form-row">
                     <div>
-                        <h1 id="installation-header"><?php SP()->primitives->admin_etext('Installation is in progress - please wait'); ?></h1>
+                        <h1 id="installation-header"><?php esc_html(SP()->primitives->admin_etext('Installation is in progress - please wait')); ?></h1>
                     </div>
                     <div class="pbar" id="progressbar"></div>
                     <table id="SPLOADINSTALLtable">
                         <tr style="display:none"><td><div class="sf-zmessage" id="zone0"></div></td></tr>
-                        <tr><td><div class="sf-zmessage" id="zone1"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Tables created') ?></div></td></tr>
-                        <tr><td><div class="sf-zmessage" id="zone2"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Permission data built') ?></div></td></tr>
-                        <tr><td><div class="sf-zmessage" id="zone3"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Usergroup data built') ?></div></td></tr>
-                        <tr><td><div class="sf-zmessage" id="zone4"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Creating forum pages') ?></div></td></tr>
-                        <tr><td><div class="sf-zmessage" id="zone5"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create default forum options') ?></div></td></tr>
-                        <tr><td><div class="sf-zmessage" id="zone6"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create storage location') ?></div></td></tr>
-                        <tr><td><div class="sf-zmessage" id="zone7"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create resources') ?></div></td></tr>
-                        <tr><td><div class="sf-zmessage" id="zone8"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create members data') ?></div></td></tr>
-                        <tr><td><div class="sf-zmessage" id="zone9"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Create admin permissions') ?></div></td></tr>
-                        <tr><td><div class="sf-zmessage" id="zone10"><span class="sf-icon sf-waiting"></span><?php echo SP()->primitives->admin_etext('Complete Installation') ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone1"><span class="sf-icon sf-waiting"></span><?php echo esc_html(SP()->primitives->admin_etext('Tables created')) ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone2"><span class="sf-icon sf-waiting"></span><?php echo esc_html(SP()->primitives->admin_etext('Permission data built')) ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone3"><span class="sf-icon sf-waiting"></span><?php echo esc_html(SP()->primitives->admin_etext('Usergroup data built')) ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone4"><span class="sf-icon sf-waiting"></span><?php echo esc_html(SP()->primitives->admin_etext('Creating forum pages')) ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone5"><span class="sf-icon sf-waiting"></span><?php echo esc_html(SP()->primitives->admin_etext('Create default forum options')) ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone6"><span class="sf-icon sf-waiting"></span><?php echo esc_html(SP()->primitives->admin_etext('Create storage location')) ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone7"><span class="sf-icon sf-waiting"></span><?php echo esc_html(SP()->primitives->admin_etext('Create resources')) ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone8"><span class="sf-icon sf-waiting"></span><?php echo esc_html(SP()->primitives->admin_etext('Create members data')) ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone9"><span class="sf-icon sf-waiting"></span><?php echo esc_html(SP()->primitives->admin_etext('Create admin permissions')) ?></div></td></tr>
+                        <tr><td><div class="sf-zmessage" id="zone10"><span class="sf-icon sf-waiting"></span><?php echo esc_html(SP()->primitives->admin_etext('Complete Installation')) ?></div></td></tr>
                     </table>
+
                     <div class="sf-zmessage" id="errorzone"></div>
-                    <form name="sfinstalldone" method="post" action="admin.php?page=<?php echo SP_FOLDER_NAME ?>/admin/panel-forums/spa-forums.php">
+                    <form name="sfinstalldone" method="post" action="admin.php?page=<?php echo esc_html(SP_FOLDER_NAME) ?>/admin/panel-forums/spa-forums.php">
                         <input type="hidden" name="install" value="1" />
                         <button id="installation-finished" type="submit" class="sf-button-primary sfhidden" disabled name="goforuminstall" ><span class="sf-icon sf-admins"></span><?php SP()->primitives->admin_etext('Go to Forum Admin') ?></button>
                     </form>
@@ -252,12 +286,12 @@ function sp_go_install() {
                     esc_js(SP()->primitives->admin_text('Installation Completed')) . '@' .
                     esc_js(SP()->primitives->admin_text('Installation has been Aborted')
             );
-            $out = '<script>' . "\n";
-            $out .= '(function(spj, $, undefined) {';
-            $out .= 'spj.performInstall("' . $phpfile . '", "' . $pass . '", "' . $curr . '", "' . $subphases . '", "' . $nextsubphase . '", "' . $image . '", "' . $messages . '", "' . SP_FOLDER_NAME . '");' . "\n";
-            $out .= '}(window.spj = window.spj || {}, jQuery));';
-            $out .= '</script>' . "\n";
-            echo $out;
+            echo '<script>' . "\n";
+            echo '(function(spj, $, undefined) {';
+            echo 'spj.performInstall("' . esc_js($phpfile) . '", "' . esc_js($pass) . '", "' . esc_js($curr) . '", "' . esc_js($subphases) . '", "' . esc_js($nextsubphase) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n";
+            echo '}(window.spj = window.spj || {}, jQuery));';
+            echo '</script>' . "\n";
+
             ?>
         </div>
     </div>
@@ -287,8 +321,7 @@ function sp_go_upgrade($current_version, $current_build) {
     <div id="sf-root-wrap" class="wrap">
 		<div id="sfmaincontainer" class="sf-installation">
 			<div class="sf-panel-head">
-				<!-- <img class="stayleft" src="<?php echo SPCOMMONIMAGES; ?>sp-mini-logo.png" alt="" title="" /> -->
-				<h3><?php SP()->primitives->admin_etext('Simple:Press is being upgraded to version '); echo SPVERSION ; echo ' / build #'; echo SPBUILD ?></h3>
+				<h3><?php SP()->primitives->admin_etext('Simple:Press is being upgraded to version '); echo esc_html(SPVERSION) ; echo ' / build #'; echo esc_html(SPBUILD) ?></h3>
 			</div>
 			<div class="sf-panel-body">
                 <div class="pbar" id="progressbar"></div>
@@ -302,12 +335,12 @@ function sp_go_upgrade($current_version, $current_build) {
 			</div>
 			<?php
 			$messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed - please upgrade your plugins and themes to the latest versions!')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
-			$out = '<script>' . "\n";
-			$out .= '(function(spj, $, undefined) {';
-			$out .= 'spj.performUpgrade("' . $phpfile . '", "' . $current_build . '", "' . $targetbuild . '", "' . $current_build . '", "' . $image . '", "' . $messages . '", "' . SP()->spPermalinks->get_url() . '", "' . SP_FOLDER_NAME . '");' . "\n";
-			$out .= '}(window.spj = window.spj || {}, jQuery));';
-			$out .= '</script>' . "\n";
-			echo $out;
+            echo '<script>' . "\n";
+            echo '(function(spj, $, undefined) {';
+            echo 'spj.performUpgrade("' . esc_js($phpfile) . '", "' . esc_js($current_build) . '", "' . esc_js($targetbuild) . '", "' . esc_js($current_build) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP()->spPermalinks->get_url()) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n";
+            echo '}(window.spj = window.spj || {}, jQuery));';
+            echo '</script>' . "\n";
+
 			?>
 		</div>
     </div>
@@ -329,7 +362,7 @@ function sp_go_network_upgrade($current_version, $current_build) {
     ?>
     <div class="wrap">
         <div class="updated">
-            <img class="stayleft" src="<?php echo SPCOMMONIMAGES; ?>sp-mini-logo.png" alt="" title="" />
+            <img class="stayleft" src="<?php echo esc_html(SPCOMMONIMAGES); ?>sp-mini-logo.png" alt="" title="" />
             <h3><?php SP()->primitives->admin_etext('Simple:Press is upgrading the Network.'); ?></h3>
         </div>
         <div id="sf-root-wrap" class="wrap">
@@ -354,24 +387,25 @@ function sp_go_network_upgrade($current_version, $current_build) {
         switch_to_blog($site->blog_id);
         global $wpdb;
         $installed = SP()->DB->select('SELECT option_id FROM ' . $wpdb->prefix . "sfoptions WHERE option_name='sfversion'");
+
         if ($installed) {
             $phpfile = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL . 'upgrade&sfnetworkid=' . $site->blog_id, 'upgrade'));
             $image = SPCOMMONIMAGES . 'working.gif';
             $targetbuild = SPBUILD;
             update_option('sfInstallID', $current_user->ID); # use wp option table
             # save the build info
-            $out = SP()->primitives->admin_text('Upgrading Network Site ID') . ': ' . $site->blog_id . '';
+
+            echo esc_html(SP()->primitives->admin_text('Upgrading Network Site ID') . ': ' . $site->blog_id . '');
             SP()->options->update('sfStartUpgrade', $current_build);
 
             # upgrade the network site
             $messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed - please upgrade your plugins and themes to the latest versions!')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
-            $out .= '<script>' . "\n";
-            $out .= '(function(spj, $, undefined) {';
-            $out .= 'spj.performUpgrade("' . $phpfile . '", "' . $current_build . '", "' . $targetbuild . '", "' . $current_build . '", "' . $image . '", "' . $messages . '", "' . SP()->spPermalinks->get_url() . '", "' . SP_FOLDER_NAME . '");' . "\n";
-            $out .= '}(window.spj = window.spj || {}, jQuery));';
-            $out .= '</script>' . "\n";
-            echo $out;
-
+            echo '<script>' . "\n"
+                . '(function(spj, $, undefined) {'
+                . 'spj.performUpgrade("' . esc_js($phpfile) . '", "' . esc_js($current_build) . '", "' . esc_js($targetbuild) . '", "' . esc_js($current_build) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP()->spPermalinks->get_url()) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n"
+                . '}(window.spj = window.spj || {}, jQuery));'
+                . '</script>' . "\n";
+  
             # clear any combined css/js cached files
             SP()->plugin->clear_css_cache('all');
             SP()->plugin->clear_css_cache('mobile');
@@ -437,7 +471,7 @@ function sp_version_checks() {
         }
     } else {
         echo '<div class="error">';
-        echo '<span>' . SP()->primitives->admin_text('Please Note') . '</span>';
+        echo '<span>' . esc_html(SP()->primitives->admin_text('Please Note')) . '</span>';
         SP()->primitives->admin_etext('We were unable to establish version details to ensure your system meets requirements') . '.';
         SP()->primitives->admin_etext('As a general rule - Simple:Press requires the same minimum versions of PHP and MySQL as WordPress and the most up to date version of WordPress itself') . '.</br />';
         SP()->primitives->admin_etext('If in doubt, please read the');
@@ -492,14 +526,15 @@ function sp_test_table_create() {
 }
 
 function sp_check_folder_creation() {
-    # Make sure we have write access to the wp-content folder
     $message = '';
     $logo = '<div class="error"><img src="' . SPCOMMONIMAGES . 'sp-full-logo.png" alt="" title="" /><hr />';
 
-    if (!is_writable(SP_STORE_DIR)) {
+    if (!wp_is_writable(SP_STORE_DIR)) {
+        // For legacy handling, return error message too
         $message .= $logo;
         $message .= '<h3>' . SP()->primitives->admin_text('Permission Problem') . '</h3>';
         $message .= '<p>' . sprintf(SP()->primitives->admin_text('%s can not create sub-folders under wp-content. Please assign correct permissions and re-run the install'), 'Simple:Press') . '</p>';
     }
     return $message;
 }
+
