@@ -91,3 +91,37 @@ $out .= "</div>\n";
 
 $out = apply_filters('sph_ProfileGlobalOptionsForm', $out, $userid);
 echo $out;
+
+$allowed_html = array(
+    'p' => array(
+        'class' => array(),
+        'id' => array(),
+        'style' => array(),
+    ),
+    'div' => array(
+        'class' => array(),
+        'id' => array(),
+        'style' => array(),
+    ),
+    'form' => array(
+        'action' => array(),
+        'method' => array(),
+        'name' => array(),
+        'id' => array(),
+        'class' => array(),
+    ),
+    'input' => array(
+        'type' => array(),
+        'class' => array(),
+        'name' => array(),
+        'value' => array(),
+        'id' => array(),
+        'checked' => array(),
+    ),
+    'label' => array(
+        'for' => array(),
+    ),
+    'hr' => array(),
+
+);
+echo wp_kses( $out, $allowed_html );
