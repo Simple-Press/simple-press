@@ -311,11 +311,6 @@ class spcCoreLoader {
 			include_once SPBOOT.'core/credentials/sp-new-user-email.php';
 		}
 
-		$sfrpx = SP()->options->get('sfrpx');
-		if (isset($sfrpx['sfrpxenable']) && $sfrpx['sfrpxenable']) {
-			include_once SPBOOT.'core/credentials/sp-rpx.php';
-		}
-
 		# common ajax actions
 		require_once SPBOOT.'core/sp-core-ajax-actions.php';
 
