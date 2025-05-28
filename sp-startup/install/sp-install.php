@@ -31,7 +31,7 @@ $subphase	 = 0;
 if (isset($_GET['phase'])) {
 	$phase = SP()->filters->integer($_GET['phase']);
 	if ($phase == 0) {
-		echo '<h5>'.SP()->primitives->admin_text('Installing').' '.SP()->primitives->admin_text('Simple:Press').'...</h5>';
+		echo '<h5>'.esc_html(SP()->primitives->admin_text('Installing')).' '.esc_html(SP()->primitives->admin_text('Simple:Press')).'...</h5>';
 	} else {
 		if (isset($_GET['subphase'])) $subphase = SP()->filters->integer($_GET['subphase']);
 	}
@@ -45,6 +45,13 @@ function sp_perform_install($phase, $subphase = 0) {
     # Initial update to make use of wp uploads to enable s3 usage
     # If not defined fall back to old config
 	SP()->define_install_path_constants();
+    
+    // Use the WP_Filesystem method for file handling
+    global $wp_filesystem;
+    if ( ! $wp_filesystem ) {
+        require_once( ABSPATH . '/wp-admin/includes/file.php' );
+        WP_Filesystem();
+    }
 
 	switch ($phase) {
 		case 1:
@@ -464,7 +471,7 @@ function sp_perform_install($phase, $subphase = 0) {
 			# now save off installed tables
 			SP()->options->add('installed_tables', $tables);
 
-			echo '<h5>'.SP()->primitives->admin_text('Phase').' - '.$phase.' - ';
+			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase).' - ';
 			SP()->primitives->admin_etext('Tables created').'</h5>';
 			break;
 
@@ -476,7 +483,7 @@ function sp_perform_install($phase, $subphase = 0) {
 			# set up the default permissions/roles
 			spa_setup_permissions();
 
-			echo '<h5>'.SP()->primitives->admin_text('Phase').' - '.$phase.' - ';
+			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase).' - ';
 			SP()->primitives->admin_etext('Permission data built').'</h5>';
 			break;
 
@@ -495,7 +502,7 @@ function sp_perform_install($phase, $subphase = 0) {
 			SP()->meta->add('default usergroup', 'sfmembers', $members); # default usergroup for members
 			sp_create_usergroup_meta($members); # create default usergroups for existing wp roles
 
-			echo '<h5>'.SP()->primitives->admin_text('Phase').' - '.$phase.' - ';
+			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase).' - ';
 			SP()->primitives->admin_etext('Usergroup data built').'</h5>';
 			break;
 
@@ -528,7 +535,7 @@ function sp_perform_install($phase, $subphase = 0) {
 			SP()->DB->execute('UPDATE '.SPWPPOSTS." SET guid='$guid' WHERE ID=$page_id");
 			SP()->options->add('sfpage', $page_id);
 
-			echo '<h5>'.SP()->primitives->admin_text('Phase').' - '.$phase.' - ';
+			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase).' - ';
 			SP()->primitives->admin_etext('Forum page created').'</h5>';
 			break;
 
@@ -915,7 +922,7 @@ function sp_perform_install($phase, $subphase = 0) {
 
 			sp_create_inspectors();
 
-			echo '<h5>'.SP()->primitives->admin_text('Phase').' - '.$phase.' - ';
+			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase).' - ';
 			SP()->primitives->admin_etext('Default forum options created').'</h5>';
 			break;
 
@@ -926,7 +933,7 @@ function sp_perform_install($phase, $subphase = 0) {
 
 			SP()->options->add('sfconfig', $sfconfig);
 
-			echo '<h5>'.SP()->primitives->admin_text('Phase').' - '.$phase.' - ';
+			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase)).' - ';
 			if ($success) {
 				SP()->primitives->admin_etext('Storage location created').'</h5>';
 			} else {
@@ -962,7 +969,7 @@ function sp_perform_install($phase, $subphase = 0) {
             if ($archive->error_code == 0) {
                 $successExtract1 = true;
                 # Lets try and remove the zip as it seems to have worked
-                @unlink($zipfile);
+                $wp_filesystem->delete($zipfile);
             }
 
 			SP()->options->add('spCopyZip1', $successCopy1);
@@ -993,8 +1000,8 @@ function sp_perform_install($phase, $subphase = 0) {
                 $archive->extract($extract_to);
                 if ($archive->error_code == 0) {
                     $successExtract2 = true;
-                    # Lets try and remove the zip as it seems to have worked
-                    @unlink($zipfile);
+                    // Let's try and remove the zip as it seems to have worked using the WordPress API
+                    $wp_filesystem->delete($zipfile);
                 }
 			} else {
 				$successCopy2	 = true;
@@ -1004,7 +1011,7 @@ function sp_perform_install($phase, $subphase = 0) {
 			SP()->options->add('spCopyZip2', $successCopy2);
 			SP()->options->add('spUnZip2', $successExtract2);
 
-			echo '<h5>'.SP()->primitives->admin_text('Phase').' - '.$phase.' - ';
+			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase).' - ';
 
 			if ($successCopy1 && $successExtract1 && $successCopy2 && $successExtract2) {
 				SP()->primitives->admin_etext('Resources created').'</h5>';
@@ -1012,7 +1019,7 @@ function sp_perform_install($phase, $subphase = 0) {
 				SP()->primitives->admin_etext('Resources file failed to copy').'</h5>';
 			} elseif (!$successExtract1 || !$successExtract2) {
 				SP()->primitives->admin_etext('Resources file failed to unzip');
-				echo ' - '.$archive->error_string.'</h5>';
+				echo ' - '.esc_html($archive->error_string).'</h5>';
 			}
 			
 			
@@ -1025,8 +1032,8 @@ function sp_perform_install($phase, $subphase = 0) {
 			# CREATE MEMBERS TABLE ---------------------------
 			sp_install_members_table($subphase);
 
-			echo '<h5>'.SP()->primitives->admin_text('Phase').' - '.$phase.' - ';
-			echo SP()->primitives->admin_text('Members data created for existing users').' '.(($subphase - 1) * 200 + 1).' - '.($subphase * 200).'</h5>';
+			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase).' - ';
+			echo esc_html(SP()->primitives->admin_text('Members data created for existing users').' '.(($subphase - 1) * 200 + 1).' - '.($subphase * 200).'</h5>');
 			break;
 
 		case 9:
@@ -1068,7 +1075,7 @@ function sp_perform_install($phase, $subphase = 0) {
 				SP()->memberData->update($user_id, 'admin_options', $sfadminoptions);
 			}
 
-			echo '<h5>'.SP()->primitives->admin_text('Phase').' - '.$phase.' - ';
+			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase).' - ';
 			SP()->primitives->admin_etext('Admin permission data built').'</h5>';
 			break;
 
@@ -1092,7 +1099,7 @@ function sp_perform_install($phase, $subphase = 0) {
 			SP()->spPermalinks->update_permalink(false);
 			SP()->options->update('sfflushrules', true);
 
-			echo '<h5>'.SP()->primitives->admin_text('Phase').' - '.$phase.' - ';
+			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase).' - ';
 			SP()->primitives->admin_etext('Version number updated').'</h5>';
 			break;
 
@@ -1108,7 +1115,7 @@ function sp_perform_install($phase, $subphase = 0) {
 			$sCopy2		 = SP()->options->get('spCopyZip2');
 			$sUnzip2	 = SP()->options->get('spUnZip2');
 			if ($sCreate1 && $sCreate2 && $sCopy1 && $sUnzip1 && $sCopy2 && $sUnzip2 && $sOwners1 && $sOwners2) {
-				echo '<h5>'.SP()->primitives->admin_text('The installation has been completed').'</h5>';
+				echo '<h5>'.esc_html(SP()->primitives->admin_text('The installation has been completed')).'</h5>';
 			} else {
 
 				$image = "<img src='".SP_PLUGIN_URL."/sp-startup/install/resources/images/important.png' alt='' style='float:left;padding: 5px 5px 20px 0;' />";
@@ -1118,57 +1125,57 @@ function sp_perform_install($phase, $subphase = 0) {
 				echo '</h5><br />';
 
 				if (!$sCreate1) {
-					echo $image.'<p style="margin-top:0">[';
+					echo esc_html($image).'<p style="margin-top:0">[';
 					SP()->primitives->admin_etext('Storage location part 1 creation failed');
 					echo '] - ';
-					echo SP()->primitives->admin_text('You will need to manually create a required a folder named').': '.get_option('sp_storage1');
+					echo esc_html(SP()->primitives->admin_text('You will need to manually create a required a folder named').': '.get_option('sp_storage1'));
 					echo '</p>';
 				} else if (!$sOwners1) {
-					echo $image.'<p>[';
+					echo esc_html($image).'<p>[';
 					SP()->primitives->admin_etext('Storage location part 1 ownership failed');
 					echo '] - ';
-					echo SP()->primitives->admin_text('We were unable to create your folders with the correct server ownership and these will need to be manually changed').': '.get_option('sp_storage1');
+					echo esc_html(SP()->primitives->admin_text('We were unable to create your folders with the correct server ownership and these will need to be manually changed').': '.get_option('sp_storage1'));
 					echo '</p>';
 				}
 				if (!$sCreate2) {
-					echo $image.'<p>[';
+					echo esc_html($image).'<p>[';
 					SP()->primitives->admin_etext('Storage location part 2 creation failed');
 					echo '] - ';
-					echo SP()->primitives->admin_text('You will need to manually create a required a folder named').': '.get_option('sp_storage2');
+					echo esc_html(SP()->primitives->admin_text('You will need to manually create a required a folder named').': '.get_option('sp_storage2'));
 					echo '</p>';
 				} elseif (!$sOwners2) {
-					echo $image.'<p>[';
+					echo esc_html($image).'<p>[';
 					SP()->primitives->admin_etext('Storage location part 2 ownership failed');
 					echo '] - ';
-					echo SP()->primitives->admin_text('We were unable to create your folders with the correct server ownership and these will need to be manually changed').': '.get_option('sp_storage2');
+					echo esc_html(SP()->primitives->admin_text('We were unable to create your folders with the correct server ownership and these will need to be manually changed').': '.get_option('sp_storage2'));
 					echo '</p>';
 				}
 				if (!$sCopy1) {
-					echo $image.'<p>[';
+					echo esc_html($image).'<p>[';
 					SP()->primitives->admin_etext('Resources part 1 file failed to copy');
 					echo '] - ';
-					echo SP()->primitives->admin_text("You will need to manually copy and extract the file ".SP_FOLDER_NAME."/sp-startup/install/sp-resources-install-part1.zip' to the new folder").': '.get_option('sp_storage1');
+					echo esc_html(SP()->primitives->admin_text("You will need to manually copy and extract the file ".SP_FOLDER_NAME."/sp-startup/install/sp-resources-install-part1.zip' to the new folder").': '.get_option('sp_storage1'));
 					echo '</p>';
 				}
 				if (!$sCopy2) {
-					echo $image.'<p>[';
+					echo esc_html($image).'<p>[';
 					SP()->primitives->admin_etext('Resources part 2 file failed to copy');
 					echo '] - ';
-					echo SP()->primitives->admin_text("You will need to manually copy and extract the file ".SP_FOLDER_NAME."/sp-startup/install/sp-resources-install-part2.zip' to the new folder").': '.get_option('sp_storage2');
+					echo esc_html(SP()->primitives->admin_text("You will need to manually copy and extract the file ".SP_FOLDER_NAME."/sp-startup/install/sp-resources-install-part2.zip' to the new folder").': '.get_option('sp_storage2'));
 					echo '</p>';
 				}
 				if (!$sUnzip1) {
-					echo $image.'<p>[';
+					echo esc_html($image).'<p>[';
 					SP()->primitives->admin_etext('Resources part 2 file failed to unzip');
 					echo '] - ';
-					echo SP()->primitives->admin_text("You will need to manually unzip the file 'sp-resources-install-part1.zip' in the new folder").': '.get_option('sp_storage1');
+					echo esc_html(SP()->primitives->admin_text("You will need to manually unzip the file 'sp-resources-install-part1.zip' in the new folder").': '.get_option('sp_storage1'));
 					echo '</p>';
 				}
 				if (!$sUnzip2) {
-					echo $image.'<p>[';
+					echo esc_html($image).'<p>[';
 					SP()->primitives->admin_etext('Resources part 2 file failed to unzip');
 					echo '] - ';
-					echo SP()->primitives->admin_text("You will need to manually unzip the file 'sp-resources-install-part2.zip' in the new folder").': '.get_option('sp_storage2');
+					echo esc_html(SP()->primitives->admin_text("You will need to manually unzip the file 'sp-resources-install-part2.zip' in the new folder").': '.get_option('sp_storage2'));
 					echo '</p>';
 				}
 			}

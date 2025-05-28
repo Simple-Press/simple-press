@@ -29,8 +29,8 @@ function sp_response($section, $die = true, $status = 'success', $error = '', $m
 		'error'		 => '');
 
 	# log the build section and status in the response
-	echo "Build upgrade section $section executing.  Status: $status <br />";
-	if ($status == 'error' && !empty($error)) echo "Error: $error <br />";
+	echo esc_html("Build upgrade section $section executing.  Status: $status") . "<br />";
+	if ($status == 'error' && !empty($error)) echo esc_html("Error: $error") . "<br />";
 
 	# build the response
 	$response['status']		 = $status;

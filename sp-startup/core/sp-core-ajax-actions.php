@@ -30,32 +30,64 @@ function sp_ajax_acknowledgements() {
 function sp_nonce($ajaxTag) {
 	$check = check_ajax_referer($ajaxTag, false, false);
 	if (!$check) {
-		$m = '<div style="margin: 5px; border: 2px solid red; padding: 10px;">';
-		$m .= '<p><img src="'.SPADMINIMAGES.'sp_Message.png" alt="" style="float:left; margin: -4px 10px 0 0;" />';
-		$m .= '<b>'.SP()->primitives->front_text('Access denied - security check failed').'<br />';
-		$m .= SP()->primitives->front_text('Unable to complete the request').'</b></p>';
-		$m .= '<p><b>'.SP()->primitives->front_text('Please reload the page and retry the operation').'</b></p>';
-		$m .= '</div>';
+        // Define allowed HTML tags and attributes for wp_kses
+        $allowed_html = array(
+            'div' => array(
+                'style' => array(),
+            ),
+            'p' => array(),
+            'img' => array(
+                'src' => array(),
+                'alt' => array(),
+                'style' => array(),
+            ),
+            'b' => array(),
+            'br' => array(),
+            'table' => array(
+                'class' => array(),
+                'style' => array(),
+            ),
+            'tr' => array(),
+            'td' => array(
+                'class' => array(),
+            ),
+        );
 
-		# lets log an error
-		$message = SP()->primitives->front_text('Nonce Security Alert').'<br />';
-		$message .= $ajaxTag.': '.SP()->primitives->front_text('failed nonce check');
-		if (!empty($_GET)) {
-			$message .= '<table class="form-table" style="width:auto;">';
-			foreach (array_map('sanitize_text_field', $_GET) as $key => $value) {
-				$message .= "<tr><td class='sflabel'>$key</td><td class='sflabel'>$value</td></tr>";
-			}
-			$message .= '</table>';
-		}
-		SP()->error->errorWrite('security', $message);
-		?>
-		<script>
-			(function(spj, $, undefined) {
-				$(document).ready(function () {
-					spj.dialogHtml('', '<?php echo($m); ?>', '<?php echo(SP()->primitives->front_text("Security Alert")); ?>', 0, 0, 'center', '');
-				});
-			}(window.spj = window.spj || {}, jQuery));
-		</script>
+        $m = '<div style="margin: 5px; border: 2px solid red; padding: 10px;">';
+        $m .= '<p><img src="'.SPADMINIMAGES.'sp_Message.png" alt="" style="float:left; margin: -4px 10px 0 0;" />';
+        $m .= '<b>'.SP()->primitives->front_text('Access denied - security check failed').'<br />';
+        $m .= SP()->primitives->front_text('Unable to complete the request').'</b></p>';
+        $m .= '<p><b>'.SP()->primitives->front_text('Please reload the page and retry the operation').'</b></p>';
+        $m .= '</div>';
+
+        // lets log an error
+        $message = SP()->primitives->front_text('Nonce Security Alert').'<br />';
+        $message .= $ajaxTag.': '.SP()->primitives->front_text('failed nonce check');
+        if (!empty($_GET)) {
+            $message .= '<table class="form-table" style="width:auto;">';
+            foreach (array_map('sanitize_text_field', $_GET) as $key => $value) {
+                $message .= "<tr><td class='sflabel'>$key</td><td class='sflabel'>$value</td></tr>";
+            }
+            $message .= '</table>';
+        }
+        SP()->error->errorWrite('security', $message);
+        ?>
+        <script>
+            (function(spj, $, undefined) {
+                $(document).ready(function () {
+                    spj.dialogHtml(
+                        '',
+                        '<?php echo wp_kses($m, $allowed_html); ?>',
+                        '<?php echo esc_html(SP()->primitives->front_text("Security Alert")); ?>',
+                        0,
+                        0,
+                        "center",
+                        ""
+                    );
+                });
+            }(window.spj = window.spj || {}, jQuery));
+        </script>
+
 		<?php
 	}
 
