@@ -161,8 +161,25 @@ class spcPrimitives {
 	}
 
 
+	/**
+	 * Remove directory and all files using WordPress filesystem methods.
+	 *
+	 * @param string $dir Directory path to remove.
+	 * @return bool True on success, false on failure.
+	 */
 	public function remove_dir($dir) {
-        delete($dir, true);
+		global $wp_filesystem;
+
+		if (empty($wp_filesystem) || !is_a($wp_filesystem, 'WP_Filesystem_Base')) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+
+		if (!$wp_filesystem->is_dir($dir)) {
+			return false;
+		}
+
+		return $wp_filesystem->delete($dir, true, 'd');
 	}
 
     public function get_image_size($file, $replace = false) {

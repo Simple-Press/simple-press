@@ -237,7 +237,7 @@ function sp_go_install() {
         $_POST['sample'] = '';
     }
 
-    $phpfile = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL . 'install&sample=' . $_POST['sample'] . '&installadmins=' . $_POST['installadmins'] . '&pagename=' . $_POST['pagename'], 'install'));
+    $phpfile = SPAJAXURL . 'install&sample=' . $_POST['sample'] . '&installadmins=' . $_POST['installadmins'] . '&pagename=' . $_POST['pagename'] . '&_wpnonce=' . wp_create_nonce('install');
     $image = SPCOMMONIMAGES . 'working.gif';
 
     # how many users passes at 200 a pop?
@@ -288,7 +288,7 @@ function sp_go_install() {
             );
             echo '<script>' . "\n";
             echo '(function(spj, $, undefined) {';
-            echo 'spj.performInstall("' . esc_js($phpfile) . '", "' . esc_js($pass) . '", "' . esc_js($curr) . '", "' . esc_js($subphases) . '", "' . esc_js($nextsubphase) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n";
+            echo 'spj.performInstall("' . esc_url_raw($phpfile) . '", "' . esc_js($pass) . '", "' . esc_js($curr) . '", "' . esc_js($subphases) . '", "' . esc_js($nextsubphase) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n";
             echo '}(window.spj = window.spj || {}, jQuery));';
             echo '</script>' . "\n";
 
@@ -313,7 +313,7 @@ function sp_go_upgrade($current_version, $current_build) {
     update_option('sfInstallID', $current_user->ID); # use wp option table
     SP()->options->update('sfStartUpgrade', $current_build);
 
-    $phpfile = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL . 'upgrade', 'upgrade')); # since passed to js cant have amp;
+    $phpfile = SPAJAXURL . 'upgrade&_wpnonce=' . wp_create_nonce('upgrade'); # since passed to js cant have amp;
     $image = SPCOMMONIMAGES . 'working.gif';
 
     $targetbuild = SPBUILD;
@@ -337,7 +337,7 @@ function sp_go_upgrade($current_version, $current_build) {
 			$messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed - please upgrade your plugins and themes to the latest versions!')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
             echo '<script>' . "\n";
             echo '(function(spj, $, undefined) {';
-            echo 'spj.performUpgrade("' . esc_js($phpfile) . '", "' . esc_js($current_build) . '", "' . esc_js($targetbuild) . '", "' . esc_js($current_build) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP()->spPermalinks->get_url()) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n";
+            echo 'spj.performUpgrade("' . esc_raw_url($phpfile) . '", "' . esc_js($current_build) . '", "' . esc_js($targetbuild) . '", "' . esc_js($current_build) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP()->spPermalinks->get_url()) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n";
             echo '}(window.spj = window.spj || {}, jQuery));';
             echo '</script>' . "\n";
 
@@ -389,7 +389,7 @@ function sp_go_network_upgrade($current_version, $current_build) {
         $installed = SP()->DB->select('SELECT option_id FROM ' . $wpdb->prefix . "sfoptions WHERE option_name='sfversion'");
 
         if ($installed) {
-            $phpfile = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL . 'upgrade&sfnetworkid=' . $site->blog_id, 'upgrade'));
+            $phpfile = SPAJAXURL . 'upgrade&sfnetworkid=' . $site->blog_id . '&_wpnonce=' . wp_create_nonce('upgrade');
             $image = SPCOMMONIMAGES . 'working.gif';
             $targetbuild = SPBUILD;
             update_option('sfInstallID', $current_user->ID); # use wp option table
@@ -402,7 +402,7 @@ function sp_go_network_upgrade($current_version, $current_build) {
             $messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed - please upgrade your plugins and themes to the latest versions!')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
             echo '<script>' . "\n"
                 . '(function(spj, $, undefined) {'
-                . 'spj.performUpgrade("' . esc_js($phpfile) . '", "' . esc_js($current_build) . '", "' . esc_js($targetbuild) . '", "' . esc_js($current_build) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP()->spPermalinks->get_url()) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n"
+                . 'spj.performUpgrade("' . esc_raw_url($phpfile) . '", "' . esc_js($current_build) . '", "' . esc_js($targetbuild) . '", "' . esc_js($current_build) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP()->spPermalinks->get_url()) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n"
                 . '}(window.spj = window.spj || {}, jQuery));'
                 . '</script>' . "\n";
   
