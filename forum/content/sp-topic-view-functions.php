@@ -48,7 +48,7 @@ function sp_TopicForumName($args = '') {
 	$out = apply_filters('sph_TopicForumName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -101,7 +101,7 @@ function sp_TopicHeaderIcon($args = '') {
 	$out = apply_filters('sph_TopicHeaderIcon', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -138,7 +138,7 @@ function sp_TopicHeaderName($args = '') {
 	$out = apply_filters('sph_TopicHeaderName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -191,7 +191,7 @@ function sp_TopicHeaderRSSButton($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_TopicHeaderRSSButton', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -243,7 +243,7 @@ function sp_NoTopicMessage($args = '', $deniedMessage = '', $definedMessage = ''
 	$out = apply_filters('sph_NoTopicMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -329,7 +329,7 @@ function sp_PostNewButton($args = '', $label = '', $toolTip = '', $toolTipLock =
 	$out = apply_filters('sph_PostNewButton', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -393,7 +393,7 @@ function sp_PostNewTopicButton($args = '', $label = '', $toolTip = '', $toolTipL
 	$out = apply_filters('sph_PostNewTopicButton', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -448,7 +448,7 @@ function sp_PostIndexPageLinks($args = '', $label = '', $toolTip = '', $jumpTool
 	$echo          = (int) $echo;
 
 	if (SP()->forum->view->thisTopic->posts_per_page >= SP()->forum->view->thisTopic->post_count) {
-		if ($showEmpty) echo "<div class='$tagClass'></div>";
+		if ($showEmpty) echo wp_kses_post("<div class='$tagClass'></div>");
 		return;
 	}
 
@@ -485,7 +485,7 @@ function sp_PostIndexPageLinks($args = '', $label = '', $toolTip = '', $jumpTool
 	$out = apply_filters('sph_PostIndexPageLinks', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -508,7 +508,7 @@ function sp_PostIndexPageLinks($args = '', $label = '', $toolTip = '', $jumpTool
 # --------------------------------------------------------------------------------------
 function sp_PostIndexAnchor() {
 	# Define the post anchor here
-	echo "<a id='p".SP()->forum->view->thisPost->post_id."'></a>";
+	echo wp_kses_post("<a id='p".SP()->forum->view->thisPost->post_id."'></a>");
 }
 
 # --------------------------------------------------------------------------------------
@@ -567,7 +567,7 @@ function sp_PostIndexUserDate($args = '') {
 	$out = apply_filters('sph_PostIndexUserDate', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -614,7 +614,7 @@ function sp_PostIndexUserName($args = '') {
 	$out = apply_filters('sph_PostIndexUserName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -656,7 +656,7 @@ function sp_PostIndexUserPosts($args = '', $label = '') {
 	$out = apply_filters('sph_PostIndexUserPosts', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -700,7 +700,7 @@ function sp_PostIndexUserRegistered($args = '', $label = '') {
 	$out = apply_filters('sph_PostIndexUserRegistered', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -830,7 +830,7 @@ function sp_PostIndexUserBadges($args = '', $label = '') {
 	$out = apply_filters('sph_PostIndexUserBadges', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -896,7 +896,7 @@ function sp_PostIndexUserRank($args = '') {
 	$out = apply_filters('sph_PostIndexUserRank', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -969,7 +969,7 @@ function sp_PostIndexUserSpecialRank($args = '') {
 	$out = apply_filters('sph_PostIndexUserSpecialRank', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1043,7 +1043,7 @@ function sp_PostIndexUserMemberships($args = '', $noMembershipLabel = '', $admin
 	$out = apply_filters('sph_PostIndexUserMemberships', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1080,7 +1080,7 @@ function sp_PostIndexNumber($args = '') {
 	$out = apply_filters('sph_PostIndexNumber', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1124,7 +1124,7 @@ function sp_PostIndexPinned($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexPinned', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1165,7 +1165,7 @@ function sp_PostIndexNewPost($args = '', $label = '') {
 	$out = apply_filters('sph_PostIndexNewPost', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1234,7 +1234,7 @@ function sp_PostIndexEditHistory($args = '', $label = '', $legend = '', $toolTip
 	$out = apply_filters('sph_PostIndexEditHistory', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1279,7 +1279,7 @@ function sp_PostIndexPermalink($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexPermalink', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1321,7 +1321,7 @@ function sp_PostIndexPrint($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexPrint', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1377,7 +1377,7 @@ function sp_PostIndexQuote($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexQuote', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1442,7 +1442,30 @@ function sp_PostIndexEdit($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexEdit', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        $allowed_html = [
+            'form' => [
+                'class' => [],
+                'action' => [],
+                'method' => [],
+                'name' => []
+            ],
+            'input' => [
+                'type' => [],
+                'name' => [],
+                'value' => [],
+            ],
+            'a' => [
+                'class' => [],
+                'id' => [],
+                'title' => [],
+                'rel' => [],
+                'href' => []
+            ]
+        ];
+
+        $allowed_protocols = array_merge( wp_allowed_protocols(), [ 'javascript' ] );
+
+		echo wp_kses($out, $allowed_html, $allowed_protocols);
 	} else {
 		return $out;
 	}
@@ -1492,7 +1515,7 @@ function sp_PostIndexDelete($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexDelete', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1556,14 +1579,14 @@ function sp_PostIndexContent($args = '', $label = '') {
 		$out .= $post_content;
 	}
 
-	# Hook: Used in sp-startup/core/sp-core-compatibility.php	
+	# Hook: Used in sp-startup/core/sp-core-compatibility.php
 	do_action( 'sph_after_PostIndexContent' );
 	
 	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexContent', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1616,7 +1639,7 @@ function sp_PostIndexUserSignature($args = '') {
 	$out = apply_filters('sph_PostIndexUserSignature', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1670,7 +1693,7 @@ function sp_PostIndexUserFlexSignature($args = '') {
 	$out = apply_filters('sph_PostIndexUserFlexSignature', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1731,7 +1754,7 @@ function sp_PostIndexUserTwitter($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserTwitter', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1792,7 +1815,7 @@ function sp_PostIndexUserFacebook($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserFacebook', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1853,7 +1876,7 @@ function sp_PostIndexUserMySpace($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserMySpace', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1914,7 +1937,7 @@ function sp_PostIndexUserLinkedIn($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserLinkedIn', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1975,7 +1998,7 @@ function sp_PostIndexUserYouTube($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserYouTube', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2036,7 +2059,7 @@ function sp_PostIndexUserGooglePlus($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserGooglePlus', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2097,7 +2120,7 @@ function sp_PostIndexUserInstagram($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserInstagram', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2152,7 +2175,7 @@ function sp_PostIndexUserWebsite($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserWebsite', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2221,7 +2244,7 @@ function sp_PostIndexUserStatus($args = '', $onlineLabel = '', $offlineLabel = '
 	$out = apply_filters('sph_PostIndexUserStatus', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2264,7 +2287,7 @@ function sp_PostIndexUserLocation($args = '', $label = '') {
 	$out = apply_filters('sph_PostIndexUserLocation', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2300,7 +2323,7 @@ function sp_NoPostsInTopicMessage($args = '', $definedMessage = '') {
 	$out = apply_filters('sph_NoPostsInTopicMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2394,7 +2417,7 @@ function sp_PostForumToolButton($args = '', $label = '', $toolTip = '') {
 	$out .= "</a>";
 	$out = apply_filters('sph_PostForumToolButton', $out, $a);
 
-	echo $out;
+	echo wp_kses_post($out);
 
 	# Add script to hover admin buttons - just once
 	if (SP()->forum->view->thisTopic->tools_flag && $hide) {
@@ -2402,7 +2425,7 @@ function sp_PostForumToolButton($args = '', $label = '', $toolTip = '') {
        <script>
 			(function(spj, $, undefined) {
 				spj.tool = {
-					toolclass: '.<?php echo($containerClass); ?>'
+					toolclass: '.<?php echo esc_js(esc_attr($containerClass)); ?>'
 				};
 			}(window.spj = window.spj || {}, jQuery));
         </script>
@@ -2491,7 +2514,7 @@ function sp_UsersAlsoViewing($args = '', $messageLabel = '') {
 
 	# finish it up
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2508,12 +2531,87 @@ function sp_UsersAlsoViewing($args = '', $messageLabel = '') {
 function sp_PostEditorWindow($addPostForm, $editPostForm) {
 	SP()->rewrites->pageData['hiddeneditor'] = $addPostForm['hide'];
 
+    $allowed_html = [
+        'form' => [
+            'class' => [],
+            'action' => [],
+            'method' => [],
+            'id' => [],
+            'name' => [],
+            'data-guest' => [],
+            'data-img' => [],
+        ],
+        'fieldset' => [
+            'class' => [],
+        ],
+        'input' => [
+            'type' => [],
+            'tabindex' => [],
+            'class' => [],
+            'title' => [],
+            'name' => [],
+            'value' => [],
+            'id' => [],
+            'data-msg' => [],
+            'data-box' => [],
+            'size' => [],
+            'maxlength' => [],
+        ],
+        'textarea' => [
+            'tabindex' => [],
+            'class' => [],
+            'name' => [],
+            'id' => [],
+            'cols' => [],
+            'rows' => [],
+        ],
+        'div' => [
+            'id' => [],
+            'style' => [],
+            'class' => [],
+        ],
+        'a' => [
+            'class' => [],
+            'id' => [],
+            'title' => [],
+            'rel' => [],
+            'href' => []
+        ],
+        'img' => [
+            'class' => [],
+            'src' => [],
+            'title' => [],
+            'alt' => [],
+            'data-url' => [],
+            'data-title' => [],
+            'data-path' => [],
+            'data-code' => [],
+        ],
+        'select' => [
+            'class' => [],
+            'tabindex' => [],
+            'id' => [],
+            'name' => [],
+        ],
+        'option' => [
+            'value' => [],
+            'selected' => [],
+        ],
+        'label' => [
+            'class' => [],
+            'for' => [],
+        ],
+        'legend' => [
+            'class' => [],
+        ]
+    ];
+
 	# Are we editing a current post?
 	if (SP()->forum->view->thisTopic->editmode) {
 		# Go into edit mode
 		$out = '<a id="spEditFormAnchor"></a>'."";
 		$out .= sp_edit_post($editPostForm, SP()->forum->view->thisTopic->editpost_id, SP()->forum->view->thisTopic->editpost_content);
-		echo $out;
+		echo wp_kses($out, $allowed_html);
 
 		# inline js to open post edit form
 		add_action('wp_footer', 'spjs_OpenPostEditForm');
@@ -2525,7 +2623,7 @@ function sp_PostEditorWindow($addPostForm, $editPostForm) {
 		if ($allowed) {
 			$out = '<a id="spEditFormAnchor"></a>'."";
 			$out .= sp_add_post($addPostForm);
-			echo $out;
+			echo wp_kses($out, $allowed_html);
 		}
 	}
 }
