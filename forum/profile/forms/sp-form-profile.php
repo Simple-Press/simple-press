@@ -11,7 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 # double check we have a user
-if (empty($userid)) return;
+if (empty($userid)) {
+    return;
+}
 ?>
     <script>
 		(function(spj, $, undefined) {

@@ -337,7 +337,7 @@ function sp_go_upgrade($current_version, $current_build) {
 			$messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed - please upgrade your plugins and themes to the latest versions!')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
             echo '<script>' . "\n";
             echo '(function(spj, $, undefined) {';
-            echo 'spj.performUpgrade("' . esc_raw_url($phpfile) . '", "' . esc_js($current_build) . '", "' . esc_js($targetbuild) . '", "' . esc_js($current_build) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP()->spPermalinks->get_url()) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n";
+            echo 'spj.performUpgrade("' . esc_url_raw($phpfile) . '", "' . esc_js($current_build) . '", "' . esc_js($targetbuild) . '", "' . esc_js($current_build) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP()->spPermalinks->get_url()) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n";
             echo '}(window.spj = window.spj || {}, jQuery));';
             echo '</script>' . "\n";
 
@@ -402,7 +402,7 @@ function sp_go_network_upgrade($current_version, $current_build) {
             $messages = esc_js(SP()->primitives->admin_text('Go to Forum Admin')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade is in progress - please wait')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Completed - please upgrade your plugins and themes to the latest versions!')) . '@' . esc_js(SP()->primitives->admin_text('Upgrade Aborted')) . '@' . esc_js(SP()->primitives->admin_text('Go to Forum'));
             echo '<script>' . "\n"
                 . '(function(spj, $, undefined) {'
-                . 'spj.performUpgrade("' . esc_raw_url($phpfile) . '", "' . esc_js($current_build) . '", "' . esc_js($targetbuild) . '", "' . esc_js($current_build) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP()->spPermalinks->get_url()) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n"
+                . 'spj.performUpgrade("' . esc_url_raw($phpfile) . '", "' . esc_js($current_build) . '", "' . esc_js($targetbuild) . '", "' . esc_js($current_build) . '", "' . esc_js($image) . '", "' . esc_js($messages) . '", "' . esc_js(SP()->spPermalinks->get_url()) . '", "' . esc_js(SP_FOLDER_NAME) . '");' . "\n"
                 . '}(window.spj = window.spj || {}, jQuery));'
                 . '</script>' . "\n";
   

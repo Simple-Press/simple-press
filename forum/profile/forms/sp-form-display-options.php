@@ -148,4 +148,55 @@ $out .= '</form>';
 $out .= "</div>\n";
 
 $out = apply_filters('sph_ProfileDisplayOptionsForm', $out, $userid);
-echo $out;
+
+// Define allowed HTML tags and their attributes for wp_kses
+$allowed_tags = array(
+    'p' => array(
+        'class' => array(),
+    ),
+    'div' => array(
+        'class' => array(),
+    ),
+    'form' => array(
+        'action' => array(),
+        'method' => array(),
+        'name' => array(),
+        'id' => array(),
+        'class' => array(),
+    ),
+    'input' => array(
+        'type' => array(),
+        'name' => array(),
+        'id' => array(),
+        'class' => array(),
+        'value' => array(),
+        'checked' => array(),
+    ),
+    'select' => array(
+        'class' => array(),
+        'id' => array(),
+        'name' => array(),
+    ),
+    'option' => array(
+        'value' => array(),
+        'selected' => array(),
+        'label' => array(),
+    ),
+    'optgroup' => array(
+        'label' => array(),
+    ),
+    'hr' => array(),
+    'small' => array(),
+    'b' => array(),
+    'label' => array(
+        'for' => array(),
+    ),
+    'a' => array(
+        'href' => array(),
+        'title' => array(),
+    ),
+);
+
+// Sanitize output HTML
+echo wp_kses($out, $allowed_tags);
+  

@@ -90,7 +90,6 @@ $out .= '</form>';
 $out .= "</div>\n";
 
 $out = apply_filters('sph_ProfileGlobalOptionsForm', $out, $userid);
-echo $out;
 
 $allowed_html = array(
     'p' => array(

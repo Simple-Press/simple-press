@@ -11,7 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 # double check we have a user
-if (empty($userid)) return;
+if (empty($userid)){
+    return;
+}
 
 $ajaxURL1 = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction=update-display-avatar&user=$userid", 'profile'));
 $ajaxURL2 = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction=update-uploaded-avatar&user=$userid", 'profile'));
@@ -25,8 +27,8 @@ $ajaxURL4 = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction
 				$('#spProfileForm1').ajaxForm({
 					dataType: 'json',
 					success: function (response) {
-						$('#spProfileDisplayAvatar').load('<?php echo esc_url($ajaxURL1); ?>');
-						$('#spAvatarUpload').load('<?php echo esc_url($ajaxURL2); ?>');
+						$('#spProfileDisplayAvatar').load('<?php echo esc_url_raw($ajaxURL1); ?>');
+						$('#spAvatarUpload').load('<?php echo esc_url_raw($ajaxURL2); ?>');
 						if (response.type == 'success') {
 							spj.displayNotification(0, response.message);
 						} else {
@@ -37,8 +39,8 @@ $ajaxURL4 = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction
 				$('#spProfileForm2').ajaxForm({
 					dataType: 'json',
 					success: function (response) {
-						$('#spProfileDisplayAvatar').load('<?php echo esc_url($ajaxURL1); ?>');
-						$('#spAvatarPool').load('<?php echo esc_url($ajaxURL3); ?>');
+						$('#spProfileDisplayAvatar').load('<?php echo esc_url_raw($ajaxURL1); ?>');
+						$('#spAvatarPool').load('<?php echo esc_url_raw($ajaxURL3); ?>');
 						if (response.type == 'success') {
 							spj.displayNotification(0, response.message);
 						} else {
@@ -49,8 +51,8 @@ $ajaxURL4 = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction
 				$('#spProfileForm3').ajaxForm({
 					dataType: 'json',
 					success: function (response) {
-						$('#spProfileDisplayAvatar').load('<?php echo esc_url($ajaxURL1); ?>');
-						$('#spRemoteAvatar').load('<?php echo esc_url($ajaxURL4); ?>');
+						$('#spProfileDisplayAvatar').load('<?php echo esc_url_raw($ajaxURL1); ?>');
+						$('#spRemoteAvatar').load('<?php echo esc_url_raw($ajaxURL4); ?>');
 						if (response.type == 'success') {
 							spj.displayNotification(0, response.message);
 						} else {

@@ -11,9 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 # double check we have a user
-if (empty($userid)) return;
+if (empty($userid)) {
+    return;
+}
 
-$ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction=update-sig&user=$userid", 'profile'));
+$ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction=update-sig&user=$userid", "profile"));
 ?>
     <script>
 		(function(spj, $, undefined) {
@@ -23,7 +25,7 @@ $ajaxURL = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction=
 					dataType: 'json',
 					beforeSerialize: spj.editorGetSignature,
 					success: function (response) {
-						$('#spProfileSignaturePreview').load('<?php echo $ajaxURL; ?>');
+						$('#spProfileSignaturePreview').load('<?php echo esc_url_raw($ajaxURL); ?>');
 						if (response.type == 'success') {
 							spj.displayNotification(0, response.message);
 						} else {
@@ -97,8 +99,71 @@ $out .= '</div>';
 $out .= '</div>'."\n";
 
 $out = apply_filters('sph_ProfileSignatureForm', $out, $userid);
-echo $out;
 
+/**
+ * Sanitize $out with wp_kses to only allow safe HTML.
+ */
+$allowed_tags = array(
+    'a' => array(
+        'href' => array(),
+        'title' => array(),
+        'class' => array(),
+        'target' => array(),
+        'rel' => array(),
+        'id' => array(),
+    ),
+    'br' => array(),
+    'em' => array(),
+    'strong' => array(),
+    'p' => array(
+        'class' => array(),
+        'align' => array(),
+    ),
+    'div' => array(
+        'class' => array(),
+        'id' => array(),
+        'style' => array(),
+        'align' => array(),
+    ),
+    'form' => array(
+        'action' => array(),
+        'method' => array(),
+        'name' => array(),
+        'id' => array(),
+        'class' => array(),
+    ),
+    'input' => array(
+        'type' => array(),
+        'class' => array(),
+        'name' => array(),
+        'value' => array(),
+        'id' => array(),
+        'checked' => array(),
+        'disabled' => array(),
+        'placeholder' => array(),
+        'autocomplete' => array(),
+        'readonly' => array(),
+        'tabindex' => array(),
+    ),
+    'textarea' => array(
+        'name' => array(),
+        'tabindex' => array(),
+        'class' => array(),
+        'id' => array(),
+        'rows' => array(),
+        'cols' => array(),
+    ),
+    'span' => array(
+        'class' => array(),
+        'id' => array(),
+        'style' => array(),
+    ),
+    'hr' => array(),
+    // Add more tags as needed by your markup.
+);
+
+echo wp_kses( $out, $allowed_tags );
+  
 ?>
 <script>
 	(function(spj, $, undefined) {

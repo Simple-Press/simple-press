@@ -23,8 +23,8 @@ $ajaxURL2 = htmlspecialchars_decode(wp_nonce_url(SPAJAXURL."profile&targetaction
 				$('#spProfileFormMemberships').ajaxForm({
 					dataType: 'json',
 					success: function (response) {
-						$('#spProfileUsergroupsMemberships').load('<?php echo $ajaxURL1; ?>');
-						$('#spProfileUsergroupsNonMemberships').load('<?php echo $ajaxURL2; ?>');
+						$('#spProfileUsergroupsMemberships').load('<?php echo esc_url($ajaxURL1); ?>');
+						$('#spProfileUsergroupsNonMemberships').load('<?php echo esc_url($ajaxURL2); ?>');
 						if (response.type == 'success') {
 							spj.displayNotification(0, response.message);
 						} else {
@@ -151,4 +151,44 @@ $out = apply_filters('sph_ProfileFormBottom', $out, $userid, $thisSlug);
 $out .= '</form>';
 
 $out = apply_filters('sph_ProfileUsergroupsMemberships', $out, $userid);
-echo $out;
+
+// Define allowed HTML tags and attributes for $out
+$allowed_tags = array(
+    'form' => array(
+        'action' => true,
+        'method' => true,
+        'name' => true,
+        'id' => true,
+        'class' => true,
+    ),
+    'input' => array(
+        'type' => true,
+        'class' => true,
+        'name' => true,
+        'id' => true,
+        'value' => true,
+        'checked' => true,
+    ),
+    'div' => array(
+        'class' => true,
+        'id' => true,
+    ),
+    'p' => array(
+        'class' => true,
+    ),
+    'label' => array(
+        'for' => true,
+    ),
+    'hr' => array(),
+    'br' => array(),
+    // Allow basic text formatting if required
+    'strong' => array(),
+    'em' => array(),
+    'span' => array(
+        'class' => true,
+        'id' => true,
+    ),
+);
+
+// Sanitize output
+echo wp_kses($out, $allowed_tags);

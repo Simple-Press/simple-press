@@ -58,7 +58,9 @@ SP()->core->forumData['editor'] = apply_filters('sph_this_editor', SP()->core->f
 do_action('sph_load_editor', SP()->core->forumData['editor']);
 
 if ($action == 'update-sig') {
-	if (empty($userid)) die();
+    if (empty($userid)) {
+        die();
+    }
 
 	sp_SetupUserProfileData($userid);
 	sp_Signature('echo=1', SP()->user->profileUser->signature);
