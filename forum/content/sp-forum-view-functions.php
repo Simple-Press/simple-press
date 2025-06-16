@@ -41,7 +41,7 @@ function sp_SubForumHeaderDescription($args = '', $label = '') {
 	$out = apply_filters('sph_SubForumHeaderDescription', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -117,7 +117,7 @@ function sp_SubForumIndexIcon($args = '') {
 	$out = apply_filters('sph_SubForumIndexIcon', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -158,7 +158,7 @@ function sp_SubForumIndexName($args = '', $toolTip = '') {
 	$out = apply_filters('sph_SubForumIndexName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -195,7 +195,7 @@ function sp_SubForumIndexDescription($args = '') {
 	$out = apply_filters('sph_SubForumIndexDescription', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -253,7 +253,7 @@ function sp_SubForumIndexPageLinks($args = '', $toolTip = '') {
 	$out = apply_filters('sph_SubForumIndexPageLinks', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -317,7 +317,7 @@ function sp_SubForumIndexModerators($args = '', $label = '') {
 	$out = apply_filters('sph_SubForumIndexModerators', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -488,7 +488,7 @@ function sp_SubForumIndexLastPost($args = '', $lastPostLabel = '', $noTopicsLabe
 	$out = apply_filters('sph_SubForumIndexLastPost', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -540,7 +540,7 @@ function sp_SubForumIndexTopicCount($args = '', $label = '') {
 	$out = apply_filters('sph_SubForumIndexTopicCount', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -592,7 +592,7 @@ function sp_SubForumIndexPostCount($args = '', $label = '') {
 	$out = apply_filters('sph_SubForumIndexPostCount', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -663,7 +663,7 @@ function sp_SubForumIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPost
 	$out = apply_filters('sph_SubForumIndexStatusIcons', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -713,7 +713,7 @@ function sp_SubForumIndexLockIcon($args = '', $toolTip = '') {
 	}
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -756,7 +756,7 @@ function sp_SubForumIndexAddIcon($args = '', $toolTip = '') {
 	}
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -818,7 +818,7 @@ function sp_SubForumIndexPostsIcon($args = '', $toolTip = '') {
 	}
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -833,7 +833,7 @@ function sp_SubForumIndexPostsIcon($args = '', $toolTip = '') {
 #
 # --------------------------------------------------------------------------------------
 function sp_SubForumIndexInlinePosts() {
-	echo "<div class='spInlineTopics' id='spInlineTopics".SP()->forum->view->thisSubForum->forum_id."' style='display:none;'></div>";
+	echo wp_kses_post("<div class='spInlineTopics' id='spInlineTopics".SP()->forum->view->thisSubForum->forum_id."' style='display:none;'></div>");
 	sp_InsertBreak();
 }
 
@@ -929,7 +929,7 @@ function sp_ForumHeaderSubForums($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_ForumHeaderSubForums', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -989,7 +989,7 @@ function sp_ForumHeaderIcon($args = '') {
 	$out = apply_filters('sph_ForumHeaderIcon', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1026,7 +1026,7 @@ function sp_ForumHeaderName($args = '') {
 	$out = apply_filters('sph_ForumHeaderName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1061,7 +1061,7 @@ function sp_ForumHeaderDescription($args = '') {
 	$out = apply_filters('sph_ForumHeaderDescription', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1118,7 +1118,7 @@ function sp_ForumHeaderRSSButton($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_ForumHeaderRSSButton', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1157,7 +1157,7 @@ function sp_ForumHeaderMessage($args = '') {
 	$out = apply_filters('sph_ForumHeaderMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1209,7 +1209,7 @@ function sp_NoForumMessage($args = '', $deniedMessage = '', $definedMessage = ''
 	$out = apply_filters('sph_NoForumMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1278,7 +1278,7 @@ function sp_TopicIndexPageLinks($args = '', $label = '', $toolTip = '', $jumpToo
 	if (!empty($jumpIcon)) $jumpIcon = SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, sanitize_file_name($jumpIcon), $jumpToolTip);
 
 	if ($topics_per_page >= SP()->forum->view->thisForum->topic_count) {
-		if ($showEmpty) echo "<div class='$tagClass'></div>";
+		if ($showEmpty) echo wp_kses_post("<div class='$tagClass'></div>");
 		return;
 	}
 
@@ -1313,7 +1313,7 @@ function sp_TopicIndexPageLinks($args = '', $label = '', $toolTip = '', $jumpToo
 	$out = apply_filters('sph_TopicIndexPageLinks', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1378,7 +1378,7 @@ function sp_TopicModeratorList($args = '', $label = '') {
 	$out = apply_filters('sph_TopicModeratorList', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1456,7 +1456,7 @@ function sp_TopicNewButton($args = '', $label = '', $toolTip = '', $toolTipLock 
 	$out = apply_filters('sph_TopicNewButton', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1563,7 +1563,7 @@ function sp_TopicIndexIcon($args = '') {
 	$out = apply_filters('sph_TopicIndexIcon', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1604,7 +1604,7 @@ function sp_TopicIndexName($args = '', $toolTip = '') {
 	$out = apply_filters('sph_TopicIndexName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1662,7 +1662,7 @@ function sp_TopicIndexPostPageLinks($args = '', $toolTip = '') {
 	$out = apply_filters('sph_TopicIndexPostPageLinks', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1719,7 +1719,7 @@ function sp_TopicIndexPostCount($args = '', $label = '', $rtlLabel = '') {
 	$out = apply_filters('sph_TopicIndexPostCount', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1775,7 +1775,7 @@ function sp_TopicIndexReplyCount($args = '', $label = '', $rtlLabel = '') {
 	$out = apply_filters('sph_TopicIndexReplyCount', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1830,7 +1830,7 @@ function sp_TopicIndexViewCount($args = '', $label = '', $rtlLabel = '') {
 	$out = apply_filters('sph_TopicIndexViewCount', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1903,7 +1903,7 @@ function sp_TopicIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPin = '
 	$out = apply_filters('sph_TopicIndexStatusIcons', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2043,7 +2043,7 @@ function sp_TopicIndexFirstPost($args = '', $label = '') {
 	$out = apply_filters('sph_TopicIndexFirstPost', $out, $a, $label);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2185,7 +2185,7 @@ function sp_TopicIndexLastPost($args = '', $label = '') {
 	$out = apply_filters('sph_TopicIndexLastPost', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2220,7 +2220,7 @@ function sp_NoTopicsInForumMessage($args = '', $definedMessage = '') {
 	$out = apply_filters('sph_NoTopicsInForumMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -2285,7 +2285,7 @@ function sp_TopicForumToolButton($args = '', $label = '', $toolTip = '') {
 	$out .= "</a>";
 	$out = apply_filters('sph_TopicForumToolButton', $out, $a);
 
-	echo $out;
+	echo wp_kses_post($out);
 
 	# Add script to hover admin buttons - just once
 	if (SP()->forum->view->thisForum->tools_flag && $hide) {
@@ -2293,7 +2293,7 @@ function sp_TopicForumToolButton($args = '', $label = '', $toolTip = '') {
         <script>
 			(function(spj, $, undefined) {
 				spj.tool = {
-					toolclass: '.<?php echo($containerClass); ?>'
+					toolclass: '.<?php echo esc_attr($containerClass); ?>'
 				};
 			}(window.spj = window.spj || {}, jQuery));
         </script>
@@ -2317,7 +2317,79 @@ function sp_TopicEditorWindow($addTopicForm) {
 	if ((SP()->auths->get('start_topics', SP()->forum->view->thisForum->forum_id)) && (!SP()->forum->view->thisForum->forum_status) && (!SP()->core->forumData['lockdown']) || SP()->user->thisUser->admin) {
 		$out = '<a id="spEditFormAnchor"></a>'."";
 		$out .= sp_add_topic($addTopicForm);
-		echo $out;
+
+        $allowed_html = [
+            'a' => [
+                'id' => []
+            ],
+            'div' => [
+                'id' => [],
+                'class' => [],
+                'style' => [],
+                'tabindex' => [],
+            ],
+            'form' => [
+                'class' => [],
+                'action' => [],
+                'method' => [],
+                'id' => [],
+                'name' => [],
+                'data-guest' => [],
+                'data-img' => [],
+            ],
+            'input' => [
+                'type' => [],
+                'name' => [],
+                'value' => [],
+                'class' => [],
+                'tabindex' => [],
+                'id' => [],
+                'size' => [],
+                'maxlength' => [],
+                'title' => [],
+                'data-msg' => [],
+                'data-box' => [],
+            ],
+            'fieldset' => [
+                'class' => [],
+            ],
+            'legend' => [
+                'class' => [],
+            ],
+            'label' => [
+                'class' => [],
+                'for' => [],
+            ],
+            'select' => [
+                'class' => [],
+                'tabindex' => [],
+                'name' => [],
+            ],
+            'option' => [
+                'value' => [],
+                'selected' => [],
+            ],
+            'textarea' => [
+                'tabindex' => [],
+                'class' => [],
+                'name' => [],
+                'id' => [],
+                'cols' => [],
+                'rows' => [],
+            ],
+            'img' => [
+                'class' => [],
+                'src' => [],
+                'title' => [],
+                'alt' => [],
+                'data-url' => [],
+                'data-title' => [],
+                'data-path' => [],
+                'data-code' => [],
+            ]
+        ];
+
+		echo wp_kses($out, $allowed_html);
 
 		# inline js to open topic form if from the topic view (script below)
 		if (isset($_GET['new']) && sanitize_text_field($_GET['new']) == 'topic') add_action('wp_footer', 'spjs_OpenTopicForm');
