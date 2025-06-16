@@ -31,7 +31,7 @@ function sp_ProfileEdit($tabSlug = 'profile', $menuSlug = '') {
 		$out .= '<div class="spMessage">';
 		$out .= apply_filters('sph_ProfileErrorMsg', SP()->primitives->front_text('Sorry, an invalid profile request was detected. Do you need to log in?'));
 		$out .= '</div>';
-		echo $out;
+		echo wp_kses_post($out);
 
 		return;
 	}
@@ -62,7 +62,7 @@ function sp_ProfileEdit($tabSlug = 'profile', $menuSlug = '') {
 				$first   = false;
 				$ajaxURL = wp_nonce_url(SPAJAXURL.'profile&amp;tab='.$tab['slug']."&amp;user=$userid&amp;rand=".wp_rand(), 'profile');
 				if (is_ssl()) $ajaxURL = str_replace('http://', "https://", $ajaxURL);
-				echo "<li><a rel='nofollow' id='spProfileTab-".esc_attr($tab['slug'])."' $class href='$ajaxURL'>".$tab['name'].'</a></li>';
+				echo wp_kses_post("<li><a rel='nofollow' id='spProfileTab-".esc_attr($tab['slug'])."' $class href='$ajaxURL'>".$tab['name'].'</a></li>');
 			}
 		}
 		echo '</ul>';
@@ -112,7 +112,7 @@ function sp_ProfileEditMobile($tabSlug = 'profile', $menuSlug = 'overview') {
 		$out .= '<div class="spMessage">';
 		$out .= apply_filters('sph_ProfileErrorMsg', SP()->primitives->front_text('Sorry, an invalid profile request was detected. Do you need to log in?'));
 		$out .= '</div>';
-		echo $out;
+		echo wp_kses_post($out);
 
 		return;
 	}
@@ -146,7 +146,7 @@ function sp_ProfileEditMobile($tabSlug = 'profile', $menuSlug = 'overview') {
 				if ($tab['slug'] == $tabSlug) $tabSlugExist = true;
 				if (empty($firstTab)) $firstTab = $tab['slug'];
 
-				echo '<h2 id="spProfileTabTitle-'.esc_attr($tab['slug']).'">'.SP()->displayFilters->title($tab['name'])."</h2>\n";
+				echo wp_kses_post('<h2 id="spProfileTabTitle-'.esc_attr($tab['slug']).'">'.SP()->displayFilters->title($tab['name'])."</h2>\n");
 				echo "<div id='spProfileTab-".esc_attr($tab['slug'])."' class='spProfileAccordionPane'>\n";
 
 				if (!empty($tab['menus'])) {
@@ -169,15 +169,15 @@ function sp_ProfileEditMobile($tabSlug = 'profile', $menuSlug = 'overview') {
 							$hideMenu         = ($noPhotos || $noAvatars);
 							$hideMenu         = apply_filters('sph_ProfileMenuHide', $hideMenu, $tab, $menu, $userid);
 							if (!$hideMenu) {
-								echo '<h2 id="spProfileMenuTitle-'.esc_attr($menu['slug']).'">'.SP()->displayFilters->title($menu['name'])."</h2>\n";
+								echo wp_kses_post('<h2 id="spProfileMenuTitle-'.esc_attr($menu['slug']).'">'.SP()->displayFilters->title($menu['name'])."</h2>\n");
 								echo "<div id='spProfileMenu-".esc_attr($menu['slug'])."' class='spProfileAccordionPane'>\n";
 								if (!empty($menu['form']) && file_exists($menu['form'])) {
 									echo "<div class='spProfileAccordionForm'>\n";
 									require_once $menu['form'];
 									echo "</div>\n";
 								} else {
-									echo SP()->primitives->front_text('Profile form could not be found').': ['.$menu['name'].']<br />';
-									echo SP()->primitives->front_text('You might try the forum - toolbox - housekeeping admin form and reset the profile tabs and menus and see if that helps');
+									echo wp_kses_post(SP()->primitives->front_text('Profile form could not be found').': ['.$menu['name'].']<br />');
+									echo wp_kses_post(SP()->primitives->front_text('You might try the forum - toolbox - housekeeping admin form and reset the profile tabs and menus and see if that helps'));
 								}
 								echo "</div>\n"; # menu pane
 							}
@@ -257,7 +257,7 @@ function sp_ProfileShowHeader($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowHeader', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -310,7 +310,7 @@ function sp_ProfileShowDisplayName($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowDisplayName', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -372,7 +372,7 @@ function sp_ProfileShowFirstName($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowFirstName', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -434,7 +434,7 @@ function sp_ProfileShowLastName($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowLastName', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -498,7 +498,7 @@ function sp_ProfileShowWebsite($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowWebsite', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -555,7 +555,7 @@ function sp_ProfileShowLocation($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowLocation', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -612,7 +612,7 @@ function sp_ProfileShowBio($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowBio', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -673,7 +673,7 @@ function sp_ProfileShowAIM($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowAIM', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -734,7 +734,7 @@ function sp_ProfileShowYIM($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowYIM', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -795,7 +795,7 @@ function sp_ProfileShowICQ($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowICQ', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -856,7 +856,7 @@ function sp_ProfileShowGoogleTalk($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowGoogleTalk', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -917,7 +917,7 @@ function sp_ProfileShowMSN($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowMSN', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -978,7 +978,7 @@ function sp_ProfileShowMySpace($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowMySpace', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -1035,7 +1035,7 @@ function sp_ProfileShowSkype($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowSkype', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -1092,7 +1092,7 @@ function sp_ProfileShowFacebook($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowFacebook', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -1149,7 +1149,7 @@ function sp_ProfileShowTwitter($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowTwitter', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -1206,7 +1206,7 @@ function sp_ProfileShowLinkedIn($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowLinkedIn', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -1263,7 +1263,7 @@ function sp_ProfileShowYouTube($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowYouTube', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -1320,7 +1320,7 @@ function sp_ProfileShowInstagram($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowInstagram', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -1373,7 +1373,7 @@ function sp_ProfileShowMemberSince($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowMemberSince', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1425,7 +1425,7 @@ function sp_ProfileShowLastVisit($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowLastVisit', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1479,7 +1479,7 @@ function sp_ProfileShowUserPosts($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowUserPosts', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1571,8 +1571,28 @@ function sp_ProfileShowSearchPosts($args = '', $label = '', $labelStarted = '', 
 
 	$out = apply_filters('sph_ProfileShowSearchPosts', $out, SP()->user->profileUser, $a);
 
+    $allowed_html = [
+        'div' => [
+            'class' => [],
+        ],
+        'form' => [
+            'action' => [],
+            'method' => [],
+            'id' => [],
+            'name' => [],
+        ],
+        'input' => [
+            'type' => [],
+            'class' => [],
+            'name' => [],
+            'id' => [],
+            'value' => [],
+        ],
+        'br' => [],
+    ];
+
 	if ($echo) {
-		echo $out;
+		echo wp_kses($out, $allowed_html);
 	} else {
 		return $out;
 	}
@@ -1622,14 +1642,13 @@ function sp_ProfileShowUserPhotos($args = '') {
 		# Set up some stlye rules...
 		?>
         <style>
-        #spMainContainer .<?php echo($tagClass); ?> {
+        #spMainContainer .<?php echo esc_attr($tagClass); ?> {
             width: 100%;
         }
-
-        #spMainContainer .<?php echo($photoClass); ?> {
+        #spMainContainer .<?php echo esc_attr($photoClass); ?> {
             float: left;
             width: <?php echo intval((100 / $numCols)-$mobileComp); ?>%;
-            margin-bottom: <?php echo($gutter); ?>px;
+            margin-bottom: <?php echo intval($gutter); ?>px;
         }
         </style><?php
 
@@ -1650,7 +1669,7 @@ function sp_ProfileShowUserPhotos($args = '') {
 		$out = apply_filters('sph_ProfileShowUserPhotos', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -1661,9 +1680,9 @@ function sp_ProfileShowUserPhotos($args = '') {
     <script>
 		(function(spj, $, undefined) {
 			$(document).ready(function () {
-				$('.<?php echo($tagClass); ?>').masonry({
-					itemSelector: '.<?php echo($photoClass); ?>',
-					gutter: <?php echo($gutter); ?>
+				$('.<?php echo esc_attr($tagClass); ?>').masonry({
+					itemSelector: '.<?php echo esc_attr($photoClass); ?>',
+					gutter: <?php echo intval($gutter); ?>
 				});
 			});
 		}(window.spj = window.spj || {}, jQuery));
@@ -1700,7 +1719,7 @@ function sp_ProfileShowLink($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowLink', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo $out;
+		echo wp_kses_post($out);
 	} else {
 		return $out;
 	}
@@ -1759,7 +1778,7 @@ function sp_ProfileShowEmail($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowEmail', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo $out;
+			echo wp_kses_post($out);
 		} else {
 			return $out;
 		}
@@ -1803,7 +1822,7 @@ function sp_ProfileEditFooter() {
 			$(document).ready(function () {
 				/* set up the profile tabs */
 				$("#spProfileTabs li a").click(function () {
-					$("#spProfileContent").html("<div><img src='<?php echo SPCOMMONIMAGES; ?>working.gif' alt='Loading' /></div>");
+					$("#spProfileContent").html("<div><img src='<?php echo esc_url(SPCOMMONIMAGES); ?>working.gif' alt='Loading' /></div>");
 					$("#spProfileTabs li a").removeClass("current");
 					$(this).addClass("current");
 					$.ajax({
@@ -1817,9 +1836,9 @@ function sp_ProfileEditFooter() {
 				});
 
 				<?php if (!empty($firstMenu)) { ?>
-				$('#spProfileTab-<?php echo $firstTab; ?>').click();
+				$('#spProfileTab-<?php echo esc_js($firstTab); ?>').click();
 				$("#spProfileMenu li a").off('click').click(function () {
-					$("#spProfileContent").html("<div><img src='<?php echo SPCOMMONIMAGES; ?>working.gif' alt='Loading' /></div>");
+					$("#spProfileContent").html("<div><img src='<?php echo esc_url(SPCOMMONIMAGES); ?>working.gif' alt='Loading' /></div>");
 					$.ajax({
 						async: false, url: this.href, success: function (html) {
 							$("#spProfileContent").html(html);
@@ -1828,10 +1847,10 @@ function sp_ProfileEditFooter() {
 					return false;
 				});
 
-				$('#spProfileMenu-<?php echo $firstMenu; ?>').click();
+				$('#spProfileMenu-<?php echo esc_js($firstMenu); ?>').click();
 
 				$("#spProfileMenu li a").off('click').click(function () {
-					$("#spProfileContent").html("<div><img src='<?php echo SPCOMMONIMAGES; ?>working.gif' alt='Loading' /></div>");
+					$("#spProfileContent").html("<div><img src='<?php echo esc_url(SPCOMMONIMAGES); ?>working.gif' alt='Loading' /></div>");
 					$.ajax({
 						async: true, url: this.href, success: function (html) {
 							$("#spProfileContent").html(html);
@@ -1840,10 +1859,10 @@ function sp_ProfileEditFooter() {
 					return false;
 				});
 				<?php } else if (!empty($firstTab)) { ?>
-				$('#spProfileTab-<?php echo $firstTab; ?>').click();
+				$('#spProfileTab-<?php echo esc_js($firstTab); ?>').click();
 				<?php } else { ?>
 				<?php $tabs = SP()->profile->get_tabs_menus(); ?>
-				$('#spProfileTab-<?php echo $tabs[0]['slug']; ?>').click();
+				$('#spProfileTab-<?php echo esc_js($tabs[0]['slug']); ?>').click();
 				<?php } ?>
 			})
 		}(window.spj = window.spj || {}, jQuery));
@@ -1882,10 +1901,10 @@ function sp_ProfileEditFooterMobile() {
 						});
 				});
 
-				$("#spProfileTab-<?php echo $firstTab; ?>").css("display", "block");
-				$("#spProfileTabTitle-<?php echo $firstTab; ?>").addClass("current");
-				$("#spProfileMenu-<?php echo $firstMenu; ?>").css("display", "block");
-				$("#spProfileMenuTitle-<?php echo $firstMenu; ?>").addClass("current");
+				$("#spProfileTab-<?php echo esc_js($firstTab); ?>").css("display", "block");
+				$("#spProfileTabTitle-<?php echo esc_js($firstTab); ?>").addClass("current");
+				$("#spProfileMenu-<?php echo esc_js($firstMenu); ?>").css("display", "block");
+				$("#spProfileMenuTitle-<?php echo esc_js($firstMenu); ?>").addClass("current");
 			})
 		}(window.spj = window.spj || {}, jQuery));
     </script>
