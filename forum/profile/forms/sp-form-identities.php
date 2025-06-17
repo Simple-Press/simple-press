@@ -11,7 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 # double check we have a user
-if (empty($userid)) return;
+if (empty($userid))  {
+    return;
+}
 ?>
     <script>
 		(function(spj, $, undefined) {
@@ -229,4 +231,39 @@ $out .= '</form>';
 $out .= "</div>\n";
 
 $out = apply_filters('sph_ProfileIdentitiesForm', $out, $userid);
-echo $out;
+$allowed_tags = array(
+    'p' => array(),
+    'hr' => array(),
+    'div' => array(
+        'class' => array(),
+        'style' => array(),
+        'id'    => array(),
+        'name'  => array(),
+    ),
+    'form' => array(
+        'action' => array(),
+        'method' => array(),
+        'name'   => array(),
+        'id'     => array(),
+        'class'  => array(),
+    ),
+    'input' => array(
+        'type'    => array(),
+        'class'   => array(),
+        'name'    => array(),
+        'id'      => array(),
+        'value'   => array(),
+        'checked' => array(),
+    ),
+    'span' => array(
+        'class' => array(),
+        'style' => array(),
+    ),
+    'label' => array(
+        'for'   => array(),
+        'class' => array(),
+    ),
+);
+
+// apply wp_kses before output/rendering
+echo wp_kses($out, $allowed_tags);

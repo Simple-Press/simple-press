@@ -11,7 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 # double check we have a user
-if (empty($userid)) return;
+if (empty($userid)) {
+    return;
+}
 ?>
     <script>
 		(function(spj, $, undefined) {
@@ -104,4 +106,43 @@ $out .= '</form>';
 $out .= "</div>\n";
 
 $out = apply_filters('sph_ProfileAccountForm', $out, $userid);
-echo $out;
+
+$allowed_html = array(
+    'p' => array(
+        'class' => true,
+        'id' => true,
+    ),
+    'hr' => array(),
+    'div' => array(
+        'class' => true,
+        'id' => true,
+        'style' => true,
+    ),
+    'form' => array(
+        'action' => true,
+        'method' => true,
+        'name' => true,
+        'id' => true,
+        'class' => true,
+    ),
+    'input' => array(
+        'type' => true,
+        'disabled' => true,
+        'class' => true,
+        'name' => true,
+        'id' => true,
+        'value' => true,
+        'autocomplete' => true,
+    ),
+    'span' => array(
+        'class' => true,
+        'id' => true,
+    ),
+    'label' => array(
+        'for' => true,
+        'class' => true,
+    ),
+    // Add filterable hooks or additional HTML tags as needed.
+);
+
+echo wp_kses($out, $allowed_html);

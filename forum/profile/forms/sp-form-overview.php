@@ -11,7 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 # double check we have a user
-if (empty($userid)) return;
+if (empty($userid)) {
+    return;
+}
 
 # let's start off with a do action hook right at the start
 do_action('sph_profile_overview_form_top', $userid);
@@ -122,4 +124,37 @@ $out = apply_filters('sph_ProfileOverviewForm', $out, $userid);
 
 $out .= sp_InsertBreak('echo=0');
 
-echo $out;
+/**
+ * Define allowed HTML tags and attributes for wp_kses.
+ */
+$allowed_html = array(
+    'div' => array(
+        'class' => array(),
+        'id'    => array(),
+        'style' => array(),
+    ),
+    'hr' => array(),
+    'p' => array(
+        'class' => array(),
+        'style' => array(),
+    ),
+    'small' => array(),
+    'form' => array(
+        'action' => array(),
+        'method' => array(),
+        'id' => array(),
+        'name' => array(),
+    ),
+    'input' => array(
+        'type' => array(),
+        'class' => array(),
+        'name' => array(),
+        'id' => array(),
+        'value' => array(),
+    ),
+);
+
+/**
+ * Output the filtered $out using wp_kses.
+ */
+echo wp_kses( $out, $allowed_html );

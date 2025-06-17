@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if (sp_get_system_status() != 'ok') {
 	$out .= '<img style="style="vertical-align:bottom;border:none;"" src="'.SP()->theme->paint_file_icon(SPTHEMEICONSURL, 'sp_Information.png').'" alt="" />'."\n";
 	$out .= '&nbsp;&nbsp;'.SP()->primitives->front_text('The forum is temporarily unavailable while being upgraded to a new version');
-	echo $out;
+	echo wp_kses_post($out);
 }
 
 # are we doing feed keys? If so reset user to that f the passed feedkey - else leave as guest
@@ -27,7 +27,7 @@ if (isset($rssopt['sfrssfeedkey']) && $rssopt['sfrssfeedkey']) {
 
 # = Support Functions ===========================
 function sp_rss_filter($text) {
-	echo convert_chars(ent2ncr($text));
+	echo esc_html(convert_chars(ent2ncr($text)));
 }
 
 function sp_rss_excerpt($text) {
@@ -172,7 +172,7 @@ header('Content-Type: application/xml');
 header("Cache-control: max-age=3600");
 header("Expires: ".date('r', time() + 3600));
 header("Pragma: ");
-echo '<?xml version="1.0" encoding="'.get_option('blog_charset').'"?>';
+echo '<?xml version="1.0" encoding="'.esc_html(get_option('blog_charset')).'"?>';
 ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<?php do_action('sph_feed_after_start'); ?>
