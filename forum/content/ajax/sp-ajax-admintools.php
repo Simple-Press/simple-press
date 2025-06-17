@@ -15,7 +15,7 @@ if (!sp_nonce('spForumTools')) die();
 
 # get out of here if no action specified
 if (empty($_GET['targetaction'])) die();
-$action = SP()->filters->str(wp_unslash(['targetaction']));
+$action = SP()->filters->str(wp_unslash($_GET['targetaction']));
 
 # check the autocomplete task before the nonce check
 if ($action == 'notify-search') sp_search_user();
