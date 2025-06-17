@@ -103,7 +103,20 @@ class spcError {
 		# Do not record notices if turned off
 		if ($errno == E_NOTICE && $this->notices) return;
 
-		$errortype = array(E_ERROR => 'Error', E_WARNING => 'Warning', E_PARSE => 'Parsing Error', E_NOTICE => 'Notice', E_CORE_ERROR => 'Core Error', E_CORE_WARNING => 'Core Warning', E_COMPILE_ERROR => 'Compile Error', E_COMPILE_WARNING => 'Compile Warning', E_USER_ERROR => 'User Error', E_USER_WARNING => 'User Warning', E_USER_NOTICE => 'User Notice', E_RECOVERABLE_ERROR => 'Catchable Fatal Error');
+        $errortype = array(
+            E_ERROR => 'Error',
+            E_WARNING => 'Warning',
+            E_PARSE => 'Parsing Error',
+            E_NOTICE => 'Notice',
+            E_CORE_ERROR => 'Core Error',
+            E_CORE_WARNING => 'Core Warning',
+            E_COMPILE_ERROR => 'Compile Error',
+            E_COMPILE_WARNING => 'Compile Warning',
+            E_USER_ERROR => 'User Error',
+            E_USER_WARNING => 'User Warning',
+            E_USER_NOTICE => 'User Notice',
+            E_RECOVERABLE_ERROR => 'Catchable Fatal Error'
+        );
 
 		if ($errno == E_NOTICE || $errno == E_RECOVERABLE_ERROR || $errno == E_WARNING || $errno == E_USER_WARNING) {
 			if (version_compare(PHP_VERSION, '5.2.4', '<')) {
@@ -229,8 +242,6 @@ class spcError {
 			$cat = 'spaErrWarning';
 		} else if ($errno == E_NOTICE) {
 			$cat = 'spaErrNotice';
-		} else if ($errno == E_STRICT) {
-			$cat = 'spaErrStrict';
 		}
 
         $now = current_time('mysql');
