@@ -933,7 +933,7 @@ function sp_perform_install($phase, $subphase = 0) {
 
 			SP()->options->add('sfconfig', $sfconfig);
 
-			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase)).' - ';
+			echo '<h5>'.esc_html(SP()->primitives->admin_text('Phase')).' - '.esc_html($phase).' - ';
 			if ($success) {
 				SP()->primitives->admin_etext('Storage location created').'</h5>';
 			} else {
