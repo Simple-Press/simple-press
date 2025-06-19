@@ -38,6 +38,9 @@ function sp_SubForumHeaderDescription($args = '', $label = '') {
 	if ($get) return $label;
 
 	$out = (empty($label)) ? '' : "<div id='$tagId' class='$tagClass'>$label</div>";
+    $allowed_html = array(
+        'div' => array('id' => array(),'class' => array()),
+    );
 	$out = apply_filters('sph_SubForumHeaderDescription', $out, $a);
 
 	if ($echo) {
@@ -114,6 +117,12 @@ function sp_SubForumIndexIcon($args = '') {
 	if ($get) return $fIcon;
 
 	$out = $fIcon;
+    $allowed_html = array(
+        'img' => array('src' => array(), 'class' => array(), 'alt' => array(), 'title' => array()),
+        'span' => array('class' => array()),
+        'div' => array('id' => array(), 'class' => array()),
+        'a'   => array('id' => array(), 'class' => array(),'href' => array(),'title' => array(),'rel' => array(),'data-popup' => array(),'data-site' => array(),'data-label' => array(),'data-width' => array(),'data-height' => array(),'data-align' => array(),'data-target' => array(),'data-spinner' => array(),'data-id' => array(),'data-open' => array(),'data-close' => array()),
+    );
 	$out = apply_filters('sph_SubForumIndexIcon', $out, $a);
 
 	if ($echo) {
@@ -155,6 +164,9 @@ function sp_SubForumIndexName($args = '', $toolTip = '') {
 	if ($get) return SP()->primitives->truncate_name(SP()->forum->view->thisSubForum->forum_name, $truncate);
 
 	$out = "<a href='".SP()->forum->view->thisSubForum->forum_permalink."' id='$tagId' class='$tagClass' title='$toolTip'>".SP()->primitives->truncate_name(SP()->forum->view->thisSubForum->forum_name, $truncate)."</a>";
+    $allowed_html = array(
+        'a' => array('href' => array(),'id' => array(),'class' => array(),'title' => array()),
+    );
 	$out = apply_filters('sph_SubForumIndexName', $out, $a);
 
 	if ($echo) {
@@ -192,10 +204,14 @@ function sp_SubForumIndexDescription($args = '') {
 	if ($get) return SP()->forum->view->thisSubForum->forum_desc;
 
 	$out = (empty(SP()->forum->view->thisSubForum->forum_desc)) ? '' : "<div id='$tagId' class='$tagClass'>".SP()->forum->view->thisSubForum->forum_desc."</div>";
+
 	$out = apply_filters('sph_SubForumIndexDescription', $out, $a);
 
+    $allowed_html = array(
+        'div' => array('id' => array(),'class' => array()),
+    );
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out,$allowed_html);
 	} else {
 		return $out;
 	}
@@ -250,10 +266,16 @@ function sp_SubForumIndexPageLinks($args = '', $toolTip = '') {
 	}
 	$out .= "</div>";
 
+    $allowed_html = array(
+        'div' => array('id' => array(),'class' => array()),
+        'a' => array('class' => array(),'href' => array(),'title' => array()),
+        'span' => array('class' => array()),
+        'img' => array('src' => array(),'class' => array(),'alt' => array(),'title' => array()),
+    );
 	$out = apply_filters('sph_SubForumIndexPageLinks', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out,$allowed_html);
 	} else {
 		return $out;
 	}
@@ -316,8 +338,13 @@ function sp_SubForumIndexModerators($args = '', $label = '') {
 	$out .= "</div>";
 	$out = apply_filters('sph_SubForumIndexModerators', $out, $a);
 
+    $allowed_html = array(
+        'div' => array('id' => array(),'class' => array()),
+        'span' => array('class' => array()),
+    );
+
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, $allowed_html);
 	} else {
 		return $out;
 	}
@@ -487,8 +514,14 @@ function sp_SubForumIndexLastPost($args = '', $lastPostLabel = '', $noTopicsLabe
 	$out .= "</div>";
 	$out = apply_filters('sph_SubForumIndexLastPost', $out, $a);
 
+    $allowed_html = array(
+        'div' => array('id' => array(),'class' => array()),
+        'span' => array('class' => array()),
+        'a' => array('class' => array(),'href' => array(),'title' => array()),
+    );
+    
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, $allowed_html);
 	} else {
 		return $out;
 	}
@@ -539,8 +572,13 @@ function sp_SubForumIndexTopicCount($args = '', $label = '') {
 	$out .= "</div>";
 	$out = apply_filters('sph_SubForumIndexTopicCount', $out, $a);
 
+    $allowed_html = array(
+        'div' => array('id' => array(),'class' => array()),
+        'span' => array('class' => array()),
+    );
+
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, $allowed_html);
 	} else {
 		return $out;
 	}
@@ -591,8 +629,13 @@ function sp_SubForumIndexPostCount($args = '', $label = '') {
 	$out .= "</div>";
 	$out = apply_filters('sph_SubForumIndexPostCount', $out, $a);
 
+    $allowed_html = array(
+        'div' => array('id' => array(),'class' => array()),
+        'span' => array('class' => array()),
+    );
+
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, $allowed_html);
 	} else {
 		return $out;
 	}
@@ -662,8 +705,13 @@ function sp_SubForumIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPost
 
 	$out = apply_filters('sph_SubForumIndexStatusIcons', $out, $a);
 
+    $allowed_html = array(
+        'div' => array('id' => array(),'class' => array()),
+        'a' => array('rel' => array(),'id' => array(),'class' => array(),'title' => array(),'href' => array(),'data-popup' => array(),'data-site' => array(),'data-label' => array(),'data-width' => array(),'data-height' => array(),'data-align' => array()),
+    );
+
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, $allowed_html);
 	} else {
 		return $out;
 	}
@@ -712,8 +760,12 @@ function sp_SubForumIndexLockIcon($args = '', $toolTip = '') {
 		$out = apply_filters('sph_SubForumIndexLockIcon', $out, $a);
 	}
 
+    $allowed_html = array(
+        'div' => array('id' => array(),'class' => array(),'title' => array()),
+    );
+
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, $allowed_html);
 	} else {
 		return $out;
 	}
@@ -755,8 +807,12 @@ function sp_SubForumIndexAddIcon($args = '', $toolTip = '') {
 		$out = apply_filters('sph_SubForumIndexAddIcon', $out, $a);
 	}
 
+    $allowed_html = array(
+        'a' => array('id' => array(),'class' => array(),'title' => array(),'href' => array()),
+    );
+
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, $allowed_html);
 	} else {
 		return $out;
 	}
@@ -817,8 +873,13 @@ function sp_SubForumIndexPostsIcon($args = '', $toolTip = '') {
 		$out = apply_filters('sph_SubForumIndexPostsIcon', $out, $a);
 	}
 
+    $allowed_html = array(
+        'a' => array('rel' => array(),'id' => array(),'class' => array(),'title' => array(),'href' => array(),'data-popup' => array(),'data-site' => array(),'data-label' => array(),'data-width' => array(),'data-height' => array(),'data-align' => array(),'data-target' => array(),'data-spinner' => array(),'data-id' => array(),'data-open' => array(),'data-close' => array()),
+        'img' => array('src' => array(),'alt' => array(),'class' => array()),
+    );
+
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, $allowed_html);
 	} else {
 		return $out;
 	}

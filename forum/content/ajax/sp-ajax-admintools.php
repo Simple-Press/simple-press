@@ -9,19 +9,98 @@ $Rev: 15862 $
 if ( ! defined( 'ABSPATH' ) ) {
 	die('Access denied - you cannot directly call this file');
 }
+
+define('AJAX_ADMINTOOLS_ALLOWED_TAGS', array(
+    'div' => array(
+        'id'=>array(),
+        'class'=>array(),
+        'style'=>array()
+    ),
+    'form' => array(
+        'class'=>array(),
+        'action'=>array(),
+        'method'=>array(),
+        'name'=>array(),
+        'id'=>array()
+    ),
+    'input' => array(
+        'type'=>array(),
+        'name'=>array(),
+        'value'=>array(),
+        'class'=>array(),
+        'id'=>array(),
+        'size'=>array(),
+        'checked'=>array(),
+        'style'=>array()
+    ),
+    'label' => array(
+        'for'=>array(),
+        'class'=>array(),
+        'id'=>array()
+    ),
+    'textarea' => array(
+        'style'=>array(),
+        'class'=>array(),
+        'name'=>array(),
+        'rows'=>array(),
+        'id'=>array()
+    ),
+    'select' => array(
+        'id'      => true,
+        'class'   => true,
+        'name'    => true,
+        'onchange'=> true,
+    ),
+    'optgroup' => array(
+        'class' => true,
+        'label' => true,
+    ),
+    'option' => array(
+        'value' => true,
+        'selected' => true,
+    ),
+    'fieldset' => array(
+        'class'=>array()
+    ),
+    'legend' => array(),
+    'table' => array(
+        'class'=>array()
+    ),
+    'tr' => array(),
+    'td' => array(
+        'class'=>array(),
+        'colspan'=>array(),
+        'style'=>array()
+    ),
+    'span' => array(
+        'class'=>array(),
+        'id'=>array()
+    ),
+    'p' => array(
+        'class'=>array(),
+        'id'=>array(),
+        'style'=>array()
+    ),
+    'br'=>array(),
+));
+
+
+
 sp_forum_ajax_support();
 
-if (!sp_nonce('spForumTools')) die();
+if (!sp_nonce('spForumTools')) {
+    die();
+}
 
 # get out of here if no action specified
-if (empty($_GET['targetaction'])) die();
+if (empty($_GET['targetaction'])) {
+    die();
+}
+
 $action = SP()->filters->str(wp_unslash($_GET['targetaction']));
 
 # check the autocomplete task before the nonce check
 if ($action == 'notify-search') sp_search_user();
-
-# now check the nonce
-
 if ($action == 'edit-title') sp_edit_title_popup();
 if ($action == 'move-topic') sp_move_topic_popup();
 if ($action == 'move-post') sp_move_post_popup();
@@ -37,7 +116,6 @@ if ($action == 'pin-post') sp_pin_post();
 if ($action == 'pin-topic') sp_pin_topic();
 if ($action == 'lock-topic') sp_lock_topic();
 
-die();
 
 function sp_edit_title_popup() {
 	$defs = array('tagClass'		=> 'spForumToolsPopup',
@@ -82,7 +160,7 @@ function sp_edit_title_popup() {
     $out.= "<input type='hidden' name='sp_edit_title' value='".esc_attr($nonce)."' />";
 	$out.= '<input type="hidden" name="tid" value="'.$thistopic->topic_id.'" />';
     $out.= '<div class="spCenter">';
-	$out.= "<div class='$titleClass'>".SP()->primitives->front_text('Topic Title').':</div>';
+	$out.= "<div class='$titleClass'>".SP()->primitives->front_text('Topic Titleoo').':</div>';
 	$out.= "<div><textarea class='$controlClass' name='topicname' rows='2'>".esc_textarea($thistopic->topic_name).'</textarea></div>';
 
 	$s = (SP()->user->thisUser->admin) ? '' : " style='display:none;'";
@@ -90,15 +168,15 @@ function sp_edit_title_popup() {
 	$out.= "<div><textarea class='$controlClass' $s name='topicslug' rows='2'>".esc_textarea($thistopic->topic_slug).'</textarea></div>';
 
     $out = apply_filters('sph_topic_title_edit' , $out, $thistopic);
-	$out.= '<div class="spCenter"><br />';
-	$out.= "<input type='submit' class='$buttonClass' name='edittopic' value='".SP()->primitives->front_text('Save')."' />";
-	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
+	$out .= '<div class="spCenter"><br />';
+	$out .= "<input type='submit' class='$buttonClass' name='edittopic' value='".SP()->primitives->front_text('Save')."' />";
+	$out .= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
 
-	$out.= '</div>';
-    $out.= '</div>';
-	$out.= '</form>';
-	$out.= '</div>';
-    echo $out;
+	$out .= '</div>';
+    $out .= '</div>';
+	$out .= '</form>';
+	$out .= '</div>';
+    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
 }
 
 function sp_move_topic_popup() {
@@ -137,21 +215,21 @@ function sp_move_topic_popup() {
 	require_once SPBOOT.'core/sp-core-support-functions.php';
 
 	$out = "<div id='spMainContainer' class='$tagClass'>";
-	$out.= "<div class='spForumToolsHeader'>";
-	$out.= "<div class='$titleClass'>".SP()->primitives->front_text('Select new forum for this topic')."</div>";
-	$out.= "<div class='$highlightClass'>".SP()->displayFilters->title($thistopic->topic_name)."</div>";
-	$out.= '</div>';
-	$out.= "<form classs='$formClass' action='".SP()->spPermalinks->build_url($thisforum->forum_slug, '', 1, 0)."' method='post' name='movetopicform'>";
-	$out.= "<input type='hidden' name='currenttopicid' value='$topicid' />";
-	$out.= "<input type='hidden' name='currentforumid' value='$forumid' />";
-	$out.= "<div class='spCenter'>";
-	$out.= sp_render_group_forum_select(false, false, true, true, SP()->primitives->front_text('Select forum'), 'forumid', 'spSelect $controlClass');
-	$out.= sp_InsertBreak('echo=0');
-	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
-	$out.= "<input type='submit' class='$buttonClass' name='maketopicmove' value='".SP()->primitives->front_text('Move Topic to Selected Forum')."' />";
-	$out.= '</div></form></div>';
+	$out .= "<div class='spForumToolsHeader'>";
+	$out .= "<div class='$titleClass'>".SP()->primitives->front_text('Select new forum for this topic')."</div>";
+	$out .= "<div class='$highlightClass'>".SP()->displayFilters->title($thistopic->topic_name)."</div>";
+	$out .= '</div>';
+	$out .= "<form class='$formClass' action='".SP()->spPermalinks->build_url($thisforum->forum_slug, '', 1, 0)."' method='post' name='movetopicform'>";
+	$out .= "<input type='hidden' name='currenttopicid' value='$topicid' />";
+	$out .= "<input type='hidden' name='currentforumid' value='$forumid' />";
+	$out .= "<div class='spCenter'>";
+	$out .= sp_render_group_forum_select(false, false, true, true, SP()->primitives->front_text('Select forum'), 'forumid', 'spSelect $controlClass');
+	$out .= sp_InsertBreak('echo=0');
+	$out .= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
+	$out .= "<input type='submit' class='$buttonClass' name='maketopicmove' value='".SP()->primitives->front_text('Move Topic to Selected Forum')."' />";
+	$out .= '</div></form></div>';
 
-	echo $out;
+	echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
 }
 
 function sp_reassign_post_popup() {
@@ -204,7 +282,8 @@ function sp_reassign_post_popup() {
 	$out.= "<input type='submit' class='$buttonClass' name='makepostreassign' value=".SP()->primitives->front_text('Reassign Post')."' />";
 	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
 	$out.= '</div></form></div>';
-	echo $out;
+
+    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
 }
 
 function sp_show_properties() {
@@ -313,7 +392,7 @@ function sp_show_properties() {
 	}
 
 	$out.= "</table></div>";
-	echo $out;
+    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
 }
 
 # Support functions for the properties tool
@@ -508,7 +587,7 @@ function sp_move_post_popup() {
 	$out.= "<input type='submit' class='$buttonClass' name='makepostmove2' value='".SP()->primitives->front_text('Move')."' />";
 	$out.= "</div></form></div>";
 
-	echo $out;
+    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
 }
 
 function sp_notify_user() {
@@ -541,14 +620,14 @@ function sp_notify_user() {
 	$titleClass		= esc_attr($titleClass);
 	$controlClass	= esc_attr($controlClass);
 	$buttonClass	= esc_attr($buttonClass);
-
-    $site = SPAJAXURL.'spForumTools&targetaction=notify-search&rand='.wp_rand();
+    $tools_nonce = wp_create_nonce('spForumTools');
+    $site = SPAJAXURL.'spForumTools&targetaction=notify-search&rand='.wp_rand().'&_wpnonce='.$tools_nonce;
 ?>
     <script>
 		(function(spj, $, undefined) {
 			$(document).ready(function() {
 				$('#sp_notify_user').autocomplete({
-					source : '<?php echo $site; ?>',
+					source : '<?php echo esc_url_raw($site); ?>',
 					disabled : false,
 					delay : 200,
 					minLength: 1,
@@ -574,7 +653,7 @@ function sp_notify_user() {
 	$out.= "<input type='submit' class='$buttonClass' name='notifyuser' value='".SP()->primitives->front_text('Notify')."' />";
 	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
 	$out.= "</div></form></div>";
-	echo $out;
+    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
 }
 
 function sp_search_user() {
@@ -603,8 +682,7 @@ function sp_search_user() {
 			$out = '['.trim($primary.$secondary, ',').']';
 		}
 	}
-	echo $out;
-	die();
+    wp_send_json(json_decode($out));
 }
 
 function sp_order_topic_pins() {
@@ -671,7 +749,7 @@ function sp_order_topic_pins() {
 	$out.= "<input type='submit' class='$buttonClass' name='ordertopicpins' value='".SP()->primitives->front_text('Save Pin Order Changes')."' />";
 	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
 	$out.= "</div></form></div>";
-	echo $out;
+    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
 }
 
 function sp_post_delete() {
@@ -687,7 +765,7 @@ function sp_post_delete() {
             $page = $page - 1;
             $returnURL = SP()->spPermalinks->build_url($forumslug, $topicslug, $page);
         }
-		echo $returnURL;
+		echo esc_url($returnURL);
     }
     die();
 }
@@ -700,7 +778,6 @@ function sp_topic_delete() {
     if ($view == 'topic') {
       	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.absint($_GET['killtopicforum']), 'forum_slug');
         $returnURL = SP()->spPermalinks->build_url($forumslug, '', 0);
-        echo $returnURL;
     } else if ((int) $_GET['count'] == 1) {
       	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.absint($_GET['killtopicforum']), 'forum_slug');
         $page = absint($_GET['page']);
@@ -710,8 +787,8 @@ function sp_topic_delete() {
             $page = $page - 1;
             $returnURL = SP()->spPermalinks->build_url($forumslug, '', $page);
         }
-        echo $returnURL;
     }
+    echo esc_url($returnURL);
 
     die();
 }
