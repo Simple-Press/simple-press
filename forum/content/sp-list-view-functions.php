@@ -282,7 +282,21 @@ function sp_ListTopicName($args = '', $toolTip = '') {
 	$out = apply_filters('sph_ListTopicName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => true,
+                    'class' => true,
+                ),
+                'a' => array(
+                    'href' => true,
+                    'id' => true,
+                    'class' => true,
+                    'title' => true,
+                ),
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -394,7 +408,26 @@ function sp_ListLastPost($args = '', $label = '') {
 	$out = apply_filters('sph_ListLastPost', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'span' => array(
+                    'id' => true,
+                    'class' => true,
+                ),
+                'div' => array(
+                    'id' => true,
+                    'class' => true,
+                ),
+                'a' => array(
+                    'href' => true,
+                    'id' => true,
+                    'class' => true,
+                    'title' => true,
+                ),
+                'br' => array(),
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -507,7 +540,26 @@ function sp_ListFirstPost($args = '', $label = '') {
 	$out = apply_filters('sph_ListFirstPost', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'span' => array(
+                    'id' => true,
+                    'class' => true,
+                ),
+                'div' => array(
+                    'id' => true,
+                    'class' => true,
+                ),
+                'a' => array(
+                    'href' => true,
+                    'id' => true,
+                    'class' => true,
+                    'title' => true,
+                ),
+                'br' => array(),
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -564,7 +616,15 @@ function sp_NoTopicsInListMessage($args = '', $definedMessage = '') {
 	$out = apply_filters('sph_NoTopicsInListMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => true,
+                    'class' => true,
+                ),
+            )
+        );
 	} else {
 		return $out;
 	}
