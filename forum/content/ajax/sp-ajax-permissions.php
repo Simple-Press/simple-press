@@ -36,22 +36,29 @@ foreach ($authlist as $a) {
 	if ($category != $a->authcat_name) {
 		$category = $a->authcat_name;
 		$curcol = 1;
-		echo '<div class="spAuthCat">'.SP()->primitives->admin_text($category).'</div>';
+		echo '<div class="spAuthCat">'.esc_html(SP()->primitives->admin_text($category)).'</div>';
 	}
 
 	echo '<div class="spColumnSection">';
-	if (SP()->auths->get($auth_name, $forumid, $userid)) {
-		echo SP()->theme->paint_icon('', SPTHEMEICONSURL, 'sp_PermissionYes.png').'&nbsp;&nbsp;'.SP()->primitives->admin_text(SP()->core->forumData['auths'][$auth_id]->auth_desc);
-	} else {
-		echo SP()->theme->paint_icon('', SPTHEMEICONSURL, 'sp_PermissionNo.png').'&nbsp;&nbsp;'.SP()->primitives->admin_text(SP()->core->forumData['auths'][$auth_id]->auth_desc);
-	}
+    $icon = SP()->theme->paint_icon('', SPTHEMEICONSURL, SP()->auths->get($auth_name, $forumid, $userid) ? 'sp_PermissionYes.png' : 'sp_PermissionNo.png');
+    $desc = SP()->primitives->admin_text(SP()->core->forumData['auths'][$auth_id]->auth_desc);
+    echo wp_kses(
+        $icon . '&nbsp;' . $desc,
+        array(
+            'img' => array('src' => array(), 'alt' => array(), 'class' => array(), 'style' => array(), 'title' => array()),
+            'span' => array('class' => array(), 'title' => array()),
+            'b' => array(),
+            'i' => array(),
+            'br' => array()
+        )
+    );
 	echo '</div>';
 
 	$curcol++;
 	if ($curcol > 2) $curcol = 1;
 }
 
-echo "<p><input type='button' id='spClosePerms$forumid' class='spSubmit spClosePermissions' value='".SP()->primitives->front_text('Close')."' data-forumid='$forumid' /></p>";
+echo "<p><input type='button' id='spClosePerms".esc_html($forumid)."' class='spSubmit spClosePermissions' value='".esc_html(SP()->primitives->front_text('Close'))."' data-forumid='".esc_html($forumid)."' /></p>";
 ?>
 	<script>
 		(function(spj, $, undefined) {
