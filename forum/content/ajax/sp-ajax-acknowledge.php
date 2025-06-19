@@ -59,5 +59,26 @@ if (empty($theme['parent'])) {
 $out.= '</p>';
 
 $out.= '</div>';
-echo $out;
+$allowed_html = array(
+    'a' => array(
+        'href' => array(),
+        'title' => array(),
+    ),
+    'br' => array(),
+    'b' => array(),
+    'strong' => array(),
+    'img' => array(
+        'src' => array(),
+        'alt' => array(),
+        'title' => array(),
+    ),
+    'p' => array(),
+    'hr' => array(),
+    'div' => array(
+        'id' => array(),
+        'style' => array(),
+    ),
+    'style' => array(),
+);
+echo wp_kses($out, $allowed_html);
 die();
