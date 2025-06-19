@@ -13,7 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 sp_forum_ajax_support();
 sp_load_editor(0,1);
 
-if (!sp_nonce('spQuotePost')) die();
+if (!sp_nonce('spQuotePost')) {
+    die();
+}
 
 $postid = SP()->filters->integer($_GET['post']);
 $forumid = SP()->filters->integer($_GET['forumid']);
@@ -42,6 +44,13 @@ if ($bqStartPos && $bqEndPos) {
 
 $content = apply_filters('sph_quote_content', $content, $original);
 
-echo $content;
+echo wp_kses(
+    $content,
+    [
+        'blockquote' => [
+            'class' => []
+        ],
+    ]
+);
 
 die();
