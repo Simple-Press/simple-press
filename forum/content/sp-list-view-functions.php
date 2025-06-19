@@ -66,11 +66,24 @@ function sp_ListForumName($args = '', $toolTip = '', $label = '') {
 	}
 	$out = apply_filters('sph_ListForumName', $out, $a);
 
-	if ($echo) {
-		echo $out;
-	} else {
-		return $out;
-	}
+    $allowed_html = array(
+        'p' => array(
+            'id' => true,
+            'class' => true,
+        ),
+        'a' => array(
+            'href' => true,
+            'id' => true,
+            'class' => true,
+            'title' => true,
+        ),
+    );
+
+    if ($echo) {
+        echo wp_kses($out, $allowed_html);
+    } else {
+        return $out;
+    }
 }
 
 # --------------------------------------------------------------------------------------
@@ -116,11 +129,26 @@ function sp_ListNewPostButton($args = '', $label = '', $toolTip = '') {
 
 	$out = apply_filters('sph_ListNewPostButton', $out, $a);
 
-	if ($echo) {
-		echo $out;
-	} else {
-		return $out;
-	}
+    $allowed_html = array(
+        'a' => array(
+            'class' => array(),
+            'id'    => array(),
+            'title' => array(),
+            'href'  => array(),
+        ),
+        'span' => array(
+            'class' => array(),
+        ),
+        // add other allowed tags if your output includes more
+    );
+
+
+
+    if ($echo) {
+        echo wp_kses($out, $allowed_html);
+    } else {
+        return $out;
+    }
 }
 
 # --------------------------------------------------------------------------------------
@@ -195,7 +223,21 @@ function sp_ListTopicIcon($args = '') {
 	$out = apply_filters('sph_ListTopicIcon', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            [ 
+                'img' => [
+                    'class' => [],
+                    'src' => [],
+                    'alt' => [],
+                    'title' => [],
+                ],
+                'span' => [
+                    'class' => [],
+                    'title' => [],
+                ]
+            ]
+        );
 	} else {
 		return $out;
 	}
