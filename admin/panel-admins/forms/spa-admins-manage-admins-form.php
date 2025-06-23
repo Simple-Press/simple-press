@@ -71,7 +71,7 @@ function spa_admins_manage_admins_form() {
 
                                     ?>
                                     <div>
-                                        <h3> <?php echo esc_html($adminName); ?> (<?php echo SP()->primitives->admin_etext('ID') . ': ' . esc_html($adminId) . ')'; ?></h3>
+                                        <h3> <?php echo esc_html($adminName); ?> (<?php echo esc_html(SP()->primitives->admin_text('ID') . ': ' . $adminId . ')'); ?></h3>
                                         <input type="hidden" name="uids[]" value="<?php echo esc_attr($adminId); ?>" />
 
                                         <ul class="list-grid sf-ml-10">
@@ -139,7 +139,21 @@ function spa_admins_manage_admins_form() {
                                         </ul>
                                         <div class="sf-ml-10">
                                             <?php if ($adminId != SP()->user->thisUser->ID) : ?>
-                                                <?php echo spa_render_caps_checkbox(SP()->primitives->admin_text('Remove All Capabilities from this') . ' ' . $title, 'remove-admin[' . esc_attr($adminId) . ']', '', $adminId); ?>
+                                                <?php echo wp_kses(
+                                                    spa_render_caps_checkbox( SP()->primitives->admin_text('Remove All Capabilities from this') . ' ' . $title, 'remove-admin[' .$adminId . ']', '', $adminId),
+                                                    array(
+                                                        'input' => array(
+                                                            'type' => array(),
+                                                            'name' => array(),
+                                                            'id' => array(),
+                                                            'checked' => array(),
+                                                            'disabled' => array(),
+                                                        ),
+                                                        'label' => array(
+                                                            'for' => array()
+                                                        ),
+                                                    )
+                                                ); ?>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -205,13 +219,13 @@ function spa_admins_manage_admins_form() {
                     if (!SP()->auths->forum_admin($admin->ID)) {
                         $out .= '<tr>';
                         $out .= '<td>';
-                        $out .= esc_html($admin->ID);
+                        $out .= $admin->ID;
                         $out .= '</td>';
                         $out .= '<td>';
-                        $out .= "<div class='sf-avatar'><img src='" . esc_url(get_avatar_url($admin->ID)) . "' alt='avatar'></div>";
+                        $out .= "<div class='sf-avatar'><img src='" . get_avatar_url($admin->ID) . "' alt='avatar'></div>";
                         $out .= '</td>';
                         $out .= '<td>';
-                        $out .= esc_html($admin->display_name);
+                        $out .= $admin->display_name;
                         $out .= '</td>';
                         $out .= '<td>';
                         $out .= '</td>';
@@ -234,7 +248,18 @@ function spa_admins_manage_admins_form() {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php echo $out ?>
+                            <?php echo wp_kses(
+                                $out,
+                                array(
+                                    array(
+                                        'tr' => array(),
+                                        'td' => array(),
+                                        'div' => array(
+                                            'class' => array()
+                                        ),
+                                    )
+                                )
+                            ); ?>
                         </tbody>
                     </table>
                     <?php
