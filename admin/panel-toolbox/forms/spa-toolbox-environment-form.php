@@ -85,15 +85,15 @@ function spa_toolbox_environment_form() {
 }
 
 function spa_env_open($text) {
-	echo "<tr><td><p><b>$text</b></p><td><td><p>";
+	echo "<tr><td><p><b>".esc_html($text)."</b></p><td><td><p>";
 }
 
 function spa_env_info($label, $text) {
-	echo "$label: <b>$text</b><br />";
+	echo esc_html($label) . ": <b>". esc_html($text) ."</b><br />";
 }
 
 function spa_env_list($item, $version) {
-	echo "<b>$item</b> ($version)<br />";
+	echo "<b>".esc_html($item)."</b> (".esc_html($version).")<br />";
 }
 
 function spa_env_close() {
