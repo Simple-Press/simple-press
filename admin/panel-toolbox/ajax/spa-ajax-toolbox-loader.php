@@ -15,7 +15,7 @@ spa_admin_ajax_support();
 if (!sp_nonce('toolbox-loader')) die();
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
+	echo esc_html(SP()->core->status);
 	die();
 }
 
@@ -30,7 +30,9 @@ $adminhelpfile = 'admin-toolbox';
 
 # ----------------------------------
 # Check Whether User Can Manage Options
-if (!SP()->auths->current_user_can('SPF Manage Toolbox')) die();
+if (!SP()->auths->current_user_can('SPF Manage Toolbox')) {
+    die();
+}
 
 if (isset($_GET['loadform'])) {
 	spa_render_toolbox_container(sanitize_text_field($_GET['loadform']));
@@ -40,27 +42,27 @@ if (isset($_GET['loadform'])) {
 if (isset($_GET['saveform'])) {
 	$saveform = sanitize_text_field($_GET['saveform']);
 	if ($saveform == 'toolbox') {
-		echo spa_save_toolbox_data();
+		echo esc_html(spa_save_toolbox_data());
 		die();
 	}
 	if ($saveform == 'uninstall') {
-		echo spa_save_uninstall_data();
+		echo esc_html(spa_save_uninstall_data());
 		die();
 	}
 	if ($saveform == 'sfclearlog') {
-		echo spa_save_toolbox_clearlog();
+		echo esc_html(spa_save_toolbox_clearlog());
 		die();
 	}
 	if ($saveform == 'housekeeping') {
-		echo spa_save_housekeeping_data();
+		echo esc_html(spa_save_housekeeping_data());
 		die();
 	}
 	if ($saveform == 'inspector') {
-		echo spa_save_inspector_data();
+		echo esc_html(spa_save_inspector_data());
 		die();
 	}
 	if ($saveform == 'cron') {
-		echo spa_save_cron_data();
+		echo esc_html(spa_save_cron_data());
 		die();
 	}
 }
