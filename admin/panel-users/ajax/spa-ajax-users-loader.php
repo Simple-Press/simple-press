@@ -15,7 +15,7 @@ spa_admin_ajax_support();
 if (!sp_nonce('users-loader')) die();
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
+	echo esc_html(SP()->core->status);
 	die();
 }
 
