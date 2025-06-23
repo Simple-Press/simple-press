@@ -10,6 +10,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die('Access denied - you cannot directly call this file');
 }
 
+
+define('SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS',
+    array(
+        'a' => array(
+            'id' => array(),
+            'class' => array(),
+            'src' => array(),
+            'target' => array(),
+            'rel' => array(),
+            'title' => array(),
+        ),
+        'div' => array(
+            'id' => array(),
+            'class' => array(),
+        ),
+        'img' => array(
+            'id' => array(),
+            'class' => array(),
+            'src' => array(),
+            'title' => array(),
+        ),
+        'span' => array(
+            'id' => array(),
+            'class' => array(),
+        ),
+    )
+);
+
 # --------------------------------------------------------------------------------------
 #
 #	sp_NoMembersListMessage()
@@ -48,7 +76,8 @@ function sp_NoMembersListMessage($args = '', $deniedMessage = '', $definedMessag
 	$out = apply_filters('sph_NoMembersListMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -85,7 +114,8 @@ function sp_NoMemberMessage($args = '', $definedMessage = '') {
 	$out = apply_filters('sph_NoMembersMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -134,7 +164,8 @@ function sp_MembersUsergroupIcon($args = '') {
 	$out = apply_filters('sph_UsergroupIcon', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -173,7 +204,8 @@ function sp_MembersUsergroupName($args = '') {
 	$out = apply_filters('sph_UsergroupName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -212,7 +244,8 @@ function sp_MembersUsergroupDescription($args = '') {
 	$out = apply_filters('sph_UsergroupDescription', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -251,7 +284,8 @@ function sp_MembersListName($args = '') {
 	$out = apply_filters('sph_MembersListName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -302,7 +336,8 @@ function sp_MemberListPostCount($args = '', $label = '') {
 	$out = apply_filters('sph_MemberListPostCount', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -351,7 +386,8 @@ function sp_MemberListLastVisit($args = '', $label = '') {
 	$out = apply_filters('sph_MemberListLastVisit', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -400,7 +436,8 @@ function sp_MemberListRegistered($args = '', $label = '') {
 	$out = apply_filters('sph_MemberListRegistered', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -466,7 +503,8 @@ function sp_MemberListUrl($args = '', $label = '') {
 	$out = apply_filters('sph_MemberListUrl', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -589,7 +627,8 @@ function sp_MemberListRank($args = '', $label = '') {
 	$out = apply_filters('sph_MemberListRank', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -679,7 +718,8 @@ function sp_MemberListActions($args = '', $label = '', $startedToolTip = '', $po
 	$out = apply_filters('sph_MemberListActions', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -760,10 +800,40 @@ function sp_MemberListSearchForm($args = '') {
 	$out = apply_filters('sph_MemberListSearchForm', $out, $a);
 
 	if ($echo) {
-		echo $out;
-	} else {
-		return $out;
-	}
+        // Allow a safe HTML set for outputting the form
+        $allowed_tags = array(
+            'div' => array(
+                'id' => array(),
+                'class' => array(),
+            ),
+            'form' => array(
+                'class' => array(),
+                'action' => array(),
+                'method' => array(),
+                'name' => array(),
+            ),
+            'fieldset' => array(
+                'class' => array(),
+            ),
+            'legend' => array(),
+            'label' => array(
+                'class' => array(),
+                'for' => array(),
+            ),
+            'input' => array(
+                'type' => array(),
+                'class' => array(),
+                'name' => array(),
+                'id' => array(),
+                'size' => array(),
+                'value' => array(),
+            ),
+            'br' => array(),
+        );
+        echo wp_kses($out, $allowed_tags);
+    } else {
+        return $out;
+    }
 }
 
 # --------------------------------------------------------------------------------------
@@ -845,7 +915,8 @@ function sp_MemberListPageLinks($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_MemberListPageLinks', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Ensure safe HTML output
+        echo wp_kses($out, SP_MEMBER_VIEW_FUNCTIONS_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -897,7 +968,24 @@ function sp_MemberListUsergroupSelect($args = '') {
 	$out = apply_filters('sph_MemberListUsergroupSelect', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // KSES allow only safe HTML here
+        $allowed_html = array(
+            'div' => array(
+                'id' => array(),
+                'class' => array(),
+            ),
+            'select' => array(
+                'class' => array(),
+                'name' => array(),
+                'id' => array(),
+            ),
+            'option' => array(
+                'value' => array(),
+                'selected' => array(),
+            ),
+        );
+
+		echo wp_kses($out, $allowed_html);
 	} else {
 		return $out;
 	}
