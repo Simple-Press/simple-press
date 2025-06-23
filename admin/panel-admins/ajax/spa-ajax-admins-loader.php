@@ -12,10 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 spa_admin_ajax_support();
 
-if (!sp_nonce('admins-loader')) die();
+if (!sp_nonce('admins-loader')) {
+    die();
+}
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
+	echo esc_html(SP()->core->status);
 	die();
 }
 
@@ -41,19 +43,19 @@ if (isset($_GET['loadform'])) {
 if (isset($_GET['saveform'])) {
 	$saveform = sanitize_text_field($_GET['saveform']);
 	if ($saveform == 'youradmin') {
-		echo spa_save_admins_your_options_data();
+		echo esc_html(spa_save_admins_your_options_data());
 		die();
 	}
 	if ($saveform == 'globaladmin') {
-		echo spa_save_admins_global_options_data();
+		echo esc_html(spa_save_admins_global_options_data());
 		die();
 	}
 	if ($saveform == 'manageadmin') {
-		echo spa_save_admins_caps_data();
+		echo esc_html(spa_save_admins_caps_data());
 		die();
 	}
 	if ($saveform == 'addadmin') {
-		echo spa_save_admins_newadmin_data();
+		echo esc_html(spa_save_admins_newadmin_data());
 		die();
 	}
 }
