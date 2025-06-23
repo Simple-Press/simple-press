@@ -12,10 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 spa_admin_ajax_support();
 
-if (!sp_nonce('install-log')) die();
+if (!sp_nonce('install-log')) {
+    die();
+}
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
+	echo esc_html(SP()->core->status);
 	die();
 }
 
@@ -25,15 +27,15 @@ if ($log > 0) {
 	$log = str_replace('-', '.', $log);
 	$details = SP()->DB->table(SPLOGMETA, "version='$log'", '', 'id DESC');
 	if ($details) {
-		echo '<p>'.SP()->primitives->admin_text('Version').': '.$log.'</p>';
+		echo '<p>'.esc_html(SP()->primitives->admin_text('Version')).': '.esc_html($log).'</p>';
 		foreach ($details as $d) {
 			$section = unserialize($d->log_data);
-			echo '<p>'.SP()->primitives->admin_text('Section').': '.$section['section'].'<br />';
-			echo SP()->primitives->admin_text('Status').':  '.$section['status'].'<br />';
-			echo SP()->primitives->admin_text('Response').': '.$section['response'].'<br /></p>';
+			echo '<p>'.esc_html(SP()->primitives->admin_text('Section')).': '.esc_html($section['section']).'<br />';
+			echo esc_html(SP()->primitives->admin_text('Status')).':  '.esc_html($section['status']).'<br />';
+			echo esc_html(SP()->primitives->admin_text('Response')).': '.esc_html($section['response']).'<br /></p>';
 		}
 	} else {
-		echo SP()->primitives->admin_text('Not Recorded');
+		echo esc_html(SP()->primitives->admin_text('Not Recorded'));
 	}
 }
 
