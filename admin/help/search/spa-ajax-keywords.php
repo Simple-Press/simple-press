@@ -10,9 +10,13 @@ if (isset($_GET['targetaction'])) $action = SP()->filters->str($_GET['targetacti
 
 spa_admin_ajax_support();
 
-if (!sp_nonce('adminkeywords')) die();
+if (!sp_nonce('adminkeywords')) {
+    die();
+}
 
-if($action == 'gettasks') sp_search_admin_tasks();
+if($action == 'gettasks'){
+    sp_search_admin_tasks();
+}
 
 function sp_search_admin_tasks() {
 	if(isset($_GET['keyword']) && !empty($_GET['keyword'])) {
@@ -25,8 +29,8 @@ function sp_search_admin_tasks() {
 			# get the base url
 			$base = SPHOMEURL.'wp-admin/admin.php?page='.SP_FOLDER_NAME.'/admin';
 
-			echo '<img class="spLeft" src="'.SPCOMMONIMAGES.'task.png" alt="" title="" />';
-			echo '<div class="codex-head">'.$keyword.'</div>';
+			echo '<img class="spLeft" src="'.esc_url(SPCOMMONIMAGES).'task.png" alt="" title="" />';
+			echo '<div class="codex-head">'.esc_html($keyword).'</div>';
 			echo '<div class="clearboth"></div>';
 			SP()->primitives->admin_etext('The links below will load the admin panel where the selected item is located');
 			echo '<p></p>';
@@ -34,8 +38,8 @@ function sp_search_admin_tasks() {
 
 			foreach($tasks as $task) {
 				echo '<div class="task-link"></div>';
-				echo '<div class="sf-help-search-ajax-keywords-div" ><p class="sf-help-search-ajax-keywords-p"><a href="'.$base.'/'.$task->url.'" >';
-				echo $task->task;
+				echo '<div class="sf-help-search-ajax-keywords-div" ><p class="sf-help-search-ajax-keywords-p"><a href="'.esc_html($base).'/'.esc_html($task->url).'" >';
+				echo esc_html($task->task);
 				echo '</a></p></div>';
 				echo '<div class="clearboth"></div>';
 			}
