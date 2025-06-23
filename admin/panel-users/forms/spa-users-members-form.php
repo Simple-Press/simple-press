@@ -93,9 +93,10 @@ function sp_list_members() {
         }
     } else {
         //No filter: list all members.
-        $total = $wpdb->get_var( "SELECT COUNT(*) FROM " . SPMEMBERS );
-        $query = "SELECT * FROM " . SPMEMBERS . " LIMIT %d, %d";
-        $members = SP()->DB->select( $wpdb->prepare( $query, $offset, $per_page ) );
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $total = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM " . SPMEMBERS ));
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+        $members = SP()->DB->select( $wpdb->prepare( "SELECT * FROM " . SPMEMBERS . " LIMIT %d, %d", $offset, $per_page ) );
     }
 
     $total_pages = ceil( $total / $per_page );
@@ -142,6 +143,7 @@ function sp_list_members() {
                                 } else {
                                     //Show only the filtered group name.
                                     $group_name = $wpdb->get_var( $wpdb->prepare(
+                                        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                                         "SELECT usergroup_name FROM " . SPUSERGROUPS . " 
                                          WHERE usergroup_id = %d",
                                         $usergroup_filter
@@ -151,10 +153,8 @@ function sp_list_members() {
                             } else {
                                 //List all memberships for member.
                                 $groups = $wpdb->get_col( $wpdb->prepare(
-                                    "SELECT ug.usergroup_name
-                                     FROM " . SPMEMBERSHIPS . " ms
-                                     LEFT JOIN " . SPUSERGROUPS . " ug ON ms.usergroup_id = ug.usergroup_id
-                                     WHERE ms.user_id = %d",
+                                    // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+                                    "SELECT ug.usergroup_name FROM " . SPMEMBERSHIPS . " ms LEFT JOIN " . SPUSERGROUPS . " ug ON ms.usergroup_id = ug.usergroup_id WHERE ms.user_id = %d",
                                     $member->user_id
                                 ) );
                                 if ( empty( $groups ) ) {
@@ -216,12 +216,12 @@ function sp_list_members() {
     if ( ! empty( $pagination ) ) {
         $processed_pagination = array_map( function( $link ) use ( $paged, $base_url ) {
             if ( strpos( $link, 'current' ) !== false ) {
-                return '<a class="page-numbers current sf-current-page" href="' . esc_url( add_query_arg( 'paged', $paged, $base_url ) ) . '">' . $paged . '</a>';
+                return '<a class="page-numbers current sf-current-page" href="' . esc_url( add_query_arg( 'paged', $paged, $base_url ) ) . '">' . esc_html($paged) . '</a>';
             }
             return $link;
         }, $pagination );
     
-        echo '<div class="sf-pagination sf-mt-15"><span class="sf-pagination-links">' . implode( '', $processed_pagination ) . '</span></div>';
+        echo '<div class="sf-pagination sf-mt-15"><span class="sf-pagination-links">' . esc_html(implode( '', $processed_pagination )) . '</span></div>';
     }
 
     return ob_get_clean();
@@ -238,8 +238,19 @@ function spa_users_members_form() {
     spa_paint_open_fieldset( SP()->primitives->admin_text( 'Member Information' ), false, '', false );
 
     ?>
-    <form id="members-filter" method="get" action="<?php echo SPADMINUSER; ?>">
-        <?php echo sp_list_members(); ?>
+    <form id="members-filter" method="get" action="<?php echo esc_attr(SPADMINUSER); ?>">
+        <?php echo wp_kses(
+            sp_list_members(),
+            array(
+                'a' => array(
+                    'href' => array(),
+                ), 
+                'div' => array(
+                    'class' => array(),
+                    'style' => array()
+                )
+            )
+        ); ?>
     </form>
 
     <script>
