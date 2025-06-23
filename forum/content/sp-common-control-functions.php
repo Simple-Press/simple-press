@@ -21,6 +21,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die('Access denied - you cannot directly call this file');
 }
 
+define('SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS', 
+        array(
+            'div' => array(
+                'class' => array(),
+                'id'    => array(),
+                'style' => array(),
+            ),
+    )
+);
+
 
 include_once SP_PLUGIN_DIR.'/admin/library/spa-iconsets.php';
 
@@ -34,6 +44,7 @@ include_once SP_PLUGIN_DIR.'/admin/library/spa-iconsets.php';
  *
  * @return mixed|string|void
  */
+
 function sp_SectionStart($args = '', $sectionName = '') {
 	$defs = array('tagClass' => 'spPlainSection',
 	              'tagId'    => '',
@@ -189,7 +200,8 @@ function sp_SectionStart($args = '', $sectionName = '') {
 	$out = apply_filters('sph_SectionStart', $out, $sectionName, $a);
 
 	if ($echo) {
-		echo $out;
+        // Safely allow only this div with class/id attributes through
+        echo wp_kses($out, SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS);
 
 		# notify custom code that section has started
 		# only valid if content is echoed out ($display=1)
@@ -239,8 +251,8 @@ function sp_SectionEnd($args = '', $sectionName = '') {
 	$out .= "</div>";
 
 	if ($echo) {
-		echo $out;
-
+        echo wp_kses($out, SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS);
+        
 		# notify custom code that section has ended
 		# only valid if content is echoed out ($show=1)
 		do_action('sph_AfterSectionEnd', $sectionName, $a);
@@ -302,7 +314,7 @@ function sp_ColumnStart($args = '', $columnName = '') {
 	$out = apply_filters('sph_ColumnStart', $out, $columnName, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses($out, SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS);
 
 		# notify custom code that column has ended
 		# only valid if content is echoed out ($show=1)
@@ -351,7 +363,7 @@ function sp_ColumnEnd($args = '', $columnName = '') {
 	$out .= "</div>";
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses($out, SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS);
 
 		# notify custom code that column has ended
 		# only valid if content is echoed out ($show=1)
@@ -403,7 +415,7 @@ function sp_InsertBreak($args = '') {
 	$out = apply_filters('sph_InsertBreak', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses($out, SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS);
 
 		# notify custom code that break has been inserted
 		# only valid if content is echoed out ($show=1)
@@ -463,18 +475,25 @@ function sp_InsertNBSpace($args = '') {
 	$spaces		=	(int) $spaces;
 	$echo		=	(int) $echo;
 
-	$out = "<span class=$tagClass>";
+	$out = "<span class='".$tagClass."'>";
 	for ($i=1; $i <> $spaces; $i++) {
 		$out.= '&nbsp;';
 	}
 	$out.= '</span>';
 
 	if ($echo) {
-		echo $out;
+        // kses allowed html
+        $allowed_html = array(
+            'span' => array(
+                'class' => array(),
+            ),
+        );
+        wp_kses($out, $allowed_tags);;
 	} else {
 		return $out;
 	}
 }
+
 
 # ------------------------------------------------------------------
 # sp_open_grid()
@@ -507,10 +526,7 @@ function sp_close_grid() {
 
 function sp_open_grid_cell() {
 	if (current_theme_supports('sp-theme-responsive')) {
-		$out = '';
-		$out .= '<div class="spGridCell">';
-
-		return $out;
+		return '<div class="spGridCell">';
 	}
 
 	return;
@@ -585,7 +601,18 @@ function sp_MobileMenuStart($args = '', $header = '') {
 	$out = apply_filters('sph_MobileMenuStart', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        $allowed_html = array(
+            'span' => array('class' => array(), 'style' => array()),
+            'strong' => array(),
+            'em' => array(),
+            'a' => array('href' => array(), 'class' => array(), 'title' => array(), 'target' => array(), 'rel' => array()),
+            'b' => array(),
+            'i' => array(),
+            'br' => array(),
+            'img' => array('src' => array(), 'alt' => array(), 'class' => array(), 'width' => array(), 'height' => array()),
+            // add any other tags you want to allow
+        );
+		echo wp_kses($out, $allowed_tags);
 
 		return;
 	} else {
@@ -619,7 +646,22 @@ function sp_MobileMenuEnd($args = '') {
 	$out = apply_filters('sph_MobileMenuEnd_after', $out);
 
 	if ($echo) {
-		echo $out;
+        // Sanitize output using wp_kses to allow only safe HTML
+        $allowed_html = array(
+            'div' => array(
+                'class' => true,
+                'id'    => true,
+                'style' => true,
+            ),
+            'span' => array(
+                'class' => true,
+                'id'    => true,
+                'style' => true,
+            ),
+            // add additional allowed tags/attributes as needed
+        );
+
+        echo wp_kses($out, $allowed_html);
 
 		return;
 	} else {
@@ -686,7 +728,7 @@ function sp_OpenCloseControl($args = '', $toolTipOpen = '', $toolTipClose = '') 
 	}
 
 	if ($default == 'closed') {
-		echo '<style>#'.$targetId.' {display:none;}</style>';
+		echo '<style>#'.esc_html($targetId).' {display:none;}</style>';
 	}
 	$out = "<span id='$tagId' class='$linkClass spOpenClose' data-targetid='$targetId' data-tagid='$tagId' data-tagclass='$tagClass' data-openicon='$openIcon' data-closeicon='$closeIcon' data-tipopen='$toolTipOpen' data-tipclose='$toolTipClose' data-setcookie='$setCookie' data-label='$asLabel' data-linkclass='$linkClass'>";
 	if ($asLabel) {
@@ -699,10 +741,36 @@ function sp_OpenCloseControl($args = '', $toolTipOpen = '', $toolTipClose = '') 
 	$out = apply_filters('sph_OpenCloseControl', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Only allow the specific tags and attributes used in $out
+        $allowed_html = array(
+            'span' => array(
+                'id' => array(),
+                'class' => array(),
+                'data-targetid' => array(),
+                'data-tagid' => array(),
+                'data-tagclass' => array(),
+                'data-openicon' => array(),
+                'data-closeicon' => array(),
+                'data-tipopen' => array(),
+                'data-tipclose' => array(),
+                'data-setcookie' => array(),
+                'data-label' => array(),
+                'data-linkclass' => array(),
+            ),
+            'img' => array(
+                'class' => array(),
+                'title' => array(),
+                'src' => array(),
+                'alt' => array(),
+            ),
+            'style' => array()
+        );
+
+        echo wp_kses($out, $allowed_html);
 
 		return;
 	} else {
 		return $out;
 	}
 }
+
