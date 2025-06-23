@@ -15,7 +15,7 @@ function spa_toolbox_log_form() {
 
     #== log Tab ==========================================================
 
-	spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox')." - ".*/SP()->primitives->admin_text('Install Log'), true);
+	spa_paint_open_tab(SP()->primitives->admin_text('Install Log'), true);
 			if (!$sflog) {
 				SP()->primitives->admin_etext("There are no Install Log Entries");
 				return;
@@ -24,12 +24,12 @@ function spa_toolbox_log_form() {
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Install Log'), false);
 				echo "<table class='wp-list-table widefat'><tr>";
-				echo '<th>'.SP()->primitives->admin_text('Version').'</th>';
+				echo '<th>'.esc_html(SP()->primitives->admin_text('Version')).'</th>';
 				echo "<th class='logDetail'>"."</th>";
-				echo '<th>'.SP()->primitives->admin_text('Build').'</th>';
-				echo "<th class='logRelease'>".SP()->primitives->admin_text('Release')."</th>";
-				echo '<th>'.SP()->primitives->admin_text('Installed').'</th>';
-				echo "<th class='logBy'>".SP()->primitives->admin_text('By')."</th>";
+				echo '<th>'.esc_html(SP()->primitives->admin_text('Build')).'</th>';
+				echo "<th class='logRelease'>".esc_html(SP()->primitives->admin_text('Release'))."</th>";
+				echo '<th>'.esc_html(SP()->primitives->admin_text('Installed')).'</th>';
+				echo "<th class='logBy'>".esc_html(SP()->primitives->admin_text('By'))."</th>";
 				echo '</tr>';
 
 				foreach ($sflog as $log) {
@@ -37,17 +37,17 @@ function spa_toolbox_log_form() {
 					$idQVer = str_replace('.', '-', $log['version']);
 
 					echo '<tr>';
-					echo "<td class='sflabel'>".$log['version']."</td>";
-				    $site = wp_nonce_url(SPAJAXURL.'install-log&amp;log='.$idQVer, 'install-log');
+					echo "<td class='sflabel'>".esc_html($log['version'])."</td>";
+				    $site = wp_nonce_url(SPAJAXURL.'install-log&amp;log='.esc_html($idQVer), 'install-log');
 					$gif = SPCOMMONIMAGES.'working.gif';
-					echo '<td class="logDetail"><input type="button" class="logDetail button spLoadAjax" value="'.SP()->primitives->admin_text('Details').'" data-url="'.$site.'" data-target="'.$idVer.'" data-img="'.$gif.'" /></td>';
+					echo '<td class="logDetail"><input type="button" class="logDetail button spLoadAjax" value="'.esc_attr(SP()->primitives->admin_text('Details')).'" data-url="'.esc_attr($site).'" data-target="'.esc_attr($idVer).'" data-img="'.esc_attr($gif).'" /></td>';
 
-					echo "<td class='sflabel'>".$log['build']."</td>";
-					echo "<td class='sflabel logRelease'>".$log['release_type']."</td>";
-					echo "<td class='sflabel'>".SP()->dateTime->format_date('d', $log['install_date'])."</td>";
-					echo "<td class='sflabel logBy'>".SP()->displayFilters->name($log['display_name'])."</td>";
+					echo "<td class='sflabel'>".esc_html($log['build'])."</td>";
+					echo "<td class='sflabel logRelease'>".esc_html($log['release_type'])."</td>";
+					echo "<td class='sflabel'>".esc_html(SP()->dateTime->format_date('d', $log['install_date']))."</td>";
+					echo "<td class='sflabel logBy'>".esc_html(SP()->displayFilters->name($log['display_name']))."</td>";
 					echo '</tr>';
-					echo "<tr><td style='display:none;' class='sflabel' id='".$idVer."' colspan='6'></td></tr>";
+					echo "<tr><td style='display:none;' class='sflabel' id='".esc_attr($idVer)."' colspan='6'></td></tr>";
 				}
 				echo '</table>';
 			spa_paint_close_fieldset();
