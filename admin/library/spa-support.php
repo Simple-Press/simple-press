@@ -36,25 +36,15 @@ function spa_get_forums_all() {
 
 function spa_create_group_select($groupid = 0, $label = false) {
 	$groups  = SP()->DB->table(SPGROUPS, '', '', 'group_seq');
-	$out     = '';
-	$default = '';
 
 	if ($groups) {
 		if ($label) {
 			echo '<option value="">'.esc_html(SP()->primitives->admin_text('Select forum group:')).'</option>';
 		}
 		foreach ($groups as $group) {
-			if ($group->group_id == $groupid) {
-				$default = 'selected="selected" ';
-			} else {
-				$default = null;
-			}
-			echo '<option '.esc_html($default).' value="'.esc_attr($group->group_id).'">'.esc_html(SP()->displayFilters->title($group->group_name)).'</option>'."\n";
-			$default = '';
+			echo '<option '.selected($group->group_id, $groupid).' value="'.esc_attr($group->group_id).'">'.esc_html(SP()->displayFilters->title($group->group_name)).'</option>'."\n";
 		}
 	}
-
-	return $out;
 }
 
 function spa_create_forum_select($forumid) {
@@ -62,12 +52,7 @@ function spa_create_forum_select($forumid) {
 	$out    = '';
 	if ($forums) {
 		foreach ($forums as $forum) {
-			if ($forum->forum_id == $forumid) {
-				$default = 'selected="selected" ';
-			} else {
-				$default = '';
-			}
-			$out .= '<option '.$default.'value="'.esc_attr($forum->forum_id).'">'.SP()->displayFilters->title($forum->forum_name).'</option>'."\n";
+			$out .= '<option '.selected($forum->forum_id, $fourmid).'value="'.esc_attr($forum->forum_id).'">--??---'.SP()->displayFilters->title($forum->forum_name).'</option>'."\n";
 			$default = '';
 		}
 	}
