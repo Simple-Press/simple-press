@@ -12,10 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 spa_admin_ajax_support();
 
-if (!sp_nonce('components-loader')) die();
+if (!sp_nonce('components-loader')) {
+    die();
+}
 
 if (SP()->core->status != 'ok') {
-	echo SP()->core->status;
+	echo esc_html(SP()->core->status);
 	die();
 }
 
@@ -30,7 +32,9 @@ $adminhelpfile = 'admin-components';
 
 # ----------------------------------
 # Check Whether User Can Manage Options
-if (!SP()->auths->current_user_can('SPF Manage Components')) die();
+if (!SP()->auths->current_user_can('SPF Manage Components')) {
+    die();
+}
 
 if (isset($_GET['loadform'])) {
 	spa_render_components_container(sanitize_text_field($_GET['loadform']));
@@ -40,40 +44,40 @@ if (isset($_GET['loadform'])) {
 if (isset($_GET['saveform'])) {
 	switch(sanitize_text_field($_GET['saveform'])) {
 		case 'smileys':
-			echo spa_save_smileys_data();
+			echo esc_html(spa_save_smileys_data());
 			break;
 
 		case 'login':
-			echo spa_save_login_data();
+			echo esc_html(spa_save_login_data());
 			break;
 
 		case 'seo':
-			echo spa_save_seo_data();
+			echo esc_html(spa_save_seo_data());
 			break;
 
 		case 'forumranks':
-			echo spa_save_forumranks_data();
+			echo esc_html(spa_save_forumranks_data());
 			break;
 
 		case 'specialranks':
 			switch (sanitize_text_field($_GET['targetaction'])) {
 				case 'newrank':
-					echo spa_add_specialrank();
+					echo esc_html(spa_add_specialrank());
 					break;
 				case 'updaterank':
-					echo spa_update_specialrank(SP()->filters->integer($_GET['id']));
+					echo esc_html(spa_update_specialrank(SP()->filters->integer($_GET['id'])));
 					break;
 				case 'addmember':
-					echo spa_add_special_rank_member(SP()->filters->integer($_GET['id']));
+					echo esc_html(spa_add_special_rank_member(SP()->filters->integer($_GET['id'])));
 					break;
 				case 'delmember':
-					echo spa_del_special_rank_member(SP()->filters->integer($_GET['id']));
+					echo esc_html(spa_del_special_rank_member(SP()->filters->integer($_GET['id'])));
 					break;
 			}
 			break;
 
 		case 'messages':
-			echo spa_save_messages_data();
+			echo esc_html(spa_save_messages_data());
 			break;
 	}
 	die();
