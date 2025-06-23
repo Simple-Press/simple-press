@@ -60,7 +60,17 @@ function sp_NoPostsInListMessage($args = '', $definedMessage = '') {
 	$out = apply_filters('sph_NoPostsInListMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        // Sanitize output with wp_kses to allow only safe HTML
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
+
 	} else {
 		return $out;
 	}
@@ -114,7 +124,21 @@ function sp_ListSearchTopicHeader($args = '') {
 	$out = apply_filters('sph_ListSearchTopicHeaderName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'id' => array(),
+                    'href' => array(),
+                    'class' => array(),
+                ),
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
+
 	} else {
 		return $out;
 	}
@@ -181,7 +205,15 @@ function sp_ListSearchPostContent($args = '') {
 	$out = apply_filters('sph_ListPostContent', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -226,7 +258,15 @@ function sp_ListSearchUserName($args = '') {
 	$out = apply_filters('sph_ListSearchUserName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -282,7 +322,16 @@ function sp_ListSearchUserDate($args = '') {
 	$out = apply_filters('sph_ListSearchUserDate', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'br' => array(),
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -325,7 +374,20 @@ function sp_ListSearchForumName($args = '', $label = '') {
 	$out = apply_filters('sph_ListSearchForumName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'href' => array(),
+                ),
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -368,7 +430,19 @@ function sp_ListSearchTopicName($args = '', $label = '') {
 	$out = apply_filters('sph_ListSearchTopicName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'href' => array(),
+                    'class' => array(),
+                ),
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -409,7 +483,15 @@ function sp_ListSearchTopicCount($args = '', $label = '') {
 	$out = apply_filters('sph_ListSearchTopicCount', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -450,7 +532,15 @@ function sp_ListSearchTopicViews($args = '', $label = '') {
 	$out = apply_filters('sph_ListSearchTopicViews', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -491,7 +581,19 @@ function sp_ListSearchGoToPost($args = '', $label = '') {
 	$out = apply_filters('sph_ListSearchGoToPost', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'href' => array(),
+                    'class' => array(),
+                ),
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
