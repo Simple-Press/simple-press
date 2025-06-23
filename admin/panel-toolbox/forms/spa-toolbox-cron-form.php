@@ -39,9 +39,9 @@ function spa_toolbox_cron_form() {
                     foreach ($cronData->schedules as $name => $schedule) {
 ?>
                         <tr class='_spMobileTableData'>
-                            <td data-label='<?php SP()->primitives->admin_etext('Name'); ?>'><?php echo $name; ?></td>
-                            <td data-label='<?php SP()->primitives->admin_etext('Description'); ?>'><?php echo $schedule['display']; ?></td>
-                            <td data-label='<?php SP()->primitives->admin_etext('Interval'); ?>'><?php echo $schedule['interval']; ?></td>
+                            <td data-label='<?php SP()->primitives->admin_etext('Name'); ?>'><?php echo esc_html($name); ?></td>
+                            <td data-label='<?php SP()->primitives->admin_etext('Description'); ?>'><?php echo esc_html($schedule['display']); ?></td>
+                            <td data-label='<?php SP()->primitives->admin_etext('Interval'); ?>'><?php echo esc_html($schedule['interval']); ?></td>
                         </tr>
 <?php
                     }
@@ -75,12 +75,12 @@ function spa_toolbox_cron_form() {
                             foreach ($items as $item) {
 ?>
                                 <tr class='_spMobileTableData'>
-                                    <td data-label='<?php SP()->primitives->admin_etext('Next Run (date)'); ?>'><?php echo $item['date']; ?></td>
-                                    <td data-label='<?php SP()->primitives->admin_etext('Next Run (timestamp)'); ?>'><?php echo $time; ?></td>
+                                    <td data-label='<?php SP()->primitives->admin_etext('Next Run (date)'); ?>'><?php echo esc_html($item['date']); ?></td>
+                                    <td data-label='<?php SP()->primitives->admin_etext('Next Run (timestamp)'); ?>'><?php echo esc_html($time); ?></td>
                                     <td data-label='<?php SP()->primitives->admin_etext('Schedule'); ?>'>
 <?php
                                         if ($item['schedule']) {
-        								    echo $cronData->schedules[$item['schedule']]['display'];
+        								    echo esc_html($cronData->schedules[$item['schedule']]['display']);
                                         } else {
         								    SP()->primitives->admin_etext('One Time');
         								}
@@ -90,7 +90,7 @@ function spa_toolbox_cron_form() {
 <?php
                                         $sph = strncmp('sph_', $hook, 4 );
                                         if ($sph === 0) echo '<b>';
-                                        echo $hook;
+                                        echo esc_html($hook);
                                         if ($sph === 0) echo '</b>';
 ?>
                                     </td>
@@ -98,7 +98,7 @@ function spa_toolbox_cron_form() {
 <?php
                                         if (count($item['args']) > 0) {
         									foreach ($item['args'] as $arg => $value) {
-        										echo $arg.':'.$value.'<br />';
+        										echo esc_html($arg).':'.esc_html($value).'<br />';
                                             }
                                         } else {
                                             echo '&nbsp;';
@@ -124,7 +124,6 @@ function spa_toolbox_cron_form() {
 
 	echo '<div class="sfform-panel-spacer"></div>';
 
-        //spa_paint_open_tab(/*SP()->primitives->admin_text('Toolbox').' - '.*/SP()->primitives->admin_text('CRON Update'), true);
 	spa_paint_open_nohead_tab();
 		spa_paint_open_panel();
 			spa_paint_open_fieldset(SP()->primitives->admin_text('Add CRON'), true, 'cron-add');
