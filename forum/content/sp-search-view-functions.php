@@ -73,7 +73,19 @@ function sp_SearchHeaderName($args = '', $termLabel = '', $postedLabel = '', $st
 	$out = apply_filters('sph_SearchHeaderName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out, 
+            array(
+                "div" => array(
+                    "id" => array(),
+                    "class" => array(),
+                ),
+                "span" => array(
+                    "id" => array(),
+                    "class" => array(),
+                ),
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -136,7 +148,25 @@ function sp_SearchPageLinks($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_SearchPageLinks', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out, 
+            array(
+                "a" => array(
+                    "id" => array(),
+                    "class" => array(),
+                    "href" => array(),
+                    "title" => array(),
+                ),
+                "div" => array(
+                    "id" => array(),
+                    "class" => array(),
+                ),
+                "span" => array(
+                    "id" => array(),
+                    "class" => array(),
+                ),
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -173,7 +203,7 @@ function sp_SearchResults($args = '') {
 		return SP()->forum->view->thisSearch->searchData;
 	}
 
-	echo "<div id='$tagId' class='$tagClass'>\n";
+	echo "<div id='".esc_html($tagId)."' class='".esc_html($tagClass)."'>\n";
 	SP()->forum->view->listTopics = new spcTopicList(SP()->forum->view->thisSearch->searchData, 0, false, '', $first, 1, 'search');
 	sp_load_template($template);
 	echo "</div>\n";
