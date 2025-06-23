@@ -58,7 +58,23 @@ function sp_GroupHeaderIcon($args = '') {
 	$out = apply_filters('sph_GroupHeaderIcon', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+                'img' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'src' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -104,15 +120,27 @@ function sp_GroupHeaderName($args = '') {
 
 	$out = '';
 	if (!empty(SP()->forum->view->thisGroup->group_name)) {
-		$out .= "<div id='$tagId' class='$tagClass spGroupHeaderOpen' data-id='$toggleTagId' data-collapse='$collapse'";
-		if ($collapse) $out .= " style='cursor: pointer;'";
-		$out .= ">".SP()->primitives->truncate_name(SP()->forum->view->thisGroup->group_name, $truncate)."</div>";
+
+        $styleOut = $collapse ? " style='cursor: pointer;'" : "";
+		$out .= "<div id='$tagId' class='$tagClass spGroupHeaderOpen' data-id='$toggleTagId' data-collapse='$collapse' $styleOut>";
+		$out .= SP()->primitives->truncate_name(SP()->forum->view->thisGroup->group_name, $truncate)."</div>";
 	}
 
 	$out = apply_filters('sph_GroupHeaderName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'data-id' => array(),
+                    'data-collapse' => array(),
+                    'style' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -149,7 +177,15 @@ function sp_GroupHeaderDescription($args = '') {
 	$out = apply_filters('sph_GroupHeaderDescription', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -195,14 +231,29 @@ function sp_GroupOpenClose($args = '', $toolTipOpen = '', $toolTipClose = '') {
 	($default == 'open') ? $tooltip = $toolTipClose : $tooltip = $toolTipOpen;
 
 	if ($default == 'closed') {
-		echo '<style>#'.$div.' {display:none;}</style>';
+		echo '<style>#'.esc_html($div).' {display:none;}</style>';
 	}
 
 	$out = "<span id='$tagId' class='spOpenCloseGroup' data-target='$div' data-tag='$tagId' data-tclass='$tagClass' data-open='$openIcon' data-close='$closeIcon' data-toolopen='$toolTipOpen' data-toolclose='$toolTipClose'><img class='$tagClass' title='$tooltip' src='$icon' alt='' /></span>";
 	$out = apply_filters('sph_GroupOpenClose', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'span' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'data-*' => array(),
+                ),
+                'img' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                    'src' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -241,7 +292,27 @@ function sp_GroupHeaderMessage($args = '') {
 	$out = apply_filters('sph_GroupHeaderMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+                'img' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'src' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -301,7 +372,28 @@ function sp_GroupHeaderRSSButton($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_GroupHeaderRSSButton', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'id' => array(),
+                    'href' => array(),
+                    'class' => array(),
+                    'title' => array(),
+                    'rel' => array(),
+                ),
+                'img' => array(
+                    'id' => array(),
+                    'src' => array(),
+                    'class' => array(),
+                    'title' => array(),
+                    'rel' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                ),
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -345,7 +437,15 @@ function sp_NoGroupMessage($args = '', $deniedMessage = '', $definedMessage = ''
 	$out = apply_filters('sph_NoGroupMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -445,7 +545,28 @@ function sp_ForumIndexIcon($args = '') {
 	$out = apply_filters('sph_ForumIndexIcon', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'id' => array(),
+                    'href' => array(),
+                    'class' => array(),
+                    'title' => array(),
+                    'rel' => array(),
+                ),
+                'img' => array(
+                    'id' => array(),
+                    'src' => array(),
+                    'class' => array(),
+                    'title' => array(),
+                    'rel' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                ),
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -488,7 +609,17 @@ function sp_ForumIndexLink($args = '', $toolTip = '') {
 	$out = apply_filters('sph_ForumIndexLink', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'href' => array(),
+                    'id' => array(),
+                    'title' => array(),
+                    'class' => array(),
+                ),
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -529,7 +660,17 @@ function sp_ForumIndexName($args = '', $toolTip = '') {
 	$out = apply_filters('sph_ForumIndexName', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'href' => array(),
+                    'id' => array(),
+                    'title' => array(),
+                    'class' => array(),
+                ),
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -566,7 +707,15 @@ function sp_ForumIndexDescription($args = '') {
 	$out = apply_filters('sph_ForumIndexDescription', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -623,7 +772,32 @@ function sp_ForumIndexPageLinks($args = '', $toolTip = '') {
 	$out = apply_filters('sph_ForumIndexPageLinks', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'href' => array(),
+                    'title' => array(),
+                    'class' => array(),
+                ),
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+                'img' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'src' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -722,7 +896,32 @@ function sp_ForumIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPost = 
 	$out = apply_filters('sph_ForumIndexStatusIcons', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'href' => array(),
+                    'title' => array(),
+                    'class' => array(),
+                ),
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+                'img' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'src' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -772,7 +971,27 @@ function sp_ForumIndexLockIcon($args = '', $toolTip = '') {
 	}
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+                'img' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'src' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -820,7 +1039,27 @@ function sp_ForumIndexDeniedIcon($args = '', $toolTip = '') {
 	}
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+                'img' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'src' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -864,7 +1103,33 @@ function sp_ForumIndexAddIcon($args = '', $toolTip = '', $label = '') {
 	}
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'title' => array(),
+                    'href' => array(),
+                ),
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+                'img' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'src' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -927,7 +1192,35 @@ function sp_ForumIndexPostsIcon($args = '', $toolTip = '') {
 	}
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'title' => array(),
+                    'href' => array(),
+                    'rel' => array(),
+                    'data-*' => array(),
+                ),
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+                'img' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'src' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -942,7 +1235,7 @@ function sp_ForumIndexPostsIcon($args = '', $toolTip = '') {
 #
 # --------------------------------------------------------------------------------------
 function sp_ForumIndexInlinePosts() {
-	echo "<div class='spInlineTopics' id='spInlineTopics".SP()->forum->view->thisForum->forum_id."' style='display:none;'></div>";
+	echo "<div class='spInlineTopics' id='spInlineTopics".esc_html(SP()->forum->view->thisForum->forum_id)."' style='display:none;'></div>";
 	sp_InsertBreak();
 }
 
@@ -998,7 +1291,21 @@ function sp_ForumIndexPostCount($args = '', $label = '', $rtlLabel = '', $labelA
 	$out = apply_filters('sph_ForumIndexPostCount', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+                'br' => array()
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -1058,7 +1365,21 @@ function sp_ForumIndexTopicCount($args = '', $label = '', $rtlLabel = '', $label
 	$out = apply_filters('sph_ForumIndexTopicCount', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+                'br' => array()
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -1232,7 +1553,28 @@ function sp_ForumIndexLastPost($args = '', $lastPostLabel = '', $noTopicsLabel =
 	$out = apply_filters('sph_ForumIndexLastPost', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'a' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'title' => array(),
+                    'href' => array(),
+                    'rel' => array(),
+                    'data-*' => array(),
+                ),
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -1296,7 +1638,20 @@ function sp_ForumIndexModerators($args = '', $label = '') {
 	$out = apply_filters('sph_ForumIndexModerators', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -1430,7 +1785,41 @@ function sp_ForumIndexSubForums($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_ForumIndexSubForums', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'hr' => array(),
+                'ul' => array(
+                    'class' => array(),
+                    'id' => array(),
+                ),
+                'li' => array(),
+                'a' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'title' => array(),
+                    'href' => array(),
+                    'rel' => array(),
+                    'data-*' => array(),
+                ),
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+                'span' => array(
+                    'class' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                ),
+                'img' => array(
+                    'id' => array(),
+                    'class' => array(),
+                    'src' => array(),
+                    'title' => array(),
+                    'alt' => array(),
+                )
+            )
+        );
 	} else {
 		return $out;
 	}
@@ -1465,7 +1854,16 @@ function sp_NoForumsInGroupMessage($args = '', $definedMessage = '') {
 	$out = apply_filters('sph_NoForumsInGroupMessage', $out, $a);
 
 	if ($echo) {
-		echo $out;
+        echo wp_kses(
+            $out,
+            array(
+                'div' => array(
+                    'id' => array(),
+                    'class' => array(),
+                ),
+            )
+        );
+        
 	} else {
 		return $out;
 	}
