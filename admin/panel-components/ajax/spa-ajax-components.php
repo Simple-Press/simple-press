@@ -48,11 +48,11 @@ if ($action == 'show') {
 						  ORDER BY display_name', 'col');
 
     echo '<fieldset class="sfsubfieldset">';
-    echo '<legend>'.SP()->primitives->admin_text('Special Rank Members').'</legend>';
+    echo '<legend>'.esc_html(SP()->primitives->admin_text('Special Rank Members')).'</legend>';
     if ($users) {
     	echo '<ul class="memberlist">';
     	for ($x = 0; $x < count($users); $x++) {
-    		echo '<li>'.SP()->displayFilters->name($users[$x]).'</li>';
+    		echo '<li>'.esc_html(SP()->displayFilters->name($users[$x])).'</li>';
     	}
     	echo '</ul>';
     } else {
@@ -65,7 +65,7 @@ if ($action == 'show') {
 if ($action == 'delsmiley') {
 	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['smileys'].'/'.$file;
-	@unlink($path);
+    wp_delete_file($path);
 
 	# load smiles from sfmeta
 	$meta = SP()->meta->get('smileys', 'smileys');
@@ -91,7 +91,7 @@ if ($action == 'delsmiley') {
 if ($action == 'delbadge') {
 	$file = SP()->filters->filename($_GET['file']);
 	$path = SP_STORE_DIR.'/'.SP()->plugin->storage['ranks'].'/'.$file;
-	@unlink($path);
+    wp_delete_file($path);
 	echo '1';
 }
 
