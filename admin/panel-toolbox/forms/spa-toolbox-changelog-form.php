@@ -24,9 +24,9 @@ function spa_toolbox_changelog_form() {
                     if (is_wp_error($c) || wp_remote_retrieve_response_code($c) != 200) {
                         $b = substr($cFile, 11);
                         $b = str_replace('.txt', '', $b);
-                        echo '<p>'.sprintf(SP()->primitives->admin_text('No change log file found for build %s'), $b).'</p>';
+                        echo '<p>'.esc_html(sprintf(SP()->primitives->admin_text('No change log file found for build %s'), $b)).'</p>';
                     } else {
-                        echo wpautop($c['body']);
+                        echo wp_kses_post(wpautop($c['body']));
                     }
                 echo '</div>';
 
@@ -37,22 +37,22 @@ function spa_toolbox_changelog_form() {
 
 		$c = wp_remote_get('https://simple-press.com/downloads/simple-press/changelogs/log-index.xml');
         if (is_wp_error($c) || wp_remote_retrieve_response_code($c) != 200) {
-   			echo '<p>'.SP()->primitives->admin_text('Unable to communicate with Simple Press server').'</p>';
+   			echo '<p>'.esc_html(SP()->primitives->admin_text('Unable to communicate with Simple Press server')).'</p>';
         } else {
 			$l = new SimpleXMLElement($c['body']);
 			if (!empty($l)) {
         		spa_paint_open_panel();
                     spa_paint_open_fieldset(SP()->primitives->admin_text('Review Change Logs'));
                     echo '<div id="sp-changelog-list" class="sf-form-row">';
-    				echo '<form name="loadchangelog" method="post" action="admin.php?page='.SP_FOLDER_NAME.'/admin/panel-toolbox/spa-toolbox.php&amp;tab=changelog">';
+    				echo '<form name="loadchangelog" method="post" action="admin.php?page='.esc_html(SP_FOLDER_NAME).'/admin/panel-toolbox/spa-toolbox.php&amp;tab=changelog">';
                         echo '<div class="sf-select-wrap">';
                             echo '<select name="clselect" class="wp-core-ui">';
                                 foreach ($l->log as $x) {
                                     if ($x->build == $current ? $s = " selected='selected' " : $s = '');
-                                    echo "<option class='wp-core-ui' value='".$x->build."' $s>".$x->build.' ('.$x->version.') - '.$x->date.'</option>';
+                                    echo "<option class='wp-core-ui' value='".esc_attr($x->build)."' ".esc_html($s).">".esc_attr($x->build).' ('.esc_attr($x->version).') - '.esc_attr($x->date).'</option>';
                                 }
                             echo '</select>';
-                            echo '<input type="submit" class="sf-button-secondary" id="gochangelog" name="gochangelog" value="'.SP()->primitives->admin_text('Display Change Log').'" />';
+                            echo '<input type="submit" class="sf-button-secondary" id="gochangelog" name="gochangelog" value="'.esc_attr(SP()->primitives->admin_text('Display Change Log')).'" />';
                         echo '</div>';
 					echo '</form>';
     				echo '</div>';
