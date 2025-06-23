@@ -189,7 +189,7 @@ function spa_paint_custom_smileys() {
 	
 	if (!$dlist) {
            echo '<div class="sf-alert-block sf-info">';
-	   echo '<table><tr><td class="sflabel"><strong>'.SP()->primitives->admin_text('The forum-smileys folder does not exist').'</strong></td></tr></table>';
+	   echo '<table><tr><td class="sflabel"><strong>'.esc_html(SP()->primitives->admin_text('The forum-smileys folder does not exist')).'</strong></td></tr></table>';
 	   echo '</div>';
            return;
 	} else {
@@ -296,14 +296,13 @@ function spa_paint_custom_smileys() {
                                     echo '<label>'.esc_html(SP()->primitives->admin_text('Smiley Code'));
                                     echo '<input type="text" class="sfpostcontrol" id="smcode-'.esc_attr($scount).'" name="smcode[]" value="'.esc_attr(SP()->displayFilters->title($code)).'" /></label>';
                                 echo '</div>';
-                                $checked = ($break) ? ' checked="checked" ' : '';
                                 echo '<div class="sf-form-row">';
-                                    echo '<input type="checkbox" class="sfpostcontrol" id="break-'.esc_attr($scount).'" name="smbreak-'.esc_attr($sname).'" '.$checked.'/>';
+                                    echo '<input type="checkbox" class="sfpostcontrol" id="break-'.esc_attr($scount).'" name="smbreak-'.esc_attr($sname).'" '.checked($break, true, false).'/>';
                                     echo '<label for="break-'.esc_attr($scount).'">'.esc_html(SP()->primitives->admin_text('Break Smileys Row in Editor Display')).'</label>';
                                 echo '</div>';
                                 $checked = ($in_use) ? ' checked="checked" ' : '';
                                 echo '<div class="sf-form-row">';
-                                    echo '<input type="checkbox" class="sfpostcontrol" id="in_use-'.esc_attr($scount).'" name="sminuse-'.esc_attr($sname).'" '.$checked.'/>';
+                                    echo '<input type="checkbox" class="sfpostcontrol" id="in_use-'.esc_attr($scount).'" name="sminuse-'.esc_attr($sname).'" '.checked($in_use, true, false).'/>';
                                     echo '<label for="in_use-'.esc_attr($scount).'">'.esc_html(SP()->primitives->admin_text('Allow Use of this Smiley')).'</label>';
                                 echo '</div>';
                                 $site = esc_url(wp_nonce_url(SPAJAXURL."components&amp;targetaction=delsmiley&amp;file=" . esc_attr($file), 'components'));
