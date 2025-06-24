@@ -1573,6 +1573,7 @@ function sp_ForumIndexLastPost($args = '', $lastPostLabel = '', $noTopicsLabel =
                     'title' => array(),
                     'alt' => array(),
                 ),
+                'br' => array(),
             )
         );
 	} else {
