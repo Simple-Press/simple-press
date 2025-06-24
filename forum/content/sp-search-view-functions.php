@@ -203,7 +203,7 @@ function sp_SearchResults($args = '') {
 		return SP()->forum->view->thisSearch->searchData;
 	}
 
-	echo "<div id='".esc_html($tagId)."' class='".esc_html($tagClass)."'>\n";
+	echo "<div id='".esc_attr($tagId)."' class='".esc_attr($tagClass)."'>";
 	SP()->forum->view->listTopics = new spcTopicList(SP()->forum->view->thisSearch->searchData, 0, false, '', $first, 1, 'search');
 	sp_load_template($template);
 	echo "</div>\n";
