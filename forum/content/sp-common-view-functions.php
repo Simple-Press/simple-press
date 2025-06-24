@@ -18,7 +18,9 @@ define('SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS', array(
         'class' => array(),
         'title' => array(),
         'href' => array(),
-        'data-*' => array(),
+        'data-id' => array(),
+        'data-type' => array(),
+        'data-min' => array(),
     ),
     'div' => array(
         'class' => array(),
@@ -38,13 +40,16 @@ define('SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS', array(
         'action' => array(),
         'method' => array(),
         'style' => array(),
-        'data-*' => array(),
+        'data-id' => array(),
+        'data-type' => array(),
+        'data-min' => array(),
     ),
     'input' => array(
         'type' => array(),
         'id' => array(),
         'class' => array(),
         'tabindex' => array(),
+        'checked' => array(),
         'name' => array(),
         'value' => array(),
         'style' => array(),
@@ -90,6 +95,7 @@ define('SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS', array(
         'id' => array(),
         'class' => array(),
     ),
+    'br' => array(),
 ));
 
 # --------------------------------------------------------------------------------------
