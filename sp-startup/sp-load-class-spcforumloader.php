@@ -173,6 +173,12 @@ class spcForumLoader {
 	 */
 	private function hooks() {
 		# Set up Forum support WP Hooks
+        
+        # Allow `style="display:none"` in wp_kses
+        add_filter( 'safe_style_css', function( $styles ) {
+            $styles[] = 'display';
+            return $styles;
+        } );
 
 		if (SP()->core->device == 'mobile' || SP()->core->device == 'tablet') {
 			add_action('template_redirect', 'sp_load_mobile_template', 10);
