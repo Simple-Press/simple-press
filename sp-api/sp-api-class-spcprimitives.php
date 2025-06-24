@@ -13,11 +13,11 @@
  */
 class spcPrimitives {
 	public function admin_text($text) {
-		return esc_attr(__($text, 'spa'));
+		return wp_kses_post(__($text, 'spa'));
 	}
 
 	public function admin_etext($text) {
-		echo esc_attr(__($text, 'spa'));
+		echo wp_kses_post(__($text, 'spa'));
 	}
 
 	public function admin_text_noesc($text) {
@@ -25,11 +25,11 @@ class spcPrimitives {
 	}
 
 	public function front_text($text) {
-		return esc_attr(__($text, 'sp'));
+		return wp_kses_post(__($text, 'sp'));
 	}
 
 	public function front_etext($text) {
-		echo esc_attr(__($text, 'sp'));
+		echo wp_kses_post(__($text, 'sp'));
 	}
 
 	public function front_text_noesc($text) {
