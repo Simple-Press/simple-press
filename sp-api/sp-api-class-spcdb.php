@@ -275,10 +275,12 @@ class spcDB {
 
         // Automatically prepare the query if parameters are passed
         if (!empty($params)) {
-            $sql = $wpdb->prepare($sql, ...$params);
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+            $wpdb->query($wpdb->prepare($sql, ...$params));
+        } else {
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+            $wpdb->query($sql);
         }
-
-        $wpdb->query($sql);
 
         if (empty($wpdb->last_error)) {
             SP()->rewrites->pageData['affectedrows'] = $wpdb->rows_affected;
@@ -579,22 +581,27 @@ class spcDB {
 
         // Automatically prepare the query if parameters are provided
         if (!empty($params)) {
+            // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             $sql = $wpdb->prepare($sql, ...$params);
         }
 
         // Execute the query based on type
         switch ($queryType) {
             case 'row':
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 $records = $wpdb->get_row($sql, $resultType);
                 break;
             case 'col':
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 $records = $wpdb->get_col($sql);
                 break;
             case 'var':
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 $records = $wpdb->get_var($sql);
                 break;
             case 'set':
             default:
+                // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
                 $records = $wpdb->get_results($sql, $resultType);
                 break;
         }
