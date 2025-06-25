@@ -109,13 +109,13 @@ function sp_update_wp_counts($counts, $titles) {
 			$num = count($pup->response);
 			$counts['counts']['plugins'] = $counts['counts']['plugins'] + $num;
             /* translators: 1: number of plugin updates */
-			$titles['sp_plugins'] = sprintf( _n( '%d Simple:Press Plugin Update', '%d Simple:Press Plugin Updates', esc_html($num), 'spa' ), esc_html($num));
+			$titles['sp_plugins'] = sprintf( _n( '%d Simple:Press Plugin Update', '%d Simple:Press Plugin Updates', esc_html($num), 'simplepress' ), esc_html($num));
 		}
 		if (!empty($tup->response)) {
 			$num = count($tup->response);
 			$counts['counts']['themes'] = $counts['counts']['themes'] + $num;
             /* translators: 1: number of theme updates */
-			$titles['sp_themes'] = sprintf(_n('%d Simple:Press Theme Update', '%d Simple:press Theme Updates', esc_html($num), 'spa'), esc_html($num));
+			$titles['sp_themes'] = sprintf(_n('%d Simple:Press Theme Update', '%d Simple:press Theme Updates', esc_html($num), 'simplepress'), esc_html($num));
 		}
 
 		$counts['counts']['total'] = $counts['counts']['plugins'] + $counts['counts']['themes'] + $counts['counts']['wordpress'];
