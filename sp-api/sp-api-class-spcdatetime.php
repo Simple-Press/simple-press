@@ -26,11 +26,16 @@ class spcDateTime {
 	 *
 	 * @return void
 	 */
-	public function set_timezone() {
-		$tz = get_option('timezone_string');
-		if (empty($tz) || substr($tz, 0, 3) == 'UTC') $tz = 'UTC';
-		date_default_timezone_set($tz);
-	}
+    public function set_timezone() {
+        $tz = get_option('timezone_string');
+        if (empty($tz) || substr($tz, 0, 3) == 'UTC') $tz = 'UTC';
+
+        # Just to make sure that we always get the correct TZ for the user
+        if ($tz !== date_default_timezone_get()) {
+           // phpcs:ignore WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
+            date_default_timezone_set($tz);
+        }
+    }
 
 	/**
 	 * This method takes a date and modifies the date to reflect a user's timezone.
