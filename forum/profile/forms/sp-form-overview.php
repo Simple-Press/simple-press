@@ -87,18 +87,24 @@ if ($sfrss['sfrssfeedkey']) {
 if (empty(SP()->user->profileUser->timezone_string)) SP()->user->profileUser->timezone_string = get_option('timezone_string');
 if (substr(SP()->user->profileUser->timezone_string, 0, 3) == 'UTC') SP()->user->profileUser->timezone_string = 'UTC';
 
-date_default_timezone_set(SP()->user->profileUser->timezone_string);
+$user_tz_str = SP()->user->profileUser->timezone_string;
+$dt = new DateTime('now', new DateTimeZone($user_tz_str));
 $tout = '';
 $tout .= '<div class="spColumnSection spProfileLeftCol">';
 $tout .= '<p class="spProfileLabel">'.SP()->primitives->front_text('Your Timezone').': </p>';
 $tout .= '</div>';
 $tout .= '<div class="spColumnSection spProfileSpacerCol"></div>';
 $tout .= '<div class="spColumnSection spProfileRightCol">';
-$tout .= '<p class="spProfileLabel">'.SP()->user->profileUser->timezone_string.'</p>';
-$tout .= '<p><small>'.SP()->primitives->front_text('Local Time').': '.SP()->dateTime->format_date('d', date(SPDATES)).' '.SP()->dateTime->format_date('t', date(SPTIMES)).'</small></p>';
-$tout .= '<p><small>'.SP()->primitives->front_text('Change your timezone on options - display').'</small></p>';
+$tout .= '<p class="spProfileLabel">'.$user_tz_str.'</p>';
+$tout .= '<p><small>'
+    . SP()->primitives->front_text('Local Time')
+    . ': ' . SP()->dateTime->format_date('d', $dt->format(SPDATES))
+    . ' ' . SP()->dateTime->format_date('t', $dt->format(SPTIMES))
+    . '</small></p>';
+$tout .= '<p><small>' . SP()->primitives->front_text('Change your timezone on options - display') . '</small></p>';
 $tout .= '</div>';
 $out .= apply_filters('sph_ProfileUserTimezone', $tout, $userid, $thisSlug);
+
 
 $out = apply_filters('sph_ProfileOverviewFormBottom', $out, $userid);
 $out = apply_filters('sph_ProfileFormBottom', $out, $userid, $thisSlug);
