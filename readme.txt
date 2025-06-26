@@ -161,7 +161,7 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 * Added missing translation functions for better i18n support
 * Improved file and directory handling using WP-native methods
 * General code cleanup and adherence to WordPress coding standards
-* Security update: Implemented a multitude of fixes for potential XSS attacks and ensured proper nonce usage on front-end forms
+* Security update: Implemented fixes for potential XSS attacks and improved nonce usage on front-end forms
 * RPX support dropped
 
 = 6.10.13 - March 2025 =
