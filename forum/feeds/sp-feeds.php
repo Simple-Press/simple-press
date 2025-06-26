@@ -137,19 +137,24 @@ if (SP()->forum->view->has_postlist()) {
 	$rssDescription = apply_filters('sph_feed_description', get_bloginfo('description'));
 	$rssGenerator   = apply_filters('sph_feed_generator', SP()->primitives->front_text('Simple:Press Version').' '.SPVERSION);
 
-	# set up time for current user timezone
-	$tz = get_option('timezone_string');
-	if (empty($tz) || substr($tz, 0, 3) == 'UTC') $tz = 'UTC';
-	$tzUser = (!empty(SP()->user->thisUser->timezone_string)) ? SP()->user->thisUser->timezone_string : $tz;
-	if (substr($tzUser, 0, 3) == 'UTC') $tzUser = 'UTC';
-	date_default_timezone_set($tzUser);
+    # set up time for current user timezone (do not change global default)
+    $tz = get_option('timezone_string');
+    if (empty($tz) || substr($tz, 0, 3) == 'UTC') $tz = 'UTC';
+    $tzUser = (!empty(SP()->user->thisUser->timezone_string)) ? SP()->user->thisUser->timezone_string : $tz;
+    if (substr($tzUser, 0, 3) == 'UTC') $tzUser = 'UTC';
+    $dtz = new DateTimeZone($tzUser);
 
 	# Now loop through the post records
 	while (SP()->forum->view->loop_postlist()) : SP()->forum->view->the_postlist();
 		$item              = new stdClass;
 		$item->title       = SP()->forum->view->thisListPost->display_name.' '.SP()->primitives->front_text('on').' '.SP()->forum->view->thisListPost->topic_name;
 		$item->link        = SP()->forum->view->thisListPost->post_permalink;
-		$item->pubDate     = date('r', strtotime(SP()->forum->view->thisListPost->post_date));
+        # Fix date to take user dates into account
+        $postDate = SP()->forum->view->thisListPost->post_date;
+        $dateObj = new DateTime($postDate, new DateTimeZone('UTC'));
+        $dateObj->setTimezone($dtz);
+        $item->pubDate = $dateObj->format('r');
+
 		$item->category    = SP()->forum->view->thisListPost->forum_name;
 		$item->description = sp_rss_excerpt(SP()->displayFilters->rss(SP()->forum->view->thisListPost->post_content));
 		$item->guid        = SP()->forum->view->thisListPost->post_permalink;
@@ -159,9 +164,6 @@ if (SP()->forum->view->has_postlist()) {
 
 		$rssItem[] = $item;
 	endwhile;
-
-	# restore timezone
-	date_default_timezone_set('UTC');
 }
 
 do_action('sph_feed_before_headers', $rssItem);
@@ -170,7 +172,7 @@ do_action('sph_feed_before_headers', $rssItem);
 header("HTTP/1.1 200 OK");
 header('Content-Type: application/xml');
 header("Cache-control: max-age=3600");
-header("Expires: ".date('r', time() + 3600));
+header("Expires: ".date_i18n('r', time() + 3600));
 header("Pragma: ");
 echo '<?xml version="1.0" encoding="'.esc_html(get_option('blog_charset')).'"?>';
 ?>
