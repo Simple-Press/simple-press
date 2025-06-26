@@ -13,27 +13,27 @@
  */
 class spcPrimitives {
 	public function admin_text($text) {
-		return wp_kses_post(__($text, 'spa'));
+		return wp_kses_post(__($text, 'simplepress')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function admin_etext($text) {
-		echo wp_kses_post(__($text, 'spa'));
+		echo wp_kses_post(__($text, 'simplepress')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function admin_text_noesc($text) {
-		return __($text, 'spa');
+		return __($text, 'simplepress'); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function front_text($text) {
-		return wp_kses_post(__($text, 'sp'));
+		return wp_kses_post(__($text, 'simplepress')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function front_etext($text) {
-		echo wp_kses_post(__($text, 'sp'));
+		echo wp_kses_post(__($text, 'simplepress')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function front_text_noesc($text) {
-		return __($text, 'sp');
+		return __($text, 'simplepress'); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function is_groupview() {
