@@ -109,33 +109,57 @@ function sp_mobile_check() {
 function sp_localisation() {
 	$locale = get_locale();
 
-	$bothSpecial  = apply_filters('sph_load_both_textdomain', array('action=permissions&',
-	                                                                'action=spAckPopup'));
-	$adminSpecial = apply_filters('sph_load_admin_textdomain', array('&loadform',
-	                                                                 'action=forums&',
-	                                                                 'action=components&',
-	                                                                 'action=usergroups&',
-	                                                                 'action=usermapping',
-	                                                                 'action=memberships',
-	                                                                 'action=integration-perm',
-	                                                                 'action=integration-langs',
-	                                                                 'action=profiles',
-	                                                                 'action=help',
-	                                                                 'action=multiselect'));
+    $bothSpecial  = apply_filters(
+        'sph_load_both_textdomain',
+        array(
+            'action=permissions&',
+            'action=spAckPopup'
+        )
+    );
 
-	if (SP()->primitives->strpos_array(array_key_exists('QUERY_STRING', $_SERVER) ? $_SERVER['QUERY_STRING'] : '', $bothSpecial) !== false || wp_doing_ajax()) {
-		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
-		load_textdomain('spa', $mofile);
+    $adminSpecial = apply_filters(
+        'sph_load_admin_textdomain',
+        array(
+            '&loadform',
+            'action=forums&',
+            'action=components&',
+            'action=usergroups&',
+            'action=usermapping',
+            'action=memberships',
+            'action=integration-perm',
+            'action=integration-langs',
+            'action=profiles',
+            'action=help',
+            'action=multiselect'
+        )
+    );
+
+
+    if (
+        SP()->primitives->strpos_array(array_key_exists('QUERY_STRING', $_SERVER) ? $_SERVER['QUERY_STRING'] : '', $bothSpecial) !== false || wp_doing_ajax()) {
+        # Todo: this needs to be addressed somehow. Previously we had two textdomains `sp` and `spa`
+        # now we only have `simplepress` and thus we need to handle this. BUT there is no simple
+        # way to merge two .mo files at the moment and we need to address this somehow in future
+        # releases.
+
+        # Admin
+		#$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
+		#load_textdomain('simplepress', $mofile);
+
+        # Load only frontend
 		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/sp-'.$locale.'.mo';
 		$mofile = apply_filters('sph_localization_mo', $mofile);
 		load_textdomain('sp', $mofile);
 	} else if (is_admin() || SP()->primitives->strpos_array(array_key_exists('QUERY_STRING', $_SERVER) ? $_SERVER['QUERY_STRING'] : '', $adminSpecial) !== false) {
+        # Only load backend
+        
 		$mofile = SP_STORE_DIR.'/'.empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
-		load_textdomain('spa', $mofile);
+		load_textdomain('simplepress', $mofile);
 	} else {
+        # Only load frontend
 		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/sp-'.$locale.'.mo';
 		$mofile = apply_filters('sph_localization_mo', $mofile);
-		load_textdomain('sp', $mofile);
+		load_textdomain('simplepress', $mofile);
 	}
 }
 
