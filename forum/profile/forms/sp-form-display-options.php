@@ -68,20 +68,29 @@ $tout .= implode('<optgroup label=', $wptz);
 $tout .= '</select></p>';
 $tout .= '<p><small>'.SP()->primitives->front_text('Server Timezone set to').': <b>'.$tz.'</b></small></p>';
 
-# timezone message
-date_default_timezone_set($tz);
-$now = localtime(time(), true);
-if ($now['tm_isdst']) {
-	$tout .= '<p><small>'.SP()->primitives->front_text('This timezone is currently in daylight savings time').'</small></p>';
+// Server time
+$serverTimezone = new DateTimeZone($tz);
+$serverNow = new DateTime('now', $serverTimezone);
+
+// DST check
+$dst = $serverNow->format('I'); // '1' if DST, '0' otherwise
+if ($dst === '1') {
+    $tout .= '<p><small>' . SP()->primitives->front_text('This timezone is currently in daylight savings time') . '</small></p>';
 } else {
-	$tout .= '<p><small>'.SP()->primitives->front_text('This timezone is currently in standard time').'</small></p>';
+    $tout .= '<p><small>' . SP()->primitives->front_text('This timezone is currently in standard time') . '</small></p>';
 }
-$tout .= '<p><small>'.SP()->primitives->front_text('Server Time is').': <b>'.date('Y-m-d G:i:s').'</b></small></p>';
-date_default_timezone_set($tzUser);
-$tout .= '<p><small>'.SP()->primitives->front_text('Local Time is').': <b>'.date('Y-m-d G:i:s').'</b></small></p>';
-date_default_timezone_set('UTC');
-$tout .= '<p><small>'.SP()->primitives->front_text('UTC Time is').': <b>'.date('Y-m-d G:i:s').'</b></small></p>';
-$tout .= '<p><small><a href="http://en.wikipedia.org/wiki/Time_zone">'.SP()->primitives->front_text('Help and explanation of timezones').'</a></small></p>';
+$tout .= '<p><small>' . SP()->primitives->front_text('Server Time is') . ': <b>' . $serverNow->format('Y-m-d G:i:s') . '</b></small></p>';
+
+// Local/User time
+$userTimezone = new DateTimeZone($tzUser);
+$userNow = new DateTime('now', $userTimezone);
+$tout .= '<p><small>' . SP()->primitives->front_text('Local Time is') . ': <b>' . $userNow->format('Y-m-d G:i:s') . '</b></small></p>';
+
+// UTC time
+$utcNow = new DateTime('now', new DateTimeZone('UTC'));
+$tout .= '<p><small>' . SP()->primitives->front_text('UTC Time is') . ': <b>' . $utcNow->format('Y-m-d G:i:s') . '</b></small></p>';
+
+$tout .= '<p><small><a href="http://en.wikipedia.org/wiki/Time_zone">' . SP()->primitives->front_text('Help and explanation of timezones') . '</a></small></p>';
 $tout .= '</div>';
 $out .= apply_filters('sph_ProfileUserTimezone', $tout, $userid, $thisSlug);
 
