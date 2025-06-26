@@ -6,7 +6,7 @@ Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 6.10.13
+Stable tag: 6.11.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,16 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 19. The front-end admin options for a post
 
 == Latest Updates ==
+
+= 6.11.0 - June 2025 =
+* Code compliance update: Refactored codebase to pass WordPress Plugin Check with no errors or warnings
+* Replaced deprecated functions and improved use of WordPress core APIs
+* Enforced consistent escaping, sanitization, and validation throughout admin and front-end
+* Added missing translation functions for better i18n support
+* Improved file and directory handling using WP-native methods
+* General code cleanup and adherence to WordPress coding standards
+* Security update: Implemented a multitude of fixes for potential XSS attacks and ensured proper nonce usage on front-end forms
+* RPX support dropped
 
 = 6.10.13 - March 2025 =
 * Improved security posture: Implemented fixes for potential XSS attacks and ensured proper nonce usage on front-end forms.
