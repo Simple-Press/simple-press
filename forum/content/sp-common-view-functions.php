@@ -1657,7 +1657,7 @@ function sp_BreadCrumbsMobile($args = '', $forumLabel = '') {
 
 	if ($echo) {
         echo wp_kses(
-            $out,
+            $breadCrumbs,
             SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
         );
 	} else {
