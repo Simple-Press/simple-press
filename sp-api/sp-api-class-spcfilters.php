@@ -53,7 +53,6 @@ class spcFilters {
 
 
 	public function str($string) {
-		$string = $this->esc_sql($string);
 		$string = wp_kses($string, array());
 
 		return $string;
