@@ -133,7 +133,7 @@ function spa_save_theme_mobile_data() {
         } else {
             $f = SPTHEMEBASEDIR.$mobile['theme'].'/styles/overlays/'.$mobile['color'].'.php';
         }
-		$icons = SP()->filters->str(SP()->theme->get_overlay_icons($f));
+		$icons = SP()->theme->get_overlay_icons($f);
 	}
 	$mobile['icons'] = $icons;
 
