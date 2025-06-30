@@ -1585,8 +1585,21 @@ function sp_PostIndexContent($args = '', $label = '') {
 	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexContent', $out, $a);
 
+    $allowed_tags = wp_kses_allowed_html('post');
+
+    $allowed_tags['iframe'] = array(
+        'title' => array(),
+        'width' => array(),
+        'height' => array(),
+        'src' => array(),
+        'frameborder' => array(),
+        'allow' => array(),
+        'referrerpolicy' => array(),
+        'allowfullscreen' => array(),
+    );
+
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, $allowed_tags);
 	} else {
 		return $out;
 	}
