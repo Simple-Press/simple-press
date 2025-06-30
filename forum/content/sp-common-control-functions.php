@@ -21,13 +21,93 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die('Access denied - you cannot directly call this file');
 }
 
-define('SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS', 
-        array(
-            'div' => array(
-                'class' => array(),
-                'id'    => array(),
-                'style' => array(),
-            ),
+define(
+    'SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS', 
+    array(
+        'a' => array(
+            'rel' => array(),
+            'id' => array(),
+            'class' => array(),
+            'title' => array(),
+            'href' => array(),
+            'data-id' => array(),
+            'data-type' => array(),
+            'data-min' => array(),
+        ),
+        'div' => array(
+            'class' => array(),
+            'id' => array(),
+            'style' => array(),
+            'data-*' => array(),
+        ),
+        'fieldset' => array(
+            'class' => array(),
+            'id' => array(),
+            'style' => array(),
+        ),
+        'form' => array(
+            'name' => array(),
+            'id' => array(),
+            'class' => array(),
+            'action' => array(),
+            'method' => array(),
+            'style' => array(),
+            'data-id' => array(),
+            'data-type' => array(),
+            'data-min' => array(),
+        ),
+        'input' => array(
+            'type' => array(),
+            'id' => array(),
+            'class' => array(),
+            'tabindex' => array(),
+            'checked' => array(),
+            'name' => array(),
+            'value' => array(),
+            'style' => array(),
+            'size' => array(),
+            'placeholder' => array(),
+        ),
+        'img' => array(
+            'src' => array(),
+            'alt' => array(),
+            'class' => array(),
+            'width' => array(),
+            'height' => array(),
+            'id' => array(),
+            'title' => array(),
+            'style' => array(),
+        ),
+        'label' => array(
+            'for' => array(),
+            'class' => array(),
+        ),
+        'p' => array(
+            'id' => array(),
+            'class' => array(),
+        ),
+        'optgroup' => array(
+            'id' => array(),
+            'title' => array(),
+            'value' => array(),
+            'class' => array(),
+        ),
+        'option' => array(
+            'id' => array(),
+            'title' => array(),
+            'value' => array(),
+            'selected' => array(),
+            'class' => array(),
+        ),
+        'select' => array(
+            'id' => array(),
+            'class' => array(),
+        ),
+        'span' => array(
+            'id' => array(),
+            'class' => array(),
+        ),
+        'br' => array(),
     )
 );
 
@@ -601,18 +681,10 @@ function sp_MobileMenuStart($args = '', $header = '') {
 	$out = apply_filters('sph_MobileMenuStart', $out, $a);
 
 	if ($echo) {
-        $allowed_html = array(
-            'span' => array('class' => array(), 'style' => array()),
-            'strong' => array(),
-            'em' => array(),
-            'a' => array('href' => array(), 'class' => array(), 'title' => array(), 'target' => array(), 'rel' => array()),
-            'b' => array(),
-            'i' => array(),
-            'br' => array(),
-            'img' => array('src' => array(), 'alt' => array(), 'class' => array(), 'width' => array(), 'height' => array()),
-            // add any other tags you want to allow
+        echo wp_kses(
+            $out,
+            SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS
         );
-		echo wp_kses($out, $allowed_tags);
 
 		return;
 	} else {
@@ -646,22 +718,10 @@ function sp_MobileMenuEnd($args = '') {
 	$out = apply_filters('sph_MobileMenuEnd_after', $out);
 
 	if ($echo) {
-        // Sanitize output using wp_kses to allow only safe HTML
-        $allowed_html = array(
-            'div' => array(
-                'class' => true,
-                'id'    => true,
-                'style' => true,
-            ),
-            'span' => array(
-                'class' => true,
-                'id'    => true,
-                'style' => true,
-            ),
-            // add additional allowed tags/attributes as needed
+        echo wp_kses(
+            $out,
+            SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS
         );
-
-        echo wp_kses($out, $allowed_html);
 
 		return;
 	} else {
