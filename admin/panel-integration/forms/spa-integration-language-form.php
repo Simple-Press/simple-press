@@ -63,10 +63,10 @@ function spa_integration_language_form() {
 					}
 				}
 				if (empty($formLang)) {
-					$link = '<a href="https://simple-press.com/documentation/installation/installation-information/localization/" target="blank">' . esc_html(SP()->primitives->admin_text('This Page')) . '</a>';
+					$link = '<a href="https://simple-press.com/documentation/installation/installation-information/localization/" target="blank">' . SP()->primitives->admin_text('This Page') . '</a>';
 					echo '<div class="sf-alert-block sf-info">';
 					SP()->primitives->admin_etext('Your WordPress site language setting has not been recognised by Simple:Press');
-					echo '<br /><br />'.wp_kses_post(sprintf(esc_html(SP()->primitives->admin_text('Please see %s for manual install instructions')), $link));
+					echo '<br /><br />'.wp_kses_post(sprintf(SP()->primitives->admin_text('Please see %s for manual install instructions'), $link));
 					echo '</div>';
 				} else {
 					echo '<div class="sf-alert-block sf-info">';
