@@ -114,8 +114,11 @@ class spcDisplayFilters {
 		# 2: Remove escape slashes
 		$content = $this->stripslashes($content);
 		
-		# 3: Run it through the wp_kses_post function.
-		$content = wp_kses_post($content);
+		# 3: Run it through the wp_kses function.
+        $content = wp_kses(
+            $content,
+            SP_CORE_ALLOWED_TAGS
+        );
 
 		$content = apply_filters('sph_display_title_filter', $content, $original);
 

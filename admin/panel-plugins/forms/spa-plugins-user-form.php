@@ -31,7 +31,7 @@ function spa_plugins_user_form($admin, $save, $form, $reload) {
     	spa_paint_options_init();
         $ajaxURL = wp_nonce_url(SPAJAXURL.'plugins-loader&amp;saveform=plugin&amp;func='.$save, 'plugins-loader');
     	echo '<form action="'.esc_attr($ajaxURL).'" method="post" id="sfpluginsuser" name="sfpluginsuser">';
-        echo '<input type="hidden" name="forum-adminform_userplugin" value="forum-adminform_userplugin" />';
+        echo sp_create_nonce('forum-adminform_userplugin');
     }
 
     call_user_func($admin);
@@ -40,7 +40,11 @@ function spa_plugins_user_form($admin, $save, $form, $reload) {
 ?>
     	<div class="sf-form-submit-bar">
 <?php
-			echo wp_kses_post(apply_filters('sph_UpdateBar', '<input type="submit" class="sf-button-primary" value="'.esc_attr(SP()->primitives->admin_text("Update")).'" />', esc_attr($reload)));
+                echo wp_kses(
+            apply_filters('sph_UpdateBar', '<input type="submit" class="sf-button-primary" value="'.SP()->primitives->admin_text("Update").'" />', $reload),
+            SP_CORE_ALLOWED_TAGS
+        );
+
 ?>
     	</div>
         <?php spa_paint_close_tab(); ?>

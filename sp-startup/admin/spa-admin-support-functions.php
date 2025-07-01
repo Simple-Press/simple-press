@@ -476,13 +476,13 @@ function spa_dashboard_forum() {
 
 		if (SP()->user->thisUser->admin) $out .= '<br />' .SP()->primitives->admin_text('Please backup your site and then ') . '<a style="text-decoration: underline;" href="'.esc_url(SPADMINUPGRADE).'">'.SP()->primitives->admin_text('Perform Upgrade').'</a>';
 		$out .= '</p></div>';
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 
 		return;
 	}
 
 	$out .= '<div id="sf-dashboard">';
-	echo wp_kses_post($out);
+	echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	do_action('sph_dashboard_start');
 
 	if (SP()->core->forumData['admin']['sfdashboardstats']) {
@@ -525,7 +525,7 @@ function spa_dashboard_forum() {
 	$out = '';
 	$out .= '<p><br /><a href="'.esc_url(SP()->spPermalinks->get_url()).'">'.SP()->primitives->admin_text('Go To Forum').'</a></p>';
 	$out .= '</div>';
-	echo wp_kses_post($out);
+	echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 }
 
 /**

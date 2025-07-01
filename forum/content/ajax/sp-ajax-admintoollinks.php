@@ -307,6 +307,7 @@ function sp_render_topic_tools($topic, $forum, $page) {
 
 	$out = '';
 	$tout = '';
+	$br = '';
 
 	$out.= '<div id="spMainContainer" class="spForumToolsPopup">';
 	$out.= '<div class="spAdminLinksPopup">';
