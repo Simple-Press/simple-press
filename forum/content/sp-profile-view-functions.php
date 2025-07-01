@@ -31,7 +31,7 @@ function sp_ProfileEdit($tabSlug = 'profile', $menuSlug = '') {
 		$out .= '<div class="spMessage">';
 		$out .= apply_filters('sph_ProfileErrorMsg', SP()->primitives->front_text('Sorry, an invalid profile request was detected. Do you need to log in?'));
 		$out .= '</div>';
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 
 		return;
 	}
@@ -112,7 +112,7 @@ function sp_ProfileEditMobile($tabSlug = 'profile', $menuSlug = 'overview') {
 		$out .= '<div class="spMessage">';
 		$out .= apply_filters('sph_ProfileErrorMsg', SP()->primitives->front_text('Sorry, an invalid profile request was detected. Do you need to log in?'));
 		$out .= '</div>';
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 
 		return;
 	}
@@ -257,7 +257,7 @@ function sp_ProfileShowHeader($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowHeader', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -310,7 +310,7 @@ function sp_ProfileShowDisplayName($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowDisplayName', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -372,7 +372,7 @@ function sp_ProfileShowFirstName($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowFirstName', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -434,7 +434,7 @@ function sp_ProfileShowLastName($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowLastName', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -498,7 +498,7 @@ function sp_ProfileShowWebsite($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowWebsite', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -555,7 +555,7 @@ function sp_ProfileShowLocation($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowLocation', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -612,7 +612,7 @@ function sp_ProfileShowBio($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowBio', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -673,7 +673,7 @@ function sp_ProfileShowAIM($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowAIM', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -734,7 +734,7 @@ function sp_ProfileShowYIM($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowYIM', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -795,7 +795,7 @@ function sp_ProfileShowICQ($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowICQ', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -856,7 +856,7 @@ function sp_ProfileShowGoogleTalk($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowGoogleTalk', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -917,7 +917,7 @@ function sp_ProfileShowMSN($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowMSN', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -978,7 +978,7 @@ function sp_ProfileShowMySpace($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowMySpace', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -1035,7 +1035,7 @@ function sp_ProfileShowSkype($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowSkype', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -1092,7 +1092,7 @@ function sp_ProfileShowFacebook($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowFacebook', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -1149,7 +1149,7 @@ function sp_ProfileShowTwitter($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowTwitter', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -1206,7 +1206,7 @@ function sp_ProfileShowLinkedIn($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowLinkedIn', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -1263,7 +1263,7 @@ function sp_ProfileShowYouTube($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowYouTube', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -1320,7 +1320,7 @@ function sp_ProfileShowInstagram($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowInstagram', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -1373,7 +1373,7 @@ function sp_ProfileShowMemberSince($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowMemberSince', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1425,7 +1425,7 @@ function sp_ProfileShowLastVisit($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowLastVisit', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1479,7 +1479,7 @@ function sp_ProfileShowUserPosts($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowUserPosts', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1669,7 +1669,7 @@ function sp_ProfileShowUserPhotos($args = '') {
 		$out = apply_filters('sph_ProfileShowUserPhotos', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
@@ -1719,7 +1719,7 @@ function sp_ProfileShowLink($args = '', $label = '') {
 	$out = apply_filters('sph_ProfileShowLink', $out, SP()->user->profileUser, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1778,7 +1778,7 @@ function sp_ProfileShowEmail($args = '', $label = '') {
 		$out = apply_filters('sph_ProfileShowEmail', $out, SP()->user->profileUser, $a);
 
 		if ($echo) {
-			echo wp_kses_post($out);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		} else {
 			return $out;
 		}
