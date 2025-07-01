@@ -32,8 +32,7 @@ if ( ! isset($_POST['nonce']) || ! wp_verify_nonce(sanitize_text_field(wp_unslas
     die('Could not validate nonce');
 }
 
-
-$sp_action = isset( $_POST['sp_action'] ) ? sanitize_text_field( wp_unslash( ['sp_action'] ) ) : '';
+$sp_action = isset( $_POST['sp_action'] ) ? sanitize_text_field($_POST['sp_action']) : '';
 
 if($sp_action !== ''){
 
