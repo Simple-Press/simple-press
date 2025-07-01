@@ -513,7 +513,7 @@ function sp_render_forum($content) {
 		$content .= '<div id="dialogcontainer" style="display:none;"></div>';
 
 		# echo any wp page content
-		echo wp_kses_post($content);
+		echo wp_kses($content, SP_CORE_ALLOWED_TAGS);
 
 		# now add our content
 		do_action('sph_before_template_processing');

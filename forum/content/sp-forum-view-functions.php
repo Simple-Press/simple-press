@@ -44,7 +44,7 @@ function sp_SubForumHeaderDescription($args = '', $label = '') {
 	$out = apply_filters('sph_SubForumHeaderDescription', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -126,7 +126,7 @@ function sp_SubForumIndexIcon($args = '') {
 	$out = apply_filters('sph_SubForumIndexIcon', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -170,7 +170,7 @@ function sp_SubForumIndexName($args = '', $toolTip = '') {
 	$out = apply_filters('sph_SubForumIndexName', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -990,7 +990,7 @@ function sp_ForumHeaderSubForums($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_ForumHeaderSubForums', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1050,7 +1050,7 @@ function sp_ForumHeaderIcon($args = '') {
 	$out = apply_filters('sph_ForumHeaderIcon', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1087,7 +1087,7 @@ function sp_ForumHeaderName($args = '') {
 	$out = apply_filters('sph_ForumHeaderName', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1122,7 +1122,7 @@ function sp_ForumHeaderDescription($args = '') {
 	$out = apply_filters('sph_ForumHeaderDescription', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1179,7 +1179,7 @@ function sp_ForumHeaderRSSButton($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_ForumHeaderRSSButton', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1218,7 +1218,7 @@ function sp_ForumHeaderMessage($args = '') {
 	$out = apply_filters('sph_ForumHeaderMessage', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1270,7 +1270,7 @@ function sp_NoForumMessage($args = '', $deniedMessage = '', $definedMessage = ''
 	$out = apply_filters('sph_NoForumMessage', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1374,7 +1374,7 @@ function sp_TopicIndexPageLinks($args = '', $label = '', $toolTip = '', $jumpToo
 	$out = apply_filters('sph_TopicIndexPageLinks', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1439,7 +1439,7 @@ function sp_TopicModeratorList($args = '', $label = '') {
 	$out = apply_filters('sph_TopicModeratorList', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1517,7 +1517,7 @@ function sp_TopicNewButton($args = '', $label = '', $toolTip = '', $toolTipLock 
 	$out = apply_filters('sph_TopicNewButton', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1624,7 +1624,7 @@ function sp_TopicIndexIcon($args = '') {
 	$out = apply_filters('sph_TopicIndexIcon', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1665,7 +1665,7 @@ function sp_TopicIndexName($args = '', $toolTip = '') {
 	$out = apply_filters('sph_TopicIndexName', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1723,7 +1723,7 @@ function sp_TopicIndexPostPageLinks($args = '', $toolTip = '') {
 	$out = apply_filters('sph_TopicIndexPostPageLinks', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1780,7 +1780,7 @@ function sp_TopicIndexPostCount($args = '', $label = '', $rtlLabel = '') {
 	$out = apply_filters('sph_TopicIndexPostCount', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1836,7 +1836,7 @@ function sp_TopicIndexReplyCount($args = '', $label = '', $rtlLabel = '') {
 	$out = apply_filters('sph_TopicIndexReplyCount', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1891,7 +1891,7 @@ function sp_TopicIndexViewCount($args = '', $label = '', $rtlLabel = '') {
 	$out = apply_filters('sph_TopicIndexViewCount', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1964,7 +1964,7 @@ function sp_TopicIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPin = '
 	$out = apply_filters('sph_TopicIndexStatusIcons', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2104,7 +2104,7 @@ function sp_TopicIndexFirstPost($args = '', $label = '') {
 	$out = apply_filters('sph_TopicIndexFirstPost', $out, $a, $label);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2246,7 +2246,7 @@ function sp_TopicIndexLastPost($args = '', $label = '') {
 	$out = apply_filters('sph_TopicIndexLastPost', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2281,7 +2281,7 @@ function sp_NoTopicsInForumMessage($args = '', $definedMessage = '') {
 	$out = apply_filters('sph_NoTopicsInForumMessage', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2346,7 +2346,7 @@ function sp_TopicForumToolButton($args = '', $label = '', $toolTip = '') {
 	$out .= "</a>";
 	$out = apply_filters('sph_TopicForumToolButton', $out, $a);
 
-	echo wp_kses_post($out);
+	echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 
 	# Add script to hover admin buttons - just once
 	if (SP()->forum->view->thisForum->tools_flag && $hide) {

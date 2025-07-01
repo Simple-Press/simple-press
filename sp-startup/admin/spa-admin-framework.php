@@ -418,35 +418,8 @@ function spa_render_sidemenu() {
                     }
                 }
 
-                // Define allowed HTML tags and attributes for wp_kses.
-                $allowed_html = array(
-                    'div' => array(
-                        'id' => true,
-                        'class' => true,
-                    ),
-                    'span' => array(
-                        'class' => true,
-                    ),
-                    'a' => array(
-                        'id' => true,
-                        'href' => true,
-                        'class' => true,
-                        'data-form' => true,
-                        'data-url' => true,
-                        'data-target' => true,
-                        'data-img' => true,
-                        'data-id' => true,
-                        'data-open' => true,
-                        'data-upgrade' => true,
-                        'data-admin' => true,
-                        'data-save' => true,
-                        'data-sform' => true,
-                        'data-reload' => true,
-                    ),
-                );
-
-                echo wp_kses($coreMenus, $allowed_html);
-                echo wp_kses($addonMenus, $allowed_html);
+                echo wp_kses($coreMenus, SP_CORE_ALLOWED_TAGS);
+                echo wp_kses($addonMenus, SP_CORE_ALLOWED_TAGS);
 
             echo '</div>'."\n";
 		echo '</div>'."\n";

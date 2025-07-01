@@ -36,56 +36,10 @@ if ($action == 'topictools') {
 	$forum = SP()->DB->table(SPFORUMS, "forum_id=$fid", 'row', '', '', ARRAY_A);
 	$topic = SP()->DB->table(SPTOPICS, "topic_id=$tid", 'row', '', '', ARRAY_A);
 
-    # Allowed output
-    $allowed_tags = array(
-        'div' => array(
-            'id' => array(),
-            'class' => array(),
-            'data-*' => array(),
-            'title' => array()
-        ),
-        'a' => array(
-            'href' => array(),
-            'class' => array(),
-            'data-*' => array(),
-            'title' => array(),
-            'rel' => array(),
-            'data-url' => array(),
-            'data-label' => array(),
-            'data-site' => array(),
-            'data-width' => array(),
-            'data-height' => array(),
-            'data-align' => array(),
-            'data-postid' => array(),
-            'data-topicid' => array(),
-            'data-forumid' => array()
-        ),
-        'form' => array(
-            'action' => array(),
-            'method' => array(),
-            'name' => array(),
-            'id' => array()
-        ),
-        'input' => array(
-            'type' => array(),
-            'name' => array(),
-            'value' => array()
-        ),
-        'img' => array(
-            'class' => array(),
-            'src' => array(),
-            'alt' => array()
-        ),
-        'br' => array(),
-        'span' => array(
-            'class' => array()
-        ),
-    );
-
     # Safe output
     echo wp_kses(
         sp_render_topic_tools($topic, $forum, $page),
-        $allowed_tags
+        SP_CORE_ALLOWED_TAGS
     );
 	die();
 }
@@ -111,54 +65,9 @@ if ($action == 'posttools') {
 		$guestemail = '';
 	}
     
-    $allowed_tags = array(
-        'div' => array(
-            'id' => array(),
-            'class' => array(),
-            'data-*' => array(),
-            'title' => array()
-        ),
-        'a' => array(
-            'href' => array(),
-            'class' => array(),
-            'data-*' => array(),
-            'title' => array(),
-            'rel' => array(),
-            'data-url' => array(),
-            'data-label' => array(),
-            'data-site' => array(),
-            'data-width' => array(),
-            'data-height' => array(),
-            'data-align' => array(),
-            'data-postid' => array(),
-            'data-topicid' => array(),
-            'data-forumid' => array()
-        ),
-        'form' => array(
-            'action' => array(),
-            'method' => array(),
-            'name' => array(),
-            'id' => array()
-        ),
-        'input' => array(
-            'type' => array(),
-            'name' => array(),
-            'value' => array()
-        ),
-        'img' => array(
-            'class' => array(),
-            'src' => array(),
-            'alt' => array()
-        ),
-        'br' => array(),
-        'span' => array(
-            'class' => array()
-        ),
-    );
-
     echo wp_kses(
         sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail, $guestemail, $displayname, $last),
-        $allowed_tags
+        SP_CORE_ALLOWED_TAGS
     );
 
 	die();
@@ -187,7 +96,7 @@ function sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail
         $nonce = wp_create_nonce('sp_approve_post_' . $post['post_id']);
         $out.= sp_open_grid_cell();
 		$out.= '<div class="spForumToolsModerate">';
-		$out.= '<a href="javascript:document.postapprove'.esc_attr($post['post_id']).'.submit();">';
+		$out.= '<a onclick="document.postapprove'.esc_attr($post['post_id']).'.submit(); return(false);">';
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsApprove.png').$br;
 		$out.= SP()->primitives->front_text('Approve this post').'</a>';
 		$out.= '<form action="'.SP()->spPermalinks->build_url($forum['forum_slug'], $topic['topic_slug'], $page, $post['post_id'], $post['post_index']).'" method="post" name="postapprove'.$post['post_id'].'">';
@@ -390,17 +299,7 @@ function sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail
 
 	$tout = apply_filters('sph_post_tools', $tout, $post, $forum, $topic, $page, $postnum, $useremail, $guestemail, $displayname, $br);
 
-    $allowed_tags = array(
-        'div' => array('id' => array(), 'class' => array(), 'data-*' => array(), 'title' => array()),
-        'a' => array('href' => array(), 'class' => array(), 'data-*' => array(), 'title' => array(), 'rel' => array(), 'data-url' => array(), 'data-label' => array(), 'data-site' => array(), 'data-width' => array(), 'data-height' => array(), 'data-align' => array(), 'data-postid' => array(), 'data-topicid' => array(), 'data-forumid' => array()),
-        'form' => array('action' => array(), 'method' => array(), 'name' => array(), 'id' => array()),
-        'input' => array('type' => array(), 'name' => array(), 'value' => array()),
-        'img' => array('class' => array(), 'src' => array(), 'alt' => array()),
-        'br' => array(),
-        'span' => array('class' => array()),
-    );
-
-    return $tout;
+   return $tout;
 }
 
 # Forum Tools - Forum View
@@ -567,15 +466,6 @@ function sp_render_common_tools($forum, $topic, $post=0, $page=0, $br='') {
 
 	$tout = apply_filters('sph_add_common_tools', $tout, $forum, $topic, $post, $page, $br);
 
-    $allowed_tags = array(
-        'div' => array('id' => array(), 'class' => array(), 'data-*' => array(), 'title' => array()),
-        'a' => array('href' => array(), 'class' => array(), 'data-*' => array(), 'title' => array(), 'rel' => array(), 'data-url' => array(), 'data-label' => array(), 'data-site' => array(), 'data-width' => array(), 'data-height' => array(), 'data-align' => array(), 'data-postid' => array(), 'data-topicid' => array(), 'data-forumid' => array()),
-        'form' => array('action' => array(), 'method' => array(), 'name' => array(), 'id' => array()),
-        'input' => array('type' => array(), 'name' => array(), 'value' => array()),
-        'img' => array('class' => array(), 'src' => array(), 'alt' => array()),
-        'br' => array(),
-        'span' => array('class' => array()),
-    );
     return $tout;
 }
 
