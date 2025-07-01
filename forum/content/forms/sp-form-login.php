@@ -36,10 +36,6 @@ function sp_render_inline_login_form($a) {
    	$out.= "<fieldset class='$controlFieldset'>\n";
     $out.= "<form name='loginform' id='loginform' class='$tagClass' action='$loginLink' method='post'>\n";
 
-    $sfrpx = SP()->options->get('sfrpx');
-	if($sfrpx){
-		if ($sfrpx['sfrpxenable']) $out.= sp_rpx_loginform('spLoginForm', '100%', true);
-	}
 	if ($title) {
 		$out = $out . "<div id='".$titleClass."' class='".$titleClass."'>$title</div> \n" ;
 	}
