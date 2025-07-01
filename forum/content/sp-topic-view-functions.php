@@ -48,7 +48,7 @@ function sp_TopicForumName($args = '') {
 	$out = apply_filters('sph_TopicForumName', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -101,7 +101,7 @@ function sp_TopicHeaderIcon($args = '') {
 	$out = apply_filters('sph_TopicHeaderIcon', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -138,7 +138,7 @@ function sp_TopicHeaderName($args = '') {
 	$out = apply_filters('sph_TopicHeaderName', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -191,7 +191,7 @@ function sp_TopicHeaderRSSButton($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_TopicHeaderRSSButton', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -243,7 +243,7 @@ function sp_NoTopicMessage($args = '', $deniedMessage = '', $definedMessage = ''
 	$out = apply_filters('sph_NoTopicMessage', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -329,7 +329,7 @@ function sp_PostNewButton($args = '', $label = '', $toolTip = '', $toolTipLock =
 	$out = apply_filters('sph_PostNewButton', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -393,7 +393,7 @@ function sp_PostNewTopicButton($args = '', $label = '', $toolTip = '', $toolTipL
 	$out = apply_filters('sph_PostNewTopicButton', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -485,7 +485,7 @@ function sp_PostIndexPageLinks($args = '', $label = '', $toolTip = '', $jumpTool
 	$out = apply_filters('sph_PostIndexPageLinks', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -567,7 +567,7 @@ function sp_PostIndexUserDate($args = '') {
 	$out = apply_filters('sph_PostIndexUserDate', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -614,7 +614,7 @@ function sp_PostIndexUserName($args = '') {
 	$out = apply_filters('sph_PostIndexUserName', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -656,7 +656,7 @@ function sp_PostIndexUserPosts($args = '', $label = '') {
 	$out = apply_filters('sph_PostIndexUserPosts', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -700,7 +700,7 @@ function sp_PostIndexUserRegistered($args = '', $label = '') {
 	$out = apply_filters('sph_PostIndexUserRegistered', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -830,7 +830,7 @@ function sp_PostIndexUserBadges($args = '', $label = '') {
 	$out = apply_filters('sph_PostIndexUserBadges', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -896,7 +896,7 @@ function sp_PostIndexUserRank($args = '') {
 	$out = apply_filters('sph_PostIndexUserRank', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -969,7 +969,7 @@ function sp_PostIndexUserSpecialRank($args = '') {
 	$out = apply_filters('sph_PostIndexUserSpecialRank', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1043,7 +1043,7 @@ function sp_PostIndexUserMemberships($args = '', $noMembershipLabel = '', $admin
 	$out = apply_filters('sph_PostIndexUserMemberships', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1080,7 +1080,7 @@ function sp_PostIndexNumber($args = '') {
 	$out = apply_filters('sph_PostIndexNumber', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1124,7 +1124,7 @@ function sp_PostIndexPinned($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexPinned', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1165,7 +1165,7 @@ function sp_PostIndexNewPost($args = '', $label = '') {
 	$out = apply_filters('sph_PostIndexNewPost', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1234,7 +1234,7 @@ function sp_PostIndexEditHistory($args = '', $label = '', $legend = '', $toolTip
 	$out = apply_filters('sph_PostIndexEditHistory', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1279,7 +1279,7 @@ function sp_PostIndexPermalink($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexPermalink', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1321,7 +1321,7 @@ function sp_PostIndexPrint($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexPrint', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1377,7 +1377,7 @@ function sp_PostIndexQuote($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexQuote', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1515,7 +1515,7 @@ function sp_PostIndexDelete($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexDelete', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1652,7 +1652,7 @@ function sp_PostIndexUserSignature($args = '') {
 	$out = apply_filters('sph_PostIndexUserSignature', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1706,7 +1706,7 @@ function sp_PostIndexUserFlexSignature($args = '') {
 	$out = apply_filters('sph_PostIndexUserFlexSignature', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1767,7 +1767,7 @@ function sp_PostIndexUserTwitter($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserTwitter', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1828,7 +1828,7 @@ function sp_PostIndexUserFacebook($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserFacebook', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1889,7 +1889,7 @@ function sp_PostIndexUserMySpace($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserMySpace', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1950,7 +1950,7 @@ function sp_PostIndexUserLinkedIn($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserLinkedIn', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2011,7 +2011,7 @@ function sp_PostIndexUserYouTube($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserYouTube', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2072,7 +2072,7 @@ function sp_PostIndexUserGooglePlus($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserGooglePlus', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2133,7 +2133,7 @@ function sp_PostIndexUserInstagram($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserInstagram', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2188,7 +2188,7 @@ function sp_PostIndexUserWebsite($args = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexUserWebsite', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2257,7 +2257,7 @@ function sp_PostIndexUserStatus($args = '', $onlineLabel = '', $offlineLabel = '
 	$out = apply_filters('sph_PostIndexUserStatus', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2300,7 +2300,7 @@ function sp_PostIndexUserLocation($args = '', $label = '') {
 	$out = apply_filters('sph_PostIndexUserLocation', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2336,7 +2336,7 @@ function sp_NoPostsInTopicMessage($args = '', $definedMessage = '') {
 	$out = apply_filters('sph_NoPostsInTopicMessage', $out, $a);
 
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2430,7 +2430,7 @@ function sp_PostForumToolButton($args = '', $label = '', $toolTip = '') {
 	$out .= "</a>";
 	$out = apply_filters('sph_PostForumToolButton', $out, $a);
 
-	echo wp_kses_post($out);
+    echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 
 	# Add script to hover admin buttons - just once
 	if (SP()->forum->view->thisTopic->tools_flag && $hide) {
@@ -2527,7 +2527,7 @@ function sp_UsersAlsoViewing($args = '', $messageLabel = '') {
 
 	# finish it up
 	if ($echo) {
-		echo wp_kses_post($out);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -2544,87 +2544,12 @@ function sp_UsersAlsoViewing($args = '', $messageLabel = '') {
 function sp_PostEditorWindow($addPostForm, $editPostForm) {
 	SP()->rewrites->pageData['hiddeneditor'] = $addPostForm['hide'];
 
-    $allowed_html = [
-        'form' => [
-            'class' => [],
-            'action' => [],
-            'method' => [],
-            'id' => [],
-            'name' => [],
-            'data-guest' => [],
-            'data-img' => [],
-        ],
-        'fieldset' => [
-            'class' => [],
-        ],
-        'input' => [
-            'type' => [],
-            'tabindex' => [],
-            'class' => [],
-            'title' => [],
-            'name' => [],
-            'value' => [],
-            'id' => [],
-            'data-msg' => [],
-            'data-box' => [],
-            'size' => [],
-            'maxlength' => [],
-        ],
-        'textarea' => [
-            'tabindex' => [],
-            'class' => [],
-            'name' => [],
-            'id' => [],
-            'cols' => [],
-            'rows' => [],
-        ],
-        'div' => [
-            'id' => [],
-            'style' => [],
-            'class' => [],
-        ],
-        'a' => [
-            'class' => [],
-            'id' => [],
-            'title' => [],
-            'rel' => [],
-            'href' => []
-        ],
-        'img' => [
-            'class' => [],
-            'src' => [],
-            'title' => [],
-            'alt' => [],
-            'data-url' => [],
-            'data-title' => [],
-            'data-path' => [],
-            'data-code' => [],
-        ],
-        'select' => [
-            'class' => [],
-            'tabindex' => [],
-            'id' => [],
-            'name' => [],
-        ],
-        'option' => [
-            'value' => [],
-            'selected' => [],
-        ],
-        'label' => [
-            'class' => [],
-            'for' => [],
-        ],
-        'legend' => [
-            'class' => [],
-        ]
-    ];
-
 	# Are we editing a current post?
 	if (SP()->forum->view->thisTopic->editmode) {
 		# Go into edit mode
 		$out = '<a id="spEditFormAnchor"></a>'."";
 		$out .= sp_edit_post($editPostForm, SP()->forum->view->thisTopic->editpost_id, SP()->forum->view->thisTopic->editpost_content);
-		echo wp_kses($out, $allowed_html);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 
 		# inline js to open post edit form
 		add_action('wp_footer', 'spjs_OpenPostEditForm');
@@ -2636,7 +2561,7 @@ function sp_PostEditorWindow($addPostForm, $editPostForm) {
 		if ($allowed) {
 			$out = '<a id="spEditFormAnchor"></a>'."";
 			$out .= sp_add_post($addPostForm);
-			echo wp_kses($out, $allowed_html);
+			echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 		}
 	}
 }

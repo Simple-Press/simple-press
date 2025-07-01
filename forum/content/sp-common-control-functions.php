@@ -21,97 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die('Access denied - you cannot directly call this file');
 }
 
-define(
-    'SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS', 
-    array(
-        'a' => array(
-            'rel' => array(),
-            'id' => array(),
-            'class' => array(),
-            'title' => array(),
-            'href' => array(),
-            'data-id' => array(),
-            'data-type' => array(),
-            'data-min' => array(),
-        ),
-        'div' => array(
-            'class' => array(),
-            'id' => array(),
-            'style' => array(),
-            'data-*' => array(),
-        ),
-        'fieldset' => array(
-            'class' => array(),
-            'id' => array(),
-            'style' => array(),
-        ),
-        'form' => array(
-            'name' => array(),
-            'id' => array(),
-            'class' => array(),
-            'action' => array(),
-            'method' => array(),
-            'style' => array(),
-            'data-id' => array(),
-            'data-type' => array(),
-            'data-min' => array(),
-        ),
-        'input' => array(
-            'type' => array(),
-            'id' => array(),
-            'class' => array(),
-            'tabindex' => array(),
-            'checked' => array(),
-            'name' => array(),
-            'value' => array(),
-            'style' => array(),
-            'size' => array(),
-            'placeholder' => array(),
-        ),
-        'img' => array(
-            'src' => array(),
-            'alt' => array(),
-            'class' => array(),
-            'width' => array(),
-            'height' => array(),
-            'id' => array(),
-            'title' => array(),
-            'style' => array(),
-        ),
-        'label' => array(
-            'for' => array(),
-            'class' => array(),
-        ),
-        'p' => array(
-            'id' => array(),
-            'class' => array(),
-        ),
-        'optgroup' => array(
-            'id' => array(),
-            'title' => array(),
-            'value' => array(),
-            'class' => array(),
-        ),
-        'option' => array(
-            'id' => array(),
-            'title' => array(),
-            'value' => array(),
-            'selected' => array(),
-            'class' => array(),
-        ),
-        'select' => array(
-            'id' => array(),
-            'class' => array(),
-        ),
-        'span' => array(
-            'id' => array(),
-            'class' => array(),
-        ),
-        'br' => array(),
-    )
-);
-
-
 include_once SP_PLUGIN_DIR.'/admin/library/spa-iconsets.php';
 
 /**
@@ -281,7 +190,7 @@ function sp_SectionStart($args = '', $sectionName = '') {
 
 	if ($echo) {
         // Safely allow only this div with class/id attributes through
-        echo wp_kses($out, SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS);
+        echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 
 		# notify custom code that section has started
 		# only valid if content is echoed out ($display=1)
@@ -331,7 +240,7 @@ function sp_SectionEnd($args = '', $sectionName = '') {
 	$out .= "</div>";
 
 	if ($echo) {
-        echo wp_kses($out, SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS);
+        echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
         
 		# notify custom code that section has ended
 		# only valid if content is echoed out ($show=1)
@@ -394,7 +303,7 @@ function sp_ColumnStart($args = '', $columnName = '') {
 	$out = apply_filters('sph_ColumnStart', $out, $columnName, $a);
 
 	if ($echo) {
-        echo wp_kses($out, SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS);
+        echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 
 		# notify custom code that column has ended
 		# only valid if content is echoed out ($show=1)
@@ -443,7 +352,7 @@ function sp_ColumnEnd($args = '', $columnName = '') {
 	$out .= "</div>";
 
 	if ($echo) {
-        echo wp_kses($out, SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS);
+        echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 
 		# notify custom code that column has ended
 		# only valid if content is echoed out ($show=1)
@@ -495,7 +404,7 @@ function sp_InsertBreak($args = '') {
 	$out = apply_filters('sph_InsertBreak', $out, $a);
 
 	if ($echo) {
-        echo wp_kses($out, SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS);
+        echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 
 		# notify custom code that break has been inserted
 		# only valid if content is echoed out ($show=1)
@@ -683,7 +592,7 @@ function sp_MobileMenuStart($args = '', $header = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 
 		return;
@@ -720,7 +629,7 @@ function sp_MobileMenuEnd($args = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_CONTROL_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 
 		return;
@@ -802,31 +711,7 @@ function sp_OpenCloseControl($args = '', $toolTipOpen = '', $toolTipClose = '') 
 
 	if ($echo) {
         // Only allow the specific tags and attributes used in $out
-        $allowed_html = array(
-            'span' => array(
-                'id' => array(),
-                'class' => array(),
-                'data-targetid' => array(),
-                'data-tagid' => array(),
-                'data-tagclass' => array(),
-                'data-openicon' => array(),
-                'data-closeicon' => array(),
-                'data-tipopen' => array(),
-                'data-tipclose' => array(),
-                'data-setcookie' => array(),
-                'data-label' => array(),
-                'data-linkclass' => array(),
-            ),
-            'img' => array(
-                'class' => array(),
-                'title' => array(),
-                'src' => array(),
-                'alt' => array(),
-            ),
-            'style' => array()
-        );
-
-        echo wp_kses($out, $allowed_html);
+        echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 
 		return;
 	} else {

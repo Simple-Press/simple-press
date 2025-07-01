@@ -11,92 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die('Access denied - you cannot directly call this file');
 }
 #
-define('SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS', array(
-    'a' => array(
-        'rel' => array(),
-        'id' => array(),
-        'class' => array(),
-        'title' => array(),
-        'href' => array(),
-        'data-id' => array(),
-        'data-type' => array(),
-        'data-min' => array(),
-    ),
-    'div' => array(
-        'class' => array(),
-        'id' => array(),
-        'style' => array(),
-        'data-*' => array(),
-    ),
-    'fieldset' => array(
-        'class' => array(),
-        'id' => array(),
-        'style' => array(),
-    ),
-    'form' => array(
-        'name' => array(),
-        'id' => array(),
-        'class' => array(),
-        'action' => array(),
-        'method' => array(),
-        'style' => array(),
-        'data-id' => array(),
-        'data-type' => array(),
-        'data-min' => array(),
-    ),
-    'input' => array(
-        'type' => array(),
-        'id' => array(),
-        'class' => array(),
-        'tabindex' => array(),
-        'checked' => array(),
-        'name' => array(),
-        'value' => array(),
-        'style' => array(),
-        'size' => array(),
-        'placeholder' => array(),
-    ),
-    'img' => array(
-        'src' => array(),
-        'alt' => array(),
-        'class' => array(),
-        'width' => array(),
-        'height' => array(),
-        'id' => array(),
-        'title' => array(),
-        'style' => array(),
-    ),
-    'label' => array(
-        'for' => array(),
-        'class' => array(),
-    ),
-    'p' => array(
-        'id' => array(),
-        'class' => array(),
-    ),
-    'optgroup' => array(
-        'id' => array(),
-        'title' => array(),
-        'value' => array(),
-        'class' => array(),
-    ),
-    'option' => array(
-        'id' => array(),
-        'title' => array(),
-        'value' => array(),
-        'selected' => array(),
-        'class' => array(),
-    ),
-    'select' => array(
-        'id' => array(),
-        'class' => array(),
-    ),
-    'span' => array(
-        'id' => array(),
-        'class' => array(),
-    ),
-    'br' => array(),
-));
 
 # --------------------------------------------------------------------------------------
 #
@@ -163,7 +77,7 @@ function sp_UserNewPostFlag($args = '', $view = '') {
 
     echo wp_kses(
         $out,
-        SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+        SP_CORE_ALLOWED_TAGS
     );
 }
 
@@ -325,7 +239,7 @@ function sp_UserAvatar($args = '', $contextData = '') {
 					} else {
                         echo wp_kses(
                             $avatar,
-                            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+                            SP_CORE_ALLOWED_TAGS
                         );
 
 						return;
@@ -426,7 +340,7 @@ function sp_UserAvatar($args = '', $contextData = '') {
 		if ($echo) {
             echo wp_kses(
                 $avatar,
-                SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+                SP_CORE_ALLOWED_TAGS
             );
 		} else {
 			return $avatar;
@@ -483,7 +397,7 @@ function sp_UserForumRank($args = '', $ranks = null) {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -541,7 +455,7 @@ function sp_UserSpecialRank($args = '', $ranks = null) {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -589,7 +503,7 @@ function sp_UserMembership($args = '', $memberships = null) {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -634,7 +548,7 @@ function sp_LoggedInOutLabel($args = '', $inLabel = '', $outLabel = '', $outLabe
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -727,7 +641,7 @@ function sp_LogInOutButton($args = '', $inLabel = '', $outLabel = '', $toolTip =
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -825,7 +739,7 @@ function sp_LoginForm($args = '') {
 	if ($a['echo']) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -891,7 +805,7 @@ function sp_RegisterButton($args = '', $label = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -948,7 +862,7 @@ function sp_ProfileEditButton($args = '', $label = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1004,7 +918,7 @@ function sp_MemberButton($args = '', $label = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1048,7 +962,7 @@ function sp_LastVisitLabel($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1121,7 +1035,7 @@ function sp_QuickLinksForum($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1166,7 +1080,7 @@ function sp_QuickLinksTopic($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1302,7 +1216,7 @@ function sp_QuickLinksForumMobile($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1391,7 +1305,7 @@ function sp_QuickLinksTopicMobile($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1658,7 +1572,7 @@ function sp_BreadCrumbsMobile($args = '', $forumLabel = '') {
 	if ($echo) {
         echo wp_kses(
             $breadCrumbs,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $breadCrumbs;
@@ -1718,7 +1632,7 @@ function sp_UserNotices($args = '', $label = '') {
 		if ($echo) {
             echo wp_kses(
                 $out,
-                SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+                SP_CORE_ALLOWED_TAGS
             );
 		} else {
 			return $out;
@@ -1857,7 +1771,7 @@ function sp_UnreadPostsInfo($args = '', $label = '', $unreadToolTip = '', $markT
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1942,7 +1856,7 @@ function sp_UnreadPostsLink($args = '', $label = '', $unreadToolTip = '', $popup
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1987,7 +1901,7 @@ function sp_MarkReadLink($args = '', $label = '', $markToolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2035,7 +1949,7 @@ function sp_MarkReadMobile($args = '', $label = '', $text = '') {
     
     echo wp_kses(
         $out,
-        SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+        SP_CORE_ALLOWED_TAGS
     );
 }
 
@@ -2083,7 +1997,7 @@ function sp_MarkForumReadMobile($args = '', $label = '', $text = '') {
 
     echo wp_kses(
         $out,
-        SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+        SP_CORE_ALLOWED_TAGS
     );
 }
 
@@ -2156,7 +2070,7 @@ function sp_MarkForumRead($args = '', $label = '', $markToolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2202,7 +2116,7 @@ function sp_MobileMenuSearch($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2252,7 +2166,7 @@ function sp_SearchToggleButton($args = '', $label = '',$toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2420,7 +2334,7 @@ function sp_SearchForm($args = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2465,7 +2379,7 @@ function sp_GoToTop($args = '', $label = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2511,7 +2425,7 @@ function sp_GoToBottom($args = '', $label = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2572,7 +2486,7 @@ function sp_AllRSSButton($args = '', $label = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2609,7 +2523,7 @@ function sp_ForumLockdown($args = '', $Message = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2724,7 +2638,7 @@ function sp_Acknowledgements($args = '', $label = '', $toolTip = '', $siteToolTi
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2768,7 +2682,7 @@ function sp_ForumTimeZone($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2813,7 +2727,7 @@ function sp_UserTimeZone($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -2941,7 +2855,7 @@ function sp_OnlineStats($args = '', $mostLabel = '', $currentLabel = '', $browsi
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3006,7 +2920,7 @@ function sp_DeviceStats($args = '', $statLabel = '', $phoneLabel = '', $tabletLa
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3066,7 +2980,7 @@ function sp_ForumStats($args = '', $titleLabel = '', $groupsLabel = '', $forumsL
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3127,7 +3041,7 @@ function sp_MembershipStats($args = '', $titleLabel = '', $membersLabel = '', $g
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3180,7 +3094,7 @@ function sp_TopPostersStats($args = '', $titleLabel = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3251,7 +3165,7 @@ function sp_NewMembers($args = '', $titleLabel = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3326,7 +3240,7 @@ function sp_ModsList($args = '', $titleLabel = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3398,7 +3312,7 @@ function sp_AdminsList($args = '', $titleLabel = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3471,7 +3385,7 @@ function sp_UserGroupList($args = '', $titleLabel = '', $userGroup = 0) {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3512,7 +3426,7 @@ function sp_Signature($args, $sig) {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3564,7 +3478,7 @@ function sp_OnlineStatus($args = '', $user = null, $userProfile = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3623,7 +3537,7 @@ function sp_AddButton($args = '', $label = '', $toolTip = '', $perm = '', $butto
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3754,7 +3668,7 @@ function sp_UniversalTitle($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -3799,7 +3713,7 @@ function sp_AddIcon($args = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -4080,6 +3994,6 @@ function populate_quicklinks_script() {
 
     echo wp_kses(
         $out,
-        SP_COMMON_VIEW_FUNCTIONS_ALLOWED_TAGS
+        SP_CORE_ALLOWED_TAGS
     );
 }
