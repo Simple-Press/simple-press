@@ -212,7 +212,7 @@ function sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail
 		$out.= sp_open_grid_cell();
 		$out.= '<div class="spForumToolsDelete">';
 		$ajaxUrl = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=delete-post&amp;killpost='.$post['post_id'].'&amp;killposttopic='.$post['topic_id'].'&amp;killpostforum='.$post['forum_id'].'&amp;killpostposter='.$post['user_id'].'&amp;page='.$page, 'spForumTools');
-		$out.= "<a class='spToolsDeletePost' data-url='$ajaxUrl', data-postid='{$post['post_id']}', data-topicid='{$post['topic_id']}'>";
+		$out.= "<a class='spToolsDeletePost' data-url='".$ajaxUrl."' data-postid='".$post['post_id']."' data-topicid='".$post['topic_id']."'>";
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsDelete.png').$br;
 		$out.= SP()->primitives->front_text('Delete this post').'</a>';
 		$out.= '</div>';
