@@ -119,20 +119,20 @@ function spa_toolbox_licensing_form_paint_instructions() {
  */
  
 function spa_toolbox_calculating_expiration_date($license_info){
-	
 	$total_days = -1;
-	$get_expiredate =  date_i18n('Y-m-d', strtotime($license_info->expires));
-	$warn_expiredate = date_i18n('Y-m-d', strtotime(' + 3 days'));
-	if($warn_expiredate >= $get_expiredate){
-		$expire_date = date_i18n('Y-m-d', strtotime($license_info->expires)); 
-		$today_date = date_i18n('Y-m-d');
-		$total_days =  round(($expire_date - $today_date)/(60 * 60 * 24));
+	$get_expiredate_timestamp = strtotime($license_info->expires);
+	$warn_expiredate_timestamp = strtotime('+3 days');
+	if($warn_expiredate_timestamp >= $get_expiredate_timestamp){
+		$expire_date_timestamp = strtotime($license_info->expires); 
+		$today_timestamp = strtotime('today');
+		$total_days = round(($expire_date_timestamp - $today_timestamp) / (60 * 60 * 24));
 		if($total_days < 0){
-			$total_days = 0;		
+			$total_days = 0;
 		}
 	}
 	return $total_days;
 }
+
 
 
 /*
