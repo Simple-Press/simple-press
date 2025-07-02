@@ -26,10 +26,8 @@ $adminhelpfile = 'admin-toolbox';
 
 # ----------------------------------
 # Check Whether User Can Manage Options
-if (!SP()->auths->current_user_can('SPF Manage Toolbox')) die();
-
-if ( ! isset($_POST['nonce']) || ! wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'license-check') ) {
-    die('Could not validate nonce');
+if (!SP()->auths->current_user_can('SPF Manage Toolbox')) {
+    die();
 }
 
 $sp_action = isset( $_POST['sp_action'] ) ? sanitize_text_field($_POST['sp_action']) : '';
