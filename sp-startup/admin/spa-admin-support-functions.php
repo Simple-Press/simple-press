@@ -1314,7 +1314,7 @@ function spa_check_theme_addon_update(){
                                                 <img src='" . esc_url($screenshot) . "' width='64' height='64' style='float:left; padding: 5px' />
                                                 <strong>" . esc_html($theme_data['Name']) . "</strong>" .
                                                 esc_html(sprintf(
-                                                    SP()->primitives->admin_text('[License free update available] You have version %1\$s installed. Update to %2\$s. Requires SP Version %3\$s.'),
+                                                    SP()->primitives->admin_text('[License free update available] You have version %s installed. Update to %s. Requires SP Version %s.'),
                                                     esc_html($theme_data['Version']),
                                                     esc_html($latest->version),
                                                     esc_html(SPVERSION)
