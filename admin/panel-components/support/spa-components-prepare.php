@@ -200,10 +200,10 @@ function spa_paint_custom_smileys() {
 	$no =  '<span class="sf-icon sf-no-check" title="'.esc_attr(SP()->primitives->admin_text('Not in use')).'"></span>';
 
         echo '<div class="sf-alert-block sf-info">';
-	echo $yes . esc_html(SP()->primitives->admin_text('Smiley is in use'));
+	echo wp_kses_post($yes) . esc_html(SP()->primitives->admin_text('Smiley is in use'));
 	echo '</div>';
         echo '<div class="sf-alert-block sf-info">';
-	echo $no . esc_html(SP()->primitives->admin_text('Smiley is not in use'));
+	echo wp_kses_post($no) . esc_html(SP()->primitives->admin_text('Smiley is not in use'));
 	echo '</div>';
 
 	# start the table display
