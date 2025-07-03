@@ -31,7 +31,7 @@ function spa_plugins_user_form($admin, $save, $form, $reload) {
     	spa_paint_options_init();
         $ajaxURL = wp_nonce_url(SPAJAXURL.'plugins-loader&amp;saveform=plugin&amp;func='.$save, 'plugins-loader');
     	echo '<form action="'.esc_attr($ajaxURL).'" method="post" id="sfpluginsuser" name="sfpluginsuser">';
-        echo sp_create_nonce('forum-adminform_userplugin');
+        sp_echo_create_nonce('forum-adminform_userplugin');
     }
 
     call_user_func($admin);
