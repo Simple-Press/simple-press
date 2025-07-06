@@ -241,15 +241,7 @@ function spa_users_members_form() {
     <form id="members-filter" method="get" action="<?php echo esc_attr(SPADMINUSER); ?>">
         <?php echo wp_kses(
             sp_list_members(),
-            array(
-                'a' => array(
-                    'href' => array(),
-                ), 
-                'div' => array(
-                    'class' => array(),
-                    'style' => array()
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         ); ?>
     </form>
 
