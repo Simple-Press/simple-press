@@ -364,6 +364,12 @@ class spcTheme {
 
 		$src = '';
 
+        # This is to make sure that icons can be found
+        if (empty($this->images)) {
+			$curTheme = SP()->core->forumData['theme'];
+            $this->set_image_array($curTheme);
+        }
+
 		if ($this->images) {
 			foreach ($this->images as $spIcon) {
 				if (file_exists($spIcon['dir'].$file)) {
