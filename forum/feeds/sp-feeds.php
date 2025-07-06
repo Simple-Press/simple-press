@@ -27,7 +27,7 @@ if (isset($rssopt['sfrssfeedkey']) && $rssopt['sfrssfeedkey']) {
 
 # = Support Functions ===========================
 function sp_rss_filter($text) {
-	echo esc_html(convert_chars(ent2ncr($text)));
+        echo wp_kses_post(convert_chars(ent2ncr($text)));
 }
 
 function sp_rss_excerpt($text) {
