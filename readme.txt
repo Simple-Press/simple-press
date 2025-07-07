@@ -154,6 +154,10 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 
 == Latest Updates ==
 
+= 6.11.5 - July 2025 =
+* Fixed broken release notes not showing correctly for add-ons
+* Fixed issue with House Keeping forms not showing correctly
+
 = 6.11.4 - July 2025 =
 * Fixed broken member listing display
 * Fixed issue with theme icon sets not loding correctly
