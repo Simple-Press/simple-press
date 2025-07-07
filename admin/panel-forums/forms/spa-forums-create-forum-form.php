@@ -76,21 +76,7 @@ function spa_forums_create_forum_form() {
 					echo '<select class="spForumSetSequence" tabindex="'.esc_attr($tab).'" name="forum_id">';
                         echo wp_kses(
                             sp_render_group_forum_select(false, false, false, true),
-                            array(
-                                'select' => array(
-                                    'id' => array(),
-                                    'class' => array(),
-                                    'name' => array(),
-                                    'onchange' => array(),
-                                ),
-                                'option' => array(
-                                    'value' => array(),
-                                ),
-                                'optgroup' => array(
-                                    'class' => array(),
-                                    'label' => array(),
-                                ),
-                            )
+                            SP_CORE_ALLOWED_TAGS
                         ) ;
 					echo "</select>\n";
 					echo '<div class="clearboth"></div>';
