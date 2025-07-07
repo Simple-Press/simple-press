@@ -270,7 +270,7 @@ if(isset($_POST['changelog_link'])){
 	
 	if($changelog_link != ''){
     
-		$message =  '<div class="sfhelptext"><xfiframe src="'.esc_attr($changelog_link).'" height="700" width="100%"></xfiframe><div class="sfhelptextlogo"><img src="'.esc_attr(SPCOMMONIMAGES).'sp-mini-logo.png" alt="" title="" /></div></div>';
+		$message =  '<div class="sfhelptext"><iframe src="'.esc_attr($changelog_link).'" height="700" width="100%"></iframe><div class="sfhelptextlogo"><img src="'.esc_attr(SPCOMMONIMAGES).'sp-mini-logo.png" alt="" title="" /></div></div>';
 		
 		$result = array('message'=>$message);
 		
