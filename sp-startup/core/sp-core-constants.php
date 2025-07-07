@@ -305,6 +305,7 @@ define(
                 'id' => array(),
                 'title' => array(),
                 'value' => array(),
+                'label' => array(),
             ),
             'option' => array(
                 'class' => array(),
