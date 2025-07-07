@@ -221,6 +221,8 @@ define(
                 'data-width' => array(),
                 'onclick' => array(),
             ),
+            'b' => array(),
+            'br' => array(),
             'button' => array(
                 'data-msg' => array(),
                 'tabindex' => array(),
@@ -316,6 +318,7 @@ define(
                 'id' => array(),
                 'name' => array(),
                 'tabindex' => array(),
+                'onchange' => array(),
             ),
             'span' => array(
                 'data-targetid' => array(),
@@ -329,13 +332,26 @@ define(
                 'data-label' => array(),
                 'data-linkclass' => array(),
             ),
+            'strong' => array(),
             'style' => array(),
+            'table' => array(
+                'style' => array()
+            ),
+            'tr' => array(),
+            'th' => array(),
+            'td' => array(
+                'class' => array(),
+                'colspan' => array(),
+                'style' => array(),
+            ),
+
             'textarea' => array(
                 'class' => array(),
                 'cols' => array(),
                 'id' => array(),
                 'name' => array(),
                 'rows' => array(),
+                'style' => array(),
                 'tabindex' => array(),
             ),
         )

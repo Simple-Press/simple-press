@@ -65,31 +65,5 @@ $out.= "</form></div>\n";
 
 echo wp_kses(
     apply_filters('sph_jump_page', $out),
-    [
-        'div' => [
-            'class' => [],
-            'id' => [],
-        ],
-        'form' => [
-            'class' => [],
-            'action' => [],
-            'method' => [],
-            'id' => [],
-            'name' => [],
-        ],
-        'input' => [
-            'type' => [],
-            'id' => [],
-            'name' => [],
-            'value' => [],
-        ],
-        'label' => [
-            'class' => [],
-            'type' => [],
-            'size' => [],
-            'id' => [],
-            'name' => [],
-            'value' => [],
-        ],
-    ]
+    SP_CORE_ALLOWED_TAGS
 );

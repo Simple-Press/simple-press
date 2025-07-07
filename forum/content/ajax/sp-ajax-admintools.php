@@ -10,82 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die('Access denied - you cannot directly call this file');
 }
 
-define('AJAX_ADMINTOOLS_ALLOWED_TAGS', array(
-    'div' => array(
-        'id'=>array(),
-        'class'=>array(),
-        'style'=>array()
-    ),
-    'form' => array(
-        'class'=>array(),
-        'action'=>array(),
-        'method'=>array(),
-        'name'=>array(),
-        'id'=>array()
-    ),
-    'input' => array(
-        'type'=>array(),
-        'name'=>array(),
-        'value'=>array(),
-        'class'=>array(),
-        'id'=>array(),
-        'size'=>array(),
-        'checked'=>array(),
-        'style'=>array()
-    ),
-    'label' => array(
-        'for'=>array(),
-        'class'=>array(),
-        'id'=>array()
-    ),
-    'textarea' => array(
-        'style'=>array(),
-        'class'=>array(),
-        'name'=>array(),
-        'rows'=>array(),
-        'id'=>array()
-    ),
-    'select' => array(
-        'id'      => true,
-        'class'   => true,
-        'name'    => true,
-        'onchange'=> true,
-    ),
-    'optgroup' => array(
-        'class' => true,
-        'label' => true,
-    ),
-    'option' => array(
-        'value' => true,
-        'selected' => true,
-    ),
-    'fieldset' => array(
-        'class'=>array()
-    ),
-    'legend' => array(),
-    'table' => array(
-        'class'=>array()
-    ),
-    'tr' => array(),
-    'td' => array(
-        'class'=>array(),
-        'colspan'=>array(),
-        'style'=>array()
-    ),
-    'span' => array(
-        'class'=>array(),
-        'id'=>array()
-    ),
-    'p' => array(
-        'class'=>array(),
-        'id'=>array(),
-        'style'=>array()
-    ),
-    'br'=>array(),
-));
-
-
-
 sp_forum_ajax_support();
 
 if (!sp_nonce('spForumTools')) {
@@ -160,7 +84,7 @@ function sp_edit_title_popup() {
     $out.= "<input type='hidden' name='sp_edit_title' value='".esc_attr($nonce)."' />";
 	$out.= '<input type="hidden" name="tid" value="'.$thistopic->topic_id.'" />';
     $out.= '<div class="spCenter">';
-	$out.= "<div class='$titleClass'>".SP()->primitives->front_text('Topic Titleoo').':</div>';
+	$out.= "<div class='$titleClass'>".SP()->primitives->front_text('Topic Title').':</div>';
 	$out.= "<div><textarea class='$controlClass' name='topicname' rows='2'>".esc_textarea($thistopic->topic_name).'</textarea></div>';
 
 	$s = (SP()->user->thisUser->admin) ? '' : " style='display:none;'";
@@ -176,7 +100,7 @@ function sp_edit_title_popup() {
     $out .= '</div>';
 	$out .= '</form>';
 	$out .= '</div>';
-    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
+    echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 }
 
 function sp_move_topic_popup() {
@@ -229,7 +153,7 @@ function sp_move_topic_popup() {
 	$out .= "<input type='submit' class='$buttonClass' name='maketopicmove' value='".SP()->primitives->front_text('Move Topic to Selected Forum')."' />";
 	$out .= '</div></form></div>';
 
-	echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
+	echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 }
 
 function sp_reassign_post_popup() {
@@ -283,7 +207,7 @@ function sp_reassign_post_popup() {
 	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
 	$out.= '</div></form></div>';
 
-    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
+    echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 }
 
 function sp_show_properties() {
@@ -392,7 +316,7 @@ function sp_show_properties() {
 	}
 
 	$out.= "</table></div>";
-    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
+    echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 }
 
 # Support functions for the properties tool
@@ -587,7 +511,7 @@ function sp_move_post_popup() {
 	$out.= "<input type='submit' class='$buttonClass' name='makepostmove2' value='".SP()->primitives->front_text('Move')."' />";
 	$out.= "</div></form></div>";
 
-    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
+    echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 }
 
 function sp_notify_user() {
@@ -653,7 +577,7 @@ function sp_notify_user() {
 	$out.= "<input type='submit' class='$buttonClass' name='notifyuser' value='".SP()->primitives->front_text('Notify')."' />";
 	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
 	$out.= "</div></form></div>";
-    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
+    echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 }
 
 function sp_search_user() {
@@ -749,7 +673,7 @@ function sp_order_topic_pins() {
 	$out.= "<input type='submit' class='$buttonClass' name='ordertopicpins' value='".SP()->primitives->front_text('Save Pin Order Changes')."' />";
 	$out.= "<input type='button' class='$buttonClass spCancelScript' name='cancel' value='".SP()->primitives->front_text('Cancel')."' />";
 	$out.= "</div></form></div>";
-    echo wp_kses($out, AJAX_ADMINTOOLS_ALLOWED_TAGS);
+    echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 }
 
 function sp_post_delete() {

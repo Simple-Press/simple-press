@@ -66,21 +66,8 @@ function sp_ListForumName($args = '', $toolTip = '', $label = '') {
 	}
 	$out = apply_filters('sph_ListForumName', $out, $a);
 
-    $allowed_html = array(
-        'p' => array(
-            'id' => true,
-            'class' => true,
-        ),
-        'a' => array(
-            'href' => true,
-            'id' => true,
-            'class' => true,
-            'title' => true,
-        ),
-    );
-
     if ($echo) {
-        echo wp_kses($out, $allowed_html);
+        echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
     } else {
         return $out;
     }
@@ -129,23 +116,8 @@ function sp_ListNewPostButton($args = '', $label = '', $toolTip = '') {
 
 	$out = apply_filters('sph_ListNewPostButton', $out, $a);
 
-    $allowed_html = array(
-        'a' => array(
-            'class' => array(),
-            'id'    => array(),
-            'title' => array(),
-            'href'  => array(),
-        ),
-        'span' => array(
-            'class' => array(),
-        ),
-        // add other allowed tags if your output includes more
-    );
-
-
-
     if ($echo) {
-        echo wp_kses($out, $allowed_html);
+        echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
     } else {
         return $out;
     }
@@ -225,18 +197,7 @@ function sp_ListTopicIcon($args = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            [ 
-                'img' => [
-                    'class' => [],
-                    'src' => [],
-                    'alt' => [],
-                    'title' => [],
-                ],
-                'span' => [
-                    'class' => [],
-                    'title' => [],
-                ]
-            ]
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -284,18 +245,7 @@ function sp_ListTopicName($args = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => true,
-                    'class' => true,
-                ),
-                'a' => array(
-                    'href' => true,
-                    'id' => true,
-                    'class' => true,
-                    'title' => true,
-                ),
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -410,23 +360,7 @@ function sp_ListLastPost($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'span' => array(
-                    'id' => true,
-                    'class' => true,
-                ),
-                'div' => array(
-                    'id' => true,
-                    'class' => true,
-                ),
-                'a' => array(
-                    'href' => true,
-                    'id' => true,
-                    'class' => true,
-                    'title' => true,
-                ),
-                'br' => array(),
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -542,23 +476,7 @@ function sp_ListFirstPost($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'span' => array(
-                    'id' => true,
-                    'class' => true,
-                ),
-                'div' => array(
-                    'id' => true,
-                    'class' => true,
-                ),
-                'a' => array(
-                    'href' => true,
-                    'id' => true,
-                    'class' => true,
-                    'title' => true,
-                ),
-                'br' => array(),
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -618,12 +536,7 @@ function sp_NoTopicsInListMessage($args = '', $definedMessage = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => true,
-                    'class' => true,
-                ),
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;

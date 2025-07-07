@@ -44,13 +44,7 @@ foreach ($authlist as $a) {
     $desc = SP()->primitives->admin_text(SP()->core->forumData['auths'][$auth_id]->auth_desc);
     echo wp_kses(
         $icon . '&nbsp;' . $desc,
-        array(
-            'img' => array('src' => array(), 'alt' => array(), 'class' => array(), 'style' => array(), 'title' => array()),
-            'span' => array('class' => array(), 'title' => array()),
-            'b' => array(),
-            'i' => array(),
-            'br' => array()
-        )
+        SP_CORE_ALLOWED_TAGS
     );
 	echo '</div>';
 
