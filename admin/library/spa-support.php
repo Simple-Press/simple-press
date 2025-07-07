@@ -818,7 +818,7 @@ function spa_print_pagination( $link_args, $countPages, $currentPageNum, $pagina
 					
 				<?php
 				$a_url = wp_nonce_url( str_replace( '{page_num}', '1', $url ), $nonce_action );
-				$href = $load_type === 'ajax' ? 'javascript:void(0);' : $a_url;
+				$href = $load_type === 'ajax' ? '#' : $a_url;
 				
 				?>
                 <a class="sf-first-page <?php echo esc_attr($anchor_ajax_class); ?>" 
@@ -829,7 +829,7 @@ function spa_print_pagination( $link_args, $countPages, $currentPageNum, $pagina
                    <?php foreach ( $pagination as $n => $v ): 
 					   
 						$a_url = wp_nonce_url( str_replace( '{page_num}', $n, $url ), $nonce_action );
-						$href = $load_type === 'ajax' ? 'javascript:void(0);' : $a_url;
+						$href = $load_type === 'ajax' ? '#' : $a_url;
 					   ?>
                        <a class="<?php echo esc_attr($anchor_ajax_class . ($currentPageNum == $n ? ' sf-current-page' : '')); ?>" 
                           <?php echo esc_attr(implode( ' ', $anchor_tag_attrs )); ?>
@@ -839,7 +839,7 @@ function spa_print_pagination( $link_args, $countPages, $currentPageNum, $pagina
                    <?php endforeach;
 				   
 					$a_url = wp_nonce_url( str_replace( '{page_num}', $countPages, $url ), $nonce_action );
-					$href = $load_type === 'ajax' ? 'javascript:void(0);' : $a_url;
+					$href = $load_type === 'ajax' ? '#' : $a_url;
 				   
 				   ?>
                 <a class="sf-last-page <?php echo esc_attr($anchor_ajax_class); ?>" 

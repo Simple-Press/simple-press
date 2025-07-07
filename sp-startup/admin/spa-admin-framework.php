@@ -404,7 +404,7 @@ function spa_render_sidemenu() {
                                 $save = (!empty($data['save']) ? $data['save'] : '');
                                 $form = (!empty($data['form']) ? $data['form'] : '');
 
-                                $html .= '<a' . esc_attr($id) . ' href="javascript:void(0);" class="spAccordionLoadForm" data-form="' . esc_attr($form_id) . '" data-url="' . esc_attr($base) . '" data-target="' . esc_attr($target) . '" data-img="' . esc_attr($image) . '" data-id="" data-open="open" data-upgrade="' . esc_attr($upgrade) . '" data-admin="' . esc_attr($admin) . '" data-save="' . esc_attr($save) . '" data-sform="' . esc_attr($form) . '" data-reload="' . esc_attr($reload) . '">' . esc_html($label) . '</a>';
+                                $html .= '<a' . esc_attr($id) . ' href="#" class="spAccordionLoadForm" data-form="' . esc_attr($form_id) . '" data-url="' . esc_attr($base) . '" data-target="' . esc_attr($target) . '" data-img="' . esc_attr($image) . '" data-id="" data-open="open" data-upgrade="' . esc_attr($upgrade) . '" data-admin="' . esc_attr($admin) . '" data-save="' . esc_attr($save) . '" data-sform="' . esc_attr($form) . '" data-reload="' . esc_attr($reload) . '">' . esc_html($label) . '</a>';
                             }
                             $html .=  '</div>'."\n";
                         }

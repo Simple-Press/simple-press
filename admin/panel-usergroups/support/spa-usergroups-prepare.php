@@ -111,17 +111,17 @@ function spa_members_not_belonging_to_any_usergroup($pageNum = 1, $filter = '', 
     <?php if ($pagination): ?>
         <div class="sf-pagination">
             <span class="sf-pagination-links">
-                <a class="sf-first-page spLoadAjax" href="javascript:void(0);"
+                <a class="sf-first-page spLoadAjax" href="#"
                    data-target=".sf-not-belonging-to-any-usergroup"
                    data-url="<?php echo esc_url( wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1&amp;page=1&amp;filter=" . urlencode($filter), 'usergroups') ); ?>"
                    ></a>
                    <?php foreach ($pagination as $n => $v): ?>
-                    <a class="spLoadAjax<?php echo ($pageNum == $n) ? ' sf-current-page' : '' ?>" href="javascript:void(0);"
+                    <a class="spLoadAjax<?php echo ($pageNum == $n) ? ' sf-current-page' : '' ?>" href="#"
                        data-target=".sf-not-belonging-to-any-usergroup"
                        data-url="<?php echo esc_url( wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1&amp;page=" . intval($n) . "&amp;filter=" . urlencode($filter), 'usergroups') ); ?>"
                        ><?php echo esc_html($v) ?></a>
                    <?php endforeach ?>
-                <a class="sf-last-page spLoadAjax" href="javascript:void(0);"
+                <a class="sf-last-page spLoadAjax" href="#"
                    data-target=".sf-not-belonging-to-any-usergroup"
                    data-url="<?php echo esc_url( wp_nonce_url(SPAJAXURL . "usergroups&amp;ug_no=1&amp;page=" . intval($countPages) . "&amp;filter=" . urlencode($filter), 'usergroups') ); ?>"
                    ></a>

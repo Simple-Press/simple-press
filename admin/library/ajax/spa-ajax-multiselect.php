@@ -300,7 +300,7 @@ function spa_msbox_pagination($msbox, $uid, $name, $from, $num, $offset, $max, $
 }
 
 function create_pagination_link($offset, $text, $msbox, $uid, $name, $from, $num, $max, $filter, $ug, $class = '') {
-    return '<a class="sf-first-page spUpdateList' . $class . '" href="javascript:void(0)"'
+    return '<a class="sf-first-page spUpdateList' . $class . '" href="#"'
         . ' data-uid="' . $name . $uid . '"'
         . ' data-url="' . wp_nonce_url(SPAJAXURL . "multiselect&amp;page_msbox=next&amp;msbox=$msbox&amp;uid=$uid&amp;name=$name&amp;from=" . urlencode($from) . "&amp;num=$num&amp;offset=$offset&amp;max=$max&amp;filter=$filter&amp;ug=$ug", 'multiselect') . '"'
         . '>' . esc_html($text) . '</a>';
