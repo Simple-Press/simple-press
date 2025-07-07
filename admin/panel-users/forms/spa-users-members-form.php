@@ -104,16 +104,7 @@ function sp_list_members() {
     ob_start();
     echo wp_kses(
         $nav_output,
-        [
-            'div' => [
-                'class' => true,
-                'style' => true
-            ],
-            'a' => [
-                'class' => true,
-                'href' => true
-            ]
-        ]
+        SP_CORE_ALLOWED_TAGS
     );
     ?>
     <table class="widefat striped">
@@ -221,7 +212,12 @@ function sp_list_members() {
             return $link;
         }, $pagination );
     
-        echo '<div class="sf-pagination sf-mt-15"><span class="sf-pagination-links">' . esc_html(implode( '', $processed_pagination )) . '</span></div>';
+        echo '<div class="sf-pagination sf-mt-15"><span class="sf-pagination-links">';
+            echo wp_kses(
+                implode( '', $processed_pagination ),
+                SP_CORE_ALLOWED_TAGS
+            );
+       echo '</span></div>';
     }
 
     return ob_get_clean();
