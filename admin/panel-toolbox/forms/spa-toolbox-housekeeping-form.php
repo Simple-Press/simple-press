@@ -37,7 +37,10 @@ function spa_toolbox_housekeeping_form() {
 
 				<?php sp_echo_create_nonce( 'forum-adminform_housekeeping' ); ?>
                         <select class="wp-core-ui sp-input-60" name="forum_id">
-							<?php echo wp_kses_post( sp_render_group_forum_select( false, false, false, true, '', '', 'wp-core-ui', 20 ) ); ?>
+    <?php echo wp_kses(
+        sp_render_group_forum_select( false, false, false, true, '', '', 'wp-core-ui', 20 ) ,
+        SP_CORE_ALLOWED_TAGS
+    ); ?>
                         </select>
 				<?php
 				echo '<span class="sf-sublabel sf-sublabel-small">' . esc_html( SP()->primitives->admin_text( 'Rebuilding the forum indexes may take some time if you have a large number of topics or posts.' ) ) . '</span>';
