@@ -987,7 +987,13 @@ function sph_check_addons_status(){
 		foreach ($plugins as $plugin_file => $plugin_data) {
 				
 			if(isset($plugin_data['ItemId']) && $plugin_data['ItemId'] != ''){
-				
+
+                # Only check active plugins, since the check might time-out
+                $is_active = SP()->plugin->is_active( $plugin_file );
+                if (!$is_active) {
+                    continue;
+                }
+
 				$sp_plugin_updater = sp_plugin_updater_object($plugin_file, $plugin_data);
 			
 				$update_status_option 	= 'spl_plugin_stats_'.$plugin_data['ItemId'];
