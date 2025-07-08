@@ -577,7 +577,7 @@ class spcDisplayFilters {
 	}
 
 	public function oEmbed($content) {
-		$content = preg_replace_callback('#(?<!=\')(?<!=")(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+\#]*[\w\-\@?^=%&amp;/~\+\#])?#i', array($this, 'check_oEmbed'), $content);
+		$content = preg_replace_callback('#(?:\[(\w+)\s+)?((https?|ftp):\/\/[^\s\]<>\'"]+)\]?#i', array($this, 'check_oEmbed'), $content);
 
 		return $content;
 	}
@@ -591,7 +591,7 @@ class spcDisplayFilters {
 
 		require_once ABSPATH.WPINC.'/class-oembed.php';
 
-		$url    = $match[0];
+        $url = $match[2] ?? $match[0];
 		$oembed = _wp_oembed_get_object();
 		foreach ($oembed->providers as $provider => $data) {
 			list($providerurl, $regex) = $data;
