@@ -592,6 +592,16 @@ class spcDisplayFilters {
 		require_once ABSPATH.WPINC.'/class-oembed.php';
 
         $url = $match[2] ?? $match[0];
+
+        // Fix to allow for badly formatted YouTube urls with two `?` questionmarks in the url
+        $qmarkPos = strpos($url, '?');
+        if ($qmarkPos !== false) {
+            $secondQmarkPos = strpos($url, '?', $qmarkPos + 1);
+            if ($secondQmarkPos !== false) {
+                $url = substr_replace($url, '&', $secondQmarkPos, 1);
+            }
+        }
+
 		$oembed = _wp_oembed_get_object();
 		foreach ($oembed->providers as $provider => $data) {
 			list($providerurl, $regex) = $data;
@@ -604,9 +614,10 @@ class spcDisplayFilters {
 				$embedUrl = wp_oembed_get($url, array('discover' => false));
 				if (empty($embedUrl)) {
 					return $url;
-				} else {
-					return $embedUrl;
-				}
+                }
+
+                // Use embedUrl
+                return $embedUrl;
 			}
 		}
 
