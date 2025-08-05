@@ -13,27 +13,27 @@
  */
 class spcPrimitives {
 	public function admin_text($text) {
-		return wp_kses_post(__($text, 'simplepress')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+		return wp_kses_post(__($text, 'spa')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function admin_etext($text) {
-		echo wp_kses_post(__($text, 'simplepress')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+		echo wp_kses_post(__($text, 'spa')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function admin_text_noesc($text) {
-		return __($text, 'simplepress'); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+		return __($text, 'spa'); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function front_text($text) {
-		return wp_kses_post(__($text, 'simplepress')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+		return wp_kses_post(__($text, 'sp')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function front_etext($text) {
-		echo wp_kses_post(__($text, 'simplepress')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+		echo wp_kses_post(__($text, 'sp')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function front_text_noesc($text) {
-		return __($text, 'simplepress'); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+		return __($text, 'sp'); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	}
 
 	public function is_groupview() {

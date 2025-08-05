@@ -135,31 +135,19 @@ function sp_localisation() {
     );
 
 
-    if (
-        SP()->primitives->strpos_array(array_key_exists('QUERY_STRING', $_SERVER) ? $_SERVER['QUERY_STRING'] : '', $bothSpecial) !== false || wp_doing_ajax()) {
-        # Todo: this needs to be addressed somehow. Previously we had two textdomains `sp` and `spa`
-        # now we only have `simplepress` and thus we need to handle this. BUT there is no simple
-        # way to merge two .mo files at the moment and we need to address this somehow in future
-        # releases.
-
-        # Admin
-		#$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
-		#load_textdomain('simplepress', $mofile);
-
-        # Load only frontend
+	if (SP()->primitives->strpos_array($_SERVER['QUERY_STRING'], $bothSpecial) !== false || wp_doing_ajax()) {
+		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
+		load_textdomain('spa', $mofile);
 		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/sp-'.$locale.'.mo';
 		$mofile = apply_filters('sph_localization_mo', $mofile);
 		load_textdomain('sp', $mofile);
-	} else if (is_admin() || SP()->primitives->strpos_array(array_key_exists('QUERY_STRING', $_SERVER) ? $_SERVER['QUERY_STRING'] : '', $adminSpecial) !== false) {
-        # Only load backend
-        
+	} else if (is_admin() || SP()->primitives->strpos_array($_SERVER['QUERY_STRING'], $adminSpecial) !== false) {
 		$mofile = SP_STORE_DIR.'/'.empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
-		load_textdomain('simplepress', $mofile);
+		load_textdomain('spa', $mofile);
 	} else {
-        # Only load frontend
 		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/sp-'.$locale.'.mo';
 		$mofile = apply_filters('sph_localization_mo', $mofile);
-		load_textdomain('simplepress', $mofile);
+		load_textdomain('sp', $mofile);
 	}
 }
 
