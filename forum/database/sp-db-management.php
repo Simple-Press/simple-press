@@ -368,6 +368,15 @@ function sp_move_post() {
 	$oldforumid = SP()->filters->integer($_POST['oldforumid']);
 	$action     = SP()->filters->str($_POST['moveop']);
 
+    # Validate nonce
+    if (
+        ( isset($_POST['makepostmove3']) || isset($_POST['makepostmove1']) ) &&
+        !wp_verify_nonce($_POST['sp_move_post_nonce'], 'sp_move_post')
+    ) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to reassign post, could not validate nonce'));
+        return;
+    }
+
 	# determine op type - new or exsiting topic
 	if (isset($_POST['makepostmove1']) || isset($_POST['makepostmove3'])) {
 		# make sure forum was selected
@@ -542,6 +551,7 @@ function sp_move_post_notice($m, $a) {
 			$m .= '<input type="hidden" name="moveop" value="'.$p['moveop'].'" />';
 			$m .= '<input type="hidden" name="forumid" value="'.SP()->rewrites->pageData['forumid'].'" />';
 			$m .= '<input type="hidden" name="newtopicid" value="'.SP()->rewrites->pageData['topicid'].'" />';
+			$m .= '<input type="hidden" name="sp_move_post_nonce" value="'.wp_create_nonce('sp_move_post').'" />';
 			$m .= '<span>';
 			$m .= '<input type="submit" class="spSubmit" name="makepostmove3" value="'.SP()->primitives->front_text('Move').'" />';
 			$m .= '<input type="submit" class="spSubmit" name="cancelpostmove" value="'.SP()->primitives->front_text('Cancel').'" />';
@@ -562,7 +572,6 @@ function sp_reassign_post() {
 	if (!SP()->auths->get('reassign_posts', SP()->rewrites->pageData['forumid'])) {
         return;
     }
-
 
 	$postid    = SP()->filters->integer($_POST['postid']);
 	$olduserid = SP()->filters->integer($_POST['olduserid']);
@@ -635,7 +644,13 @@ function sp_update_opened($topicid) {
 function sp_delete_topic($topicid, $forumid, $show = true) {
 	if (empty($topicid) || empty($forumid)) return;
 
-	if (!SP()->auths->get('delete_topics', $forumid) && !SP()->auths->forum_admin(SP()->user->thisUser->ID) && !SP()->auths->get('delete_own_posts', $forumid)) return;
+    if (
+        !SP()->auths->get('delete_topics', $forumid) 
+            && !SP()->auths->forum_admin(SP()->user->thisUser->ID) 
+            && !SP()->auths->get('delete_own_posts', $forumid)
+    ) {
+        return;
+    }
 
 	# Load topic record for later index rebuild
 	$row = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
