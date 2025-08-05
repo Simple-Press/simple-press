@@ -6,7 +6,7 @@ Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 6.11.5
+Stable tag: 6.11.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,10 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 19. The front-end admin options for a post
 
 == Latest Updates ==
+
+= 6.11.6 - August 2025 =
+* Fixed missing nonce on admin tools
+* Fixed issue with some YouTube urls that were not embeded correctly 
 
 = 6.11.5 - July 2025 =
 * Fixed broken release notes not showing correctly for add-ons
