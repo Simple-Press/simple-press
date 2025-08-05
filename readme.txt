@@ -155,6 +155,7 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 == Latest Updates ==
 
 = 6.11.6 - August 2025 =
+* Fixed issue with translations not loaded
 * Fixed missing nonce on admin tools
 * Fixed issue with some YouTube urls that were not embeded correctly 
 
