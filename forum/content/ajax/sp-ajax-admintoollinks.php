@@ -17,12 +17,17 @@ if (!sp_nonce('spForumToolsMenu')) {
 }
 
 $fid = '';
+
 if (isset($_GET['forum'])) $fid = SP()->filters->integer($_GET['forum']);
 
 # get out of here if no action specified
-if (empty($_GET['targetaction'])) die();
+if (empty($_GET['targetaction'])) {
+    die();
+}
+
 $action = SP()->filters->str($_GET['targetaction']);
 
+// Topic tools
 if ($action == 'topictools') {
 	# admins topic tool set
 	$tid = SP()->filters->integer($_GET['topic']);
@@ -44,6 +49,7 @@ if ($action == 'topictools') {
 	die();
 }
 
+// Post tools
 if ($action == 'posttools') {
 	# admins post tool set
 	$postid = SP()->filters->integer($_GET['post']);
@@ -112,10 +118,10 @@ function sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail
 	$out = '';
 
 	if (($post['post_status'] == 0) && SP()->auths->get('moderate_posts', $forum['forum_id'])) {
-        $nonce = wp_create_nonce('sp_unapprove_post_' . $forum['forum_id']);
+        $nonce = wp_create_nonce('sp_unapprove_post_' . $post['post_id']);
 		$out.= sp_open_grid_cell();
 		$out.= '<div class="spForumToolsModerate">';
-		$out.= '<a href="javascript:document.unapprovepost'.$post['post_id'].'.submit();">';
+		$out.= '<a onclick="event.preventDefault(); document.unapprovepost'.$post['post_id'].'.submit();">';
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsUnapprove.png').$br;
 		$out.= SP()->primitives->front_text('Unapprove this post').'</a>';
 		$out.= '<form action="'.SP()->spPermalinks->build_url($forum['forum_slug'], $topic['topic_slug'], $page, $post['post_id'], $post['post_index']).'" method="post" name="unapprovepost'.$post['post_id'].'">';
@@ -155,9 +161,10 @@ function sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail
 
 	if (SP()->auths->get('pin_posts', $forum['forum_id'])) {
 		$pintext = ($post['post_pinned']) ? SP()->primitives->front_text('Unpin this post') : SP()->primitives->front_text('Pin this post');
+        $sp_pin_post_nonce = wp_create_nonce('sp_pin_post_' . $post['post_id']);
 		$out.= sp_open_grid_cell();
 		$out.= '<div class="spForumToolsPin">';
-		$ajaxUrl = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=pin-post&amp;post='.$post['post_id'].'&amp;forum='.$forum['forum_id'], 'spForumTools');
+		$ajaxUrl = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=pin-post&amp;post='.$post['post_id'].'&amp;forum='.$forum['forum_id']."&amp;sp_pin_post=".$sp_pin_post_nonce, 'spForumTools');
 		$out.= "<a class='spToolsPin' data-url='$ajaxUrl'>";
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsPin.png').$br;
 		$out.= $pintext.'</a>';
@@ -171,8 +178,9 @@ function sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail
 
 	if (SP()->user->thisUser->admin) {
 		$out.= sp_open_grid_cell();
+        $sp_sort_post_nonce = wp_create_nonce('sp_sort_topic_' . $topic['topic_id']);
 		$out.= '<div class="spForumToolsOrder">';
-		$site = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=sort-topic&amp;topicid='.$topic['topic_id'], 'spForumTools');
+		$site = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=sort-topic&amp;topicid='.$topic['topic_id'].'&amp;sp_sort_topic='.$sp_sort_post_nonce, 'spForumTools');
 		$out.= "<a class='spToolsPostSort' data-url='$site' data-target='spMainContainer'>";
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsSort.png').$br;
 		$out.= SP()->primitives->front_text('Reverse sort this topic').'</a>';
@@ -209,9 +217,10 @@ function sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail
 	$out = '';
 
 	if (SP()->auths->get('delete_any_post', $post['forum_id']) || SP()->auths->get('delete_own_posts', $forum['forum_id']) && SP()->user->thisUser->ID == $post['user_id']) {
+        $sp_delete_post_nonce = wp_create_nonce('sp_delete_post_' . $post['post_id']);
 		$out.= sp_open_grid_cell();
 		$out.= '<div class="spForumToolsDelete">';
-		$ajaxUrl = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=delete-post&amp;killpost='.$post['post_id'].'&amp;killposttopic='.$post['topic_id'].'&amp;killpostforum='.$post['forum_id'].'&amp;killpostposter='.$post['user_id'].'&amp;page='.$page, 'spForumTools');
+		$ajaxUrl = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=delete-post&amp;killpost='.$post['post_id'].'&amp;killposttopic='.$post['topic_id'].'&amp;killpostforum='.$post['forum_id'].'&amp;killpostposter='.$post['user_id'].'&amp;page='.$page.'&amp;sp_delete_post='.$sp_delete_post_nonce, 'spForumTools');
 		$out.= "<a class='spToolsDeletePost' data-url='".$ajaxUrl."' data-postid='".$post['post_id']."' data-topicid='".$post['topic_id']."'>";
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsDelete.png').$br;
 		$out.= SP()->primitives->front_text('Delete this post').'</a>';
@@ -280,10 +289,12 @@ function sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail
 	$out = '';
 
 	if (SP()->user->thisUser->admin || SP()->user->thisUser->moderator) {
+        $sp_properties_nonce = wp_create_nonce('sp_properties_' . $post['forum_id']);
 		$out.= sp_open_grid_cell();
 		$out.= '<div class="spForumToolsProperties">';
-		$site = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=properties&amp;forum='.$post['forum_id'].'&amp;topic='.$post['topic_id'].'&amp;post='.$post['post_id'], 'spForumTools');
-		$title = SP()->primitives->front_text('View properties');
+
+		$site = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=properties&amp;forum='.$post['forum_id'].'&amp;topic='.$post['topic_id'].'&amp;post='.$post['post_id'].'bbb&amp;sp_properties='.$sp_properties_nonce, 'spForumTools');
+		$title = SP()->primitives->front_text('View properities');
 		$out.= "<a rel='nofollow' class='spOpenDialog' data-site='$site' data-label='".esc_attr($title)."' data-width='400' data-height='0' data-align='center'>";
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsProperties.png').$br;
 		$out.= $title.'</a>';
@@ -371,9 +382,10 @@ function sp_render_common_tools($forum, $topic, $post=0, $page=0, $br='') {
 
 	if (SP()->auths->get('lock_topics', $forum['forum_id'])) {
 		$out.= sp_open_grid_cell();
+        $sp_lock_topic_nonce = wp_create_nonce('sp_lock_topic_' . $topic['topic_id']);
 		$out.= '<div class="spForumToolsLock">';
 		$locktext = ($topic['topic_status']) ? SP()->primitives->front_text('Unlock this topic') : SP()->primitives->front_text('Lock this topic');
-		$ajaxUrl = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=lock-topic&amp;topic='.$topic['topic_id'].'&amp;forum='.$forum['forum_id'], 'spForumTools');
+		$ajaxUrl = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=lock-topic&amp;topic='.$topic['topic_id'].'&amp;forum='.$forum['forum_id'].'&amp;sp_lock_topic='.$sp_lock_topic_nonce, 'spForumTools');
 		$out.= "<a class='spToolsLockTopic' data-url='$ajaxUrl'>";
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsLock.png').$br;
 		$out.= $locktext.'</a>';
@@ -387,9 +399,10 @@ function sp_render_common_tools($forum, $topic, $post=0, $page=0, $br='') {
 
 	if (SP()->auths->get('pin_topics', $forum['forum_id'])) {
 		$out.= sp_open_grid_cell();
+        $sp_pin_topic_nonce = wp_create_nonce('sp_pin_topic_' . $topic['topic_id']);
 		$out.= '<div class="spForumToolsPin">';
 		$pintext = ($topic['topic_pinned']) ? SP()->primitives->front_text('Unpin this topic') : SP()->primitives->front_text('Pin this topic');
-		$ajaxUrl = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=pin-topic&amp;topic='.$topic['topic_id'].'&amp;forum='.$forum['forum_id'], 'spForumTools');
+		$ajaxUrl = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=pin-topic&amp;topic='.$topic['topic_id'].'&amp;forum='.$forum['forum_id'].'&amp;sp_pin_topic='.$sp_pin_topic_nonce, 'spForumTools');
 		$out.= "<a class='spToolsPinTopic' data-url='$ajaxUrl'>";
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsPin.png').$br;
 		$out.= $pintext.'</a>';
@@ -438,8 +451,9 @@ function sp_render_common_tools($forum, $topic, $post=0, $page=0, $br='') {
 		$out.= sp_open_grid_cell();
 		$out.= '<div class="spForumToolsDelete">';
 		$view = (!empty($post)) ? 'topic' : 'forum';
-		$ajaxUrl = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=delete-topic&amp;killtopic='.$topic['topic_id'].'&amp;killtopicforum='.$forum['forum_id'].'&amp;page='.$page."&amp;view=$view", 'spForumTools');
-		$out.= "<a class='spToolsDeleteTopic' data-url='$ajaxUrl' data-topicid='{$topic['topic_id']}' data-forumid='{$forum['forum_id']}'>";
+        $sp_delete_topic_nonce = wp_create_nonce('sp_delete_topic_' . $forum['forum_id'] . $topic['topic_id']);
+        $ajaxUrl = wp_nonce_url(SPAJAXURL.'spForumTools&amp;targetaction=delete-topic&amp;killtopic='.$topic['topic_id'].'&amp;killtopicforum='.$forum['forum_id'].'&amp;page='.$page."&amp;view=$view&amp;sp_delete_topic=".$sp_delete_topic_nonce, 'spForumTools');
+        $out.= "<a class='spToolsDeleteTopic' data-url='$ajaxUrl' data-topicid='{$topic['topic_id']}' data-forumid='{$forum['forum_id']}'>";
 		$out.= SP()->theme->paint_icon('spIcon', SPTHEMEICONSURL, 'sp_ToolsDelete.png').$br;
 		$out.= SP()->primitives->front_text('Delete this topic').'</a>';
 		$out.= '</div>';

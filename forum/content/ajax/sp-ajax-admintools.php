@@ -134,9 +134,12 @@ function sp_move_topic_popup() {
 
 	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
 	$thisforum = SP()->DB->table(SPFORUMS, "forum_id=$forumid", 'row');
+
     if (empty($thistopic) || empty($thisforum)) die();
 
 	require_once SPBOOT.'core/sp-core-support-functions.php';
+
+    $nonce = wp_create_nonce('sp_move_topic_' . $forumid . $topicid);
 
 	$out = "<div id='spMainContainer' class='$tagClass'>";
 	$out .= "<div class='spForumToolsHeader'>";
@@ -144,6 +147,7 @@ function sp_move_topic_popup() {
 	$out .= "<div class='$highlightClass'>".SP()->displayFilters->title($thistopic->topic_name)."</div>";
 	$out .= '</div>';
 	$out .= "<form class='$formClass' action='".SP()->spPermalinks->build_url($thisforum->forum_slug, '', 1, 0)."' method='post' name='movetopicform'>";
+    $out .= "<input type='hidden' name='sp_move_topic' value='".esc_attr($nonce)."' />";
 	$out .= "<input type='hidden' name='currenttopicid' value='$topicid' />";
 	$out .= "<input type='hidden' name='currentforumid' value='$forumid' />";
 	$out .= "<div class='spCenter'>";
@@ -233,7 +237,15 @@ function sp_show_properties() {
 
     $forumid = absint($_GET['forum']);
     $topicid = absint($_GET['topic']);
+
     if (empty($forumid) || empty($topicid)) die();
+
+    # Validate nonce
+    if (!wp_verify_nonce($_GET['sp_properties'], 'sp_properties_' . $forumid)) {
+        die('Unable to validate properties nonce');
+        return;
+    }
+
 
 	$thistopic = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'row');
 
@@ -377,6 +389,13 @@ function sp_forum_sort_order() {
 
 function sp_topic_sort_order() {
 	$topicid = absint($_GET['topicid']);
+
+    # Validate nonce
+    if (!wp_verify_nonce($_GET['sp_sort_topic'], 'sp_sort_topic_' . $topicid)) {
+        die('Unable to validate sort nonce');
+        return;
+    }
+
 	if (!SP()->user->thisUser->admin) die();
 
     # make sure we have valid forum

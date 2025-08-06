@@ -296,12 +296,20 @@ function sp_move_topic() {
 	$currenttopicid = SP()->filters->integer($_POST['currenttopicid']);
 	$targetforumid  = SP()->filters->integer($_POST['forumid']);
 
-	if (!SP()->auths->get('move_topics', $targetforumid)) return;
+    if (!SP()->auths->get('move_topics', $targetforumid)) {
+        return;
+    }
+
+    if ( !wp_verify_nonce($_POST['sp_move_topic'], 'sp_move_topic_' . $currentforumid . $currenttopicid)) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to move topic, could not validate nonce'));
+        return;
+    }
 
 	# change topic record to new forum id
 	$sql = 'UPDATE '.SPTOPICS.' SET
 			forum_id = '.$targetforumid."
 			WHERE topic_id=$currenttopicid";
+
 	if (SP()->DB->execute($sql) == false) {
 		SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Topic move failed'));
 
@@ -373,7 +381,7 @@ function sp_move_post() {
         ( isset($_POST['makepostmove3']) || isset($_POST['makepostmove1']) ) &&
         !wp_verify_nonce($_POST['sp_move_post_nonce'], 'sp_move_post')
     ) {
-        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to reassign post, could not validate nonce'));
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to move post, could not validate nonce'));
         return;
     }
 
@@ -644,6 +652,13 @@ function sp_update_opened($topicid) {
 function sp_delete_topic($topicid, $forumid, $show = true) {
 	if (empty($topicid) || empty($forumid)) return;
 
+    # Validate nonce
+    if (!wp_verify_nonce($_GET['sp_delete_topic'], 'sp_delete_topic_' . $forumid . $topicid)) {
+        SP()->notifications->message(SPFAILURE, SP()->primitives->front_text('Unable to verify nonce, could not delete topic'));
+        return;
+    }
+
+
     if (
         !SP()->auths->get('delete_topics', $forumid) 
             && !SP()->auths->forum_admin(SP()->user->thisUser->ID) 
@@ -714,6 +729,12 @@ function sp_delete_post($postid, $topicid=0, $forumid=0, $show = true) {
 	# leaving $topicid and $forumid function arguments above though not used anymore for backwards compat in case function called by others
 
 	if (!$postid) return;
+    
+    # Validate nonce
+    if (!wp_verify_nonce($_GET['sp_delete_post'], 'sp_delete_post_' . $postid)) {
+        die('could not delete post');
+        return;
+    }
 
 	# grab info from database for the post id so we are sure we are using common info for checks in case someone dorked with the query
 	$target = SP()->DB->table(SPPOSTS, "post_id=$postid", 'row');
@@ -787,6 +808,13 @@ function sp_delete_post($postid, $topicid=0, $forumid=0, $show = true) {
 # ------------------------------------------------------------------
 function sp_lock_topic_toggle($topicid, $forumid = '') {
 	if (!$topicid) return;
+
+    # Validate nonce
+    if (!wp_verify_nonce($_GET['sp_lock_topic'], 'sp_lock_topic_' . $topicid)) {
+        die('nonce not valid');
+        return;
+    }
+
 	if (!SP()->auths->get('lock_topics', $forumid)) return;
 
 	$status = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'topic_status');
@@ -805,7 +833,16 @@ function sp_lock_topic_toggle($topicid, $forumid = '') {
 function sp_pin_topic_toggle($topicid, $forumid = '') {
 
 	if (!$topicid) return;
-	if (!SP()->auths->get('pin_topics', $forumid)) return;
+
+    # Validate nonce
+    if (!wp_verify_nonce($_GET['sp_pin_topic'], 'sp_pin_topic_' . $topicid)) {
+        die('nonce not valid');
+        return;
+    }
+
+    if (!SP()->auths->get('pin_topics', $forumid)) {
+        return;
+    }
 
 	$status = SP()->DB->table(SPTOPICS, "topic_id=$topicid", 'topic_pinned');
 	$status = ($status > 0) ? 0 : 1;
@@ -859,6 +896,13 @@ function sp_promote_pinned_topic() {
 function sp_pin_post_toggle($postid, $forumid = '') {
 
 	if (!$postid) return;
+
+    # Validate nonce
+    if (!wp_verify_nonce($_GET['sp_pin_post'], 'sp_pin_post_' . $postid)) {
+        die('nonce not valid');
+        return;
+    }
+
 	if (!SP()->auths->get('pin_posts', $forumid)) return;
 
 	$status = SP()->DB->table(SPPOSTS, "post_id=$postid", 'post_pinned');

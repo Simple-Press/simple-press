@@ -486,11 +486,16 @@
 				url: url + '&count=' + count,
 				cache: false,
 				success: function(html) {
-					$('#eachPost' + pid).slideUp(function() {
-						spj.displayNotification(0, sp_forum_vars.postdeleted);
-						if (html != '')
-							window.location = html;
-					});
+                    if (html == '') {
+                        $('#eachPost' + pid).slideUp(function() {
+                            spj.displayNotification(0, sp_forum_vars.postdeleted);
+                            if (html != '')
+                                window.location = html;
+                        });
+
+                        return;
+                    }
+                    spj.displayNotification(1, 'Could not delete post');
 				}
 			});
 		}
@@ -505,13 +510,17 @@
 				url: url + '&count=' + count,
 				cache: false,
 				success: function(html) {
+                    if (html == '') {
+                        $('#eachTopic' + tid).slideUp(function() {
+                            spj.displayNotification(0, sp_forum_vars.topicdeleted);
+                            var url = html != '' ? html : window.location.href;
+                            window.location.href = url;
+                            
+                        });
+                        return;
+                    }
 
-					$('#eachTopic' + tid).slideUp(function() {
-						spj.displayNotification(0, sp_forum_vars.topicdeleted);
-						var url = html != '' ? html : window.location.href;
-						window.location.href = url;
-						
-					});
+                    spj.displayNotification(1, 'Could not delete topic');
 				}
 			});
 		}
@@ -550,7 +559,12 @@
 			url: url,
 			cache: false,
 			success: function(html) {
-				spj.displayNotification(0, sp_forum_vars.pinpost);
+                if (html == '') {
+                    spj.displayNotification(0, sp_forum_vars.pinpost);
+                    return;
+                }
+
+                spj.displayNotification(1, 'Could not pin post');
 			}
 		});
 	};
@@ -561,7 +575,12 @@
 			url: url,
 			cache: false,
 			success: function(html) {
-				spj.displayNotification(0, sp_forum_vars.pintopic);
+                if (html == '') {
+                    spj.displayNotification(0, sp_forum_vars.pintopic);
+                    return;
+                }
+
+                spj.displayNotification(1, 'Could not pin topic');
 			}
 		});
 	};
@@ -572,7 +591,12 @@
 			url: url,
 			cache: false,
 			success: function(html) {
-				spj.displayNotification(0, sp_forum_vars.locktopic);
+                if (html == '') {
+                    spj.displayNotification(0, sp_forum_vars.locktopic);
+                    return;
+                }
+
+                spj.displayNotification(1, 'Could not lock topic');
 			}
 		});
 	};
