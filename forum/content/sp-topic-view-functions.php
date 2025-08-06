@@ -1442,30 +1442,7 @@ function sp_PostIndexEdit($args = '', $label = '', $toolTip = '') {
 	$out = apply_filters('sph_PostIndexEdit', $out, $a);
 
 	if ($echo) {
-        $allowed_html = [
-            'form' => [
-                'class' => [],
-                'action' => [],
-                'method' => [],
-                'name' => []
-            ],
-            'input' => [
-                'type' => [],
-                'name' => [],
-                'value' => [],
-            ],
-            'a' => [
-                'class' => [],
-                'id' => [],
-                'title' => [],
-                'rel' => [],
-                'href' => []
-            ]
-        ];
-
-        $allowed_protocols = array_merge( wp_allowed_protocols(), [ 'javascript' ] );
-
-		echo wp_kses($out, $allowed_html, $allowed_protocols);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
@@ -1585,21 +1562,8 @@ function sp_PostIndexContent($args = '', $label = '') {
 	$out .= "</div>";
 	$out = apply_filters('sph_PostIndexContent', $out, $a);
 
-    $allowed_tags = wp_kses_allowed_html('post');
-
-    $allowed_tags['iframe'] = array(
-        'title' => array(),
-        'width' => array(),
-        'height' => array(),
-        'src' => array(),
-        'frameborder' => array(),
-        'allow' => array(),
-        'referrerpolicy' => array(),
-        'allowfullscreen' => array(),
-    );
-
 	if ($echo) {
-		echo wp_kses($out, $allowed_tags);
+		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
 	} else {
 		return $out;
 	}
