@@ -1433,7 +1433,7 @@ function sp_PostIndexEdit($args = '', $label = '', $toolTip = '') {
 	if (SP()->forum->view->thisTopic->display_page > 1) $action = user_trailingslashit(trailingslashit($action).'page-'.SP()->forum->view->thisTopic->display_page);
 	$out = "<form class='spButtonForm' action='$action' method='post' name='usereditpost".SP()->forum->view->thisPost->post_id."'>";
 	$out .= "<input type='hidden' name='postedit' value='".SP()->forum->view->thisPost->post_id."' />";
-	$out .= "<a class='$tagClass' id='$tagId' title='$toolTip' rel='nofollow' href='javascript:document.usereditpost".SP()->forum->view->thisPost->post_id.".submit();'>";
+	$out .= "<a class='$tagClass' id='$tagId' title='$toolTip' rel='nofollow' onclick='event.preventDefault(); document.usereditpost".SP()->forum->view->thisPost->post_id.".submit();'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
 	$out .= "</a>";
