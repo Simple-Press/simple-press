@@ -141,23 +141,8 @@ function sp_SearchPageLinks($args = '', $label = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out, 
-            array(
-                "a" => array(
-                    "id" => array(),
-                    "class" => array(),
-                    "href" => array(),
-                    "title" => array(),
-                ),
-                "div" => array(
-                    "id" => array(),
-                    "class" => array(),
-                ),
-                "span" => array(
-                    "id" => array(),
-                    "class" => array(),
-                ),
-            )
-        );
+            SP_CORE_ALLOWED_TAGS
+        ) ;
 	} else {
 		return $out;
 	}
