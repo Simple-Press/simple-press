@@ -264,6 +264,7 @@ define(
                 'data-box' => array(),
                 'data-image' => array(),
                 'data-msg' => array(),
+                'data-target' => array(),
                 'data-type' => array(),
                 'data-val1' => array(),
                 'data-val2' => array(),
