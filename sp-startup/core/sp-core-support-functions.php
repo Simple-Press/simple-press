@@ -109,46 +109,9 @@ function sp_mobile_check() {
 function sp_localisation() {
 	$locale = get_locale();
 
-    $bothSpecial  = apply_filters(
-        'sph_load_both_textdomain',
-        array(
-            'action=permissions&',
-            'action=spAckPopup'
-        )
-    );
-
-    $adminSpecial = apply_filters(
-        'sph_load_admin_textdomain',
-        array(
-            '&loadform',
-            'action=forums&',
-            'action=components&',
-            'action=usergroups&',
-            'action=usermapping',
-            'action=memberships',
-            'action=integration-perm',
-            'action=integration-langs',
-            'action=profiles',
-            'action=help',
-            'action=multiselect'
-        )
-    );
-
-
-	if (SP()->primitives->strpos_array($_SERVER['QUERY_STRING'], $bothSpecial) !== false || wp_doing_ajax()) {
-		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
-		load_textdomain('spa', $mofile);
-		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/sp-'.$locale.'.mo';
-		$mofile = apply_filters('sph_localization_mo', $mofile);
-		load_textdomain('sp', $mofile);
-	} else if (is_admin() || SP()->primitives->strpos_array($_SERVER['QUERY_STRING'], $adminSpecial) !== false) {
-		$mofile = SP_STORE_DIR.'/'.empty(SP()->plugin->storage) ? '' : SP()->plugin->storage['language-sp'].'/spa-'.$locale.'.mo';
-		load_textdomain('spa', $mofile);
-	} else {
-		$mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/sp-'.$locale.'.mo';
-		$mofile = apply_filters('sph_localization_mo', $mofile);
-		load_textdomain('sp', $mofile);
-	}
+    $mofile = SP_STORE_DIR.'/'.SP()->plugin->storage['language-sp'].'/sp-'.$locale.'.mo';
+    $mofile = apply_filters('sph_localization_mo', $mofile);
+    load_textdomain('simplepress', $mofile);
 }
 
 /**

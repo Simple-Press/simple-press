@@ -13,7 +13,7 @@
  * Description: 		The most versatile and feature-rich forums plugin for WordPress
  * Author: 				The Simple:Press Forum Team
  * Author URI: 			https://simple-press.com/about
- * Text Domain: 		sp
+ * Text Domain: 		simplepress
  * License:				GPL-2.0+
  * License URI:			http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path:			/languages
