@@ -3596,7 +3596,7 @@ function sp_page_url($thisPage, $baseUrl, $iconType, $linkClass, $iconClass, $pr
 	$toolTip = str_ireplace('%PAGE%', $thisPage, $toolTip);
 
 	$out = "<a href='";
-	if (is_int($search)) { # normal forum search puts page number in search query arg
+	if (absint($search)) { # normal forum search puts page number in search query arg
 		$out .= user_trailingslashit($baseUrl.'&amp;search='.$thisPage);
 	} else {
 		$url = ($thisPage > 1) ? trailingslashit($baseUrl).'page-'.$thisPage : $baseUrl;
