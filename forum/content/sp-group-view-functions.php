@@ -179,12 +179,7 @@ function sp_GroupHeaderDescription($args = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -240,19 +235,7 @@ function sp_GroupOpenClose($args = '', $toolTipOpen = '', $toolTipClose = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'span' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'data-*' => array(),
-                ),
-                'img' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                    'src' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -294,24 +277,7 @@ function sp_GroupHeaderMessage($args = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-                'img' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'src' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -374,25 +340,7 @@ function sp_GroupHeaderRSSButton($args = '', $label = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'a' => array(
-                    'id' => array(),
-                    'href' => array(),
-                    'class' => array(),
-                    'title' => array(),
-                    'rel' => array(),
-                ),
-                'img' => array(
-                    'id' => array(),
-                    'src' => array(),
-                    'class' => array(),
-                    'title' => array(),
-                    'rel' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                ),
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -439,12 +387,7 @@ function sp_NoGroupMessage($args = '', $deniedMessage = '', $definedMessage = ''
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -547,25 +490,7 @@ function sp_ForumIndexIcon($args = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'a' => array(
-                    'id' => array(),
-                    'href' => array(),
-                    'class' => array(),
-                    'title' => array(),
-                    'rel' => array(),
-                ),
-                'img' => array(
-                    'id' => array(),
-                    'src' => array(),
-                    'class' => array(),
-                    'title' => array(),
-                    'rel' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                ),
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -611,14 +536,7 @@ function sp_ForumIndexLink($args = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'a' => array(
-                    'href' => array(),
-                    'id' => array(),
-                    'title' => array(),
-                    'class' => array(),
-                ),
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -662,14 +580,7 @@ function sp_ForumIndexName($args = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'a' => array(
-                    'href' => array(),
-                    'id' => array(),
-                    'title' => array(),
-                    'class' => array(),
-                ),
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -709,12 +620,7 @@ function sp_ForumIndexDescription($args = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -774,29 +680,7 @@ function sp_ForumIndexPageLinks($args = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'a' => array(
-                    'href' => array(),
-                    'title' => array(),
-                    'class' => array(),
-                ),
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-                'img' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'src' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -898,29 +782,7 @@ function sp_ForumIndexStatusIcons($args = '', $toolTipLock = '', $toolTipPost = 
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'a' => array(
-                    'href' => array(),
-                    'title' => array(),
-                    'class' => array(),
-                ),
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-                'img' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'src' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -973,24 +835,7 @@ function sp_ForumIndexLockIcon($args = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-                'img' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'src' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1041,24 +886,7 @@ function sp_ForumIndexDeniedIcon($args = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-                'img' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'src' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1105,30 +933,7 @@ function sp_ForumIndexAddIcon($args = '', $toolTip = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'a' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'title' => array(),
-                    'href' => array(),
-                ),
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-                'img' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'src' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1194,32 +999,7 @@ function sp_ForumIndexPostsIcon($args = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'a' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'title' => array(),
-                    'href' => array(),
-                    'rel' => array(),
-                    'data-*' => array(),
-                ),
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-                'img' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'src' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1293,18 +1073,7 @@ function sp_ForumIndexPostCount($args = '', $label = '', $rtlLabel = '', $labelA
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-                'br' => array()
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1367,18 +1136,7 @@ function sp_ForumIndexTopicCount($args = '', $label = '', $rtlLabel = '', $label
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-                'br' => array()
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1555,26 +1313,7 @@ function sp_ForumIndexLastPost($args = '', $lastPostLabel = '', $noTopicsLabel =
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'a' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'title' => array(),
-                    'href' => array(),
-                    'rel' => array(),
-                    'data-*' => array(),
-                ),
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-                'br' => array(),
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1641,17 +1380,7 @@ function sp_ForumIndexModerators($args = '', $label = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1788,38 +1517,7 @@ function sp_ForumIndexSubForums($args = '', $label = '', $toolTip = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'hr' => array(),
-                'ul' => array(
-                    'class' => array(),
-                    'id' => array(),
-                ),
-                'li' => array(),
-                'a' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'title' => array(),
-                    'href' => array(),
-                    'rel' => array(),
-                    'data-*' => array(),
-                ),
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-                'span' => array(
-                    'class' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                ),
-                'img' => array(
-                    'id' => array(),
-                    'class' => array(),
-                    'src' => array(),
-                    'title' => array(),
-                    'alt' => array(),
-                )
-            )
+            SP_CORE_ALLOWED_TAGS
         );
 	} else {
 		return $out;
@@ -1857,12 +1555,7 @@ function sp_NoForumsInGroupMessage($args = '', $definedMessage = '') {
 	if ($echo) {
         echo wp_kses(
             $out,
-            array(
-                'div' => array(
-                    'id' => array(),
-                    'class' => array(),
-                ),
-            )
+            SP_CORE_ALLOWED_TAGS
         );
         
 	} else {
