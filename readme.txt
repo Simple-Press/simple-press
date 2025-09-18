@@ -6,7 +6,7 @@ Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 6.11.9
+Stable tag: 6.11.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,11 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 
 == Latest Updates ==
 
+= 6.11.10 - September 2025 =
+* Unread message counters now update correctly
+* "Last visit" tracking now works as expected
+* Relaxed overly strict HTML sanitization in admin output
+ 
 = 6.11.9 - September 2025 =
 * Fixed an issue that prevented YouTube videos from embedding correctly when using TinyMCE
 * Enhanced Forum Description to support additional HTML elements for richer content
