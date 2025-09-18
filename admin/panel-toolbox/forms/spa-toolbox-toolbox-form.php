@@ -33,7 +33,7 @@ function spa_toolbox_toolbox_form() {
                 echo '<div class="sf-form-row">';
             	$version = SP()->primitives->admin_text('Version:').'&nbsp;<strong>'.SP()->options->get('sfversion').'</strong>';
             	$build = SP()->primitives->admin_text('Build:  ').'&nbsp;<strong>'.SP()->options->get('sfbuild').'</strong>';
-            	echo esc_html($version).'<br>'.esc_html($build);
+                echo wp_kses($version, SP_CORE_ALLOWED_TAGS).'<br>'.wp_kses($build, SP_CORE_ALLOWED_TAGS);
                 echo '</div>';
 			spa_paint_close_fieldset();
 		spa_paint_close_panel();
