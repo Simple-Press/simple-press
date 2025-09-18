@@ -27,15 +27,10 @@ class spcDateTime {
 	 * @return void
 	 */
     public function set_timezone() {
-        $tz = get_option('timezone_string');
-        if (empty($tz) || substr($tz, 0, 3) == 'UTC') $tz = 'UTC';
-
-        # Just to make sure that we always get the correct TZ for the user
-        if ($tz !== date_default_timezone_get()) {
-           // phpcs:ignore WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
-            date_default_timezone_set($tz);
-        }
-    }
+		$tz = get_option('timezone_string');
+		if (empty($tz) || substr($tz, 0, 3) == 'UTC') $tz = 'UTC';
+		date_default_timezone_set($tz);
+	}
 
 	/**
 	 * This method takes a date and modifies the date to reflect a user's timezone.
@@ -74,7 +69,7 @@ class spcDateTime {
 		if ($return == 'display') {
 			$date = date_i18n(SPDATES, $date).' - '.date_i18n(SPTIMES, $date);
 		} else if ($return == 'mysql') {
-			$date = date_i18n('Y-m-d H:i:s', $date);
+			$date = date('Y-m-d H:i:s', $date);
 		}
 
 		return $date;
@@ -155,7 +150,7 @@ class spcDateTime {
 		}
 
 		# put in date string format
-		$date = date_i18n('Y-m-d H:i:s', $dts);
+		$date = date('Y-m-d H:i:s', $dts);
 
 		return $date;
 	}
@@ -183,7 +178,7 @@ class spcDateTime {
 		}
 
 		# put in date string format
-		$date = date_i18n('Y-m-d H:i:s', $dts);
+		$date = date('Y-m-d H:i:s', $dts);
 
 		return $date;
 	}

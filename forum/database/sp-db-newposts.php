@@ -255,7 +255,7 @@ function spdb_zone_mysql_checkdate($d) {
 	$ud = strtotime($d);
 	if ($zone < 0 ? $ud = $ud + (abs($zone * 3600)) : $ud = $ud - (abs($zone * 3600))) ;
 
-	return date_i18n('Y-n-d H:i:s', $ud);
+	return date('Y-n-d H:i:s', $ud);
 }
 
 add_action('sph_remove_a_newpost', 'sp_bump_newpost_count');
