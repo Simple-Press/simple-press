@@ -249,7 +249,7 @@ function sp_load_version_xml($showError = true, $usecache = true) {
  */
 function sp_check_for_updates() {
 	$xml = sp_load_version_xml();
-	if ($xml) {
+	if ($xml && !empty($xml->plugins->plugin)) {
 		# make sure SP is installed
 		$installed_build = SP()->options->get('sfbuild');
 		if (empty($installed_build)) return;

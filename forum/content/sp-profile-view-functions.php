@@ -329,7 +329,7 @@ function sp_ProfileShowFirstName($args = '', $label = '') {
 
     // If option to hide firstname and lastname is set, do not return any data
     $profileOptions = SP()->options->get('sfprofile');
-    if ($profileOptions['hideuserinfo']) {
+    if (!empty($profileOptions['hideuserinfo'])) {
         return;
     }
 
@@ -392,7 +392,7 @@ function sp_ProfileShowLastName($args = '', $label = '') {
 
     // If option to hide firstname and lastname is set, do not return any data
     $profileOptions = SP()->options->get('sfprofile');
-    if ($profileOptions['hideuserinfo']) {
+    if (!empty($profileOptions['hideuserinfo'])) {
         return;
     }
 
@@ -1738,7 +1738,7 @@ function sp_ProfileShowEmail($args = '', $label = '') {
 
     // If option to hide firstname and lastname is set, do not return any data
     $profileOptions = SP()->options->get('sfprofile');
-    if ($profileOptions['hideuserinfo']) {
+    if (!empty($profileOptions['hideuserinfo'])) {
         return;
     }
 

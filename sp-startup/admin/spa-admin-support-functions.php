@@ -852,7 +852,7 @@ function spa_plugin_addon_dashboard_update()
 		
 		}else{
 
-			if ($xml) {
+			if ($xml && !empty($xml->plugins->plugin)) {
 					
 				foreach ($xml->plugins->plugin as $latest) {
 					
@@ -1068,7 +1068,7 @@ function spa_check_plugin_addon_update() {
 		
 		}else{
 
-			if ($xml) {
+			if ($xml && !empty($xml->plugins->plugin)) {
 					
 				foreach ($xml->plugins->plugin as $latest) {
 					
