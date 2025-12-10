@@ -1271,17 +1271,17 @@ function sp_transient_cleanup() {
     $time = time();
 
     // Prepare SQL for selecting expired transients
+	$tname = $wpdb->esc_sql( SP_PREFIX . 'options' );
     $records = $wpdb->get_results(
         $wpdb->prepare(
-            'SELECT * FROM %s
+            "SELECT * FROM `{$tname}`
                 WHERE (
                     (option_name LIKE %s AND option_value < %d) OR
                     (option_name LIKE %s AND option_value < %d) OR
                     (option_name LIKE %s AND option_value < %d) OR
                     (option_name LIKE %s AND option_value < %d) OR
                     (option_name LIKE %s AND option_value < %d)
-                )',
-            SP_PREFIX . "options",
+                )",
             '_transient_timeout_%url', $time,
             '_transient_timeout_%bookmark', $time,
             '_transient_timeout_%post', $time,
