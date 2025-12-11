@@ -1271,7 +1271,7 @@ function sp_transient_cleanup() {
     $time = time();
 
     // Prepare SQL for selecting expired transients
-	$tname = $wpdb->esc_sql( SP_PREFIX . 'options' );
+	$tname = SP_PREFIX . 'options';
     $records = $wpdb->get_results(
         $wpdb->prepare(
             "SELECT * FROM `{$tname}`
