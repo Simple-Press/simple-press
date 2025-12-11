@@ -672,8 +672,14 @@ if ($build < $section) {
     sp_response($section);
 }
 
-# Start of Upgrade Routines - 6.11.9 ==========================================================
+# Start of Upgrade Routines - 6.11.10 ==========================================================
 $section = 15914;
+if ($build < $section) {
+    sp_response($section);
+}
+
+# Start of Upgrade Routines - 6.11.11 ==========================================================
+$section = 15915;
 if ($build < $section) {
     sp_response($section);
 }
