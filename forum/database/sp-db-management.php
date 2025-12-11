@@ -731,7 +731,7 @@ function sp_delete_post($postid, $topicid=0, $forumid=0, $show = true) {
 	if (!$postid) return; # Return if post_id not found
 
     # Validate nonce
-    if (!wp_verify_nonce($_GET['_wpnonce'], 'sp_delete_post_' . $postid)) {
+    if (!wp_verify_nonce($_GET['sp_delete_post'], 'sp_delete_post_' . $postid)) {
         die('could not delete post');
         return;
     }
