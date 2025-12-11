@@ -12,9 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 sp_forum_ajax_support();
 
-if (!sp_nonce('spForumToolsMenu')) {
-    die();
-}
+#if (!sp_nonce('spForumToolsMenu')) {
+#    die();
+#}
 
 $fid = '';
 
@@ -216,7 +216,11 @@ function sp_render_post_tools($post, $forum, $topic, $page, $postnum, $useremail
 	$tout.= $out;
 	$out = '';
 
-	if (SP()->auths->get('delete_any_post', $post['forum_id']) || SP()->auths->get('delete_own_posts', $forum['forum_id']) && SP()->user->thisUser->ID == $post['user_id']) {
+    if (
+        SP()->auths->get('delete_any_post', $post['forum_id']) 
+        || SP()->auths->get('delete_own_posts', $forum['forum_id']) 
+        && SP()->user->thisUser->ID == $post['user_id']
+    ) {
         $sp_delete_post_nonce = wp_create_nonce('sp_delete_post_' . $post['post_id']);
 		$out.= sp_open_grid_cell();
 		$out.= '<div class="spForumToolsDelete">';

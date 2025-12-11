@@ -1483,7 +1483,18 @@ function sp_PostIndexDelete($args = '', $label = '', $toolTip = '') {
 
 	$out = '';
 
-	$ajaxUrl = wp_nonce_url(SPAJAXURL."spForumTools&targetaction=delete-post&killpost=".SP()->forum->view->thisPost->post_id."&killposttopic=".SP()->forum->view->thisTopic->topic_id."&killpostforum=".SP()->forum->view->thisTopic->forum_id."&killpostposter=".SP()->forum->view->thisPost->user_id."&page=".SP()->rewrites->pageData['page'], 'spForumTools');
+    $sp_delete_post_nonce = wp_create_nonce('sp_delete_post_' . SP()->forum->view->thisPost->post_id);
+
+    $ajaxUrl = wp_nonce_url(
+        SPAJAXURL ."spForumTools&targetaction=delete-post&killpost="
+        . SP()->forum->view->thisPost->post_id
+        . "&killposttopic=".SP()->forum->view->thisTopic->topic_id
+        . "&killpostforum=".SP()->forum->view->thisTopic->forum_id
+        . "&killpostposter=".SP()->forum->view->thisPost->user_id
+        . "&page=".SP()->rewrites->pageData['page']
+        . "&sp_delete_post=".$sp_delete_post_nonce
+        , 'spForumTools');
+
 	$out .= "<a class='$tagClass spDeletePost' id='$tagId' title='$toolTip' rel='nofollow' data-url='$ajaxUrl' data-postid='".SP()->forum->view->thisPost->post_id."' data-topicid='".SP()->forum->view->thisTopic->topic_id."'>";
 	if (!empty($icon)) $out .= SP()->theme->paint_icon($iconClass, SPTHEMEICONSURL, $icon);
 	if (!empty($label)) $out .= SP()->displayFilters->title($label);
