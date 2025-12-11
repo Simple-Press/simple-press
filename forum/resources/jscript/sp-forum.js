@@ -503,24 +503,18 @@
 
 	spj.deleteTopic = function(url, tid, fid) {
 		if (confirm(sp_forum_vars.deletetopic)) {
-			$('#dialog').dialog('close');
-			var count = $('#topiclist' + fid + ' > div.spForumTopicSection:not([style*="display: none"])').length;
 			$.ajax({
 				type: 'GET',
-				url: url + '&count=' + count,
+				url: url,
 				cache: false,
-				success: function(html) {
+				success: function(html){
                     if (html == '') {
-                        $('#eachTopic' + tid).slideUp(function() {
-                            spj.displayNotification(0, sp_forum_vars.topicdeleted);
-                            var url = html != '' ? html : window.location.href;
-                            window.location.href = url;
-                            
-                        });
-                        return;
+                        // Got no url, unable to delete
+                        spj.displayNotification(1, 'Could not delete topic');
+                    } else {
+                        spj.displayNotification(0, 'Topic deleted');
+                        window.location = html;
                     }
-
-                    spj.displayNotification(1, 'Could not delete topic');
 				}
 			});
 		}

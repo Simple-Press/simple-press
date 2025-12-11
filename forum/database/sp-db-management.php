@@ -658,7 +658,7 @@ function sp_delete_topic($topicid, $forumid, $show = true) {
         return;
     }
 
-
+    # Check if the user is allowed
     if (
         !SP()->auths->get('delete_topics', $forumid) 
             && !SP()->auths->forum_admin(SP()->user->thisUser->ID) 
@@ -728,10 +728,10 @@ function sp_delete_topic($topicid, $forumid, $show = true) {
 function sp_delete_post($postid, $topicid=0, $forumid=0, $show = true) {
 	# leaving $topicid and $forumid function arguments above though not used anymore for backwards compat in case function called by others
 
-	if (!$postid) return;
-    
+	if (!$postid) return; # Return if post_id not found
+
     # Validate nonce
-    if (!wp_verify_nonce($_GET['sp_delete_post'], 'sp_delete_post_' . $postid)) {
+    if (!wp_verify_nonce($_GET['_wpnonce'], 'sp_delete_post_' . $postid)) {
         die('could not delete post');
         return;
     }

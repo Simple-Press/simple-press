@@ -12,10 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 sp_forum_ajax_support();
 
-if (!sp_nonce('spForumTools')) {
-    die();
-}
-
 # get out of here if no action specified
 if (empty($_GET['targetaction'])) {
     die();
@@ -717,6 +713,7 @@ function sp_topic_delete() {
 
     sp_delete_topic(absint($_GET['killtopic']), absint($_GET['killtopicforum']), false);
 
+    // What URL to return
     $view = SP()->filters->str($_GET['view']);
     if ($view == 'topic') {
       	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.absint($_GET['killtopicforum']), 'forum_slug');
@@ -731,9 +728,7 @@ function sp_topic_delete() {
             $returnURL = SP()->spPermalinks->build_url($forumslug, '', $page);
         }
     }
-    echo esc_url($returnURL);
-
-    die();
+    die(esc_url($returnURL));
 }
 
 function sp_pin_post() {
