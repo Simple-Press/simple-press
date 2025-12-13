@@ -48,7 +48,7 @@ function sp_TopicForumName($args = '') {
 	$out = apply_filters('sph_TopicForumName', $out, $a);
 
 	if ($echo) {
-		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
+		echo wp_kses($out, apply_filters('sph_TopicForumName_kses', SP_CORE_ALLOWED_TAGS, $a));
 	} else {
 		return $out;
 	}
@@ -101,7 +101,7 @@ function sp_TopicHeaderIcon($args = '') {
 	$out = apply_filters('sph_TopicHeaderIcon', $out, $a);
 
 	if ($echo) {
-		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
+		echo wp_kses($out, apply_filters('sph_TopicHeaderIcon_kses', SP_CORE_ALLOWED_TAGS, $a));
 	} else {
 		return $out;
 	}
@@ -138,7 +138,7 @@ function sp_TopicHeaderName($args = '') {
 	$out = apply_filters('sph_TopicHeaderName', $out, $a);
 
 	if ($echo) {
-		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
+		echo wp_kses($out, apply_filters('sph_TopicHeaderName_kses',SP_CORE_ALLOWED_TAGS,$a) );
 	} else {
 		return $out;
 	}
@@ -243,7 +243,7 @@ function sp_NoTopicMessage($args = '', $deniedMessage = '', $definedMessage = ''
 	$out = apply_filters('sph_NoTopicMessage', $out, $a);
 
 	if ($echo) {
-		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
+		echo wp_kses($out, apply_filters('sph_NoTopicMessage_kses',SP_CORE_ALLOWED_TAGS,$a) );
 	} else {
 		return $out;
 	}
@@ -1574,7 +1574,7 @@ function sp_PostIndexContent($args = '', $label = '') {
 	$out = apply_filters('sph_PostIndexContent', $out, $a);
 
 	if ($echo) {
-		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
+		echo wp_kses($out, apply_filters('sph_PostIndexContent_kses', SP_CORE_ALLOWED_TAGS, $a) );
 	} else {
 		return $out;
 	}
@@ -1627,7 +1627,7 @@ function sp_PostIndexUserSignature($args = '') {
 	$out = apply_filters('sph_PostIndexUserSignature', $out, $a);
 
 	if ($echo) {
-		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
+		echo wp_kses($out, apply_filters('sph_PostIndexUserSignature_kses', SP_CORE_ALLOWED_TAGS, $a) );
 	} else {
 		return $out;
 	}
@@ -1681,7 +1681,7 @@ function sp_PostIndexUserFlexSignature($args = '') {
 	$out = apply_filters('sph_PostIndexUserFlexSignature', $out, $a);
 
 	if ($echo) {
-		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
+		echo wp_kses($out, apply_filters('sph_PostIndexUserFlexSignature_kses', SP_CORE_ALLOWED_TAGS, $a) );
 	} else {
 		return $out;
 	}
@@ -2311,7 +2311,7 @@ function sp_NoPostsInTopicMessage($args = '', $definedMessage = '') {
 	$out = apply_filters('sph_NoPostsInTopicMessage', $out, $a);
 
 	if ($echo) {
-		echo wp_kses($out, SP_CORE_ALLOWED_TAGS);
+		echo wp_kses($out, apply_filters('sph_NoPostsInTopicMessage_kses', SP_CORE_ALLOWED_TAGS, $a) );
 	} else {
 		return $out;
 	}
