@@ -283,7 +283,7 @@ function sp_topic_editor_section_math($out, $spThisForum, $a) {
 		$out.= "<div class='$mathLabels'>$labelMathSum:</div>\n";
 		$out.= "<div class='$mathLabels'>$spammath[0] + $spammath[1]</div>\n";
 		$out.= "<div class='spEditorSpam'>\n";
-		$out.= "<input type='text' tabindex='".$tab++."' class='$controlInput spMathCheck' size='20' name='$uKey1' id='$uKey1' value='' data-type='topic' data-val1='$spammath[0]', data-val2='$spammath[1]' data-buttongood='$labelPostButtonReady' data-buttonbad='$labelPostButtonMath' />\n";
+		$out.= "<input type='text' tabindex='".$tab++."' class='$controlInput spMathCheck' size='20' name='$uKey1' id='$uKey1' value='' data-type='topic' data-val1='$spammath[0]' data-val2='$spammath[1]' data-buttongood='$labelPostButtonReady' data-buttonbad='$labelPostButtonMath' />\n";
 		$out.= "<input type='hidden' name='$uKey2' value='$spammath[2]' />\n";
 		$out.= "</div></div></div>\n";
 	}
@@ -326,7 +326,7 @@ function sp_post_editor_section_math($out, $spThisData, $a) {
 		$out.= "<div class='$mathLabels'>$labelMathSum:</div>\n";
 		$out.= "<div class='$mathLabels'>$spammath[0] + $spammath[1]</div>\n";
 		$out.= "<div class='spEditorSpam'>\n";
-		$out.= "<input type='text' tabindex='105' class='$controlInput spMathCheck' size='20' name='$uKey1' id='$uKey1' value='' data-type='post' data-val1='$spammath[0]', data-val2='$spammath[1]' data-buttongood='$labelPostButtonReady' data-buttonbad='$labelPostButtonMath' />\n";
+		$out.= "<input type='text' tabindex='105' class='$controlInput spMathCheck' size='20' name='$uKey1' id='$uKey1' value='' data-type='post' data-val1='$spammath[0]' data-val2='$spammath[1]' data-buttongood='$labelPostButtonReady' data-buttonbad='$labelPostButtonMath' />\n";
 		$out.= "<input type='hidden' name='$uKey2' value='$spammath[2]' />\n";
 		$out.= "</div></div></div>\n";
 	}
