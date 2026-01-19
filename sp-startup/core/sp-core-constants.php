@@ -320,6 +320,7 @@ define(
                 'title' => array(),
                 'value' => array(),
             ),
+            'script' => array(),
             'select' => array(
                 'class' => array(),
                 'id' => array(),
