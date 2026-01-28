@@ -1271,33 +1271,38 @@ function sp_transient_cleanup() {
     $time = time();
 
     // Prepare SQL for selecting expired transients
-	$tname = $wpdb->esc_sql( SP_PREFIX . 'options' );
+	$tname = SP_PREFIX . 'options';
+	
+	// Escape _ as it is a special character for LIKE.
+	$esc_transient_timeout = $wpdb->esc_like('_transient_timeout_');
     $records = $wpdb->get_results(
         $wpdb->prepare(
-            "SELECT * FROM `{$tname}`
+            "SELECT option_name FROM `{$tname}`
                 WHERE (
-                    (option_name LIKE %s AND option_value < %d) OR
-                    (option_name LIKE %s AND option_value < %d) OR
-                    (option_name LIKE %s AND option_value < %d) OR
-                    (option_name LIKE %s AND option_value < %d) OR
-                    (option_name LIKE %s AND option_value < %d)
+                    (option_name LIKE %s AND CAST(option_value AS UNSIGNED) < %d) OR
+                    (option_name LIKE %s AND CAST(option_value AS UNSIGNED) < %d) OR
+                    (option_name LIKE %s AND CAST(option_value AS UNSIGNED) < %d) OR
+                    (option_name LIKE %s AND CAST(option_value AS UNSIGNED) < %d) OR
+                    (option_name LIKE %s AND CAST(option_value AS UNSIGNED) < %d)
                 )",
-            '_transient_timeout_%url', $time,
-            '_transient_timeout_%bookmark', $time,
-            '_transient_timeout_%post', $time,
-            '_transient_timeout_%search', $time,
-            '_transient_timeout_%reload', $time
+            $esc_transient_timeout . '%url', $time,
+            $esc_transient_timeout . '%bookmark', $time,
+            $esc_transient_timeout . '%post', $time,
+            $esc_transient_timeout . '%search', $time,
+            $esc_transient_timeout . '%reload', $time
         )
     );
 
+	if(empty($records)) return; // Prevent a null error.
     foreach ($records as $record) {
         $transient = explode('_transient_timeout_', $record->option_name);
+
+		if (!isset($transient[1])) continue; // Prevent null warning.
 
         // Prepare statement for deleting transient timeout
         $wpdb->query(
             $wpdb->prepare(
-                'DELETE FROM %s WHERE option_name=%s',
-                SP_PREFIX . 'options',
+                "DELETE FROM `{$tname}` WHERE option_name=%s",
                 '_transient_timeout_' . $transient[1]
             )
         );
@@ -1305,18 +1310,17 @@ function sp_transient_cleanup() {
         // Prepare statement for deleting transient
         $wpdb->query(
             $wpdb->prepare(
-                'DELETE FROM  WHERE option_name=%s',
-                SP_PREFIX . 'options',
+                "DELETE FROM `{$tname}` WHERE option_name=%s",
                 '_transient_' . $transient[1]
             )
         );
     }
 
     // Prepare statement for cleaning up user notices
+	$notices = SPNOTICES;
     $wpdb->query(
         $wpdb->prepare(
-            'DELETE FROM %s WHERE expires < %d',
-            SPNOTICES,
+            "DELETE FROM {$notices} WHERE CAST(expires AS UNSIGNED) < %d",
             $time
         )
     );

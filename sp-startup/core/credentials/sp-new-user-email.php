@@ -19,22 +19,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 if (!function_exists('wp_new_user_notification')):
 
 	function wp_new_user_notification($user_id, $deprecated = null, $notify = 'both') {
+		
 		$user = new WP_User($user_id);
 		$sflogin = SP()->options->get('sflogin');
 		$eol = "\r\n";
 		$user_login = $user->user_login;
 		$user_email = $user->user_email;
-		$message = '';
-		$message .= SP()->primitives->front_text_noesc('New user registration on your website').': '.get_option('blogname').$eol.$eol;
-		$message .= SP()->primitives->front_text_noesc('Username').': '.$user_login.$eol;
-		$message .= SP()->primitives->front_text_noesc('E-mail').': '.$user_email.$eol;
-		$message .= SP()->primitives->front_text_noesc('Registration IP').': '.sp_get_ip().$eol;
+		
+		// Don't send admin an email if the $notify variable is user.
+		if($notify !== 'user' && apply_filters('wp_send_new_user_notification_to_admin', true, $user)) {
+			$message = '';
+			$message .= SP()->primitives->front_text_noesc('New user registration on your website').': '.get_option('blogname').$eol.$eol;
+			$message .= SP()->primitives->front_text_noesc('Username').': '.$user_login.$eol;
+			$message .= SP()->primitives->front_text_noesc('E-mail').': '.$user_email.$eol;
+			$message .= SP()->primitives->front_text_noesc('Registration IP').': '.sp_get_ip().$eol;
 
-		$address = apply_filters('sph_admin_new_user_email_addrress', get_option('admin_email'), $user_id);
-		$subject = apply_filters('sph_admin_new_user_email_subject', get_option('blogname').' '.SP()->primitives->front_text_noesc('New User Registration'), $user_id);
-		$msg = apply_filters('sph_admin_new_user_email_msg', $message, $user_id);
-		sp_send_email($address, $subject, $msg);
-
+			$address = apply_filters('sph_admin_new_user_email_addrress', get_option('admin_email'), $user_id);
+			$subject = apply_filters('sph_admin_new_user_email_subject', get_option('blogname').' '.SP()->primitives->front_text_noesc('New User Registration'), $user_id);
+			$msg = apply_filters('sph_admin_new_user_email_msg', $message, $user_id);
+			sp_send_email($address, $subject, $msg);
+		}
+		
 		if ('admin' === $notify || empty($notify)) return;
 
 		# Generate something random for a password reset key.
@@ -44,6 +49,7 @@ if (!function_exists('wp_new_user_notification')):
 		do_action('retrieve_password_key', $user_login, $key);
 
 		# Now insert the key, hashed, into the DB.
+		global $wp_hasher;
 		if (empty($wp_hasher)) {
 			require_once ABSPATH.WPINC.'/class-phpass.php';
 			$wp_hasher = new PasswordHash(8, true);
@@ -69,7 +75,7 @@ if (!function_exists('wp_new_user_notification')):
 			$body = str_replace('%PWURL%', network_site_url("wp-login.php?action=rp&key=$key&login=".rawurlencode($user_login), 'login'), $body);
 			$body = str_replace('%NEWLINE%', $eol, $body);
 		}
-		str_replace('<br />', $eol, $body);
+		$body = preg_replace('@<br ?/>@', $eol, $body);
 
 		$address = apply_filters('sph_user_new_user_email_addrress', $user_email, $user_id);
 		$subject = apply_filters('sph_user_new_user_email_subject', get_option('blogname').' '.SP()->primitives->front_text_noesc('New User Registration'), $user_id);
