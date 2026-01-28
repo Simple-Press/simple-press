@@ -19,12 +19,8 @@ if (empty($_GET['targetaction'])) {
 
 $action = SP()->filters->str($_GET['targetaction']);
 
-if ($action == 'page-popup') {
-    die();
-}
-
 if (!sp_nonce('spPageJump')) {
-    die();
+    die('Could not validate spPageJump nonce');
 }
 
 $defs = array('tagClass'		=> 'spPageJump',
@@ -55,13 +51,13 @@ $permalink = trailingslashit(SP()->filters->str($_GET['url']));
 $max = SP()->filters->str($_GET['max']);
 
 $out = "<div id='spMainContainer' class='$tagClass'>\n";
-$out.= "<form class='$formClass' action='".SP()->spPermalinks->get_url()."' method='post' id ='pagejump' name='pagejump'>\n";
-$out.= "<input type='hidden' id='url' name='url' value='".$permalink."' />\n";
-$out.= "<input type='hidden' id='max' name='max' value='".$max."' />\n";
-$out.= "<label class='$labelClass'>".SP()->primitives->front_text('Enter page you want to go to:')."</label>\n";
-$out.= "<input class='$controlClass' type='text' size='5' id='pageNum' name='pageNum' value='' />\n";
-$out.= "<input type='submit' class='$buttonClass spJumpPage' name='submitpagejump' value='".SP()->primitives->front_text('Go')."' />\n";
-$out.= "</form></div>\n";
+$out .= "<form class='$formClass' action='".SP()->spPermalinks->get_url()."' method='post' id ='pagejump' name='pagejump'>\n";
+$out .= "<input type='hidden' id='url' name='url' value='".$permalink."' />\n";
+$out .= "<input type='hidden' id='max' name='max' value='".$max."' />\n";
+$out .= "<label class='$labelClass'>".SP()->primitives->front_text('Enter page you want to go to:')."</label>\n";
+$out .= "<input class='$controlClass' type='text' size='5' id='pageNum' name='pageNum' style='border: 1px solid gray;' value='' />\n";
+$out .= "<input type='submit' class='$buttonClass spJumpPage' name='submitpagejump' value='".SP()->primitives->front_text('Go')."' />\n";
+$out .= "</form></div>\n";
 
 echo wp_kses(
     apply_filters('sph_jump_page', $out),
