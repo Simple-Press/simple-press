@@ -514,16 +514,28 @@ class spcDB {
 	 */
 	public function connectionExists() {
 		global $wpdb;
-		if(empty($wpdb->dbh)) return false;
-		if ($wpdb->dbh instanceof mysqli) return mysqli_ping($wpdb->dbh);
-		if ($wpdb->dbh instanceof PDO) {
+
+		if (!is_object($wpdb) || !isset($wpdb->dbh) || empty($wpdb->dbh)) return false;
+
+		$dbh = $wpdb->dbh;
+		if ($dbh instanceof mysqli) {
 			try {
-				$wpdb->dbh->query('SELECT 1');
-				return true;
-			} catch (PDOException $e) {
+				$result = $dbh->query('SELECT 1');
+				if ($result instanceof mysqli_result) $result->free();
+				return ($result !== false);
+			} catch (Exception $e) {
 				return false;
 			}
 		}
+		if (class_exists('PDO', false) && $dbh instanceof PDO) {
+			try {
+				$dbh->query('SELECT 1');
+				return true;
+			} catch (Exception $e) {
+				return false;
+			}
+		}
+
 		return true;
 	}
 
