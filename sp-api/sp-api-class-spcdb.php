@@ -514,8 +514,17 @@ class spcDB {
 	 */
 	public function connectionExists() {
 		global $wpdb;
-		$connection = (is_object($wpdb)) ? $wpdb->check_connection(false) : false;
-		return $connection;
+		if(empty($wpdb->dbh)) return false;
+		if ($wpdb->dbh instanceof mysqli) return mysqli_ping($wpdb->dbh);
+		if ($wpdb->dbh instanceof PDO) {
+			try {
+				$wpdb->dbh->query('SELECT 1');
+				return true;
+			} catch (PDOException $e) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	#
