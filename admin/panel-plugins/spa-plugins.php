@@ -63,7 +63,7 @@ if ($action && $action == 'uninstall') {
 					window.location = '<?php echo esc_js(SPADMINPLUGINS."&plugin=$plugin&action=uninstall_cancelled&sfnonce=".wp_create_nonce('forum-adminform_plugins')); ?>';
 				};
 
-				$('#dialog').html('<?php wp_kses_post($msg); ?>');
+				$('#dialog').html('<?php echo wp_kses_post($msg); ?>');
 				$('#dialog').dialog({
 					modal: true,
 					autoOpen: true,
