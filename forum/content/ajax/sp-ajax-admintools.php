@@ -694,7 +694,7 @@ function sp_order_topic_pins() {
 function sp_post_delete() {
     sp_delete_post(absint($_GET['killpost']));
 
-	if ((int) $_GET['count'] == 1) {
+	if (isset($_GET['count']) && (int)$_GET['count'] == 1) {
     	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.absint($_GET['killpostforum']), 'forum_slug');
        	$topicslug = SP()->DB->table(SPTOPICS, 'topic_id='.absint($_GET['killposttopic']), 'topic_slug');
         $page = absint($_GET['page']);
@@ -710,24 +710,28 @@ function sp_post_delete() {
 }
 
 function sp_topic_delete() {
-
+	
     sp_delete_topic(absint($_GET['killtopic']), absint($_GET['killtopicforum']), false);
 
-    // What URL to return
     $view = SP()->filters->str($_GET['view']);
+    $count = isset($_GET['count']) ? (int) $_GET['count'] : 0;
+    $forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.absint($_GET['killtopicforum']), 'forum_slug');
+
     if ($view == 'topic') {
-      	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.absint($_GET['killtopicforum']), 'forum_slug');
         $returnURL = SP()->spPermalinks->build_url($forumslug, '', 0);
-    } else if ((int) $_GET['count'] == 1) {
-      	$forumslug = SP()->DB->table(SPFORUMS, 'forum_id='.absint($_GET['killtopicforum']), 'forum_slug');
+    } else if ($count == 1) {
         $page = absint($_GET['page']);
         if ($page == 1) {
             $returnURL = SP()->spPermalinks->build_url($forumslug, '', 0);
         } else {
-            $page = $page - 1;
-            $returnURL = SP()->spPermalinks->build_url($forumslug, '', $page);
+            $returnURL = SP()->spPermalinks->build_url($forumslug, '', $page - 1);
         }
+    } else {
+        // Fallback: still on the same forum/page, just re-point at current page
+        $page = isset($_GET['page']) ? absint($_GET['page']) : 0;
+        $returnURL = SP()->spPermalinks->build_url($forumslug, '', $page);
     }
+
     die(esc_url($returnURL));
 }
 
