@@ -280,6 +280,7 @@ function sp_load_plugin_styles($ajaxCall = false) {
 	$vars = (!empty($vars)) ? "$vars&site=$site$oldstore" : "?site=$site$oldstore";
 
 	# enqueue the main theme css
+	$curThemeData = (!empty($curTheme['parent'])) ? SP()->theme->get_data(SPTHEMEBASEDIR.$curTheme['theme'].'/spTheme.txt') : array('Version' => false);
 	if (SP()->plugin->is_active('user-selection/sp-user-selection-plugin.php')) {
 		if (!empty($parentTheme)) {
 			$cssTheme = (strpos($parentTheme['Stylesheet'], '.css')) ? true : false;
@@ -295,7 +296,7 @@ function sp_load_plugin_styles($ajaxCall = false) {
 		if ($cssTheme && file_exists(SPTHEMEDIR.$reset)) {
 			wp_enqueue_style('sp-theme-reset', SPTHEMECSSEXTRA.$reset);
 		}
-		wp_enqueue_style('sp-theme', SPTHEMECSS.$vars);
+		wp_enqueue_style('sp-theme', SPTHEMECSS.$vars, array(), $curThemeData['Version']);
 		if (is_rtl() && $cssTheme && file_exists(SPTHEMEDIR.'rtl.css')) {
 			wp_enqueue_style('sp-theme-rtl', SPTHEMECSSEXTRA.'rtl.css');
 		}
@@ -305,7 +306,7 @@ function sp_load_plugin_styles($ajaxCall = false) {
 			if ($cssTheme && file_exists(SPTHEMEBASEDIR.$curTheme['parent'].'/styles/'.$reset)) {
 				SP()->plugin->enqueue_style('sp-parent-reset', SPTHEMEBASEURL.$curTheme['parent'].'/styles/'.$reset);
 			}
-			SP()->plugin->enqueue_style('sp-parent', SPTHEMEBASEURL.$curTheme['parent'].'/styles/'.$parentTheme['Stylesheet'].$vars);
+			SP()->plugin->enqueue_style('sp-parent', SPTHEMEBASEURL.$curTheme['parent'].'/styles/'.$parentTheme['Stylesheet'].$vars, array(), $parentTheme['Version']);
 			if (is_rtl() && $cssTheme && file_exists(SPTHEMEBASEDIR.$curTheme['parent'].'/styles/rtl.css')) {
 				SP()->plugin->enqueue_style('sp-parent-rtl', SPTHEMEBASEURL.$curTheme['parent'].'/styles/rtl.css');
 			}
@@ -314,7 +315,7 @@ function sp_load_plugin_styles($ajaxCall = false) {
 		if ($cssTheme && file_exists(SPTHEMEDIR.$reset)) {
 			SP()->plugin->enqueue_style('sp-theme-reset', SPTHEMECSSEXTRA.$reset);
 		}
-		SP()->plugin->enqueue_style('sp-theme', SPTHEMECSS.$vars);
+		SP()->plugin->enqueue_style('sp-theme', SPTHEMECSS.$vars, array(), $curThemeData['Version']);
 		if (is_rtl() && $cssTheme && file_exists(SPTHEMEDIR.'rtl.css')) {
 			SP()->plugin->enqueue_style('sp-theme-rtl', SPTHEMECSSEXTRA.'rtl.css');
 		}
@@ -330,7 +331,8 @@ function sp_load_plugin_styles($ajaxCall = false) {
 		global $sp_plugin_styles;
 		if (!empty($sp_plugin_styles)) {
 			foreach ($sp_plugin_styles->queue as $handle) {
-				wp_enqueue_style($handle, $sp_plugin_styles->registered[$handle]->src);
+				$enqueued_style = $sp_plugin_styles->registered[$handle];
+				wp_enqueue_style($handle, $enqueued_style->src, $enqueued_style->deps, $enqueued_style->ver);
 			}
 		}
 #	}

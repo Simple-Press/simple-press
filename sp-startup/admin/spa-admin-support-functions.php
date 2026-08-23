@@ -556,7 +556,7 @@ function spa_dashboard_news() {
 	echo '<div style="clear:both;"></div>';
 	echo '</div>';
 	echo '<div class="spa_dashboard_text">';
-	echo esc_html(SP()->displayFilters->text($spNews));
+	echo SP()->displayFilters->text($spNews);
 	spa_plugin_addon_dashboard_update();
 	spa_theme_addon_dashboard_update();
 	echo '</div>';
