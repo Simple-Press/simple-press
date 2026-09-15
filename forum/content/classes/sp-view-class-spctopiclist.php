@@ -430,18 +430,23 @@ class spcTopicList {
 		$sort_data = SP()->meta->get_value('topic_cache', 'new');
 		if (!empty($sort_data)) {
 			foreach ($sort_data as $t) {
+				# Support cache rows written with legacy string keys as well as numeric indexes.
+				$forumId = $t[LISTFORUM] ?? $t['LISTFORUM'] ?? null;
+				$topicId = $t[LISTTOPIC] ?? $t['LISTTOPIC'] ?? null;
+				$status  = $t[LISTSTATUS] ?? $t['LISTSTATUS'] ?? null;
+				if ($forumId === null || $topicId === null || $status === null) continue;
 
 				# 1 - check if topic ID already in list
-				if (in_array($t[LISTTOPIC], $topicIds)) continue;
+				if (in_array($topicId, $topicIds)) continue;
 
 				# 2 - check if topic n forum that can be viewed
-				if (!in_array($t[LISTFORUM], $forumIds)) continue;
+				if (!in_array($forumId, $forumIds)) continue;
 
 				# 3 - if post in moderation can user moderate
-				if ($t[LISTSTATUS] == true && SP()->user->thisUser->auths[$t[LISTFORUM]][$mod] == false) continue;
+				if ($status == true && SP()->user->thisUser->auths[$forumId][$mod] == false) continue;
 
 				# 4 - so - we can add topic ID to list
-				$topicIds[] = $t[LISTTOPIC];
+				$topicIds[] = $topicId;
 
 				# 5 - and if we have enough then break the loop
 				if (count($topicIds) == $count) break;

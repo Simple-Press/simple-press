@@ -559,10 +559,10 @@ class spcPost {
 		$cacheSize = SP()->options->get('topic_cache');
 
 		$a             = array();
-		$a['LISTFORUM']  = (int)$this->newpost['forumid'];
-		$a['LISTTOPIC']  = (int)$this->newpost['topicid'];
-		$a['LISTPOST']   = (int)$this->newpost['postid'];
-		$a['LISTSTATUS'] = (int)$this->newpost['poststatus'];
+		$a[LISTFORUM]  = (int)$this->newpost['forumid'];
+		$a[LISTTOPIC]  = (int)$this->newpost['topicid'];
+		$a[LISTPOST]   = (int)$this->newpost['postid'];
+		$a[LISTSTATUS] = (int)$this->newpost['poststatus'];
 
 		$topics = SP()->meta->get_value('topic_cache', 'new');
 		if (!empty($topics)) {

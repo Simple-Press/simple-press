@@ -12,9 +12,3 @@ if (!defined('SPBLOGID')) define('SPBLOGID', $wpdb->blogid);
 
 # Location of forum non-theme images
 if (!defined('SPFIMAGES')) define('SPFIMAGES', SP_PLUGIN_URL.'/forum/resources/images/');
-
-# constants for the cached new posts/topics array
-if (!defined('LISTFORUM')) define('LISTFORUM', 0);
-if (!defined('LISTTOPIC')) define('LISTTOPIC', 1);
-if (!defined('LISTPOST')) define('LISTPOST', 2);
-if (!defined('LISTSTATUS')) define('LISTSTATUS', 3);

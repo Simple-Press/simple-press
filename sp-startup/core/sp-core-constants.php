@@ -12,6 +12,12 @@ if (!defined('SPCHARSET')) {
     define('SPCHARSET', get_bloginfo('charset'));
 }
 
+# Indexes for the cached new posts/topics array
+if (!defined('LISTFORUM')) define('LISTFORUM', 0);
+if (!defined('LISTTOPIC')) define('LISTTOPIC', 1);
+if (!defined('LISTPOST')) define('LISTPOST', 2);
+if (!defined('LISTSTATUS')) define('LISTSTATUS', 3);
+
 function formatUploadsForS3 (string $input = ''): string
 {
 
@@ -365,4 +371,3 @@ define(
         )
     ) 
 );
-
