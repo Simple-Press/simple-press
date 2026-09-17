@@ -523,7 +523,7 @@ class spcDB {
 				$result = $dbh->query('SELECT 1');
 				if ($result instanceof mysqli_result) $result->free();
 				return ($result !== false);
-			} catch (Exception $e) {
+			} catch (Throwable $e) {
 				return false;
 			}
 		}
@@ -531,7 +531,7 @@ class spcDB {
 			try {
 				$dbh->query('SELECT 1');
 				return true;
-			} catch (Exception $e) {
+			} catch (Throwable $e) {
 				return false;
 			}
 		}

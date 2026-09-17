@@ -118,7 +118,8 @@ class spcDateTime {
         } else {
             $format   = SP()->primitives->front_text('%d %s ago');
             $nicedate = sprintf($format, $difference, $periods[$j]);
-            $nicedate = apply_filters('sph_nicedate', $nicedate, $difference, $periods[$j], $format);
+            $tense    = SP()->primitives->front_text('ago');
+            $nicedate = apply_filters('sph_nicedate', $nicedate, $difference, $periods[$j], $tense);
         }
 
 		return $nicedate;
