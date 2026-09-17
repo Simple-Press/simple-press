@@ -4,9 +4,9 @@ Plugin Name: Simple:Press Forums
 Contributors: simplepress, elindydotcom, usermrpapa, yellowswordfish, tahir1235
 Tags: forum, wordpress forum, discussion forum, community forum, forums
 Requires at least: 5.7
-Tested up to: 6.8
+Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 6.11.14
+Stable tag: 6.11.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,14 @@ The editor in the free version is a pure text editor.  However, Simple:Press Pro
 19. The front-end admin options for a post
 
 == Latest Updates ==
+
+= 6.11.15 - September 2026 =
+* Bug: Fixed a fatal error when editing pages containing the sp_recent_posts shortcode
+* Improvement: Added compatibility for legacy and current topic-cache formats
+* Improvement: Improved database connection checks and removed deprecated mysqli_ping() usage
+* Bug: Fixed potential fatal errors caused by WordPress database connection checks
+* Improvement: Improved CSS cache busting for both parent and child Simple:Press themes
+* Bug: Fixed an undefined variable passed to the sph_nicedate filter
 
 = 6.11.14 - January 2026 =
 * Feature: Added ability for developers to customize which HTML tags are allowed in forum topic displays through filter hooks
